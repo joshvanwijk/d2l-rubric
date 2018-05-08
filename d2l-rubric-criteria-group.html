@@ -295,11 +295,24 @@
 				}
 			},
 
-			_getCriteriaClassName: function(criterionCell, assessmentResult) {
+			_getCriteriaClassName: function(criterionCell, assessmentResult, selectedCellRelations) {
+				var descriptionEntity = criterionCell && criterionCell.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
+				var descriptionText = descriptionEntity && descriptionEntity.properties && descriptionEntity.properties.text || '';
 				var selfLink = this._getSelfLink(criterionCell);
-				var className = 'criterion-cell';
-				if (selfLink && assessmentResult && assessmentResult[selfLink]) {
-					className += ' selected';
+
+				if (selfLink) {
+					if (assessmentResult && assessmentResult[selfLink]) {
+						if (descriptionText === '') {
+							if (selectedCellRelations && selectedCellRelations[selfLink]) {
+								return 'criterion-cell selected-icon notop';
+							}
+							return 'criterion-cell selected-icon';
+						}		
+						if (selectedCellRelations && selectedCellRelations[selfLink]) {
+							return 'criterion-cell selected notop';
+						}
+						return 'criterion-cell selected';
+					}
 				}
 				return className;
 			}
