@@ -65,6 +65,9 @@
 				border-left: 1px solid var(--d2l-color-celestine);
 				border-bottom: 1px solid var(--d2l-color-celestine);
 			}
+			.nobottom {
+				border-bottom: none;
+			}
 		</style>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
@@ -304,12 +307,12 @@
 					if (assessmentResult && assessmentResult[selfLink]) {
 						if (descriptionText === '') {
 							if (selectedCellRelations && selectedCellRelations[selfLink]) {
-								return 'criterion-cell selected-icon notop';
+								return 'criterion-cell selected-icon nobottom';
 							}
 							return 'criterion-cell selected-icon';
 						}		
 						if (selectedCellRelations && selectedCellRelations[selfLink]) {
-							return 'criterion-cell selected notop';
+							return 'criterion-cell selected nobottom';
 						}
 						return 'criterion-cell selected';
 					}

@@ -73,24 +73,26 @@
 			}
 			var cellRelationsMap = {};
 			var criteriaEntities = assessmentEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCellSelector);
-			var prevScore = null;
-			for (var i = 0; i < criteriaEntities.length; i++) {
-				
+			var prevLevel = null;
+			var prevLink = null;
+
+			for (var i = 0; i < criteriaEntities.length; i++) {		
 				var criterionEntity = criteriaEntities[i];
 				var selectedCriterionCellEntity = criterionEntity.entities[0];//criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
+
 				if (selectedCriterionCellEntity) {
-					var link = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell);
-					if (link.href) {
-						cellRelationsMap[link.href] = (prevScore === selectedCriterionCellEntity.properties.score);
-					}
-					prevScore = selectedCriterionCellEntity.properties.score;
+					var thisLevel = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level).href;
+					cellRelationsMap[prevLink] = (prevLevel === thisLevel);
+
+					prevLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell).href;
+					prevLevel = thisLevel;
+
 					var feedback = selectedCriterionCellEntity.getSubEntityByClass('feedback')
 					if (feedback && feedback.properties && feedback.properties.text) {
-						prevScore = null;
+						prevLevel = null;
 					}
 				}
 			}
-			console.log(cellRelationsMap);
 			return cellRelationsMap;
 		},
 
