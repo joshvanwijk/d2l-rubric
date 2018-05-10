@@ -54,10 +54,6 @@
 				@apply --d2l-body-compact-text;
 				vertical-align: text-top;
 			}
-			.criterion-description-richtext {
-				display: block;
-				overflow-x: hidden;
-			}
 			.feedback-wrapper {
 				border: none;
 			}
@@ -75,7 +71,8 @@
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<d2l-table
 			aria-colcount$="[[_getColumnCount(_levels, entity)]]"
-			aria-rowcount$="[[_getRowCount(_criteriaEntities)]]"
+			aria-rowcount$="[[_getRowCount(_criteriaEntities, assessmentResult)]]"
+			aria-labelledby="group-header"
 			hidden$="[[!_showContent]]"
 		>
 			<d2l-offscreen>
@@ -83,7 +80,7 @@
 			</d2l-offscreen>
 			<d2l-thead>
 				<d2l-tr>
-					<d2l-td class="group-name">
+					<d2l-td class="group-name" id="group-header">
 						[[entity.properties.name]]
 					</d2l-td>
 					<template is="dom-repeat" items="[[_levels]]" as="level">
@@ -103,7 +100,7 @@
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion">
 						<d2l-tr>
-							<d2l-td class="criteria">[[criterion.properties.name]]</d2l-td>
+							<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
 							<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
 								<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
 									<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
@@ -117,7 +114,7 @@
 						</d2l-tr>
 					<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
 						<d2l-tspan>
-							<d2l-rubric-feedback class="feedback-wrapper">
+							<d2l-rubric-feedback class="feedback-wrapper" role="cell" aria-colspan$="[[_getColumnCount(_levels,entity)]]">
 								<s-html html="[[getAssessmentFeedback(criterion, assessmentResult)]]"></s-html>
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -268,11 +265,12 @@
 				return this.localize('outOf', 'outOf', criterion.properties.outOf);
 			},
 
-			_getRowCount: function(criteria) {
+			_getRowCount: function(criteria, assessmentResult) {
 				if (!criteria) {
 					return 0;
 				}
-				return criteria.length + 1; // criteria + levels row
+				var feedbackCount = this.getFeedbackCount(assessmentResult);
+				return criteria.length + feedbackCount + 1; // criteria + feedback + levels row
 			},
 
 			_getColumnCount: function(levels, entity) {
