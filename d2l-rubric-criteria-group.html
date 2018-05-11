@@ -104,7 +104,7 @@
 					<d2l-tr aria-rowindex$="[[_getRowIndex(index)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, index)]]">
 						<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, selectedCellRelations)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
@@ -299,23 +299,14 @@
 			},
 
 			_getCriteriaClassName: function(criterionCell, assessmentResult, selectedCellRelations) {
-				var descriptionEntity = criterionCell && criterionCell.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				var descriptionText = descriptionEntity && descriptionEntity.properties && descriptionEntity.properties.text || '';
 				var selfLink = this._getSelfLink(criterionCell);
-
-				if (selfLink) {
-					if (assessmentResult && assessmentResult[selfLink]) {
-						if (descriptionText === '') {
-							if (selectedCellRelations && selectedCellRelations[selfLink]) {
-								return 'criterion-cell selected-icon nobottom';
-							}
-							return 'criterion-cell selected-icon';
-						}		
-						if (selectedCellRelations && selectedCellRelations[selfLink]) {
-							return 'criterion-cell selected nobottom';
-						}
-						return 'criterion-cell selected';
-					}
+				var className = 'criterion-cell';
+				if (selfLink && assessmentResult && assessmentResult[selfLink]) {
+					className += ' selected';
+				}
+				console.log(selectedCellRelations);
+				if (selectedCellRelations && selectedCellRelations[selfLink]) {
+					className += ' nobottom';
 				}
 				return className;
 			}
