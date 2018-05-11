@@ -225,7 +225,7 @@
 
 			_hasFeedback: function(entity, assessmentResult) {
 				var entityLink = this._getSelfLink(entity);
-				return assessmentResult && assessmentResult[entityLink].feedback;
+				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedback;
 			},
 
 			_hasCustomPoints: function(criterionCell) {
