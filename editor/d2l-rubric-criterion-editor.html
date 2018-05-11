@@ -92,26 +92,44 @@
 		</style>
 
 		<div class="cell col-first criterion-name">
-			<d2l-textarea no-border hover-styles value=[[entity.properties.name]] placeholder="[[localize('criterionPlaceholder')]]"></d2l-textarea>
+			<d2l-textarea
+				aria-label="criterion name"
+				no-border
+				hover-styles
+				value=[[entity.properties.name]]
+				placeholder="[[localize('criterionPlaceholder')]]"
+				on-change="_saveName">
+			</d2l-textarea>
 		</div>
 		<div class="criterion-detail">
 			<div class="criterion-text">
-				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
+				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" index-as="cellIndex" rendered-item-count="{{descriptionCount}}" >
 					<div class="cell">
-						<d2l-rubric-criterion-description-editor href="[[_getSelfLink(criterionCell)]]" token="[[token]]"></d2d2l-rubric-criterion-description-editor>
+						<d2l-rubric-criterion-description-editor
+							href="[[_getSelfLink(criterionCell)]]"
+							token="[[token]]"
+							level-index="[[cellIndex]]"
+							level-count="[[descriptionCount]]"
+						></d2l-rubric-criterion-description-editor>
 					</div>
 				</template>
 			</div>
 			<div class="cell criterion-feedback-header">[[localize('predefinedFeedback')]]</div>
 			<div class="criterion-feedback">
-				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
+				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" index-as="cellIndex" rendered-item-count="{{feedbackCount}}" >
 					<div class="cell">
-						<d2l-rubric-criterion-feedback-editor href="[[_getSelfLink(criterionCell)]]" token="[[token]]"></d2d2l-rubric-criterion-description-editor>
+						<d2l-rubric-criterion-feedback-editor
+							href="[[_getSelfLink(criterionCell)]]"
+							token="[[token]]"
+							level-index="[[cellIndex]]"
+							level-count="[[feedbackCount]]"
+						>
+						</d2l-rubric-criterion-feedback-editor>
 					</div>
 				</template>
 			</div>
 		</div>
-		<div hidden="[[!hasOutOf]]" class="cell col-last points">/ <d2l-text-input value=""></d2l-text-input></div>
+		<div hidden="[[!hasOutOf]]" class="cell col-last points">/ <d2l-text-input value="" aria-label="todo"></d2l-text-input></div>
 	</template>
 
 	<script>
@@ -122,7 +140,7 @@
 				hasOutOf: {
 					type: Boolean,
 					value: false
-				}
+				},
 			},
 
 			behaviors: [
@@ -134,6 +152,10 @@
 			_getCriterionCells: function(entity) {
 				var entities = entity && entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 				return entities || [];
+			},
+
+			_saveName: function(e) {
+				console.log("Saving name", e.target.value);
 			},
 
 		});
