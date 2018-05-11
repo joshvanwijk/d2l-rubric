@@ -74,13 +74,11 @@
 			},
 
 			_getAssessedLabel: function(entity, assessmentResult) {
-				if (entity && assessmentResult) {
-					var descriptionText = this._getDescription(entity);
-					if (this.href && assessmentResult && assessmentResult[this.href]) {
-						return 'Assessed level';
-					} else if (descriptionText === '') {
-						return '';
-					}
+				if (assessmentResult && this.href && assessmentResult[this.href]) {
+					return 'Assessed level';
+				}
+				if (entity && this._getDescription(entity) === '') {
+					return '';
 				}
 			},
 

@@ -21,6 +21,10 @@
 				type: Object,
 				value: null,
 				computed: '_computeAssessmentResult(assessmentEntity)'
+			},
+			anyFeedback: {
+				type: Boolean,
+				value: false
 			}
 		},
 
@@ -44,6 +48,11 @@
 							level: selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level),
 							feedback: feedback && feedback.properties && feedback.properties.html
 						};
+
+						if (assessment.feedback) {
+							this.anyFeedback = true;
+						}
+
 						assessmentMap[link.href] = assessment;
 						assessmentMap[rowLink.href] = assessment;
 					}

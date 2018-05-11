@@ -70,17 +70,16 @@
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<d2l-table
-			aria-colcount$="[[_getColumnCount(_levels, entity)]]"
-			aria-rowcount$="[[_getRowCount(_criteriaEntities, assessmentResult)]]"
-			aria-labelledby="groupHeader"
+			aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult)]]"
+			aria-rowcount$="[[_getRowCount(_criteriaEntities)]]"
 			hidden$="[[!_showContent]]"
 		>
 			<d2l-offscreen>
 				[[localize('rubricSummaryA11y')]]
 			</d2l-offscreen>
 			<d2l-thead>
-				<d2l-tr>
-					<d2l-td class="group-name" id="groupHeader">
+				<d2l-tr aria-rowindex="1">
+					<d2l-td class="group-name">
 						[[entity.properties.name]]
 					</d2l-td>
 					<template is="dom-repeat" items="[[_levels]]" as="level">
@@ -93,14 +92,14 @@
 						</d2l-th>
 					</template>
 					<template is="dom-if" if="[[_hasOutOf(entity)]]">
-						<d2l-th class="out-of" role="cell"></d2l-th>
+						<d2l-th class="out-of"></d2l-th>
 					</template>
 				</d2l-tr>
 			</d2l-thead>
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion">
-					<d2l-tr>
-						<d2l-td class="criteria" role="rowheader" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, index)]]">[[criterion.properties.name]]</d2l-td>
+					<d2l-tr aria-rowindex$="[[_getRowIndex(index)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, index)]]">
+						<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
 							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
@@ -113,8 +112,8 @@
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
-						<d2l-tspan id="feedback[[index]]">
-							<d2l-rubric-feedback class="feedback-wrapper" role="cell" aria-colspan$="[[_getColumnCount(_levels,entity)]]">
+						<d2l-tspan id="feedback[[index]]" role="cell">
+							<d2l-rubric-feedback class="feedback-wrapper">
 								<s-html html="[[getAssessmentFeedback(criterion, assessmentResult)]]"></s-html>
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -265,22 +264,29 @@
 				return this.localize('outOf', 'outOf', criterion.properties.outOf);
 			},
 
-			_getRowCount: function(criteria, assessmentResult) {
+			_getRowCount: function(criteria) {
 				if (!criteria) {
 					return 0;
 				}
-				var feedbackCount = this._getFeedbackCount(criteria, assessmentResult);
-				return criteria.length + feedbackCount + 1; // criteria + feedback + levels row
+				return criteria.length + 1; // criteria + levels row
 			},
 
-			_getColumnCount: function(levels, entity) {
+			_getColumnCount: function(levels, entity, assessmentResult) {
 				if (!levels) {
 					return 0;
 				}
-				if (this._hasOutOf(entity)) {
-					return levels.length + 2; // levels + outof + criteria
+				var count = levels.length;
+				if (assessmentResult && this.anyFeedback) {
+					count += 1; // extra "column" for feedback
 				}
-				return levels.length + 1; // levels + criteria
+				if (this._hasOutOf(entity)) {
+					count += 1;
+				}
+				return count + 1; // levels + (feedback) + (OutOf) + criteria
+			},
+
+			_getRowIndex: function(criterionIndex) {
+				return criterionIndex + 2; // index + levels row + 1
 			},
 
 			_getFeedbackCount: function(criteria, assessmentResult) {
@@ -288,7 +294,7 @@
 					return 0;
 				}
 				var feedbackCount = 0;
-				for (var i=0; i<criteria.length; i++) {
+				for (var i = 0; i < criteria.length; i++) {
 					if (this._hasFeedback(criteria[i], assessmentResult)) {
 						feedbackCount += 1;
 					}
@@ -298,7 +304,7 @@
 
 			_getFeedbackID: function(criterion, assessmentResult, index) {
 				if (this._hasFeedback(criterion, assessmentResult)) {
-					return 'feedback' + index
+					return 'feedback' + index;
 				}
 			},
 
