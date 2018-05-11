@@ -40,6 +40,13 @@
 				background-color: var(--d2l-color-gypsum);
 				border: solid 1px var(--d2l-color-galena);
 			}
+			.level.assessed {
+				background-color: var(--d2l-color-celestine-plus-2);
+			}
+			.level.assessed.selected {
+				background-color: var(--d2l-color-celestine-plus-2);
+				border: solid 1px var(--d2l-color-celestine);
+			}
 			.level.selected + .level:not(:focus) {
 				border-left: none;
 			}
@@ -54,6 +61,12 @@
 				box-shadow: 0 0 0 4px rgb(178, 211, 235);
 				z-index: 0;
 				border: solid 1px rgba(0, 111, 191, 0.4);
+			}
+			.level.selected.assessed:focus {
+				background-color: var(--d2l-color-celestine-plus-2);
+				box-shadow: 0 0 0 4px rgb(178, 211, 235);
+				z-index: 0;
+				border: solid 1px var(--d2l-color-celestine);
 			}
 			.level-name {
 				@apply --d2l-body-small-text;
@@ -77,6 +90,9 @@
 			}
 			.level.last.selected {
 				border: solid 1px var(--d2l-color-galena);
+			}
+			.level.last.selected:focus {
+				border: solid 1px rgba(0, 111, 191, 0.4);
 			}
 			div.level:first-of-type {
 				border-top-left-radius: 6px;
@@ -110,7 +126,7 @@
 					<div
 
 						id="level-tab[[index]]"
-						class$="[[_getLevelClassName(index, selected)]]"
+						class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]"
 						on-tap="_selectLevel"
 						data-index="[[index]]"
 						role="tab"
@@ -120,7 +136,7 @@
 						aria-controls$="level-description-panel[[index]]"
 					>
 						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"class="check-icon" icon='d2l-tier1:check'></d2l-icon>
-						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
+						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected, item, assessedLevelHref)]]">
 							[[item.properties.name]]
 						</div>
 					</div>
@@ -228,10 +244,13 @@
 				this.levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 			},
 
-			_getLevelClassName: function(index, selected) {
+			_getLevelClassName: function(index, selected, level, assessedLevelHref) {
 				var className = 'level';
 				if (index === selected) {
 					className += ' selected';
+				}
+				if (this._isAssessedLevel(level, assessedLevelHref)) {
+					className += ' assessed';
 				}
 				if (index === this.total - 1) {
 					className += ' last';
