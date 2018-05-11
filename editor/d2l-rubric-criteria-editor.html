@@ -75,15 +75,9 @@
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 			},
 
-			_calcOffset: function(index) {
-				return parseInt(index) + 1;
-			},
-
 			_getCriterionLegend: function(index, count) {
 				return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count)
 			}
-
-
 		});
 	</script>
 </dom-module>
