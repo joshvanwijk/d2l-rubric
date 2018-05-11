@@ -18,7 +18,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -27,6 +28,22 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "You Rock",
+                                "html": "<p>You Rock</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -59,6 +76,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -91,6 +123,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -123,6 +170,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -173,6 +235,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -197,7 +274,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -206,6 +284,22 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "Almost",
+                                "html": "<p>Almost</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -238,6 +332,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -270,6 +379,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -320,6 +444,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -352,6 +491,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -376,7 +530,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -385,6 +540,22 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "ok undefined  undef   null NULL (null)  nil  NIL true false True False TRUE FALSE None hasOwnProperty 9999999999999999999999999999999999999 99999999999999999999999999999999 999999999999999999999999999",
+                                "html": "<p>ok</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -417,6 +588,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -467,6 +653,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -490,7 +691,9 @@
                 },
                 {
                     "class": [
-                        "assessment-criterion-cell"
+                        "assessment-criterion-cell",
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -499,6 +702,22 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "html\n",
+                                "html": "<p>html</p>\n<p><img src=\"/content/enforced/131646-101/Maze2.png?_&amp;d2lSessionVal=snDNB4lmu0zE2GWgfUvzJDg3v\" alt=\"maze\" title=\"Maze\" style=\"max-width: 100%;\"/></p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -522,8 +741,7 @@
                 },
                 {
                     "class": [
-                        "assessment-criterion-cell",
-                        "selected"
+                        "assessment-criterion-cell"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -532,6 +750,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -582,6 +815,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -605,8 +853,7 @@
                 },
                 {
                     "class": [
-                        "assessment-criterion-cell",
-                        "selected"
+                        "assessment-criterion-cell"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -615,6 +862,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -638,7 +900,9 @@
                 },
                 {
                     "class": [
-                        "assessment-criterion-cell"
+                        "assessment-criterion-cell",
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -647,6 +911,22 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "hmmmm, really?",
+                                "html": "<p>hmmmm, really?</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -689,7 +969,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -698,6 +979,22 @@
                     "properties": {
                         "score": 5.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "Awesome",
+                                "html": "<p>Awesome</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -730,6 +1027,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -762,6 +1074,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -794,6 +1121,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -826,6 +1168,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -876,6 +1233,21 @@
                     "properties": {
                         "score": 5.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -900,7 +1272,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -909,6 +1282,22 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "Good Job",
+                                "html": "<p>Good Job</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -941,6 +1330,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -973,6 +1377,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1005,6 +1424,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1055,6 +1489,21 @@
                     "properties": {
                         "score": 5.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1087,6 +1536,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1111,7 +1575,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -1120,6 +1585,22 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "Ok",
+                                "html": "<p>Ok</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1152,6 +1633,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1184,6 +1680,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1234,6 +1745,21 @@
                     "properties": {
                         "score": 5.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1266,6 +1792,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1298,6 +1839,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1322,7 +1878,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -1331,6 +1888,22 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "Try Harder",
+                                "html": "<p>Try Harder</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1363,6 +1936,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1413,6 +2001,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1445,6 +2048,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1469,7 +2087,8 @@
                 {
                     "class": [
                         "assessment-criterion-cell",
-                        "selected"
+                        "selected",
+                        "overridden"
                     ],
                     "rel": [
                         "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
@@ -1478,6 +2097,22 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "Not Good!",
+                                "html": "<p>Not Good!</p>"
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -1515,13 +2150,19 @@
             "rel": [
                 "self"
             ],
-            "href": "data/rubrics/organizations/multiple-groups/203/multiple-groups_assessment.json"
+            "href": "data/rubrics/assessment/203/sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA5.json"
         },
         {
             "rel": [
                 "https://api.brightspace.com/rels/rubric"
             ],
             "href": "data/rubrics/organizations/multiple-groups/203.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/user"
+            ],
+            "href": "data/rubrics/enrolled-user/sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg.json"
         }
     ]
 }
