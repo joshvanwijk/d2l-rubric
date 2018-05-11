@@ -21,10 +21,6 @@
 				type: Object,
 				value: null,
 				computed: '_computeAssessmentResult(assessmentEntity)'
-			},
-			_feedbackCount: {
-				type: Number,
-				value: null
 			}
 		},
 
@@ -34,7 +30,6 @@
 			}
 			var assessmentMap = {};
 			var criteriaEntities = assessmentEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCellSelector);
-			this._feedbackCount = 0;
 			for (var i = 0; i < criteriaEntities.length; i++) {
 				var criterionEntity = criteriaEntities[i];
 				var selectedCriterionCellEntity = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
@@ -51,10 +46,6 @@
 						};
 						assessmentMap[link.href] = assessment;
 						assessmentMap[rowLink.href] = assessment;
-
-						if (assessment.feedback) {
-							this._feedbackCount += 1;
-						}
 					}
 
 				}
@@ -78,12 +69,6 @@
 
 		getAssessmentFeedback: function(criterionEntity, assessmentResult) {
 			return this._getItem(criterionEntity, assessmentResult, function(x) {return x.feedback;});
-		},
-
-		getFeedbackCount: function(assessmentResult) {
-			if (assessmentResult) {
-				return this._feedbackCount;
-			}
 		}
 	};
 

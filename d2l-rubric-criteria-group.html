@@ -72,7 +72,7 @@
 		<d2l-table
 			aria-colcount$="[[_getColumnCount(_levels, entity)]]"
 			aria-rowcount$="[[_getRowCount(_criteriaEntities, assessmentResult)]]"
-			aria-labelledby="group-header"
+			aria-labelledby="groupHeader"
 			hidden$="[[!_showContent]]"
 		>
 			<d2l-offscreen>
@@ -80,7 +80,7 @@
 			</d2l-offscreen>
 			<d2l-thead>
 				<d2l-tr>
-					<d2l-td class="group-name" id="group-header">
+					<d2l-td class="group-name" id="groupHeader">
 						[[entity.properties.name]]
 					</d2l-td>
 					<template is="dom-repeat" items="[[_levels]]" as="level">
@@ -93,27 +93,27 @@
 						</d2l-th>
 					</template>
 					<template is="dom-if" if="[[_hasOutOf(entity)]]">
-						<d2l-th class="out-of"></d2l-th>
+						<d2l-th class="out-of" role="cell"></d2l-th>
 					</template>
 				</d2l-tr>
 			</d2l-thead>
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion">
-						<d2l-tr>
-							<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
-							<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-								<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
-									<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
-								</d2l-td>
-							</template>
-							<template is="dom-if" if="[[_hasOutOf(entity)]]">
-								<d2l-td class="out-of">
-									<div>[[_localizeOutOf(criterion, assessmentResult)]]</div>
-								</d2l-td>
-							</template>
-						</d2l-tr>
+					<d2l-tr>
+						<d2l-td class="criteria" role="rowheader" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, index)]]">[[criterion.properties.name]]</d2l-td>
+						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
+								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
+							</d2l-td>
+						</template>
+						<template is="dom-if" if="[[_hasOutOf(entity)]]">
+							<d2l-td class="out-of">
+								<div>[[_localizeOutOf(criterion, assessmentResult)]]</div>
+							</d2l-td>
+						</template>
+					</d2l-tr>
 					<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
-						<d2l-tspan>
+						<d2l-tspan id="feedback[[index]]">
 							<d2l-rubric-feedback class="feedback-wrapper" role="cell" aria-colspan$="[[_getColumnCount(_levels,entity)]]">
 								<s-html html="[[getAssessmentFeedback(criterion, assessmentResult)]]"></s-html>
 							</d2l-rubric-feedback>
@@ -269,7 +269,7 @@
 				if (!criteria) {
 					return 0;
 				}
-				var feedbackCount = this.getFeedbackCount(assessmentResult);
+				var feedbackCount = this._getFeedbackCount(criteria, assessmentResult);
 				return criteria.length + feedbackCount + 1; // criteria + feedback + levels row
 			},
 
@@ -281,6 +281,25 @@
 					return levels.length + 2; // levels + outof + criteria
 				}
 				return levels.length + 1; // levels + criteria
+			},
+
+			_getFeedbackCount: function(criteria, assessmentResult) {
+				if (!criteria || !assessmentResult) {
+					return 0;
+				}
+				var feedbackCount = 0;
+				for (var i=0; i<criteria.length; i++) {
+					if (this._hasFeedback(criteria[i], assessmentResult)) {
+						feedbackCount += 1;
+					}
+				}
+				return feedbackCount;
+			},
+
+			_getFeedbackID: function(criterion, assessmentResult, index) {
+				if (this._hasFeedback(criterion, assessmentResult)) {
+					return 'feedback' + index
+				}
 			},
 
 			_getCriteriaClassName: function(criterionCell, assessmentResult) {
