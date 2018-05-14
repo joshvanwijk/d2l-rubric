@@ -57,7 +57,7 @@
 			.feedback-wrapper {
 				border: none;
 			}
-			.selected {
+			.criterion-cell.selected {
 				border-color: var(--d2l-color-celestine);
 				background-color: var(--d2l-color-celestine-plus-2);
 				text-decoration-color: var(--d2l-color-celestine-minus-1);
@@ -65,10 +65,7 @@
 				border-left: 1px solid var(--d2l-color-celestine);
 				border-bottom: 1px solid var(--d2l-color-celestine);
 			}
-			.bottom {
-				border-bottom: 1px solid var(--d2l-color-celestine) !important;
-			}
-			.nobottom {
+			.criterion-cell.nobottom {
 				border-bottom: none;
 			}
 		</style>
@@ -306,11 +303,9 @@
 				var className = 'criterion-cell';
 				if (selfLink && assessmentResult && assessmentResult[selfLink]) {
 					className += ' selected';
-					if (selectedCellRelations && selectedCellRelations[selfLink]) {
-						className += ' nobottom';
-					} else {
-						className += ' bottom';
-					}
+				}
+				if (selectedCellRelations && selectedCellRelations[selfLink]) {
+					className += ' nobottom';
 				}
 				return className;
 			}
