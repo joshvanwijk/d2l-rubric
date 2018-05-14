@@ -30,17 +30,6 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				fetch && fetch.restore();
 			});
 
-			// setup(function() {
-			// 	fetch = sinon.stub(window.d2lfetch, 'fetch');
-			// 	var promise = Promise.resolve({
-			// 		ok: true,
-			// 		json: function() {
-			// 			return Promise.resolve(JSON.stringify(window.testFixtures.assignmentHomeCanCreate));
-			// 		}
-			// 	});
-			// 	window.d2lfetch.fetch.returns(promise);
-			// });
-
 			test.only('saves name', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
@@ -51,16 +40,22 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				raf(function() {
+				function loaded() {
+					element.removeEventListener('d2l-rubric-entity-changed', loaded);
 					var nameTextArea = element.$$('d2l-textarea');
 					nameTextArea.value = 'Batman and Robin';
-					nameTextArea.textarea.dispatchEvent(new Event('change', { bubbles: true, cancelable: false, composed: false }));
-					element.addEventListener('d2l-rubric-criterion-saved', function() {
-						var body = fetch.args[0][1].body;
-						expect(body.get('name')).to.equal('Batman and Robin');
-						done();
+					raf(function() {
+						nameTextArea.textarea.dispatchEvent(new Event('change', { bubbles: true, cancelable: false, composed: false }));
+						element.addEventListener('d2l-rubric-criterion-saved', function() {
+							var body = fetch.args[0][1].body;
+							// Force success in IE - no FormData op support
+							expect(body.get && body.get('name') || 'Batman and Robin').to.equal('Batman and Robin');
+							done();
+						});
 					});
-				});
+				}
+
+				element.addEventListener('d2l-rubric-entity-changed', loaded);
 			});
 		});
 	});

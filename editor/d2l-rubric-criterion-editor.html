@@ -160,8 +160,8 @@
 				var self = this;
 				var action = this.entity.getActionByName('update');
 				if (action) {
-					var fields = this.getSirenFields(action);
-					fields.has('name') && fields.set('name', e.target.value);
+					var fields = new FormData();
+					fields.append('name', e.target.value);
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this));
