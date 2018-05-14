@@ -1,0 +1,53 @@
+{
+    "class": [
+        "criterion-cell"
+    ],
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.",
+                "html": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels/1725.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/criteria/1/0.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/criteria/1.json"
+        }
+    ]
+}

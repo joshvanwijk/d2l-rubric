@@ -13,19 +13,33 @@
 	 */
 	D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 		properties: {
-			assessmentEntity: Object,
+			assessmentEntity: {
+				type: Object,
+				value: null
+			},
 			assessmentResult: {
 				type: Object,
 				value: null,
-				computed: '_computeAssessmentResult(assessmentEntity)'
+				computed: '_computeAssessmentResultAndCellRelations(assessmentEntity)'
+			},
+			anyFeedback: {
+				type: Boolean,
+				value: false
+			},
+			selectedCellRelations: {
+				type: Object,
+				value: null
 			}
 		},
 
-		_computeAssessmentResult: function(assessmentEntity) {
+		_computeAssessmentResultAndCellRelations: function(assessmentEntity) {
 			if (!assessmentEntity) {
 				return;
 			}
+			var cellRelationsMap = {};
 			var assessmentMap = {};
+			var prevLevel = null;
+			var prevLink = null;
 			var criteriaEntities = assessmentEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCellSelector);
 			for (var i = 0; i < criteriaEntities.length; i++) {
 				var criterionEntity = criteriaEntities[i];
@@ -33,20 +47,34 @@
 				if (selectedCriterionCellEntity) {
 					var link = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell);
 					var rowLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
+					var level = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level);
+					var feedback = selectedCriterionCellEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+
+					if (prevLink) {
+						// Keeps track of selected cells with another selected cell directly below
+						cellRelationsMap[prevLink] = (prevLevel === level.href);
+					}
+
+					var feedbackHTML = feedback && feedback.properties && feedback.properties.html;
+					this.anyFeedback = feedbackHTML !== null;
+
+					// We only need to hide the bottom border if the cell has no feedback
+					prevLink = !feedbackHTML && link.href;
+					prevLevel = level.href;
 
 					if (link.href) {
-						var feedback = selectedCriterionCellEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
 						var assessment = {
 							score: selectedCriterionCellEntity.properties.score,
-							level: selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level),
-							feedback: feedback && feedback.properties && feedback.properties.html
+							level: level,
+							feedback: feedbackHTML
 						};
+
 						assessmentMap[link.href] = assessment;
 						assessmentMap[rowLink.href] = assessment;
 					}
-
 				}
 			}
+			this.selectedCellRelations = cellRelationsMap;
 			return assessmentMap;
 		},
 

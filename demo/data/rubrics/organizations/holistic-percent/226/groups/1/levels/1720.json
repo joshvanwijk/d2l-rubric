@@ -1,0 +1,30 @@
+{
+    "class": [
+        "level",
+        "percentage"
+    ],
+    "properties": {
+        "name": "Level 4",
+        "points": 75.0
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1720.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1719.json"
+        }
+    ]
+}

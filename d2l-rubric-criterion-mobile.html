@@ -120,6 +120,9 @@
 			.level-name {
 				font-weight: 700;
 			}
+			.level-name.assessed {
+				color: var(--d2l-color-celestine-minus-1);
+			}
 			[hidden] {
 				display: none !important;
 			}
@@ -156,7 +159,7 @@
 					role="tabpanel"
 					hidden="[[!_isLevelSelected(index, _selected)]]"
 				>
-					<div class="level-name">
+					<div class$="[[_getLevelNameClass(_levelEntities, _selected, _assessedLevelHref)]]">
 						[[_getSelectedLevelText(_selected, _levelEntities, criterionCell)]]
 					</div>
 					<div hidden=[[!_hasDescription(criterionCell)]] class="criterion-description">
@@ -244,6 +247,19 @@
 				if (score) {
 					this._score = score.toString();
 				}
+				this._selectAssessedLevel(this._levelEntities, this._assessedLevelHref);
+			},
+
+			_selectAssessedLevel: function(levelEntities, assessedLevelHref) {
+				if (!levelEntities || !assessedLevelHref) {
+					return;
+				}
+				for (var i = 0; i < levelEntities.length; i++) {
+					if (this._getSelfLink(levelEntities[i]) === assessedLevelHref) {
+						this._selected = i;
+						return;
+					}
+				}
 			},
 
 			_hasDescription: function(criterionCell) {
@@ -313,8 +329,17 @@
 
 			_isLevelSelected: function(levelIndex, selected) {
 				return levelIndex === selected;
-			}
+			},
 
+			_getLevelNameClass: function(levelEntities, selected, assessedLevelHref) {
+				var className = 'level-name';
+				if (levelEntities && levelEntities[selected] && assessedLevelHref) {
+					if (this._getSelfLink(levelEntities[selected]) === assessedLevelHref) {
+						className += ' assessed';
+					}
+				}
+				return className;
+			}
 		});
 	</script>
 </dom-module>

@@ -1,0 +1,56 @@
+{
+    "class": [
+        "rubric",
+        "published"
+    ],
+    "properties": {
+        "name": "Holistic Rubric - Text only"
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/criteria-groups"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/organization"
+            ],
+            "href": "data/rubrics/holistic-text.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/overall-levels"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels.json"
+        }
+    ]
+}

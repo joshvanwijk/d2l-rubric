@@ -1,0 +1,53 @@
+{
+    "class": [
+        "criterion-cell"
+    ],
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.",
+                "html": "<p>In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.</p>"
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels/1721.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/criteria/1/4.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/criteria/1.json"
+        }
+    ]
+}

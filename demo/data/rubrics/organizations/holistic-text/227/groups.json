@@ -1,0 +1,60 @@
+{
+    "class": [
+        "collection",
+        "criteria-groups"
+    ],
+    "entities": [
+        {
+            "class": [
+                "criteria-group"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/criteria",
+                "item"
+            ],
+            "properties": {
+                "name": ""
+            },
+            "links": [
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/criteria"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-text/227/groups/1/criteria.json"
+                },
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/levels"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels.json"
+                },
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-text/227/groups/1.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-text/227/groups.json"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227.json"
+        }
+    ]
+}

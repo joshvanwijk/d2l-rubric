@@ -1,0 +1,30 @@
+{
+    "class": [
+        "level",
+        "percentage"
+    ],
+    "properties": {
+        "name": "Excellent",
+        "points": 0.0
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels/1725.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels/1724.json"
+        }
+    ]
+}
