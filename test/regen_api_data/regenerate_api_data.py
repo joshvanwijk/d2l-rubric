@@ -26,8 +26,8 @@ pwd = args.daily_pwd
 support_user_name = 'd2lsupport'
 rubrics_course_id = '131646'
 #defined the rubrics we want to use by id and 'identifier'
-rubric_ids = ['197','198','199','203']
-rubric_titles = ['default-rubric','custom-points','text-only','multiple-groups']
+rubric_ids = ['197','198','199','203','227','226']
+rubric_titles = ['default-rubric','custom-points','text-only','multiple-groups','holistic-text','holistic-percent']
 
 #create local base paths for each rubric
 base_paths = ['data/rubrics/organizations/%s'%title for title in rubric_titles]

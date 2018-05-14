@@ -1,0 +1,53 @@
+{
+    "class": [
+        "criterion-cell"
+    ],
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Cu essent aliquam noluisse vis? Expetendis percipitur vituperatoribus ad sea, sea ludus dolorum antiopam eu, vix eu tritani vivendo partiendo.",
+                "html": "<p>Cu essent aliquam noluisse vis? Expetendis percipitur vituperatoribus ad sea, sea ludus dolorum antiopam eu, vix eu tritani vivendo partiendo.</p>"
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1719.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1/1.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1.json"
+        }
+    ]
+}

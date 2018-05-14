@@ -1,0 +1,237 @@
+{
+    "class": [
+        "rubric-result",
+        "incomplete"
+    ],
+    "properties": {
+        "score": 50.0
+    },
+    "entities": [
+        {
+            "class": [
+                "criterion-cell-selector"
+            ],
+            "rel": [
+                "item"
+            ],
+            "entities": [
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 75.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1720.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1/0.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 50.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1719.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 25.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1718.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 0.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1717.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1.json"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/criterion"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/criteria/1.json"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/assessment/226/sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA4.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/rubric"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/user"
+            ],
+            "href": "data/rubrics/enrolled-user/sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg.json"
+        }
+    ]
+}

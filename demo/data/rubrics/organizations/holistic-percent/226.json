@@ -1,0 +1,59 @@
+{
+    "class": [
+        "rubric",
+        "published",
+        "holistic",
+        "percentage"
+    ],
+    "properties": {
+        "name": "Holistic Rubric - Percentages",
+        "outOf": 100
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/criteria-groups"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/organization"
+            ],
+            "href": "data/rubrics/holistic-percent.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/overall-levels"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels.json"
+        }
+    ]
+}
