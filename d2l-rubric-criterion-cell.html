@@ -36,7 +36,7 @@
 			}
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-		<div class="descriptor-text">
+		<div class="descriptor-text" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden=[[!_hasCustomPoints(entity)]]>
 				[[localize('points', 'number', entity.properties.points)]]
 			</div>
@@ -71,6 +71,12 @@
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				return description && description.properties && description.properties.html || '';
+			},
+
+			_getEmptyLabel: function(entity) {
+				if (entity && this._getDescription(entity) === '') {
+					return '';
+				}
 			},
 
 			_showSelectedIcon: function(entity, assessmentResult) {

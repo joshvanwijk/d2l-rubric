@@ -118,6 +118,7 @@
 						tabindex="0"
 						aria-selected$="[[_isSelected(index, selected)]]"
 						aria-controls$="level-description-panel[[index]]"
+						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]"
 					>
 						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"class="check-icon" icon='d2l-tier1:check'></d2l-icon>
 						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
@@ -268,6 +269,13 @@
 			getSelfLink: function(entity) {
 				return entity && (entity.getLinkByRel('self') || {}).href || '';
 			},
+
+			_getLevelLabelName: function(item, assessedLevelHref) {
+				if (this._isAssessedLevel(item, assessedLevelHref)) {
+					return item.properties.name;
+				}
+			},
+
 		});
 	</script>
 </dom-module>
