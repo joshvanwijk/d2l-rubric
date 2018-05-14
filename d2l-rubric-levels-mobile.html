@@ -272,9 +272,8 @@
 
 			_getLevelLabelName: function(item, assessedLevelHref) {
 				if (this._isAssessedLevel(item, assessedLevelHref)) {
-					return 'Assessed level';
+					return item.properties.name;
 				}
-				return item.properties.name;
 			},
 
 		});

@@ -36,7 +36,7 @@
 			}
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-		<div class="descriptor-text" aria-label$="[[_getAssessedLabel(entity, assessmentResult)]]">
+		<div class="descriptor-text" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden=[[!_hasCustomPoints(entity)]]>
 				[[localize('points', 'number', entity.properties.points)]]
 			</div>
@@ -73,10 +73,7 @@
 				return description && description.properties && description.properties.html || '';
 			},
 
-			_getAssessedLabel: function(entity, assessmentResult) {
-				if (assessmentResult && this.href && assessmentResult[this.href]) {
-					return 'Assessed level';
-				}
+			_getEmptyLabel: function(entity) {
 				if (entity && this._getDescription(entity) === '') {
 					return '';
 				}
