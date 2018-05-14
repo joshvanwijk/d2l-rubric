@@ -57,13 +57,16 @@
 			.feedback-wrapper {
 				border: none;
 			}
-			.selected {
+			.criterion-cell.selected {
 				border-color: var(--d2l-color-celestine);
 				background-color: var(--d2l-color-celestine-plus-2);
 				text-decoration-color: var(--d2l-color-celestine-minus-1);
 				color: var(--d2l-color-celestine-minus-1);
 				border-left: 1px solid var(--d2l-color-celestine);
 				border-bottom: 1px solid var(--d2l-color-celestine);
+			}
+			.criterion-cell.nobottom {
+				border-bottom: none;
 			}
 		</style>
 
@@ -101,7 +104,7 @@
 					<d2l-tr aria-rowindex$="[[_getRowIndex(index)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, index)]]">
 						<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, selectedCellRelations)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
@@ -295,11 +298,14 @@
 				}
 			},
 
-			_getCriteriaClassName: function(criterionCell, assessmentResult) {
+			_getCriteriaClassName: function(criterionCell, assessmentResult, selectedCellRelations) {
 				var selfLink = this._getSelfLink(criterionCell);
 				var className = 'criterion-cell';
 				if (selfLink && assessmentResult && assessmentResult[selfLink]) {
 					className += ' selected';
+				}
+				if (selectedCellRelations && selectedCellRelations[selfLink]) {
+					className += ' nobottom';
 				}
 				return className;
 			}
