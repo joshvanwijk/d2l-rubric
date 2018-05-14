@@ -1,8 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="../../d2l-offscreen/d2l-offscreen.html">
 
 <link rel="import" href="../store/entity-editor-behavior.html">
+<link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-criterion-editor.html">
 
 <dom-module id="d2l-rubric-criteria-editor">
@@ -16,17 +18,31 @@
 				box-sizing: border-box;
 			}
 
-			d2l-rubric-criterion-editor {
+			fieldset {
+				border: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			fieldset {
 				border-bottom: var(--d2l-table-border);
 			}
 
-			d2l-rubric-criterion-editor:last-of-type {
+			fieldset:last-of-type {
 				border-bottom: none;
 			}
 		</style>
 
-		<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion">
-			<d2l-rubric-criterion-editor href="[[_getSelfLink(criterion)]]" token="[[token]]" has-out-of="[[hasOutOf]]"></d2l-rubric-criterion-editor>
+		<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
+			<fieldset>
+				<legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend>
+				<d2l-rubric-criterion-editor
+					href="[[_getSelfLink(criterion)]]"
+					token="[[token]]"
+					has-out-of="[[hasOutOf]]"
+				>
+				</d2l-rubric-criterion-editor>
+			</fieldset>
 		</template>
 	</template>
 
@@ -44,7 +60,8 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityEditorBehavior,
-				window.D2L.Hypermedia.HMConstantsBehavior
+				window.D2L.Hypermedia.HMConstantsBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
 			observers: [
@@ -58,6 +75,9 @@
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 			},
 
+			_getCriterionLegend: function(index, count) {
+				return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count)
+			}
 		});
 	</script>
 </dom-module>
