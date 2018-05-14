@@ -43,7 +43,7 @@
 			.level.assessed {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
-			.level.assessed.selected {
+			.level.selected.assessed {
 				background-color: var(--d2l-color-celestine-plus-2);
 				border: solid 1px var(--d2l-color-celestine);
 			}
@@ -136,7 +136,7 @@
 						aria-controls$="level-description-panel[[index]]"
 					>
 						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"class="check-icon" icon='d2l-tier1:check'></d2l-icon>
-						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected, item, assessedLevelHref)]]">
+						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
 							[[item.properties.name]]
 						</div>
 					</div>
