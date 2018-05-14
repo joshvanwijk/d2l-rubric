@@ -41,7 +41,7 @@
 			var criteriaEntities = assessmentEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCellSelector);
 			for (var i = 0; i < criteriaEntities.length; i++) {
 				var criterionEntity = criteriaEntities[i];
-				var selectedCriterionCellEntity = criterionEntity.entities[0];//criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
+				var selectedCriterionCellEntity = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
 				if (selectedCriterionCellEntity) {
 					var link = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell);
 					var rowLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
@@ -76,9 +76,9 @@
 			var prevLevel = null;
 			var prevLink = null;
 
-			for (var i = 0; i < criteriaEntities.length; i++) {		
+			for (var i = 0; i < criteriaEntities.length; i++) {
 				var criterionEntity = criteriaEntities[i];
-				var selectedCriterionCellEntity = criterionEntity.entities[0];//criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
+				var selectedCriterionCellEntity = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
 
 				if (selectedCriterionCellEntity) {
 					var thisLevel = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level).href;
@@ -87,7 +87,7 @@
 					prevLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell).href;
 					prevLevel = thisLevel;
 
-					var feedback = selectedCriterionCellEntity.getSubEntityByClass('feedback')
+					var feedback = selectedCriterionCellEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
 					if (feedback && feedback.properties && feedback.properties.text) {
 						prevLevel = null;
 					}
