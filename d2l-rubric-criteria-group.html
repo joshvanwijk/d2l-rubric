@@ -289,19 +289,6 @@
 				return criterionIndex + 2; // index + levels row + 1
 			},
 
-			_getFeedbackCount: function(criteria, assessmentResult) {
-				if (!criteria || !assessmentResult) {
-					return 0;
-				}
-				var feedbackCount = 0;
-				for (var i = 0; i < criteria.length; i++) {
-					if (this._hasFeedback(criteria[i], assessmentResult)) {
-						feedbackCount += 1;
-					}
-				}
-				return feedbackCount;
-			},
-
 			_getFeedbackID: function(criterion, assessmentResult, index) {
 				if (this._hasFeedback(criterion, assessmentResult)) {
 					return 'feedback' + index;
