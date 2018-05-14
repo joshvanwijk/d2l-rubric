@@ -5,16 +5,6 @@
     "properties": {
         "name": "Criterion 1"
     },
-    "actions": [{
-      "name": "update",
-      "method": "PUT",
-      "href":  "data/rubrics/organizations/text-only/199/groups/176/criteria/623.json",
-      "fields": [{
-        "type": "text",
-        "name": "name",
-        "value": "Analysis/synthesis/evaluation/interpretation are effective and consistent. Edited again"
-      }]
-    }],
     "entities": [
         {
             "class": [
