@@ -55,7 +55,7 @@
 
 			var entity = this._initContainer(this._store, entityId, token);
 			if (!entity || bypassCache) {
-				this._store.get(lowerCaseToken).set(entityId.toLowerCase(), { 'status': 'fetching', 'entity': null });
+				this._store.get(lowerCaseToken).set(lowerCaseEntityId, { 'status': 'fetching', 'entity': null });
 
 				// var headers = new Headers();
 				// headers.set('Authorization', `Bearer ${token}`);

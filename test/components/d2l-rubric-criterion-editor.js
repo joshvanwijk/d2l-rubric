@@ -36,6 +36,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 					}
 				}
 				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
 			});
 
 			teardown(function() {
