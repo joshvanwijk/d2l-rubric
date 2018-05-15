@@ -65,37 +65,7 @@
 			if (this.removeListener) {
 				this.removeListener();
 			}
-			// if (this.href && typeof this.token === 'string') {
-			// 	window.D2L.Rubric.EntityStore.removeListener(this.href, this.token, this._entityChangedHandler);
-			// }
 		},
-
-		// _hrefChanged: function(href, oldhref) {
-		// 	if (typeof this.token !== 'string') {
-		// 		return;
-		// 	}
-		// 	if (oldhref) {
-		// 		window.D2L.Rubric.EntityStore.removeListener(oldhref, this.token, this._entityChangedHandler);
-		// 	}
-		// 	if (!href) {
-		// 		return;
-		// 	}
-		// 	window.D2L.Rubric.EntityStore.addListener(href, this.token, this._entityChangedHandler);
-		// },
-		//
-		// _tokenChanged(token, oldToken) {
-		// 	if (!this.href) {
-		// 		return;
-		// 	}
-		// 	if (oldToken) {
-		// 		window.D2L.Rubric.EntityStore.removeListener(this.href, oldToken, this._entityChangedHandler);
-		// 	}
-		// 	if (typeof token !== 'string') {
-		// 		return;
-		// 	}
-		// 	window.D2L.Rubric.EntityStore.addListener(this.href, token, this._entityChangedHandler);
-		// },
-
 
 		_fetchEntity: function(href, token) {
 			if (!href || typeof token !== 'string') {
@@ -114,11 +84,14 @@
 
 		_entityChanged: function(entity) {
 			this.entity = entity;
-			this.fire('d2l-rubric-entity-changed');
+			this.fire('d2l-rubric-entity-changed', {entity: entity});
 		},
 
 		_getSelfLink: function(entity) {
-			return entity && (entity.getLinkByRel('self') || entity).href || '';
+			if (entity) {
+				return entity.href || (entity.hasLinkByRel('self') ? entity.getLinkByRel('self').href : '');
+			}
+			return '';
 		},
 
 	};

@@ -112,7 +112,7 @@
 					expandEntities.push(entity);
 				});
 
-				if (expandEntity.hasLinkByRel('self')) {
+				if (!expandEntity.href && expandEntity.hasLinkByRel('self')) {
 					const href = expandEntity.getLinkByRel('self').href.toLowerCase();
 					if (!entityIndex.has(href)) {
 						entityIndex.add(href);
@@ -161,7 +161,7 @@
 		_notifyError: function(entityId, token, error) {
 			const listenerSet = this._initContainer(this._listeners, entityId, token, new Set());
 			listenerSet.forEach(function(listener) {
-				listener(entity);
+				listener(null, error);
 			});
 		}
 	};
