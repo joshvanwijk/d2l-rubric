@@ -42,7 +42,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				fetch && fetch.restore();
 			});
 
-			test.only('saves name', function(done) {
+			test('saves name', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
