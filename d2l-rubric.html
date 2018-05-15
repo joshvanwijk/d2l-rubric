@@ -7,6 +7,7 @@
 <link rel="import" href="./localize-behavior.html">
 <link rel="import" href="./siren-entity-behavior.html">
 <link rel="import" href="../d2l-alert/d2l-alert.html">
+<link rel="import" href="../s-html/s-html.html">
 
 <!--
 `d2l-rubric`
@@ -72,6 +73,14 @@ Polymer Web-Component to display rubrics
 					margin-top: 24px;
 				}
 			}
+			.overall-feedback-header {
+				@apply --d2l-label-text;
+				padding-top: 30px;
+			}
+			.overall-feedback-text {
+				@apply --d2l-body-compact-text;
+				padding-top: 12px;
+			}
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
 		<template is="dom-repeat" items="[[_alerts]]">
@@ -92,6 +101,10 @@ Polymer Web-Component to display rubrics
 				</div>
 			</div>
 		</div>
+		<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
+			<div class="overall-feedback-header">[[localize('overallFeedback')]]</div>
+			<s-html class="overall-feedback-text" html$="[[_getOverallFeedback(_feedback)]]"></s-html>
+		</div>
 	</template>
 
 	<script>
@@ -107,6 +120,10 @@ Polymer Web-Component to display rubrics
 					value: false
 				},
 				_score: {
+					type: String,
+					value: null
+				},
+				_feedback: {
 					type: String,
 					value: null
 				},
@@ -140,6 +157,8 @@ Polymer Web-Component to display rubrics
 			_onAssessmentEntityChanged: function(assessmentEntity) {
 				if (assessmentEntity) {
 					this._score = assessmentEntity.properties.score;
+					var feedback = assessmentEntity.getSubEntityByClass('overall-feedback');
+					this._feedback = feedback && feedback.properties && feedback.properties.html;
 				}
 			},
 
@@ -158,6 +177,14 @@ Polymer Web-Component to display rubrics
 			},
 			_hasScore: function(score) {
 				return !!score || score === 0;
+			},
+
+			_hasOverallFeedback: function(feedback) {
+				return feedback !== null;
+			},
+
+			_getOverallFeedback: function(feedback) {
+				return feedback || '';
 			}
 		});
 	</script>
