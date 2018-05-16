@@ -66,7 +66,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 			});
 
-			test.only('sets aria-invalid if saving name fails', function(done) {
+			test('sets aria-invalid if saving name fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: false,
