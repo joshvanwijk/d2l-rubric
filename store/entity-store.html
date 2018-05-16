@@ -16,14 +16,17 @@
 		_invalidationListeners: new Set(),
 
 		_initContainer(map, entityId, token, init) {
-			if (!map.has(token)) {
-				map.set(token, new Map());
+			const lowerCaseToken = token.toLowerCase();
+			const lowerCaseEntityId = entityId.toLowerCase();
+
+			if (!map.has(lowerCaseToken)) {
+				map.set(lowerCaseToken, new Map());
 			}
-			var entityMap = map.get(token);
-			if (init && !entityMap.has(entityId)) {
-				entityMap.set(entityId, init);
+			var entityMap = map.get(lowerCaseToken);
+			if (init && !entityMap.has(lowerCaseEntityId)) {
+				entityMap.set(lowerCaseEntityId, init);
 			}
-			return entityMap.get(entityId);
+			return entityMap.get(lowerCaseEntityId);
 		},
 
 		addListener: function(entityId, token, listener) {
@@ -33,7 +36,9 @@
 			}
 
 			this._initContainer(this._listeners, entityId, token, new Set()).add(listener);
-
+			return function() {
+				this.removeListener(entityId, token, listener);
+			}.bind(this);
 		},
 
 		addInvalidationListener: function(listener) {
@@ -45,9 +50,12 @@
 		},
 
 		fetch: function(entityId, token, bypassCache) {
+			const lowerCaseToken = token.toLowerCase();
+			const lowerCaseEntityId = entityId.toLowerCase();
+
 			var entity = this._initContainer(this._store, entityId, token);
 			if (!entity || bypassCache) {
-				this._store.get(token).set(entityId, { 'status': 'fetching', 'entity': null });
+				this._store.get(lowerCaseToken).set(lowerCaseEntityId, { 'status': 'fetching', 'entity': null });
 
 				// var headers = new Headers();
 				// headers.set('Authorization', `Bearer ${token}`);
@@ -63,9 +71,9 @@
 				).then(function(entity) {
 					this.update(entityId, token, entity);
 					if (bypassCache) {
-						for (const listener of this._invalidationListeners) {
+						this._invalidationListeners.forEach(function(listener) {
 							listener(entityId, token, entity);
-						}
+						});
 					}
 				}.bind(this))
 				.catch(function(err) {
@@ -73,15 +81,18 @@
 				}.bind(this));
 			}
 
-			return this._store.get(token).get(entityId);
+			return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
 		},
 
 		update: function(entityId, token, entity) {
-			this._initContainer(this._store, entityId, token);
+			const lowerCaseToken = token.toLowerCase();
+			const lowerCaseEntityId = entityId.toLowerCase();
+
+			this._initContainer(this._store, lowerCaseEntityId, lowerCaseToken);
 			return new Promise((resolve) => {
-				const entities = this.expand(entityId, entity);
+				const entities = this.expand(entity);
 				entities.forEach(function(entity) {
-					this._store.get(token).set(entity.key, { 'status': '', 'entity': entity.value });
+					this._store.get(lowerCaseToken).set(entity.key.toLowerCase(), { 'status': '', 'entity': entity.value });
 					this._notify(entity.key, token, entity.value);
 				}.bind(this));
 
@@ -89,7 +100,7 @@
 			});
 		},
 
-		expand: function(entityId, entity) {
+		expand: function(entity) {
 			const entityIndex = new Set();
 			const expandEntities = [];
 			const entities = [];
@@ -101,8 +112,8 @@
 					expandEntities.push(entity);
 				});
 
-				if (expandEntity.hasLinkByRel('self')) {
-					const href = expandEntity.getLinkByRel('self').href;
+				if (!expandEntity.href && expandEntity.hasLinkByRel('self')) {
+					const href = expandEntity.getLinkByRel('self').href.toLowerCase();
 					if (!entityIndex.has(href)) {
 						entityIndex.add(href);
 						entities.push({
@@ -116,10 +127,13 @@
 		},
 
 		setError: function(entityId, token, error) {
+			const lowerCaseToken = token.toLowerCase();
+			const lowerCaseEntityId = entityId.toLowerCase();
+
 			this._initContainer(this._store, entityId, token);
 			return new Promise((resolve) => {
 
-				this._store.get(token).set(entityId, { 'status': 'error', 'entity': null, 'error': error });
+				this._store.get(lowerCaseToken).set(lowerCaseEntityId, { 'status': 'error', 'entity': null, 'error': error });
 				this._notifyError(entityId, token, error);
 
 				resolve(error);
@@ -139,16 +153,16 @@
 
 		_notify: function(entityId, token, entity) {
 			const listenerSet = this._initContainer(this._listeners, entityId, token, new Set());
-			for (const listener of listenerSet) {
+			listenerSet.forEach(function(listener) {
 				listener(entity);
-			}
+			});
 		},
 
 		_notifyError: function(entityId, token, error) {
 			const listenerSet = this._initContainer(this._listeners, entityId, token, new Set());
-			for (const listener of listenerSet) {
+			listenerSet.forEach(function(listener) {
 				listener(null, error);
-			}
+			});
 		}
 	};
 })();

@@ -3,7 +3,7 @@
         "criterion"
     ],
     "properties": {
-        "name": "Criterion 1"
+        "name": "Criterion 2"
     },
     "entities": [
         {
@@ -24,8 +24,8 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "Proper use of grammar",
-                        "html": "Proper use of grammar"
+                        "text": "",
+                        "html": ""
                     }
                 },
                 {
@@ -47,19 +47,19 @@
                     "rel": [
                         "https://rubrics.api.brightspace.com/rels/level"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/levels/1476.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1476.json"
                 },
                 {
                     "rel": [
                         "self"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624/0.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json"
                 }
             ]
         },
@@ -104,19 +104,19 @@
                     "rel": [
                         "https://rubrics.api.brightspace.com/rels/level"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/levels/1477.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1477.json"
                 },
                 {
                     "rel": [
                         "self"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624/1.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json"
                 }
             ]
         },
@@ -161,19 +161,19 @@
                     "rel": [
                         "https://rubrics.api.brightspace.com/rels/level"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/levels/1478.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1478.json"
                 },
                 {
                     "rel": [
                         "self"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623/2.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624/2.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json"
                 }
             ]
         },
@@ -218,19 +218,19 @@
                     "rel": [
                         "https://rubrics.api.brightspace.com/rels/level"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/levels/1479.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json"
                 },
                 {
                     "rel": [
                         "self"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623/3.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624/3.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json"
                 }
             ]
         }
@@ -240,13 +240,13 @@
             "rel": [
                 "self"
             ],
-            "href": "data/rubrics/organizations/text-only/199/groups/176/criteria/623.json"
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json"
         },
         {
             "rel": [
                 "up"
             ],
-            "href": "data/rubrics/organizations/text-only/199/groups/176/criteria.json"
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria.json"
         }
     ]
 }
