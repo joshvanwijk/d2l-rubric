@@ -93,6 +93,10 @@
 				'_onEntityChanged(entity)',
 			],
 
+			ready: function() {
+				this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this));
+			},
+
 			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;

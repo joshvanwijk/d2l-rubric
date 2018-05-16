@@ -116,6 +116,10 @@ Creates and edits a rubric
 				'_onEntityChanged(entity)'
 			],
 
+			ready: function() {
+				this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this));
+			},
+
 			_onEntityChanged: function(entity) {
 				if (entity && entity.hasLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups)) {
 					this._showContent = true;

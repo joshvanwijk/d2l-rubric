@@ -58,8 +58,6 @@
 
 		ready: function() {
 			this._entityChangedHandler = this._entityChanged.bind(this);
-			this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this))
-			this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this))
 		},
 
 		detached: function() {
@@ -97,12 +95,6 @@
 				return entity.href || (entity.hasLinkByRel('self') ? entity.getLinkByRel('self').href : '');
 			}
 			return '';
-		},
-
-		_handleError: function(e) {
-		},
-
-		_handleSaveError: function(e) {
 		},
 
 		_addAlert: function(type, name, message) {
