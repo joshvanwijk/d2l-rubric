@@ -117,7 +117,8 @@
 			},
 
 			_handleSaveError: function(e) {
-				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'))
+				this._clearAlerts();
+				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 			},
 		});
 	</script>

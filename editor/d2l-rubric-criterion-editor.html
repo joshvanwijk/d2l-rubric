@@ -166,8 +166,7 @@
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function() {
-						this.$$('#criterion-name').value = action.hasFieldByName('name') ? action.getFieldByName('name').value : '';
-						this.$$('#criterion-name').setAttribute('aria-invalid', true);
+						this.$$('#criterion-name').ariaInvalid = "true";
 					}.bind(this));
 				}
 			},

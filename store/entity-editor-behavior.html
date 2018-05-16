@@ -107,19 +107,26 @@
 
 		_addAlert: function(type, name, message) {
 			if (this._alerts) {
-				this.push('_alerts', {
-					alertType: type,
-					alertName: name,
-					alertMessage: message
-				});
-				this._hasAlerts = true;
+				// Something weird happens when clearing alerts immediately before
+				// adding alerts and the dom-repeat seems to get stuck and doesn't display
+				// new alerts. So adding new alerts async
+				setTimeout(function() {
+					this.push('_alerts', {
+						alertType: type,
+						alertName: name,
+						alertMessage: message
+					});
+					// Also trying to set _hasAlerts as a computed property based on _alerts
+					// also does not seem to be working reliably so having to manage it manually.
+					this._hasAlerts = true;
+				}.bind(this));
 			}
 		},
 
-		_computeHasAlerts: function(_alerts) {
-			console.log(this._alerts);
-			return _alerts.length > 0;
-		}
+		_clearAlerts: function() {
+			this.splice('_alerts', 0, this._alerts.length);
+			this._hasAlerts = false;
+		},
 	};
 
 	/** @polymerBehavior */
