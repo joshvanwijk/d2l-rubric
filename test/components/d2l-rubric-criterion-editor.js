@@ -89,5 +89,28 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 			});
 		});
+
+		suite('readonly', function() {
+
+			var element;
+
+			setup(function(done) {
+				element = fixture('readonly');
+				function waitForLoad(e) {
+					element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json') {
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			test('name is disabled', function() {
+				var nameTextArea = element.$$('d2l-textarea');
+				expect(nameTextArea.disabled).to.be.true;
+			});
+
+		});
 	});
 });
