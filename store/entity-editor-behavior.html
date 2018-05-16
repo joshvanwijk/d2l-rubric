@@ -50,7 +50,6 @@
 				type: Boolean,
 				value: false
 			}
-
 		},
 
 		observers: [
@@ -82,9 +81,13 @@
 			}
 		},
 
-		_entityChanged: function(entity) {
-			this.entity = entity;
-			this.fire('d2l-rubric-entity-changed', {entity: entity});
+		_entityChanged: function(entity, error) {
+			if (!error) {
+				this.entity = entity;
+				this.fire('d2l-rubric-entity-changed', { entity: entity });
+			} else {
+				this.fire('d2l-rubric-entity-error', { error: error })
+			}
 		},
 
 		_getSelfLink: function(entity) {
@@ -94,6 +97,28 @@
 			return '';
 		},
 
+		_addAlert: function(type, name, message) {
+			if (this._alerts) {
+				// Something weird happens when clearing alerts immediately before
+				// adding alerts and the dom-repeat seems to get stuck and doesn't display
+				// new alerts. So adding new alerts async
+				setTimeout(function() {
+					this.push('_alerts', {
+						alertType: type,
+						alertName: name,
+						alertMessage: message
+					});
+					// Also trying to set _hasAlerts as a computed property based on _alerts
+					// also does not seem to be working reliably so having to manage it manually.
+					this._hasAlerts = true;
+				}.bind(this));
+			}
+		},
+
+		_clearAlerts: function() {
+			this.splice('_alerts', 0, this._alerts.length);
+			this._hasAlerts = false;
+		},
 	};
 
 	/** @polymerBehavior */

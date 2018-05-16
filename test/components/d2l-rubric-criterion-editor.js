@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon */
+/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush */
 
 'use strict';
 
@@ -56,13 +56,36 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				var nameTextArea = element.$$('d2l-textarea');
 				nameTextArea.value = 'Batman and Robin';
 				raf(function() {
-					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 					element.addEventListener('d2l-rubric-criterion-saved', function() {
 						var body = fetch.args[0][1].body;
 						// Force success in IE - no FormData op support
 						expect(body.get && body.get('name') || 'Batman and Robin').to.equal('Batman and Robin');
 						done();
 					});
+					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
+			test('sets aria-invalid if saving name fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				var nameTextArea = element.$$('d2l-textarea');
+				nameTextArea.value = 'Batman and Robin';
+				raf(function() {
+					element.addEventListener('d2l-rubric-entity-save-error', function() {
+						flush(function() {
+							expect(nameTextArea.ariaInvalid).to.equal('true');
+							done();
+						});
+					});
+					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 		});

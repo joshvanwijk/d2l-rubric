@@ -19,6 +19,10 @@
 				box-sizing: border-box;
 			}
 
+			d2l-alert {
+				margin-bottom: 1rem;
+			}
+
 			.criteria-group {
 				border: var(--d2l-table-border);
 				border-radius: var(--d2l-table-border-radius);
@@ -46,6 +50,12 @@
 				padding: 1rem;
 			}
 		</style>
+
+		<template is="dom-repeat" items="[[_alerts]]">
+			<d2l-alert type="[[item.alertType]]" has-close-button>
+				[[item.alertMessage]]
+			</d2l-alert>
+		</template>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
@@ -83,6 +93,10 @@
 				'_onEntityChanged(entity)',
 			],
 
+			ready: function() {
+				this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this));
+			},
+
 			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
@@ -104,7 +118,12 @@
 
 			_hasOutOf: function(entity) {
 				return entity && entity.hasClass(this.HypermediaClasses.rubrics.numeric);
-			}
+			},
+
+			_handleSaveError: function(e) {
+				this._clearAlerts();
+				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+			},
 		});
 	</script>
 </dom-module>

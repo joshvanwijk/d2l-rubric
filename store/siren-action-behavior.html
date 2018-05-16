@@ -81,10 +81,12 @@
 			})
 			.then(function (res) {
 				if (!res.ok) {
-					throw new Error(`${ res.statusText } response executing ${ action.method } on ${ url.href }.`);
+					const error = new Error(`${ res.statusText } response executing ${ action.method } on ${ url.href }.`);
+					this.fire('d2l-rubric-entity-save-error', { error: error });
+					throw error;
 				}
 				return res.json();
-			})
+			}.bind(this))
 			.then(function(body) {
 				var entity = window.D2L.Hypermedia.Siren.Parse(body);
 				return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
