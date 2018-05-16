@@ -50,7 +50,6 @@
 				type: Boolean,
 				value: false
 			}
-
 		},
 
 		observers: [
@@ -59,6 +58,8 @@
 
 		ready: function() {
 			this._entityChangedHandler = this._entityChanged.bind(this);
+			this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this))
+			this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this))
 		},
 
 		detached: function() {
@@ -82,9 +83,13 @@
 			}
 		},
 
-		_entityChanged: function(entity) {
-			this.entity = entity;
-			this.fire('d2l-rubric-entity-changed', {entity: entity});
+		_entityChanged: function(entity, error) {
+			if (!error) {
+				this.entity = entity;
+				this.fire('d2l-rubric-entity-changed', { entity: entity });
+			} else {
+				this.fire('d2l-rubric-entity-error', { error: error })
+			}
 		},
 
 		_getSelfLink: function(entity) {
@@ -94,6 +99,27 @@
 			return '';
 		},
 
+		_handleError: function(e) {
+		},
+
+		_handleSaveError: function(e) {
+		},
+
+		_addAlert: function(type, name, message) {
+			if (this._alerts) {
+				this.push('_alerts', {
+					alertType: type,
+					alertName: name,
+					alertMessage: message
+				});
+				this._hasAlerts = true;
+			}
+		},
+
+		_computeHasAlerts: function(_alerts) {
+			console.log(this._alerts);
+			return _alerts.length > 0;
+		}
 	};
 
 	/** @polymerBehavior */

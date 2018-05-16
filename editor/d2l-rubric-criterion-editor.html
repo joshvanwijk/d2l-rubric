@@ -94,6 +94,7 @@
 
 		<div class="cell col-first criterion-name">
 			<d2l-textarea
+				id="criterion-name"
 				aria-label="criterion name"
 				no-border
 				hover-styles
@@ -164,10 +165,12 @@
 					fields.append('name', e.target.value);
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
+					}.bind(this)).catch(function() {
+						this.$$('#criterion-name').value = action.hasFieldByName('name') ? action.getFieldByName('name').value : '';
+						this.$$('#criterion-name').setAttribute('aria-invalid', true);
 					}.bind(this));
 				}
 			},
-
 		});
 	</script>
 </dom-module>

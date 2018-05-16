@@ -130,11 +130,17 @@ Creates and edits a rubric
 			_hasOutOf: function(entity) {
 				return entity && entity.properties.outOf;
 			},
+
 			_hideLoading: function(showContent, hasAlerts) {
 				return showContent || hasAlerts;
 			},
+
 			_hideOutOf: function(showContent, hasAlerts) {
 				return !showContent || hasAlerts;
+			},
+
+			_handleError: function(e) {
+				this._addAlert('error', e.detail.error.message, this.localize('rubricLoadingErrorMessage'))
 			}
 		});
 	</script>
