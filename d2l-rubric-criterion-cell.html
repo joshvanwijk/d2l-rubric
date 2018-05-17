@@ -31,12 +31,16 @@
 				text-align: center;
 				margin: auto;
 			}
-			.descriptor-text {
+			.cell-container {
 				@apply --d2l-body-small-text;
+				min-width: 130px;
+			}
+			.cell-container.no-text {
+				min-width: 80px;
 			}
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-		<div class="descriptor-text" aria-label$="[[_getEmptyLabel(entity)]]">
+		<div class$="[[_getCellClassName(entity)]]" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden=[[!_hasCustomPoints(entity)]]>
 				[[localize('points', 'number', entity.properties.points)]]
 			</div>
@@ -71,6 +75,13 @@
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				return description && description.properties && description.properties.html || '';
+			},
+
+			_getCellClassName: function(entity) {
+				if (this._getDescription(entity) === '') {
+					return 'cell-container no-text';
+				}
+				return 'cell-container';
 			},
 
 			_getEmptyLabel: function(entity) {
