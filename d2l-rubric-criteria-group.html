@@ -244,7 +244,7 @@
 			},
 
 			_isNumeric: function(entity, level) {
-				var hasPoints = level.properties.points;
+				var hasPoints = level.properties.points !== null;
 				var isNumeric = entity && entity.hasClass(this.HypermediaClasses.rubrics.numeric);
 				return hasPoints && isNumeric;
 			},
