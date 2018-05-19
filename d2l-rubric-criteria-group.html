@@ -234,7 +234,7 @@
 			},
 
 			_hasOutOf: function(entity) {
-				return entity && entity.hasClass(this.HypermediaClasses.rubrics.numeric);
+				return entity && entity.properties && entity.properties.outOf;
 			},
 
 			_isHolistic: function(entity, level) {
