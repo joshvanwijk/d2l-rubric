@@ -20,7 +20,8 @@
 			id="level-name"
 			value="[[entity.properties.name]]"
 			on-change="_saveName"
-			aria-label="level name"></d2l-text-input>
+			aria-label="level name"
+			disabled="[[!canEdit]]"></d2l-text-input>
 	</template>
 
 	<script>
@@ -28,6 +29,10 @@
 			is: 'd2l-rubric-level-editor',
 
 			properties: {
+				canEdit: {
+					type: Boolean,
+					computed: '_canEditLevel(entity)',
+				},
 			},
 
 			behaviors: [
@@ -35,6 +40,9 @@
 				D2L.PolymerBehaviors.Rubric.SirenActionBehavior
 			],
 
+			_canEditLevel: function(entity) {
+				return entity && entity.hasActionByName('update');
+			},
 			_saveName: function(e) {
 				var self = this;
 				var action = this.entity.getActionByName('update');
