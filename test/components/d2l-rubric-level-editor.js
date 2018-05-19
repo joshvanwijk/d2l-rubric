@@ -66,7 +66,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 			});
 
-			/*test('sets aria-invalid if saving name fails', function(done) {
+			test('sets aria-invalid if saving name fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: false,
@@ -87,7 +87,7 @@ suite('<d2l-rubric-level-editor>', function() {
 					});
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
-			});*/
+			});
 		});
 	});
 });
