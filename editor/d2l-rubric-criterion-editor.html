@@ -100,7 +100,9 @@
 		<div class="cell col-first criterion-name">
 			<d2l-textarea
 				id="name"
+				aria-disabled$="[[!_canEdit]]"
 				aria-label="criterion name"
+				aria-required$="[[_nameRequired]]"
 				disabled="[[!_canEdit]]"
 				no-border
 				hover-styles
@@ -223,7 +225,7 @@
 				if (show) {
 					fieldElement.ariaInvalid = "true";
 				} else {
-					fieldElement.ariaInvalid = null;
+					// fieldElement.ariaInvalid = "false";
 				}
 			},
 
