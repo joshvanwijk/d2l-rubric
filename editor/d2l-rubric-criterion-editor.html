@@ -96,6 +96,7 @@
 			<d2l-textarea
 				id="criterion-name"
 				aria-label="criterion name"
+				disabled="[[!canEdit]]"
 				no-border
 				hover-styles
 				value=[[entity.properties.name]]
@@ -139,6 +140,10 @@
 			is: 'd2l-rubric-criterion-editor',
 
 			properties: {
+				canEdit: {
+					type: Boolean,
+					computed: '_canEditCriterion(entity)',
+				},
 				hasOutOf: {
 					type: Boolean,
 					value: false
@@ -170,6 +175,10 @@
 					}.bind(this));
 				}
 			},
+
+			_canEditCriterion: function(entity) {
+				return entity && entity.hasActionByName('update');
+			}
 		});
 	</script>
 </dom-module>
