@@ -41,6 +41,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 
 			teardown(function() {
 				fetch && fetch.restore();
+				window.D2L.Rubric.EntityStore.clear();
 			});
 
 			test('saves name', function(done) {
@@ -84,6 +85,18 @@ suite('<d2l-rubric-criterion-editor>', function() {
 							expect(nameTextArea.ariaInvalid).to.equal('true');
 							done();
 						});
+					});
+					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
+			test('sets aria-invalid if name is empty', function(done) {
+				var nameTextArea = element.$$('d2l-textarea');
+				nameTextArea.value = '';
+				raf(function() {
+					flush(function() {
+						expect(nameTextArea.ariaInvalid).to.equal('true');
+						done();
 					});
 					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});

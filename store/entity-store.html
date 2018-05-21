@@ -163,6 +163,12 @@
 			listenerSet.forEach(function(listener) {
 				listener(null, error);
 			});
+		},
+
+		clear: function() {
+			this._store = new Map();
+			this._listeners = new Map();
+			this._invalidationListeners = new Set();
 		}
 	};
 })();
