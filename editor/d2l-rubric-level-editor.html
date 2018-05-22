@@ -4,6 +4,8 @@
 <link rel="import" href="../store/entity-editor-behavior.html">
 <link rel="import" href="../store/siren-action-behavior.html">
 
+<link rel="import" href="./../localize-behavior.html">
+
 <dom-module id="d2l-rubric-level-editor">
 	<template strip-whitespace>
 		<style>
@@ -20,8 +22,8 @@
 			id="level-name"
 			value="[[entity.properties.name]]"
 			on-change="_saveName"
-			aria-label="level name"
-			disabled="[[!canEdit]]"></d2l-text-input>
+			aria-label="localize('levelName')]]"
+			disabled="[[!_canEdit]]"></d2l-text-input>
 	</template>
 
 	<script>
@@ -29,7 +31,7 @@
 			is: 'd2l-rubric-level-editor',
 
 			properties: {
-				canEdit: {
+				_canEdit: {
 					type: Boolean,
 					computed: '_canEditLevel(entity)',
 				},
@@ -37,7 +39,8 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityEditorBehavior,
-				D2L.PolymerBehaviors.Rubric.SirenActionBehavior
+				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
 			_canEditLevel: function(entity) {
