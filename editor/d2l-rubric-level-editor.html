@@ -44,7 +44,7 @@
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-saved');
 					}.bind(this)).catch(function() {
-						//this.$$('#level-name').ariaInvalid = "true";
+						this.$$('#level-name').ariaInvalid = "true";
 					}.bind(this));
 				} else {
 					this.fire('d2l-rubric-level-not-saved');
