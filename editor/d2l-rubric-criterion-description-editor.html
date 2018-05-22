@@ -85,7 +85,7 @@
 				return parseInt(index) + 1;
 			},
 			_saveDescription: function(e) {
-				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
+				var description = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				var action = description.getActionByName('update');
 				if (action) {
 					var fields = new FormData();
