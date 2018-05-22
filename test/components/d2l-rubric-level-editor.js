@@ -66,7 +66,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 			});
 
-			/*test('sets aria-invalid if saving name fails', function(done) {
+			test('sets aria-invalid if saving name fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: false,
@@ -87,7 +87,29 @@ suite('<d2l-rubric-level-editor>', function() {
 					});
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
-			});*/
+			});
+		});
+
+		suite('readonly', function() {
+			var element;
+
+			setup(function(done) {
+				element = fixture('readonly');
+				function waitForLoad(e) {
+					element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels/1478.json') {
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			test('name is disabled', function() {
+				var nameTextInput = element.$$('d2l-text-input');
+				expect(nameTextInput.disabled).to.be.true;
+			});
+
 		});
 	});
 });

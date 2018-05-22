@@ -10,6 +10,7 @@
       "method": "PUT",
       "href":  "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json",
       "fields": [{
+        "class": ["required"],
         "type": "text",
         "name": "name",
         "value": "Criterion 1"
