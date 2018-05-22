@@ -25,9 +25,6 @@
 			:host {
 				display: block;
 			}
-			d2l-td {
-				min-width: 130px;
-			}
 			d2l-td.out-of {
 				text-align: right;
 				min-width: 0;
@@ -227,12 +224,6 @@
 				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedback;
 			},
 
-			_hasCustomPoints: function(criterionCell) {
-				// TODO: The API currently returns 0 points for cells without custom points, this will be null soon.
-				// TODO: Once we get null then remove the > 0 compare
-				return criterionCell.properties && criterionCell.properties.points > 0;
-			},
-
 			_hasOutOf: function(entity) {
 				return entity && entity.properties && entity.properties.outOf;
 			},
@@ -244,7 +235,7 @@
 			},
 
 			_isNumeric: function(entity, level) {
-				var hasPoints = level.properties.points;
+				var hasPoints = level.properties.points !== null && level.properties.points !== undefined;
 				var isNumeric = entity && entity.hasClass(this.HypermediaClasses.rubrics.numeric);
 				return hasPoints && isNumeric;
 			},

@@ -31,14 +31,18 @@
 				text-align: center;
 				margin: auto;
 			}
-			.descriptor-text {
+			.cell-container {
 				@apply --d2l-body-small-text;
+				min-width: 130px;
+			}
+			.cell-container.no-text {
+				min-width: 80px;
 			}
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-		<div class="descriptor-text" aria-label$="[[_getEmptyLabel(entity)]]">
+		<div class$="[[_getCellClassName(entity)]]" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden=[[!_hasCustomPoints(entity)]]>
-				[[localize('points', 'number', entity.properties.points)]]
+				[[_localizeCustomPoints(entity)]]
 			</div>
 			<div class="check-icon" hidden="[[!_showSelectedIcon(entity, assessmentResult)]]">
 				<d2l-icon class="check-icon" icon='d2l-tier1:check'></d2l-icon>
@@ -63,14 +67,25 @@
 			],
 
 			_hasCustomPoints: function(criterionCell) {
-				// TODO: The API currently returns 0 points for cells without custom points, this will be null soon.
-				// TODO: Once we get null then remove the > 0 compare
-				return criterionCell && criterionCell.properties && criterionCell.properties.points > 0;
+				return criterionCell && criterionCell.properties && criterionCell.properties.points !== null;
+			},
+
+			_localizeCustomPoints: function(criterionCell) {
+				if (this._hasCustomPoints(criterionCell)) {
+					return this.localize('points', 'number', criterionCell.properties.points.toString());
+				}
 			},
 
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				return description && description.properties && description.properties.html || '';
+			},
+
+			_getCellClassName: function(entity) {
+				if (this._getDescription(entity) === '') {
+					return 'cell-container no-text';
+				}
+				return 'cell-container';
 			},
 
 			_getEmptyLabel: function(entity) {
