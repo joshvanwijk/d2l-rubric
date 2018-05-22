@@ -89,5 +89,27 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 			});
 		});
+
+		suite('readonly', function() {
+			var element;
+
+			setup(function(done) {
+				element = fixture('readonly');
+				function waitForLoad(e) {
+					element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels/1478.json') {
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			test('name is disabled', function() {
+				var nameTextInput = element.$$('d2l-text-input');
+				expect(nameTextInput.disabled).to.be.true;
+			});
+
+		});
 	});
 });
