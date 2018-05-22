@@ -11,9 +11,10 @@
         "method": "PUT",
         "href":  "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
         "fields": [{
-          "type": "text",
-          "name": "name",
-          "value": "Level 1"
+            "class": ["required"],
+            "type": "text",
+            "name": "name",
+            "value": "Level 1"
         }]
       }],
     "links": [

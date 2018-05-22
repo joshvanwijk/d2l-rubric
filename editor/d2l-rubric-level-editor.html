@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../store/entity-editor-behavior.html">
 <link rel="import" href="../store/siren-action-behavior.html">
@@ -22,8 +23,13 @@
 			id="level-name"
 			value="[[entity.properties.name]]"
 			on-change="_saveName"
+			aria-invalid="[[_nameInvalid]]"
 			aria-label="localize('levelName')]]"
-			disabled="[[!_canEdit]]"></d2l-text-input>
+			disabled="[[!_canEdit]]"
+			required="[[_nameRequired]]"></d2l-text-input>
+			<template is="dom-if" if="[[_nameInvalid]]">
+				<d2l-tooltip for="level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+			</template>
 	</template>
 
 	<script>
@@ -34,6 +40,16 @@
 				_canEdit: {
 					type: Boolean,
 					computed: '_canEditLevel(entity)',
+				},
+				_nameRequired: {
+					type: Boolean,
+					computed: '_isNameRequired(entity)',
+				},
+				_nameInvalid: {
+					type: String
+				},
+				_nameInvalidError: {
+					type: String
 				},
 			},
 
@@ -46,19 +62,41 @@
 			_canEditLevel: function(entity) {
 				return entity && entity.hasActionByName('update');
 			},
+			_isNameRequired: function(entity) {
+				var action = entity && entity.getActionByName('update');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('name');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
 			_saveName: function(e) {
 				var self = this;
 				var action = this.entity.getActionByName('update');
 				if (action) {
-					var fields = new FormData();
-					fields.append('name', e.target.value);
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-level-saved');
-					}.bind(this)).catch(function() {
-						this.$$('#level-name').ariaInvalid = "true";
-					}.bind(this));
+					if (this._nameRequired && !e.target.value.trim()) {
+						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
+					} else {
+						this._toggleBubble('_nameInvalid', false);
+						var fields = new FormData();
+						fields.append('name', e.target.value);
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-level-saved');
+						}.bind(this)).catch(function() {
+							this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+						}.bind(this));
+					}
+				}
+			},
+			_toggleBubble: function(invalidId, show, error) {
+				if (show) {
+					this.set(invalidId, 'true');
+					this.set(invalidId + 'Error', error);
 				} else {
-					this.fire('d2l-rubric-level-not-saved');
+					this.set(invalidId, 'false');
 				}
 			},
 		});
