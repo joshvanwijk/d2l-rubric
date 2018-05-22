@@ -14,7 +14,26 @@
             "properties": {
                 "text": "Proper use of grammar",
                 "html": "Proper use of grammar"
-            }
+            },
+            "actions": [
+              {
+                "name": "update",
+                "method": "PUT",
+                "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json",
+                "fields": [
+                  {
+                    "type": "text",
+                    "name": "description",
+                    "value": "Proper use of grammar"
+                  },
+                  {
+                    "type": "hidden",
+                    "name": "feedback",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
         },
         {
             "class": [
@@ -27,7 +46,26 @@
             "properties": {
                 "text": "",
                 "html": ""
-            }
+            },
+            "actions": [
+              {
+                "name": "update",
+                "method": "PUT",
+                "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json",
+                "fields": [
+                  {
+                    "type": "hidden",
+                    "name": "description",
+                    "value": "Proper use of grammar"
+                  },
+                  {
+                    "type": "text",
+                    "name": "feedback",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
         }
     ],
     "links": [
