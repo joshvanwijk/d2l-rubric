@@ -325,6 +325,7 @@
 				if (this.isNumeric) {
 					return this.localize('levelNameAndPoints', 'levelName', levelTitle, 'number', points.toString());
 				}
+				return levelTitle;
 			},
 
 			_getCriterionCellText: function(criterionCell) {
