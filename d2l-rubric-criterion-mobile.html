@@ -192,6 +192,8 @@
 
 				isHolistic: Boolean,
 
+				isNumeric: Boolean,
+
 				_entity: Object,
 
 				_name: String,
@@ -318,9 +320,12 @@
 				}
 
 				if (this.isHolistic) {
-					return this.localize('levelNameAndPercentage', 'levelName', levelTitle, 'number', points);
+					return this.localize('levelNameAndPercentage', 'levelName', levelTitle, 'number', points.toString());
 				}
-				return this.localize('levelNameAndPoints', 'levelName', levelTitle, 'number', points);
+				if (this.isNumeric) {
+					return this.localize('levelNameAndPoints', 'levelName', levelTitle, 'number', points.toString());
+				}
+				return levelTitle;
 			},
 
 			_getCriterionCellText: function(criterionCell) {

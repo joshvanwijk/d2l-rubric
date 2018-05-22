@@ -38,7 +38,7 @@
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<hr class="line"></hr>
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion">
-			<d2l-rubric-criterion-mobile href="[[_getSelfLink(criterion)]]" levels-href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[isHolistic]]">
+			<d2l-rubric-criterion-mobile href="[[_getSelfLink(criterion)]]" levels-href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[isHolistic]]" is-numeric="[[isNumeric]]">
 			</d2l-rubric-criterion-mobile>
 			<div hidden="[[!_hasFeedback(criterion, assessmentResult)]]">
 				<div class="feedback-container">
@@ -65,7 +65,8 @@
 				 */
 				levelsHref: String,
 				assessmentHref: String,
-				isHolistic: Boolean
+				isHolistic: Boolean,
+				isNumeric: Boolean
 			},
 
 			behaviors: [
