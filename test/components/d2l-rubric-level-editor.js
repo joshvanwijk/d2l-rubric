@@ -41,6 +41,7 @@ suite('<d2l-rubric-level-editor>', function() {
 
 			teardown(function() {
 				fetch && fetch.restore();
+				window.D2L.Rubric.EntityStore.clear();
 			});
 
 			test('saves name', function(done) {
@@ -84,6 +85,18 @@ suite('<d2l-rubric-level-editor>', function() {
 							expect(nameTextInput.ariaInvalid).to.equal('true');
 							done();
 						});
+					});
+					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
+			test('sets aria-invalid if name is empty', function(done) {
+				var nameTextInput = element.$$('d2l-text-input');
+				nameTextInput.value = '';
+				raf(function() {
+					flush(function() {
+						expect(nameTextInput.ariaInvalid).to.equal('true');
+						done();
 					});
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
