@@ -36,6 +36,7 @@
 
 		<d2l-textarea
 			id="feedback"
+			aria-invalid="[[_isAriaInvalid(_feedbackInvalid)]]"
 			aria-label="[[localize('criterionFeedbackAriaLabel', 'level', _levelOffset, 'levelCount', levelCount)]]"
 			disabled="[[!_canEdit]]"
 			no-border
@@ -122,6 +123,11 @@
 					this.set(invalidId, false);
 				}
 			},
+
+			_isAriaInvalid: function(feedbackInvalid) {
+				return new Boolean(feedbackInvalid).toString();
+			},
+
 		});
 	</script>
 </dom-module>
