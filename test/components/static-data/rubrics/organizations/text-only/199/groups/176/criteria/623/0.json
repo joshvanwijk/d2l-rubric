@@ -29,7 +29,7 @@
                   {
                     "type": "hidden",
                     "name": "feedback",
-                    "value": ""
+                    "value": "5 stars for proper use of grammar!"
                   }
                 ]
               }
@@ -44,8 +44,8 @@
                 "item"
             ],
             "properties": {
-                "text": "",
-                "html": ""
+                "text": "5 stars for proper use of grammar!",
+                "html": "5 stars for proper use of grammar!"
             },
             "actions": [
               {
@@ -61,7 +61,7 @@
                   {
                     "type": "text",
                     "name": "feedback",
-                    "value": ""
+                    "value": "5 stars for proper use of grammar!"
                   }
                 ]
               }

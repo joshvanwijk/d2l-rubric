@@ -98,7 +98,7 @@
 
 			_saveFeedback: function(e) {
 				var feedback = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
-				var action = feedback && feedback.hasActionByName('update');
+				var action = feedback.getActionByName('update');
 				if (action) {
 					this._toggleBubble('_feedbackInvalid', false);
 					var fields = new FormData();
