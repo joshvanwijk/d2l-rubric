@@ -96,7 +96,7 @@
 		<div class="cell col-first criterion-name">
 			<d2l-textarea
 				id="name"
-				aria-invalid="[[_nameInvalid]]"
+				aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 				aria-label="[[localize('criterionName')]]"
 				disabled="[[!_canEdit]]"
 				no-border
@@ -155,7 +155,7 @@
 					computed: '_isNameRequired(entity)',
 				},
 				_nameInvalid: {
-					type: String
+					type: Boolean
 				},
 				_nameInvalidError: {
 					type: String
@@ -179,7 +179,6 @@
 			},
 
 			_saveName: function(e) {
-				var self = this;
 				var action = this.entity.getActionByName('update');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
@@ -216,11 +215,15 @@
 
 			_toggleBubble: function(invalidId, show, error) {
 				if (show) {
-					this.set(invalidId, 'true');
+					this.set(invalidId, true);
 					this.set(invalidId + 'Error', error);
 				} else {
-					this.set(invalidId, 'false');
+					this.set(invalidId, false);
 				}
+			},
+
+			_isAriaInvalid: function(nameInvalid) {
+				return new Boolean(nameInvalid).toString();
 			},
 
 		});
