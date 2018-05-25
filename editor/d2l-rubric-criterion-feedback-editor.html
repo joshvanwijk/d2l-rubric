@@ -1,8 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../store/entity-editor-behavior.html">
+<link rel="import" href="../store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 
 <dom-module id="d2l-rubric-criterion-feedback-editor">
@@ -33,11 +35,18 @@
 		</style>
 
 		<d2l-textarea
+			id="feedback"
+			aria-invalid="[[_isAriaInvalid(_feedbackInvalid)]]"
 			aria-label="[[localize('criterionFeedbackAriaLabel', 'level', _levelOffset, 'levelCount', levelCount)]]"
+			disabled="[[!_canEdit]]"
 			no-border
 			hover-styles
 			value=[[_getFeedback(entity)]]
+			on-change="_saveFeedback"
 		></d2l-textarea>
+		<template is="dom-if" if="[[_feedbackInvalid]]">
+			<d2l-tooltip for="feedback" position="bottom">[[_feedbackInvalidError]]</d2l-tooltip>
+		</template>
 	</template>
 
 	<script>
@@ -58,10 +67,21 @@
 					type: Number,
 					computed: '_calcOffset(levelIndex)',
 				},
+				_canEdit: {
+					type: Boolean,
+					computed: '_canEditFeedback(entity)',
+				},
+				_feedbackInvalid: {
+					type: Boolean
+				},
+				_feedbackInvalidError: {
+					type: String
+				},
 			},
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityEditorBehavior,
+				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
@@ -71,9 +91,43 @@
 				return feedback && feedback.properties && feedback.properties.text || '';
 			},
 
+			_canEditFeedback: function(entity) {
+				var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+				return feedback && feedback.hasActionByName('update');
+			},
+
+			_saveFeedback: function(e) {
+				var feedback = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+				var action = feedback.getActionByName('update');
+				if (action) {
+					this._toggleBubble('_feedbackInvalid', false);
+					var fields = new FormData();
+					fields.append('feedback', e.target.value);
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-feedback-saved');
+					}.bind(this)).catch(function() {
+						this._toggleBubble('_feedbackInvalid', true, this.localize('feedbackSaveFailed'));
+					}.bind(this));
+				}
+			},
+
 			_calcOffset: function(index) {
 				return parseInt(index) + 1;
-			}
+			},
+
+			_toggleBubble: function(invalidId, show, error) {
+				if (show) {
+					this.set(invalidId, true);
+					this.set(invalidId + 'Error', error);
+				} else {
+					this.set(invalidId, false);
+				}
+			},
+
+			_isAriaInvalid: function(feedbackInvalid) {
+				return new Boolean(feedbackInvalid).toString();
+			},
+
 		});
 	</script>
 </dom-module>
