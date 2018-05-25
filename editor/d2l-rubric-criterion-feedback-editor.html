@@ -71,7 +71,7 @@
 					computed: '_canEditFeedback(entity)',
 				},
 				_feedbackInvalid: {
-					type: String
+					type: Boolean
 				},
 				_feedbackInvalidError: {
 					type: String
@@ -116,12 +116,12 @@
 
 			_toggleBubble: function(invalidId, show, error) {
 				if (show) {
-					this.set(invalidId, 'true');
+					this.set(invalidId, true);
 					this.set(invalidId + 'Error', error);
 				} else {
-					this.set(invalidId, 'false');
+					this.set(invalidId, false);
 				}
-			}
+			},
 		});
 	</script>
 </dom-module>
