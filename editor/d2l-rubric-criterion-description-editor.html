@@ -1,6 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../store/entity-editor-behavior.html">
 <link rel="import" href="../store/siren-action-behavior.html">
@@ -35,6 +36,7 @@
 
 		<d2l-textarea
 			id="description"
+			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
 			aria-label="[[localize('criterionDescriptionAriaLabel', 'level', _levelOffset, 'levelCount', levelCount)]]"
 			disabled="[[!_canEdit]]"
 			no-border
@@ -42,7 +44,9 @@
 			value=[[_getDescription(entity)]]
 			on-change="_saveDescription"
 		></d2l-textarea>
-
+		<template is="dom-if" if="[[_descriptionInvalid]]">
+			<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+		</template>
 	</template>
 
 	<script>
@@ -67,6 +71,12 @@
 					type: Boolean,
 					computed: '_canEditDescription(entity)',
 				},
+				_descriptionInvalid: {
+					type: Boolean
+				},
+				_descriptionInvalidError: {
+					type: String
+				},
 			},
 
 			behaviors: [
@@ -88,18 +98,32 @@
 				var description = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				var action = description.getActionByName('update');
 				if (action) {
+					this._toggleBubble('_descriptionInvalid', false);
 					var fields = new FormData();
 					fields.append('description', e.target.value);
 					this.performSirenAction(action, fields).then(function () {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function () {
-						this.$$('#description').ariaInvalid = "true";
+						this._toggleBubble('_descriptionInvalid', true, this.localize('descriptionSaveFailed'));
 					}.bind(this));
 				}
 			},
 			_canEditDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				return description && description.hasActionByName('update');
+			},
+
+			_toggleBubble: function(invalidId, show, error) {
+				if (show) {
+					this.set(invalidId, true);
+					this.set(invalidId + 'Error', error);
+				} else {
+					this.set(invalidId, false);
+				}
+			},
+
+			_isAriaInvalid: function(descriptionInvalid) {
+				return new Boolean(descriptionInvalid).toString();
 			},
 
 		});
