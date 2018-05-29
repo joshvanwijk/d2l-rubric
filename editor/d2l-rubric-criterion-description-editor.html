@@ -101,7 +101,7 @@
 					this._toggleBubble('_descriptionInvalid', false);
 					var fields = new FormData();
 					fields.append('description', e.target.value);
-					this.performSirenAction(action, fields).then(function () {
+					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function () {
 						this._toggleBubble('_descriptionInvalid', true, this.localize('descriptionSaveFailed'));

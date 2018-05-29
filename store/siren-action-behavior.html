@@ -48,6 +48,19 @@
 			return url;
 		},
 
+		_appendHiddenFields: function(action, fields) {
+			if (action.fields && action.fields.forEach) {
+				action.fields.forEach(function(field) {
+					if (field.type !== 'hidden' || field.value === undefined) {
+						return;
+					}
+					// if the field is specified multiple times, assume it is intentional
+					fields.append(field.name, field.value);
+				});
+			}
+			return fields;
+		},
+
 		performSirenAction: function(action, fields) {
 			if (!action) {
 				return Promise.reject(new Error('No action given'));
@@ -58,7 +71,11 @@
 			var url = this.getEntityUrl(action, fields);
 			var body;
 
-			fields = fields || this.getSirenFields(action);
+			if (fields) {
+				fields = this._appendHiddenFields(action, fields);
+			} else {
+				fields = this.getSirenFields(action);
+			}
 			if (action.method !== 'GET' && action.method !== 'HEAD') {
 				body = fields;
 			}
