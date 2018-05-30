@@ -40,6 +40,7 @@
 					href="[[_getSelfLink(criterion)]]"
 					token="[[token]]"
 					has-out-of="[[hasOutOf]]"
+					display-name-placeholder="[[_isFirst(index)]]"
 				>
 				</d2l-rubric-criterion-editor>
 			</fieldset>
@@ -76,8 +77,12 @@
 			},
 
 			_getCriterionLegend: function(index, count) {
-				return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count)
-			}
+				return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count);
+			},
+
+			_isFirst: function(index) {
+				return index === 0;
+			},
 		});
 	</script>
 </dom-module>
