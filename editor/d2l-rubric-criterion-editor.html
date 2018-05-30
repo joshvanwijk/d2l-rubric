@@ -102,7 +102,7 @@
 				no-border
 				hover-styles
 				value=[[entity.properties.name]]
-				placeholder="[[localize('criterionPlaceholder')]]"
+				placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]"
 				on-change="_saveName"
 				required="[[_nameRequired]]">
 			</d2l-textarea>
@@ -163,6 +163,9 @@
 				hasOutOf: {
 					type: Boolean,
 					value: false
+				},
+				displayNamePlaceholder: {
+					type: Boolean,
 				},
 			},
 
@@ -225,6 +228,13 @@
 			_isAriaInvalid: function(nameInvalid) {
 				return new Boolean(nameInvalid).toString();
 			},
+
+			_getNamePlaceholder: function(localize, displayNamePlaceholder) {
+				if (displayNamePlaceholder) {
+					return localize('criterionPlaceholder');
+				}
+				return '';
+			}
 
 		});
 	</script>
