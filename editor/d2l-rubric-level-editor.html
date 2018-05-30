@@ -26,7 +26,9 @@
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 			aria-label="localize('levelName')]]"
 			disabled="[[!_canEdit]]"
-			required="[[_nameRequired]]"></d2l-text-input>
+			required="[[_nameRequired]]"
+			prevent-submit="true">
+		</d2l-text-input>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip for="level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
