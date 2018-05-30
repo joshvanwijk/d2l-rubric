@@ -39,7 +39,7 @@
     "iron-media-query": "^2.1.0",
     "iron-resizable-behavior": "^2.1.0",
     "polymer": "1 - 2",
-    "s-html": "Brightspace/s-html#^1.0.0",
+    "s-html": "Brightspace/s-html#^1.2.0",
     "d2l-textarea": "BrightspaceUI/textarea#^0.6.0",
     "d2l-text-input": "BrightspaceUI/text-input#^0.3.0",
     "d2l-tooltip": "BrightspaceUI/tooltip#^2.0.4"

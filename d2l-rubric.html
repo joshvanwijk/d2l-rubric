@@ -21,6 +21,47 @@ Polymer Web-Component to display rubrics
 		<style>
 			:host {
 				display: block;
+
+				--shtml-h1 : {
+					display: block;
+					font-weight: bold;
+					font-size: 2em;
+					margin: .67em 0;
+				};
+
+				--shtml-h2: {
+					display: block;
+					font-weight: bold;
+					font-size: 1.5em;
+					margin: .83em 0;
+				};
+
+				--shtml-h3: {
+					display: block;
+					font-weight: bold;
+					font-size: 1.17em;
+					margin: 1em 0;
+				};
+
+				--shtml-h4: {
+					display: block;
+					font-weight: bold;
+					margin: 1.33em 0;
+				};
+
+				--shtml-h5: {
+					display: block;
+					font-weight: bold;
+					font-size: 0.83em;
+					margin: 1.67em 0;
+				};
+
+				--shtml-h6: {
+					display: block;
+					font-weight: bold;
+					font-size: 0.67em;
+					margin: 2.33em 0;
+				};
 			}
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
@@ -80,6 +121,7 @@ Polymer Web-Component to display rubrics
 			.overall-feedback-text {
 				@apply --d2l-body-compact-text;
 			}
+
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
 		<template is="dom-repeat" items="[[_alerts]]">
