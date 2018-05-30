@@ -15,7 +15,7 @@
 
 		_invalidationListeners: new Set(),
 
-		_initContainer(map, entityId, token, init) {
+		_initContainer: function(map, entityId, token, init) {
 			const lowerCaseToken = token.toLowerCase();
 			const lowerCaseEntityId = entityId.toLowerCase();
 
@@ -89,7 +89,7 @@
 			const lowerCaseEntityId = entityId.toLowerCase();
 
 			this._initContainer(this._store, lowerCaseEntityId, lowerCaseToken);
-			return new Promise((resolve) => {
+			return new Promise(function(resolve) {
 				const entities = this.expand(entity);
 				entities.forEach(function(entity) {
 					this._store.get(lowerCaseToken).set(entity.key.toLowerCase(), { 'status': '', 'entity': entity.value });
@@ -97,7 +97,7 @@
 				}.bind(this));
 
 				resolve(entity);
-			});
+			}.bind(this));
 		},
 
 		expand: function(entity) {
@@ -131,14 +131,14 @@
 			const lowerCaseEntityId = entityId.toLowerCase();
 
 			this._initContainer(this._store, entityId, token);
-			return new Promise((resolve) => {
+			return new Promise(function(resolve) {
 
 				this._store.get(lowerCaseToken).set(lowerCaseEntityId, { 'status': 'error', 'entity': null, 'error': error });
 				this._notifyError(entityId, token, error);
 
 				resolve(error);
 
-			});
+			}.bind(this));
 		},
 
 		removeListener: function(entityId, token, listener) {
