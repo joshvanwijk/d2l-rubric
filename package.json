@@ -1,6 +1,6 @@
 {
   "name": "d2l-rubric",
-  "version": "0.56.0",
+  "version": "0.57.0",
   "description": "Polymer-based web components for D2L Rubrics",
   "private": true,
   "directories": {
@@ -29,7 +29,7 @@
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.1.6",
     "eslint": "^4.19.1",
     "eslint-config-brightspace": "^0.4.0",
     "eslint-plugin-html": "^4.0.3",
