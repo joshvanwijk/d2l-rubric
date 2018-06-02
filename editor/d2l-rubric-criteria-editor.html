@@ -31,12 +31,14 @@
 			fieldset:last-of-type {
 				border-bottom: none;
 			}
+
 		</style>
 
 		<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
 			<fieldset>
 				<legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend>
 				<d2l-rubric-criterion-editor
+					animating="[[animating]]"
 					href="[[_getSelfLink(criterion)]]"
 					token="[[token]]"
 					has-out-of="[[hasOutOf]]"
@@ -54,6 +56,10 @@
 			properties: {
 				_criteriaEntities: Array,
 				hasOutOf: {
+					type: Boolean,
+					value: false
+				},
+				animating: {
 					type: Boolean,
 					value: false
 				}
@@ -74,6 +80,10 @@
 					return;
 				}
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
+				this.animating = false;
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					this.animating = false;
+				}.bind(this));
 			},
 
 			_getCriterionLegend: function(index, count) {
