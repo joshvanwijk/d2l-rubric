@@ -291,6 +291,9 @@
 
 			_handledDescriptionAnimation: function(animation, selected) {
 				var element = this.$.description.querySelector('#' + 'level-description-panel' + selected);
+				if (!element) {
+					return;
+				}
 				element.classList.remove('slide-from-right');
 				element.classList.remove('slide-from-left');
 				element.classList.add(animation);
