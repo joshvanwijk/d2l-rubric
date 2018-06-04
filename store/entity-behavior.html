@@ -9,7 +9,7 @@
 	* Behavior for fetching an entity when an href and token a present
 	* @polymerBehavior
 	*/
-	D2L.PolymerBehaviors.Rubric.EntityEditorBehaviorImpl = {
+	D2L.PolymerBehaviors.Rubric.EntityBehavior = {
 		properties: {
 			/**
 			 * The href for this siren entity
@@ -31,7 +31,8 @@
 			 */
 			entity: {
 				type: Object,
-				value: null
+				value: null,
+				notify: true
 			},
 
 			_entityChangedHandler: {
@@ -120,9 +121,4 @@
 			this._hasAlerts = false;
 		},
 	};
-
-	/** @polymerBehavior */
-	D2L.PolymerBehaviors.Rubric.EntityEditorBehavior = [
-		D2L.PolymerBehaviors.Rubric.EntityEditorBehaviorImpl
-	];
 </script>

@@ -5,7 +5,7 @@
 <link rel="import" href="../d2l-table/d2l-thead.html">
 <link rel="import" href="../d2l-table/d2l-tbody.html">
 <link rel="import" href="../d2l-table/d2l-th.html">
-<link rel="import" href="./siren-entity-behavior.html">
+<link rel="import" href="./store/entity-behavior.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="./d2l-rubric-loading.html">
@@ -69,6 +69,8 @@
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+		<siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></siren-entity>
+		<siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></siren-entity>
 		<d2l-table
 			aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult)]]"
 			aria-rowcount$="[[_getRowCount(_criteriaEntities)]]"
@@ -129,22 +131,29 @@
 
 			properties: {
 				_levelsHref: String,
-				_levelsEntity: Object,
+				_levelsEntity: {
+					type: Object,
+					value: null
+				},
 				_levels: Array,
 				_criteriaCollectionHref: String,
-				_criteriaCollectionEntity: Object,
+				_criteriaCollectionEntity: {
+					type: Object,
+					value: null
+				},
 				_criteriaEntities: Array,
 				_showContent: {
 					type: Boolean,
 					value: false
 				},
 				assessmentHref: {
-					type: String
+					type: String,
+					value: null
 				}
 			},
 
 			behaviors: [
-				D2L.PolymerBehaviors.Rubric.SirenEntityBehavior,
+				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				Polymer.IronResizableBehavior,
@@ -152,14 +161,12 @@
 			],
 
 			observers: [
-				'_onEntityChanged(entity)',
-				'_fetchLevels(_levelsHref, token)',
-				'_fetchCriteria(_criteriaCollectionHref, token)',
+				'_entityChanged(entity)',
 				'_onLevelsEntityChanged(_levelsEntity)',
 				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
 			],
 
-			_onEntityChanged: function(entity) {
+			_entityChanged: function(entity) {
 				if (!entity) {
 					return;
 				}
@@ -168,6 +175,9 @@
 			},
 
 			_onLevelsEntityChanged: function(levelsEntity) {
+				if (!levelsEntity) {
+					return;
+				}
 				this._levels = levelsEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 				// trigger a resize event so that the table resizes with the new levels
 				if (Polymer.Element) {
@@ -181,26 +191,11 @@
 				}
 			},
 
-			_fetchLevels: function(href, token) {
-				if (href && token) {
-					this._fetchEntityWithToken(href, function() { return Promise.resolve(token); })
-						.then(function(entity) {
-							this._levelsEntity = entity;
-						}.bind(this));
-				}
-			},
-
-			_fetchCriteria: function(href, token) {
-				if (href && token) {
-					this._fetchEntityWithToken(href, function() { return Promise.resolve(token); })
-						.then(function(entity) {
-							this._criteriaCollectionEntity = entity;
-							this._showContent = true;
-						}.bind(this));
-				}
-			},
-
 			_onCriteriaCollectionEntityChanged: function(entity) {
+				if (!entity) {
+					return;
+				}
+				this._showContent = true;
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 			},
 
