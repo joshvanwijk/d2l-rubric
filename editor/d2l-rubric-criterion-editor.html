@@ -24,7 +24,7 @@
 
 				opacity: 0;
 				max-height: 0;
-				transition: opacity 10000ms ease-out, max-height 5000ms ease-out;
+				transition: opacity 100ms ease-out, max-height 400ms ease-out;
 
 				--d2l-textarea: {
 					display: block;
@@ -189,18 +189,11 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
-			observers: [
-				'_onEntityChanged(entity)',
-			],
-
-			_onEntityChanged: function(entity) {
+			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {
 					return;
 				}
-				// Polymer.RenderStatus.afterNextRender(this, function() {
-				// 	this._transitionElement(this);
-				// });
-				if (!this.animating) {
+				if (!this.animating && !oldEntity) {
 					setTimeout(function() {
 						this._transitionElement(this, 200);
 					}.bind(this));

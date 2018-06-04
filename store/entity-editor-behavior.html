@@ -31,7 +31,8 @@
 			 */
 			entity: {
 				type: Object,
-				value: null
+				value: null,
+				observer: '_onEntityChanged',
 			},
 
 			_entityChangedHandler: {
@@ -123,7 +124,7 @@
 		_transitionElement: function(element, maxHeight) {
 
 			element.style.maxHeight = maxHeight + 'px';
-			element.className = element.className + " show";
+			element.classList.add('show');
 
 			// when the next css transition finishes (which should be the one we just triggered)
 			element.addEventListener('transitionend', function(e) {
