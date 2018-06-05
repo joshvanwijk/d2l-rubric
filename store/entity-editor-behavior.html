@@ -91,6 +91,10 @@
 			}
 		},
 
+		_onEntityChanged: function(entity, oldEntity) {
+			// default empty implementation
+		},
+
 		_getSelfLink: function(entity) {
 			if (entity) {
 				return entity.href || (entity.hasLinkByRel('self') ? entity.getLinkByRel('self').href : '');
