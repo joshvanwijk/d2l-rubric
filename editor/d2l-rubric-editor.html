@@ -8,6 +8,7 @@
 <link rel="import" href="../store/entity-store.html">
 <link rel="import" href="../store/entity-behavior.html">
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
+<link rel="import" href="./d2l-rubric-editor-save-status.html">
 
 <!--
 `d2l-rubric-editor`
@@ -22,11 +23,13 @@ Creates and edits a rubric
 			:host {
 				display: block;
 			}
+
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
 				border-radius: 8px;
 				text-align: right;
 			}
+
 			.out-of-text {
 				@apply --d2l-body-compact-text;
 				margin-right: 1rem;
@@ -34,6 +37,7 @@ Creates and edits a rubric
 				margin-bottom: 0.5rem;
 				display: flex;
 			}
+
 			.out-of-loader {
 				margin-top: 24px;
 				border: 1px solid var(--d2l-color-mica);
@@ -41,39 +45,61 @@ Creates and edits a rubric
 				text-align: right;
 				height: 30px;
 			}
+
 			.left {
 				width: 100%;
 				text-align: left;
 				padding-left: 20px;
 			}
+
 			:host-context([dir='rtl']) .left {
 				text-align: right;
 				padding-left: 0;
 				padding-right: 20px;
 			}
+
 			:host(:dir(rtl)) .left {
 				text-align: right;
 				padding-left: 0;
 				padding-right: 20px;
 			}
+
 			.right {
 				width: 100%;
 				text-align: right;
 			}
+
 			:host-context([dir='rtl']) .right {
 				text-align: left;
 				padding-left: 20px;
 			}
+
 			:host(:dir(rtl)) .right {
 				text-align: left;
 				padding-left: 20px;
 			}
+
 			@media screen and (max-width: 614px) {
 				.out-of-container {
 					margin-top: 24px;
 				}
 			}
+
+			#editor-save-status-container {
+				padding-right: 0.12rem
+			}
+
+			:host-context([dir='rtl']) #editor-save-status-container {
+				padding-left: 0.12rem
+			}
+
+			:host(:dir(rtl)) #editor-save-status-container {
+				padding-left: 0.12rem
+			}
 		</style>
+		<div id="editor-save-status-container">
+			<d2l-rubric-editor-save-status id="editor-save-status" class="right"></d2l-rubric-editor-save-status>
+		</div>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]">
 				[[item.alertMessage]]
@@ -86,7 +112,8 @@ Creates and edits a rubric
 			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]"></d2l-rubric-criteria-groups-editor>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
-					<div class="left">[[localize('total')]]</div><div class="right">[[localize('dashOutOf', 'outOf', entity.properties.outOf)]]</div>
+					<div class="left">[[localize('total')]]</div>
+					<div class="right">[[localize('dashOutOf', 'outOf', entity.properties.outOf)]]</div>
 				</div>
 			</div>
 		</div>
@@ -112,38 +139,53 @@ Creates and edits a rubric
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
+			listeners: {
+				'd2l-rubric-entity-save-start': '_onEntitySave',
+				'd2l-rubric-entity-save-error': '_onEntitySave',
+				'd2l-rubric-entity-save-end': '_onEntitySave'
+			},
+
 			observers: [
 				'_onEntityChanged(entity)'
 			],
 
-			ready: function() {
+			ready: function () {
 				this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this));
 			},
 
-			_onEntityChanged: function(entity) {
+			_onEntitySave(e) {
+				var saveStateEl = this.$['editor-save-status'];
+				({
+					'd2l-rubric-entity-save-start': function () { saveStateEl.start() },
+					'd2l-rubric-entity-save-end': function () { saveStateEl.end() },
+					'd2l-rubric-entity-save-error': function () { saveStateEl.error() }
+				})[e.type]();
+			},
+
+			_onEntityChanged: function (entity) {
 				if (entity && entity.hasLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups)) {
 					this._showContent = true;
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 				}
 			},
 
-			_getHref: function(link) {
+			_getHref: function (link) {
 				return link.href;
 			},
 
-			_hasOutOf: function(entity) {
+			_hasOutOf: function (entity) {
 				return entity && entity.properties.outOf;
 			},
 
-			_hideLoading: function(showContent, hasAlerts) {
+			_hideLoading: function (showContent, hasAlerts) {
 				return showContent || hasAlerts;
 			},
 
-			_hideOutOf: function(showContent, hasAlerts) {
+			_hideOutOf: function (showContent, hasAlerts) {
 				return !showContent || hasAlerts;
 			},
 
-			_handleError: function(e) {
+			_handleError: function (e) {
 				this._addAlert('error', e.detail.error.message, this.localize('rubricLoadingErrorMessage'))
 			}
 		});

@@ -59,6 +59,32 @@
 			return fields;
 		},
 
+		_fetch: function (href, opts) {
+			var methodTypes = ['POST', 'PUT', 'DELETE'];
+			var sendSaveEvent = methodTypes.indexOf(opts.method) !== -1;
+			var self = this;
+
+			if (sendSaveEvent) {
+				self.fire('d2l-rubric-entity-save-start');
+			}
+
+			return window.d2lfetch.fetch(href, opts)
+				.then(function(resp) {
+					if (sendSaveEvent && resp.ok) {
+						self.fire('d2l-rubric-entity-save-end');
+					}
+					return resp;
+				})
+				.then(function (resp) {
+					if (!resp.ok) {
+						const error = new Error(`${ resp.statusText } response executing ${ opts.method } on ${ href }.`);
+						self.fire('d2l-rubric-entity-save-error', { error: error });
+						throw error;
+					}
+					return resp.json();
+				});
+		},
+
 		performSirenAction: function(action, fields) {
 			if (!action) {
 				return Promise.reject(new Error('No action given'));
@@ -89,19 +115,11 @@
 
 			var token = this.token;
 
-			return window.d2lfetch.fetch(url.href, {
+			return this._fetch(url.href, {
 				method: action.method,
 				body: body,
 				headers: headers
 			})
-			.then(function(res) {
-				if (!res.ok) {
-					const error = new Error(res.statusText + ' response executing ' + action.method + ' on ' + url.href + '.');
-					this.fire('d2l-rubric-entity-save-error', { error: error });
-					throw error;
-				}
-				return res.json();
-			}.bind(this))
 			.then(function(body) {
 				var entity = window.D2L.Hypermedia.Siren.Parse(body);
 				return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
