@@ -31,12 +31,14 @@
 			fieldset:last-of-type {
 				border-bottom: none;
 			}
+
 		</style>
 
 		<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
 			<fieldset>
 				<legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend>
 				<d2l-rubric-criterion-editor
+					animating="[[animating]]"
 					href="[[_getSelfLink(criterion)]]"
 					token="[[token]]"
 					has-out-of="[[hasOutOf]]"
@@ -56,6 +58,10 @@
 				hasOutOf: {
 					type: Boolean,
 					value: false
+				},
+				animating: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -65,15 +71,27 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
-			observers: [
-				'_onEntityChanged(entity)',
-			],
-
-			_onEntityChanged: function(entity) {
+			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {
 					return;
 				}
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
+				// EXPERIMENTAL animation/transition handling. If oldEntity is undefined, then
+				// this represents the initial render so indicate to child components that we
+				// are animating so that child components don't animate on initial render.
+				// After render, reset the animation flag so that subsequently added criterion will animate.
+
+				// NOTE: this is experimental and will not support use cases where an entity is inserted into
+				// an existing list, in which case the oldEntity will be the entity that was previously
+				// rendered by this component. Once we have that scenario we may have to store state with
+				// each entity to indicate whether it was just newly created (should potentially animate) or
+				// was simply updated.
+				if (!oldEntity) {
+					this.animating = true;
+					Polymer.RenderStatus.afterNextRender(this, function() {
+						this.animating = false;
+					}.bind(this));
+				}
 			},
 
 			_getCriterionLegend: function(index, count) {

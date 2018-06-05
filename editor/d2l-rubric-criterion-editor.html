@@ -22,12 +22,21 @@
 				justify-content: space-between;
 				overflow: hidden;
 
+				opacity: 0;
+				max-height: 0;
+				transition: opacity 100ms ease-out, max-height 400ms ease-out;
+
 				--d2l-textarea: {
 					display: block;
 					height: 100%;
 					overflow: hidden;
 					hyphens: auto;
 				};
+			}
+
+			:host(.show) {
+				max-height: none;
+				opacity: 1;
 			}
 
 			* {
@@ -167,6 +176,10 @@
 				displayNamePlaceholder: {
 					type: Boolean,
 				},
+				animating: {
+					type: Boolean,
+					value: false
+				}
 			},
 
 			behaviors: [
@@ -175,6 +188,19 @@
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
+
+			_onEntityChanged: function(entity, oldEntity) {
+				if (!entity) {
+					return;
+				}
+				if (!this.animating && !oldEntity) {
+					setTimeout(function() {
+						this._transitionElement(this, 200);
+					}.bind(this));
+				} else {
+					this.className = this.className + " show";
+				}
+			},
 
 			_getCriterionCells: function(entity) {
 				var entities = entity && entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
