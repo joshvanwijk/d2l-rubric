@@ -5,7 +5,7 @@
 <link rel="import" href="./localize-behavior.html">
 <link rel="import" href="./d2l-rubric-levels-mobile.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="./siren-entity-behavior.html">
+<link rel="import" href="./store/entity-behavior.html">
 <link rel="import" href="../s-html/s-html.html">
 <link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="./siren-entity.html">
@@ -219,7 +219,7 @@
 			},
 
 			behaviors: [
-				D2L.PolymerBehaviors.Rubric.SirenEntityBehavior,
+				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior
@@ -227,7 +227,8 @@
 
 			observers: [
 				'_onEntityChanged(entity)',
-				'_onAssessmentResultChanged(_entity, assessmentResult)'
+				'_onAssessmentResultChanged(_entity, assessmentResult)',
+				'_selectAssessedLevel(_levelEntities, _assessedLevelHref)'
 			],
 
 			_onEntityChanged: function(entity) {
@@ -249,7 +250,6 @@
 				if (score) {
 					this._score = score.toString();
 				}
-				this._selectAssessedLevel(this._levelEntities, this._assessedLevelHref);
 			},
 
 			_selectAssessedLevel: function(levelEntities, assessedLevelHref) {
@@ -291,6 +291,9 @@
 
 			_handledDescriptionAnimation: function(animation, selected) {
 				var element = this.$.description.querySelector('#' + 'level-description-panel' + selected);
+				if (!element) {
+					return;
+				}
 				element.classList.remove('slide-from-right');
 				element.classList.remove('slide-from-left');
 				element.classList.add(animation);
