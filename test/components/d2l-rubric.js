@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
+/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon, stubWhitelist */
 
 'use strict';
 
@@ -9,6 +9,7 @@ suite('<d2l-rubric>', function() {
 	suiteSetup(function(done) {
 		sandbox = sinon.sandbox.create();
 		element = fixture('basic');
+
 		function waitForLoad(e) {
 			element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
 			if (e.detail.entity.getLinkByRel('self').href === 'data/rubrics/organizations/text-only/199.json') {
@@ -18,6 +19,8 @@ suite('<d2l-rubric>', function() {
 		element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
 		element.href = 'data/rubrics/organizations/text-only/199.json';
 		element.token = 'foozleberries';
+
+		stubWhitelist();
 	});
 
 	suiteTeardown(function() {

@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
+/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon, stubWhitelist */
 
 'use strict';
 
@@ -9,6 +9,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 	suiteSetup(function() {
 		sandbox = sinon.sandbox.create();
 		element = fixture('basic-criteria');
+		stubWhitelist();
 	});
 
 	suiteTeardown(function() {
