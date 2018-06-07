@@ -16,11 +16,10 @@ suite('<d2l-rubric>', function() {
 				done();
 			}
 		}
+		stubWhitelist();
 		element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
 		element.href = 'data/rubrics/organizations/text-only/199.json';
 		element.token = 'foozleberries';
-
-		stubWhitelist();
 	});
 
 	suiteTeardown(function() {
