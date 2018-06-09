@@ -149,44 +149,44 @@ Creates and edits a rubric
 				'_onEntityChanged(entity)'
 			],
 
-			ready: function () {
+			ready: function() {
 				this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this));
 			},
 
-			_onEntitySave(e) {
+			_onEntitySave: function(e) {
 				var saveStateEl = this.$['editor-save-status'];
 				({
-					'd2l-rubric-entity-save-start': function () { saveStateEl.start() },
-					'd2l-rubric-entity-save-end': function () { saveStateEl.end() },
-					'd2l-rubric-entity-save-error': function () { saveStateEl.error() }
+					'd2l-rubric-entity-save-start': function() { saveStateEl.start(); },
+					'd2l-rubric-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-rubric-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
 			},
 
-			_onEntityChanged: function (entity) {
+			_onEntityChanged: function(entity) {
 				if (entity && entity.hasLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups)) {
 					this._showContent = true;
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 				}
 			},
 
-			_getHref: function (link) {
+			_getHref: function(link) {
 				return link.href;
 			},
 
-			_hasOutOf: function (entity) {
+			_hasOutOf: function(entity) {
 				return entity && entity.properties.outOf;
 			},
 
-			_hideLoading: function (showContent, hasAlerts) {
+			_hideLoading: function(showContent, hasAlerts) {
 				return showContent || hasAlerts;
 			},
 
-			_hideOutOf: function (showContent, hasAlerts) {
+			_hideOutOf: function(showContent, hasAlerts) {
 				return !showContent || hasAlerts;
 			},
 
-			_handleError: function (e) {
-				this._addAlert('error', e.detail.error.message, this.localize('rubricLoadingErrorMessage'))
+			_handleError: function(e) {
+				this._addAlert('error', e.detail.error.message, this.localize('rubricLoadingErrorMessage'));
 			}
 		});
 	</script>
