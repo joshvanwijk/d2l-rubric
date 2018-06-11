@@ -26,6 +26,18 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 </head>
 ```
 
+#### Display a Rubric with an assessment:
+```html
+<head>
+	<link rel="import" href="../d2l-rubric/d2l-rubric.html">
+	<d2l-rubric 
+		href="href for rubric" 
+		token="User token" 
+		assessment-href="href for assessment"
+	/>
+</head>
+```
+
 ## Viewing Your Element
 
 ```
