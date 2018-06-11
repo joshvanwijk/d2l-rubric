@@ -24,13 +24,14 @@ base_url = args.base_url
 pwd = args.daily_pwd
 
 support_user_name = 'd2lsupport'
+student_user_name = 'demo_s'
 rubrics_course_id = '131646'
 #defined the rubrics we want to use by id and 'identifier'
-rubric_ids = ['197','198','199','203','227','226']
-rubric_titles = ['default-rubric','custom-points','text-only','multiple-groups','holistic-text','holistic-percent']
+#{'rubricId':['rubric-title','assessments-hash']}
+rubric_ids = {'197':['default-rubric'],'198':['custom-points','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA0'''],
+'199':['text-only'],'203':['multiple-groups','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA5'''],
+'227':['holistic-text'],'226':['holistic-percent','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA4''']}
 
-#create local base paths for each rubric
-base_paths = ['data/rubrics/organizations/%s'%title for title in rubric_titles]
 #where the data will get written to
 demo_data_path = os.path.join(os.getcwd(),'..','..','demo','data')
 test_data_path = os.path.join(os.getcwd(),'..','components','data')
@@ -92,8 +93,30 @@ def create_files(original_json,rubric_id,rub_title):
                 write_json_file(json_file_path,new_response)
                 create_files(new_response,rubric_id,rub_title)
 
+def get_endpoint_assessments(assessment_id,assessment_hash):
+    return 'd2l/api/hm/assessments/assessment/%s/%s'%(assessment_id,assessment_hash)
+
+def get_assessment(assesments_rel_href):
+    my_api_handle = api_requests(base_url,student_user_name,pwd)
+    response = my_api_handle.issueGetRequest(assesments_rel_href)
+    if not response.status_code==200:
+        print ("Something went wrong. Couldn't find this assessment: %s"%assesments_rel_href)
+    assessment_response = response.json()
+    return assessment_response
+
+def correct_assessment_self_link(assessment_file_name,assessment_hash,rub_title):
+    with open('%s.json'%assessment_file_name,'r') as f: 
+        content = f.read()
+        f.seek(0)
+        new_content = content.replace(assessment_hash,assessment_file_name)
+        new_content = new_content.replace('data/rubrics/assessment','data/rubrics/organizations/%s'%rub_title)
+    with open('%s.json'%assessment_file_name,'w') as f:
+        f.write(new_content)
+
 first_dir = os.getcwd()
-for base_path,rub_title,rubric_id in zip(base_paths,rubric_titles,rubric_ids):
+for rubric_id,data in rubric_ids.items():
+    rub_title = data[0]
+    base_path = 'data/rubrics/organizations/%s'%rub_title
     #make sure old data is removed first
     file_save_location = os.path.join(os.getcwd(),base_path)
     if os.path.exists(file_save_location):
@@ -121,6 +144,19 @@ for base_path,rub_title,rubric_id in zip(base_paths,rubric_titles,rubric_ids):
     #create all remaining files
     create_files(rub_groups_response,rubric_id,rub_title)
     os.chdir(first_dir)
+
+    #create assessments file
+    if len(data) > 1:
+        os.chdir(os.path.join(os.getcwd(),base_path,rubric_id))
+        assessment_hash = data[1]
+        assessment_json = get_assessment(get_endpoint_assessments(rubric_id,assessment_hash))
+        assessment_file_name = '%s_assessment'%rub_title
+        with open('%s.json'%assessment_file_name,'w') as f:
+            json.dump(replace_all_links_in_json(rubrics_course_id,assessment_json,rub_title),f,indent=4)
+        #fix self link
+        correct_assessment_self_link(assessment_file_name,assessment_hash,rub_title)
+
+        os.chdir(first_dir)
 
 
 if args.copy_files:

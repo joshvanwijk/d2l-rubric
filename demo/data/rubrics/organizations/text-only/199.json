@@ -44,7 +44,7 @@
             "rel": [
                 "https://api.brightspace.com/rels/organization"
             ],
-            "href": "data/rubrics/organizations/text-only.json"
+            "href": "data/rubrics/text-only.json"
         },
         {
             "rel": [

@@ -47,7 +47,7 @@
             "rel": [
                 "https://api.brightspace.com/rels/organization"
             ],
-            "href": "data/rubrics/organizations/custom-points.json"
+            "href": "data/rubrics/custom-points.json"
         },
         {
             "rel": [

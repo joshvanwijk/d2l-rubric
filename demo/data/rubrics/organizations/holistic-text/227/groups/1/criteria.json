@@ -35,7 +35,26 @@
                             "properties": {
                                 "text": "Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.",
                                 "html": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/0",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                                        },
+                                        {
+                                            "type": "hidden",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "class": [
@@ -48,7 +67,26 @@
                             "properties": {
                                 "text": "",
                                 "html": ""
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/0",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "hidden",
+                                            "name": "description",
+                                            "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "links": [
@@ -92,7 +130,26 @@
                             "properties": {
                                 "text": "Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?",
                                 "html": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/1",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+                                        },
+                                        {
+                                            "type": "hidden",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "class": [
@@ -105,7 +162,26 @@
                             "properties": {
                                 "text": "",
                                 "html": ""
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/1",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "hidden",
+                                            "name": "description",
+                                            "value": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "links": [
@@ -149,7 +225,26 @@
                             "properties": {
                                 "text": "Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.",
                                 "html": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/2",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
+                                        },
+                                        {
+                                            "type": "hidden",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "class": [
@@ -162,7 +257,26 @@
                             "properties": {
                                 "text": "",
                                 "html": ""
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/2",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "hidden",
+                                            "name": "description",
+                                            "value": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "links": [
@@ -206,7 +320,26 @@
                             "properties": {
                                 "text": "Ex mea clita laoreet adversarium, ipsum labitur cu sea.",
                                 "html": "<p>Ex mea clita laoreet adversarium, ipsum labitur cu sea.</p>"
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/3",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Ex mea clita laoreet adversarium, ipsum labitur cu sea.</p>"
+                                        },
+                                        {
+                                            "type": "hidden",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "class": [
@@ -219,7 +352,26 @@
                             "properties": {
                                 "text": "",
                                 "html": ""
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/3",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "hidden",
+                                            "name": "description",
+                                            "value": "<p>Ex mea clita laoreet adversarium, ipsum labitur cu sea.</p>"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "links": [
@@ -263,7 +415,26 @@
                             "properties": {
                                 "text": "In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.",
                                 "html": "<p>In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.</p>"
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/4",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.</p>"
+                                        },
+                                        {
+                                            "type": "hidden",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "class": [
@@ -276,7 +447,26 @@
                             "properties": {
                                 "text": "",
                                 "html": ""
-                            }
+                            },
+                            "actions": [
+                                {
+                                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/4",
+                                    "name": "update",
+                                    "method": "PUT",
+                                    "fields": [
+                                        {
+                                            "type": "hidden",
+                                            "name": "description",
+                                            "value": "<p>In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.</p>"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "links": [
@@ -297,6 +487,23 @@
                                 "up"
                             ],
                             "href": "data/rubrics/organizations/holistic-text/227/groups/1/criteria/1.json"
+                        }
+                    ]
+                }
+            ],
+            "actions": [
+                {
+                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "text",
+                            "name": "name",
+                            "value": ""
                         }
                     ]
                 }
@@ -329,6 +536,18 @@
                 "up"
             ],
             "href": "data/rubrics/organizations/holistic-text/227/groups/1.json"
+        }
+    ],
+    "actions": [
+        {
+            "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria",
+            "name": "create",
+            "method": "POST"
+        },
+        {
+            "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria",
+            "name": "delete",
+            "method": "DELETE"
         }
     ]
 }

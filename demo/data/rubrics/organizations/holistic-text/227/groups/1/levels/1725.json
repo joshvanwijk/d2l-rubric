@@ -26,5 +26,22 @@
             ],
             "href": "data/rubrics/organizations/holistic-text/227/groups/1/levels/1724.json"
         }
+    ],
+    "actions": [
+        {
+            "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/levels/1725",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "name",
+                    "value": "Excellent"
+                }
+            ]
+        }
     ]
 }

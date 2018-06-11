@@ -14,7 +14,26 @@
             "properties": {
                 "text": "Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.",
                 "html": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
-            }
+            },
+            "actions": [
+                {
+                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/0",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             "class": [
@@ -27,7 +46,26 @@
             "properties": {
                 "text": "",
                 "html": ""
-            }
+            },
+            "actions": [
+                {
+                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/0",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "type": "hidden",
+                            "name": "description",
+                            "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                        },
+                        {
+                            "type": "text",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "links": [

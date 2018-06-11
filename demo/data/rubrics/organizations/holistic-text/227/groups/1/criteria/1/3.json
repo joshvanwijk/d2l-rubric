@@ -14,7 +14,26 @@
             "properties": {
                 "text": "Ex mea clita laoreet adversarium, ipsum labitur cu sea.",
                 "html": "<p>Ex mea clita laoreet adversarium, ipsum labitur cu sea.</p>"
-            }
+            },
+            "actions": [
+                {
+                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/3",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": "<p>Ex mea clita laoreet adversarium, ipsum labitur cu sea.</p>"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             "class": [
@@ -27,7 +46,26 @@
             "properties": {
                 "text": "",
                 "html": ""
-            }
+            },
+            "actions": [
+                {
+                    "href": "https://09732783-065e-428f-8491-90d18d0d1f79.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/1/criteria/1/3",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "type": "hidden",
+                            "name": "description",
+                            "value": "<p>Ex mea clita laoreet adversarium, ipsum labitur cu sea.</p>"
+                        },
+                        {
+                            "type": "text",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "links": [

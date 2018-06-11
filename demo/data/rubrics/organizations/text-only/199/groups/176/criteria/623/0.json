@@ -12,8 +12,8 @@
                 "item"
             ],
             "properties": {
-                "text": "Proper use of grammar",
-                "html": "Proper use of grammar"
+                "text": "",
+                "html": ""
             }
         },
         {
@@ -25,8 +25,8 @@
                 "item"
             ],
             "properties": {
-                "text": "Consult Strunk & White",
-                "html": "Consult Strunk & White"
+                "text": "",
+                "html": ""
             }
         }
     ],

@@ -27,6 +27,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -59,6 +74,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -91,6 +121,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -123,6 +168,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -174,6 +234,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -206,6 +281,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -238,6 +328,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -270,6 +375,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -321,6 +441,21 @@
                     "properties": {
                         "score": 4.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -353,6 +488,21 @@
                     "properties": {
                         "score": 3.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -385,6 +535,21 @@
                     "properties": {
                         "score": 2.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -417,6 +582,21 @@
                     "properties": {
                         "score": 1.0
                     },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
                     "links": [
                         {
                             "rel": [
@@ -447,6 +627,19 @@
                     "href": "data/rubrics/organizations/custom-points/198/groups/175/criteria/622.json"
                 }
             ]
+        },
+        {
+            "class": [
+                "richtext",
+                "overall-feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
         }
     ],
     "links": [
@@ -454,13 +647,19 @@
             "rel": [
                 "self"
             ],
-            "href": "data/rubrics/organizations/custom-points/198/assessment.json"
+            "href": "data/rubrics/organizations/custom-points/198/custom-points_assessment.json"
         },
         {
             "rel": [
                 "https://api.brightspace.com/rels/rubric"
             ],
             "href": "data/rubrics/organizations/custom-points/198.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/user"
+            ],
+            "href": "data/rubrics/enrolled-user/sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg.json"
         }
     ]
 }

@@ -551,7 +551,7 @@
                                 "item"
                             ],
                             "properties": {
-                                "text": "ok undefined  undef   null NULL (null)  nil  NIL true false True False TRUE FALSE None hasOwnProperty 9999999999999999999999999999999999999 99999999999999999999999999999999 999999999999999999999999999",
+                                "text": "ok",
                                 "html": "<p>ok</p>"
                             }
                         }
@@ -714,7 +714,7 @@
                             ],
                             "properties": {
                                 "text": "html\n",
-                                "html": "<p>html</p>\n<p><img src=\"/content/enforced/131646-101/Maze2.png?_&amp;d2lSessionVal=snDNB4lmu0zE2GWgfUvzJDg3v\" alt=\"maze\" title=\"Maze\" style=\"max-width: 100%;\"/></p>"
+                                "html": "<p>html</p>\n<p><img src=\"/content/enforced/131646-101/Maze2.png?_&amp;d2lSessionVal=kMuBYejMs3uUImbi9FaXam28a\" alt=\"maze\" title=\"Maze\" style=\"max-width: 100%;\"/></p>"
                             }
                         }
                     ],
@@ -2143,6 +2143,20 @@
                     "href": "data/rubrics/organizations/multiple-groups/203/groups/183/criteria/642.json"
                 }
             ]
+        },
+        {
+            "class": [
+                "richtext",
+                "overridden",
+                "overall-feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "This is for the overall field",
+                "html": "<p>This is for the overall field</p>"
+            }
         }
     ],
     "links": [
@@ -2150,7 +2164,7 @@
             "rel": [
                 "self"
             ],
-            "href": "data/rubrics/organizations/multiple-groups/203/multiple-groups_Assessment.json"
+            "href": "data/rubrics/organizations/multiple-groups/203/multiple-groups_assessment.json"
         },
         {
             "rel": [
