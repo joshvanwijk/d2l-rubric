@@ -3,6 +3,12 @@
         "collection",
         "criteria"
     ],
+    "actions": [{
+      "name": "create",
+      "method": "POST",
+      "href":  "static-data/rubrics/organizations/text-only/199/groups/176/criteria.json",
+      "fields": []
+    }],
     "entities": [
         {
             "class": [

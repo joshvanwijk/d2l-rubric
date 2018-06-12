@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-		<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-		<script src="../bower_components/web-component-tester/browser.js"></script>
-	</head>
-	<body>
-		<script>
-			/* global WCT */
-			'use strict';
-			// Load and run all tests (.html, .js):
-			WCT.loadSuites([
-				'./components/d2l-rubric.html',
-				'./components/d2l-rubric-criteria-group.html',
-				'./components/d2l-rubric-editor.html',
-				'./components/d2l-rubric-criteria-group-editor.html',
-				'./components/d2l-rubric-criterion-editor.html',
-				'./components/d2l-rubric-criterion-description-editor.html',
-				'./components/d2l-rubric-criterion-feedback-editor.html',
-				'./components/d2l-rubric-level-editor.html',
-				'./components/entity-store.html',
-				'./components/d2l-rubric.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-criteria-group.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-editor.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-criteria-group-editor.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-criterion-editor.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-criterion-description-editor.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-criterion-feedback-editor.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric-level-editor.html?wc-shadydom=true&wc-ce=true',
-				'./components/entity-store.html?wc-shadydom=true&wc-ce=true',
-				'./components/d2l-rubric.html?dom=shadow',
-				'./components/d2l-rubric-criteria-group.html?dom=shadow',
-				'./components/d2l-rubric-editor.html?dom=shadow',
-				'./components/d2l-rubric-criteria-group-editor.html?dom=shadow',
-				'./components/d2l-rubric-criterion-editor.html?dom=shadow',
-				'./components/d2l-rubric-criterion-description-editor.html?dom=shadow',
-				'./components/d2l-rubric-criterion-feedback-editor.html?dom=shadow',
-				'./components/d2l-rubric-level-editor.html?dom=shadow',
-				'./components/entity-store.html?dom=shadow',
-				'./components/d2l-rubric.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-criteria-group.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-criteria-group-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-criterion-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-criterion-description-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-criterion-feedback-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-level-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/entity-store.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
-				'./components/d2l-rubric-editor-save-status.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true'
-				]);
-		</script>
-	</body>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../bower_components/web-component-tester/browser.js"></script>
+</head>
+
+<body>
+	<script>
+		/* global WCT */
+		'use strict';
+		// Load and run all tests (.html, .js):
+		WCT.loadSuites([
+			'./components/d2l-rubric.html',
+			'./components/d2l-rubric-criteria-group.html',
+			'./components/d2l-rubric-editor.html',
+			'./components/d2l-rubric-criteria-group-editor.html',
+			'./components/d2l-rubric-criteria-editor.html',
+			'./components/d2l-rubric-criterion-editor.html',
+			'./components/d2l-rubric-criterion-description-editor.html',
+			'./components/d2l-rubric-criterion-feedback-editor.html',
+			'./components/d2l-rubric-level-editor.html',
+			'./components/entity-store.html',
+			'./components/d2l-rubric.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-criteria-group.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-criteria-group-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-criteria-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-criterion-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-criterion-description-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-criterion-feedback-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric-level-editor.html?wc-shadydom=true&wc-ce=true',
+			'./components/entity-store.html?wc-shadydom=true&wc-ce=true',
+			'./components/d2l-rubric.html?dom=shadow',
+			'./components/d2l-rubric-criteria-group.html?dom=shadow',
+			'./components/d2l-rubric-editor.html?dom=shadow',
+			'./components/d2l-rubric-criteria-group-editor.html?dom=shadow',
+			'./components/d2l-rubric-criteria-editor.html?dom=shadow',
+			'./components/d2l-rubric-criterion-editor.html?dom=shadow',
+			'./components/d2l-rubric-criterion-description-editor.html?dom=shadow',
+			'./components/d2l-rubric-criterion-feedback-editor.html?dom=shadow',
+			'./components/d2l-rubric-level-editor.html?dom=shadow',
+			'./components/entity-store.html?dom=shadow',
+			'./components/d2l-rubric.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-criteria-group.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-criteria-group-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-criteria-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-criterion-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-criterion-description-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-criterion-feedback-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/d2l-rubric-level-editor.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true',
+			'./components/entity-store.html?dom=shadow&lazyRegister=true&useNativeCSSProperties=true'
+		]);
+	</script>
+</body>
+
 </html>

@@ -23,7 +23,7 @@
 
 			if (action.fields && action.fields.forEach) {
 				action.fields.forEach(function(field) {
-					if(field.value === undefined){
+					if (field.value === undefined) {
 						return;
 					}
 					// if the field is specified multiple times, assume it is intentional
@@ -59,7 +59,7 @@
 			return fields;
 		},
 
-		_fetch: function (href, opts) {
+		_fetch: function(href, opts) {
 			var methodTypes = ['POST', 'PUT', 'DELETE'];
 			var sendSaveEvent = methodTypes.indexOf(opts.method) !== -1;
 			var self = this;
@@ -75,9 +75,10 @@
 					}
 					return resp;
 				})
-				.then(function (resp) {
+				.then(function(resp) {
 					if (!resp.ok) {
-						const error = new Error(`${ resp.statusText } response executing ${ opts.method } on ${ href }.`);
+						var errMsg = resp.statusText + ' response executing ' + opts.method + ' on ' + href + '.';
+						var error = new Error(errMsg);
 						self.fire('d2l-rubric-entity-save-error', { error: error });
 						throw error;
 					}
@@ -120,10 +121,10 @@
 				body: body,
 				headers: headers
 			})
-			.then(function(body) {
-				var entity = window.D2L.Hypermedia.Siren.Parse(body);
-				return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
-			});
+				.then(function(body) {
+					var entity = window.D2L.Hypermedia.Siren.Parse(body);
+					return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
+				});
 		}
 	};
 
