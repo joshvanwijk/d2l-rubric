@@ -161,12 +161,11 @@
 			],
 
 			observers: [
-				'_entityChanged(entity)',
 				'_onLevelsEntityChanged(_levelsEntity)',
 				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
 			],
 
-			_entityChanged: function(entity) {
+			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
 				}
