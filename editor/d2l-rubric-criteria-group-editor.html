@@ -28,27 +28,11 @@
 				border: var(--d2l-table-border);
 				border-radius: var(--d2l-table-border-radius);
 				width: 100%;
-			}
-
-			.header, .footer {
 				background-color: var(--d2l-table-header-background-color);
 			}
 
 			.header {
-				border-top-left-radius: var(--d2l-table-border-radius);
-				border-top-right-radius: var(--d2l-table-border-radius);
 				border-bottom: var(--d2l-table-border);
-			}
-
-			.footer {
-				border-bottom-left-radius: var(--d2l-table-border-radius);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
-				border-top: var(--d2l-table-border);
-			}
-
-			.footer {
-				text-align: center;
-				padding: 1rem;
 			}
 		</style>
 
@@ -65,9 +49,6 @@
 				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-levels-editor>
 			</div>
 			<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
-			<div class="footer">
-				<div>+ [[localize('addCriterion')]]</div>
-			</div>
 		</div>
 	</template>
 

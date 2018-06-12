@@ -21,6 +21,7 @@
 				flex-direction: row;
 				justify-content: space-between;
 				overflow: hidden;
+				background-color: white;
 
 				opacity: 0;
 				max-height: 0;
@@ -195,10 +196,12 @@
 				}
 				if (!this.animating && !oldEntity) {
 					setTimeout(function() {
-						this._transitionElement(this, 200);
+						this.$$('#name').textarea.select();
+						this._transitionElement(this, 10);
+						this.scrollIntoView();
 					}.bind(this));
 				} else {
-					this.className = this.className + " show";
+					this.classList.add('show');
 				}
 			},
 

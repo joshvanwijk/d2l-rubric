@@ -1,3 +1,5 @@
+<link rel="import" href="../../d2l-fastdom-import/fastdom.html">
+
 <script>
 	// 'use strict';
 
@@ -126,10 +128,12 @@
 			this._hasAlerts = false;
 		},
 
-		_transitionElement: function(element, maxHeight) {
+		_transitionElement: function(element, maxHeightRem) {
 
-			element.style.maxHeight = maxHeight + 'px';
-			element.classList.add('show');
+			fastdom.mutate(function() {
+				element.style.maxHeight = maxHeightRem + 'rem';
+				element.classList.add('show');
+			})
 
 			// when the next css transition finishes (which should be the one we just triggered)
 			element.addEventListener('transitionend', function(e) {
@@ -137,7 +141,9 @@
 				element.removeEventListener('transitionend', arguments.callee);
 
 				// remove "max-height" from the element's inline styles, so it can return to its initial value
-				element.style.maxHeight = null;
+				fastdom.mutate(function() {
+					element.style.maxHeight = null;
+				})
 			});
 		}
 	};
