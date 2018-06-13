@@ -40,14 +40,14 @@
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion">
 			<d2l-rubric-criterion-mobile href="[[_getSelfLink(criterion)]]" levels-href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[isHolistic]]" is-numeric="[[isNumeric]]">
 			</d2l-rubric-criterion-mobile>
-			<div hidden="[[!_hasFeedback(criterion, assessmentResult)]]">
+			<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
 				<div class="feedback-container">
 					<div class="feedback-heading">[[localize('feedback')]]</div>
 					<div class="feedback-text">
 						<s-html html="[[_getFeedback(criterion, assessmentResult)]]"></s-html>
 					</div>
 				</div>
-			</div>
+			</template>
 			<hr class="line"></hr>
 		</template>
 	</template>
