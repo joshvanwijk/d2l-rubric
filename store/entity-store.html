@@ -65,6 +65,9 @@
 				// 	headers.set('cache-control', 'no-cache');
 				// }
 
+				// This call is required because FetchSirenEntityBehavior is now
+				// assumes it is uses as a true behavior rather than as a 'lib',
+				// which is how we were previously using it. Need to revisit.
 				D2L.PolymerBehaviors.FetchSirenEntityBehavior.registered();
 				D2L.PolymerBehaviors.FetchSirenEntityBehavior._fetchEntityWithToken(
 					entityId,
