@@ -31,8 +31,8 @@ suite('<d2l-rubric-criterion-feedback-editor>', function() {
 			setup(function(done) {
 				element = fixture('basic');
 				function waitForLoad(e) {
-					element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json') {
+						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
 						done();
 					}
 				}
@@ -98,8 +98,8 @@ suite('<d2l-rubric-criterion-feedback-editor>', function() {
 			setup(function(done) {
 				element = fixture('readonly');
 				function waitForLoad(e) {
-					element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json') {
+						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
 						done();
 					}
 				}
