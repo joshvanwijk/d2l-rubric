@@ -25,6 +25,11 @@
 	<link rel="import" href="../d2l-rubric-title.html">
 	<link rel="import" href="../../d2l-typography/d2l-typography.html">
 
+	<script>
+		'use strict';
+		(D2L.PolymerBehaviors.FetchSirenEntityBehavior || {})._isWhitelisted = function() { return true; };
+	</script>
+
 	<style is="custom-style" include="demo-pages-shared-styles">
 	</style>
 	<custom-style include="d2l-typography">
