@@ -65,6 +65,7 @@
 				// 	headers.set('cache-control', 'no-cache');
 				// }
 
+				D2L.PolymerBehaviors.FetchSirenEntityBehavior.registered();
 				D2L.PolymerBehaviors.FetchSirenEntityBehavior._fetchEntityWithToken(
 					entityId,
 					function() { return Promise.resolve(token); }
