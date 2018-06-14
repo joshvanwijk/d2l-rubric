@@ -4,6 +4,7 @@
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../../d2l-textarea/d2l-textarea.html">
 <link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../store/entity-behavior.html">
@@ -17,10 +18,11 @@
 	<template strip-whitespace>
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
+				position: relative;
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
-				overflow: hidden;
+				background-color: white;
 				background-color: white;
 
 				opacity: 0;
@@ -101,6 +103,17 @@
 			.col-last.points d2l-text-input {
 				width: 1.5rem;
 			}
+
+			.criterion-remove {
+				position: absolute;
+				align-self: center;
+				right: -2.5rem;
+			}
+
+			[hidden] {
+				display: none;
+			}
+
 		</style>
 
 		<div class="cell col-first criterion-name">
@@ -149,6 +162,10 @@
 			</div>
 		</div>
 		<div hidden="[[!hasOutOf]]" class="cell col-last points">/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input></div>
+		<div class="criterion-remove">
+			<d2l-button-icon id="remove" hidden$="[[!_showRemove(entity, moreThanOneCriterion)]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion')]]"></d2l-button-icon>
+			<d2l-tooltip for="remove" position="bottom">[[localize('removeCriterion')]]</d2l-tooltip>
+		</div>
 	</template>
 
 	<script>
@@ -180,6 +197,9 @@
 				animating: {
 					type: Boolean,
 					value: false
+				},
+				moreThanOneCriterion: {
+					type: Boolean,
 				}
 			},
 
@@ -233,6 +253,10 @@
 				return entity && entity.hasActionByName('update');
 			},
 
+			_canDeleteCriterion: function(entity) {
+				return entity && entity.hasActionByName('delete');
+			},
+
 			_isNameRequired: function(entity) {
 				var action = entity && entity.getActionByName('update');
 				if (!action) {
@@ -263,6 +287,10 @@
 					return localize('criterionPlaceholder');
 				}
 				return '';
+			},
+
+			_showRemove: function(entity, moreThanOneCriterion) {
+				return this._canDeleteCriterion(entity) && moreThanOneCriterion;
 			}
 
 		});
