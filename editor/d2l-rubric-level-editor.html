@@ -24,14 +24,14 @@
 			value="[[entity.properties.name]]"
 			on-change="_saveName"
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
-			aria-label="localize('levelName')]]"
+			aria-label="[[localize('levelName')]]"
 			disabled="[[!_canEdit]]"
 			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-text-input>
-			<template is="dom-if" if="[[_nameInvalid]]">
-				<d2l-tooltip for="level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-			</template>
+		<template is="dom-if" if="[[_nameInvalid]]">
+			<d2l-tooltip for="level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+		</template>
 	</template>
 
 	<script>
