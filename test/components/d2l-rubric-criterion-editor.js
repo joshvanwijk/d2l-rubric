@@ -5,6 +5,10 @@
 suite('<d2l-rubric-criterion-editor>', function() {
 
 	var sandbox;
+	var isVisible = function(elem) {
+		var style = elem && getComputedStyle(elem);
+		return style && style.visibility !== 'hidden' && style.display !== 'none';
+	};
 
 	suiteSetup(function() {
 		sandbox = sinon.sandbox.create();
@@ -102,6 +106,11 @@ suite('<d2l-rubric-criterion-editor>', function() {
 					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
+
+			test('remove is hidden (as moreThanOneCriterion is false)', function() {
+				var removeButton = element.$.remove;
+				expect(isVisible(removeButton)).to.be.false;
+			});
 		});
 
 		suite('readonly', function() {
@@ -123,6 +132,33 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			test('name is disabled', function() {
 				var nameTextArea = element.$$('d2l-textarea');
 				expect(nameTextArea.disabled).to.be.true;
+			});
+
+			test('remove is hidden', function() {
+				var removeButton = element.$.remove;
+				expect(isVisible(removeButton)).to.be.false;
+			});
+		});
+
+		suite('moreThanOneCriterion', function() {
+
+			var element;
+
+			setup(function(done) {
+				element = fixture('moreThanOneCriterion');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json') {
+						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			test('remove is visible', function() {
+				var removeButton = element.$.remove;
+				expect(isVisible(removeButton)).to.be.true;
 			});
 
 		});

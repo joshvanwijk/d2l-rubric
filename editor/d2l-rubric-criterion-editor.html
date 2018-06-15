@@ -163,8 +163,15 @@
 		</div>
 		<div hidden="[[!hasOutOf]]" class="cell col-last points">/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input></div>
 		<div class="criterion-remove">
-			<d2l-button-icon id="remove" hidden$="[[!_showRemove(entity, moreThanOneCriterion)]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion')]]"></d2l-button-icon>
-			<d2l-tooltip for="remove" position="bottom">[[localize('removeCriterion')]]</d2l-tooltip>
+			<d2l-button-icon
+				id="remove"
+				hidden$="[[!_showRemove(entity, moreThanOneCriterion)]]"
+				icon="d2l-tier1:delete"
+				text="[[localize('removeCriterion')]]"
+			></d2l-button-icon>
+			<template is="dom-if" if="[[_showRemove(entity, moreThanOneCriterion)]]">
+				<d2l-tooltip for="remove" position="bottom">[[localize('removeCriterion')]]</d2l-tooltip>
+			</template>
 		</div>
 	</template>
 
@@ -200,6 +207,7 @@
 				},
 				moreThanOneCriterion: {
 					type: Boolean,
+					value: false
 				}
 			},
 
