@@ -5,6 +5,13 @@
     "properties": {
         "name": "Criterion 2"
     },
+    "actions": [
+        {
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ],
     "entities": [
         {
             "class": [

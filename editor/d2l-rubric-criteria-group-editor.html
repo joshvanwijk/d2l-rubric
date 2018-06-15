@@ -13,7 +13,7 @@
 	<template strip-whitespace>
 		<style>
 			:host {
-				display: block;
+				display: flex;
 			}
 
 			* {
@@ -34,6 +34,9 @@
 			.header {
 				border-bottom: var(--d2l-table-border);
 			}
+			.criterion-remove {
+				width: 2.5rem;
+			}
 		</style>
 
 		<template is="dom-repeat" items="[[_alerts]]">
@@ -50,6 +53,7 @@
 			</div>
 			<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
 		</div>
+		<div class="criterion-remove"></div>
 	</template>
 
 	<script>

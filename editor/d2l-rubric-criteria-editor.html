@@ -38,9 +38,6 @@
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 				border-bottom-right-radius: var(--d2l-table-border-radius);
 				border-top: var(--d2l-table-border);
-			}
-
-			.footer {
 				text-align: center;
 				padding: 1rem;
 			}
@@ -56,6 +53,7 @@
 					token="[[token]]"
 					has-out-of="[[hasOutOf]]"
 					display-name-placeholder="[[_isFirst(index)]]"
+					more-than-one-criterion="[[_moreThanOne(criterionCount)]]"
 				>
 				</d2l-rubric-criterion-editor>
 			</fieldset>
@@ -142,6 +140,10 @@
 						this.fire('d2l-rubric-criterion-added');
 					}.bind(this));
 				}
+			},
+
+			_moreThanOne: function(number) {
+				return number > 1;
 			}
 
 		});

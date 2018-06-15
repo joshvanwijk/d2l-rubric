@@ -3,12 +3,14 @@
         "collection",
         "criteria"
     ],
-    "actions": [{
-      "name": "create",
-      "method": "POST",
-      "href":  "static-data/rubrics/organizations/text-only/199/groups/176/criteria.json",
-      "fields": []
-    }],
+    "actions": [
+        {
+            "name": "create",
+            "method": "POST",
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria.json",
+            "fields": []
+        }
+    ],
     "entities": [
         {
             "class": [
@@ -20,17 +22,28 @@
             "properties": {
                 "name": "Criterion 1"
             },
-            "actions": [{
-              "name": "update",
-              "method": "PUT",
-              "href":  "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json",
-              "fields": [{
-                "class": ["required"],
-                "type": "text",
-                "name": "name",
-                "value": "Criterion 1"
-              }]
-            }],
+            "actions": [
+                {
+                    "name": "update",
+                    "method": "PUT",
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "text",
+                            "name": "name",
+                            "value": "Criterion 1"
+                        }
+                    ]
+                },
+                {
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json",
+                    "name": "delete",
+                    "method": "DELETE"
+                }
+            ],
             "entities": [
                 {
                     "class": [
@@ -286,6 +299,13 @@
             "properties": {
                 "name": "Criterion 2"
             },
+            "actions": [
+                {
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json",
+                    "name": "delete",
+                    "method": "DELETE"
+                }
+            ],
             "entities": [
                 {
                     "class": [
@@ -541,6 +561,13 @@
             "properties": {
                 "name": "Criterion 3"
             },
+            "actions": [
+                {
+                    "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/625.json",
+                    "name": "delete",
+                    "method": "DELETE"
+                }
+            ],
             "entities": [
                 {
                     "class": [

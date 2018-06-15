@@ -15,6 +15,11 @@
         "name": "name",
         "value": "Criterion 1"
       }]
+    },
+    {
+        "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json",
+        "name": "delete",
+        "method": "DELETE"
     }],
     "entities": [
         {
