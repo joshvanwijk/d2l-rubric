@@ -32,6 +32,8 @@
 			}
 		},
 
+		// Computes and returns assessmentResult
+		// Also computes (but does not return): selectedCellRelations, anyFeedback
 		_computeAssessmentResultAndCellRelations: function(assessmentEntity) {
 			if (!assessmentEntity) {
 				return;
@@ -46,36 +48,49 @@
 				var selectedCriterionCellEntity = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
 				if (selectedCriterionCellEntity) {
 					var link = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell);
-					var rowLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
 					var level = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level);
+
 					var feedback = selectedCriterionCellEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
-
-					if (prevLink) {
-						// Keeps track of selected cells with another selected cell directly below
-						cellRelationsMap[prevLink] = (prevLevel === level.href);
-					}
-
 					var feedbackHTML = feedback && feedback.properties && feedback.properties.html;
-					this.anyFeedback = feedbackHTML !== null;
+
+					cellRelationsMap = this._updateCellRelations(prevLink, prevLevel, level, cellRelationsMap);
+					assessmentMap = this._updateAssessmentMap(assessmentMap, selectedCriterionCellEntity, link, level, feedbackHTML);
 
 					// We only need to hide the bottom border if the cell has no feedback
 					prevLink = !feedbackHTML && link.href;
 					prevLevel = level.href;
-
-					if (link.href) {
-						var assessment = {
-							score: selectedCriterionCellEntity.properties.score,
-							level: level,
-							feedback: feedbackHTML
-						};
-
-						assessmentMap[link.href] = assessment;
-						assessmentMap[rowLink.href] = assessment;
-					}
 				}
 			}
 			this.selectedCellRelations = cellRelationsMap;
 			return assessmentMap;
+		},
+
+		_updateAssessmentMap: function(assessmentMap, selectedCriterionCellEntity, link, level, feedbackHTML) {
+			var rowLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
+
+			if (feedbackHTML) this.anyFeedback = true;
+
+			if (link.href) {
+				var assessment = {
+					score: selectedCriterionCellEntity.properties.score,
+					level: level,
+					feedback: feedbackHTML
+				};
+
+				assessmentMap[link.href] = assessment;
+				assessmentMap[rowLink.href] = assessment;
+			}
+
+			return assessmentMap;
+		},
+
+		_updateCellRelations: function(prevLink, prevLevel, level, cellRelationsMap) {
+			if (prevLink) {
+				// Keeps track of selected cells with another selected cell directly below
+				cellRelationsMap[prevLink] = (prevLevel === level.href);
+			}
+
+			return cellRelationsMap;
 		},
 
 		_getItem: function(criterionEntity, assessmentResult, itemFetcher) {
