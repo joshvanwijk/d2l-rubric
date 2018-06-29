@@ -78,7 +78,13 @@
 
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.properties && description.properties.html || '';
+				var descHtml = description && description.properties && description.properties.html || '';
+				if (descHtml) {
+					// Remove the margin of any paragraph elements in the description
+					var paragraphStyle = '<style> p { margin: 0; } </style>';
+					return paragraphStyle + descHtml;
+				}
+				return descHtml;
 			},
 
 			_getCellClassName: function(entity) {

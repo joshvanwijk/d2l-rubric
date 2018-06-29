@@ -307,7 +307,13 @@
 			},
 
 			_getCriterionCellText: function(criterionCell) {
-				return criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description).properties.html;
+				var descHtml = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description).properties.html;
+				if (descHtml) {
+					// Remove the margin of any paragraph elements in the description
+					var paragraphStyle = '<style> p { margin: 0; } </style>';
+					return paragraphStyle + descHtml;
+				}
+				return descHtml;
 			},
 
 			_isLevelSelected: function(levelIndex, selected) {
