@@ -94,9 +94,11 @@
 			</d2l-offscreen>
 			<d2l-thead>
 				<d2l-tr aria-rowindex="1">
-					<d2l-td class="group-name">
-						[[entity.properties.name]]
-					</d2l-td>
+					<template is="dom-if" if="[[!_shouldHideRowHeaders(entity, _criteriaEntities)]]">
+						<d2l-td class="group-name">
+							[[entity.properties.name]]
+						</d2l-td>
+					</template>
 					<template is="dom-repeat" items="[[_levels]]" as="level">
 						<d2l-th>
 							<div>
@@ -114,7 +116,11 @@
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
 					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
-						<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
+						<template is="dom-if" if="[[!_shouldHideRowHeaders(entity, _criteriaEntities)]]">
+							<d2l-td class="criteria" role="rowheader">
+								[[criterion.properties.name]]
+							</d2l-td>
+						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
 							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
 								<div class="cell-left-border" hidden="[[!_isSelected(criterionCell, assessmentResult)]]"></div>
@@ -235,6 +241,20 @@
 
 			_hasOutOf: function(entity) {
 				return entity && entity.properties && entity.properties.outOf;
+			},
+
+			_shouldHideRowHeaders: function(entity, criteriaEntities) {
+				if (!entity || entity.properties.name) {
+					return false;
+				} else if (entity.hasClass(this.HypermediaClasses.rubrics.percentage)) {
+					return true;
+				}
+				// Not one of the easy cases above, we could still be in a text-only holistic rubric, or
+				// a numeric rubric with no criteria names or title
+
+				// We assume that if the first criterion has no title then none of them will
+				var firstEntity = criteriaEntities && criteriaEntities[0];
+				return !firstEntity || !firstEntity.properties.name;
 			},
 
 			_isHolistic: function(entity, level) {
