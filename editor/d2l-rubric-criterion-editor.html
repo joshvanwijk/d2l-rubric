@@ -105,8 +105,13 @@
 
 			.criterion-remove {
 				position: absolute;
-				align-self: center;
+				margin: 1rem 0;
 				right: -2.5rem;
+			}
+
+			:host-context([dir='rtl']) .criterion-remove {
+				right: auto;
+				left: -2.5rem;
 			}
 
 			[hidden] {
