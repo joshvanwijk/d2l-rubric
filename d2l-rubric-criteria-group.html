@@ -298,14 +298,20 @@
 				if (!levels) {
 					return 0;
 				}
+
 				var count = levels.length;
+
 				if (assessmentResult && this.anyFeedback) {
 					count += 1; // extra "column" for feedback
 				}
 				if (this._hasOutOf(entity)) {
 					count += 1;
 				}
-				return count + 1; // levels + (feedback) + (OutOf) + criteria
+				if (!this._shouldHideRowHeaders(entity, this._criteriaEntities)) {
+					count += 1;
+				}
+
+				return count; // levels + (feedback) + (OutOf) + (criteria)
 			},
 
 			_getRowIndex: function(criterionIndex) {
