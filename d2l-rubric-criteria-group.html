@@ -55,15 +55,28 @@
 				border: none;
 			}
 			.criterion-cell.selected {
+				position: relative;
 				border-color: var(--d2l-color-celestine);
 				background-color: var(--d2l-color-celestine-plus-2);
 				text-decoration-color: var(--d2l-color-celestine-minus-1);
 				color: var(--d2l-color-celestine-minus-1);
-				border-left: 1px solid var(--d2l-color-celestine);
-				border-bottom: 1px solid var(--d2l-color-celestine);
 			}
-			.criterion-cell.nobottom {
-				border-bottom: none;
+			.cell-left-border {
+				position: absolute;
+				top: 0;
+				left: -0.5px;
+				height: calc(100% + 1px);
+				width: 1px;
+				background-color: var(--d2l-color-celestine);
+			}
+			.cell-bottom-border {
+				position: absolute;
+				bottom: -0.5px;
+				left: 0;
+				width: 100%;
+				height: 1px;
+				background-color: var(--d2l-color-celestine);
+				z-index: 1;
 			}
 		</style>
 
@@ -99,11 +112,13 @@
 				</d2l-tr>
 			</d2l-thead>
 			<d2l-tbody>
-				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion">
-					<d2l-tr aria-rowindex$="[[_getRowIndex(index)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, index)]]">
+				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
+					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
 						<d2l-td class="criteria" role="rowheader">[[criterion.properties.name]]</d2l-td>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, selectedCellRelations)]]">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
+								<div class="cell-left-border" hidden="[[!_isSelected(criterionCell, assessmentResult)]]"></div>
+								<div class="cell-bottom-border" hidden="[[!_hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]"></div>
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
@@ -114,7 +129,7 @@
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
-						<d2l-tspan id="feedback[[index]]" role="cell">
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell">
 							<d2l-rubric-feedback class="feedback-wrapper">
 								<s-html html="[[getAssessmentFeedback(criterion, assessmentResult)]]"></s-html>
 							</d2l-rubric-feedback>
@@ -283,14 +298,29 @@
 				}
 			},
 
-			_getCriteriaClassName: function(criterionCell, assessmentResult, selectedCellRelations) {
+			_isSelected: function(criterionCell, assessmentResult) {
 				var selfLink = this._getSelfLink(criterionCell);
+				return selfLink && assessmentResult && assessmentResult[selfLink];
+			},
+
+			_hasBottom: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteria) {
+				var selfLink = this._getSelfLink(criterionCell);
+
+				var noBottom = noBottomCells && noBottomCells[selfLink];
+				var isLastCell = criterionNum === criteria.length - 1;
+				var hasFeedback = this._hasFeedback(criterionCell, assessmentResult);
+
+				// A cell already has a bottom border in the following cases:
+				// 1. The cell is on top of another selected cell and does not have feedback
+				// 2. The cell is the last cell of a criteria group and does not have feedback
+				var isBottomless = (noBottom || isLastCell) && !hasFeedback;
+				return this._isSelected(criterionCell, assessmentResult) && !isBottomless;
+			},
+
+			_getCriteriaClassName: function(criterionCell, assessmentResult) {
 				var className = 'criterion-cell';
-				if (selfLink && assessmentResult && assessmentResult[selfLink]) {
+				if (this._isSelected(criterionCell, assessmentResult)) {
 					className += ' selected';
-				}
-				if (selectedCellRelations && selectedCellRelations[selfLink]) {
-					className += ' nobottom';
 				}
 				return className;
 			}
