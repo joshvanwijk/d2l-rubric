@@ -129,11 +129,17 @@
 		},
 
 		_transitionElement: function(element, maxHeightRem) {
-
-			fastdom.mutate(function() {
-				element.style.maxHeight = maxHeightRem + 'rem';
-				element.classList.add('show');
-			})
+			if (maxHeightRem) {
+				fastdom.mutate(function() {
+					element.style.maxHeight = maxHeightRem + 'rem';
+					element.classList.add('show');
+				});
+			} else {
+				fastdom.mutate(function() {
+					element.style.maxHeight = element.offsetHeight + 'px';
+					element.classList.remove('show');
+				});
+			}
 
 			// when the next css transition finishes (which should be the one we just triggered)
 			element.addEventListener('transitionend', function(e) {
@@ -143,7 +149,7 @@
 				// remove "max-height" from the element's inline styles, so it can return to its initial value
 				fastdom.mutate(function() {
 					element.style.maxHeight = null;
-				})
+				});
 			});
 		}
 	};
