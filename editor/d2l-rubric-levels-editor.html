@@ -51,13 +51,21 @@
 		</style>
 
 		<div class="cell col-first">
-			<d2l-button-icon icon="d2l-tier2:add" text=[[localize('addLevel')]]></d2l-button-icon>
+			<d2l-button-icon
+				icon="d2l-tier2:add"
+				text=[[localize('addLevel')]]
+				disabled="[[!_canPrepend]]">
+			</d2l-button-icon>
 		</div>
 		<template is="dom-repeat" items="[[_levels]]" as="level">
 			<div class="cell"><d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]"></d2l-rubric-level-editor></div>
 		</template>
 		<div class="cell col-last empty">
-			<d2l-button-icon icon="d2l-tier2:add" text=[[localize('addLevel')]]></d2l-button-icon>
+			<d2l-button-icon
+				icon="d2l-tier2:add"
+				text=[[localize('addLevel')]]
+				disabled="[[!_canAppend]]">
+			</d2l-button-icon>
 		</div>
 	</template>
 
@@ -70,7 +78,15 @@
 				hasOutOf: {
 					type: Boolean,
 					value: false
-				}
+				},
+				_canPrepend: {
+					type: Boolean,
+					computed: '_canPrependLevel(entity)',
+				},
+				_canAppend: {
+					type: Boolean,
+					computed: '_canAppendLevel(entity)',
+				},
 			},
 
 			behaviors: [
@@ -94,7 +110,13 @@
 				if (hasOutOf) {
 					this.$$('.col-last').classList.remove('empty');
 				}
-			}
+			},
+			_canPrependLevel: function (entity) {
+				return entity && entity.hasActionByName('prepend');
+			},
+			_canAppendLevel: function (entity) {
+				return entity && entity.hasActionByName('append');
+			},
 		});
 	</script>
 </dom-module>
