@@ -44,7 +44,7 @@ suite('<d2l-rubric-criteria-editor>', function() {
 				window.D2L.Rubric.EntityStore.clear();
 			});
 
-			test.only('adds criterion', function(done) {
+			test('adds criterion', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
