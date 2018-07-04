@@ -1,8 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="../../d2l-button/d2l-button-icon.html">
 
 <link rel="import" href="../store/entity-behavior.html">
+<link rel="import" href="../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-level-editor.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 
@@ -19,13 +21,44 @@
 			* {
 				box-sizing: border-box;
 			}
+			.cell {
+				padding: 0.5rem;
+			}
+			d2l-button-icon {
+				border-radius: 0.3rem;
+				border: 1px solid var(--d2l-color-mica);
+				background-color: var(--d2l-color-sylvite);
+				height: 100%;
+				align-items: center;
+				--d2l-button-icon-min-height: 100%;
+			}
+			.col-first {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: flex-end;
+			}
+			.col-last {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: flex-start;
+			}
+			.col-last[noOutOf] {
+				min-width: calc(1rem + 44px); /* button width = 44px including border */
+				flex: 0 0 0;
+			}
 		</style>
 
-		<div class="cell col-first"></div>
+		<div class="cell col-first">
+			<d2l-button-icon icon="d2l-tier2:add" text=[[localize('addLevel')]]></d2l-button-icon>
+		</div>
 		<template is="dom-repeat" items="[[_levels]]" as="level">
 			<div class="cell"><d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]"></d2l-rubric-level-editor></div>
 		</template>
-		<div hidden="[[!hasOutOf]]" class="cell col-last"></div>
+		<div class="cell col-last" noOutOf$=[[!hasOutOf]]>
+			<d2l-button-icon icon="d2l-tier2:add" text=[[localize('addLevel')]]></d2l-button-icon>
+		</div>
 	</template>
 
 	<script>
@@ -42,7 +75,8 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				window.D2L.Hypermedia.HMConstantsBehavior
+				window.D2L.Hypermedia.HMConstantsBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
 			observers: [
@@ -55,7 +89,6 @@
 				}
 				this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 			},
-
 		});
 	</script>
 </dom-module>

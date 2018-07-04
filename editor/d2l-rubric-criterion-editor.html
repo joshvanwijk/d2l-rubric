@@ -104,6 +104,11 @@
 				width: 1.5rem;
 			}
 
+			.col-last-empty {
+				min-width: calc(1rem + 44px); /* button width = 44px including border */
+				flex: 0 0 0;
+			}
+
 			.criterion-remove {
 				position: absolute;
 				margin: 1rem 0;
@@ -167,6 +172,7 @@
 			</div>
 		</div>
 		<div hidden="[[!hasOutOf]]" class="cell col-last points">/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input></div>
+		<div hidden="[[hasOutOf]]" class="cell col-last-empty"></div>
 		<div class="criterion-remove">
 			<d2l-button-icon
 				id="remove"
@@ -175,9 +181,6 @@
 				text="[[localize('removeCriterion')]]"
 				on-tap="_handleDeleteCriterion"
 			></d2l-button-icon>
-			<template is="dom-if" if="[[_showRemove(entity, moreThanOneCriterion)]]">
-				<d2l-tooltip for="remove" position="bottom">[[localize('removeCriterion')]]</d2l-tooltip>
-			</template>
 		</div>
 	</template>
 
