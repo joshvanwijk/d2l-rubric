@@ -23,7 +23,7 @@
 				flex-direction: row;
 				justify-content: space-between;
 				background-color: white;
-
+				border: 0;
 				opacity: 0;
 				max-height: 0;
 				transition: opacity 100ms ease-out, max-height 400ms ease-out;
@@ -39,6 +39,7 @@
 			:host(.show) {
 				max-height: none;
 				opacity: 1;
+				border-bottom: var(--d2l-table-border);
 			}
 
 			* {
@@ -129,7 +130,7 @@
 			<d2l-textarea
 				id="name"
 				aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
-				aria-label="[[localize('criterionName')]]"
+				aria-label="[[localize('criterionNameAriaLabel')]]"
 				disabled="[[!_canEdit]]"
 				no-border
 				hover-styles
@@ -178,6 +179,7 @@
 				hidden$="[[!_showRemove(entity, moreThanOneCriterion)]]"
 				icon="d2l-tier1:delete"
 				text="[[localize('removeCriterion')]]"
+				on-tap="_handleDeleteCriterion"
 			></d2l-button-icon>
 		</div>
 	</template>
@@ -306,6 +308,16 @@
 
 			_showRemove: function(entity, moreThanOneCriterion) {
 				return this._canDeleteCriterion(entity) && moreThanOneCriterion;
+			},
+
+			_handleDeleteCriterion: function() {
+				var action = this.entity.getActionByName('delete');
+				if (action) {
+					this._transitionElement(this, 0);
+					this.performSirenAction(action).then(function() {
+						this.fire('d2l-rubric-criterion-deleted');
+					}.bind(this));
+				}
 			}
 
 		});

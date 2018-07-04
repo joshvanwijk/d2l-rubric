@@ -13,7 +13,7 @@
 	<template strip-whitespace>
 		<style>
 			:host {
-				display: flex;
+				display: block;
 			}
 
 			* {
@@ -25,6 +25,10 @@
 			}
 
 			.criteria-group {
+				display: flex;
+			}
+
+			.criteria-group-editable {
 				border: var(--d2l-table-border);
 				border-radius: var(--d2l-table-border-radius);
 				width: 100%;
@@ -45,15 +49,16 @@
 			</d2l-alert>
 		</template>
 
-		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-
 		<div class="criteria-group">
-			<div class="header">
-				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-levels-editor>
+			<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
+			<div class="criteria-group-editable">
+				<div class="header">
+					<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-levels-editor>
+				</div>
+				<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
 			</div>
-			<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
+			<div class="criterion-remove"></div>
 		</div>
-		<div class="criterion-remove"></div>
 	</template>
 
 	<script>
