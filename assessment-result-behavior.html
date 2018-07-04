@@ -108,7 +108,11 @@
 		},
 
 		getAssessmentFeedback: function(criterionEntity, assessmentResult) {
-			return this._getItem(criterionEntity, assessmentResult, function(x) {return x.feedback;});
+			var feedback = this._getItem(criterionEntity, assessmentResult, function(x) {return x.feedback;});
+			if (!feedback) {
+				return feedback;
+			}
+			return '<style> p { margin: 0; } </style>' + feedback;
 		}
 	};
 
