@@ -47,6 +47,7 @@
 				id="remove"
 				icon="d2l-tier1:delete"
 				text="[[localize('removeLevel')]]"
+				on-tap="_handleDeleteLevel"
 				disabled>
 			</d2l-button-icon>
 		</div>
@@ -124,6 +125,14 @@
 			_isAriaInvalid: function(nameInvalid) {
 				return new Boolean(nameInvalid).toString();
 			},
+			_handleDeleteLevel: function() {
+				var action = this.entity.getActionByName('delete');
+				if (action) {
+					this.performSirenAction(action).then(function() {
+						this.fire('d2l-rubric-level-deleted');
+					}.bind(this));
+				}
+			}
 		});
 	</script>
 </dom-module>
