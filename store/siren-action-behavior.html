@@ -82,7 +82,23 @@
 						self.fire('d2l-rubric-entity-save-error', { error: error });
 						throw error;
 					}
-					return resp.json();
+					var linkHeader = resp.headers ? resp.headers.get('Link') : null;
+					var links;
+					if (linkHeader) {
+						links = window.D2L.Rubric.EntityStore.parseLinkHeader(linkHeader);
+					}
+					if (resp.status === 204) {
+						return {
+							body: null,
+							links: links
+						};
+					}
+					return resp.json().then(function(body) {
+						return {
+							body: body,
+							links: links
+						}
+					});
 				});
 		},
 
@@ -121,9 +137,17 @@
 				body: body,
 				headers: headers
 			})
-				.then(function(body) {
-					var entity = window.D2L.Hypermedia.Siren.Parse(body);
-					return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
+				.then(function(result) {
+					var linkRequests = [];
+					if (result.links) {
+						result.links.forEach(function(link) {
+							linkRequests.push(window.D2L.Rubric.EntityStore.fetch2(link.href, token, true));
+						});
+					}
+					var entity = window.D2L.Hypermedia.Siren.Parse(result.body);
+					return Promise.all(linkRequests).then(function() {
+						return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
+					});
 				});
 		}
 	};
