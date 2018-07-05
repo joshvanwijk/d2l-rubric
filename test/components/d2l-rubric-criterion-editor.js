@@ -106,11 +106,6 @@ suite('<d2l-rubric-criterion-editor>', function() {
 					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
-
-			test('remove is hidden (as moreThanOneCriterion is false)', function() {
-				var removeButton = element.$.remove;
-				expect(isVisible(removeButton)).to.be.false;
-			});
 		});
 
 		suite('readonly', function() {
@@ -140,35 +135,13 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 		});
 
-		suite('moreThanOneCriterion', function() {
-
-			var element;
-
-			setup(function(done) {
-				element = fixture('moreThanOneCriterion');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
-			});
-
-			test('remove is visible', function() {
-				var removeButton = element.$.remove;
-				expect(isVisible(removeButton)).to.be.true;
-			});
-		});
-
-		suite('remove criterion', function() {
+		suite('delete criterion', function() {
 
 			var fetch;
 			var element;
 
 			setup(function(done) {
-				element = fixture('moreThanOneCriterion');
+				element = fixture('basic');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json') {
 						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
@@ -182,6 +155,11 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			teardown(function() {
 				fetch && fetch.restore();
 				window.D2L.Rubric.EntityStore.clear();
+			});
+
+			test('remove is visible', function() {
+				var removeButton = element.$.remove;
+				expect(isVisible(removeButton)).to.be.true;
 			});
 
 			test('generates event if deleting fails', function(done) {
