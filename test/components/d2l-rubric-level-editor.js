@@ -104,6 +104,44 @@ suite('<d2l-rubric-level-editor>', function() {
 			});
 		});
 
+		suite('delete level', function() {
+			var fetch;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json') {
+						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Rubric.EntityStore.clear();
+			});
+
+			test('generates event if deleting fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				element.addEventListener('d2l-rubric-entity-save-error', function() {
+					done();
+				});
+				element.$$('#remove').click();
+			});
+		});
+
 		suite('readonly', function() {
 			var element;
 

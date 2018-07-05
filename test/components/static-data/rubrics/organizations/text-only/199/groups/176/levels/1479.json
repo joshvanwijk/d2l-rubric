@@ -6,17 +6,24 @@
         "name": "Level 1",
         "points": 0.0
     },
-    "actions": [{
-        "name": "update",
-        "method": "PUT",
-        "href":  "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
-        "fields": [{
-            "class": ["required"],
-            "type": "text",
-            "name": "name",
-            "value": "Level 1"
-        }]
-      }],
+    "actions": [
+        {
+            "name": "update",
+            "method": "PUT",
+            "href":  "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
+            "fields": [{
+                "class": ["required"],
+                "type": "text",
+                "name": "name",
+                "value": "Level 1"
+            }]
+        },
+        {
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1476.json",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ],
     "links": [
         {
             "rel": [
