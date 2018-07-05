@@ -6,6 +6,13 @@
         "name": "Level 3",
         "points": 0.0
     },
+    "actions": [
+        {
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1477.json",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ],
     "links": [
         {
             "rel": [
