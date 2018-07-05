@@ -44,7 +44,6 @@
 					token="[[token]]"
 					has-out-of="[[hasOutOf]]"
 					display-name-placeholder="[[_isFirst(index)]]"
-					more-than-one-criterion="[[_moreThanOne(criterionCount)]]"
 				>
 				</d2l-rubric-criterion-editor>
 			</fieldset>
@@ -131,10 +130,6 @@
 						this.fire('d2l-rubric-criterion-added');
 					}.bind(this));
 				}
-			},
-
-			_moreThanOne: function(number) {
-				return number > 1;
 			}
 
 		});

@@ -47,7 +47,8 @@
 				id="remove"
 				icon="d2l-tier1:delete"
 				text="[[localize('removeLevel')]]"
-				on-tap="_handleDeleteLevel">
+				on-tap="_handleDeleteLevel"
+				disabled="[[!_canDelete]]">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">
@@ -63,6 +64,10 @@
 				_canEdit: {
 					type: Boolean,
 					computed: '_canEditLevel(entity)',
+				},
+				_canDelete: {
+					type: Boolean,
+					computed: '_canDeleteLevel(entity)',
 				},
 				_nameRequired: {
 					type: Boolean,
@@ -123,6 +128,9 @@
 			},
 			_isAriaInvalid: function(nameInvalid) {
 				return new Boolean(nameInvalid).toString();
+			},
+			_canDeleteLevel: function(entity) {
+				return entity && entity.hasActionByName('delete');
 			},
 			_handleDeleteLevel: function() {
 				var action = this.entity.getActionByName('delete');
