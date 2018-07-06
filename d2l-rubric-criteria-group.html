@@ -94,7 +94,7 @@
 			</d2l-offscreen>
 			<d2l-thead>
 				<d2l-tr aria-rowindex="1">
-					<template is="dom-if" if="[[!_shouldHideRowHeaders()]]">
+					<template is="dom-if" if="[[_showRowHeaders()]]">
 						<d2l-td class="group-name">
 							[[entity.properties.name]]
 						</d2l-td>
@@ -116,7 +116,7 @@
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
 					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
-						<template is="dom-if" if="[[!_shouldHideRowHeaders()]]">
+						<template is="dom-if" if="[[_showRowHeaders()]]">
 							<d2l-td class="criteria" role="rowheader">
 								[[criterion.properties.name]]
 							</d2l-td>
@@ -247,8 +247,8 @@
 				return entity && entity.properties && entity.properties.outOf;
 			},
 
-			_shouldHideRowHeaders: function() {
-				return this.rubricType === 'holistic';
+			_showRowHeaders: function() {
+				return this.rubricType !== 'holistic';
 			},
 
 			_isHolistic: function(entity, level) {
@@ -301,7 +301,7 @@
 				if (this._hasOutOf(entity)) {
 					count += 1;
 				}
-				if (!this._shouldHideRowHeaders()) {
+				if (this._showRowHeaders()) {
 					count += 1;
 				}
 
