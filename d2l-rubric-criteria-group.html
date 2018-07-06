@@ -244,7 +244,8 @@
 			},
 
 			_hasOutOf: function(entity) {
-				return entity && entity.properties && entity.properties.outOf;
+				var outOf = entity && entity.properties && entity.properties.outOf;
+				return !!outOf || outOf === 0;
 			},
 
 			_showRowHeaders: function() {
@@ -275,10 +276,10 @@
 				if (assessmentResult) {
 					score = this.getAssessedScore(criterion, assessmentResult);
 				}
-				if (score) {
-					return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', criterion.properties.outOf);
+				if (score !== null) {
+					return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', criterion.properties.outOf.toString());
 				}
-				return this.localize('outOf', 'outOf', criterion.properties.outOf);
+				return this.localize('outOf', 'outOf', criterion.properties.outOf.toString());
 			},
 
 			_getRowCount: function(criteria) {
