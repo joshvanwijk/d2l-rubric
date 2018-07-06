@@ -59,7 +59,6 @@
 
 				// var headers = new Headers();
 				// headers.set('Authorization', `Bearer ${token}`);
-
 				// if (bypassCache) {
 				// 	headers.set('pragma', 'no-cache');
 				// 	headers.set('cache-control', 'no-cache');
@@ -84,8 +83,70 @@
 					this.setError(entityId, token, err);
 				}.bind(this));
 			}
-
 			return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
+		},
+
+		// This newer version of fetch uses d2l-fetch directly so we can set
+		// appropriate headers to bypass caching done by the d2l-fetch middleware chain
+		// The intention is to replace the fetch implementation that uses d2l-fetch-siren-entity-behavior with this
+		// newer implementation.
+		//
+		// It is also now returning a promise so that the siren-action-behavior can co-ordinate
+		// updating the UI more consistently when dependent entities change as a result of Siren
+		// actions.
+		fetch2: function(entityId, token, bypassCache) {
+			const lowerCaseToken = token.toLowerCase();
+			const lowerCaseEntityId = entityId.toLowerCase();
+
+			var entity = this._initContainer(this._store, entityId, token);
+			if (!entity || bypassCache) {
+
+				var headers = new Headers();
+				headers.set('Authorization', `Bearer ${token}`);
+
+				if (bypassCache) {
+					headers.set('pragma', 'no-cache');
+					headers.set('cache-control', 'no-cache');
+				}
+
+				var request = window.d2lfetch.fetch(entityId, {
+					headers: headers
+				});
+				this._store.get(lowerCaseToken).set(lowerCaseEntityId, {
+					status: 'fetching',
+					entity: null,
+					request: request
+				});
+				return request.then(function(response) {
+					if (response.ok) {
+						return response.json();
+					}
+					return Promise.reject(response.status);
+				})
+				.then(function(body) {
+					var entity = window.D2L.Hypermedia.Siren.Parse(body);
+					this.update(entityId, token, entity);
+					if (bypassCache) {
+						this._invalidationListeners.forEach(function(listener) {
+							listener(entityId, token, entity);
+						});
+					}
+					return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
+				}.bind(this))
+				.catch(function(err) {
+					this.setError(entityId, token, err);
+					return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
+				}.bind(this));
+			}
+
+			if (entity.request) {
+				return request;
+			} else {
+				return new Promise(function(resolve) {
+					this._notify(lowerCaseEntityId, lowerCaseToken, entity.entity);
+					resolve(entity);
+				}.bind(this));
+			}
 		},
 
 		update: function(entityId, token, entity) {
@@ -96,7 +157,11 @@
 			return new Promise(function(resolve) {
 				const entities = this.expand(entity);
 				entities.forEach(function(entity) {
-					this._store.get(lowerCaseToken).set(entity.key.toLowerCase(), { 'status': '', 'entity': entity.value });
+					this._store.get(lowerCaseToken).set(entity.key.toLowerCase(), {
+						status: '',
+						entity: entity.value,
+						request: null
+					});
 					this._notify(entity.key, token, entity.value);
 				}.bind(this));
 
@@ -137,7 +202,12 @@
 			this._initContainer(this._store, entityId, token);
 			return new Promise(function(resolve) {
 
-				this._store.get(lowerCaseToken).set(lowerCaseEntityId, { 'status': 'error', 'entity': null, 'error': error });
+				this._store.get(lowerCaseToken).set(lowerCaseEntityId, {
+					status: 'error',
+					entity: null,
+					error: error,
+					request: null
+				});
 				this._notifyError(entityId, token, error);
 
 				resolve(error);
@@ -173,6 +243,43 @@
 			this._store = new Map();
 			this._listeners = new Map();
 			this._invalidationListeners = new Set();
+		},
+
+		// parse a Link header
+		//
+		// Link:<https://example.org/.meta>; rel=meta
+		//
+		// var r = parseLinkHeader(xhr.getResponseHeader('Link');
+		// r['meta'] outputs https://example.org/.meta
+		//
+		parseLinkHeader: function(links) {
+		    var linkexp = /<[^>]*>\s*(\s*;\s*[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*")))*(,|$)/g;
+		    var paramexp = /[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*"))/g;
+
+		    var matches = links.match(linkexp);
+		    var links = [];
+		    for (var i = 0; i < matches.length; i++) {
+		        var split = matches[i].split('>');
+		        var href = split[0].substring(1);
+				links.push({
+					href: href
+				})
+		        var ps = split[1];
+		        var s = ps.match(paramexp);
+		        for (var j = 0; j < s.length; j++) {
+		            var p = s[j];
+		            var paramsplit = p.split('=');
+		            var name = paramsplit[0];
+		            var val = paramsplit[1].replace(/["']/g, '');
+					if (name === 'rel') {
+						var relsplit = val.split(' ');
+						links[i][name] = relsplit;
+					} else {
+						links[i][name] = val;
+					}
+		        }
+		    }
+		    return links;
 		}
 	};
 })();
