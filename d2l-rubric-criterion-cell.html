@@ -31,6 +31,11 @@
 				text-align: center;
 				margin: auto;
 			}
+			.check-icon.corner {
+				position: absolute;
+				bottom: 5px;
+				right: 5px;
+			}
 			.cell-container {
 				@apply --d2l-body-small-text;
 				min-width: 130px;
@@ -44,10 +49,10 @@
 			<div class="points custom-points" hidden=[[!_hasCustomPoints(entity)]]>
 				[[_localizeCustomPoints(entity)]]
 			</div>
-			<div class="check-icon" hidden="[[!_showSelectedIcon(entity, assessmentResult)]]">
+			<s-html class="criterion-description-richtext" html="[[_getDescription(entity)]]"></s-html>
+			<div class$="[[_getCheckIconClass(entity, assessmentResult)]]" hidden="[[!_showSelectedIcon(assessmentResult)]]">
 				<d2l-icon class="check-icon" icon='d2l-tier1:check'></d2l-icon>
 			</div>
-			<s-html class="criterion-description-richtext" html="[[_getDescription(entity)]]"></s-html>
 		</div>
 
 	</template>
@@ -100,15 +105,21 @@
 				}
 			},
 
-			_showSelectedIcon: function(entity, assessmentResult) {
+			_showSelectedIcon: function(assessmentResult) {
+				return this.href && assessmentResult && assessmentResult[this.href];
+			},
+
+			_getCheckIconClass: function(entity, assessmentResult) {
+				var className = 'check-icon';
 				if (!entity || !assessmentResult) {
-					return false;
+					return className;
 				}
+
 				var descriptionText = this._getDescription(entity);
-				if (this.href && assessmentResult && assessmentResult[this.href]) {
-					return descriptionText === '';
+				if (this.href && assessmentResult[this.href] && descriptionText !== '') {
+					className += ' corner';
 				}
-				return false;
+				return className;
 			}
 		});
 	</script>
