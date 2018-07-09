@@ -1,0 +1,40 @@
+{
+    "class": [
+        "level"
+    ],
+    "properties": {
+        "name": "New Level",
+        "points": 0.0
+    },
+    "actions": [{
+        "name": "update",
+        "method": "PUT",
+        "href":  "static-data/rubrics/organizations/text-only/199/groups/176/levels/1480.json",
+        "fields": [{
+            "class": ["required"],
+            "type": "text",
+            "name": "name",
+            "value": "New Level"
+        }]
+      }],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1480.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json"
+        }
+    ]
+}
