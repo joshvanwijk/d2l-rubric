@@ -134,7 +134,7 @@ Polymer Web-Component to display rubrics
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]"></d2l-rubric-criteria-groups>
+			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]"></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
@@ -173,6 +173,10 @@ Polymer Web-Component to display rubrics
 					type: String,
 					reflectToAttribute: true
 				},
+				rubricType: {
+					type: String,
+					value: null
+				},
 				_assessmentEntity: {
 					type: Object,
 					value: null
@@ -192,6 +196,7 @@ Polymer Web-Component to display rubrics
 
 			_onEntityChanged: function(entity) {
 				if (entity) {
+					this.rubricType = this._findRubricType(entity);
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._showContent = true;
 				}
@@ -207,6 +212,16 @@ Polymer Web-Component to display rubrics
 
 			_getHref: function(link) {
 				return link.href;
+			},
+
+			_findRubricType: function(entity) {
+				if (entity.hasClass(this.HypermediaClasses.rubrics.holistic)) {
+					return 'holistic';
+				} else if (entity.hasClass(this.HypermediaClasses.rubrics.analytic)) {
+					return 'analytic';
+				} else {
+					return null;
+				}
 			},
 
 			_hasOutOf: function(entity) {
