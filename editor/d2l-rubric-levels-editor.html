@@ -118,7 +118,7 @@
 			_handlePrependLevel: function() {
 				var action = this.entity.getActionByName('prepend');
 				if (action) {
-					this.performSirenAction(action, new FormData()).then(function () {
+					this.performSirenAction(action, new FormData()).then(function() {
 						this.fire('d2l-rubric-level-added');
 					}.bind(this));
 				}
@@ -126,7 +126,7 @@
 			_handleAppendLevel: function() {
 				var action = this.entity.getActionByName('append');
 				if (action) {
-					this.performSirenAction(action, new FormData()).then(function () {
+					this.performSirenAction(action, new FormData()).then(function() {
 						this.fire('d2l-rubric-level-added');
 					}.bind(this));
 				}
