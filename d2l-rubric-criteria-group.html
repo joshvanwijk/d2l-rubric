@@ -85,7 +85,7 @@
 		<siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></siren-entity>
 		<siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></siren-entity>
 		<d2l-table
-			aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult)]]"
+			aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult, rubricType)]]"
 			aria-rowcount$="[[_getRowCount(_criteriaEntities)]]"
 			hidden$="[[!_showContent]]"
 		>
@@ -288,7 +288,7 @@
 				return criteria.length + 1; // criteria + levels row
 			},
 
-			_getColumnCount: function(levels, entity, assessmentResult) {
+			_getColumnCount: function(levels, entity, assessmentResult, rubricType) {
 				if (!levels) {
 					return 0;
 				}
@@ -301,7 +301,7 @@
 				if (this._hasOutOf(entity)) {
 					count += 1;
 				}
-				if (this._showRowHeaders()) {
+				if (this._showRowHeaders(rubricType)) {
 					count += 1;
 				}
 
