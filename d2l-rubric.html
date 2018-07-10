@@ -138,8 +138,8 @@ Polymer Web-Component to display rubrics
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
-					<div hidden="[[_hasScore(_score)]]" class="right">[[localize('dashOutOf', 'outOf', entity.properties.outOf)]]</div>
-					<div hidden="[[!_hasScore(_score)]]" class="right">[[localize('scoreOutOf', 'score', _score, 'outOf', entity.properties.outOf)]]</div>
+					<div hidden="[[_hasScore(_score)]]" class="right">[[_localizeDashOutOf(entity)]]</div>
+					<div hidden="[[!_hasScore(_score)]]" class="right">[[_localizeOutOf(entity, _score)]]</div>
 				</div>
 			</div>
 		</div>
@@ -204,7 +204,7 @@ Polymer Web-Component to display rubrics
 
 			_onAssessmentEntityChanged: function(assessmentEntity) {
 				if (assessmentEntity) {
-					this._score = assessmentEntity.properties.score;
+					this._score = this._getScore(assessmentEntity);
 					var feedback = assessmentEntity.getSubEntityByClass('overall-feedback');
 					this._feedback = feedback && feedback.properties && feedback.properties.html || '';
 				}
@@ -212,6 +212,13 @@ Polymer Web-Component to display rubrics
 
 			_getHref: function(link) {
 				return link.href;
+			},
+
+			_getScore: function(entity) {
+				var score = entity && entity.properties && entity.properties.score;
+				if (!!score || score === 0) {
+					return score.toString();
+				}
 			},
 
 			_findRubricType: function(entity) {
@@ -225,8 +232,20 @@ Polymer Web-Component to display rubrics
 			},
 
 			_hasOutOf: function(entity) {
-				return entity && entity.properties.outOf;
+				var outOf = entity && entity.properties && entity.properties.outOf;
+				return !!outOf || outOf === 0;
 			},
+
+			_localizeDashOutOf: function(entity) {
+				if (!this._hasOutOf(entity)) return;
+				return this.localize('dashOutOf', 'outOf', entity.properties.outOf.toString());
+			},
+
+			_localizeOutOf: function(entity, score) {
+				if (!this._hasOutOf(entity) || !score) return;
+				return this.localize('scoreOutOf', 'score', score, 'outOf', entity.properties.outOf.toString());
+			},
+
 			_hideLoading: function(showContent, hasAlerts) {
 				return showContent || hasAlerts;
 			},
@@ -234,7 +253,7 @@ Polymer Web-Component to display rubrics
 				return !showContent || hasAlerts;
 			},
 			_hasScore: function(score) {
-				return !!score || score === 0;
+				return !!score;
 			},
 
 			_hasOverallFeedback: function(feedback) {
