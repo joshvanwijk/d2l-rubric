@@ -123,8 +123,10 @@
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
 							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
-								<div class="cell-left-border" hidden="[[!_isSelected(criterionCell, assessmentResult)]]"></div>
-								<div class="cell-bottom-border" hidden="[[!_hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]"></div>
+								<template is="dom-if" if="[[_isSelected(criterionCell, assessmentResult)]]">
+									<div class="cell-left-border"></div>
+									<div class="cell-bottom-border" hidden="[[!_hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]"></div>
+								</template>
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
@@ -335,7 +337,7 @@
 				// 1. The cell is on top of another selected cell and does not have feedback
 				// 2. The cell is the last cell of a criteria group and does not have feedback
 				var isBottomless = (noBottom || isLastCell) && !hasFeedback;
-				return this._isSelected(criterionCell, assessmentResult) && !isBottomless;
+				return !isBottomless;
 			},
 
 			_getCriteriaClassName: function(criterionCell, assessmentResult) {
