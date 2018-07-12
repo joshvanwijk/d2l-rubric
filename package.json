@@ -1,6 +1,6 @@
 {
   "name": "d2l-rubric",
-  "version": "0.66.0",
+  "version": "0.68.0",
   "description": "Polymer-based web components for D2L Rubrics",
   "private": true,
   "directories": {
@@ -29,12 +29,12 @@
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cross-env": "^5.1.6",
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-brightspace": "^0.4.0",
-    "eslint-plugin-html": "^4.0.3",
+    "eslint-plugin-html": "^4.0.5",
     "frau-ci": "^1.33.2",
-    "polymer-cli": "^1.6.0",
+    "polymer-cli": "^1.7.7",
     "python-shell": "^0.5.0",
     "web-component-tester-istanbul": "^0.10.0"
   }
