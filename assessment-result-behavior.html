@@ -36,7 +36,7 @@
 		// Also computes (but does not return): noBottomCells, anyFeedback
 		_computeAssessmentResultAndCellRelations: function(assessmentEntity) {
 			if (!assessmentEntity) {
-				return {};
+				return null;
 			}
 			var noBottomCellsMap = {};
 			var assessmentMap = {};
