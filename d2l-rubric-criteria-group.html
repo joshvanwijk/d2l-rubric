@@ -275,7 +275,7 @@
 
 			_localizeOutOf: function(criterion, assessmentResult) {
 				var score = null;
-				if (assessmentResult) {
+				if (!this._isNullOrEmpty(assessmentResult)) {
 					score = this.getAssessedScore(criterion, assessmentResult);
 				}
 				if (score !== null) {
@@ -298,7 +298,7 @@
 
 				var count = levels.length;
 
-				if (assessmentResult && this.anyFeedback) {
+				if (!this._isNullOrEmpty(assessmentResult) && this.anyFeedback) {
 					count += 1; // extra "column" for feedback
 				}
 				if (this._hasOutOf(entity)) {
@@ -346,6 +346,10 @@
 					className += ' selected';
 				}
 				return className;
+			},
+
+			_isNullOrEmpty: function(obj) {
+				return !obj || Object.keys(obj).length === 0;
 			}
 		});
 	</script>
