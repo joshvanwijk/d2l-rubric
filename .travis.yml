@@ -1,5 +1,5 @@
 language: node_js
-node_js: 8
+node_js: node
 dist: trusty
 sudo: required
 before_script:
@@ -7,17 +7,16 @@ before_script:
 script:
 - set -e
 - polymer test --skip-plugin sauce
+- 'if [ "$TRAVIS_BRANCH" == "master" ]; then node modify_wct_sauce_config.js; fi'
 - 'if [ "$TRAVIS_BRANCH" == "master" ]; then polymer test --skip-plugin local; fi'
 - 'if [ "$TRAVIS_BRANCH" == "master" ]; then frauci-update-version; fi'
 env:
   global:
   - REPO_NAME=d2l-rubric
-  - SAUCE_USERNAME=Desire2Learn
-  #SAUCE_ACCESS_KEY
   #GITHUB_RELEASE_TOKEN
-  - secure: E2elp4jMul7F+bvOyUEZKIYydcsOKE3gz53FM2I+2HJHeTgUrAxWL+bC2YtEYCUA9TjAFJU19XtBXbwl16ALf9J6/EKLbje2Uq+vjWMZvzJnQ0lWbd1NNRFfhgqhUHoes47eg6OFcuzFSRP5hHSqZuzGsZ6SR/YnmEeAkD7yvKBhGjrBU41qmUnl4hjrkyWj7C8whUDqpW7PowH7Zs+1ke63tM2glIgx4UntT9j+73zx6zhfDRyeBRqMP1LGbBOz5qVIP5AwZI++vBOJdz2re5XRi7cb4obNSBRyCuXNY6kC4V6l9BCEcgD7CCTt7GoNdcAQF1A953mqprZRPK5CAPG9SauG8NLutBsi1deGNb5A9OryOD+gy2iYzx9OCHQLlIjatuaHWBq8gTb5totRV904CbGASvj1qfGWLgDl5xK5AJHCMLN0NHMwxtrTcYOuzQKnndPFNvAcD5IIOM8epUbIp9Q+tsmRdZdl6JL6ST8U6BrGkaYvF1TkI9afxxo+E6eH9g/KR6Nc9HQSWR66UKDYcCYtaQlxYzugkiMGVLJj8DCVLU5nmWu3ziT78Grps/Lwz/VQjEys7tzn8y9licexZOj5rwPMfgR8t6f1+xjeAWnasSAPU/Gy+v/ntTjg6wzJ1MhAzMlCFnXDWbwPiuEje/2ZaB6KYE0GE0+vXdg=
   - secure: RsXBtLXZAa7FVshCZUPfvUrl2LanQcGvmT3OvF4oT+heV3ntEtXtqYs+8MWwxVbJQOwbftkurXEYRExSimSpE1Mpd9vumuFZxv+IGE81rq+4OPR7irBXm9TIU3hjVMox/TpQ6ISJm3PRI3KCbQQPSklt3+t1zsAk2z7eSgh4XEomZiBmft3SJ7mj/AUyNjftMFVPxzNqadnesOh3dJNNlCywfrLl1+OBgbfbQHvuREcQrgrUyosdcksUQhtVDGGiBX43RDw7LnCGoVd7E1wnkn/iqcw8iwYKueZqORol0iH+UGizStRa0oB1PGfe54xwVoTKOll5xEDuPSmi0SsGeeRVBph5stegWqgbDwSFE++LcQad16fMdBNVpgEsl4lC9/l4KtVXpy10hOvEm/jOXhxrotoaf4zmCbvEqnNSWPIokgwBbwrvO3mpUAcXJZA0tu84QN7mZobBiecLiQ1kcEB+YOarNJlWklg5TatP15t6gXVwEedT/d6LUuqa/h3FI8JRix8wwrEuxNE1oJ8KOs136jj1kXQ77jVHFgcmrY+OxdUpWdQtpyR9N6CEgxwh4KXAL6rJuN2NZSWTC9Hq8ObHgCbOVbhmoP0O4tjrVML52dyGqKDzBTc7NOP4XoA6iagMxZswFwSSZHPImdZnyzCCzonMqLNVMZoZiXuZsOs=
 addons:
+  sauce_connect: true
   firefox: latest
   chrome: stable
   apt:
