@@ -2,11 +2,36 @@
 
 <script>
 (function() {
-
 	'use strict';
+
+	function EntityMap() {
+		this._store = new Map();
+		this._cleanEntityId = function(entityId) {
+			return (entityId || '').split('?')[0];
+		};
+	}
+
+	EntityMap.prototype.set = function(entityId, value) {
+		this._store.set(this._cleanEntityId(entityId), value);
+		return this;
+	};
+
+	EntityMap.prototype.get = function(entityId) {
+		return this._store.get(this._cleanEntityId(entityId));
+	};
+
+	EntityMap.prototype.has = function(entityId) {
+		return this._store.has(this._cleanEntityId(entityId));
+	};
+
+	EntityMap.prototype.delete = function(entityId) {
+		return this._store.delete(this._cleanEntityId(entityId));
+	};
 
 	window.D2L = window.D2L || {};
 	window.D2L.Rubric = window.D2L.Rubric || {};
+
+	window.D2L.Rubric.EntityMap = EntityMap;
 
 	window.D2L.Rubric.EntityStore = {
 		_store: new Map(),
@@ -20,7 +45,7 @@
 			const lowerCaseEntityId = entityId.toLowerCase();
 
 			if (!map.has(lowerCaseToken)) {
-				map.set(lowerCaseToken, new Map());
+				map.set(lowerCaseToken, new EntityMap());
 			}
 			var entityMap = map.get(lowerCaseToken);
 			if (init && !entityMap.has(lowerCaseEntityId)) {
@@ -79,9 +104,9 @@
 						});
 					}
 				}.bind(this))
-				.catch(function(err) {
-					this.setError(entityId, token, err);
-				}.bind(this));
+					.catch(function(err) {
+						this.setError(entityId, token, err);
+					}.bind(this));
 			}
 			return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
 		},
@@ -123,20 +148,20 @@
 					}
 					return Promise.reject(response.status);
 				})
-				.then(function(body) {
-					var entity = window.D2L.Hypermedia.Siren.Parse(body);
-					this.update(entityId, token, entity);
-					if (bypassCache) {
-						this._invalidationListeners.forEach(function(listener) {
-							listener(entityId, token, entity);
-						});
-					}
-					return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
-				}.bind(this))
-				.catch(function(err) {
-					this.setError(entityId, token, err);
-					return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
-				}.bind(this));
+					.then(function(body) {
+						var entity = window.D2L.Hypermedia.Siren.Parse(body);
+						this.update(entityId, token, entity);
+						if (bypassCache) {
+							this._invalidationListeners.forEach(function(listener) {
+								listener(entityId, token, entity);
+							});
+						}
+						return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
+					}.bind(this))
+					.catch(function(err) {
+						this.setError(entityId, token, err);
+						return this._store.get(lowerCaseToken).get(lowerCaseEntityId);
+					}.bind(this));
 			}
 
 			if (entity.request) {
@@ -253,33 +278,33 @@
 		// r['meta'] outputs https://example.org/.meta
 		//
 		parseLinkHeader: function(links) {
-		    var linkexp = /<[^>]*>\s*(\s*;\s*[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*")))*(,|$)/g;
-		    var paramexp = /[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*"))/g;
+			var linkexp = /<[^>]*>\s*(\s*;\s*[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*")))*(,|$)/g;
+			var paramexp = /[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*"))/g;
 
-		    var matches = links.match(linkexp);
-		    var links = [];
-		    for (var i = 0; i < matches.length; i++) {
-		        var split = matches[i].split('>');
-		        var href = split[0].substring(1);
-				links.push({
+			var matches = links.match(linkexp);
+			var _links = [];
+			for (var i = 0; i < matches.length; i++) {
+				var split = matches[i].split('>');
+				var href = split[0].substring(1);
+				_links.push({
 					href: href
-				})
-		        var ps = split[1];
-		        var s = ps.match(paramexp);
-		        for (var j = 0; j < s.length; j++) {
-		            var p = s[j];
-		            var paramsplit = p.split('=');
-		            var name = paramsplit[0];
-		            var val = paramsplit[1].replace(/["']/g, '');
+				});
+				var ps = split[1];
+				var s = ps.match(paramexp);
+				for (var j = 0; j < s.length; j++) {
+					var p = s[j];
+					var paramsplit = p.split('=');
+					var name = paramsplit[0];
+					var val = paramsplit[1].replace(/["']/g, '');
 					if (name === 'rel') {
 						var relsplit = val.split(' ');
-						links[i][name] = relsplit;
+						_links[i][name] = relsplit;
 					} else {
-						links[i][name] = val;
+						_links[i][name] = val;
 					}
-		        }
-		    }
-		    return links;
+				}
+			}
+			return _links;
 		}
 	};
 })();

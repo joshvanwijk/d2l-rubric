@@ -66,6 +66,7 @@
   },
   "resolutions": {
     "webcomponentsjs": "^v1.0.0",
-    "d2l-text-input": "^0.4.0"
+    "d2l-text-input": "^0.4.0",
+    "d2l-icons": "^5.0.0"
   }
 }
