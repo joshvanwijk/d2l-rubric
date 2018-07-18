@@ -222,7 +222,7 @@
 				}
 				this._assessedLevelHref = this.getAssessedLevelHref(entity, assessmentResult);
 				var score = this.getAssessedScore(entity, assessmentResult);
-				if (score) {
+				if (score || score === 0) {
 					this._score = score.toString();
 				}
 			},
