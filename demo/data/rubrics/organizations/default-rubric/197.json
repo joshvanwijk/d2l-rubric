@@ -2,8 +2,8 @@
     "class": [
         "rubric",
         "published",
-        "numeric",
-        "analytic"
+        "analytic",
+        "numeric"
     ],
     "properties": {
         "name": "Default Rubric",

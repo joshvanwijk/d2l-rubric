@@ -1,0 +1,169 @@
+{
+    "class": [
+        "collection",
+        "levels"
+    ],
+    "properties": {
+        "total": 4
+    },
+    "entities": [
+        {
+            "class": [
+                "level",
+                "percentage"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 4",
+                "points": 75.0
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1720.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1719.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level",
+                "percentage"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 3",
+                "points": 50.0
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1719.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels.json"
+                },
+                {
+                    "rel": [
+                        "prev"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1720.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1718.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level",
+                "percentage"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 2",
+                "points": 25.0
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1718.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels.json"
+                },
+                {
+                    "rel": [
+                        "prev"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1719.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1717.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level",
+                "percentage"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 1",
+                "points": 0.0
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1717.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels.json"
+                },
+                {
+                    "rel": [
+                        "prev"
+                    ],
+                    "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels/1718.json"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1/levels.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/1.json"
+        }
+    ]
+}
