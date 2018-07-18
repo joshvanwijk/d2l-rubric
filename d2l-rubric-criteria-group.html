@@ -278,7 +278,7 @@
 				if (assessmentResult) {
 					score = this.getAssessedScore(criterion, assessmentResult);
 				}
-				if (score !== null) {
+				if (score || score === 0) {
 					return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', criterion.properties.outOf.toString());
 				}
 				return this.localize('outOf', 'outOf', criterion.properties.outOf.toString());
