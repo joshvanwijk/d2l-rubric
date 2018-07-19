@@ -17,6 +17,17 @@ suite('entity-store', function() {
 
 	suite('smoke test', function() {
 
+		test('entity map', function(done) {
+			var testEntityId = 'http://localhost/1?linkedSubEntities=1';
+			var entityId = 'http://localhost/1';
+			var entityMap = new window.D2L.Rubric.EntityMap();
+			entityMap.set(testEntityId, { id: 1});
+			var entity = entityMap.get(entityId);
+			expect(entity).not.to.be.null;
+			expect(entity.id).to.equal(1);
+			done();
+		});
+
 		test('can fetch leaf entity using listener', function(done) {
 			window.D2L.Rubric.EntityStore.addListener(
 				'data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json',
