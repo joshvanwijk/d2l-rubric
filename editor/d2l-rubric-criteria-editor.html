@@ -3,6 +3,7 @@
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-offscreen/d2l-offscreen.html">
 <link rel="import" href="../../d2l-button/d2l-button-subtle.html">
+<link rel="import" href="../../d2l-dnd-sortable/d2l-dnd-sortable.html">
 
 <link rel="import" href="../store/entity-behavior.html">
 <link rel="import" href="../store/siren-action-behavior.html">
@@ -21,6 +22,8 @@
 			}
 
 			fieldset {
+				display: block;
+				position: relative;
 				border: none;
 				padding: 0;
 				margin: 0;
@@ -33,21 +36,27 @@
 				padding: 0.45rem;
 			}
 
+			.sortable-fallback {
+				display: block;
+			}
+
 		</style>
 
-		<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
-			<fieldset>
-				<legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend>
-				<d2l-rubric-criterion-editor
-					animating="[[animating]]"
-					href="[[_getSelfLink(criterion)]]"
-					token="[[token]]"
-					has-out-of="[[hasOutOf]]"
-					display-name-placeholder="[[_isFirst(index)]]"
-				>
-				</d2l-rubric-criterion-editor>
-			</fieldset>
-		</template>
+		<d2l-dnd-sortable>
+			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
+				<fieldset>
+					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
+					<d2l-rubric-criterion-editor
+						animating="[[animating]]"
+						href="[[_getSelfLink(criterion)]]"
+						token="[[token]]"
+						has-out-of="[[hasOutOf]]"
+						display-name-placeholder="[[_isFirst(index)]]"
+					>
+					</d2l-rubric-criterion-editor>
+				</fieldset>
+			</template>
+		</d2l-dnd-sortable>
 		<div class="footer">
 			<div>
 				<d2l-button-subtle
