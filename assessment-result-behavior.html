@@ -59,6 +59,9 @@
 					// We only need to hide the bottom border if the cell has no feedback
 					prevLink = !feedbackHTML && link.href;
 					prevLevel = level.href;
+				} else {
+					// If there is no selected cell (the rubric is partially assessed) then skip this row
+					prevLink = null;
 				}
 			}
 			this.noBottomCells = noBottomCellsMap;
