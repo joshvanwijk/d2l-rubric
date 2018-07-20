@@ -27,11 +27,9 @@
 			<d2l-rubric-criteria-group-editor hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-criteria-group-editor>
 		</template>
 
-		<template is="dom-if" if="[[_canCreate]]">
-			<d2l-button on-tap="_handleAddCriteriaGroup">
-				[[localize('addCriteriaGroup')]]
-			</d2l-button>
-		</template>
+		<d2l-button on-tap="_handleAddCriteriaGroup" hidden="[[!_canCreate]]" aria-label="[[localize('addCriteriaGroup')]]">
+			[[localize('addCriteriaGroup')]]
+		</d2l-button>
 	</template>
 
 	<script>
