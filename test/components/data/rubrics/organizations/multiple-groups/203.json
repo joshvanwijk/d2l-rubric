@@ -2,8 +2,8 @@
     "class": [
         "rubric",
         "published",
-        "numeric",
-        "analytic"
+        "analytic",
+        "numeric"
     ],
     "properties": {
         "name": "Many Groups Rubric",
@@ -47,7 +47,7 @@
             "rel": [
                 "https://api.brightspace.com/rels/organization"
             ],
-            "href": "data/rubrics/organizations/multiple-groups.json"
+            "href": "data/rubrics/multiple-groups.json"
         },
         {
             "rel": [
