@@ -29,7 +29,7 @@ rubrics_course_id = '131646'
 #defined the rubrics we want to use by id and 'identifier'
 #{'rubricId':['rubric-title','assessments-hash']}
 rubric_ids = {'197':['default-rubric'],'198':['custom-points','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA0'''],
-'199':['text-only'],'203':['multiple-groups','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA5'''],
+'242':['text-only'],'199':['text-only-no-edit'],'203':['multiple-groups','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA5'''],
 '227':['holistic-text'],'226':['holistic-percent','''sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg/UnVicmljfERyb3Bib3h8NzA4''']}
 
 #where the data will get written to

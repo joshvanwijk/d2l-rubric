@@ -1,0 +1,35 @@
+{
+    "class": [
+        "criteria-group",
+        "text"
+    ],
+    "properties": {
+        "name": "Criteria"
+    },
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/criteria"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/groups/220/criteria.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/levels"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/groups/220/levels.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/groups/220.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/groups.json"
+        }
+    ]
+}
