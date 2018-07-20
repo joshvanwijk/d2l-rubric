@@ -36,14 +36,24 @@
 				padding: 0.45rem;
 			}
 
-			.sortable-fallback {
-				display: flex;
-				box-sizing: border-box;
+			.dnd-placeholder::after {
+			  content: "";
+  			  position: absolute;
+  			  top: 0;
+  			  bottom: 0;
+  			  right: 0;
+  			  left: 0;
+			  border-bottom: var(--d2l-table-border);
+			  background-color: white;
+			}
+
+			.dnd-mirror {
+				border: var(--d2l-table-border);
 			}
 
 		</style>
 
-		<!-- <d2l-dnd-sortable> -->
+		<d2l-dnd-sortable placeholder-class="dnd-placeholder" mirror-class="dnd-mirror">
 			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
 				<fieldset>
 					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
@@ -57,7 +67,7 @@
 					</d2l-rubric-criterion-editor>
 				</fieldset>
 			</template>
-		<!-- </d2l-dnd-sortable> -->
+		</d2l-dnd-sortable>
 		<div class="footer">
 			<div>
 				<d2l-button-subtle
