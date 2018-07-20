@@ -38,7 +38,7 @@
                     "rel": [
                         "up"
                     ],
-                    "href": "static-data/rubrics/organizations/text-only/199/groups.json"
+                    "href": "static-data/rubrics/organizations/text-only/199/groups-readonly.json"
                 }
             ]
         }
@@ -48,20 +48,13 @@
             "rel": [
                 "self"
             ],
-            "href": "static-data/rubrics/organizations/text-only/199/groups.json"
+            "href": "static-data/rubrics/organizations/text-only/199/groups-readonly.json"
         },
         {
             "rel": [
                 "up"
             ],
             "href": "static-data/rubrics/organizations/text-only/199.json"
-        }
-    ],
-    "actions": [
-        {
-            "href": "static-data/rubrics/organizations/text-only/199/groups.json",
-            "name": "create",
-            "method": "POST"
         }
     ]
 }
