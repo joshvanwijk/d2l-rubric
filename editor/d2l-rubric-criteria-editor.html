@@ -21,8 +21,8 @@
 				box-sizing: border-box;
 			}
 
-			fieldset {
-				display: block;
+			.fieldset {
+				display: flex;
 				position: relative;
 				border: none;
 				padding: 0;
@@ -37,26 +37,60 @@
 			}
 
 			.dnd-placeholder::after {
-			  content: "";
-  			  position: absolute;
-  			  top: 0;
-  			  bottom: 0;
-  			  right: 0;
-  			  left: 0;
-			  border-bottom: var(--d2l-table-border);
-			  background-color: white;
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				border-bottom: var(--d2l-table-border);
+				background-color: white;
 			}
 
 			.dnd-mirror {
 				border: var(--d2l-table-border);
 			}
 
+			.dnd-touch-mirror::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				background-color: white;
+				background-image: url('./images/dnd-skeleton.svg');
+				background-repeat: no-repeat;
+				background-clip: padding-box;
+				border: var(--d2l-table-border);
+			}
+
+			.dnd-drag-handle {
+				display: block;
+				flex: 0 0 0%;
+				margin: 1rem 0;
+				/* position: absolute;
+				left: -1rem; */
+				cursor: move;
+				width: 40px;
+			}
+
+			d2l-rubric-criterion-editor {
+				flex: 1 1 auto;
+			}
+
 		</style>
 
-		<d2l-dnd-sortable placeholder-class="dnd-placeholder" mirror-class="dnd-mirror">
+		<d2l-dnd-sortable
+			placeholder-class="dnd-placeholder"
+			mirror-class="dnd-mirror"
+			touch-mirror-class="dnd-touch-mirror"
+			handle=".dnd-drag-handle"
+		>
 			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
-				<fieldset>
+				<div class="fieldset">
 					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
+					<span class="dnd-drag-handle">↕</span>
 					<d2l-rubric-criterion-editor
 						animating="[[animating]]"
 						href="[[_getSelfLink(criterion)]]"
@@ -65,7 +99,7 @@
 						display-name-placeholder="[[_isFirst(index)]]"
 					>
 					</d2l-rubric-criterion-editor>
-				</fieldset>
+				</div>
 			</template>
 		</d2l-dnd-sortable>
 		<div class="footer">
