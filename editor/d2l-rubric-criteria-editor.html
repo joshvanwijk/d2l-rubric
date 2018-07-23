@@ -128,7 +128,9 @@
 				if (action) {
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criterion-added');
-						this.fire('iron-announce', { text: this.localize('criterionAdded') }, { bubbles: true });
+						setTimeout(function() {
+							this.fire('iron-announce', { text: this.localize('criterionAdded') }, { bubbles: true });
+						}.bind(this), 2000);
 					}.bind(this));
 				}
 			}
