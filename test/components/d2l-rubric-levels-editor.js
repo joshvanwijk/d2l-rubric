@@ -22,6 +22,34 @@ suite('<d2l-rubric-levels-editor>', function() {
 			expect(element.is).to.equal('d2l-rubric-levels-editor');
 		});
 
+		suite('edit group name', function() {
+
+			var fetch;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels.json') {
+						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Rubric.EntityStore.clear();
+			});
+
+			test('group name text input exists', function(done) {
+				expect(element.$$('#group-name')).to.be.not.null;
+				done()
+			});
+		});
+
 		suite('add level', function() {
 
 			var fetch;
