@@ -49,9 +49,26 @@
 				min-width: calc(1rem + 44px); /* button width = 44px including border */
 				flex: 0 0 0%;
 			}
+
+			#group-name {
+				align-self: flex-start;
+				padding-right: 0.5rem;
+			}
+
+			[hidden] {
+				display: none;
+			}
 		</style>
 
 		<div class="cell col-first">
+			<d2l-text-input
+				id="group-name"
+				value="[[groupName]]"
+				aria-label="[[localize('groupName')]]"
+				hidden="[[!showGroupName]]"
+				disabled="[[!canEditGroupName]]"
+				required prevent-submit>
+			</d2l-text-input>
 			<d2l-button-icon
 				on-tap="_handlePrependLevel"
 				icon="d2l-tier2:add"

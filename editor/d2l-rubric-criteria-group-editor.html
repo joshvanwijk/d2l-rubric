@@ -53,7 +53,14 @@
 			<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 			<div class="criteria-group-editable">
 				<div class="header">
-					<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-levels-editor>
+					<d2l-rubric-levels-editor 
+						href="[[_levelsHref]]"
+						token="[[token]]"
+						has-out-of="[[_hasOutOf(entity)]]"
+						group-name="[[entity.properties.name]]"
+						can-edit-group-name="[[_canEditGroupName(entity)]]"
+						show-group-name="[[showGroupName]]">
+					</d2l-rubric-levels-editor>
 				</div>
 				<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
 			</div>
@@ -114,6 +121,10 @@
 			_handleSaveError: function(e) {
 				this._clearAlerts();
 				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+			},
+
+			_canEditGroupName: function(entity) {
+				return entity && entity.hasActionByName('update');
 			},
 		});
 	</script>
