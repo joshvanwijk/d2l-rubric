@@ -9,10 +9,11 @@
 <link rel="import" href="../store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-criterion-editor.html">
+<link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 
 <dom-module id="d2l-rubric-criteria-editor">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-rubric-editor-cell-styles">
 			:host {
 				display: block;
 			}
@@ -30,28 +31,46 @@
 			}
 
 			.footer {
-				border-bottom-left-radius: var(--d2l-table-border-radius);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
+				display: flex;
+			}
+
+			.footer-buttons {
 				text-align: center;
 				padding: 0.45rem;
+				flex: 1 1 auto;
+				border: var(--d2l-table-border);
+				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+				background-color: var(--d2l-table-header-background-color);
 			}
 
 			.dnd-placeholder::after {
+				/* These margins need to match the width of the left
+				and right gutters to prevent the bottom border being drawn in
+				the gutters */
+				margin: 0 2.5rem 0 2.2rem;
 				content: "";
 				position: absolute;
 				top: 0;
 				bottom: 0;
 				right: 0;
 				left: 0;
-				border-bottom: var(--d2l-table-border);
+				border-top: var(--d2l-table-border);
 				background-color: white;
 			}
 
+			.dnd-placeholder d2l-rubric-criterion-editor {
+				visibility: hidden;
+			}
+
 			.dnd-mirror {
-				border: var(--d2l-table-border);
 			}
 
 			.dnd-touch-mirror::after {
+				/* These margins need to match the width of the left
+				and right gutters to prevent the bottom border being drawn in
+				the gutters */
+				margin: 0 2.5rem 0 2.2rem;
 				content: "";
 				position: absolute;
 				top: 0;
@@ -66,13 +85,7 @@
 			}
 
 			.dnd-drag-handle {
-				display: block;
-				flex: 0 0 0%;
-				margin: 1rem 0;
-				/* position: absolute;
-				left: -1rem; */
 				cursor: move;
-				width: 40px;
 			}
 
 			d2l-rubric-criterion-editor {
@@ -80,7 +93,6 @@
 			}
 
 		</style>
-
 		<d2l-dnd-sortable
 			placeholder-class="dnd-placeholder"
 			mirror-class="dnd-mirror"
@@ -90,7 +102,6 @@
 			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
 				<div class="fieldset">
 					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
-					<span class="dnd-drag-handle">↕</span>
 					<d2l-rubric-criterion-editor
 						animating="[[animating]]"
 						href="[[_getSelfLink(criterion)]]"
@@ -98,12 +109,20 @@
 						has-out-of="[[hasOutOf]]"
 						display-name-placeholder="[[_isFirst(index)]]"
 					>
+						<!-- <span slot="gutter-left" class="dnd-drag-handle"> -->
+						<d2l-icon
+							class="dnd-drag-handle"
+							slot="gutter-left"
+							icon="d2l-tier1:menu-hamburger"
+						></d2l-icon>
+						<!-- </span> -->
 					</d2l-rubric-criterion-editor>
 				</div>
 			</template>
 		</d2l-dnd-sortable>
 		<div class="footer">
-			<div>
+			<div class="gutter-left"></div>
+			<div class="footer-buttons">
 				<d2l-button-subtle
 					on-tap="_handleAddCriterion"
 					icon="d2l-tier1:plus-default"
@@ -112,6 +131,7 @@
 				>
 				</d2l-button-subtle>
 			</div>
+			<div class="gutter-right"></div>
 		</div>
 	</template>
 

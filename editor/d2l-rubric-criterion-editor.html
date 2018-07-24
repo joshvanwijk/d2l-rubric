@@ -39,7 +39,6 @@
 			:host(.show) {
 				max-height: none;
 				opacity: 1;
-				border-bottom: var(--d2l-table-border);
 			}
 
 			* {
@@ -54,10 +53,6 @@
 
 			.criterion-feedback-header {
 				background-color: var(--d2l-table-header-background-color);
-			}
-
-			.criterion-text, .criterion-feedback-header {
-				border-bottom: var(--d2l-table-border);
 			}
 
 			.criterion-name {
@@ -100,19 +95,21 @@
 				font-weight: 700;
 			}
 
-			.col-last.points d2l-text-input {
-				width: 1.5rem;
-			}
-
-			.col-last-empty {
-				min-width: calc(1rem + 44px); /* button width = 44px including border */
+			.col-last[text-only] {
+				min-width: calc(1rem + 2.2rem); /* button width = 44px including border */
 				flex: 0 0 0%;
 			}
 
-			.criterion-remove {
-				position: absolute;
-				margin: 1rem 0;
-				right: -2.5rem;
+			.col-last d2l-text-input {
+				width: 1.5rem;
+			}
+
+			.gutter-left, .gutter-right {
+				margin-top: 1rem;
+			}
+
+			.gutter-left[text-only], .gutter-right[text-only] {
+				margin-top: 0;
 			}
 
 			:host-context([dir='rtl']) .criterion-remove {
@@ -125,7 +122,9 @@
 			}
 
 		</style>
-
+		<div class="gutter-left" text-only$="[[!hasOutOf]]">
+			<slot name="gutter-left"></slot>
+		</div>
 		<div class="cell col-first criterion-name">
 			<d2l-textarea
 				id="name"
@@ -171,9 +170,8 @@
 				</template>
 			</div>
 		</div>
-		<div hidden="[[!hasOutOf]]" class="cell col-last points">/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input></div>
-		<div hidden="[[hasOutOf]]" class="cell col-last-empty"></div>
-		<div class="criterion-remove">
+		<div text-only$="[[!hasOutOf]]" class="cell col-last"><span hidden="[[!hasOutOf]]">/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input></span></div>
+		<div class="gutter-right" text-only$="[[!hasOutOf]]">
 			<d2l-button-icon
 				id="remove"
 				hidden$="[[!_canDelete]]"
