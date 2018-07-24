@@ -9,6 +9,7 @@
 <link rel="import" href="../store/entity-behavior.html">
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
+<link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 
 <!--
 `d2l-rubric-editor`
@@ -151,6 +152,10 @@ Creates and edits a rubric
 
 			ready: function() {
 				this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this));
+			},
+
+			attached: function() {
+				Polymer.IronA11yAnnouncer.requestAvailability();
 			},
 
 			_onEntitySave: function(e) {
