@@ -24,6 +24,7 @@
 			}
 			.cell {
 				padding: 0.5rem;
+				background-color: var(--d2l-table-header-background-color);
 			}
 			d2l-button-icon {
 				border-radius: 0.3rem;
@@ -38,12 +39,22 @@
 				flex-direction: row;
 				align-items: center;
 				justify-content: flex-end;
+				border-top-left-radius: var(--d2l-table-border-radius);
+			}
+			:dir(rtl) .col-first {
+				border-top-left-radius: 0;
+				border-top-right-radius: var(--d2l-table-border-radius);;
 			}
 			.col-last {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
 				justify-content: flex-start;
+				border-top-right-radius: var(--d2l-table-border-radius);
+			}
+ 			:dir(rtl) .col-last {
+				border-top-right-radius: 0;
+				border-top-left-radius: var(--d2l-table-border-radius);;
 			}
 			.col-last[noOutOf] {
 				min-width: calc(1rem + 44px); /* button width = 44px including border */
@@ -51,6 +62,7 @@
 			}
 		</style>
 
+		<div class="gutter-left"></div>
 		<div class="cell col-first">
 			<slot name="group-name-slot"></slot>
 			<d2l-button-icon
@@ -71,6 +83,7 @@
 				disabled="[[!_canAppend]]">
 			</d2l-button-icon>
 		</div>
+		<div class="gutter-right"></div>
 	</template>
 
 	<script>

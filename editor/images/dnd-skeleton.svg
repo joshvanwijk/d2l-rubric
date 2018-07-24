@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 478.666 82.44125"
+   preserveAspectRatio="none"
+   version="1.1"
+   id="svg3719"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="dnd-skeleton.svg">
+  <defs
+     id="defs3713" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="314.63079"
+     inkscape:cy="-209.71577"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="3840"
+     inkscape:window-height="2104"
+     inkscape:window-x="-16"
+     inkscape:window-y="-16"
+     inkscape:window-maximized="1"
+     units="px"
+     fit-margin-top="60"
+     fit-margin-left="60"
+     fit-margin-right="60"
+     fit-margin-bottom="60">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3721"
+       originx="-328.08333"
+       originy="-128.0587" />
+    <sodipodi:guide
+       position="15.874999,17.4625"
+       orientation="0,1640"
+       id="guide4542"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="449.79165,17.4625"
+       orientation="-189.99852,0"
+       id="guide4544"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="449.79165,67.73294"
+       orientation="0,-1640"
+       id="guide4546"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="15.874999,67.73294"
+       orientation="189.99852,0"
+       id="guide4548"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3716">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-202.91667)">
+    <rect
+       id="rect3725"
+       width="140"
+       height="20"
+       x="15.875"
+       y="218.79167"
+       style="opacity:0.5;fill:#565a5c;fill-opacity:1;stroke-width:0.25943726" />
+    <rect
+       style="opacity:0.5;fill:#565a5c;fill-opacity:1;stroke-width:0.25943726"
+       y="249.48293"
+       x="15.875"
+       height="20"
+       width="140"
+       id="rect4550" />
+    <rect
+       style="opacity:0.5;fill:#565a5c;fill-opacity:1;stroke-width:0.25943726"
+       y="218.79167"
+       x="169.33282"
+       height="20"
+       width="140"
+       id="rect4552" />
+    <rect
+       id="rect4554"
+       width="140"
+       height="20"
+       x="169.33282"
+       y="249.48293"
+       style="opacity:0.5;fill:#565a5c;fill-opacity:1;stroke-width:0.25943726" />
+    <rect
+       id="rect4556"
+       width="140"
+       height="20"
+       x="322.79102"
+       y="218.79167"
+       style="opacity:0.5;fill:#565a5c;fill-opacity:1;stroke-width:0.25943726" />
+    <rect
+       style="opacity:0.5;fill:#565a5c;fill-opacity:1;stroke-width:0.25943726"
+       y="249.48293"
+       x="322.79102"
+       height="20"
+       width="140"
+       id="rect4558" />
+  </g>
+</svg>
