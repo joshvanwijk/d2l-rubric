@@ -3,15 +3,17 @@
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-offscreen/d2l-offscreen.html">
 <link rel="import" href="../../d2l-button/d2l-button-subtle.html">
+<link rel="import" href="../../d2l-dnd-sortable/d2l-dnd-sortable.html">
 
 <link rel="import" href="../store/entity-behavior.html">
 <link rel="import" href="../store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-criterion-editor.html">
+<link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 
 <dom-module id="d2l-rubric-criteria-editor">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-rubric-editor-cell-styles">
 			:host {
 				display: block;
 			}
@@ -20,36 +22,111 @@
 				box-sizing: border-box;
 			}
 
-			fieldset {
+			.fieldset {
+				display: flex;
+				position: relative;
 				border: none;
 				padding: 0;
 				margin: 0;
 			}
 
 			.footer {
-				border-bottom-left-radius: var(--d2l-table-border-radius);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
+				display: flex;
+			}
+
+			.footer-buttons {
 				text-align: center;
 				padding: 0.45rem;
+				flex: 1 1 auto;
+				border: var(--d2l-table-border);
+				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+				background-color: var(--d2l-table-header-background-color);
+			}
+
+			.dnd-placeholder::after {
+				/* These margins need to match the width of the left
+				and right gutters to prevent the bottom border being drawn in
+				the gutters */
+				margin: 0 2.5rem 0 2.2rem;
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				border-top: var(--d2l-table-border);
+				background-color: white;
+			}
+
+			.dnd-placeholder d2l-rubric-criterion-editor {
+				visibility: hidden;
+			}
+
+			.dnd-mirror {
+			}
+
+			.dnd-touch-mirror::after {
+				/* These margins need to match the width of the left
+				and right gutters to prevent the bottom border being drawn in
+				the gutters */
+				margin: 0 2.5rem 0 2.2rem;
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				background-color: white;
+				background-image: url('./images/dnd-skeleton.svg');
+				background-repeat: no-repeat;
+				background-clip: padding-box;
+				border: var(--d2l-table-border);
+			}
+
+			.dnd-drag-handle {
+				cursor: move;
+			}
+
+			d2l-rubric-criterion-editor {
+				flex: 1 1 auto;
 			}
 
 		</style>
+		<d2l-dnd-sortable
+			placeholder-class="dnd-placeholder"
+			mirror-class="dnd-mirror"
+			touch-mirror-class="dnd-touch-mirror"
+			handle=".dnd-drag-handle"
+		>
 
-		<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}" >
-			<fieldset>
-				<legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend>
-				<d2l-rubric-criterion-editor
-					animating="[[animating]]"
-					href="[[_getSelfLink(criterion)]]"
-					token="[[token]]"
-					has-out-of="[[hasOutOf]]"
-					display-name-placeholder="[[_isFirst(index)]]"
-				>
-				</d2l-rubric-criterion-editor>
-			</fieldset>
-		</template>
+		<!--
+			MDB: Temporarily removing the off-screen legend as it breaks sortableJS drag and drop
+			Might have to come up with an alternate approach
+		-->
+			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
+				<div class="fieldset">
+					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
+					<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
+					<d2l-rubric-criterion-editor
+						animating="[[animating]]"
+						href="[[_getSelfLink(criterion)]]"
+						token="[[token]]"
+						has-out-of="[[hasOutOf]]"
+						display-name-placeholder="[[_isFirst(index)]]"
+					>
+						<d2l-icon
+							class="dnd-drag-handle"
+							slot="gutter-left"
+							icon="d2l-tier1:menu-hamburger"
+						></d2l-icon>
+					</d2l-rubric-criterion-editor>
+				</div>
+			</template>
+		</d2l-dnd-sortable>
 		<div class="footer">
-			<div>
+			<div class="gutter-left"></div>
+			<div class="footer-buttons">
 				<d2l-button-subtle
 					on-tap="_handleAddCriterion"
 					icon="d2l-tier1:plus-default"
@@ -58,6 +135,7 @@
 				>
 				</d2l-button-subtle>
 			</div>
+			<div class="gutter-right"></div>
 		</div>
 	</template>
 
