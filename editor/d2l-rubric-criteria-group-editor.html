@@ -45,9 +45,8 @@
 			}
 
 			#group-name {
-				position: absolute;
-				width: calc(23% - 0.5rem - 44px);
-				padding: 0.5rem;
+				align-self: flex-start;
+				padding-right: 0.5rem;
 			}
 
 			[hidden] {
@@ -65,19 +64,20 @@
 			<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 			<div class="criteria-group-editable">
 				<div class="header">
-					<d2l-text-input
-						id="group-name"
-						on-change="_saveName"
-						value="[[entity.properties.name]]"
-						aria-label="[[localize('groupName')]]"
-						hidden="[[!showGroupName]]"
-						disabled="[[!_canEditGroupName(entity)]]"
-						required prevent-submit>
-					</d2l-text-input>
 					<d2l-rubric-levels-editor 
 						href="[[_levelsHref]]"
 						token="[[token]]"
 						has-out-of="[[_hasOutOf(entity)]]">
+						<d2l-text-input
+							id="group-name"
+							slot="group-name-slot"
+							value="[[entity.properties.name]]"
+							hidden="[[!showGroupName]]"
+							disabled="[[!_canEditGroupName(entity)]]"
+							on-change="_saveName"
+							aria-label="[[localize('groupName')]]"
+							required prevent-submit>
+						</d2l-text-input>
 					</d2l-rubric-levels-editor>
 				</div>
 				<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
