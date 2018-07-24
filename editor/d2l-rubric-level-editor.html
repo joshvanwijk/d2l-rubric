@@ -50,7 +50,7 @@
 			<d2l-button-icon
 				id="remove"
 				icon="d2l-tier1:delete"
-				text="[[localize('removeLevel')]]"
+				text="[[localize('removeLevel', 'name', entity.properties.name)]]"
 				on-tap="_handleDeleteLevel"
 				hidden="[[!_canDelete]]">
 			</d2l-button-icon>
@@ -139,6 +139,8 @@
 			_handleDeleteLevel: function() {
 				var action = this.entity.getActionByName('delete');
 				if (action) {
+					var name = this.entity.properties.name;
+					this.fire('iron-announce', { text: this.localize('levelDeleted', 'name', name) }, { bubbles: true });
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-deleted');
 					}.bind(this));
