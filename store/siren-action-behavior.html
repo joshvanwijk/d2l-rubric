@@ -67,7 +67,6 @@
 			if (sendSaveEvent) {
 				self.fire('d2l-rubric-entity-save-start');
 			}
-
 			return window.d2lfetch.fetch(href, opts)
 				.then(function(resp) {
 					if (sendSaveEvent && resp.ok) {
@@ -99,6 +98,10 @@
 							links: links
 						};
 					});
+				})
+				.catch(function(reason) {
+					self.fire('d2l-rubric-entity-save-error', { error: new Error(reason.message) });
+					throw reason;
 				});
 		},
 
