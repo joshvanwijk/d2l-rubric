@@ -50,7 +50,7 @@
 			<d2l-button-icon
 				id="remove"
 				icon="d2l-tier1:delete"
-				text="[[localize('removeLevel')]]"
+				text="[[localize('removeLevel', 'name', entity.properties.name)]]"
 				on-tap="_handleDeleteLevel"
 				hidden="[[!_canDelete]]">
 			</d2l-button-icon>
