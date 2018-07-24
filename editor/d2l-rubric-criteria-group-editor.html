@@ -101,6 +101,7 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
+				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
@@ -143,6 +144,17 @@
 
 			_canEditGroupName: function(entity) {
 				return entity && entity.hasActionByName('update');
+			},
+
+			_saveName: function(e) {
+				var action = this.entity.getActionByName('update');
+				if (action) {
+					var fields = new FormData();
+					fields.append('name', e.target.value);
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-group-name-saved');
+					}.bind(this))
+				}
 			},
 		});
 	</script>
