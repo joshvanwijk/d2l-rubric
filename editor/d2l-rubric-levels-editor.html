@@ -118,16 +118,22 @@
 			_handlePrependLevel: function() {
 				var action = this.entity.getActionByName('prepend');
 				if (action) {
+					var firstLevel = this.$$('d2l-rubric-level-editor');
+					var levelName = firstLevel ? firstLevel.entity.properties.name : '';
 					this.performSirenAction(action, new FormData()).then(function() {
 						this.fire('d2l-rubric-level-added');
+						this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', levelName) }, { bubbles: true });
 					}.bind(this));
 				}
 			},
 			_handleAppendLevel: function() {
 				var action = this.entity.getActionByName('append');
 				if (action) {
+					var levels = Polymer.dom(this.root).querySelectorAll('d2l-rubric-level-editor');
+					var levelName = levels.length ? levels[levels.length - 1].entity.properties.name : '';
 					this.performSirenAction(action, new FormData()).then(function() {
 						this.fire('d2l-rubric-level-added');
+						this.fire('iron-announce', { text: this.localize('levelAppended', 'name', levelName) }, { bubbles: true });
 					}.bind(this));
 				}
 			},
