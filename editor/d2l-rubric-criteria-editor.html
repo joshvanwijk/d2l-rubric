@@ -104,8 +104,7 @@
 			MDB: Temporarily removing the off-screen legend as it breaks sortableJS drag and drop
 			Might have to come up with an alternate approach
 		-->
-			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}"
->
+			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
 				<div class="fieldset">
 					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
 					<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>

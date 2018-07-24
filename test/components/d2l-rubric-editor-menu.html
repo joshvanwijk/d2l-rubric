@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html>
+
+<head>
+	<title>d2l-rubric-editor-menul test</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+	<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../../web-component-tester/browser.js"></script>
+
+	<link rel="import" href="../../editor/d2l-rubric-editor-menu.html">
+	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
+</head>
+
+<body>
+	<test-fixture id="basic">
+		<template>
+			<d2l-rubric-editor-menu></d2l-rubric-editor-menu>
+		</template>
+	</test-fixture>
+	<script>
+		'use strict';
+
+		suite('<d2l-rubric-editor>', function () {
+
+			var element, sandbox;
+
+			suiteSetup(function () {
+				sandbox = sinon.sandbox.create();
+				element = fixture('basic');
+				stubWhitelist();
+			});
+
+			suiteTeardown(function () {
+				sandbox.restore();
+			});
+
+			suite('smoke test', function () {
+
+				test('can be instantiated', function () {
+					expect(element.is).to.equal('d2l-rubric-editor-menu');
+				});
+
+				test('can enable reverse levels button', function() {
+					element.reverseLevelsEnabled = true;
+					expect(element.reverseLevelsEnabled).to.equal(true);
+					expect(element.$$('d2l-button-subtle').hidden).to.equal(false);
+				});
+			});
+		});
+	</script>
+
+	<script>
+		a11ySuite('basic');
+	</script>
+</body>
+
+</html>
