@@ -107,8 +107,8 @@
 			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}"
 >
 				<div class="fieldset">
-					<!-- <legend></legend> -->
-					<d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen>
+					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
+					<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
 					<d2l-rubric-criterion-editor
 						animating="[[animating]]"
 						href="[[_getSelfLink(criterion)]]"
