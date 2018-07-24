@@ -178,7 +178,7 @@
 				id="remove"
 				hidden$="[[!_canDelete]]"
 				icon="d2l-tier1:delete"
-				text="[[localize('removeCriterion')]]"
+				text="[[localize('removeCriterion', 'name', entity.properties.name)]]"
 				on-tap="_handleDeleteCriterion"
 			></d2l-button-icon>
 		</div>
@@ -309,7 +309,9 @@
 			_handleDeleteCriterion: function() {
 				var action = this.entity.getActionByName('delete');
 				if (action) {
+					var name = this.entity.properties.name;
 					this._transitionElement(this, 0);
+					this.fire('iron-announce', { text: this.localize('criterionDeleted', 'name', name) }, { bubbles: true });
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criterion-deleted');
 					}.bind(this));
