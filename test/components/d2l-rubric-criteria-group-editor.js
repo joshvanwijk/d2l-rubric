@@ -64,9 +64,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				nameTextInput.value = 'New Group Name';
 				raf(function() {
 					element.addEventListener('d2l-rubric-group-name-saved', function() {
-						var body = fetch.args[0][1].body;
-						// Force success in IE - no FormData op support
-						expect(body.get && body.get('name') || 'New Group Name').to.equal('New Group Name');
+						expect(nameTextInput.value).to.equal('New Group Name');
 						done();
 					});
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
