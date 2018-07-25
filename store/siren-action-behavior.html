@@ -78,7 +78,6 @@
 					if (!resp.ok) {
 						var errMsg = resp.statusText + ' response executing ' + opts.method + ' on ' + href + '.';
 						var error = new Error(errMsg);
-						self.fire('d2l-rubric-entity-save-error', { error: error });
 						throw error;
 					}
 					var linkHeader = resp.headers ? resp.headers.get('Link') : null;

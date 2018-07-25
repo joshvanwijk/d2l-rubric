@@ -26,7 +26,6 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 			var element;
 			var fetch;
-			var raf = window.requestAnimationFrame;
 
 			setup(function(done) {
 				element = fixture('basic');
@@ -78,28 +77,20 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 					}
 				});
 				fetch.returns(promise);
-
-				var groupTextArea = element.$$('#group-name');
-				groupTextArea.value = 'New Group Name';
-				raf(function() {
-					element.addEventListener('d2l-rubric-entity-save-error', function() {
-						flush(function() {
-							done();
-						});
-					});
-					groupTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				element.addEventListener('d2l-rubric-entity-save-error', function() {
+					done();
 				});
+				element.$$('#group-name').dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 			});
 		});
 		
 		suite('readonly', function() {
-
 			var element;
 
 			setup(function(done) {
 				element = fixture('readonly');
 				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176.json') {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176-readonly.json') {
 						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
 						done();
 					}
@@ -108,7 +99,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				element.token = 'foozleberries';
 			});
 			
-			test('group name is disabled without action', function() {
+			test('group name is disabled', function() {
 				expect(element.$$('#group-name').disabled).to.be.true;
 			});
 		});
