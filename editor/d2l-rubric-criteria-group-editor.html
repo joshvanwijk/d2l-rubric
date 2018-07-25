@@ -2,6 +2,7 @@
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
+<link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../store/entity-behavior.html">
 <link rel="import" href="./../d2l-rubric-loading.html">
@@ -57,6 +58,9 @@
 					required prevent-submit>
 				</d2l-text-input>
 			</d2l-rubric-levels-editor>
+			<template is="dom-if" if="[[_nameInvalid]]">
+				<d2l-tooltip for="group-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+			</template>
 			<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
 		</div>
 	</template>
@@ -72,6 +76,12 @@
 					type: Boolean,
 					value: false
 				},
+				_nameInvalid: {
+					type: Boolean
+			},
+				_nameInvalidError: {
+					type: String
+				}
 			},
 
 			behaviors: [
@@ -124,11 +134,25 @@
 			_saveName: function(e) {
 				var action = this.entity.getActionByName('update');
 				if (action) {
-					var fields = new FormData();
-					fields.append('name', e.target.value);
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-group-name-saved');
-					}.bind(this))
+					if (!e.target.value.trim()) {
+						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
+					} else {
+						this._toggleBubble('_nameInvalid', false);
+						var fields = new FormData();
+						fields.append('name', e.target.value);
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-group-name-saved');
+						}.bind(this));
+					}
+				}
+			},
+
+			_toggleBubble: function(invalidId, show, error) {
+				if (show) {
+					this.set(invalidId, true);
+					this.set(invalidId + 'Error', error);
+				} else {
+					this.set(invalidId, false);
 				}
 			},
 		});
