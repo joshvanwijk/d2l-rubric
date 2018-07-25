@@ -1,0 +1,58 @@
+{
+    "class": [
+        "rubric",
+        "published",
+        "analytic",
+        "text"
+    ],
+    "properties": {
+        "name": "Text Only Rubric"
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/text-only-multiple-groups/242.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/text-only-multiple-groups.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/criteria-groups"
+            ],
+            "href": "data/rubrics/organizations/text-only-multiple-groups/242/groups.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/organization"
+            ],
+            "href": "data/rubrics/text-only-multiple-groups.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/overall-levels"
+            ],
+            "href": "data/rubrics/organizations/text-only-multiple-groups/242/overallLevels.json"
+        }
+    ]
+}
