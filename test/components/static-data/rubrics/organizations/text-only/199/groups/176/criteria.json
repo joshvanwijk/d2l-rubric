@@ -8,6 +8,18 @@
       "method": "POST",
       "href":  "static-data/rubrics/organizations/text-only/199/groups/176/criteria.json",
       "fields": []
+    }, {
+      "name": "reorder",
+      "method": "POST",
+      "href":  "static-data/rubrics/organizations/text-only/199/groups/176/criteria-reorder",
+      "fields": [{
+          "name": "newIndex",
+          "type": "number"
+        }, {
+            "name": "oldIndex",
+            "type": "number"
+          }
+        ]
     }],
     "entities": [
         {

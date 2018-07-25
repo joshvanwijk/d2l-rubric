@@ -120,9 +120,9 @@ Creates and edits a rubric
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader">
 		</div>
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-			<d2l-rubrics-editor-menu
+			<d2l-rubric-editor-menu
 				on-d2l-rubric-reverse-levels="_handleReverseLevels"
-				reverse-levels-enabled="[[_present(_reverseLevels)]]"></d2l-rubrics-editor-menu>
+				reverse-levels-enabled="[[_present(_reverseLevels)]]"></d2l-rubric-editor-menu>
 
 			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]"></d2l-rubric-criteria-groups-editor>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
