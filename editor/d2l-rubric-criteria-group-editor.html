@@ -136,15 +136,12 @@
 				if (action) {
 					if (!e.target.value.trim()) {
 						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
-						return;
 					} else {
 						this._toggleBubble('_nameInvalid', false);
-					var fields = new FormData();
-					fields.append('name', e.target.value);
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-group-name-saved');
-						}.bind(this)).catch(function() {
-							this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+						var fields = new FormData();
+						fields.append('name', e.target.value);
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-group-name-saved');
 						}.bind(this));
 					}
 				}
