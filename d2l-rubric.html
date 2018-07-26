@@ -243,13 +243,13 @@ Polymer Web-Component to display rubrics
 			_hasOverallScore: function(entity) {
 				return (
 					entity &&
-					entity.hasLink( 'https://rubrics.api.brightspace.com/rels/overall-levels' ) &&
+					entity.hasLink('https://rubrics.api.brightspace.com/rels/overall-levels') &&
 					!entity.hasClass(this.HypermediaClasses.rubrics.holistic)
 				);
 			},
 
 			_getOverallLevels: function(entity) {
-				return entity.getLink( 'https://rubrics.api.brightspace.com/rels/overall-levels' ).href;
+				return entity.getLink('https://rubrics.api.brightspace.com/rels/overall-levels').href;
 			},
 
 			_localizeDashOutOf: function(entity) {

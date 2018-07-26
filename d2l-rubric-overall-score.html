@@ -100,15 +100,15 @@
 				if (!entity) {
 					return;
 				}
-				this._levels = entity.getSubEntitiesByClass( 'overall-level' ) || [];
+				this._levels = entity.getSubEntitiesByClass('overall-level') || [];
 			},
 
 			_getDescriptionHtml: function(levelEntity) {
-				return levelEntity.getSubEntityByClass( 'description' ).properties.html;
+				return levelEntity.getSubEntityByClass('description').properties.html;
 			},
 
 			_localizePoints: function(levelEntity) {
-				return this.localize( 'points', 'number', levelEntity.properties.rangeStart.toString() );
+				return this.localize('points', 'number', levelEntity.properties.rangeStart.toString());
 			}
 
 		});
