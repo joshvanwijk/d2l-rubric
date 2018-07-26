@@ -1,7 +1,12 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="./localize-behavior.html">
+<link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="../s-html/s-html.html">
+<link rel="import" href="../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="./siren-entity.html">
+
 
 <dom-module id="d2l-rubric-feedback">
 	<template strip-whitespace>
@@ -11,11 +16,12 @@
 			}
 
 			.feedback-arrow {
-				margin-top: -45px;
+				margin-top: calc(-0.5rem - 25px);
 				width: 0;
 				height: 0;
 				border: 12px solid transparent;
 				border-bottom-color: var(--d2l-table-border-color);
+				position: absolute;
 			}
 
 			.feedback-arrow-inner {
@@ -35,20 +41,56 @@
 				padding-top: 18px
 			}
 
+			.clear-feedback-button {
+				float: right;
+			}
+
 			.feedback-text {
 				@apply --d2l-body-compact-text;
 				margin: 0.5rem 0;
 			}
-		</style>
 
-		<div class="feedback-arrow">
-			<div class="feedback-arrow-inner"></div>
-		</div>
-		<div class="feedback-heading">
-			[[localize('feedback')]]
-		</div>
-		<div class="feedback-text">
-			<slot></slot>
+			.feedback-wrapper {
+				padding: 0.5rem;
+				border: 1px solid transparent;
+			}
+
+			.feedback-wrapper:hover {
+				background: var(--d2l-color-sylvite);
+				background-color: var(--d2l-color-sylvite);
+				cursor: pointer;
+			}
+			.feedback-wrapper:hover .feedback-arrow-inner {
+				border-bottom: 12px solid var(--d2l-color-sylvite);
+			}
+			.feedback-wrapper:hover textarea {
+				background: var(--d2l-color-sylvite);
+			}
+			textarea {
+				border: none;
+			}
+
+		</style>
+		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
+		<div class="feedback-wrapper" on-tap="handleTap">
+			<div class="feedback-arrow">
+				<div class="feedback-arrow-inner"></div>
+			</div>
+			<div class="feedback-heading">
+				[[localize('feedback')]]
+				<div class="clear-feedback-button">
+					X
+				</div>
+			</div>
+			<div hidden="[[!_isFeedbackVisible]]" class="feedback-edit">
+				<d2l-textarea
+					id="text-area"
+					value="[[getAssessmentFeedback(criterionEntity, assessmentResult, false)]]"
+					placeholder="Enter Feedback"
+				>
+				</d2l-textarea>
+			</div>
 		</div>
 	</template>
 
@@ -56,9 +98,80 @@
 		Polymer({
 			is: 'd2l-rubric-feedback',
 
+			properties: {
+				criterionHref: String,
+				criterionEntity: Object,
+				assessmentHref: {
+					type: String,
+					value: null
+				},
+				token: String,
+				_isFeedbackVisible: {
+					type: Boolean,
+					value: false
+				},
+				display: {
+					type: Boolean,
+					notify: true,
+					value: false
+				},
+
+				_boundBlurHandler: {
+					type: Function,
+					value: function() {
+						return this._blurHandler.bind(this);
+					}
+				},
+			},
+
 			behaviors: [
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
+
+			observers: [
+				'checkFeedback(criterionEntity, assessmentResult)'
+			],
+
+			attached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) return;
+				elem.addEventListener('blur', this._boundBlurHandler);
+			},
+
+			detached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) return;
+				elem.removeEventListener('blur', this._boundBlurHandler);
+			},
+
+			handleTap: function() {
+				console.log('handling tap');
+				this._isEditing = true;
+				this.display = false;
+			},
+
+			isHidden: function() {
+				return true;
+			},
+
+			checkFeedback: function(criterionEntity, assessmentResult) {
+				this._isFeedbackVisible = this._hasFeedback(criterionEntity, assessmentResult);
+			},
+
+			_hasFeedback: function(entity, assessmentResult) {
+				var entityLink = this._getSelfLink(entity);
+				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
+			},
+
+			_blurHandler: function(event) {
+				var feedback = event.target.$.textarea.value;
+				this.saveFeedback(feedback);
+			},
+
+			saveFeedback: function(feedback) {
+				this.saveAssessmentFeedback(this.criterionHref, feedback);
+			}
 		});
 	</script>
 </dom-module>

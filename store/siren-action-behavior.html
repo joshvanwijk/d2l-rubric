@@ -138,8 +138,39 @@
 				method: action.method,
 				body: body,
 				headers: headers
-			})
-				.then(function(result) {
+			}).then(function(result) {
+					var linkRequests = [];
+					if (result.links) {
+						result.links.forEach(function(link) {
+							linkRequests.push(window.D2L.Rubric.EntityStore.fetch2(link.href, token, true));
+						});
+					}
+					var entity = window.D2L.Hypermedia.Siren.Parse(result.body);
+					return Promise.all(linkRequests).then(function() {
+						return window.D2L.Rubric.EntityStore.update(url.href, token, entity);
+					});
+				});
+		},
+
+		performSirenActionJSON: function(action, fields) {
+			var headers = new Headers();
+			this.token && headers.append('Authorization', 'Bearer ' + this.token);
+			var url = new URL(action.href, window.location.origin);
+			headers.set('Content-Type', action.type);
+			var json = {};
+			fields.forEach(function (field) {
+				json[field.name] = field.value;
+			});
+
+			var body = JSON.stringify(json);
+
+			var token = this.token;
+
+			return this._fetch(url.href, {
+				method: action.method,
+				body: body,
+				headers: headers
+			}).then(function(result) {
 					var linkRequests = [];
 					if (result.links) {
 						result.links.forEach(function(link) {

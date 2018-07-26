@@ -5,6 +5,7 @@
 <link rel="import" href="../d2l-table/d2l-thead.html">
 <link rel="import" href="../d2l-table/d2l-tbody.html">
 <link rel="import" href="../d2l-table/d2l-th.html">
+<link rel="import" href="../d2l-table/d2l-tspan.html">
 <link rel="import" href="./store/entity-behavior.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
@@ -53,7 +54,10 @@
 			}
 			.feedback-wrapper {
 				border: none;
+				margin: -1rem;
+				height: 100%;
 			}
+
 			.criterion-cell.selected {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
@@ -77,6 +81,15 @@
 				height: 1px;
 				background-color: var(--d2l-color-celestine);
 				z-index: 1;
+			}
+			.criterion-cell.assessable {
+				cursor: pointer;
+			}
+			.criterion-cell.assessable:hover {
+				background-color: var(--d2l-color-sylvite);
+			}
+			.criterion-cell.assessable.selected {
+				background-color: var(--d2l-color-celestine-plus-2);
 			}
 		</style>
 
@@ -122,7 +135,7 @@
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]" on-tap="handleTap" data-href$="[[_getSelfLink(criterionCell)]]">
 								<template is="dom-if" if="[[_isSelected(criterionCell, assessmentResult)]]">
 									<div class="cell-left-border"></div>
 									<div class="cell-bottom-border" hidden="[[!_hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]"></div>
@@ -136,10 +149,10 @@
 							</d2l-td>
 						</template>
 					</d2l-tr>
-					<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
+					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum)]]">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell">
-							<d2l-rubric-feedback class="feedback-wrapper">
-								<s-html html="[[getAssessmentFeedback(criterion, assessmentResult)]]"></s-html>
+							<d2l-rubric-feedback class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]">
+
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -176,6 +189,10 @@
 				rubricType: {
 					type: String,
 					value: null
+				},
+				_feedbackDisplay: {
+					type: Array,
+					value: null
 				}
 			},
 
@@ -189,7 +206,8 @@
 
 			observers: [
 				'_onLevelsEntityChanged(_levelsEntity)',
-				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
+				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)',
+				'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 			],
 
 			_onEntityChanged: function(entity) {
@@ -225,6 +243,18 @@
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 			},
 
+			_updateFeedbackDisplay: function(criteriaEntities, assessmentResult) {
+				if (!criteriaEntities || !assessmentResult) {
+					return;
+				}
+
+				var feedbackDisplay = [];
+				for (var i = 0; i < criteriaEntities.length; i++) {
+					feedbackDisplay[i] = this._hasFeedback(criteriaEntities[i], assessmentResult);
+				}
+				this._feedbackDisplay = feedbackDisplay;
+			},
+
 			_getCriteriaLink: function(entity) {
 				var link = entity && entity.getLinkByRel(this.HypermediaRels.Rubrics.criteria);
 				return link && link.href || '';
@@ -242,7 +272,7 @@
 
 			_hasFeedback: function(entity, assessmentResult) {
 				var entityLink = this._getSelfLink(entity);
-				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedback;
+				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
 			},
 
 			_hasOutOf: function(entity) {
@@ -345,7 +375,21 @@
 				if (this._isSelected(criterionCell, assessmentResult)) {
 					className += ' selected';
 				}
+				if (this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
+					className += ' assessable';
+				}
 				return className;
+			},
+
+			handleTap: function(event) {
+				this.assessCriterionCell(event.currentTarget.dataset.href);
+			},
+
+			_displayFeedback: function(feedbackDisplay, criterionNum) {
+				if (!feedbackDisplay) {
+					return;
+				}
+				return feedbackDisplay[criterionNum];
 			}
 		});
 	</script>

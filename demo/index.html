@@ -10,8 +10,8 @@
 	<script>
 		'use strict';
 		window.d2lfetch = {
-			fetch: function (req) {
-				return window.fetch(req);
+			fetch: function (req, opts) {
+				return window.fetch(req, opts);
 			}
 		};
 	</script>
@@ -87,6 +87,17 @@
 	<h3>Rubric loading</h3>
 	<demo-snippet>
 		<d2l-rubric-loading></d2l-rubric-loading>
+	</demo-snippet>
+
+
+	<h2>Rubric, live action</h2>
+
+	<demo-snippet>
+		<d2l-rubric
+			href="https://ca4993db-9b0f-4a72-98eb-3d74738c1a8b.rubrics.api.proddev.d2l/organizations/6609/1"
+			assessment-href="https://ca4993db-9b0f-4a72-98eb-3d74738c1a8b.assessments.api.proddev.d2l/assessment/1/EXFpU7l2infjYIK1HDLowyW3e-wmU0q0Xshz0H8jGgY/UnVicmljfERyb3Bib3h8MQ%3d%3d"
+			token="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjlhZTA2M2FmLWQwZTgtNGFiZS1iMGY5LTIwMzM2N2I1ZjRmYiJ9.eyJ0ZW5hbnRpZCI6ImNhNDk5M2RiLTliMGYtNGE3Mi05OGViLTNkNzQ3MzhjMWE4YiIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiIxNDA1OGEwZi1mMjEyLTQ3NjYtOTYzYy1jMzY5M2NmNmFmZjUiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTMyNjM3NDgzLCJuYmYiOjE1MzI2MzM4ODN9.LwzEGvpA_3hjZwS2sayCsi5G9CIrLYmOXpxEtdisNXSR0QfvwuvL9L9zIyFRrLSvLiUCj8zgJ64R_G5VfDktO0G-CBEhu3i-L9rCjMRb9inETE_7FzIMd1SeE5KznY08fZ9NYT2q4YVTo_v3UskWF3S-SSwmEWte0YTo3s52nhlUIzmm19Gu2rtSR94Lsu-LMU9iK2QqA85AiYFAT0W3eSISWYJSBKFg9gftJLG_sMhvGAj80Ap_Zv_o1qlPPCI7nIMNc965fRs087kparJ0IAeTQ91SbFm-186KjNmh1jx07GkZMDSvyiDuar_7alLQwjrhGYvD-cL_pxElhYhWrA"
+		></d2l-rubric>
 	</demo-snippet>
 </div>
 </body>
