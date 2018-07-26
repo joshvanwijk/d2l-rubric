@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, stubWhitelist */
+/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, flush, sinon, stubWhitelist */
 
 'use strict';
 
@@ -79,6 +79,37 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			});
 		});
 
+		suite('reorder criterion', function() {
+
+			var fetch;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json') {
+						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Rubric.EntityStore.clear();
+			});
+
+			test('enables drag and drop', function(done) {
+				flush(function() {
+					var dragHandle = element.$$('.dnd-drag-handle');
+					expect(dragHandle.icon).to.equal('d2l-tier1:menu-hamburger');
+					done();
+				});
+			});
+		});
+
 		suite('readonly', function() {
 
 			var element;
@@ -98,6 +129,11 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			test('add is disabled', function() {
 				var addButton = element.$$('d2l-button-subtle');
 				expect(addButton.disabled).to.be.true;
+			});
+
+			test('drag drop is disabled', function() {
+				var dragHandle = element.$$('.d2l-drag-handle');
+				expect(dragHandle).to.be.null;
 			});
 		});
 	});

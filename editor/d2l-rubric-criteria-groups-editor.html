@@ -92,7 +92,7 @@
 					}.bind(this));
 				}
 			},
-			_canCreateCriteriaGroup(entity) {
+			_canCreateCriteriaGroup: function(entity) {
 				return entity && entity.hasActionByName('create');
 			},
 			_showGroupName: function(entity) {
