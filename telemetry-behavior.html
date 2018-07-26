@@ -1,0 +1,53 @@
+<link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="./store/entity-behavior.html">
+<link rel="import" href="../d2l-telemetry-browser-client/d2l-telemetry-browser-client.html">
+
+<script>
+	'use strict';
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
+
+	/**
+	 * Behavior for sending telemetry messages to the telemetry service
+	 * @polymerBehavior
+	 */
+	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
+		properties: {
+            // Maybe update this with eg. rubricMode, originTool, isMobile
+		},
+
+		logEvent: function(entity) {
+				// TODO: Eventually change this to be Prd/Dev/QA based on environment
+				const endpoint = 'https://dev.telemetryservice.brightspace.com/dev/api/events';
+
+				const client = new window.d2lTelemetryBrowserClient.Client({
+					endpoint
+				});
+
+				const id = this._getSelfLink(entity);
+				console.log('ID is:', id);
+
+				const eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+					.setAction('Open')
+					.setObject(encodeURIComponent(id), 'Rubric', id);
+
+				const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
+					.setDate(new Date())
+					.setType('TelemetryEvent')
+					.setSourceId('d2lrubric')
+					.setBody(eventBody);
+
+				console.log("Event is", event);
+
+				client.logUserEvent(event);
+			}
+	};
+
+	/** @polymerBehavior */
+	D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior = [
+		D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl,
+		D2L.PolymerBehaviors.Rubric.EntityBehavior,
+		window.D2L.Hypermedia.HMConstantsBehavior
+	];
+</script>
