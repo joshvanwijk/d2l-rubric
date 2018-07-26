@@ -47,12 +47,6 @@
                 "https://api.brightspace.com/rels/organization"
             ],
             "href": "data/rubrics/text-only-no-edit.json"
-        },
-        {
-            "rel": [
-                "https://rubrics.api.brightspace.com/rels/overall-levels"
-            ],
-            "href": "data/rubrics/organizations/text-only-no-edit/199/overallLevels.json"
         }
     ]
 }
