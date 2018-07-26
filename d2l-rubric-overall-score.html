@@ -100,11 +100,11 @@
 				if (!entity) {
 					return;
 				}
-				this._levels = entity.getSubEntitiesByClass('overall-level') || [];
+				this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
 			},
 
 			_getDescriptionHtml: function(levelEntity) {
-				return levelEntity.getSubEntityByClass('description').properties.html;
+				return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.html;
 			},
 
 			_localizePoints: function(levelEntity) {
