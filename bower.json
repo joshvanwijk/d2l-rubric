@@ -46,7 +46,7 @@
     "d2l-button": "BrightspaceUI/button#^4.5.0",
     "d2l-fastdom-import": "Brightspace/fastdom-import#^1.0.2",
     "d2l-save-status": "Brightspace/d2l-save-status#^0.8.0",
-    "d2l-dnd-sortable": "Brightspace/dnd-sortable#^0.0.2",
+    "d2l-dnd-sortable": "Brightspace/dnd-sortable#^0.0.3",
     "iron-a11y-announcer": "^2.1.0"
   },
   "devDependencies": {
