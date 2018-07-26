@@ -98,6 +98,8 @@
 			mirror-class="dnd-mirror"
 			touch-mirror-class="dnd-touch-mirror"
 			handle=".dnd-drag-handle"
+			on-d2l-dnd-sorted="_handleReorder"
+			disabled="[[!_canReorder]]"
 		>
 
 		<!--
@@ -119,6 +121,7 @@
 							class="dnd-drag-handle"
 							slot="gutter-left"
 							icon="d2l-tier1:menu-hamburger"
+							hidden="[[!_canReorder]]"
 						></d2l-icon>
 					</d2l-rubric-criterion-editor>
 				</div>
@@ -156,6 +159,10 @@
 				_canCreate: {
 					type: Boolean,
 					computed: '_canCreateCriterion(entity)',
+				},
+				_canReorder: {
+					type: Boolean,
+					computed: '_canReorderCriterion(entity)',
 				},
 			},
 
@@ -211,8 +218,22 @@
 						}.bind(this), 2000);
 					}.bind(this));
 				}
-			}
+			},
 
+			_canReorderCriterion: function(entity) {
+				return entity && entity.hasActionByName('reorder');
+			},
+
+			_handleReorder: function(e) {
+				var action = this.entity.getActionByName('reorder');
+				if (action) {
+					var fields = new FormData();
+					fields.append('oldIndex', e.detail.oldIndex);
+					fields.append('newIndex', e.detail.newIndex);
+					this.performSirenAction(action, fields).then(function() {
+					}.bind(this));
+				}
+			}
 		});
 	</script>
 </dom-module>
