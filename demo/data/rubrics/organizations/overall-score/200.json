@@ -2,11 +2,12 @@
     "class": [
         "rubric",
         "published",
-        "holistic",
-        "text"
+        "analytic",
+        "numeric"
     ],
     "properties": {
-        "name": "Holistic Rubric - Text only"
+        "name": "Rubric With Overall Feedback",
+        "outOf": 8
     },
     "entities": [
         {
@@ -28,25 +29,31 @@
             "rel": [
                 "self"
             ],
-            "href": "data/rubrics/organizations/holistic-text/227.json"
+            "href": "data/rubrics/organizations/overall-score/200.json"
         },
         {
             "rel": [
                 "up"
             ],
-            "href": "data/rubrics/organizations/holistic-text.json"
+            "href": "data/rubrics/organizations/overall-score.json"
         },
         {
             "rel": [
                 "https://rubrics.api.brightspace.com/rels/criteria-groups"
             ],
-            "href": "data/rubrics/organizations/holistic-text/227/groups.json"
+            "href": "data/rubrics/organizations/overall-score/200/groups.json"
         },
         {
             "rel": [
                 "https://api.brightspace.com/rels/organization"
             ],
-            "href": "data/rubrics/holistic-text.json"
+            "href": "data/rubrics/overall-score.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/overall-levels"
+            ],
+            "href": "data/rubrics/organizations/overall-score/200/overall-levels.json"
         }
     ]
 }
