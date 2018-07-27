@@ -17,7 +17,7 @@
             // Maybe update this with eg. rubricMode, originTool, isMobile
 		},
 
-		logEvent: function(entity, isMobile) {
+		_logEvent: function(entity, isMobile, eventType) {
 			// TODO: Eventually change this to be Prd/Dev/QA based on environment
 			const endpoint = 'https://dev.telemetryservice.brightspace.com/dev/api/events';
 
@@ -28,21 +28,57 @@
 			const id = this._getSelfLink(entity);
 			console.log('ID is:', id);
 
-			const eventBody = new window.d2lTelemetryBrowserClient.EventBody()
-				.setAction('Open')
-				.setObject(encodeURIComponent(id), 'Rubric', id);
+			let eventBody = null;
 
-			eventBody.addCustom('isMobile', isMobile);
+			if (eventType === 'PerformanceEvent') {
+				eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+					.addUserTiming(window.performance.getEntriesByType('measure'));
+			} else { // eventType === 'TelemetryEvent'
+				eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+					.addCustom('isMobile', isMobile);
+			}
+
+			eventBody.setAction('Open').setObject(encodeURIComponent(id), 'Rubric', id);
 
 			const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 				.setDate(new Date())
-				.setType('TelemetryEvent')
+				.setType(eventType)
 				.setSourceId('d2lrubric')
 				.setBody(eventBody);
 
 			console.log("Event is", event);
-
 			client.logUserEvent(event);
+		},
+
+		perfMark(name) {
+			if (!window.performance || !window.performance.mark) {
+				return;
+			}
+			window.performance.mark(name);
+		},
+
+		perfMeasure(name, startMark, endMark) {
+			if (!window.performance || !window.performance.measure) {
+				return;
+			}
+			/* contrary to spec, start & end marks are not optional in IE */
+			if (!startMark) {
+				startMark = 'navigationStart';
+			}
+			if (!endMark) {
+				this.perfMark(name);
+				endMark = name;
+			}
+			window.performance.measure(name, startMark, endMark);
+		},
+
+		// Should Performance events take in an isMobile flag?
+		logPerformanceEvent: function(entity) {
+			this._logEvent(entity, null, 'PerformanceEvent');
+		},
+
+		logTelemetryEvent: function(entity, isMobile) {
+			this._logEvent(entity, isMobile, 'TelemetryEvent');
 		}
 	};
 

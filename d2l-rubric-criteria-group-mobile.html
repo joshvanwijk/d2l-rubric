@@ -53,7 +53,7 @@
 				}
 				// The first time that the entity loads, we send out an Open event
 				if (!this._loaded) {
-					this.logEvent(entity, true);
+					this.logTelemetryEvent(entity, true);
 					this._loaded = true;
 				}
 				this._name = entity.properties.name;
