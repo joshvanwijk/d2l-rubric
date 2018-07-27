@@ -90,7 +90,7 @@
 					<h4>[[level.properties.name]]</h4>
 					<span class="overall-level-text">
 						<span>[[_localizePoints(level)]]</span>
-						<br>
+						<br hidden="[[!_scoreVisible(level)]]">
 						<s-html html$="[[_getDescriptionHtml(level)]]"></s-html>
 					</span>
 				</div>
@@ -126,7 +126,12 @@
 			},
 
 			_localizePoints: function(levelEntity) {
-				return this.localize('points', 'number', levelEntity.properties.rangeStart.toString());
+				return this._scoreVisible(levelEntity) ? localize('points', 'number', levelEntity.properties.rangeStart.toString()) : '';
+			},
+
+			_scoreVisible: function(levelEntity) {
+				var rangeStart = levelEntity.properties.rangeStart;
+				return rangeStart !== null && rangeStart !== undefined;
 			}
 
 		});
