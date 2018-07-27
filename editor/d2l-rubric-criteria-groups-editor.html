@@ -87,7 +87,7 @@
 			_handleAddCriteriaGroup: function() {
 				var action = this.entity.getActionByName('create');
 				if (action) {
-					this.performSirenAction(action, new FormData()).then(function() {
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criteria-group-added');
 					}.bind(this));
 				}
