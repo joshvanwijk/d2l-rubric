@@ -141,7 +141,7 @@
 				if (action) {
 					var name = this.entity.properties.name;
 					this.fire('iron-announce', { text: this.localize('levelDeleted', 'name', name) }, { bubbles: true });
-					this.performSirenAction(action).then(function() {
+					this.performSirenAction(action, new FormData()).then(function() {
 						this.fire('d2l-rubric-level-deleted');
 					}.bind(this));
 				}
