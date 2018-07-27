@@ -215,7 +215,7 @@ Creates and edits a rubric
 			},
 			_handleReverseLevels: function() {
 				if (this._reverseLevels) {
-					this.performSirenAction(this._reverseLevels, new FormData())
+					this.performSirenAction(this._reverseLevels)
 						.then(function() { this.fire('d2l-rubric-levels-reversed');	}.bind(this));
 				}
 			},

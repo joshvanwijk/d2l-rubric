@@ -310,7 +310,7 @@
 					var name = this.entity.properties.name;
 					this._transitionElement(this, 0);
 					this.fire('iron-announce', { text: this.localize('criterionDeleted', 'name', name) }, { bubbles: true });
-					this.performSirenAction(action, new FormData()).then(function() {
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criterion-deleted');
 					}.bind(this));
 				}
