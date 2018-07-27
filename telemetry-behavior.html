@@ -17,31 +17,33 @@
             // Maybe update this with eg. rubricMode, originTool, isMobile
 		},
 
-		logEvent: function(entity) {
-				// TODO: Eventually change this to be Prd/Dev/QA based on environment
-				const endpoint = 'https://dev.telemetryservice.brightspace.com/dev/api/events';
+		logEvent: function(entity, isMobile) {
+			// TODO: Eventually change this to be Prd/Dev/QA based on environment
+			const endpoint = 'https://dev.telemetryservice.brightspace.com/dev/api/events';
 
-				const client = new window.d2lTelemetryBrowserClient.Client({
-					endpoint
-				});
+			const client = new window.d2lTelemetryBrowserClient.Client({
+				endpoint
+			});
 
-				const id = this._getSelfLink(entity);
-				console.log('ID is:', id);
+			const id = this._getSelfLink(entity);
+			console.log('ID is:', id);
 
-				const eventBody = new window.d2lTelemetryBrowserClient.EventBody()
-					.setAction('Open')
-					.setObject(encodeURIComponent(id), 'Rubric', id);
+			const eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+				.setAction('Open')
+				.setObject(encodeURIComponent(id), 'Rubric', id);
 
-				const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
-					.setDate(new Date())
-					.setType('TelemetryEvent')
-					.setSourceId('d2lrubric')
-					.setBody(eventBody);
+			eventBody.addCustom('isMobile', isMobile);
 
-				console.log("Event is", event);
+			const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
+				.setDate(new Date())
+				.setType('TelemetryEvent')
+				.setSourceId('d2lrubric')
+				.setBody(eventBody);
 
-				client.logUserEvent(event);
-			}
+			console.log("Event is", event);
+
+			client.logUserEvent(event);
+		}
 	};
 
 	/** @polymerBehavior */
