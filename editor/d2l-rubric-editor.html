@@ -162,9 +162,9 @@ Creates and edits a rubric
 			],
 
 			listeners: {
-				'd2l-rubric-entity-save-start': '_onEntitySave',
+				'd2l-siren-entity-save-start': '_onEntitySave',
 				'd2l-siren-entity-save-error': '_onEntitySave',
-				'd2l-rubric-entity-save-end': '_onEntitySave'
+				'd2l-siren-entity-save-end': '_onEntitySave'
 			},
 
 			observers: [
@@ -172,7 +172,7 @@ Creates and edits a rubric
 			],
 
 			ready: function() {
-				this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this));
+				this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
 				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
 			},
 
@@ -183,8 +183,8 @@ Creates and edits a rubric
 			_onEntitySave: function(e) {
 				var saveStateEl = this.$['editor-save-status'];
 				({
-					'd2l-rubric-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-rubric-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
 					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
 			},
