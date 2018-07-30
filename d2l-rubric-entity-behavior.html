@@ -1,4 +1,5 @@
-<link rel="import" href="../../d2l-fastdom-import/fastdom.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-behavior.html">
+<link rel="import" href="../d2l-fastdom-import/fastdom.html">
 
 <script>
 	// 'use strict';
@@ -11,39 +12,8 @@
 	* Behavior for fetching an entity when an href and token a present
 	* @polymerBehavior
 	*/
-	D2L.PolymerBehaviors.Rubric.EntityBehavior = {
+	D2L.PolymerBehaviors.Rubric.EntityBehaviorImpl = {
 		properties: {
-			/**
-			 * The href for this siren entity
-			 */
-			href: {
-				type: String,
-				reflectToAttribute: true
-			},
-
-			/**
-			 * The user access token
-			 */
-			token: {
-				type: String,
-			},
-
-			/**
-			 * The fetched siren entity
-			 */
-			entity: {
-				type: Object,
-				value: null,
-				notify: true,
-				observer: '_onEntityChanged',
-			},
-
-			_entityChangedHandler: {
-				type: Function,
-				value: function() {
-					return this._entityChanged.bind(this);
-				}
-			},
 
 			_alerts: {
 				type: Array,
@@ -54,56 +24,6 @@
 				type: Boolean,
 				value: false
 			}
-		},
-
-		observers: [
-			'_fetchEntity(href, token)'
-		],
-
-		ready: function() {
-			this._entityChangedHandler = this._entityChanged.bind(this);
-		},
-
-		attached: function() {
-			this._fetchEntity(this.href, this.token);
-		},
-
-		detached: function() {
-			if (this.removeListener) {
-				this.removeListener();
-				this.removeListener = null;
-			}
-		},
-
-		_fetchEntity: function(href, token) {
-			if (!href || typeof token !== 'string') {
-				return;
-			}
-			if (this.removeListener) {
-				this.removeListener();
-			}
-			this.removeListener = window.D2L.Rubric.EntityStore.addListener(href, token, this._entityChangedHandler);
-			window.D2L.Rubric.EntityStore.fetch(href, token);
-		},
-
-		_entityChanged: function(entity, error) {
-			if (!error) {
-				this.entity = entity;
-				this.fire('d2l-rubric-entity-changed', { entity: entity });
-			} else {
-				this.fire('d2l-rubric-entity-error', { error: error });
-			}
-		},
-
-		_onEntityChanged: function(entity, oldEntity) {
-			// default empty implementation
-		},
-
-		_getSelfLink: function(entity) {
-			if (entity) {
-				return entity.href || (entity.hasLinkByRel('self') ? entity.getLinkByRel('self').href : '');
-			}
-			return '';
 		},
 
 		_addAlert: function(type, name, message) {
@@ -143,7 +63,7 @@
 			}
 
 			// when the next css transition finishes (which should be the one we just triggered)
-			element.addEventListener('transitionend', function(e) {
+			element.addEventListener('transitionend', function() {
 				// remove this event listener so it only gets triggered once
 				element.removeEventListener('transitionend', arguments.callee);
 
@@ -154,4 +74,10 @@
 			});
 		}
 	};
+
+	/** @polymerBehavior */
+	D2L.PolymerBehaviors.Rubric.EntityBehavior = [
+		D2L.PolymerBehaviors.Siren.EntityBehavior,
+		D2L.PolymerBehaviors.Rubric.EntityBehaviorImpl
+	];
 </script>
