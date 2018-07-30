@@ -1,0 +1,139 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./store/entity-behavior.html">
+<link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="./localize-behavior.html">
+<link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="./siren-entity.html">
+<link rel="import" href="../s-html/s-html.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../d2l-table/d2l-scroll-wrapper.html">
+
+<dom-module id="d2l-rubric-overall-score">
+	<template strip-whitespace>
+		<style>
+			:host {
+				display: block;
+				width: 100%;
+			}
+			
+			h4 {
+				@apply --d2l-heading-4;
+				margin: 0;
+			}
+			
+			h3 {
+				@apply --d2l-heading-3;
+			}
+			
+			.overall-levels {
+				width: 100%;
+				display: flex;
+				align-items: stretch;
+			}
+			
+			.overall-levels[data-mobile] {
+				flex-direction: column;
+			}
+			
+			.overall-level {
+				box-sizing: border-box;
+				min-width: 165px;
+				flex-grow: 1;
+				padding: 1rem;
+				margin-right: 0.6rem;
+				border: 1px solid var(--d2l-color-mica);
+				border-radius: 8px;
+			}
+			
+			.overall-levels[data-mobile] .overall-level {
+				flex-grow: 0;
+				margin-right: 0;
+				margin-bottom: 0.6rem;
+				min-width: 0;
+			}
+			
+			.overall-level:last-child {
+				margin-right: 0;
+			}
+			
+			.overall-level-text {
+				@apply --d2l-body-small-text;
+			}
+			
+			d2l-scroll-wrapper {
+			
+				--d2l-scroll-wrapper-h-scroll: {
+					border-left: 1px dashed var(--d2l-color-mica);
+					border-right: 1px dashed var(--d2l-color-mica);
+				};
+				
+				--d2l-scroll-wrapper-left: {
+					border-left: none;
+				};
+				
+				--d2l-scroll-wrapper-right: {
+					border-right: none;
+				};
+				
+				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
+				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
+			}
+		</style>
+
+	<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
+	<h3>[[localize('overallScore')]]</h3>
+	<d2l-scroll-wrapper	show-actions>
+		<div class="overall-levels" data-mobile$="[[!_largeScreen]]" on-scroll="_onScroll" >
+			<template is="dom-repeat" items="[[_levels]]" as="level">
+				<div class="overall-level">
+					<h4>[[level.properties.name]]</h4>
+					<span class="overall-level-text">
+						<span>[[_localizePoints(level)]]</span>
+						<br hidden="[[!_scoreVisible(level)]]">
+						<s-html html$="[[_getDescriptionHtml(level)]]"></s-html>
+					</span>
+				</div>
+			</template>
+		</div>
+	</d2l-scroll-wrapper>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-rubric-overall-score',
+
+			properties: {
+				_levels: Array,
+				_largeScreen: Boolean
+			},
+
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.EntityBehavior,
+				window.D2L.Hypermedia.HMConstantsBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+			],
+
+			_onEntityChanged: function(entity) {
+				if (!entity) {
+					return;
+				}
+				this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
+			},
+
+			_getDescriptionHtml: function(levelEntity) {
+				return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.html;
+			},
+
+			_localizePoints: function(levelEntity) {
+				return this._scoreVisible(levelEntity) ? this.localize('points', 'number', levelEntity.properties.rangeStart.toString()) : '';
+			},
+
+			_scoreVisible: function(levelEntity) {
+				var rangeStart = levelEntity.properties.rangeStart;
+				return rangeStart !== null && rangeStart !== undefined;
+			}
+
+		});
+	</script>
+</dom-module>

@@ -2,6 +2,7 @@
 <link rel="import" href="../d2l-fetch/d2l-fetch.html">
 <link rel="import" href="./d2l-rubric-criteria-groups.html">
 <link rel="import" href="./d2l-rubric-loading.html">
+<link rel="import" href="./d2l-rubric-overall-score.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="./localize-behavior.html">
@@ -143,6 +144,9 @@ Polymer Web-Component to display rubrics
 				</div>
 			</div>
 		</div>
+		<template is="dom-if" if="[[_hasOverallScore(entity)]]">
+			<d2l-rubric-overall-score href="[[_getOverallLevels(entity)]]" token="[[token]]"></d2l-rubric-overall-score>
+		</template>
 		<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
 			<div class="overall-feedback-header">[[localize('overallFeedback')]]</div>
 			<s-html class="overall-feedback-text" html$="[[_feedback]]"></s-html>
@@ -234,6 +238,18 @@ Polymer Web-Component to display rubrics
 			_hasOutOf: function(entity) {
 				var outOf = entity && entity.properties && entity.properties.outOf;
 				return !!outOf || outOf === 0;
+			},
+
+			_hasOverallScore: function(entity) {
+				return (
+					entity &&
+					entity.hasLink(this.HypermediaRels.Rubrics.overallLevels) &&
+					!entity.hasClass(this.HypermediaClasses.rubrics.holistic)
+				);
+			},
+
+			_getOverallLevels: function(entity) {
+				return entity.getLink(this.HypermediaRels.Rubrics.overallLevels).href;
 			},
 
 			_localizeDashOutOf: function(entity) {

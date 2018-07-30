@@ -48,12 +48,6 @@
                 "https://api.brightspace.com/rels/organization"
             ],
             "href": "data/rubrics/custom-points.json"
-        },
-        {
-            "rel": [
-                "https://rubrics.api.brightspace.com/rels/overall-levels"
-            ],
-            "href": "data/rubrics/organizations/custom-points/198/overallLevels.json"
         }
     ]
 }
