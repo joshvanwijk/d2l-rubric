@@ -227,6 +227,7 @@
 			_handleReorder: function(e) {
 				var action = this.entity.getActionByName('reorder');
 				if (action) {
+					this.splice('_criteriaEntities', e.detail.newIndex, 0, this.splice('_criteriaEntities', e.detail.oldIndex, 1)[0]);
 					var fields = new FormData();
 					fields.append('oldIndex', e.detail.oldIndex);
 					fields.append('newIndex', e.detail.newIndex);
