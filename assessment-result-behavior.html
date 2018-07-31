@@ -170,12 +170,18 @@
 				var feedbackField = fields.find( function(field) { return field.name === 'feedbackText'});
 				feedbackField.value = feedback;
 				feedbackField = fields.find( function(field) { return field.name === 'feedbackHtml'});
-				feedbackField.value = feedback;
+				feedbackField.value = this._escapeHtml(feedback);
 				var setAsSelectedField = fields.find( function(field) { return field.name === 'setAsSelected'});
 				setAsSelectedField.value = true;
 
 				this.performSirenActionJSON(action, fields);
 			}
+		},
+
+		_escapeHtml: function(feedback) {
+			var div = document.createElement('div');
+			div.appendChild(document.createTextNode(feedback));
+			return div.innerHtml;
 		},
 
 		assessCriterionCell: function(criterionCellHref) {
@@ -189,12 +195,25 @@
 
 			if (action) {
 				var fields = action.fields;
+				var setAsSelectedField = fields.find( function(field) { return field.name === 'setAsSelected'});
 				if (criterionCell.hasClass(this.HypermediaClasses.rubrics.selected)) {
-					var setAsSelectedField = fields.find( function(field) { return field.name === 'setAsSelected'});
+
 					setAsSelectedField.value = false;
+				} else {
+					setAsSelectedField.value = true;
 				}
 				this.performSirenActionJSON(action, fields);
 			}
+		},
+
+		canAddFeedback: function(criterion, assessmentResult) {
+			var assessedCriterion = assessmentResult[this._getSelfLink(criterion)];
+			if (!assessedCriterion) {
+				return false;
+			}
+			var assessmentCriterionCell = assessedCriterion.cellEntity;
+			var action = assessmentCriterionCell.getActionByName('select-criterion-cell');
+			return !!action;
 		},
 
 		canAssessCriterionCell: function(criterionCellHref) {

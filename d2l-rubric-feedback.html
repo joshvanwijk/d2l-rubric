@@ -73,21 +73,18 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
-		<div class="feedback-wrapper" on-tap="handleTap">
+		<div class="feedback-wrapper">
 			<div class="feedback-arrow">
 				<div class="feedback-arrow-inner"></div>
 			</div>
 			<div class="feedback-heading">
 				[[localize('feedback')]]
-				<div class="clear-feedback-button">
-					X
-				</div>
 			</div>
-			<div hidden="[[!_isFeedbackVisible]]" class="feedback-edit">
+			<div class="feedback-edit">
 				<d2l-textarea
 					id="text-area"
 					value="[[getAssessmentFeedback(criterionEntity, assessmentResult, false)]]"
-					placeholder="Enter Feedback"
+					placeholder="[[localize('editFeedback')]]"
 				>
 				</d2l-textarea>
 			</div>
@@ -106,22 +103,12 @@
 					value: null
 				},
 				token: String,
-				_isFeedbackVisible: {
-					type: Boolean,
-					value: false
-				},
-				display: {
-					type: Boolean,
-					notify: true,
-					value: false
-				},
-
 				_boundBlurHandler: {
 					type: Function,
 					value: function() {
 						return this._blurHandler.bind(this);
 					}
-				},
+				}
 			},
 
 			behaviors: [
@@ -129,13 +116,11 @@
 				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
 
-			observers: [
-				'checkFeedback(criterionEntity, assessmentResult)'
-			],
-
 			attached: function() {
 				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
-				if (!elem) return;
+				if (!elem) {
+					return;
+				}
 				elem.addEventListener('blur', this._boundBlurHandler);
 			},
 
@@ -145,23 +130,9 @@
 				elem.removeEventListener('blur', this._boundBlurHandler);
 			},
 
-			handleTap: function() {
-				console.log('handling tap');
-				this._isEditing = true;
-				this.display = false;
-			},
-
-			isHidden: function() {
-				return true;
-			},
-
-			checkFeedback: function(criterionEntity, assessmentResult) {
-				this._isFeedbackVisible = this._hasFeedback(criterionEntity, assessmentResult);
-			},
-
-			_hasFeedback: function(entity, assessmentResult) {
-				var entityLink = this._getSelfLink(entity);
-				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
+			focus: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				elem.focus();
 			},
 
 			_blurHandler: function(event) {
