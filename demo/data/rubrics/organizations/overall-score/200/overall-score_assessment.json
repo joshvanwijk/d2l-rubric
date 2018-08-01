@@ -1,0 +1,670 @@
+{
+	"class": [
+		"rubric-result",
+		"completed"
+	],
+	"properties": {
+		"score": 6
+	},
+	"entities": [
+		{
+			"class": [
+				"criterion-cell-selector"
+			],
+			"rel": [
+				"item"
+			],
+			"entities": [
+				{
+					"class": [
+						"assessment-criterion-cell"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 4
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1460.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617/0.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617.json"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-criterion-cell"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 3
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1461.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617/1.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617.json"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-criterion-cell",
+						"selected"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 2
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1462.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617/2.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617.json"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-criterion-cell"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 1
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1463.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617/3.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617.json"
+						}
+					]
+				}
+			],
+			"links": [
+				{
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/criterion"
+					],
+					"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/617.json"
+				}
+			]
+		},
+		{
+			"class": [
+				"criterion-cell-selector"
+			],
+			"rel": [
+				"item"
+			],
+			"entities": [
+				{
+					"class": [
+						"assessment-criterion-cell",
+						"selected"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 4
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1460.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618/0.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618.json"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-criterion-cell"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 3
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1461.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618/1.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618.json"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-criterion-cell"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 2
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1462.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618/2.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618.json"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-criterion-cell"
+					],
+					"rel": [
+						"https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+						"item"
+					],
+					"properties": {
+						"score": 1
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/levels/1463.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion-cell"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618/3.json"
+						},
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/criterion"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618.json"
+						}
+					]
+				}
+			],
+			"links": [
+				{
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/criterion"
+					],
+					"href": "data/rubrics/organizations/overall-score/200/groups/174/criteria/618.json"
+				}
+			]
+		},
+		{
+			"class": [
+				"overall-level-selector"
+			],
+			"rel": [
+				"item"
+			],
+			"entities": [
+				{
+					"class": [
+						"assessment-overall-level"
+					],
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/assessment-overall-level"
+					],
+					"properties": {
+						"name": "Level 4",
+						"rangeStart": 7
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"description"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "A",
+								"html": "<p>A</p>"
+							}
+						},
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/overall-level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/overall-levels/1"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-overall-level",
+						"selected"
+					],
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/assessment-overall-level"
+					],
+					"properties": {
+						"name": "Level 3",
+						"rangeStart": 5
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"description"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "B",
+								"html": "<p>B</p>"
+							}
+						},
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/overall-level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/overall-levels/2"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-overall-level"
+					],
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/assessment-overall-level"
+					],
+					"properties": {
+						"name": "Level 2",
+						"rangeStart": 3
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"description"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "C",
+								"html": "<p>C</p>"
+							}
+						},
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/overall-level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/overall-levels/3"
+						}
+					]
+				},
+				{
+					"class": [
+						"assessment-overall-level"
+					],
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/assessment-overall-level"
+					],
+					"properties": {
+						"name": "Level 1",
+						"rangeStart": 0
+					},
+					"entities": [
+						{
+							"class": [
+								"richtext",
+								"description"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "D",
+								"html": "<p>D</p>"
+							}
+						},
+						{
+							"class": [
+								"richtext",
+								"feedback"
+							],
+							"rel": [
+								"item"
+							],
+							"properties": {
+								"text": "",
+								"html": ""
+							}
+						}
+					],
+					"links": [
+						{
+							"rel": [
+								"https://rubrics.api.brightspace.com/rels/overall-level"
+							],
+							"href": "data/rubrics/organizations/overall-score/200/overall-levels/4"
+						}
+					]
+				}
+			],
+			"links": [
+				{
+					"rel": [
+						"https://rubrics.api.brightspace.com/rels/overall-levels"
+					],
+					"href": "data/rubrics/organizations/overall-score/200/overall-levels.json"
+				}
+			]
+		},
+		{
+			"class": [
+				"richtext",
+				"overridden",
+				"overall-feedback"
+			],
+			"rel": [
+				"item"
+			],
+			"properties": {
+				"text": "",
+				"html": ""
+			}
+		}
+	],
+	"links": [
+		{
+			"rel": [
+				"self"
+			],
+			"href": "data/rubrics/organizations/overall-score/200/overall-score_assessment.json"
+		},
+		{
+			"rel": [
+				"https://api.brightspace.com/rels/rubric"
+			],
+			"href": "data/rubrics/organizations/overall-score/200.json"
+		},
+		{
+			"rel": [
+				"https://api.brightspace.com/rels/user"
+			],
+			"href": "data/rubrics/enrolled-user/sYXIWuF0ETxFZ1zN1WinLjVTh5XzJgSaSfaMEXxBuJg.json"
+		}
+	]
+}
