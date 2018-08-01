@@ -127,7 +127,7 @@
 			if (!entity || bypassCache) {
 
 				var headers = new Headers();
-				headers.set('Authorization', 'Bearer ' + token);
+				token && headers.set('Authorization', 'Bearer ' + token);
 
 				if (bypassCache) {
 					headers.set('pragma', 'no-cache');
