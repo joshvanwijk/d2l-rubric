@@ -227,6 +227,10 @@
 			_handleReorder: function(e) {
 				var action = this.entity.getActionByName('reorder');
 				if (action) {
+					// After reorder, the criteria API returns the entities in the correct SortOrder, but Polymer's dom-repeat
+					// does not respect the order, and reverts the DOM back to before it was drag-dropped.
+					// This manually updates '_criteriaEntities' by splicing the criterion from oldIndex and appending it at newIndex.
+					this.splice('_criteriaEntities', e.detail.newIndex, 0, this.splice('_criteriaEntities', e.detail.oldIndex, 1)[0]);
 					var fields = new FormData();
 					fields.append('oldIndex', e.detail.oldIndex);
 					fields.append('newIndex', e.detail.newIndex);
