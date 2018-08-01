@@ -16,16 +16,13 @@
 
 		_logEvent: function(entity, isMobile, eventType) {
 			// TODO: Eventually change this to be Prd/QA based on environment
-			const endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
+			var endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
 
-			const client = new window.d2lTelemetryBrowserClient.Client({
-				endpoint
-			});
+			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
 
-			const id = this._getSelfLink(entity);
-			console.log('ID is:', id);
+			var id = this._getSelfLink(entity);
 
-			let eventBody = null;
+			var eventBody = null;
 
 			if (eventType === 'PerformanceEvent') {
 				eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
@@ -37,24 +34,23 @@
 
 			eventBody.setAction('Open').setObject(encodeURIComponent(id), 'Rubric', id);
 
-			const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
+			var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 				.setDate(new Date())
 				.setType(eventType)
 				.setSourceId('rubric')
 				.setBody(eventBody);
 
-			console.log("Event is", event);
 			client.logUserEvent(event);
 		},
 
-		perfMark(name) {
+		perfMark: function(name) {
 			if (!window.performance || !window.performance.mark) {
 				return;
 			}
 			window.performance.mark(name);
 		},
 
-		perfMeasure(name, startMark, endMark) {
+		perfMeasure: function(name, startMark, endMark) {
 			if (!window.performance || !window.performance.measure) {
 				return;
 			}
