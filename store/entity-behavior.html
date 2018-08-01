@@ -79,11 +79,6 @@
 			}
 			this.removeListener = window.D2L.Rubric.EntityStore.addListener(href, token, this._entityChangedHandler);
 			window.D2L.Rubric.EntityStore.fetch(href, token);
-			// var entity = window.D2L.Rubric.EntityStore.fetch(href, token);
-			// if (entity.status !== 'fetching') {
-			// 	// Allows class/mixin to override _entityChanged
-			// 	this._entityChanged(entity.entity);
-			// }
 		},
 
 		_entityChanged: function(entity, error) {
