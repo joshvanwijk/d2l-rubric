@@ -48,7 +48,7 @@
 			</d2l-alert>
 		</template>
 
-		<div class="criteria-group">
+		<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 			<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 			<d2l-rubric-levels-editor
 				href="[[_levelsHref]]"
@@ -57,11 +57,11 @@
 				<d2l-text-input
 					id="group-name"
 					slot="group-name-slot"
-					value="[[entity.properties.name]]"
+					value="[[_groupName]]"
 					hidden="[[!showGroupName]]"
 					disabled="[[!_canEditGroupName(entity)]]"
 					on-change="_saveName"
-					aria-label="[[localize('groupName')]]"
+					aria-label$="[[localize('groupName')]]"
 					required prevent-submit>
 				</d2l-text-input>
 			</d2l-rubric-levels-editor>
@@ -89,6 +89,9 @@
 				},
 				_nameInvalidError: {
 					type: String
+				},
+				_groupName: {
+					type: String
 				}
 			},
 
@@ -114,6 +117,7 @@
 				this._levelsHref = this._getLevelsLink(entity);
 				this._criteriaCollectionHref = this._getCriteriaLink(entity);
 				this._showContent = true;
+				this._groupName = entity.properties.name;
 			},
 
 			_getCriteriaLink: function(entity) {
