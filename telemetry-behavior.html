@@ -13,13 +13,10 @@
 	 * @polymerBehavior
 	 */
 	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
-		properties: {
-            // Maybe update this with eg. rubricMode, originTool, isMobile
-		},
 
 		_logEvent: function(entity, isMobile, eventType) {
-			// TODO: Eventually change this to be Prd/Dev/QA based on environment
-			const endpoint = 'https://dev.telemetryservice.brightspace.com/dev/api/events';
+			// TODO: Eventually change this to be Prd/QA based on environment
+			const endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
 
 			const client = new window.d2lTelemetryBrowserClient.Client({
 				endpoint
@@ -43,7 +40,7 @@
 			const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 				.setDate(new Date())
 				.setType(eventType)
-				.setSourceId('d2lrubric')
+				.setSourceId('rubric')
 				.setBody(eventBody);
 
 			console.log("Event is", event);
