@@ -150,7 +150,13 @@ Polymer Web-Component to display rubrics
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]"></d2l-rubric-criteria-groups>
+			<d2l-rubric-criteria-groups
+				href="[[_getHref(_criteriaGroups)]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				rubric-type="[[rubricType]]"
+				read-only="[[readOnly]]"
+			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
@@ -170,6 +176,11 @@ Polymer Web-Component to display rubrics
 			is: 'd2l-rubric',
 
 			properties: {
+				readOnly: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
+				},
 				_criteriaGroups: {
 					type: Object
 				},

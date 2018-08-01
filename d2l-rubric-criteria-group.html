@@ -171,6 +171,7 @@
 								criterion-href="[[_getSelfLink(criterion)]]"
 								assessment-href="[[assessmentHref]]"
 								token="[[token]]"
+								read-only="[[readOnly]]"
 							>
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -209,6 +210,7 @@
 					type: String,
 					value: null
 				},
+				readOnly: Boolean,
 				_feedbackDisplay: {
 					type: Array,
 					value: null
@@ -411,13 +413,16 @@
 				if (this._isSelected(criterionCell, assessmentResult)) {
 					className += ' selected';
 				}
-				if (this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
+				if (!this.readOnly && this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
 					className += ' assessable';
 				}
 				return className;
 			},
 
 			handleTap: function(event) {
+				if (this.readOnly) {
+					return;
+				}
 				this.assessCriterionCell(event.currentTarget.dataset.href);
 			},
 

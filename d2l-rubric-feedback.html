@@ -38,7 +38,7 @@
 
 			.feedback-heading {
 				@apply --d2l-label-text;
-				padding-top: 18px
+				padding-top: 0.5rem;
 			}
 
 			.clear-feedback-button {
@@ -55,19 +55,13 @@
 				border: 1px solid transparent;
 			}
 
-			.feedback-wrapper:hover {
+			.feedback-wrapper-editable:hover {
 				background: var(--d2l-color-sylvite);
 				background-color: var(--d2l-color-sylvite);
 				cursor: pointer;
 			}
-			.feedback-wrapper:hover .feedback-arrow-inner {
+			.feedback-wrapper-editable:hover .feedback-arrow-inner {
 				border-bottom: 12px solid var(--d2l-color-sylvite);
-			}
-			.feedback-wrapper:hover textarea {
-				background: var(--d2l-color-sylvite);
-			}
-			textarea {
-				border: none;
 			}
 
 		</style>
@@ -80,13 +74,19 @@
 			<div class="feedback-heading">
 				[[localize('feedback')]]
 			</div>
-			<div class="feedback-edit">
+			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
 				<d2l-textarea
 					id="text-area"
 					value="[[getAssessmentFeedback(criterionEntity, assessmentResult, false)]]"
 					placeholder="[[localize('editFeedback')]]"
 				>
 				</d2l-textarea>
+			</div>
+			<div hidden="[[_canEditFeedback(criterionEntity, assessmentResult)]]">
+				<s-html
+					html="[[getAssessmentFeedback(criterionEntity, assessmentResult, true)]]"
+				>
+				</s-html>
 			</div>
 		</div>
 	</template>
@@ -108,7 +108,8 @@
 					value: function() {
 						return this._blurHandler.bind(this);
 					}
-				}
+				},
+				readOnly: Boolean
 			},
 
 			behaviors: [
@@ -142,6 +143,13 @@
 
 			saveFeedback: function(feedback) {
 				this.saveAssessmentFeedback(this.criterionHref, feedback);
+			},
+
+			_canEditFeedback: function(criterionEntity, assessmentEntity) {
+				if (this.readOnly || !criterionEntity || !assessmentEntity) {
+					return false;
+				}
+				return this.canAddFeedback(criterionEntity, assessmentEntity);
 			}
 		});
 	</script>

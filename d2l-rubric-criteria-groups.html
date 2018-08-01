@@ -29,6 +29,7 @@
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
+					read-only="[[readOnly]]"
 				>
 				</d2l-rubric-criteria-group>
 			</template>
@@ -67,7 +68,8 @@
 				},
 				rubricType: {
 					type: String
-				}
+				},
+				readOnly: Boolean
 			},
 
 			behaviors: [
