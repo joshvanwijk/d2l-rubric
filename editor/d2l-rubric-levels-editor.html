@@ -67,8 +67,9 @@
 			<slot name="group-name-slot"></slot>
 			<d2l-button-icon
 				on-tap="_handlePrependLevel"
+				on-focus="_onPrependFocus"
 				icon="d2l-tier2:add"
-				text=[[localize('addLevel')]]
+				text="[[localize('addLevelPrepend', 'name', '')]]"
 				disabled="[[!_canPrepend]]">
 			</d2l-button-icon>
 		</div>
@@ -78,8 +79,9 @@
 		<div class="cell col-last" noOutOf$=[[!hasOutOf]]>
 			<d2l-button-icon
 				on-tap="_handleAppendLevel"
+				on-focus="_onAppendFocus"
 				icon="d2l-tier2:add"
-				text=[[localize('addLevel')]]
+				text="[[localize('addLevelAppend', 'name', '')]]"
 				disabled="[[!_canAppend]]">
 			</d2l-button-icon>
 		</div>
@@ -132,25 +134,37 @@
 			_handlePrependLevel: function() {
 				var action = this.entity.getActionByName('prepend');
 				if (action) {
-					var firstLevel = this.$$('d2l-rubric-level-editor');
-					var levelName = firstLevel ? firstLevel.entity.properties.name : '';
-					this.performSirenAction(action, new FormData()).then(function() {
+					var firstLevelName = this._getFirstLevelName();
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-added');
-						this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', levelName) }, { bubbles: true });
+						this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
 					}.bind(this));
 				}
 			},
 			_handleAppendLevel: function() {
 				var action = this.entity.getActionByName('append');
 				if (action) {
-					var levels = Polymer.dom(this.root).querySelectorAll('d2l-rubric-level-editor');
-					var levelName = levels.length ? levels[levels.length - 1].entity.properties.name : '';
-					this.performSirenAction(action, new FormData()).then(function() {
+					var lastLevelName = this._getLastLevelName();
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-added');
-						this.fire('iron-announce', { text: this.localize('levelAppended', 'name', levelName) }, { bubbles: true });
+						this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
 					}.bind(this));
 				}
 			},
+			_getFirstLevelName: function() {
+				var firstLevel = this.$$('d2l-rubric-level-editor');
+				return firstLevel ? firstLevel.entity.properties.name : '';
+			},
+			_getLastLevelName: function() {
+				var levels = Polymer.dom(this.root).querySelectorAll('d2l-rubric-level-editor');
+				return levels.length ? levels[levels.length - 1].entity.properties.name : '';
+			},
+			_onPrependFocus: function() {
+				this.fire('iron-announce', { text: this.localize('addLevelPrepend', 'name', this._getFirstLevelName()) }, { bubbles: true });
+			},
+			_onAppendFocus: function() {
+				this.fire('iron-announce', { text: this.localize('addLevelAppend', 'name', this._getLastLevelName()) }, { bubbles: true });
+			}
 		});
 	</script>
 </dom-module>

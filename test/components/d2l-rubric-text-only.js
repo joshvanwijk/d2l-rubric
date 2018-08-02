@@ -31,5 +31,14 @@ suite('<d2l-rubric-text-only>', function() {
 				done();
 			});
 		});
+		
+		test('Overall Score section is not rendered if the rubric has no overall score', function(done) {
+			myAsyncFunction(function(myElement){
+				expect(!Polymer.dom(myElement.root).querySelector('.overall-levels'));
+				done();
+			});
+		});
 	});
+	
+
 });
