@@ -14,12 +14,13 @@
 	 */
 	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
-		_logEvent: function(entity, isMobile, eventType) {
+		_logEvent: function(entity, isMobile, eventType, rubricMode, originTool) {
 			// TODO: Eventually change this to be Prd/QA based on environment
 			var endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
 
 			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
 
+			// TODO: Pass in ID instead of whole entity
 			var id = this._getSelfLink(entity);
 
 			var eventBody = null;
@@ -32,7 +33,10 @@
 					.addCustom('isMobile', isMobile);
 			}
 
-			eventBody.setAction('Open').setObject(encodeURIComponent(id), 'Rubric', id);
+			eventBody.setAction('Open')
+				.setObject(encodeURIComponent(id), 'Rubric', id)
+				.addCustom('rubricMode', rubricMode || 'unkown')
+				.addCustom('originTool', originTool || 'unkown');
 
 			var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 				.setDate(new Date())
@@ -70,8 +74,8 @@
 			this._logEvent(entity, null, 'PerformanceEvent');
 		},
 
-		logTelemetryEvent: function(entity, isMobile) {
-			this._logEvent(entity, isMobile, 'TelemetryEvent');
+		logTelemetryEvent: function(entity, isMobile, rubricMode, originTool) {
+			this._logEvent(entity, isMobile, 'TelemetryEvent', rubricMode, originTool);
 		}
 	};
 
