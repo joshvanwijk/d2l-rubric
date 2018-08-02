@@ -136,6 +136,7 @@
 
 			_handleSaveError: function(e) {
 				this._clearAlerts();
+				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
 				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 			},
 
