@@ -79,12 +79,18 @@
 				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
+			
+			s-html {
+				overflow: hidden;
+				width: 100%;
+				word-wrap: break-word;
+			}
 		</style>
 
 	<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 	<h3>[[localize('overallScore')]]</h3>
 	<d2l-scroll-wrapper	show-actions>
-		<div class="overall-levels" data-mobile$="[[!_largeScreen]]" on-scroll="_onScroll" >
+		<div class="overall-levels" data-mobile$="[[!_largeScreen]]" >
 			<template is="dom-repeat" items="[[_levels]]" as="level">
 				<div class="overall-level">
 					<h4>[[level.properties.name]]</h4>
@@ -119,6 +125,9 @@
 					return;
 				}
 				this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					this.$$('d2l-scroll-wrapper').checkScrollbar();
+				}.bind(this));
 			},
 
 			_getDescriptionHtml: function(levelEntity) {
