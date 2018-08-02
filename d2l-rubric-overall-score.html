@@ -135,7 +135,7 @@
 			},
 
 			_localizePoints: function(levelEntity) {
-				return this._scoreVisible(levelEntity) ? this.localize('points', 'number', levelEntity.properties.rangeStart.toString()) : '';
+				return this._scoreVisible(levelEntity) ? this.localize('pointsMinimum', 'number', levelEntity.properties.rangeStart.toString()) : '';
 			},
 
 			_scoreVisible: function(levelEntity) {
