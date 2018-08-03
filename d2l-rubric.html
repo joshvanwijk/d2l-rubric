@@ -217,7 +217,7 @@ Polymer Web-Component to display rubrics
 			_onAssessmentEntityChanged: function(assessmentEntity) {
 				if (assessmentEntity) {
 					this._score = this._getScore(assessmentEntity);
-					var feedback = assessmentEntity.getSubEntityByClass('overall-feedback');
+					var feedback = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallFeedback);
 					this._feedback = feedback && feedback.properties && feedback.properties.html || '';
 				}
 			},
