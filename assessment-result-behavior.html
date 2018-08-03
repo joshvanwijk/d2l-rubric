@@ -61,23 +61,24 @@
 			for (var i = 0; i < criteriaEntities.length; i++) {
 				var criterionEntity = criteriaEntities[i];
 				var selectedCriterionCellEntity = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
-				if (selectedCriterionCellEntity) {
-					var link = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell);
-					var level = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level);
 
-
-					this._updateCellRelations(prevLink, prevLevel, level, noBottomCellsMap);
-					this._updateAssessmentMap(assessmentMap, selectedCriterionCellEntity, link, level);
-
-					prevLink = link.href;
-					prevLevel = level.href;
-				} else {
-					// If there is no selected cell (the rubric is partially assessed) then skip this row
-					prevLink = null;
-				}
 				if (!this.readOnly) {
 					this._buildRubricToAssessmentMap(assessmentCriterionMap, assessmentCriterionCellMap, criterionEntity);
 				}
+				if (!selectedCriterionCellEntity) {
+					// No selected cell in this row, so reset prevLink
+					prevLink = null;
+					continue;
+				}
+
+				var link = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterionCell);
+				var level = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.level);
+
+				this._updateCellRelations(prevLink, prevLevel, level, noBottomCellsMap);
+				this._updateAssessmentMap(assessmentMap, selectedCriterionCellEntity, link, level);
+
+				prevLink = link.href;
+				prevLevel = level.href;
 			}
 			this._assessmentCriterionCellMap = assessmentCriterionCellMap;
 			this._assessmentCriterionMap = assessmentCriterionMap;
@@ -87,16 +88,16 @@
 
 		_updateAssessmentMap: function(assessmentMap, selectedCriterionCellEntity, link, level) {
 			var rowLink = selectedCriterionCellEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
+			var feedback = selectedCriterionCellEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+			var feedbackHTML = feedback && feedback.properties && feedback.properties.html;
+			var feedbackText = feedback && feedback.properties && feedback.properties.text;
 
 			if (feedbackHTML) {
 				this.anyFeedback = true;
 			}
 			var assessment = {};
 			if (link.href) {
-				var feedback = selectedCriterionCellEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
-				var feedbackHTML = feedback && feedback.properties && feedback.properties.html;
-				var feedbackText = feedback && feedback.properties && feedback.properties.text;
-				 assessment = {
+				assessment = {
 					score: selectedCriterionCellEntity.properties.score,
 					level: level,
 					feedback: feedbackHTML,
@@ -145,8 +146,9 @@
 			if (!criterionEntity || !assessmentResult) {
 				return;
 			}
+			var feedback;
 			if (html) {
-				var feedback = this._getItem(criterionEntity, assessmentResult, function (x) {
+				feedback = this._getItem(criterionEntity, assessmentResult, function(x) {
 					return x.feedback;
 				});
 				if (!feedback) {
@@ -156,7 +158,7 @@
 					return '<style> p { margin: 0; } </style>' + feedback.html;
 				}
 			}
-			var feedback = this._getItem(criterionEntity, assessmentResult, function (x) {
+			feedback = this._getItem(criterionEntity, assessmentResult, function(x) {
 				return x.feedbackText;
 			});
 			return feedback;
@@ -166,14 +168,13 @@
 			var assessmentCriterionCell = this.assessmentResult[criterionHref].cellEntity;
 			var action = assessmentCriterionCell.getActionByName('select-criterion-cell');
 
-
 			if (action) {
 				var fields = action.fields;
-				var feedbackField = fields.find( function(field) { return field.name === 'feedbackText'});
+				var feedbackField = fields.find(function(field) { return field.name === 'feedbackText'; });
 				feedbackField.value = feedback;
-				feedbackField = fields.find( function(field) { return field.name === 'feedbackHtml'});
+				feedbackField = fields.find(function(field) { return field.name === 'feedbackHtml'; });
 				feedbackField.value = this._escapeHtml(feedback);
-				var setAsSelectedField = fields.find( function(field) { return field.name === 'setAsSelected'});
+				var setAsSelectedField = fields.find(function(field) { return field.name === 'setAsSelected'; });
 				setAsSelectedField.value = true;
 
 				this.performSirenActionJSON(action, fields);
@@ -197,7 +198,7 @@
 
 			if (action) {
 				var fields = action.fields;
-				var setAsSelectedField = fields.find( function(field) { return field.name === 'setAsSelected'});
+				var setAsSelectedField = fields.find(function(field) { return field.name === 'setAsSelected'; });
 				if (criterionCell.hasClass(this.HypermediaClasses.rubrics.selected)) {
 
 					setAsSelectedField.value = false;
