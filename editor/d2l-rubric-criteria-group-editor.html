@@ -4,7 +4,7 @@
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
-<link rel="import" href="../store/entity-behavior.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="./../d2l-rubric-loading.html">
 <link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-levels-editor.html">
@@ -97,7 +97,7 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
@@ -107,7 +107,7 @@
 			],
 
 			ready: function() {
-				this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this));
+				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
 			},
 
 			_onEntityChanged: function(entity) {
