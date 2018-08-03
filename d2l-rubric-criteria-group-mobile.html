@@ -34,7 +34,9 @@
 				assessmentHref: String,
 				_isHolistic: Boolean,
 				_isNumeric: Boolean,
-				_loaded: Boolean
+				_loaded: Boolean,
+				rubricMode: String,
+				originTool: String
 			},
 
 			observers: [
@@ -53,7 +55,7 @@
 				}
 				// The first time that the entity loads, we send out an Open event
 				if (!this._loaded) {
-					this.logTelemetryEvent(entity, true);
+					this.logTelemetryEvent(entity, true, this.rubricMode, this.originTool);
 					this._loaded = true;
 				}
 				this._name = entity.properties.name;
