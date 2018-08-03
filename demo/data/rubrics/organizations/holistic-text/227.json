@@ -47,12 +47,6 @@
                 "https://api.brightspace.com/rels/organization"
             ],
             "href": "data/rubrics/holistic-text.json"
-        },
-        {
-            "rel": [
-                "https://rubrics.api.brightspace.com/rels/overall-levels"
-            ],
-            "href": "data/rubrics/organizations/holistic-text/227/overallLevels.json"
         }
     ]
 }

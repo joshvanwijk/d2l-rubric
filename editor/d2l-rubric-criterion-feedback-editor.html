@@ -3,8 +3,8 @@
 <link rel="import" href="../../d2l-textarea/d2l-textarea.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
-<link rel="import" href="../store/entity-behavior.html">
-<link rel="import" href="../store/siren-action-behavior.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
+<link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 
 <dom-module id="d2l-rubric-criterion-feedback-editor">
@@ -81,7 +81,7 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],

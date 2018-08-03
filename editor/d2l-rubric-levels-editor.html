@@ -3,8 +3,8 @@
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-button/d2l-button-icon.html">
 
-<link rel="import" href="../store/entity-behavior.html">
-<link rel="import" href="../store/siren-action-behavior.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
+<link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-level-editor.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
@@ -67,8 +67,9 @@
 			<slot name="group-name-slot"></slot>
 			<d2l-button-icon
 				on-tap="_handlePrependLevel"
+				on-focus="_onPrependFocus"
 				icon="d2l-tier2:add"
-				text=[[localize('addLevel')]]
+				text="[[localize('addLevelPrepend', 'name', '')]]"
 				disabled="[[!_canPrepend]]">
 			</d2l-button-icon>
 		</div>
@@ -78,8 +79,9 @@
 		<div class="cell col-last" noOutOf$=[[!hasOutOf]]>
 			<d2l-button-icon
 				on-tap="_handleAppendLevel"
+				on-focus="_onAppendFocus"
 				icon="d2l-tier2:add"
-				text=[[localize('addLevel')]]
+				text="[[localize('addLevelAppend', 'name', '')]]"
 				disabled="[[!_canAppend]]">
 			</d2l-button-icon>
 		</div>
@@ -108,7 +110,7 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
@@ -132,25 +134,37 @@
 			_handlePrependLevel: function() {
 				var action = this.entity.getActionByName('prepend');
 				if (action) {
-					var firstLevel = this.$$('d2l-rubric-level-editor');
-					var levelName = firstLevel ? firstLevel.entity.properties.name : '';
-					this.performSirenAction(action, new FormData()).then(function() {
+					var firstLevelName = this._getFirstLevelName();
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-added');
-						this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', levelName) }, { bubbles: true });
+						this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
 					}.bind(this));
 				}
 			},
 			_handleAppendLevel: function() {
 				var action = this.entity.getActionByName('append');
 				if (action) {
-					var levels = Polymer.dom(this.root).querySelectorAll('d2l-rubric-level-editor');
-					var levelName = levels.length ? levels[levels.length - 1].entity.properties.name : '';
-					this.performSirenAction(action, new FormData()).then(function() {
+					var lastLevelName = this._getLastLevelName();
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-added');
-						this.fire('iron-announce', { text: this.localize('levelAppended', 'name', levelName) }, { bubbles: true });
+						this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
 					}.bind(this));
 				}
 			},
+			_getFirstLevelName: function() {
+				var firstLevel = this.$$('d2l-rubric-level-editor');
+				return firstLevel ? firstLevel.entity.properties.name : '';
+			},
+			_getLastLevelName: function() {
+				var levels = Polymer.dom(this.root).querySelectorAll('d2l-rubric-level-editor');
+				return levels.length ? levels[levels.length - 1].entity.properties.name : '';
+			},
+			_onPrependFocus: function() {
+				this.fire('iron-announce', { text: this.localize('addLevelPrepend', 'name', this._getFirstLevelName()) }, { bubbles: true });
+			},
+			_onAppendFocus: function() {
+				this.fire('iron-announce', { text: this.localize('addLevelAppend', 'name', this._getLastLevelName()) }, { bubbles: true });
+			}
 		});
 	</script>
 </dom-module>

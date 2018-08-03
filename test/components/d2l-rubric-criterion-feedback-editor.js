@@ -32,11 +32,11 @@ suite('<d2l-rubric-criterion-feedback-editor>', function() {
 				element = fixture('basic');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 
@@ -80,7 +80,7 @@ suite('<d2l-rubric-criterion-feedback-editor>', function() {
 				var feedbackTextArea = element.$$('d2l-textarea');
 				feedbackTextArea.value = 'You are a grammar rockstar!';
 				raf(function() {
-					element.addEventListener('d2l-rubric-entity-save-error', function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
 							expect(feedbackTextArea.ariaInvalid).to.equal('true');
 							done();
@@ -99,11 +99,11 @@ suite('<d2l-rubric-criterion-feedback-editor>', function() {
 				element = fixture('readonly');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 

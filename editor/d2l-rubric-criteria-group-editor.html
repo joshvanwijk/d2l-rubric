@@ -4,7 +4,7 @@
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
-<link rel="import" href="../store/entity-behavior.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="./../d2l-rubric-loading.html">
 <link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-levels-editor.html">
@@ -27,7 +27,14 @@
 
 			#group-name {
 				align-self: flex-start;
+			}
+
+			:dir(ltr) #group-name {
 				padding-right: 0.5rem;
+			}
+
+			:dir(rtl) #group-name {
+				padding-left: 0.5rem;
 			}
 
 			[hidden] {
@@ -41,7 +48,7 @@
 			</d2l-alert>
 		</template>
 
-		<div class="criteria-group">
+		<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 			<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 			<d2l-rubric-levels-editor
 				href="[[_levelsHref]]"
@@ -50,11 +57,11 @@
 				<d2l-text-input
 					id="group-name"
 					slot="group-name-slot"
-					value="[[entity.properties.name]]"
+					value="[[_groupName]]"
 					hidden="[[!showGroupName]]"
 					disabled="[[!_canEditGroupName(entity)]]"
 					on-change="_saveName"
-					aria-label="[[localize('groupName')]]"
+					aria-label$="[[localize('groupName')]]"
 					required prevent-submit>
 				</d2l-text-input>
 			</d2l-rubric-levels-editor>
@@ -82,12 +89,15 @@
 				},
 				_nameInvalidError: {
 					type: String
+				},
+				_groupName: {
+					type: String
 				}
 			},
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
@@ -97,7 +107,7 @@
 			],
 
 			ready: function() {
-				this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this));
+				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
 			},
 
 			_onEntityChanged: function(entity) {
@@ -107,6 +117,7 @@
 				this._levelsHref = this._getLevelsLink(entity);
 				this._criteriaCollectionHref = this._getCriteriaLink(entity);
 				this._showContent = true;
+				this._groupName = entity.properties.name;
 			},
 
 			_getCriteriaLink: function(entity) {
@@ -125,6 +136,7 @@
 
 			_handleSaveError: function(e) {
 				this._clearAlerts();
+				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
 				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 			},
 
