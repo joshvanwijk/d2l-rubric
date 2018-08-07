@@ -13,9 +13,14 @@
 	 */
 	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
-		_logEvent: function(id, isMobile, eventType, rubricMode, originTool) {
-			// TODO: Eventually change this to be Prd/QA based on environment
-			var endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
+		_logEvent: function(id, isMobile, eventType, telemetryData) {
+			if (!telemetryData) {
+				telemetryData = {};
+			}
+
+			var defaultEndpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
+			// Use the QA environment if no prod environment is specified
+			var endpoint = telemetryData.endpoint || defaultEndpoint;
 
 			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
 			var eventBody = null;
@@ -30,8 +35,8 @@
 
 			eventBody.setAction('Open')
 				.setObject(encodeURIComponent(id), 'Rubric', id)
-				.addCustom('rubricMode', rubricMode || 'unkown')
-				.addCustom('originTool', originTool || 'unkown');
+				.addCustom('rubricMode', telemetryData.rubricMode || 'unkown')
+				.addCustom('originTool', telemetryData.originTool || 'unkown');
 
 			var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 				.setDate(new Date())
@@ -69,8 +74,8 @@
 			this._logEvent(id, null, 'PerformanceEvent');
 		},
 
-		logTelemetryEvent: function(id, isMobile, rubricMode, originTool) {
-			this._logEvent(id, isMobile, 'TelemetryEvent', rubricMode, originTool);
+		logTelemetryEvent: function(id, isMobile, telemetryData) {
+			this._logEvent(id, isMobile, 'TelemetryEvent', telemetryData);
 		}
 	};
 

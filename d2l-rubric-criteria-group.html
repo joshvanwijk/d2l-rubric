@@ -182,12 +182,8 @@
 					type: String,
 					value: null
 				},
-				rubricMode: {
-					type: String,
-					value: null
-				},
-				originTool: {
-					type: String,
+				telemetryData: {
+					type: Object,
 					value: null
 				}
 			},
@@ -213,7 +209,7 @@
 				// The first time that the entity loads, we send out an Open event
 				if (!this._loaded) {
 					var entityId = this._getSelfLink(entity);
-					this.logTelemetryEvent(entityId, false, this.rubricMode, this.originTool);
+					this.logTelemetryEvent(entityId, false, this.telemetryData);
 					this._loaded = true;
 				}
 				this._levelsHref = this._getLevelsLink(entity);

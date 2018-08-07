@@ -35,8 +35,7 @@
 				_isHolistic: Boolean,
 				_isNumeric: Boolean,
 				_loaded: Boolean,
-				rubricMode: String,
-				originTool: String
+				telemetryData: Object
 			},
 
 			observers: [
@@ -56,7 +55,7 @@
 				// The first time that the entity loads, we send out an Open event
 				if (!this._loaded) {
 					var entityId = this._getSelfLink(entity);
-					this.logTelemetryEvent(entityId, true, this.rubricMode, this.originTool);
+					this.logTelemetryEvent(entityId, true, this.telemetryData);
 					this._loaded = true;
 				}
 				this._name = entity.properties.name;

@@ -135,7 +135,7 @@ Polymer Web-Component to display rubrics
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" rubric-mode="[[_rubricMode]]" origin-tool="[[_originTool]]"></d2l-rubric-criteria-groups>
+			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" telemetry-data="[[_telemetryData]]"></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
@@ -193,13 +193,9 @@ Polymer Web-Component to display rubrics
 					type: Object,
 					value: null
 				},
-				_rubricMode: {
-					type: String,
-					value: null
-				},
-				_originTool: {
-					type: String,
-					value: null
+				_telemetryData: {
+					type: Object,
+					value: {}
 				}
 			},
 
@@ -216,8 +212,9 @@ Polymer Web-Component to display rubrics
 
 			_onEntityChanged: function(entity) {
 				if (entity) {
-					this._rubricMode = this.dataset.rubricMode;
-					this._originTool = this.dataset.originTool;
+					this._telemetryData.rubricMode = this.dataset.rubricMode;
+					this._telemetryData.originTool = this.dataset.originTool;
+					this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
 					this.rubricType = this._findRubricType(entity);
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._showContent = true;

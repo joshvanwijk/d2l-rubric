@@ -29,8 +29,7 @@
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
-					rubric-mode="[[rubricMode]]"
-					origin-tool="[[originTool]]"
+					telemetry-data="[[telemetryData]]"
 				>
 				</d2l-rubric-criteria-group>
 			</template>
@@ -42,8 +41,7 @@
 					href="[[_getSelfLink(item)]]"
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
-					rubric-mode="[[rubricMode]]"
-					origin-tool="[[originTool]]"
+					telemetry-data="[[telemetryData]]"
 				>
 				</d2l-rubric-criteria-group-mobile>
 			</template>
@@ -72,11 +70,8 @@
 				rubricType: {
 					type: String
 				},
-				rubricMode: {
-					type: String
-				},
-				originTool: {
-					type: String
+				telemetryData: {
+					type: Object
 				}
 			},
 
