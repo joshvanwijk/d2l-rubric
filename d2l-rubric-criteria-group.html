@@ -212,7 +212,8 @@
 				}
 				// The first time that the entity loads, we send out an Open event
 				if (!this._loaded) {
-					this.logTelemetryEvent(entity, false, this.rubricMode, this.originTool);
+					var entityId = this._getSelfLink(entity);
+					this.logTelemetryEvent(entityId, false, this.rubricMode, this.originTool);
 					this._loaded = true;
 				}
 				this._levelsHref = this._getLevelsLink(entity);

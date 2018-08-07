@@ -1,5 +1,4 @@
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-telemetry-browser-client/d2l-telemetry-browser-client.html">
 
 <script>
@@ -14,15 +13,11 @@
 	 */
 	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
-		_logEvent: function(entity, isMobile, eventType, rubricMode, originTool) {
+		_logEvent: function(id, isMobile, eventType, rubricMode, originTool) {
 			// TODO: Eventually change this to be Prd/QA based on environment
 			var endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
 
 			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
-
-			// TODO: Pass in ID instead of whole entity
-			var id = this._getSelfLink(entity);
-
 			var eventBody = null;
 
 			if (eventType === 'PerformanceEvent') {
@@ -70,19 +65,18 @@
 		},
 
 		// Should Performance events take in an isMobile flag?
-		logPerformanceEvent: function(entity) {
-			this._logEvent(entity, null, 'PerformanceEvent');
+		logPerformanceEvent: function(id) {
+			this._logEvent(id, null, 'PerformanceEvent');
 		},
 
-		logTelemetryEvent: function(entity, isMobile, rubricMode, originTool) {
-			this._logEvent(entity, isMobile, 'TelemetryEvent', rubricMode, originTool);
+		logTelemetryEvent: function(id, isMobile, rubricMode, originTool) {
+			this._logEvent(id, isMobile, 'TelemetryEvent', rubricMode, originTool);
 		}
 	};
 
 	/** @polymerBehavior */
 	D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior = [
 		D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl,
-		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior
 	];
 </script>
