@@ -135,7 +135,14 @@ Polymer Web-Component to display rubrics
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" telemetry-data="[[_telemetryData]]"></d2l-rubric-criteria-groups>
+			<d2l-rubric-criteria-groups
+				href="[[_getHref(_criteriaGroups)]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				rubric-type="[[rubricType]]"
+				telemetry-data="[[_telemetryData]]"
+				telemetry-flag="[[_telemetryFlag]]"
+			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
@@ -144,7 +151,7 @@ Polymer Web-Component to display rubrics
 				</div>
 			</div>
 		</div>
-		<template is="dom-if" if="[[_hasOverallScore(entity)]]">
+		<template is="dom-if" if="[[_hasOverallScore(entity, _overallScoreFlag)]]">
 			<d2l-rubric-overall-score
 				hidden$="[[_assessmentEntity]]"
 				href="[[_getOverallLevels(entity)]]"
@@ -196,6 +203,14 @@ Polymer Web-Component to display rubrics
 				_telemetryData: {
 					type: Object,
 					value: null
+				},
+				_telemetryFlag: {
+					type: Boolean,
+					value: false
+				},
+				_overallScoreFlag: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -216,6 +231,9 @@ Polymer Web-Component to display rubrics
 					this._telemetryData.rubricMode = this.dataset.rubricMode;
 					this._telemetryData.originTool = this.dataset.originTool;
 					this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
+					//TODO: Test in Polymer 1
+					this._telemetryFlag = this.dataset.telemetryFlag;
+					this._overallScoreFlag = this.dataset.overallScoreFlag;
 					this.rubricType = this._findRubricType(entity);
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._showContent = true;
@@ -256,8 +274,9 @@ Polymer Web-Component to display rubrics
 				return !!outOf || outOf === 0;
 			},
 
-			_hasOverallScore: function(entity) {
+			_hasOverallScore: function(entity, overallScoreFlag) {
 				return (
+					overallScoreFlag &&
 					entity &&
 					entity.hasLink(this.HypermediaRels.Rubrics.overallLevels) &&
 					!entity.hasClass(this.HypermediaClasses.rubrics.holistic)
