@@ -195,7 +195,7 @@ Polymer Web-Component to display rubrics
 				},
 				_telemetryData: {
 					type: Object,
-					value: {}
+					value: null
 				}
 			},
 
@@ -212,6 +212,7 @@ Polymer Web-Component to display rubrics
 
 			_onEntityChanged: function(entity) {
 				if (entity) {
+					this._telemetryData = {};
 					this._telemetryData.rubricMode = this.dataset.rubricMode;
 					this._telemetryData.originTool = this.dataset.originTool;
 					this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
