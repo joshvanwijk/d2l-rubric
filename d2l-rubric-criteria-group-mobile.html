@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./telemetry-behavior.html">
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="./d2l-rubric-criteria-mobile.html">
@@ -32,7 +33,8 @@
 				_levelsHref: String,
 				assessmentHref: String,
 				_isHolistic: Boolean,
-				_isNumeric: Boolean
+				_isNumeric: Boolean,
+				_loaded: Boolean
 			},
 
 			observers: [
@@ -41,12 +43,18 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				window.D2L.Hypermedia.HMConstantsBehavior
+				window.D2L.Hypermedia.HMConstantsBehavior,
+				D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 			],
 
 			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
+				}
+				// The first time that the entity loads, we send out an Open event
+				if (!this._loaded) {
+					this.logTelemetryEvent(entity, true);
+					this._loaded = true;
 				}
 				this._name = entity.properties.name;
 				this._levelsHref = this._getLevelsLink(entity);

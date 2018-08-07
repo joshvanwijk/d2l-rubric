@@ -5,6 +5,7 @@
 <link rel="import" href="../d2l-table/d2l-thead.html">
 <link rel="import" href="../d2l-table/d2l-tbody.html">
 <link rel="import" href="../d2l-table/d2l-th.html">
+<link rel="import" href="./telemetry-behavior.html">
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
@@ -169,6 +170,10 @@
 					type: Boolean,
 					value: false
 				},
+				_loaded: {
+					type: Boolean,
+					value: false
+				},
 				assessmentHref: {
 					type: String,
 					value: null
@@ -184,7 +189,8 @@
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				Polymer.IronResizableBehavior,
-				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+				D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 			],
 
 			observers: [
@@ -195,6 +201,11 @@
 			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
+				}
+				// The first time that the entity loads, we send out an Open event
+				if (!this._loaded) {
+					this.logTelemetryEvent(entity, false);
+					this._loaded = true;
 				}
 				this._levelsHref = this._getLevelsLink(entity);
 				this._criteriaCollectionHref = this._getCriteriaLink(entity);

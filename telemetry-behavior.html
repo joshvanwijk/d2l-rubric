@@ -1,0 +1,84 @@
+<link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="./d2l-rubric-entity-behavior.html">
+<link rel="import" href="../d2l-telemetry-browser-client/d2l-telemetry-browser-client.html">
+
+<script>
+	'use strict';
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
+
+	/**
+	 * Behavior for sending telemetry messages to the telemetry service
+	 * @polymerBehavior
+	 */
+	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
+
+		_logEvent: function(entity, isMobile, eventType) {
+			// TODO: Eventually change this to be Prd/QA based on environment
+			var endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
+
+			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
+
+			var id = this._getSelfLink(entity);
+
+			var eventBody = null;
+
+			if (eventType === 'PerformanceEvent') {
+				eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+					.addUserTiming(window.performance.getEntriesByType('measure'));
+			} else { // eventType === 'TelemetryEvent'
+				eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+					.addCustom('isMobile', isMobile);
+			}
+
+			eventBody.setAction('Open').setObject(encodeURIComponent(id), 'Rubric', id);
+
+			var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
+				.setDate(new Date())
+				.setType(eventType)
+				.setSourceId('rubric')
+				.setBody(eventBody);
+
+			client.logUserEvent(event);
+		},
+
+		perfMark: function(name) {
+			if (!window.performance || !window.performance.mark) {
+				return;
+			}
+			window.performance.mark(name);
+		},
+
+		perfMeasure: function(name, startMark, endMark) {
+			if (!window.performance || !window.performance.measure) {
+				return;
+			}
+			/* contrary to spec, start & end marks are not optional in IE */
+			if (!startMark) {
+				startMark = 'navigationStart';
+			}
+			if (!endMark) {
+				this.perfMark(name);
+				endMark = name;
+			}
+			window.performance.measure(name, startMark, endMark);
+		},
+
+		// Should Performance events take in an isMobile flag?
+		logPerformanceEvent: function(entity) {
+			this._logEvent(entity, null, 'PerformanceEvent');
+		},
+
+		logTelemetryEvent: function(entity, isMobile) {
+			this._logEvent(entity, isMobile, 'TelemetryEvent');
+		}
+	};
+
+	/** @polymerBehavior */
+	D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior = [
+		D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl,
+		D2L.PolymerBehaviors.Rubric.EntityBehavior,
+		window.D2L.Hypermedia.HMConstantsBehavior
+	];
+</script>
