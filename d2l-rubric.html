@@ -124,6 +124,11 @@ Polymer Web-Component to display rubrics
 				@apply --d2l-body-compact-text;
 			}
 
+			/* Fix for Polymer 2 */
+			d2l-rubric-overall-score[hidden] {
+				display: none;
+			}
+
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
 		<template is="dom-repeat" items="[[_alerts]]">
@@ -231,7 +236,6 @@ Polymer Web-Component to display rubrics
 					this._telemetryData.rubricMode = this.dataset.rubricMode;
 					this._telemetryData.originTool = this.dataset.originTool;
 					this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
-					//TODO: Test in Polymer 1
 					this._telemetryFlag = this.dataset.telemetryFlag;
 					this._overallScoreFlag = this.dataset.overallScoreFlag;
 					this.rubricType = this._findRubricType(entity);
