@@ -146,7 +146,7 @@ Polymer Web-Component to display rubrics
 				token="[[token]]"
 				rubric-type="[[rubricType]]"
 				telemetry-data="[[_telemetryData]]"
-				telemetry-flag="[[_telemetryFlag]]"
+				telemetry-flag="[[telemetryFlag]]"
 			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
@@ -156,7 +156,7 @@ Polymer Web-Component to display rubrics
 				</div>
 			</div>
 		</div>
-		<template is="dom-if" if="[[_hasOverallScore(entity, _overallScoreFlag)]]">
+		<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
 			<d2l-rubric-overall-score
 				hidden$="[[_assessmentEntity]]"
 				href="[[_getOverallLevels(entity)]]"
@@ -209,13 +209,15 @@ Polymer Web-Component to display rubrics
 					type: Object,
 					value: null
 				},
-				_telemetryFlag: {
+				telemetryFlag: {
 					type: Boolean,
-					value: false
+					value: false,
+					reflectToAttribute: true
 				},
-				_overallScoreFlag: {
+				overallScoreFlag: {
 					type: Boolean,
-					value: false
+					value: false,
+					reflectToAttribute: true
 				}
 			},
 
@@ -236,8 +238,6 @@ Polymer Web-Component to display rubrics
 					this._telemetryData.rubricMode = this.dataset.rubricMode;
 					this._telemetryData.originTool = this.dataset.originTool;
 					this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
-					this._telemetryFlag = this.dataset.telemetryFlag;
-					this._overallScoreFlag = this.dataset.overallScoreFlag;
 					this.rubricType = this._findRubricType(entity);
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._showContent = true;
