@@ -30,6 +30,7 @@
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
 					telemetry-data="[[telemetryData]]"
+					telemetry-flag="[[telemetryFlag]]"
 				>
 				</d2l-rubric-criteria-group>
 			</template>
@@ -42,6 +43,7 @@
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
 					telemetry-data="[[telemetryData]]"
+					telemetry-flag="[[telemetryFlag]]"
 				>
 				</d2l-rubric-criteria-group-mobile>
 			</template>
@@ -72,6 +74,10 @@
 				},
 				telemetryData: {
 					type: Object
+				},
+				telemetryFlag: {
+					type: Boolean,
+					value: false
 				}
 			},
 
