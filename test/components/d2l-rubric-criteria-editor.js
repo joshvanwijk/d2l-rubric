@@ -104,7 +104,7 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			test('enables drag and drop', function(done) {
 				flush(function() {
 					var dragHandle = element.$$('.dnd-drag-handle');
-					expect(dragHandle.icon).to.equal('d2l-tier1:menu-hamburger');
+					expect(dragHandle.icon).to.equal('d2l-tier1:dragger');
 					done();
 				});
 			});
