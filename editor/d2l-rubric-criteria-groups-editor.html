@@ -103,7 +103,9 @@
 				if (action) {
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criteria-group-added');
-						this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
+						setTimeout(function() {
+							this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
+						}.bind(this), 2000);
 					}.bind(this)).then(function() {
 						var allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
 						var lastGroup = allGroups[allGroups.length - 1];
