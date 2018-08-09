@@ -181,6 +181,14 @@
 				rubricType: {
 					type: String,
 					value: null
+				},
+				telemetryData: {
+					type: Object,
+					value: null
+				},
+				telemetryFlag: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -203,8 +211,9 @@
 					return;
 				}
 				// The first time that the entity loads, we send out an Open event
-				if (!this._loaded) {
-					this.logTelemetryEvent(entity, false);
+				if (!this._loaded && this.telemetryFlag) {
+					var entityId = this._getSelfLink(entity);
+					this.logTelemetryEvent(entityId, false, this.telemetryData);
 					this._loaded = true;
 				}
 				this._levelsHref = this._getLevelsLink(entity);

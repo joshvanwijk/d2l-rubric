@@ -1,5 +1,4 @@
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-telemetry-browser-client/d2l-telemetry-browser-client.html">
 
 <script>
@@ -14,14 +13,16 @@
 	 */
 	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
-		_logEvent: function(entity, isMobile, eventType) {
-			// TODO: Eventually change this to be Prd/QA based on environment
-			var endpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
+		_logEvent: function(id, isMobile, eventType, telemetryData) {
+			if (!telemetryData) {
+				telemetryData = {};
+			}
+
+			var defaultEndpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
+			// Use the QA environment if no prod environment is specified
+			var endpoint = telemetryData.endpoint || defaultEndpoint;
 
 			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
-
-			var id = this._getSelfLink(entity);
-
 			var eventBody = null;
 
 			if (eventType === 'PerformanceEvent') {
@@ -32,7 +33,10 @@
 					.addCustom('isMobile', isMobile);
 			}
 
-			eventBody.setAction('Open').setObject(encodeURIComponent(id), 'Rubric', id);
+			eventBody.setAction('Open')
+				.setObject(encodeURIComponent(id), 'Rubric', id)
+				.addCustom('rubricMode', telemetryData.rubricMode || 'unkown')
+				.addCustom('originTool', telemetryData.originTool || 'unkown');
 
 			var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 				.setDate(new Date())
@@ -66,19 +70,18 @@
 		},
 
 		// Should Performance events take in an isMobile flag?
-		logPerformanceEvent: function(entity) {
-			this._logEvent(entity, null, 'PerformanceEvent');
+		logPerformanceEvent: function(id) {
+			this._logEvent(id, null, 'PerformanceEvent');
 		},
 
-		logTelemetryEvent: function(entity, isMobile) {
-			this._logEvent(entity, isMobile, 'TelemetryEvent');
+		logTelemetryEvent: function(id, isMobile, telemetryData) {
+			this._logEvent(id, isMobile, 'TelemetryEvent', telemetryData);
 		}
 	};
 
 	/** @polymerBehavior */
 	D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior = [
 		D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl,
-		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior
 	];
 </script>
