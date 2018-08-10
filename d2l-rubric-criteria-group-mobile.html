@@ -35,8 +35,7 @@
 				_isHolistic: Boolean,
 				_isNumeric: Boolean,
 				_loaded: Boolean,
-				telemetryData: Object,
-				telemetryFlag: Boolean
+				telemetryData: Object
 			},
 
 			observers: [
@@ -54,7 +53,7 @@
 					return;
 				}
 				// The first time that the entity loads, we send out an Open event
-				if (!this._loaded && this.telemetryFlag) {
+				if (!this._loaded && this.telemetryData && this.telemetryData.endpoint) {
 					var entityId = this._getSelfLink(entity);
 					this.logTelemetryEvent(entityId, true, this.telemetryData);
 					this._loaded = true;
