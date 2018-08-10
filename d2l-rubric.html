@@ -163,7 +163,6 @@ Polymer Web-Component to display rubrics
 				rubric-type="[[rubricType]]"
 				read-only="[[readOnly]]"
 				telemetry-data="[[_telemetryData]]"
-				telemetry-flag="[[telemetryFlag]]"
 			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
@@ -230,11 +229,6 @@ Polymer Web-Component to display rubrics
 				_telemetryData: {
 					type: Object,
 					value: null
-				},
-				telemetryFlag: {
-					type: Boolean,
-					value: false,
-					reflectToAttribute: true
 				},
 				overallScoreFlag: {
 					type: Boolean,
