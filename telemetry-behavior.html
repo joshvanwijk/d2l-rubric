@@ -18,7 +18,7 @@
 				return;
 			}
 
-			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: telemetryData.endpoint })
+			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: telemetryData.endpoint });
 
 			eventBody.setAction('Open')
 				.setObject(encodeURIComponent(id), 'Rubric', id)
@@ -58,14 +58,14 @@
 
 		// Should Performance events take in an isMobile flag?
 		logPerformanceEvent: function(id, telemetryData) {
-			eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+			var eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
 				.addUserTiming(window.performance.getEntriesByType('measure'));
 
 			this._logEvent(id, 'PerformanceEvent', eventBody, telemetryData);
 		},
 
 		logTelemetryEvent: function(id, isMobile, telemetryData) {
-			eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+			var eventBody = new window.d2lTelemetryBrowserClient.EventBody()
 				.addCustom('isMobile', isMobile);
 
 			this._logEvent(id, 'TelemetryEvent', eventBody, telemetryData);
