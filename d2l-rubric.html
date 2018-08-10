@@ -137,6 +137,11 @@ Polymer Web-Component to display rubrics
 				padding-left: 0.12rem
 			}
 
+			/* Fix for Polymer 2 */
+			d2l-rubric-overall-score[hidden] {
+				display: none;
+			}
+
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
 		<div id="editor-save-status-container">
@@ -157,6 +162,8 @@ Polymer Web-Component to display rubrics
 				token="[[token]]"
 				rubric-type="[[rubricType]]"
 				read-only="[[readOnly]]"
+				telemetry-data="[[_telemetryData]]"
+				telemetry-flag="[[telemetryFlag]]"
 			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
@@ -166,7 +173,7 @@ Polymer Web-Component to display rubrics
 				</div>
 			</div>
 		</div>
-		<template is="dom-if" if="[[_hasOverallScore(entity)]]">
+		<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
 			<d2l-rubric-overall-score
 				hidden$="[[_assessmentEntity]]"
 				href="[[_getOverallLevels(entity)]]"
@@ -219,6 +226,20 @@ Polymer Web-Component to display rubrics
 				_assessmentEntity: {
 					type: Object,
 					value: null
+				},
+				_telemetryData: {
+					type: Object,
+					value: null
+				},
+				telemetryFlag: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
+				},
+				overallScoreFlag: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
 				}
 			},
 
@@ -241,6 +262,10 @@ Polymer Web-Component to display rubrics
 
 			_onEntityChanged: function(entity) {
 				if (entity) {
+					this._telemetryData = {};
+					this._telemetryData.rubricMode = this.dataset.rubricMode;
+					this._telemetryData.originTool = this.dataset.originTool;
+					this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
 					this.rubricType = this._findRubricType(entity);
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._showContent = true;
@@ -290,8 +315,9 @@ Polymer Web-Component to display rubrics
 				return !!outOf || outOf === 0;
 			},
 
-			_hasOverallScore: function(entity) {
+			_hasOverallScore: function(entity, overallScoreFlag) {
 				return (
+					overallScoreFlag &&
 					entity &&
 					entity.hasLink(this.HypermediaRels.Rubrics.overallLevels) &&
 					!entity.hasClass(this.HypermediaClasses.rubrics.holistic)

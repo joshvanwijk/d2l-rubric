@@ -30,6 +30,8 @@
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
 					read-only="[[readOnly]]"
+					telemetry-data="[[telemetryData]]"
+					telemetry-flag="[[telemetryFlag]]"
 				>
 				</d2l-rubric-criteria-group>
 			</template>
@@ -41,6 +43,8 @@
 					href="[[_getSelfLink(item)]]"
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
+					telemetry-data="[[telemetryData]]"
+					telemetry-flag="[[telemetryFlag]]"
 				>
 				</d2l-rubric-criteria-group-mobile>
 			</template>
@@ -69,7 +73,14 @@
 				rubricType: {
 					type: String
 				},
-				readOnly: Boolean
+				readOnly: Boolean,
+				telemetryData: {
+					type: Object
+				},
+				telemetryFlag: {
+					type: Boolean,
+					value: false
+				}
 			},
 
 			behaviors: [
