@@ -5,12 +5,11 @@
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
 <link rel="import" href="../d2l-rubric-loading.html">
 <link rel="import" href="../localize-behavior.html">
-<link rel="import" href="../store/entity-store.html">
-<link rel="import" href="../store/entity-behavior.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
+<link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
 <link rel="import" href="./d2l-rubric-editor-menu.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
-<link rel="import" href="../store/siren-action-behavior.html">
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 
 <!--- Local WhiteList Hack-->
@@ -158,14 +157,14 @@ Creates and edits a rubric
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.SirenActionBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
 			listeners: {
-				'd2l-rubric-entity-save-start': '_onEntitySave',
-				'd2l-rubric-entity-save-error': '_onEntitySave',
-				'd2l-rubric-entity-save-end': '_onEntitySave'
+				'd2l-siren-entity-save-start': '_onEntitySave',
+				'd2l-siren-entity-save-error': '_onEntitySave',
+				'd2l-siren-entity-save-end': '_onEntitySave'
 			},
 
 			observers: [
@@ -173,8 +172,8 @@ Creates and edits a rubric
 			],
 
 			ready: function() {
-				this.addEventListener('d2l-rubric-entity-error', this._handleError.bind(this));
-				this.addEventListener('d2l-rubric-entity-save-error', this._handleSaveError.bind(this));
+				this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
+				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
 			},
 
 			attached: function() {
@@ -184,9 +183,9 @@ Creates and edits a rubric
 			_onEntitySave: function(e) {
 				var saveStateEl = this.$['editor-save-status'];
 				({
-					'd2l-rubric-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-rubric-entity-save-end': function() { saveStateEl.end(); },
-					'd2l-rubric-entity-save-error': function() { saveStateEl.error(); }
+					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
 			},
 
@@ -227,10 +226,12 @@ Creates and edits a rubric
 			_handleSaveError: function(e) {
 				this._clearAlerts();
 				if (e.target === this) { // handle own error events
+					this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
 					this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 				}
 			},
 			_handleError: function(e) {
+				this.fire('iron-announce', { text: this.localize('rubricLoadingErrorAriaAlert') }, { bubbles: true });
 				this._addAlert('error', e.detail.error.message, this.localize('rubricLoadingErrorMessage'));
 				this._displayEditor(false);
 			}

@@ -32,17 +32,17 @@ suite('<d2l-rubric-level-editor>', function() {
 				element = fixture('basic');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 
 			teardown(function() {
 				fetch && fetch.restore();
-				window.D2L.Rubric.EntityStore.clear();
+				window.D2L.Siren.EntityStore.clear();
 			});
 
 			test('saves name', function(done) {
@@ -81,7 +81,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				var nameTextInput = element.$$('d2l-text-input');
 				nameTextInput.value = 'Superman';
 				raf(function() {
-					element.addEventListener('d2l-rubric-entity-save-error', function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
 							expect(nameTextInput.ariaInvalid).to.equal('true');
 							done();
@@ -112,17 +112,17 @@ suite('<d2l-rubric-level-editor>', function() {
 				element = fixture('basic');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 
 			teardown(function() {
 				fetch && fetch.restore();
-				window.D2L.Rubric.EntityStore.clear();
+				window.D2L.Siren.EntityStore.clear();
 			});
 
 			test('generates event if deleting fails', function(done) {
@@ -135,7 +135,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				element.addEventListener('d2l-rubric-entity-save-error', function() {
+				element.addEventListener('d2l-siren-entity-save-error', function() {
 					done();
 				});
 				element.$$('#remove').click();
@@ -149,11 +149,11 @@ suite('<d2l-rubric-level-editor>', function() {
 				element = fixture('readonly');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels/1478.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 

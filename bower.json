@@ -29,7 +29,7 @@
     "d2l-colors": "^3.1.2",
     "d2l-fetch": "Brightspace/d2l-fetch#^1.8.0",
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior#^5.0.2",
-    "d2l-hm-constants-behavior": "git://github.com/Brightspace/d2l-hm-constants-behavior.git#^5.15.0",
+    "d2l-hm-constants-behavior": "git://github.com/Brightspace/d2l-hm-constants-behavior.git#^5.17.0",
     "d2l-icons": "^5.0.1",
     "d2l-loading-spinner": "^6.0.2",
     "d2l-localize-behavior": "^1.1.0",
@@ -41,13 +41,14 @@
     "polymer": "1 - 2",
     "s-html": "Brightspace/s-html#^1.2.0",
     "d2l-textarea": "BrightspaceUI/textarea#^0.6.1",
-    "d2l-text-input": "BrightspaceUI/text-input#^0.4.0",
+    "d2l-text-input": "BrightspaceUI/text-input#^0.5.0",
     "d2l-tooltip": "BrightspaceUI/tooltip#^2.0.4",
     "d2l-button": "BrightspaceUI/button#^4.5.0",
     "d2l-fastdom-import": "Brightspace/fastdom-import#^1.0.2",
     "d2l-save-status": "Brightspace/d2l-save-status#^0.8.0",
     "d2l-dnd-sortable": "Brightspace/dnd-sortable#^0.0.3",
-    "iron-a11y-announcer": "^2.1.0"
+    "iron-a11y-announcer": "^2.1.0",
+    "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#^0.0.2"
   },
   "devDependencies": {
     "fetch": "^2.0.3",
@@ -68,7 +69,7 @@
   },
   "resolutions": {
     "webcomponentsjs": "^v1.0.0",
-    "d2l-text-input": "^0.4.0",
+    "d2l-text-input": "^0.5.0",
     "d2l-icons": "^5.0.1"
   }
 }

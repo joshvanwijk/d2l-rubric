@@ -12,12 +12,12 @@ suite('<d2l-rubric>', function() {
 
 		function waitForLoad(e) {
 			if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199.json') {
-				element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 				done();
 			}
 		}
 		stubWhitelist();
-		element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+		element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 		element.href = 'static-data/rubrics/organizations/text-only/199.json';
 		element.token = 'foozleberries';
 	});
@@ -57,11 +57,11 @@ suite('<d2l-rubric>', function() {
 			function waitForLoad(e) {
 				if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199.json') {
 					expect(element._showContent).to.be.true;
-					element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+					element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 					done();
 				}
 			}
-			element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+			element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 			element.href = 'static-data/rubrics/organizations/text-only/199.json';
 			element.token = 'foozleberries';
 			expect(element._showContent).to.be.false;

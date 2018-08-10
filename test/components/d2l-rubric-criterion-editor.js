@@ -36,17 +36,17 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				element = fixture('basic');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 
 			teardown(function() {
 				fetch && fetch.restore();
-				window.D2L.Rubric.EntityStore.clear();
+				window.D2L.Siren.EntityStore.clear();
 			});
 
 			test('saves name', function(done) {
@@ -85,7 +85,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				var nameTextArea = element.$$('d2l-textarea');
 				nameTextArea.value = 'Batman and Robin';
 				raf(function() {
-					element.addEventListener('d2l-rubric-entity-save-error', function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
 							expect(nameTextArea.ariaInvalid).to.equal('true');
 							done();
@@ -116,11 +116,11 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				element = fixture('readonly');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/624.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 
@@ -144,17 +144,17 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				element = fixture('basic');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623.json') {
-						element.removeEventListener('d2l-rubric-entity-changed', waitForLoad);
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
 				}
-				element.addEventListener('d2l-rubric-entity-changed', waitForLoad);
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
 
 			teardown(function() {
 				fetch && fetch.restore();
-				window.D2L.Rubric.EntityStore.clear();
+				window.D2L.Siren.EntityStore.clear();
 			});
 
 			test('remove is visible', function() {
@@ -172,7 +172,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				element.addEventListener('d2l-rubric-entity-save-error', function() {
+				element.addEventListener('d2l-siren-entity-save-error', function() {
 					done();
 				});
 				element.$$('#remove').click();

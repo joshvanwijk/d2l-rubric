@@ -77,14 +77,14 @@
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
 				<d2l-textarea
 					id="text-area"
-					value="[[getAssessmentFeedback(criterionEntity, assessmentResult, false)]]"
+					value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]"
 					placeholder="[[localize('editFeedback')]]"
 				>
 				</d2l-textarea>
 			</div>
 			<div hidden="[[_canEditFeedback(criterionEntity, assessmentResult)]]">
 				<s-html
-					html="[[getAssessmentFeedback(criterionEntity, assessmentResult, true)]]"
+					html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"
 				>
 				</s-html>
 			</div>
@@ -150,6 +150,14 @@
 					return false;
 				}
 				return this.canAddFeedback(criterionEntity, assessmentEntity);
+			},
+
+			getAssessmentFeedbackHtml: function(criterionEntity, assessmentEntity) {
+				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, true);
+			},
+
+			getAssessmentFeedbackText: function(criterionEntity, assessmentEntity) {
+				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, false);
 			}
 		});
 	</script>
