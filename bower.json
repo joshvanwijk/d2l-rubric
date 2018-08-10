@@ -49,7 +49,7 @@
     "d2l-dnd-sortable": "Brightspace/dnd-sortable#^0.0.3",
     "iron-a11y-announcer": "^2.1.0",
     "d2l-telemetry-browser-client": "Brightspace/d2l-telemetry-browser-client#^0.4.0",
-    "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors"
+    "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#v0.0.1"
   },
   "devDependencies": {
     "fetch": "^2.0.3",
