@@ -145,7 +145,7 @@ Polymer Web-Component to display rubrics
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
 		<div id="editor-save-status-container">
-			<d2l-save-status id="editor-save-status" class="right"></d2l-save-status>
+			<d2l-save-status id="rubric-save-status" class="right"></d2l-save-status>
 		</div>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]">
@@ -255,9 +255,9 @@ Polymer Web-Component to display rubrics
 			],
 
 			listeners: {
-				'd2l-rubric-entity-save-start': '_onEntitySave',
-				'd2l-rubric-entity-save-error': '_onEntitySave',
-				'd2l-rubric-entity-save-end': '_onEntitySave'
+				'd2l-siren-entity-save-start': '_onEntitySave',
+				'd2l-siren-entity-save-error': '_onEntitySave',
+				'd2l-siren-entity-save-end': '_onEntitySave'
 			},
 
 			_onEntityChanged: function(entity) {
@@ -273,11 +273,11 @@ Polymer Web-Component to display rubrics
 			},
 
 			_onEntitySave: function(e) {
-				var saveStateEl = this.$['editor-save-status'];
+				var saveStateEl = this.$['rubric-save-status'];
 				({
-					'd2l-rubric-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-rubric-entity-save-end': function() { saveStateEl.end(); },
-					'd2l-rubric-entity-save-error': function() { saveStateEl.error(); }
+					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
 			},
 
