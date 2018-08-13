@@ -13,25 +13,12 @@
 	 */
 	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
-		_logEvent: function(id, isMobile, eventType, telemetryData) {
-			if (!telemetryData) {
-				telemetryData = {};
+		_logEvent: function(id, eventType, eventBody, telemetryData) {
+			if (!telemetryData || !telemetryData.endpoint) {
+				return;
 			}
 
-			var defaultEndpoint = 'https://qa.telemetryservice.brightspace.com/api/events';
-			// Use the QA environment if no prod environment is specified
-			var endpoint = telemetryData.endpoint || defaultEndpoint;
-
-			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
-			var eventBody = null;
-
-			if (eventType === 'PerformanceEvent') {
-				eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
-					.addUserTiming(window.performance.getEntriesByType('measure'));
-			} else { // eventType === 'TelemetryEvent'
-				eventBody = new window.d2lTelemetryBrowserClient.EventBody()
-					.addCustom('isMobile', isMobile);
-			}
+			var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: telemetryData.endpoint });
 
 			eventBody.setAction('Open')
 				.setObject(encodeURIComponent(id), 'Rubric', id)
@@ -70,12 +57,18 @@
 		},
 
 		// Should Performance events take in an isMobile flag?
-		logPerformanceEvent: function(id) {
-			this._logEvent(id, null, 'PerformanceEvent');
+		logPerformanceEvent: function(id, telemetryData) {
+			var eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+				.addUserTiming(window.performance.getEntriesByType('measure'));
+
+			this._logEvent(id, 'PerformanceEvent', eventBody, telemetryData);
 		},
 
 		logTelemetryEvent: function(id, isMobile, telemetryData) {
-			this._logEvent(id, isMobile, 'TelemetryEvent', telemetryData);
+			var eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+				.addCustom('isMobile', isMobile);
+
+			this._logEvent(id, 'TelemetryEvent', eventBody, telemetryData);
 		}
 	};
 
