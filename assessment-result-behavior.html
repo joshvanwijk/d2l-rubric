@@ -220,7 +220,12 @@
 		},
 
 		canAssessCriterionCell: function(criterionCellHref) {
-			return !!this._assessmentCriterionCellMap[criterionCellHref];
+			var criterionCell = this._assessmentCriterionCellMap[criterionCellHref];
+			if (criterionCell) {
+				var action = criterionCell.getActionByName('select-criterion-cell');
+				return !!action;
+			}
+			return false;
 		}
 	};
 
