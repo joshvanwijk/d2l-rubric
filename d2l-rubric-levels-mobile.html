@@ -3,9 +3,11 @@
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="./localize-behavior.html">
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-icons/d2l-icon.html">
+<link rel="import" href="./siren-entity.html">
 
 <dom-module id="d2l-rubric-levels-mobile">
 	<template strip-whitespace>
@@ -120,6 +122,7 @@
 				display: none !important;
 			}
 		</style>
+		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<div class="levels-container">
 			<div class="levels" role="tablist">
 				<template is="dom-repeat" items="[[levelEntities]]">
@@ -127,7 +130,7 @@
 
 						id="level-tab[[index]]"
 						class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]"
-						on-tap="_selectLevel"
+						on-tap="handleTap"
 						data-index="[[index]]"
 						role="tab"
 						on-keydown="_onKeyDown"
@@ -135,6 +138,7 @@
 						aria-selected$="[[_isSelected(index, selected)]]"
 						aria-controls$="level-description-panel[[index]]"
 						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]"
+						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]"
 					>
 						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"class="check-icon" icon='d2l-tier1:check'></d2l-icon>
 						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
@@ -191,16 +195,31 @@
 					value: null
 				},
 
+				assessmentHref: {
+					type: String,
+					value: null
+				},
+
 				assessedLevelHref:{
 					type: String,
 					value:null
+				},
+
+				readOnly: {
+					type: Boolean
+				},
+
+				criterionCells: {
+					type: Array,
+					value: null
 				}
 			},
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
 
 			observers: [
@@ -294,6 +313,18 @@
 					return item.properties.name;
 				}
 			},
+
+			_getCriterionCellHref: function(criterionCells, index) {
+				return this.getSelfLink(criterionCells[index]);
+			},
+
+			handleTap: function(event) {
+				this._selectLevel(event);
+				if (this.readOnly) {
+					return;
+				}
+				this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+			}
 
 		});
 	</script>

@@ -112,6 +112,7 @@
 		</div>
 		<d2l-rubric-levels-mobile
 			href="[[levelsHref]]"
+			assessment-href="[[assessmentHref]]"
 			token="[[token]]"
 			selected="{{_selected}}"
 			level-entities="{{_levelEntities}}"
@@ -119,6 +120,8 @@
 			out-of="[[_outOf]]"
 			score="[[_score]]"
 			assessed-level-href = "[[_assessedLevelHref]]"
+			read-only="[[readOnly]]"
+			criterion-cells="[[_criterionCells]]"
 		>
 		</d2l-rubric-levels-mobile>
 
@@ -190,7 +193,9 @@
 
 				_assessedLevelHref: String,
 
-				_score: String
+				_score: String,
+
+				readOnly: Boolean
 			},
 
 			behaviors: [
