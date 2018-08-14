@@ -164,14 +164,6 @@
 			return feedback;
 		},
 
-		getAssessmentFeedbackHtml: function(criterionEntity, assessmentEntity) {
-			return this.getAssessmentFeedback(criterionEntity, assessmentEntity, true);
-		},
-
-		getAssessmentFeedbackText: function(criterionEntity, assessmentEntity) {
-			return this.getAssessmentFeedback(criterionEntity, assessmentEntity, false);
-		},
-
 		saveAssessmentFeedback: function(criterionHref, feedback) {
 			var assessmentCriterionCell = this.assessmentResult[criterionHref].cellEntity;
 			var action = assessmentCriterionCell.getActionByName('select-criterion-cell');

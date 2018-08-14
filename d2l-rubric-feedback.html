@@ -1,5 +1,4 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="./d2l-rubric-feedback-textbox.html">
 <link rel="import" href="./localize-behavior.html">
 <link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
@@ -7,6 +6,7 @@
 <link rel="import" href="../s-html/s-html.html">
 <link rel="import" href="../d2l-textarea/d2l-textarea.html">
 <link rel="import" href="./siren-entity.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
 
 
 <dom-module id="d2l-rubric-feedback">
@@ -15,7 +15,6 @@
 			:host {
 				display: block;
 			}
-
 			.feedback-arrow {
 				margin-top: calc(-0.5rem - 25px);
 				width: 0;
@@ -24,7 +23,9 @@
 				border-bottom-color: var(--d2l-table-border-color);
 				position: absolute;
 			}
-
+			.feedback-arrow[data-mobile] {
+				display: none;
+			}
 			.feedback-arrow-inner {
 				position: relative;
 				top: 1px;
@@ -36,26 +37,13 @@
 				border-bottom: 12px solid white;
 				z-index: 1;
 			}
-
-			.feedback-heading {
-				@apply --d2l-label-text;
-				padding-top: 0.5rem;
-			}
-
 			.clear-feedback-button {
 				float: right;
 			}
-
-			.feedback-text {
-				@apply --d2l-body-compact-text;
-				margin: 0.5rem 0;
-			}
-
-			.feedback-wrapper {
+			.feedback-wrapper[data-desktop] {
 				padding: 0.5rem;
 				border: 1px solid transparent;
 			}
-
 			.feedback-wrapper-editable:hover {
 				background: var(--d2l-color-sylvite);
 				background-color: var(--d2l-color-sylvite);
@@ -64,30 +52,48 @@
 			.feedback-wrapper-editable:hover .feedback-arrow-inner {
 				border-bottom: 12px solid var(--d2l-color-sylvite);
 			}
-
+			.feedback-heading {
+				@apply --d2l-label-text;
+				padding-top: 0.5rem;
+			}
+			.feedback-text {
+				@apply --d2l-body-compact-text;
+				margin: 0.5rem 0;
+			}
+			.feedback-container[data-mobile] {
+				margin-top: 24px;
+				margin-bottom: 18px;
+				border: 1px solid var(--d2l-color-mica);
+				border-radius: 8px;
+				padding: 18px;
+				padding-bottom: 24px;
+			}
 		</style>
+		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
-		<div class="feedback-wrapper">
-			<div class="feedback-arrow">
+		<div class="feedback-wrapper"data-desktop$="[[_largeScreen]]">
+			<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]">
 				<div class="feedback-arrow-inner"></div>
 			</div>
-			<div class="feedback-heading">
-				[[localize('feedback')]]
-			</div>
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
-				<d2l-rubric-feedback-textbox
-					criterion-href="[[criterionHref]]"
-					assessment-href="[[assessmentHref]]"
-					token="[[token]]"
+				<div class="feedback-heading">
+					[[localize('feedback')]]
+				</div>
+				<d2l-textarea
+					id="text-area"
+					value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]"
+					placeholder="[[localize('editFeedback')]]"
 				>
-				</d2l-rubric-feedback-textbox>
+				</d2l-textarea>
 			</div>
 			<div hidden="[[_canEditFeedback(criterionEntity, assessmentResult)]]">
-				<s-html
-					html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"
-				>
-				</s-html>
+				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
+					<div class="feedback-heading">[[localize('feedback')]]</div>
+					<div class="feedback-text">
+						<s-html html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"></s-html>
+					</div>
+				</div>
 			</div>
 		</div>
 	</template>
@@ -104,7 +110,12 @@
 					value: null
 				},
 				token: String,
-				readOnly: Boolean
+				_boundBlurHandler: {
+					type: Function,
+					value: function() {
+						return this._blurHandler.bind(this);
+					}
+				}
 			},
 
 			behaviors: [
@@ -112,11 +123,47 @@
 				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
 
+			attached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) {
+					return;
+				}
+				elem.addEventListener('blur', this._boundBlurHandler);
+			},
+
+			detached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) return;
+				elem.removeEventListener('blur', this._boundBlurHandler);
+			},
+
+			focus: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				elem.focus();
+			},
+
+			_blurHandler: function(event) {
+				var feedback = event.target.$.textarea.value;
+				this.saveFeedback(feedback);
+			},
+
+			saveFeedback: function(feedback) {
+				this.saveAssessmentFeedback(this.criterionHref, feedback);
+			},
+
 			_canEditFeedback: function(criterionEntity, assessmentEntity) {
 				if (this.readOnly || !criterionEntity || !assessmentEntity) {
 					return false;
 				}
 				return this.canAddFeedback(criterionEntity, assessmentEntity);
+			},
+
+			getAssessmentFeedbackHtml: function(criterionEntity, assessmentEntity) {
+				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, true);
+			},
+
+			getAssessmentFeedbackText: function(criterionEntity, assessmentEntity) {
+				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, false);
 			}
 		});
 	</script>

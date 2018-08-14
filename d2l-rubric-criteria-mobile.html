@@ -3,7 +3,7 @@
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="./d2l-rubric-criterion-mobile.html">
 <link rel="import" href="./d2l-rubric-levels-mobile.html">
-<link rel="import" href="./d2l-rubric-feedback-textbox.html">
+<link rel="import" href="./d2l-rubric-feedback.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="./assessment-result-behavior.html">
@@ -21,23 +21,6 @@
 			.line {
 				border: solid 0.5px var(--d2l-color-mica);
 			}
-			.feedback-container {
-				margin-top: 24px;
-				margin-bottom: 18px;
-				border: 1px solid var(--d2l-color-mica);
-				border-radius: 8px;
-				padding: 18px;
-				padding-bottom: 24px;
-			}
-			.feedback-heading {
-				@apply --d2l-body-small-text;
-				font-weight: 700;
-			}
-			.feedback-text {
-				@apply --d2l-body-compact-text;
-				margin: 0.5rem 0;
-		   }
-
 			[hidden] {
 				display: none !important;
 			}
@@ -60,24 +43,14 @@
 				on-tap="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]"
 			></d2l-button-subtle>
-			<div id="feedback[[criterionNum]]" hidden="[[!_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]">
-				<div hidden="[[!_canEditFeedback(criterion, assessmentResult)]]">
-					<d2l-rubric-feedback-textbox
-						criterion-href="[[_getSelfLink(criterion)]]"
-						assessment-href="[[assessmentHref]]"
-						token="[[token]]"
-					>
-					</d2l-rubric-feedback-textbox>
-				</div>
-				<div hidden="[[_canEditFeedback(criterion, assessmentResult)]]">
-					<div class="feedback-container">
-						<div class="feedback-heading">[[localize('feedback')]]</div>
-						<div class="feedback-text">
-							<s-html html="[[getAssessmentFeedbackHtml(criterion, assessmentResult)]]"></s-html>
-						</div>
-					</div>
-				</div>
-			</div>
+			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]">
+				<d2l-rubric-feedback id="feedback[[criterionNum]]"
+					criterion-href="[[_getSelfLink(criterion)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+				>
+				</d2l-rubric-feedback>
+			</template>
 			<hr class="line"></hr>
 		</template>
 	</template>
@@ -167,14 +140,6 @@
 				return !this._hasFeedback(entity, assessmentResult);
 			},
 
-			// TODO: Refactor / re-use d2l-rubric feedback :)
-			_canEditFeedback: function(criterionEntity, assessmentEntity) {
-				if (this.readOnly || !criterionEntity || !assessmentEntity) {
-					return false;
-				}
-				return this.canAddFeedback(criterionEntity, assessmentEntity);
-			},
-
 			_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
 				if (!feedbackDisplay) {
 					return;
@@ -186,7 +151,6 @@
 				var criterionNum = event.model.get('criterionNum');
 				this._addingFeedback = criterionNum;
 				fastdom.mutate(function() {
-					//TODO: Maybe change which element has the ID and use a dom-if for displayFeedback div
 					Polymer.dom(this.root).querySelector('#feedback' + criterionNum).focus();
 				}.bind(this));
 			}
