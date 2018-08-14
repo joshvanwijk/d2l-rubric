@@ -1,0 +1,82 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./localize-behavior.html">
+<link rel="import" href="./assessment-result-behavior.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="../s-html/s-html.html">
+<link rel="import" href="../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="./siren-entity.html">
+
+
+<dom-module id="d2l-rubric-feedback-textbox">
+	<template strip-whitespace>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
+		<d2l-textarea
+            id="text-area"
+            value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]"
+            placeholder="[[localize('editFeedback')]]"
+        >
+        </d2l-textarea>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-rubric-feedback-textbox',
+
+			properties: {
+				criterionHref: String,
+				criterionEntity: Object,
+				assessmentHref: {
+					type: String,
+					value: null
+				},
+				token: String,
+				_boundBlurHandler: {
+					type: Function,
+					value: function() {
+						return this._blurHandler.bind(this);
+					}
+				}
+			},
+
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+			],
+
+			attached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) {
+					return;
+				}
+				elem.addEventListener('blur', this._boundBlurHandler);
+			},
+
+			detached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) return;
+				elem.removeEventListener('blur', this._boundBlurHandler);
+			},
+
+			focus: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				elem.focus();
+			},
+
+			_blurHandler: function(event) {
+				var feedback = event.target.$.textarea.value;
+				this.saveFeedback(feedback);
+			},
+
+			saveFeedback: function(feedback) {
+				this.saveAssessmentFeedback(this.criterionHref, feedback);
+			}
+		});
+	</script>
+</dom-module>

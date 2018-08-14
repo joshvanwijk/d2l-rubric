@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./d2l-rubric-feedback-textbox.html">
 <link rel="import" href="./localize-behavior.html">
 <link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
@@ -75,12 +76,12 @@
 				[[localize('feedback')]]
 			</div>
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
-				<d2l-textarea
-					id="text-area"
-					value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]"
-					placeholder="[[localize('editFeedback')]]"
+				<d2l-rubric-feedback-textbox
+					criterion-href="[[criterionHref]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
 				>
-				</d2l-textarea>
+				</d2l-rubric-feedback-textbox>
 			</div>
 			<div hidden="[[_canEditFeedback(criterionEntity, assessmentResult)]]">
 				<s-html
@@ -103,12 +104,6 @@
 					value: null
 				},
 				token: String,
-				_boundBlurHandler: {
-					type: Function,
-					value: function() {
-						return this._blurHandler.bind(this);
-					}
-				},
 				readOnly: Boolean
 			},
 
@@ -117,47 +112,11 @@
 				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
 
-			attached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
-				if (!elem) {
-					return;
-				}
-				elem.addEventListener('blur', this._boundBlurHandler);
-			},
-
-			detached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
-				if (!elem) return;
-				elem.removeEventListener('blur', this._boundBlurHandler);
-			},
-
-			focus: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
-				elem.focus();
-			},
-
-			_blurHandler: function(event) {
-				var feedback = event.target.$.textarea.value;
-				this.saveFeedback(feedback);
-			},
-
-			saveFeedback: function(feedback) {
-				this.saveAssessmentFeedback(this.criterionHref, feedback);
-			},
-
 			_canEditFeedback: function(criterionEntity, assessmentEntity) {
 				if (this.readOnly || !criterionEntity || !assessmentEntity) {
 					return false;
 				}
 				return this.canAddFeedback(criterionEntity, assessmentEntity);
-			},
-
-			getAssessmentFeedbackHtml: function(criterionEntity, assessmentEntity) {
-				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, true);
-			},
-
-			getAssessmentFeedbackText: function(criterionEntity, assessmentEntity) {
-				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, false);
 			}
 		});
 	</script>
