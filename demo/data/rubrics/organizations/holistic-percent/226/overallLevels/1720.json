@@ -1,0 +1,57 @@
+{
+    "class": [
+        "overall-level"
+    ],
+    "properties": {
+        "name": "Level 4",
+        "rangeStart": 75.0
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Lorem ipsum dolor sit amet, ex veri vivendo mel, invidunt disputando comprehensam nec ei. Vel ad erat quodsi viderer, ferri rebum pertinacia te eos, id vim salutatus sententiae referrentur. Nam posse partem libris no, ea causae persius aliquid sed, alia cetero gubergren te nam? Ne vix dico salutandi evertitur, sale quaerendum ne sea! At sit quis dignissim. Nec ne dolore quidam recteque, utamur quaerendum ea duo, sit erat melius erroribus no.",
+                "html": "<p>Lorem ipsum dolor sit amet, ex veri vivendo mel, invidunt disputando comprehensam nec ei. Vel ad erat quodsi viderer, ferri rebum pertinacia te eos, id vim salutatus sententiae referrentur. Nam posse partem libris no, ea causae persius aliquid sed, alia cetero gubergren te nam? Ne vix dico salutandi evertitur, sale quaerendum ne sea! At sit quis dignissim. Nec ne dolore quidam recteque, utamur quaerendum ea duo, sit erat melius erroribus no.</p>"
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels/1720.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels/1719.json"
+        }
+    ]
+}

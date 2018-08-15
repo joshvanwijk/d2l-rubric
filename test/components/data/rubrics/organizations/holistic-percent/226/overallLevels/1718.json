@@ -1,0 +1,63 @@
+{
+    "class": [
+        "overall-level"
+    ],
+    "properties": {
+        "name": "Level 2",
+        "rangeStart": 25.0
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Ad vis enim purto iracundia, ignota definiebas has et. In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.",
+                "html": "<p>Ad vis enim purto iracundia, ignota definiebas has et. In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.</p>"
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels/1718.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels/1719.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels/1717.json"
+        }
+    ]
+}
