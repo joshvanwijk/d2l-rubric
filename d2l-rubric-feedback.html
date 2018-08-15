@@ -87,7 +87,7 @@
 				>
 				</d2l-textarea>
 			</div>
-			<div hidden="[[_canEditFeedback(criterionEntity, assessmentResult)]]">
+			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
 				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
 					<div class="feedback-heading">[[localize('feedback')]]</div>
 					<div class="feedback-text">
@@ -115,6 +115,10 @@
 					value: function() {
 						return this._blurHandler.bind(this);
 					}
+				},
+				addingFeedback: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -156,6 +160,10 @@
 					return false;
 				}
 				return this.canAddFeedback(criterionEntity, assessmentEntity);
+			},
+
+			_hasReadonlyFeedback: function(criterionEntity, assessmentEntity) {
+				return this._canEditFeedback(criterionEntity, assessmentEntity) || this.addingFeedback;
 			},
 
 			getAssessmentFeedbackHtml: function(criterionEntity, assessmentEntity) {

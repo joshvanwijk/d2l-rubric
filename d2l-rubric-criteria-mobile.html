@@ -48,6 +48,7 @@
 					criterion-href="[[_getSelfLink(criterion)]]"
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
+					adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]"
 				>
 				</d2l-rubric-feedback>
 			</template>
@@ -145,6 +146,10 @@
 					return;
 				}
 				return feedbackDisplay[criterionNum] || criterionNum === addingFeedback;
+			},
+
+			_cellAddingFeedback: function(addingFeedback, criterionNum) {
+				return criterionNum === addingFeedback;
 			},
 
 			_handleAddFeedback: function(event) {
