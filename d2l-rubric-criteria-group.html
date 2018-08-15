@@ -164,7 +164,7 @@
 							</d2l-td>
 						</template>
 					</d2l-tr>
-					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]">
+					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell">
 							<d2l-rubric-feedback
 								id="feedback-inner[[criterionNum]]"
@@ -440,6 +440,7 @@
 					return;
 				}
 				this.assessCriterionCell(event.currentTarget.dataset.href);
+				this._addingFeedback = -1;
 			},
 
 			_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
