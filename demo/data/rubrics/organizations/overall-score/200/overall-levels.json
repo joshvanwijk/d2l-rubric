@@ -41,10 +41,42 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                      "text": "Congratulations! You have exceeded the minimum requirements!",
+                      "html": "<p>Congratulations! You have exceeded the minimum requirements!</p>"
                     }
                 }
+            ],
+            "actions": [
+              {
+                  "href": "data/rubrics/organizations/overall-score/200/overall-levels/1",
+                  "name": "update",
+                  "method": "PUT",
+                  "fields": [
+                      {
+                          "class": [
+                              "required"
+                          ],
+                          "type": "text",
+                          "name": "name",
+                          "value": "Level 4"
+                      },
+                      {
+                          "type": "hidden",
+                          "name": "description",
+                          "value": "A"
+                      },
+                      {
+                          "type": "hidden",
+                          "name": "feedback",
+                          "value": ""
+                      }
+                  ]
+              },
+              {
+                "href": "data/rubrics/organizations/overall-score/200/overall-levels/1",
+                "name": "delete",
+                "method": "DELETE"
+              }
             ],
             "links": [
                 {
@@ -52,7 +84,7 @@
                         "self"
                     ],
                     "href": "data/rubrics/organizations/overall-score/200/overall-levels/1"
-				},
+				        },
                 {
                     "rel": [
                         "up"

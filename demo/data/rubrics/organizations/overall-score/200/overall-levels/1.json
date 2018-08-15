@@ -32,8 +32,8 @@
 				"item"
 			],
 			"properties": {
-				"text": "",
-				"html": ""
+				"text": "Congratulations! You have exceeded the minimum requirements!",
+				"html": "<p>Congratulations! You have exceeded the minimum requirements!</p>"
 			}
 		}
 	],

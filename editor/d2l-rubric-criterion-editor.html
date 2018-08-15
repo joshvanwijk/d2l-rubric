@@ -10,8 +10,8 @@
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
-<link rel="import" href="./d2l-rubric-criterion-description-editor.html">
-<link rel="import" href="./d2l-rubric-criterion-feedback-editor.html">
+<link rel="import" href="./d2l-rubric-description-editor.html">
+<link rel="import" href="./d2l-rubric-feedback-editor.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 
 <dom-module id="d2l-rubric-criterion-editor">
@@ -146,12 +146,13 @@
 			<div class="criterion-text">
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" index-as="cellIndex" rendered-item-count="{{descriptionCount}}" >
 					<div class="cell">
-						<d2l-rubric-criterion-description-editor
+						<d2l-rubric-description-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
+							aria-label-langterm="criterionDescriptionAriaLabel"
 							level-index="[[cellIndex]]"
 							level-count="[[descriptionCount]]"
-						></d2l-rubric-criterion-description-editor>
+						></d2l-rubric-description-editor>
 					</div>
 				</template>
 			</div>
@@ -159,13 +160,14 @@
 			<div class="criterion-feedback">
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" index-as="cellIndex" rendered-item-count="{{feedbackCount}}" >
 					<div class="cell">
-						<d2l-rubric-criterion-feedback-editor
+						<d2l-rubric-feedback-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
+							aria-label-langterm="criterionFeedbackAriaLabel"
 							level-index="[[cellIndex]]"
 							level-count="[[feedbackCount]]"
 						>
-						</d2l-rubric-criterion-feedback-editor>
+						</d2l-rubric-feedback-editor>
 					</div>
 				</template>
 			</div>

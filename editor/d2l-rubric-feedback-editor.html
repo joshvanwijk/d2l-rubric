@@ -7,13 +7,12 @@
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 
-<dom-module id="d2l-rubric-criterion-description-editor">
+<dom-module id="d2l-rubric-feedback-editor">
 	<template strip-whitespace>
 		<style>
 			:host {
 				display: flex;
 				flex-grow: 1;
-				min-height: 4rem;
 
 				--d2l-textarea: {
 					display: block;
@@ -36,25 +35,32 @@
 		</style>
 
 		<d2l-textarea
-			id="description"
-			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
-			aria-label="[[localize('criterionDescriptionAriaLabel', 'level', _levelOffset, 'levelCount', levelCount)]]"
+			id="feedback"
+			aria-invalid="[[_isAriaInvalid(_feedbackInvalid)]]"
+			aria-label="[[localize(ariaLabelLangterm, 'level', _levelOffset, 'levelCount', levelCount)]]"
 			disabled="[[!_canEdit]]"
 			no-border
 			hover-styles
-			value=[[_getDescription(entity)]]
-			on-change="_saveDescription"
+			value=[[_getFeedback(entity)]]
+			on-change="_saveFeedback"
 		></d2l-textarea>
-		<template is="dom-if" if="[[_descriptionInvalid]]">
-			<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+		<template is="dom-if" if="[[_feedbackInvalid]]">
+			<d2l-tooltip for="feedback" position="bottom">[[_feedbackInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 
 	<script>
 		Polymer({
-			is: 'd2l-rubric-criterion-description-editor',
+			is: 'd2l-rubric-feedback-editor',
 
 			properties: {
+				/**
+				 * textarea aria-label langterm
+				 */
+				ariaLabelLangterm: {
+					type: String,
+					value: ''
+				},
 				/**
 				 * Index of this level in the collection - useful for aria labels
 				 */
@@ -70,12 +76,12 @@
 				},
 				_canEdit: {
 					type: Boolean,
-					computed: '_canEditDescription(entity)',
+					computed: '_canEditFeedback(entity)',
 				},
-				_descriptionInvalid: {
+				_feedbackInvalid: {
 					type: Boolean
 				},
-				_descriptionInvalidError: {
+				_feedbackInvalidError: {
 					type: String
 				},
 			},
@@ -87,31 +93,33 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
-			_getDescription: function(entity) {
-				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.properties && description.properties.html || '';
+			_getFeedback: function(entity) {
+				var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+				return feedback && feedback.properties && feedback.properties.text || '';
+			},
+
+			_canEditFeedback: function(entity) {
+				var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+				return feedback && feedback.hasActionByName('update');
+			},
+
+			_saveFeedback: function(e) {
+				var feedback = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+				var action = feedback.getActionByName('update');
+				if (action) {
+					this._toggleBubble('_feedbackInvalid', false);
+					var fields = new FormData();
+					fields.append('feedback', e.target.value);
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-feedback-saved');
+					}.bind(this)).catch(function() {
+						this._toggleBubble('_feedbackInvalid', true, this.localize('feedbackSaveFailed'));
+					}.bind(this));
+				}
 			},
 
 			_calcOffset: function(index) {
 				return parseInt(index) + 1;
-			},
-			_saveDescription: function(e) {
-				var description = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				var action = description.getActionByName('update');
-				if (action) {
-					this._toggleBubble('_descriptionInvalid', false);
-					var fields = new FormData();
-					fields.append('description', e.target.value);
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-description-saved');
-					}.bind(this)).catch(function() {
-						this._toggleBubble('_descriptionInvalid', true, this.localize('descriptionSaveFailed'));
-					}.bind(this));
-				}
-			},
-			_canEditDescription: function(entity) {
-				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.hasActionByName('update');
 			},
 
 			_toggleBubble: function(invalidId, show, error) {
@@ -123,8 +131,8 @@
 				}
 			},
 
-			_isAriaInvalid: function(descriptionInvalid) {
-				return new Boolean(descriptionInvalid).toString();
+			_isAriaInvalid: function(feedbackInvalid) {
+				return new Boolean(feedbackInvalid).toString();
 			},
 
 		});

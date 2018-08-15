@@ -1,0 +1,60 @@
+{
+	"class": [
+		"overall-level"
+	],
+	"rel": [
+		"https://rubrics.api.brightspace.com/rels/overall-level"
+	],
+	"properties": {
+		"name": "Level 1",
+		"rangeStart": 0
+	},
+	"entities": [
+		{
+			"class": [
+				"richtext",
+				"description"
+			],
+			"rel": [
+				"item"
+			],
+			"properties": {
+				"text": "Proper use of grammar",
+                "html": "Proper use of grammar"
+			}
+		},
+		{
+			"class": [
+				"richtext",
+				"feedback"
+			],
+			"rel": [
+				"item"
+			],
+			"properties": {
+				"text": "5 stars for proper use of grammar!",
+                "html": "5 stars for proper use of grammar!"
+			}
+		}
+	],
+	"links": [
+		{
+			"rel": [
+				"self"
+			],
+			"href": "static-data/rubrics/organizations/text-only/199/overall-levels/2.json"
+		},
+		{
+			"rel": [
+				"up"
+			],
+			"href": "static-data/rubrics/organizations/text-only/199/overall-levels/overall-levels.json"
+		},
+		{
+			"rel": [
+				"prev"
+			],
+			"href": "static-data/rubrics/organizations/text-only/199/overall-levels/1"
+		}
+	]
+}

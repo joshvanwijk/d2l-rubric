@@ -108,6 +108,7 @@ Creates and edits a rubric
 			[hidden] {
 				display: none;
 			}
+
 		</style>
 		<div id="editor-save-status-container">
 			<d2l-save-status id="editor-save-status"></d2l-save-status>
@@ -133,8 +134,9 @@ Creates and edits a rubric
 					<div class="right">[[localize('dashOutOf', 'outOf', entity.properties.outOf)]]</div>
 				</div>
 			</div>
-
-			<d2l-rubric-overall-levels-editor hidden$="[[!_present(_overallLevels)]]" href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
+			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
+				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
+			</div>
 		</div>
 	</template>
 
