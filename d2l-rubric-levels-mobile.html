@@ -236,6 +236,9 @@
 				switch (event.keyCode) {
 					case this._keyCodes.ENTER:
 						this.selected = event.currentTarget.dataIndex;
+						if (!this.readOnly) {
+							this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+						}
 						break;
 					case this._keyCodes.LEFT:
 						if (event.currentTarget.dataIndex !== 0) {

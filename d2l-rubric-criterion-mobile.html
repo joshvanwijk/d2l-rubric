@@ -260,12 +260,20 @@
 			_handleTapLeft: function() {
 				if (this._selected > 0) {
 					this._selected--;
+					this._assessSelected();
 				}
 			},
 
 			_handleTapRight: function() {
 				if (this._selected < this._total - 1) {
 					this._selected++;
+					this._assessSelected();
+				}
+			},
+
+			_assessSelected: function() {
+				if (!this.readOnly) {
+					this.assessCriterionCell(this._getSelfLink(this._criterionCells[this._selected]));
 				}
 			},
 
