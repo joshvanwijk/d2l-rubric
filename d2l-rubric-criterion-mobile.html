@@ -126,7 +126,7 @@
 		</d2l-rubric-levels-mobile>
 
 		<div id="description" class="criterion-description-container">
-			<div class="criterion-prev-container" hidden="[[_maxLevelSelected(_selected)]]" on-tap="_handleTapLeft">
+			<div class="criterion-prev-container" hidden="[[_hideLeftChevron(_selected)]]" on-tap="_handleTapLeft">
 				<d2l-button-icon
 					icon="d2l-tier1:chevron-left"
 				></d2l-button-icon>
@@ -147,7 +147,7 @@
 					</div>
 				</div>
 			</template>
-			<div class="criterion-next-container" hidden="[[_minLevelSelected(_selected)]]" on-tap="_handleTapRight">
+			<div class="criterion-next-container" hidden="[[_hideRightChevron(_selected)]]" on-tap="_handleTapRight">
 				<d2l-button-icon
 					icon="d2l-tier1:chevron-right"
 				></d2l-button-icon>
@@ -225,10 +225,17 @@
 				if (!entity || !assessmentResult) {
 					return;
 				}
+
 				this._assessedLevelHref = this.getAssessedLevelHref(entity, assessmentResult);
+				if (!this._assessedLevelHref && !this.readOnly) {
+					this._selected = -1;
+				}
+
 				var score = this.getAssessedScore(entity, assessmentResult);
 				if (score || score === 0) {
 					this._score = score.toString();
+				} else {
+					this._score = score;
 				}
 			},
 
@@ -287,16 +294,16 @@
 				element.classList.add(animation);
 			},
 
-			_maxLevelSelected: function(selected) {
-				return selected === 0;
+			_hideLeftChevron: function(selected) {
+				return selected === 0 || selected === -1;
 			},
 
-			_minLevelSelected: function(selected) {
-				return selected === this._total - 1;
+			_hideRightChevron: function(selected) {
+				return selected === this._total - 1 || selected === -1;
 			},
 
 			_getSelectedLevelText: function(selected, levels, criterionCell) {
-				if (!levels) {
+				if (!levels || !levels[selected]) {
 					return null;
 				}
 				// check for overrides
