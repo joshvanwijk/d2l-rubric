@@ -47,6 +47,19 @@
                 "https://api.brightspace.com/rels/organization"
             ],
             "href": "data/rubrics/text-only.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/overall-levels"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/overallLevels.json"
+        }
+    ],
+    "actions": [
+        {
+            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/reverseLevels",
+            "name": "reverse-levels",
+            "method": "POST"
         }
     ]
 }

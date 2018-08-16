@@ -1,0 +1,29 @@
+{
+    "class": [
+        "level"
+    ],
+    "properties": {
+        "name": "Level 1",
+        "points": 1.0
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "static-data/rubrics/organizations/overall-score/200/groups/174/levels/1463.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "static-data/rubrics/organizations/overall-score/200/groups/174/levels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "static-data/rubrics/organizations/overall-score/200/groups/174/levels/1462.json"
+        }
+    ]
+}
