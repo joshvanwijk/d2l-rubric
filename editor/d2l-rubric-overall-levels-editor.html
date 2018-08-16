@@ -259,7 +259,7 @@
 			},
 			_getFirstLevelName: function() {
 				var level = Polymer.dom(this.root).querySelectorAll('d2l-rubric-overall-level-editor');
-				return level ? level.entity.properties.name : '';
+				return level.length ? level[0].entity.properties.name : '';
 			},
 			_getLastLevelName: function() {
 				var levels = Polymer.dom(this.root).querySelectorAll('d2l-rubric-overall-level-editor');
