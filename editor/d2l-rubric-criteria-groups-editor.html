@@ -106,10 +106,18 @@
 						setTimeout(function() {
 							this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
 						}.bind(this), 2000);
-					}.bind(this)).then(function() {
 						var allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
-						var lastGroup = allGroups[allGroups.length - 1];
-						lastGroup.$$('d2l-text-input').$$('input').select();
+						// If the DOM takes too long to update (as in IE11), delay setting the focus
+						if (this.entity.entities.length !== allGroups.length) {
+							setTimeout(function() {
+								allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
+								var lastGroup = allGroups[allGroups.length - 1];
+								lastGroup.$$('d2l-text-input').$$('input').select();
+							}.bind(this), 50);
+						} else {
+							var lastGroup = allGroups[allGroups.length - 1];
+							lastGroup.$$('d2l-text-input').$$('input').select();
+						}
 					}.bind(this));
 				}
 			},
