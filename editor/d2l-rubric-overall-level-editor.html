@@ -1,8 +1,9 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
-<link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
+
+<link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 <link rel="import" href="../../d2l-button/d2l-button-icon.html">
 
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
@@ -10,32 +11,139 @@
 <!-- todo todo todo -->
 <dom-module id="d2l-rubric-overall-level-editor">
 	<template strip-whitespace>
-		<style include="d2l-rubric-editor-cell-styles">
+		<style>
 			:host {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				overflow: hidden;
+
 			}
 
+			* {
+				box-sizing: border-box;
+			}
+			.operations {
+				text-align: right;
+			}
+
+			:host-context([dir='rtl']) .operations {
+				text-align: left;
+			}
+
+			d2l-button-icon {
+				padding-top: 0.5rem;
+			}
+
+			[hidden] {
+				display: none;
+			}
 		</style>
 
+		<d2l-text-input
+			id="overall-level-name"
+			value="[[entity.properties.name]]"
+			on-change="_saveName"
+			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
+			aria-label="[[localize('overallLevelName')]]"
+			disabled="[[!_canEdit]]"
+			required="[[_nameRequired]]"
+			prevent-submit>
+		</d2l-text-input>
+		<div class="operations">
+			<d2l-button-icon
+				id="remove"
+				icon="d2l-tier1:delete"
+				text="[[localize('removeOverallLevel', 'name', entity.properties.name)]]"
+				on-tap="_handleDeleteLevel"
+				hidden="[[!_canDelete]]">
+			</d2l-button-icon>
+		</div>
+		<template is="dom-if" if="[[_nameInvalid]]">
+			<d2l-tooltip for="overall-level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+		</template>
 	</template>
 	<script>
 		Polymer({
 			is: 'd2l-rubric-overall-level-editor',
 
 			properties: {
-
+				_canEdit: {
+					type: Boolean,
+					computed: '_canEditLevel(entity)',
+				},
+				_canDelete: {
+					type: Boolean,
+					computed: '_canDeleteLevel(entity)',
+				},
+				_nameRequired: {
+					type: Boolean,
+					computed: '_isNameRequired(entity)',
+				},
+				_nameInvalid: {
+					type: Boolean
+				},
+				_nameInvalidError: {
+					type: String
+				}
 			},
-
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
-				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
-			]
+			],
 
+			_canEditLevel: function(entity) {
+				return entity && entity.hasActionByName('update');
+			},
+			_isNameRequired: function(entity) {
+				var action = entity && entity.getActionByName('update');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('name');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
+			_saveName: function(e) {
+				var action = this.entity.getActionByName('update');
+				if (action) {
+					if (this._nameRequired && !e.target.value.trim()) {
+						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
+					} else {
+						this._toggleBubble('_nameInvalid', false);
+						var fields = new FormData();
+						fields.append('name', e.target.value);
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-overall-level-saved');
+						}.bind(this)).catch(function() {
+							this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+						}.bind(this));
+					}
+				}
+			},
+			_toggleBubble: function(invalidId, show, error) {
+				if (show) {
+					this.set(invalidId, true);
+					this.set(invalidId + 'Error', error);
+				} else {
+					this.set(invalidId, false);
+				}
+			},
+			_isAriaInvalid: function(nameInvalid) {
+				return new Boolean(nameInvalid).toString();
+			},
+			_canDeleteLevel: function(entity) {
+				return entity && entity.hasActionByName('delete');
+			},
+			_handleDeleteLevel: function() {
+				var action = this.entity.getActionByName('delete');
+				if (action) {
+					var name = this.entity.properties.name;
+					this.fire('iron-announce', { text: this.localize('overallLevelDeleted', 'name', name) }, { bubbles: true });
+					this.performSirenAction(action).then(function() {
+						this.fire('d2l-rubric-overall-level-deleted');
+					}.bind(this));
+				}
+			}
 		});
 	</script>
 </dom-module>
