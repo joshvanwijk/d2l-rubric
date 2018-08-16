@@ -12,7 +12,7 @@
       "dir": "./coverage",
       "reporters": ["text-summary", "lcov"],
       "include": [
-        "**/*.js"
+        "**/*.html"
       ],
       "exclude": [
         "/polymer/polymer.js",

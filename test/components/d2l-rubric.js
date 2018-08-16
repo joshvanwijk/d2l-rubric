@@ -72,4 +72,15 @@ suite('<d2l-rubric>', function() {
 			expect(loaderElement).to.exist;
 		});
 	});
+
+	suite ('Ally Test',function(){
+		suiteSetup(function(){
+			if (!isAttestInstalled()){
+				this.skip();
+			}
+		});
+		test('d2l-rubric ally checks',function(){
+			ally_tests();
+		});
+	});
 });
