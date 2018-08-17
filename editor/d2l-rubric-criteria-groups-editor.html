@@ -42,7 +42,7 @@
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
-		<template is="dom-repeat" items="[[_groups]]">
+		<template is="dom-repeat" items="[[_groups]]" on-dom-change="_groupsDomComplete">
 			<d2l-rubric-criteria-group-editor
 				hidden$="[[!_showContent]]"
 				href="[[_getSelfLink(item)]]"
@@ -101,23 +101,12 @@
 			_handleAddCriteriaGroup: function() {
 				var action = this.entity.getActionByName('create');
 				if (action) {
+					this.addEventListener('d2l-rubric-group-complete', this._refocus);
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criteria-group-added');
 						setTimeout(function() {
 							this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
 						}.bind(this), 2000);
-						var allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
-						// If the DOM takes too long to update (as in IE11), delay setting the focus
-						if (this.entity.entities.length !== allGroups.length) {
-							setTimeout(function() {
-								allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
-								var lastGroup = allGroups[allGroups.length - 1];
-								lastGroup.$$('d2l-text-input').$$('input').select();
-							}.bind(this), 50);
-						} else {
-							var lastGroup = allGroups[allGroups.length - 1];
-							lastGroup.$$('d2l-text-input').$$('input').select();
-						}
 					}.bind(this));
 				}
 			},
@@ -126,6 +115,15 @@
 			},
 			_showGroupName: function(entity) {
 				return entity.entities.length > 1;
+			},
+			_groupsDomComplete: function() {
+				this.fire('d2l-rubric-group-complete');
+			},
+			_refocus: function(e) {
+				allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
+				var lastGroup = allGroups[allGroups.length - 1];
+				lastGroup.$$('d2l-text-input').$$('input').select();
+				e.target.removeEventListener(e.type, arguments.callee);
 			}
 		});
 	</script>
