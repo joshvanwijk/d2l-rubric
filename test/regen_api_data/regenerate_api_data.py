@@ -135,14 +135,21 @@ for rubric_id,data in rubric_ids.items():
     rub_groups_response = get_rubric(rub_groups_href)
     rub_groups_response = replace_all_links_in_json(rubrics_course_id,rub_groups_response,rub_title)
 
+    #write overall-levels to file
+    rub_overall_levels_href = '%s/overallLevels'%get_endpoint(rubric_id)
+    rub_overall_levels_response = get_rubric(rub_overall_levels_href)
+    rub_overall_levels_response = replace_all_links_in_json(rubrics_course_id,rub_overall_levels_response,rub_title)
+    
+    #create all remaining files
     if not os.path.exists(rubric_id):
         os.mkdir(rubric_id)
     os.chdir(rubric_id)
     
     write_json_file('groups.json',rub_groups_response)
+    write_json_file('overallLevels.json',rub_overall_levels_response)
 
-    #create all remaining files
     create_files(rub_groups_response,rubric_id,rub_title)
+    create_files(rub_overall_levels_response,rubric_id,rub_title)
     os.chdir(first_dir)
 
     #create assessments file

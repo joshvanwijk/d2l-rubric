@@ -7,7 +7,10 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script src="../../../web-component-tester/browser.js"></script>
+		<script src="../../node_modules/attest/attest.js"></script>
+		<script src="./ally-test-script.js"></script>
 
+		<link rel="import" href="../../store/entity-store.html">
 		<link rel="import" href="../../d2l-rubric-criteria-group.html">
 		<script src="utilities/fetch-siren-entity-whitelist.js"></script>
 	</head>
@@ -18,10 +21,5 @@
 			</template>
 		</test-fixture>
 		<script src="d2l-rubric-criteria-group.js"></script>
-		<script>
-			// TODO: Can re-enable these two tests after aria 1.1 support in accessibility developer tools
-			// https://github.com/GoogleChrome/accessibility-developer-tools/pull/343
-			a11ySuite('basic-criteria', ['badAriaRole', 'ariaRoleNotScoped', 'badAriaAttribute']);
-		</script>
 	</body>
 </html>

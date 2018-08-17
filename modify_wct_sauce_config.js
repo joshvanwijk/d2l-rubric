@@ -29,7 +29,7 @@ var json_contents = {
 var platform_array =  [
     {
       "browserName": "chrome",
-      "platform": "OS X 10.12",
+      "platform": "OS X 10.13",
       "version": ""
     },
     {
@@ -39,7 +39,7 @@ var platform_array =  [
     },
     {
       "browserName": "firefox",
-      "platform": "OS X 10.12",
+      "platform": "OS X 10.13",
       "version": ""
     },
     {
@@ -49,7 +49,7 @@ var platform_array =  [
     },
     {
       "browserName": "safari",
-      "platform": "OS X 10.12",
+      "platform": "OS X 10.13",
       "version": ""
     },
     {

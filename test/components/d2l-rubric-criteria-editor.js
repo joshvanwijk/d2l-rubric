@@ -136,5 +136,15 @@ suite('<d2l-rubric-criteria-editor>', function() {
 				expect(dragHandle).to.be.null;
 			});
 		});
+		suite ('Ally Test',function(){
+			suiteSetup(function(){
+				if (!isAttestInstalled()){
+					this.skip();
+				}
+			});
+			test('d2l-rubric-criteria-editor ally checks',function(){
+				return ally_tests();
+			});
+		});
 	});
 });

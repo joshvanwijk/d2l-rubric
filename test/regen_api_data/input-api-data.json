@@ -1,0 +1,1492 @@
+{
+    "class": [
+        "rubric-result",
+        "incomplete"
+    ],
+    "properties": {
+        "score": 0
+    },
+    "entities": [
+        {
+            "class": [
+                "criterion-cell-selector"
+            ],
+            "rel": [
+                "item"
+            ],
+            "entities": [
+                {
+                    "class": [
+                        "assessment-criterion-cell",
+                        "selected"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 4
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "overridden",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "test",
+                                "html": "<p>test</p>"
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1/0.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 3
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 2
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 1
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 4
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/4.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1.json"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/criterion"
+                    ],
+                    "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/1.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "criterion-cell-selector"
+            ],
+            "rel": [
+                "item"
+            ],
+            "entities": [
+                {
+                    "class": [
+                        "assessment-criterion-cell",
+                        "selected"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 4
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2/0.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 3
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 2
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 1
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 4
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/4.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2.json"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/criterion"
+                    ],
+                    "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/2.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "criterion-cell-selector"
+            ],
+            "rel": [
+                "item"
+            ],
+            "entities": [
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 4
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 4
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 4
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3/0.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 3
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3/1.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 2
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 2
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3/2.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-criterion-cell"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-criterion-cell",
+                        "item"
+                    ],
+                    "properties": {
+                        "score": 1
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "type": "application/json",
+                            "href": "https://83f52639-4f79-4fa1-acaa-e9ae52d12e36.assessments.api.proddev.d2l/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d",
+                            "name": "select-criterion-cell",
+                            "method": "POST",
+                            "fields": [
+                                {
+                                    "type": "hidden",
+                                    "name": "criterionId",
+                                    "value": 3
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "levelId",
+                                    "value": 4
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "defaultScore",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "score",
+                                    "value": 1
+                                },
+                                {
+                                    "type": "hidden",
+                                    "name": "rubricAssessment",
+                                    "value": {
+                                        "RubricId": 1,
+                                        "OverallScore": null,
+                                        "OverallFeedback": {
+                                            "Text": "",
+                                            "Html": ""
+                                        },
+                                        "OverallLevel": null,
+                                        "OverallScoreOverridden": false,
+                                        "OverallFeedbackOverridden": false,
+                                        "CriteriaOutcome": [
+                                            {
+                                                "CriterionId": 1,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "test",
+                                                    "Html": "<p>test</p>"
+                                                },
+                                                "FeedbackIsOverridden": true
+                                            },
+                                            {
+                                                "CriterionId": 2,
+                                                "LevelId": 1,
+                                                "Score": 4,
+                                                "ScoreIsOverridden": false,
+                                                "Feedback": {
+                                                    "Text": "",
+                                                    "Html": ""
+                                                },
+                                                "FeedbackIsOverridden": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackHtml",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "feedbackText",
+                                    "value": ""
+                                },
+                                {
+                                    "type": "radio",
+                                    "name": "saveUpdate",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/level"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/levels/4.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion-cell"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3/3.json"
+                        },
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/criterion"
+                            ],
+                            "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3.json"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/criterion"
+                    ],
+                    "href": "data/rubrics/organizations/course-rubric/1/groups/1/criteria/3.json"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/assessment/1/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM/UnVicmljfERyb3Bib3h8MQ%3d%3d.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/rubric"
+            ],
+            "href": "data/rubrics/organizations/course-rubric/1.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/user"
+            ],
+            "href": "data/rubrics/enrolled-user/gEqsWFOJpSdaPPl9TA8EGoLNPHxg2pW5Oag-Zq9AkTM.json"
+        }
+    ]
+}

@@ -22,4 +22,17 @@ suite('<d2l-rubric-criteria-group>', function() {
 			expect(element.is).to.equal('d2l-rubric-criteria-group');
 		});
 	});
+
+	suite ('Ally Test',function(){
+
+        suiteSetup(function() {
+			if (!isAttestInstalled()){
+				this.skip();
+			}		
+		});
+
+		test('d2l-rubric-criteria-groups ally checks',function(){
+			return ally_tests(500);
+		});
+	});
 });
