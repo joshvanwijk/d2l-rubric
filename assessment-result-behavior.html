@@ -189,7 +189,6 @@
 			if (action) {
 				var fields = action.fields;
 				var scoreField = fields.find(function(field) { return field.name === 'score'; });
-				console.log(action);
 				scoreField.value = points;
 
 				this.performSirenAction(action, fields);
@@ -197,14 +196,11 @@
 		},
 
 		saveTotalPoints: function(points) {
-			console.log(this.assessmentEntity);
 			var entity = this.assessmentEntity;
 			var action = entity.getActionByName('save');
 			if (action) {
-				console.log(action.fields);
 				var fields = action.fields;
 				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
-				console.log(assessmentField.value, assessmentField.value.OverallScore);
 				assessmentField.value.OverallScore = points;
 				this.performSirenAction(action, fields);
 			}

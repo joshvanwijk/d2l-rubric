@@ -113,10 +113,22 @@
 				cursor: default;
 				background-color: transparent;
 			}
+			.out-of.editing {
+				width: calc(100% - 10px);
+				height: 45px;
+				text-align: center;
+				margin-bottom: 5px;
+				margin-left: 5px;
+				display: block;
+			}
 			.check-icon {
 				color: var(--d2l-color-celestine-minus-1);
 				text-align: center;
 				margin: auto;
+			}
+			.score-wrapper.assessable:hover {
+				color: var(--d2l-color-celestine);
+				cursor: pointer;
 			}
 			[hidden] {
 				display: none !important;
@@ -124,7 +136,7 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<div class="levels-container">
-			<div class="levels" role="tablist">
+			<div class="levels" role="tablist" hidden$=[[editingScore]]>
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 
@@ -147,13 +159,18 @@
 					</div>
 				</template>
 			</div>
-			<div hidden$="[[!_hasOutOf(outOf)]]" class="level out-of">
-				<div hidden$="[[_hasScore(score)]]" class="level-name">
-					[[localize('outOf', 'outOf', outOf)]]
-				</div>
-				<div hidden$="[[!_hasScore(score)]]" class="level-name">
-					[[localize('scoreOutOf', 'score', score, 'outOf', outOf)]]
-				</div>
+			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]">
+				<d2l-rubric-editable-score
+					id="score-inner"
+					class$="[[_getScoreWrapperClassName(entity, editingScore)]]"
+					criterion-href="[[criterionHref]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					read-only="[[readOnly]]"
+					editing-score="{{editingScore}}"
+					on-tap="_handleOverrideScore"
+				>
+				</d2l-rubric-editable-score>
 			</div>
 		</div>
 	</template>
@@ -212,6 +229,16 @@
 				criterionCells: {
 					type: Array,
 					value: null
+				},
+
+				criterionHref: {
+					type: String,
+					value: null
+				},
+
+				editingScore: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -327,6 +354,41 @@
 					return;
 				}
 				this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+			},
+
+			_canEditScore: function(entity) {
+				//TODO: Update this condition?
+				return !this.readOnly;
+			},
+
+			_getOutOfClassName: function(editingScore) {
+				var className = 'level out-of';
+				if (editingScore) {
+					className += ' editing';
+				}
+				return className;
+			},
+
+			_getScoreWrapperClassName: function(entity, editingScore) {
+				var className = 'score-wrapper';
+				if (this._canEditScore(entity)) {
+					className += ' assessable';
+				}
+				if (!editingScore) {
+					className += ' level-name';
+				}
+				return className;
+			},
+
+			_handleOverrideScore: function(event) {
+				if (this.readOnly) {
+					// TODO: Update this condition?
+					return;
+				}
+				this.editingScore = true;
+				fastdom.mutate(function() {
+					Polymer.dom(this.root).querySelector('#score-inner').focus();
+				}.bind(this));
 			}
 
 		});

@@ -4,7 +4,7 @@
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../s-html/s-html.html">
-<link rel="import" href="../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="../d2l-text-input/d2l-text-input.html">
 <link rel="import" href="./siren-entity.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 
@@ -15,23 +15,29 @@
 			:host {
 				display: block;
 			}
-			d2l-textarea {
-				max-width: 60px;
+			/* TODO: Find a way to remove step arrows */
+			d2l-text-input {
+				max-width: 100px;
 			}
             .score-out-of.assessed {
                 color: var(--d2l-color-celestine);
             }
+			.right {
+				display: inline;
+				padding: 0 5px;
+			}
 		</style>
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
         <siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
         <div hidden="[[!editingScore]]">
-            <d2l-textarea
-                id="text-area"
-                value="[[getScore(criterionEntity, assessmentResult)]]"
+            <d2l-text-input
+				id="text-area"
+				value="[[getScore(criterionEntity, assessmentResult)]]"
+				type="number"
             >
-            </d2l-textarea>
-            <div>[[_localizeOutOf(criterionEntity, rubricEntity)]]</div>
+            </d2l-text-input>
+            <div class="right">[[_localizeOutOf(criterionEntity, rubricEntity)]]</div>
         </div>
         <div hidden="[[editingScore]]" class$="[[_getOutOfClassName(criterionEntity, assessmentResult)]]">
             [[_localizeOutOf(criterionEntity, rubricEntity, assessmentResult, totalScore)]]
@@ -59,7 +65,8 @@
 				},
 				editingScore: {
 					type: Boolean,
-					value: false
+					value: false,
+					notify: true
 				},
                 _scoreOverridden: {
                     type: Boolean,
@@ -76,7 +83,7 @@
 			],
 
 			attached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
 				if (!elem) {
 					return;
 				}
@@ -84,23 +91,24 @@
 			},
 
 			detached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
 				if (!elem) return;
 				elem.removeEventListener('blur', this._boundBlurHandler);
 			},
 
 			focus: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
 				elem.focus();
 			},
 
 			_blurHandler: function(event) {
-				var score = event.target.$.textarea.value;
+				var score = event.target.value;
 				this.saveScore(score);
 			},
 
 			saveScore: function(score) {
                 this._scoreOverridden = true;
+				this.editingScore = false;
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
 				} else {
