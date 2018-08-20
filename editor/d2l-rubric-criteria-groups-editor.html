@@ -112,7 +112,7 @@
 						setTimeout(function() {
 							this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
 						}.bind(this), 2000);
-					}.bind(this), function() {
+					}.bind(this)).catch(function() {
 						this._waitingForGroups = false;
 					}.bind(this));
 				}
