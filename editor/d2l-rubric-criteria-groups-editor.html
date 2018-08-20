@@ -77,6 +77,11 @@
 				_canCreate: {
 					type: Boolean,
 					computed: '_canCreateCriteriaGroup(entity)'
+				},
+
+				_waitingForGroups: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -101,7 +106,7 @@
 			_handleAddCriteriaGroup: function() {
 				var action = this.entity.getActionByName('create');
 				if (action) {
-					this.addEventListener('d2l-rubric-group-complete', this._refocus);
+					this._waitingForGroups = true;
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criteria-group-added');
 						setTimeout(function() {
@@ -117,13 +122,15 @@
 				return entity.entities.length > 1;
 			},
 			_groupsDomComplete: function() {
-				this.fire('d2l-rubric-group-complete');
+				if (this._waitingForGroups) {
+					this._waitingForGroups = false;
+					this._refocus();
+				}
 			},
-			_refocus: function(e) {
+			_refocus: function() {
 				allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
 				var lastGroup = allGroups[allGroups.length - 1];
 				lastGroup.$$('d2l-text-input').$$('input').select();
-				e.target.removeEventListener(e.type, arguments.callee);
 			}
 		});
 	</script>
