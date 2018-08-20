@@ -1,0 +1,145 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./localize-behavior.html">
+<link rel="import" href="./assessment-result-behavior.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="../s-html/s-html.html">
+<link rel="import" href="../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="./siren-entity.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+
+
+<dom-module id="d2l-rubric-editable-score">
+	<template strip-whitespace>
+		<style>
+			:host {
+				display: block;
+			}
+			d2l-textarea {
+				max-width: 60px;
+			}
+            .score-out-of.assessed {
+                color: var(--d2l-color-celestine);
+            }
+		</style>
+		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
+		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+        <siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
+        <div hidden="[[!editingScore]]">
+            <d2l-textarea
+                id="text-area"
+                value="[[getScore(criterionEntity, assessmentResult)]]"
+            >
+            </d2l-textarea>
+            <div>[[_localizeOutOf(criterionEntity, rubricEntity)]]</div>
+        </div>
+        <div hidden="[[editingScore]]" class$="[[_getOutOfClassName(criterionEntity, assessmentResult)]]">
+            [[_localizeOutOf(criterionEntity, rubricEntity, assessmentResult, totalScore)]]
+        </div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-rubric-editable-score',
+
+			properties: {
+				criterionHref: String,
+				criterionEntity: Object,
+				rubricEntity: Object,
+				assessmentHref: {
+					type: String,
+					value: null
+				},
+				token: String,
+				_boundBlurHandler: {
+					type: Function,
+					value: function() {
+						return this._blurHandler.bind(this);
+					}
+				},
+				editingScore: {
+					type: Boolean,
+					value: false
+				},
+                _scoreOverridden: {
+                    type: Boolean,
+                    value: false
+                },
+                totalScore: {
+                    type: String
+                }
+			},
+
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+			],
+
+			attached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) {
+					return;
+				}
+				elem.addEventListener('blur', this._boundBlurHandler);
+			},
+
+			detached: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				if (!elem) return;
+				elem.removeEventListener('blur', this._boundBlurHandler);
+			},
+
+			focus: function() {
+				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				elem.focus();
+			},
+
+			_blurHandler: function(event) {
+				var score = event.target.$.textarea.value;
+				this.saveScore(score);
+			},
+
+			saveScore: function(score) {
+                this._scoreOverridden = true;
+				if (this.criterionHref) {
+					this.saveCriterionPoints(this.criterionHref, score);
+				} else {
+					this.saveTotalPoints(score);
+				}
+			},
+
+			getScore: function(criterionEntity, assessmentEntity) {
+                if (!criterionEntity || !assessmentEntity) {
+                    return;
+                }
+               return this.getAssessedScore(criterionEntity, assessmentEntity);
+			},
+
+            _localizeOutOf: function(criterion, rubric, assessmentResult, totalScore) {
+				var entity = criterion || rubric;
+                if (!entity || !entity.properties || !entity.properties.outOf) {
+                    return;
+                }
+
+				var score = null;
+				if (totalScore) {
+					score = totalScore;
+				} else if (assessmentResult) {
+					score = this.getAssessedScore(entity, assessmentResult);
+				}
+				if (score || score === 0) {
+					return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', entity.properties.outOf.toString());
+				}
+				return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
+			},
+
+            _getOutOfClassName: function(criterionEntity, assessmentResult) {
+				var className = 'score-out-of';
+				if (this._scoreOverridden) {
+					className += ' assessed';
+				}
+				return className;
+			}
+		});
+	</script>
+</dom-module>

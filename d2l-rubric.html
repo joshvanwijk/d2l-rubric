@@ -66,6 +66,10 @@ Polymer Web-Component to display rubrics
 					margin: 2.33em 0;
 				};
 			}
+			d2l-rubric-editable-score.assessable:hover {
+				color: var(--d2l-color-celestine);
+				cursor: pointer;
+			}
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
 				border-radius: 8px;
@@ -167,8 +171,18 @@ Polymer Web-Component to display rubrics
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
-					<div hidden="[[_hasScore(_score)]]" class="right">[[_localizeDashOutOf(entity)]]</div>
-					<div hidden="[[!_hasScore(_score)]]" class="right">[[_localizeOutOf(entity, _score)]]</div>
+					<d2l-rubric-editable-score
+						id="total-score-inner"
+						class$="[[_getOutOfClassName(entity)]]"
+						assessment-href="[[assessmentHref]]"
+						token="[[token]]"
+						read-only="[[readOnly]]"
+						editing-score="[[editingScore]]"
+						total-score="[[_score]]"
+						rubric-entity="[[entity]]"
+						on-tap="_handleOverrideScore"
+					>
+					</d2l-rubric-editable-score>
 				</div>
 			</div>
 		</div>
@@ -209,6 +223,10 @@ Polymer Web-Component to display rubrics
 				_score: {
 					type: String,
 					value: null
+				},
+				editingScore: {
+					type: Boolean,
+					value: false
 				},
 				_feedback: {
 					type: String,
@@ -338,12 +356,33 @@ Polymer Web-Component to display rubrics
 			_hideOutOf: function(showContent, hasAlerts) {
 				return !showContent || hasAlerts;
 			},
-			_hasScore: function(score) {
-				return !!score;
-			},
 
 			_hasOverallFeedback: function(feedback) {
 				return feedback !== null && feedback !== '';
+			},
+
+			_canEditScore: function(entity) {
+				//TODO: Update this condition?
+				return !this.readOnly;
+			},
+
+			_getOutOfClassName: function(entity) {
+				var className = 'score-wrapper right';
+				if (this._canEditScore(entity)) {
+					className += ' assessable';
+				}
+				return className;
+			},
+
+			_handleOverrideScore: function(event) {
+				if (this.readOnly) {
+					// TODO: Update this condition?
+					return;
+				}
+				this.editingScore = true;
+				fastdom.mutate(function() {
+					Polymer.dom(this.root).querySelector('#total-score-inner').focus();
+				}.bind(this));
 			}
 		});
 	</script>
