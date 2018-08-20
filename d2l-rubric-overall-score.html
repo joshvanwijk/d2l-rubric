@@ -46,6 +46,11 @@
 				border-radius: 8px;
 			}
 			
+			.overall-level[data-achieved] {
+				background-color: var(--d2l-color-celestine-plus-2);
+				border-color: var(--d2l-color-celestine);
+			}
+			
 			.overall-levels[data-mobile] .overall-level {
 				flex-grow: 0;
 				margin-right: 0;
@@ -87,12 +92,13 @@
 			}
 		</style>
 
+	<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
 	<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 	<h3>[[localize('overallScore')]]</h3>
 	<d2l-scroll-wrapper	show-actions>
 		<div class="overall-levels" data-mobile$="[[!_largeScreen]]" >
 			<template is="dom-repeat" items="[[_levels]]" as="level">
-				<div class="overall-level">
+				<div class="overall-level" data-achieved$="[[_isAchieved(level)]]">
 					<h4>[[level.properties.name]]</h4>
 					<span class="overall-level-text">
 						<span>[[_localizePoints(level)]]</span>
@@ -111,13 +117,22 @@
 
 			properties: {
 				_levels: Array,
-				_largeScreen: Boolean
+				_largeScreen: Boolean,
+				_assessmentEntity: {
+					type: Object,
+					value: null
+				},
+				_levelAchieved: String
 			},
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+			],
+
+			observers: [
+				'_onAssessmentEntityChanged(_assessmentEntity)'
 			],
 
 			_onEntityChanged: function(entity) {
@@ -130,6 +145,30 @@
 				}.bind(this));
 			},
 
+			_onAssessmentEntityChanged: function(assessmentEntity) {
+				if (!assessmentEntity) {
+					this._levelAchieved = null;
+					return;
+				}
+
+				var selector = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallLevelSelector);
+				if (!selector) {
+					return;
+				}
+
+				var level = selector.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
+				if (!level) {
+					return;
+				}
+
+				var rubricLevel = level.getLinkByRel(this.HypermediaRels.Rubrics.overallLevel);
+				if (!rubricLevel) {
+					return;
+				}
+
+				this._levelAchieved = rubricLevel.href;
+			},
+
 			_getDescriptionHtml: function(levelEntity) {
 				return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.html;
 			},
@@ -139,8 +178,17 @@
 			},
 
 			_scoreVisible: function(levelEntity) {
+				if (this.assessmentHref) {
+					// Minimum points is not shown in graded view
+					return false;
+				}
 				var rangeStart = levelEntity.properties.rangeStart;
 				return rangeStart !== null && rangeStart !== undefined;
+			},
+
+			_isAchieved: function(levelEntity) {
+				var levelHref = levelEntity.getLinkByRel('self').href;
+				return levelHref && levelHref === this._levelAchieved;
 			}
 
 		});
