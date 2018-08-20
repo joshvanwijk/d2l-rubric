@@ -1,0 +1,149 @@
+{
+    "class": [
+        "overall-level"
+    ],
+    "properties": {
+        "name": "Proficient",
+        "rangeStart": null
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?",
+                "html": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+            },
+            "actions": [
+                {
+                    "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1724",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "hidden",
+                            "name": "name",
+                            "value": "Proficient"
+                        },
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            },
+            "actions": [
+                {
+                    "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1724",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "hidden",
+                            "name": "name",
+                            "value": "Proficient"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "description",
+                            "value": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+                        },
+                        {
+                            "type": "text",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels/1724.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels/1725.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels/1723.json"
+        }
+    ],
+    "actions": [
+        {
+            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1724",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "name",
+                    "value": "Proficient"
+                },
+                {
+                    "type": "hidden",
+                    "name": "description",
+                    "value": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+                },
+                {
+                    "type": "hidden",
+                    "name": "feedback",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1724",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ]
+}

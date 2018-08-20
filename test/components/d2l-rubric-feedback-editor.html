@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html>
+	<head>
+		<title>d2l-rubric-feedback-editor test</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../../web-component-tester/browser.js"></script>
+		<script src="../../node_modules/attest/attest.js"></script>
+		<script src="./ally-test-script.js"></script>
+
+		<link rel="import" href="../../../promise-polyfill/promise-polyfill.html">
+		<script src="../../../fetch/fetch.js"></script>
+
+		<link rel="import" href="../../../d2l-polymer-siren-behaviors/store/entity-store.html">
+		<link rel="import" href="../../editor/d2l-rubric-feedback-editor.html">
+		<script src="utilities/fetch-siren-entity-whitelist.js"></script>
+
+		<script src="static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0-feedback-mod.js"></script>
+		<script src="static-data/rubrics/organizations/text-only/199/overall-levels/1-feedback-mod.js"></script>
+	</head>
+	<body>
+		<test-fixture id="basic-criterion">
+			<template>
+				<d2l-rubric-feedback-editor
+					href="static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json"
+				>
+				</d2l-rubric-feedback-editor>
+			</template>
+		</test-fixture>
+		<test-fixture id="readonly-criterion">
+			<template>
+				<d2l-rubric-feedback-editor
+					href="static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json"
+				>
+				</d2l-rubric-feedback-editor>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="basic-overall-level">
+			<template>
+				<d2l-rubric-feedback-editor
+					href="static-data/rubrics/organizations/text-only/199/overall-levels/1.json"
+				>
+				</d2l-rubric-feedback-editor>
+			</template>
+		</test-fixture>
+		<test-fixture id="readonly-overall-level">
+			<template>
+				<d2l-rubric-feedback-editor
+					href="static-data/rubrics/organizations/text-only/199/overall-levels/2.json"
+				>
+				</d2l-rubric-feedback-editor>
+			</template>
+		</test-fixture>
+
+		<script src="d2l-rubric-feedback-editor.js"></script>
+
+	</body>
+</html>

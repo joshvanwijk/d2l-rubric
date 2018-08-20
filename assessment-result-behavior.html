@@ -163,17 +163,19 @@
 		},
 
 		saveAssessmentFeedback: function(criterionHref, feedback) {
-			var assessmentCriterionCell = this.assessmentResult[criterionHref].cellEntity;
-			var action = assessmentCriterionCell.getActionByName('select-criterion-cell');
+			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
+			var action = asssessmentCriterion.getActionByName('update-critierion-assessment');
 
 			if (action) {
 				var fields = action.fields;
 				var feedbackField = fields.find(function(field) { return field.name === 'feedbackText'; });
-				feedbackField.value = feedback;
+				if (feedbackField) {
+					feedbackField.value = feedback;
+				}
 				feedbackField = fields.find(function(field) { return field.name === 'feedbackHtml'; });
-				feedbackField.value = this._escapeHtml(feedback);
-				var setAsSelectedField = fields.find(function(field) { return field.name === 'setAsSelected'; });
-				setAsSelectedField.value = true;
+				if (feedbackField) {
+					feedbackField.value = this._escapeHtml(feedback);
+				}
 
 				this.performSirenAction(action, fields);
 			}
@@ -211,7 +213,7 @@
 		_escapeHtml: function(feedback) {
 			var div = document.createElement('div');
 			div.appendChild(document.createTextNode(feedback));
-			return div.innerHtml;
+			return div.innerHTML;
 		},
 
 		assessCriterionCell: function(criterionCellHref) {
@@ -224,15 +226,7 @@
 			var action = criterionCell.getActionByName('select-criterion-cell');
 
 			if (action) {
-				var fields = action.fields;
-				var setAsSelectedField = fields.find(function(field) { return field.name === 'setAsSelected'; });
-				if (criterionCell.hasClass(this.HypermediaClasses.rubrics.selected)) {
-
-					setAsSelectedField.value = false;
-				} else {
-					setAsSelectedField.value = true;
-				}
-				this.performSirenAction(action, fields);
+				this.performSirenAction(action);
 			}
 		},
 
@@ -247,7 +241,12 @@
 		},
 
 		canAssessCriterionCell: function(criterionCellHref) {
-			return !!this._assessmentCriterionCellMap[criterionCellHref];
+			var criterionCell = this._assessmentCriterionCellMap[criterionCellHref];
+			if (criterionCell) {
+				var action = criterionCell.getActionByName('select-criterion-cell');
+				return !!action;
+			}
+			return false;
 		},
 
 		canOverrideScore: function(criterionHref) {

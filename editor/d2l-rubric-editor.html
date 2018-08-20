@@ -7,14 +7,13 @@
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
+
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
+<link rel="import" href="./d2l-rubric-overall-levels-editor.html">
+
 <link rel="import" href="./d2l-rubric-editor-menu.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
-
-<!--- Local WhiteList Hack-->
-<!-- <link rel="import" href="../demo/fetch-siren-entity-whitelist.html"> -->
-<!--- Local WhiteList Hack-->
 
 <!--
 `d2l-rubric-editor`
@@ -109,6 +108,7 @@ Creates and edits a rubric
 			[hidden] {
 				display: none;
 			}
+
 		</style>
 		<div id="editor-save-status-container">
 			<d2l-save-status id="editor-save-status"></d2l-save-status>
@@ -134,6 +134,9 @@ Creates and edits a rubric
 					<div class="right">[[localize('dashOutOf', 'outOf', entity.properties.outOf)]]</div>
 				</div>
 			</div>
+			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
+				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
+			</div>
 		</div>
 	</template>
 
@@ -144,6 +147,10 @@ Creates and edits a rubric
 			properties: {
 				_criteriaGroups: {
 					type: Object
+				},
+				_overallLevels: {
+					type: Object,
+					value: null
 				},
 				_reverseLevels: {
 					type: Object
@@ -196,10 +203,13 @@ Creates and edits a rubric
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._reverseLevels = entity.getActionByName('reverse-levels') || null;
 				}
+				if (entity && entity.hasLinkByRel(this.HypermediaRels.Rubrics.overallLevels)) {
+					this._overallLevels = entity.getLinkByRel(this.HypermediaRels.Rubrics.overallLevels) || null;
+				}
 			},
 
 			_getHref: function(link) {
-				return link.href;
+				return link && link.href;
 			},
 
 			_present: function(obj) {
