@@ -68,7 +68,7 @@
 					value: false,
 					notify: true
 				},
-                _scoreOverridden: {
+                scoreOverridden: {
                     type: Boolean,
                     value: false
                 },
@@ -81,6 +81,19 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
+
+			observers: [
+				'_onAssessmentResultChanged(criterionHref, assessmentResult)'
+			],
+
+			_onAssessmentResultChanged: function(criterionHref, assessmentResult) {
+				if (!criterionHref || !assessmentResult) {
+					return;
+				}
+
+				this.scoreOverridden = this.isScoreOverridden(criterionHref);
+				console.log(this.scoreOverridden);
+			},
 
 			attached: function() {
 				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
@@ -107,7 +120,6 @@
 			},
 
 			saveScore: function(score) {
-                this._scoreOverridden = true;
 				this.editingScore = false;
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
@@ -143,7 +155,7 @@
 
             _getOutOfClassName: function(criterionEntity, assessmentResult) {
 				var className = 'score-out-of';
-				if (this._scoreOverridden) {
+				if (this.scoreOverridden) {
 					className += ' assessed';
 				}
 				return className;
