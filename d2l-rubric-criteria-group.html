@@ -61,23 +61,11 @@
 				background-color: var(--d2l-color-celestine-plus-2);
 				text-decoration-color: var(--d2l-color-celestine-minus-1);
 				color: var(--d2l-color-celestine-minus-1);
+				box-shadow: -1px 0 0 var(--d2l-color-celestine); /* left border */
 			}
-			.cell-left-border {
-				position: absolute;
-				top: 0;
-				left: -0.5px;
-				height: calc(100% + 1px);
-				width: 1px;
-				background-color: var(--d2l-color-celestine);
-			}
-			.cell-bottom-border {
-				position: absolute;
-				bottom: -0.5px;
-				left: 0;
-				width: 100%;
-				height: 1px;
-				background-color: var(--d2l-color-celestine);
-				z-index: 1;
+			.criterion-cell.selected.has-bottom {
+				box-shadow: -1px 0 0 var(--d2l-color-celestine), 0 1px 0 var(--d2l-color-celestine);
+				z-index: 1; /* Need bottom border to render over feedback cell border */
 			}
 		</style>
 
@@ -123,11 +111,7 @@
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult)]]">
-								<template is="dom-if" if="[[_isSelected(criterionCell, assessmentResult)]]">
-									<div class="cell-left-border"></div>
-									<div class="cell-bottom-border" hidden="[[!_hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]"></div>
-								</template>
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
@@ -356,10 +340,13 @@
 				return !isBottomless;
 			},
 
-			_getCriteriaClassName: function(criterionCell, assessmentResult) {
+			_getCriteriaClassName: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities) {
 				var className = 'criterion-cell';
 				if (this._isSelected(criterionCell, assessmentResult)) {
 					className += ' selected';
+				}
+				if (this._hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities)) {
+					className += ' has-bottom';
 				}
 				return className;
 			}
