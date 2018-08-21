@@ -714,7 +714,7 @@
                             ],
                             "properties": {
                                 "text": "html\n",
-                                "html": "<p>html</p>\n<p><img src=\"/content/enforced/131646-101/Maze2.png?_&amp;d2lSessionVal=v7po0vvL6SfPXSOwiEltImsIs\" alt=\"maze\" title=\"Maze\" style=\"max-width: 100%;\"/></p>"
+                                "html": "<p>html</p>\n<p><img src=\"/content/enforced/131646-101/Maze2.png?_&amp;d2lSessionVal=dtlDibATCoB82WiJjUzpBdwnn\" alt=\"maze\" title=\"Maze\" style=\"max-width: 100%;\"/></p>"
                             }
                         }
                     ],
@@ -2141,6 +2141,221 @@
                         "https://rubrics.api.brightspace.com/rels/criterion"
                     ],
                     "href": "data/rubrics/organizations/multiple-groups/203/groups/183/criteria/642.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "overall-level-selector"
+            ],
+            "rel": [
+                "item"
+            ],
+            "entities": [
+                {
+                    "class": [
+                        "assessment-overall-level",
+                        "selected"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-overall-level",
+                        "item"
+                    ],
+                    "properties": {
+                        "name": "Level 4",
+                        "rangeStart": 11.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "description"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        },
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/overall-level"
+                            ],
+                            "href": "data/rubrics/organizations/multiple-groups/203/overallLevels/1522.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-overall-level"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-overall-level",
+                        "item"
+                    ],
+                    "properties": {
+                        "name": "Level 3",
+                        "rangeStart": 8.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "description"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        },
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/overall-level"
+                            ],
+                            "href": "data/rubrics/organizations/multiple-groups/203/overallLevels/1521.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-overall-level"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-overall-level",
+                        "item"
+                    ],
+                    "properties": {
+                        "name": "Level 2",
+                        "rangeStart": 5.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "description"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        },
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/overall-level"
+                            ],
+                            "href": "data/rubrics/organizations/multiple-groups/203/overallLevels/1520.json"
+                        }
+                    ]
+                },
+                {
+                    "class": [
+                        "assessment-overall-level"
+                    ],
+                    "rel": [
+                        "https://assessments.api.brightspace.com/rels/assessment-overall-level",
+                        "item"
+                    ],
+                    "properties": {
+                        "name": "Level 1",
+                        "rangeStart": 0.0
+                    },
+                    "entities": [
+                        {
+                            "class": [
+                                "richtext",
+                                "description"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        },
+                        {
+                            "class": [
+                                "richtext",
+                                "feedback"
+                            ],
+                            "rel": [
+                                "item"
+                            ],
+                            "properties": {
+                                "text": "",
+                                "html": ""
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "rel": [
+                                "https://rubrics.api.brightspace.com/rels/overall-level"
+                            ],
+                            "href": "data/rubrics/organizations/multiple-groups/203/overallLevels/1519.json"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/overall-levels"
+                    ],
+                    "href": "data/rubrics/organizations/multiple-groups/203/overallLevels.json"
                 }
             ]
         },

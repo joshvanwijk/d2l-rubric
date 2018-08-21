@@ -1,0 +1,63 @@
+{
+    "class": [
+        "overall-level"
+    ],
+    "properties": {
+        "name": "Level 2",
+        "rangeStart": null
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/text-only-no-edit/199/overallLevels/1481.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/text-only-no-edit/199/overallLevels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "data/rubrics/organizations/text-only-no-edit/199/overallLevels/1482.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/text-only-no-edit/199/overallLevels/1480.json"
+        }
+    ]
+}

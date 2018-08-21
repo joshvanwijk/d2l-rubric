@@ -1,0 +1,143 @@
+{
+    "class": [
+        "overall-level"
+    ],
+    "properties": {
+        "name": "Excellent",
+        "rangeStart": null
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.",
+                "html": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+            },
+            "actions": [
+                {
+                    "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1725",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "hidden",
+                            "name": "name",
+                            "value": "Excellent"
+                        },
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            },
+            "actions": [
+                {
+                    "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1725",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "hidden",
+                            "name": "name",
+                            "value": "Excellent"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "description",
+                            "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                        },
+                        {
+                            "type": "text",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels/1725.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/overallLevels/1724.json"
+        }
+    ],
+    "actions": [
+        {
+            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1725",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "name",
+                    "value": "Excellent"
+                },
+                {
+                    "type": "hidden",
+                    "name": "description",
+                    "value": "<p>Offendit omittantur ea ius, at tale erant appetere mei. Eum te eius indoctum. Duo eros rationibus conclusionemque eu, iriure quaeque usu ea, at eum tale alia constituam? Te adhuc theophrastus per.</p>"
+                },
+                {
+                    "type": "hidden",
+                    "name": "feedback",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/227/overallLevels/1725",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ]
+}
