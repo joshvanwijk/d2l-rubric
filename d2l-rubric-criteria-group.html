@@ -33,6 +33,10 @@
 			d2l-td.out-of {
 				text-align: right;
 				min-width: 0;
+				pointer-events: none;
+			}
+			d2l-td.out-of.assessable {
+				pointer-events: auto;
 			}
 			d2l-td.out-of.assessable:hover {
 				color: var(--d2l-color-celestine);
@@ -495,7 +499,6 @@
 
 			_handleOverrideScore: function(event) {
 				if (this.readOnly) {
-					// TODO: Update this condition?
 					return;
 				}
 				var criterionNum = event.model.get('criterionNum');

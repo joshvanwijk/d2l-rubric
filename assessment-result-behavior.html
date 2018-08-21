@@ -189,7 +189,6 @@
 
 			if (action) {
 				var fields = action.fields;
-				console.log(fields);
 				var defaultScoreField = fields.find(function(field) { return field.name === 'defaultScore'; });
 				var scoreField = fields.find(function(field) { return field.name === 'score'; });
 				return defaultScoreField.value !== scoreField.value;
@@ -268,6 +267,15 @@
 				return false;
 			}
 			var action = assessedCriterion.getActionByName('update-critierion-assessment');
+			return !!action;
+		},
+
+		canOverrideTotal: function(assessmentEntity) {
+			if (!assessmentEntity) {
+				return false;
+			}
+			// TODO: Use the correct name for this action
+			var action = assessmentEntity.getActionByName('save');
 			return !!action;
 		}
 	};

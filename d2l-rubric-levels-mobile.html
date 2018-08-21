@@ -126,6 +126,12 @@
 				text-align: center;
 				margin: auto;
 			}
+			.score-wrapper {
+				pointer-events: none;
+			}
+			.score-wrapper.assessable {
+				pointer-events: auto;
+			}
 			.score-wrapper.assessable:hover {
 				color: var(--d2l-color-celestine);
 				cursor: pointer;
@@ -162,7 +168,7 @@
 			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]">
 				<d2l-rubric-editable-score
 					id="score-inner"
-					class$="[[_getScoreWrapperClassName(entity, editingScore)]]"
+					class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]"
 					criterion-href="[[criterionHref]]"
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
@@ -356,9 +362,8 @@
 				this.assessCriterionCell(event.currentTarget.dataset.cellHref);
 			},
 
-			_canEditScore: function(entity) {
-				//TODO: Update this condition?
-				return !this.readOnly;
+			_canEditScore: function(criterionHref) {
+				return !this.readOnly && this.canOverrideScore(criterionHref);
 			},
 
 			_getOutOfClassName: function(editingScore) {
@@ -369,9 +374,9 @@
 				return className;
 			},
 
-			_getScoreWrapperClassName: function(entity, editingScore) {
+			_getScoreWrapperClassName: function(criterionHref, editingScore) {
 				var className = 'score-wrapper';
-				if (this._canEditScore(entity)) {
+				if (this._canEditScore(criterionHref)) {
 					className += ' assessable';
 				}
 				if (!editingScore) {
@@ -380,9 +385,8 @@
 				return className;
 			},
 
-			_handleOverrideScore: function(event) {
+			_handleOverrideScore: function() {
 				if (this.readOnly) {
-					// TODO: Update this condition?
 					return;
 				}
 				this.editingScore = true;

@@ -6,7 +6,6 @@
 <link rel="import" href="../s-html/s-html.html">
 <link rel="import" href="../d2l-text-input/d2l-text-input.html">
 <link rel="import" href="./siren-entity.html">
-<link rel="import" href="../iron-media-query/iron-media-query.html">
 
 
 <dom-module id="d2l-rubric-editable-score">
@@ -19,29 +18,28 @@
 			d2l-text-input {
 				max-width: 100px;
 			}
-            .score-out-of.assessed {
-                color: var(--d2l-color-celestine);
-            }
+			.score-out-of.assessed {
+				color: var(--d2l-color-celestine);
+			}
 			.right {
 				display: inline;
 				padding: 0 5px;
 			}
 		</style>
-		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-        <siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
-        <div hidden="[[!editingScore]]">
-            <d2l-text-input
+		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
+		<div hidden="[[!editingScore]]">
+			<d2l-text-input
 				id="text-area"
 				value="[[getScore(criterionEntity, assessmentResult)]]"
 				type="number"
-            >
-            </d2l-text-input>
-            <div class="right">[[_localizeOutOf(criterionEntity, rubricEntity)]]</div>
-        </div>
-        <div hidden="[[editingScore]]" class$="[[_getOutOfClassName(criterionEntity, assessmentResult)]]">
-            [[_localizeOutOf(criterionEntity, rubricEntity, assessmentResult, totalScore)]]
-        </div>
+			>
+			</d2l-text-input>
+			<div class="right">[[_localizeOutOf(criterionEntity, rubricEntity)]]</div>
+		</div>
+		<div hidden="[[editingScore]]" class$="[[_getOutOfClassName(criterionEntity, assessmentResult)]]">
+			[[_localizeOutOf(criterionEntity, rubricEntity, assessmentResult, totalScore)]]
+		</div>
 	</template>
 
 	<script>
@@ -68,13 +66,14 @@
 					value: false,
 					notify: true
 				},
-                scoreOverridden: {
-                    type: Boolean,
-                    value: false
-                },
-                totalScore: {
-                    type: String
-                }
+				scoreOverridden: {
+					type: Boolean,
+					value: false
+				},
+				totalScore: {
+					type: String,
+					value: null
+				}
 			},
 
 			behaviors: [
@@ -92,7 +91,6 @@
 				}
 
 				this.scoreOverridden = this.isScoreOverridden(criterionHref);
-				console.log(this.scoreOverridden);
 			},
 
 			attached: function() {
@@ -129,17 +127,17 @@
 			},
 
 			getScore: function(criterionEntity, assessmentEntity) {
-                if (!criterionEntity || !assessmentEntity) {
-                    return;
-                }
-               return this.getAssessedScore(criterionEntity, assessmentEntity);
+				if (!criterionEntity || !assessmentEntity) {
+					return;
+				}
+				return this.getAssessedScore(criterionEntity, assessmentEntity);
 			},
 
-            _localizeOutOf: function(criterion, rubric, assessmentResult, totalScore) {
+			_localizeOutOf: function(criterion, rubric, assessmentResult, totalScore) {
 				var entity = criterion || rubric;
-                if (!entity || !entity.properties || !entity.properties.outOf) {
-                    return;
-                }
+				if (!entity || !entity.properties || !entity.properties.outOf) {
+					return null;
+				}
 
 				var score = null;
 				if (totalScore) {
@@ -153,9 +151,9 @@
 				return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 			},
 
-            _getOutOfClassName: function(criterionEntity, assessmentResult) {
+			_getOutOfClassName: function(criterionEntity, assessmentResult) {
 				var className = 'score-out-of';
-				if (this.scoreOverridden) {
+				if (assessmentResult && this.scoreOverridden) {
 					className += ' assessed';
 				}
 				return className;
