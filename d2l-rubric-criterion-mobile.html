@@ -229,6 +229,7 @@
 
 				this._assessedLevelHref = this.getAssessedLevelHref(entity, assessmentResult);
 				if (!this._assessedLevelHref && !this.readOnly) {
+					this._assessedLevelHref = null; /* hack for Polymer 1 */
 					this._selected = -1;
 				}
 
