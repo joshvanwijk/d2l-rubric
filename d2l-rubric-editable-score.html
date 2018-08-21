@@ -27,18 +27,18 @@
 			}
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
+		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></siren-entity>
 		<div hidden="[[!editingScore]]">
 			<d2l-text-input
 				id="text-area"
-				value="[[getScore(criterionEntity, assessmentResult)]]"
+				value="[[getScore(entity, assessmentResult, totalScore)]]"
 				type="number"
 			>
 			</d2l-text-input>
-			<div class="right">[[_localizeOutOf(criterionEntity, rubricEntity)]]</div>
+			<div class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
-		<div hidden="[[editingScore]]" class$="[[_getOutOfClassName(criterionEntity, assessmentResult)]]">
-			[[_localizeOutOf(criterionEntity, rubricEntity, assessmentResult, totalScore)]]
+		<div hidden="[[editingScore]]" class$="[[_getOutOfClassName(entity, assessmentResult)]]">
+			[[_localizeOutOf(entity, assessmentResult, totalScore)]]
 		</div>
 	</template>
 
@@ -48,8 +48,10 @@
 
 			properties: {
 				criterionHref: String,
-				criterionEntity: Object,
-				rubricEntity: Object,
+
+				/* Entity could be a criterionEntity or a rubricEntity */
+				entity: Object,
+
 				assessmentHref: {
 					type: String,
 					value: null
@@ -126,15 +128,17 @@
 				}
 			},
 
-			getScore: function(criterionEntity, assessmentEntity) {
-				if (!criterionEntity || !assessmentEntity) {
+			getScore: function(entity, assessmentResult, totalScore) {
+				if (!entity || !assessmentResult) {
 					return;
 				}
-				return this.getAssessedScore(criterionEntity, assessmentEntity);
+				if (totalScore) {
+					return totalScore;
+				}
+				return this.getAssessedScore(entity, assessmentResult);
 			},
 
-			_localizeOutOf: function(criterion, rubric, assessmentResult, totalScore) {
-				var entity = criterion || rubric;
+			_localizeOutOf: function(entity, assessmentResult, totalScore) {
 				if (!entity || !entity.properties || !entity.properties.outOf) {
 					return null;
 				}
@@ -151,7 +155,7 @@
 				return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 			},
 
-			_getOutOfClassName: function(criterionEntity, assessmentResult) {
+			_getOutOfClassName: function(entity, assessmentResult) {
 				var className = 'score-out-of';
 				if (assessmentResult && this.scoreOverridden) {
 					className += ' assessed';
