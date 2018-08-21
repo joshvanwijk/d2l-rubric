@@ -8,6 +8,12 @@
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 	window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
 
+	// Create a promise queue for siren actions
+	window.D2L = window.D2L || {};
+	window.D2L.Rubric = window.D2L.Rubric || {};
+	window.D2L.Rubric.Assessment = window.D2L.Rubric.Assessment || {};
+	window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise || Promise.resolve();
+
 	/**
 	 * Behavior for computing assessment results from an assessment entity
 	 * @polymerBehavior
@@ -83,6 +89,7 @@
 			this._assessmentCriterionCellMap = assessmentCriterionCellMap;
 			this._assessmentCriterionMap = assessmentCriterionMap;
 			this.noBottomCells = noBottomCellsMap;
+
 			return assessmentMap;
 		},
 
@@ -162,7 +169,16 @@
 			return feedback;
 		},
 
+		addToQueue: function(promiseFactory) {
+			window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(promiseFactory);
+		},
+
 		saveAssessmentFeedback: function(criterionHref, feedback) {
+			var saveAssessmentFeedbackPromise = this.saveAssessmentFeedbackPromise.bind(this, criterionHref, feedback);
+			this.addToQueue(saveAssessmentFeedbackPromise);
+		},
+
+		saveAssessmentFeedbackPromise: function(criterionHref, feedback) {
 			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
 			var action = asssessmentCriterion.getActionByName('update-critierion-assessment');
 
@@ -177,7 +193,7 @@
 					feedbackField.value = this._escapeHtml(feedback);
 				}
 
-				this.performSirenAction(action, fields);
+				return this.performSirenAction(action, fields);
 			}
 		},
 
@@ -188,16 +204,22 @@
 		},
 
 		assessCriterionCell: function(criterionCellHref) {
+			var assessCriterionCellPromise = this.assessCriterionCellPromise.bind(this, criterionCellHref);
+			this.addToQueue(assessCriterionCellPromise);
+		},
+
+		assessCriterionCellPromise: function(criterionCellHref) {
 			if (this._assessmentCriterionCellMap[criterionCellHref]) {
-				this._selectCriterionCell(this._assessmentCriterionCellMap[criterionCellHref]);
+				return this._selectCriterionCell(this._assessmentCriterionCellMap[criterionCellHref]);
 			}
 		},
 
 		_selectCriterionCell: function(criterionCell) {
+
 			var action = criterionCell.getActionByName('select-criterion-cell');
 
 			if (action) {
-				this.performSirenAction(action);
+				return this.performSirenAction(action);
 			}
 		},
 
