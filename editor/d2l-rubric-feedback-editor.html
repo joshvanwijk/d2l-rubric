@@ -108,8 +108,7 @@
 				var action = feedback.getActionByName('update');
 				if (action) {
 					this._toggleBubble('_feedbackInvalid', false);
-					var fields = new FormData();
-					fields.append('feedback', e.target.value);
+					var fields = [{'name':'feedback', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-feedback-saved');
 					}.bind(this)).catch(function() {

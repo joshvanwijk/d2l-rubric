@@ -5,6 +5,7 @@
 <link rel="import" href="../d2l-table/d2l-thead.html">
 <link rel="import" href="../d2l-table/d2l-tbody.html">
 <link rel="import" href="../d2l-table/d2l-th.html">
+<link rel="import" href="../d2l-table/d2l-tspan.html">
 <link rel="import" href="./telemetry-behavior.html">
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
@@ -19,6 +20,8 @@
 <link rel="import" href="./siren-entity.html">
 <link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="../s-html/s-html.html">
+<link rel="import" href="../d2l-button/d2l-button-subtle.html">
+<link rel="import" href="../d2l-fastdom-import/fastdom.html">
 
 <dom-module id="d2l-rubric-criteria-group">
 	<template strip-whitespace>
@@ -54,7 +57,10 @@
 			}
 			.feedback-wrapper {
 				border: none;
+				margin: -1rem;
+				height: 100%;
 			}
+
 			.criterion-cell.selected {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
@@ -66,6 +72,19 @@
 			.criterion-cell.selected.has-bottom {
 				box-shadow: -1px 0 0 var(--d2l-color-celestine), 0 1px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
+			}
+			.criterion-cell.assessable {
+				cursor: pointer;
+			}
+			.criterion-cell.assessable:hover {
+				background-color: var(--d2l-color-sylvite);
+			}
+			.criterion-cell.assessable.selected {
+				background-color: var(--d2l-color-celestine-plus-2);
+			}
+
+			[hidden] {
+				display: none !important;
 			}
 		</style>
 
@@ -107,11 +126,19 @@
 					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
 						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
 							<d2l-td class="criteria" role="rowheader">
-								[[criterion.properties.name]]
+								<div>
+									[[criterion.properties.name]]
+								</div>
+								<d2l-button-subtle
+									hidden="[[!_addFeedback(criterion, assessmentResult)]]"
+									text="[[localize('addFeedback')]]"
+									on-tap="_handleAddFeedback"
+									data-criterion$="[[criterionNum]]"
+								></d2l-button-subtle>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]" on-tap="handleTap" data-href$="[[_getSelfLink(criterionCell)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
@@ -121,10 +148,16 @@
 							</d2l-td>
 						</template>
 					</d2l-tr>
-					<template is="dom-if" if="[[_hasFeedback(criterion, assessmentResult)]]">
+					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell">
-							<d2l-rubric-feedback class="feedback-wrapper">
-								<s-html html="[[getAssessmentFeedback(criterion, assessmentResult)]]"></s-html>
+							<d2l-rubric-feedback
+								id="feedback-inner[[criterionNum]]"
+								class="feedback-wrapper"
+								criterion-href="[[_getSelfLink(criterion)]]"
+								assessment-href="[[assessmentHref]]"
+								token="[[token]]"
+								read-only="[[readOnly]]"
+							>
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -166,6 +199,15 @@
 					type: String,
 					value: null
 				},
+				readOnly: Boolean,
+				_feedbackDisplay: {
+					type: Array,
+					value: null
+				},
+				_addingFeedback: {
+					type: Number,
+					value: -1
+				},
 				telemetryData: {
 					type: Object,
 					value: null
@@ -183,7 +225,8 @@
 
 			observers: [
 				'_onLevelsEntityChanged(_levelsEntity)',
-				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
+				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)',
+				'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 			],
 
 			_onEntityChanged: function(entity) {
@@ -225,6 +268,18 @@
 				this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 			},
 
+			_updateFeedbackDisplay: function(criteriaEntities, assessmentResult) {
+				if (!criteriaEntities || !assessmentResult) {
+					return;
+				}
+
+				var feedbackDisplay = [];
+				for (var i = 0; i < criteriaEntities.length; i++) {
+					feedbackDisplay[i] = this._hasFeedback(criteriaEntities[i], assessmentResult);
+				}
+				this._feedbackDisplay = feedbackDisplay;
+			},
+
 			_getCriteriaLink: function(entity) {
 				var link = entity && entity.getLinkByRel(this.HypermediaRels.Rubrics.criteria);
 				return link && link.href || '';
@@ -242,7 +297,20 @@
 
 			_hasFeedback: function(entity, assessmentResult) {
 				var entityLink = this._getSelfLink(entity);
-				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedback;
+				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
+			},
+
+			_addFeedback: function(entity, assessmentResult) {
+				if (!entity || !assessmentResult) {
+					return false;
+				}
+				if (this.readOnly) {
+					return false;
+				}
+				if (!this.canAddFeedback(entity, assessmentResult)) {
+					return false;
+				}
+				return !this._hasFeedback(entity, assessmentResult);
 			},
 
 			_hasOutOf: function(entity) {
@@ -326,12 +394,12 @@
 				return selfLink && assessmentResult && assessmentResult[selfLink];
 			},
 
-			_hasBottom: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteria) {
+			_hasBottom: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteria, addingFeedback) {
 				var selfLink = this._getSelfLink(criterionCell);
 
 				var noBottom = noBottomCells && noBottomCells[selfLink];
 				var isLastCell = criterionNum === criteria.length - 1;
-				var hasFeedback = this._hasFeedback(criterionCell, assessmentResult);
+				var hasFeedback = this._hasFeedback(criterionCell, assessmentResult) || criterionNum === addingFeedback;
 
 				// A cell already has a bottom border in the following cases:
 				// 1. The cell is on top of another selected cell and does not have feedback
@@ -345,10 +413,36 @@
 				if (this._isSelected(criterionCell, assessmentResult)) {
 					className += ' selected';
 				}
+				if (!this.readOnly && this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
+					className += ' assessable';
+				}
 				if (this._hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities)) {
 					className += ' has-bottom';
 				}
 				return className;
+			},
+
+			handleTap: function(event) {
+				if (this.readOnly) {
+					return;
+				}
+				this.assessCriterionCell(event.currentTarget.dataset.href);
+				this._addingFeedback = -1;
+			},
+
+			_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
+				if (!feedbackDisplay) {
+					return;
+				}
+				return feedbackDisplay[criterionNum] || criterionNum === addingFeedback;
+			},
+
+			_handleAddFeedback: function(event) {
+				var criterionNum = event.model.get('criterionNum');
+				this._addingFeedback = criterionNum;
+				fastdom.mutate(function() {
+					Polymer.dom(this.root).querySelector('#feedback-inner' + criterionNum).focus();
+				}.bind(this));
 			}
 		});
 	</script>

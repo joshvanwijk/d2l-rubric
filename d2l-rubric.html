@@ -9,6 +9,7 @@
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-alert/d2l-alert.html">
 <link rel="import" href="../s-html/s-html.html">
+<link rel="import" href="../d2l-save-status/d2l-save-status.html">
 
 <!--
 `d2l-rubric`
@@ -123,6 +124,18 @@ Polymer Web-Component to display rubrics
 				@apply --d2l-body-compact-text;
 			}
 
+			#editor-save-status-container {
+				padding-right: 0.12rem
+			}
+
+			:host-context([dir='rtl']) #editor-save-status-container {
+				padding-left: 0.12rem
+			}
+
+			:host(:dir(rtl)) #editor-save-status-container {
+				padding-left: 0.12rem
+			}
+
 			/* Fix for Polymer 2 */
 			d2l-rubric-overall-score[hidden] {
 				display: none;
@@ -130,6 +143,9 @@ Polymer Web-Component to display rubrics
 
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
+		<div id="editor-save-status-container">
+			<d2l-save-status id="rubric-save-status" class="right"></d2l-save-status>
+		</div>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]">
 				[[item.alertMessage]]
@@ -144,6 +160,7 @@ Polymer Web-Component to display rubrics
 				assessment-href="[[assessmentHref]]"
 				token="[[token]]"
 				rubric-type="[[rubricType]]"
+				read-only="[[readOnly]]"
 				telemetry-data="[[_telemetryData]]"
 			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
@@ -172,6 +189,11 @@ Polymer Web-Component to display rubrics
 			is: 'd2l-rubric',
 
 			properties: {
+				readOnly: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
+				},
 				_criteriaGroups: {
 					type: Object
 				},
@@ -221,6 +243,12 @@ Polymer Web-Component to display rubrics
 				'_onAssessmentEntityChanged(_assessmentEntity)'
 			],
 
+			listeners: {
+				'd2l-siren-entity-save-start': '_onEntitySave',
+				'd2l-siren-entity-save-error': '_onEntitySave',
+				'd2l-siren-entity-save-end': '_onEntitySave'
+			},
+
 			_onEntityChanged: function(entity) {
 				if (entity) {
 					this._telemetryData = {};
@@ -231,6 +259,15 @@ Polymer Web-Component to display rubrics
 					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 					this._showContent = true;
 				}
+			},
+
+			_onEntitySave: function(e) {
+				var saveStateEl = this.$['rubric-save-status'];
+				({
+					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
+				})[e.type]();
 			},
 
 			_onAssessmentEntityChanged: function(assessmentEntity) {

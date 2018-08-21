@@ -256,8 +256,7 @@
 					} else {
 						this._toggleBubble('_nameInvalid', false);
 					}
-					var fields = new FormData();
-					fields.append('name', e.target.value);
+					var fields = [{'name':'name', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function() {
