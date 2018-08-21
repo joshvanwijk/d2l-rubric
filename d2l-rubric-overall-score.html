@@ -116,6 +116,7 @@
 			is: 'd2l-rubric-overall-score',
 
 			properties: {
+				readOnly: Boolean,
 				_levels: Array,
 				_largeScreen: Boolean,
 				_assessmentEntity: {
@@ -178,7 +179,7 @@
 			},
 
 			_scoreVisible: function(levelEntity) {
-				if (this.assessmentHref) {
+				if (this.readOnly && this.assessmentHref) {
 					// Minimum points is not shown in graded view
 					return false;
 				}

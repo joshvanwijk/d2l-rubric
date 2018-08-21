@@ -173,6 +173,7 @@ Polymer Web-Component to display rubrics
 		</div>
 		<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
 			<d2l-rubric-overall-score
+				read-only="[[readOnly]]"
 				href="[[_getOverallLevels(entity)]]"
 				assessment-href="[[assessmentHref]]"
 				token="[[token]]"
