@@ -203,6 +203,11 @@
 		},
 
 		saveCriterionPoints: function(criterionHref, points) {
+			var saveCriterionPointsPromise = this.saveCriterionPointsPromise.bind(this, criterionHref, feedback);
+			this.addToQueue(saveCriterionPointsPromise);
+		},
+
+		saveCriterionPointsPromise: function(criterionHref, points) {
 			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
 			// Action name is typoed in the API
 			var action = asssessmentCriterion.getActionByName('update-critierion-assessment');
@@ -217,6 +222,11 @@
 		},
 
 		saveTotalPoints: function(points) {
+			var saveTotalPointsPromise = this.saveTotalPointsPromise.bind(this, criterionHref, feedback);
+			this.addToQueue(saveTotalPointsPromise);
+		},
+
+		saveTotalPointsPromise: function(points) {
 			var entity = this.assessmentEntity;
 			var action = entity.getActionByName('save');
 			if (action) {
