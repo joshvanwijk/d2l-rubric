@@ -214,10 +214,10 @@
 			var entity = this.assessmentEntity;
 			var action = entity.getActionByName('save');
 			if (action) {
-				// TODO: Make an actual API action to update total score
 				var fields = action.fields;
 				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
 				assessmentField.value.OverallScore = points;
+				assessmentField.value.OverallScoreOverridden = true;
 				this.performSirenAction(action, fields);
 			}
 		},
@@ -248,7 +248,7 @@
 				return false;
 			}
 			var assessmentCriterionCell = assessedCriterion.cellEntity;
-			var action = assessmentCriterionCell.getActionByName('select-criterion-cell');
+			var action = assessmentCriterionCell.getActionByName('update-critierion-assessment');
 			return !!action;
 		},
 
@@ -274,7 +274,6 @@
 			if (!assessmentEntity) {
 				return false;
 			}
-			// TODO: Use the correct name for this action
 			var action = assessmentEntity.getActionByName('save');
 			return !!action;
 		}
