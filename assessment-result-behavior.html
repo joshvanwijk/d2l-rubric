@@ -181,19 +181,10 @@
 			}
 		},
 
-		// TODO: Fix API to make defaultScore actually return the "default score" or
-		//	find a better way to check if score is overridden
 		isScoreOverridden: function(criterionHref) {
 			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
-			var action = asssessmentCriterion.getActionByName('update-critierion-assessment');
-
-			if (action) {
-				var fields = action.fields;
-				var defaultScoreField = fields.find(function(field) { return field.name === 'defaultScore'; });
-				var scoreField = fields.find(function(field) { return field.name === 'score'; });
-				return defaultScoreField.value !== scoreField.value;
-			}
-			return false;
+			var overridden = asssessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden)
+			return !!overridden;
 		},
 
 		saveCriterionPoints: function(criterionHref, points) {
@@ -238,17 +229,21 @@
 			var action = criterionCell.getActionByName('select-criterion-cell');
 
 			if (action) {
-				this.performSirenAction(action);
+				var fields = action.fields;
+				var defaultScoreField = fields.find(function(field) { return field.name === 'defaultScore'; });
+				var scoreField = fields.find(function(field) { return field.name === 'score'; });
+				defaultScoreField.value = scoreField.value;
+
+				this.performSirenAction(action, fields);
 			}
 		},
 
 		canAddFeedback: function(criterion, assessmentResult) {
-			var assessedCriterion = assessmentResult[this._getSelfLink(criterion)];
+			var assessedCriterion = this._assessmentCriterionMap[this._getSelfLink(criterion)];
 			if (!assessedCriterion) {
 				return false;
 			}
-			var assessmentCriterionCell = assessedCriterion.cellEntity;
-			var action = assessmentCriterionCell.getActionByName('update-critierion-assessment');
+			var action = assessedCriterion.getActionByName('update-critierion-assessment');
 			return !!action;
 		},
 
