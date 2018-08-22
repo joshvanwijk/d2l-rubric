@@ -37,7 +37,7 @@
 		<d2l-textarea
 			id="feedback"
 			aria-invalid="[[_isAriaInvalid(_feedbackInvalid)]]"
-			aria-label="[[localize(ariaLabelLangterm, 'level', _levelOffset, 'levelCount', levelCount)]]"
+			aria-label="[[ariaLabelText]]"
 			disabled="[[!_canEdit]]"
 			no-border
 			hover-styles
@@ -57,7 +57,7 @@
 				/**
 				 * textarea aria-label langterm
 				 */
-				ariaLabelLangterm: {
+				ariaLabelText: {
 					type: String,
 					value: ''
 				},
