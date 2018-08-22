@@ -198,6 +198,9 @@
 
 		isScoreOverridden: function(criterionHref) {
 			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
+			if (!asssessmentCriterion) {
+				return;
+			}
 			var overridden = asssessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
 			return !!overridden;
 		},
@@ -256,16 +259,10 @@
 		},
 
 		_selectCriterionCell: function(criterionCell) {
-
 			var action = criterionCell.getActionByName('select-criterion-cell');
 
 			if (action) {
-				var fields = action.fields;
-				var defaultScoreField = fields.find(function(field) { return field.name === 'defaultScore'; });
-				var scoreField = fields.find(function(field) { return field.name === 'score'; });
-				defaultScoreField.value = scoreField.value;
-
-				return this.performSirenAction(action, fields);
+				return this.performSirenAction(action);
 			}
 		},
 
