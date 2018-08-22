@@ -198,12 +198,12 @@
 
 		isScoreOverridden: function(criterionHref) {
 			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
-			var overridden = asssessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden)
+			var overridden = asssessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
 			return !!overridden;
 		},
 
 		saveCriterionPoints: function(criterionHref, points) {
-			var saveCriterionPointsPromise = this.saveCriterionPointsPromise.bind(this, criterionHref, feedback);
+			var saveCriterionPointsPromise = this.saveCriterionPointsPromise.bind(this, criterionHref, points);
 			this.addToQueue(saveCriterionPointsPromise);
 		},
 
@@ -222,7 +222,7 @@
 		},
 
 		saveTotalPoints: function(points) {
-			var saveTotalPointsPromise = this.saveTotalPointsPromise.bind(this, criterionHref, feedback);
+			var saveTotalPointsPromise = this.saveTotalPointsPromise.bind(this, points);
 			this.addToQueue(saveTotalPointsPromise);
 		},
 
@@ -269,7 +269,7 @@
 			}
 		},
 
-		canAddFeedback: function(criterion, assessmentResult) {
+		canAddFeedback: function(criterion) {
 			var assessedCriterion = this._assessmentCriterionMap[this._getSelfLink(criterion)];
 			if (!assessedCriterion) {
 				return false;

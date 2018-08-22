@@ -329,7 +329,7 @@
 				if (this.readOnly) {
 					return false;
 				}
-				if (!this.canAddFeedback(entity, assessmentResult)) {
+				if (!this.canAddFeedback(entity)) {
 					return false;
 				}
 				return !this._hasFeedback(entity, assessmentResult);

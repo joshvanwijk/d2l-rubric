@@ -159,7 +159,7 @@
 				if (this.readOnly || !criterionEntity || !assessmentEntity) {
 					return false;
 				}
-				return this.canAddFeedback(criterionEntity, assessmentEntity);
+				return this.canAddFeedback(criterionEntity);
 			},
 
 			_hasReadonlyFeedback: function(criterionEntity, assessmentEntity) {
