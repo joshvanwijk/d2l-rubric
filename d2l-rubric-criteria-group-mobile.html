@@ -20,7 +20,15 @@
 		<h3>
 			[[_name]]
 		</h3>
-		<d2l-rubric-criteria-mobile href="[[_criteriaHref]]" levels-href="[[_levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[_isHolistic]]" is-numeric="[[_isNumeric]]">
+		<d2l-rubric-criteria-mobile
+			href="[[_criteriaHref]]"
+			levels-href="[[_levelsHref]]"
+			assessment-href="[[assessmentHref]]"
+			token="[[token]]"
+			is-holistic="[[_isHolistic]]"
+			is-numeric="[[_isNumeric]]"
+			read-only="[[readOnly]]"
+		>
 		</d2l-rubric-criteria-mobile>
 	</template>
 	<script>
@@ -35,6 +43,7 @@
 				_isHolistic: Boolean,
 				_isNumeric: Boolean,
 				_loaded: Boolean,
+				readOnly: Boolean,
 				telemetryData: Object
 			},
 
