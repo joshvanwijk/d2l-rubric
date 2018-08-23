@@ -196,6 +196,62 @@
 			}
 		},
 
+		isScoreOverridden: function(criterionHref) {
+			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
+			if (!asssessmentCriterion) {
+				return;
+			}
+			var overridden = asssessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
+			return !!overridden;
+		},
+
+		isTotalScoreOverridden: function() {
+			var entity = this.assessmentEntity;
+			var action = entity.getActionByName('save');
+			if (!action) {
+				return false;
+			}
+			var fields = action.fields;
+			var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+			return assessmentField.value.OverallScoreOverridden;
+		},
+
+		saveCriterionPoints: function(criterionHref, points) {
+			var saveCriterionPointsPromise = this.saveCriterionPointsPromise.bind(this, criterionHref, points);
+			this.addToQueue(saveCriterionPointsPromise);
+		},
+
+		saveCriterionPointsPromise: function(criterionHref, points) {
+			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
+			// Action name is typoed in the API
+			var action = asssessmentCriterion.getActionByName('update-critierion-assessment');
+
+			if (action) {
+				var fields = action.fields;
+				var scoreField = fields.find(function(field) { return field.name === 'score'; });
+				scoreField.value = points;
+
+				this.performSirenAction(action, fields);
+			}
+		},
+
+		saveTotalPoints: function(points) {
+			var saveTotalPointsPromise = this.saveTotalPointsPromise.bind(this, points);
+			this.addToQueue(saveTotalPointsPromise);
+		},
+
+		saveTotalPointsPromise: function(points) {
+			var entity = this.assessmentEntity;
+			var action = entity.getActionByName('save');
+			if (action) {
+				var fields = action.fields;
+				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+				assessmentField.value.OverallScore = points;
+				assessmentField.value.OverallScoreOverridden = true;
+				this.performSirenAction(action, fields);
+			}
+		},
+
 		_escapeHtml: function(feedback) {
 			var div = document.createElement('div');
 			div.appendChild(document.createTextNode(feedback));
@@ -214,7 +270,6 @@
 		},
 
 		_selectCriterionCell: function(criterionCell) {
-
 			var action = criterionCell.getActionByName('select-criterion-cell');
 
 			if (action) {
@@ -222,13 +277,12 @@
 			}
 		},
 
-		canAddFeedback: function(criterion, assessmentResult) {
-			var assessedCriterion = assessmentResult[this._getSelfLink(criterion)];
+		canAddFeedback: function(criterion) {
+			var assessedCriterion = this._assessmentCriterionMap[this._getSelfLink(criterion)];
 			if (!assessedCriterion) {
 				return false;
 			}
-			var assessmentCriterionCell = assessedCriterion.cellEntity;
-			var action = assessmentCriterionCell.getActionByName('select-criterion-cell');
+			var action = assessedCriterion.getActionByName('update-critierion-assessment');
 			return !!action;
 		},
 
@@ -239,6 +293,23 @@
 				return !!action;
 			}
 			return false;
+		},
+
+		canOverrideScore: function(criterionHref) {
+			var assessedCriterion = this._assessmentCriterionMap[criterionHref];
+			if (!assessedCriterion) {
+				return false;
+			}
+			var action = assessedCriterion.getActionByName('update-critierion-assessment');
+			return !!action;
+		},
+
+		canOverrideTotal: function(assessmentEntity) {
+			if (!assessmentEntity) {
+				return false;
+			}
+			var action = assessmentEntity.getActionByName('save');
+			return !!action;
 		}
 	};
 

@@ -113,10 +113,28 @@
 				cursor: default;
 				background-color: transparent;
 			}
+			.out-of.editing {
+				width: calc(100% - 10px);
+				height: 45px;
+				text-align: center;
+				margin-bottom: 5px;
+				margin-left: 5px;
+				display: block;
+			}
 			.check-icon {
 				color: var(--d2l-color-celestine-minus-1);
 				text-align: center;
 				margin: auto;
+			}
+			.score-wrapper {
+				pointer-events: none;
+			}
+			.score-wrapper.assessable {
+				pointer-events: auto;
+			}
+			.score-wrapper.assessable:hover {
+				color: var(--d2l-color-celestine);
+				cursor: pointer;
 			}
 			[hidden] {
 				display: none !important;
@@ -124,7 +142,7 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<div class="levels-container">
-			<div class="levels" role="tablist">
+			<div class="levels" role="tablist" hidden$=[[_isEditingScore(editingScore)]]>
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 
@@ -147,13 +165,18 @@
 					</div>
 				</template>
 			</div>
-			<div hidden$="[[!_hasOutOf(outOf)]]" class="level out-of">
-				<div hidden$="[[_hasScore(score)]]" class="level-name">
-					[[localize('outOf', 'outOf', outOf)]]
-				</div>
-				<div hidden$="[[!_hasScore(score)]]" class="level-name">
-					[[localize('scoreOutOf', 'score', score, 'outOf', outOf)]]
-				</div>
+			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]">
+				<d2l-rubric-editable-score
+					id="score-inner"
+					class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]"
+					criterion-href="[[criterionHref]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					read-only="[[readOnly]]"
+					editing-score="{{editingScore}}"
+					on-tap="_handleOverrideScore"
+				>
+				</d2l-rubric-editable-score>
 			</div>
 		</div>
 	</template>
@@ -212,6 +235,16 @@
 				criterionCells: {
 					type: Array,
 					value: null
+				},
+
+				criterionHref: {
+					type: String,
+					value: null
+				},
+
+				editingScore: {
+					type: Object,
+					value: false
 				}
 			},
 
@@ -327,6 +360,43 @@
 					return;
 				}
 				this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+			},
+
+			_canEditScore: function(criterionHref) {
+				return !this.readOnly && this.canOverrideScore(criterionHref);
+			},
+
+			_getOutOfClassName: function(editingScore) {
+				var className = 'level out-of';
+				if (editingScore && editingScore !== -1) {
+					className += ' editing';
+				}
+				return className;
+			},
+
+			_getScoreWrapperClassName: function(criterionHref, editingScore) {
+				var className = 'score-wrapper';
+				if (this._canEditScore(criterionHref)) {
+					className += ' assessable';
+				}
+				if (!editingScore || editingScore === -1) {
+					className += ' level-name';
+				}
+				return className;
+			},
+
+			_handleOverrideScore: function() {
+				if (this.readOnly) {
+					return;
+				}
+				this.editingScore = 1;
+				fastdom.mutate(function() {
+					Polymer.dom(this.root).querySelector('#score-inner').focus();
+				}.bind(this));
+			},
+
+			_isEditingScore: function(editingScore) {
+				return editingScore && editingScore !== -1;
 			}
 
 		});

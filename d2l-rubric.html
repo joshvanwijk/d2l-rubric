@@ -6,6 +6,7 @@
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="./localize-behavior.html">
+<link rel="import" href="./assessment-result-behavior.html">
 <link rel="import" href="./d2l-rubric-entity-behavior.html">
 <link rel="import" href="../d2l-alert/d2l-alert.html">
 <link rel="import" href="../s-html/s-html.html">
@@ -64,6 +65,16 @@ Polymer Web-Component to display rubrics
 					font-size: 0.67em;
 					margin: 2.33em 0;
 				};
+			}
+			.score-wrapper {
+				pointer-events: none;
+			}
+			.score-wrapper.assessable {
+				pointer-events: auto;
+			}
+			.score-wrapper.assessable:hover {
+				color: var(--d2l-color-celestine);
+				cursor: pointer;
 			}
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
@@ -166,8 +177,18 @@ Polymer Web-Component to display rubrics
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
 					<div class="left">[[localize('total')]]</div>
-					<div hidden="[[_hasScore(_score)]]" class="right">[[_localizeDashOutOf(entity)]]</div>
-					<div hidden="[[!_hasScore(_score)]]" class="right">[[_localizeOutOf(entity, _score)]]</div>
+					<d2l-rubric-editable-score
+						id="total-score-inner"
+						class$="[[_getOutOfClassName(_assessmentEntity)]]"
+						assessment-href="[[assessmentHref]]"
+						token="[[token]]"
+						read-only="[[readOnly]]"
+						editing-score="{{editingScore}}"
+						total-score="[[_score]]"
+						entity="[[entity]]"
+						on-tap="_handleOverrideScore"
+					>
+					</d2l-rubric-editable-score>
 				</div>
 			</div>
 		</div>
@@ -206,6 +227,10 @@ Polymer Web-Component to display rubrics
 					type: String,
 					value: null
 				},
+				editingScore: {
+					type: Number,
+					value: -1
+				},
 				_feedback: {
 					type: String,
 					value: null
@@ -236,7 +261,8 @@ Polymer Web-Component to display rubrics
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
 			],
 
 			observers: [
@@ -334,12 +360,31 @@ Polymer Web-Component to display rubrics
 			_hideOutOf: function(showContent, hasAlerts) {
 				return !showContent || hasAlerts;
 			},
-			_hasScore: function(score) {
-				return !!score;
-			},
 
 			_hasOverallFeedback: function(feedback) {
 				return feedback !== null && feedback !== '';
+			},
+
+			_canEditScore: function(assessmentEntity) {
+				return !this.readOnly && this.canOverrideTotal(assessmentEntity);
+			},
+
+			_getOutOfClassName: function(assessmentEntity) {
+				var className = 'score-wrapper right';
+				if (this._canEditScore(assessmentEntity)) {
+					className += ' assessable';
+				}
+				return className;
+			},
+
+			_handleOverrideScore: function() {
+				if (this.readOnly) {
+					return;
+				}
+				this.editingScore = 1;
+				fastdom.mutate(function() {
+					Polymer.dom(this.root).querySelector('#total-score-inner').focus();
+				}.bind(this));
 			}
 		});
 	</script>

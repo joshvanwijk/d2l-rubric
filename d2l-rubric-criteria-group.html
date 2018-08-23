@@ -22,6 +22,7 @@
 <link rel="import" href="../s-html/s-html.html">
 <link rel="import" href="../d2l-button/d2l-button-subtle.html">
 <link rel="import" href="../d2l-fastdom-import/fastdom.html">
+<link rel="import" href="./d2l-rubric-editable-score.html">
 
 <dom-module id="d2l-rubric-criteria-group">
 	<template strip-whitespace>
@@ -32,6 +33,14 @@
 			d2l-td.out-of {
 				text-align: right;
 				min-width: 0;
+				pointer-events: none;
+			}
+			d2l-td.out-of.assessable {
+				pointer-events: auto;
+			}
+			d2l-td.out-of.assessable:hover {
+				color: var(--d2l-color-celestine);
+				cursor: pointer;
 			}
 			d2l-th  {
 				text-align: center;
@@ -143,8 +152,18 @@
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class="out-of">
-								<div>[[_localizeOutOf(criterion, assessmentResult)]]</div>
+							<d2l-td class$="[[_getOutOfClassName(criterion)]]" on-tap="_handleOverrideScore">
+								<d2l-rubric-editable-score
+									id="score-inner[[criterionNum]]"
+									class="score-wrapper"
+									criterion-href="[[_getSelfLink(criterion)]]"
+									assessment-href="[[assessmentHref]]"
+									token="[[token]]"
+									read-only="[[readOnly]]"
+									editing-score="{{editingScore}}"
+									criterion-num="[[criterionNum]]"
+								>
+								</d2l-rubric-editable-score>
 							</d2l-td>
 						</template>
 					</d2l-tr>
@@ -205,6 +224,10 @@
 					value: null
 				},
 				_addingFeedback: {
+					type: Number,
+					value: -1
+				},
+				editingScore: {
 					type: Number,
 					value: -1
 				},
@@ -307,7 +330,7 @@
 				if (this.readOnly) {
 					return false;
 				}
-				if (!this.canAddFeedback(entity, assessmentResult)) {
+				if (!this.canAddFeedback(entity)) {
 					return false;
 				}
 				return !this._hasFeedback(entity, assessmentResult);
@@ -422,12 +445,21 @@
 				return className;
 			},
 
+			_getOutOfClassName: function(criterionEntity) {
+				var className = 'out-of';
+				if (this._canEditScore(criterionEntity)) {
+					className += ' assessable';
+				}
+				return className;
+			},
+
 			handleTap: function(event) {
 				if (this.readOnly) {
 					return;
 				}
 				this.assessCriterionCell(event.currentTarget.dataset.href);
 				this._addingFeedback = -1;
+				this.editingScore = -1;
 			},
 
 			_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
@@ -442,6 +474,21 @@
 				this._addingFeedback = criterionNum;
 				fastdom.mutate(function() {
 					Polymer.dom(this.root).querySelector('#feedback-inner' + criterionNum).focus();
+				}.bind(this));
+			},
+
+			_canEditScore: function(criterionEntity) {
+				return !this.readOnly && this.canOverrideScore(this._getSelfLink(criterionEntity));
+			},
+
+			_handleOverrideScore: function(event) {
+				if (this.readOnly) {
+					return;
+				}
+				var criterionNum = event.model.get('criterionNum');
+				this.editingScore = criterionNum;
+				fastdom.mutate(function() {
+					Polymer.dom(this.root).querySelector('#score-inner' + criterionNum).focus();
 				}.bind(this));
 			}
 		});
