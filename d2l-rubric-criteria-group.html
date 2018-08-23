@@ -139,7 +139,7 @@
 									[[criterion.properties.name]]
 								</div>
 								<d2l-button-subtle
-									hidden="[[!_addFeedback(criterion, assessmentResult)]]"
+									hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]"
 									text="[[localize('addFeedback')]]"
 									on-tap="_handleAddFeedback"
 									data-criterion$="[[criterionNum]]"
@@ -323,7 +323,7 @@
 				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
 			},
 
-			_addFeedback: function(entity, assessmentResult) {
+			_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback) {
 				if (!entity || !assessmentResult) {
 					return false;
 				}
@@ -331,6 +331,9 @@
 					return false;
 				}
 				if (!this.canAddFeedback(entity)) {
+					return false;
+				}
+				if (criterionNum === addingFeedback) {
 					return false;
 				}
 				return !this._hasFeedback(entity, assessmentResult);

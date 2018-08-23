@@ -38,7 +38,7 @@
 				read-only="[[readOnly]]">
 			</d2l-rubric-criterion-mobile>
 			<d2l-button-subtle
-				hidden="[[!_addFeedback(criterion, assessmentResult)]]"
+				hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]"
 				text="[[localize('addFeedback')]]"
 				on-tap="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]"
@@ -128,7 +128,7 @@
 				}
 			},
 
-			_addFeedback: function(entity, assessmentResult) {
+			_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback) {
 				if (!entity || !assessmentResult) {
 					return false;
 				}
@@ -136,6 +136,9 @@
 					return false;
 				}
 				if (!this.canAddFeedback(entity)) {
+					return false;
+				}
+				if (criterionNum === addingFeedback) {
 					return false;
 				}
 				return !this._hasFeedback(entity, assessmentResult);
