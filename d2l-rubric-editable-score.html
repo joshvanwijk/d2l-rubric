@@ -28,7 +28,7 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></siren-entity>
-		<div hidden="[[!editingScore]]">
+		<div hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
 			<d2l-text-input
 				id="text-area"
 				value="[[getScore(entity, assessmentResult, totalScore)]]"
@@ -37,7 +37,7 @@
 			</d2l-text-input>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
-		<div hidden="[[editingScore]]" class$="[[_getOutOfClassName(entity, assessmentResult)]]">
+		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(entity, scoreOverridden)]]">
 			[[_localizeOutOf(entity, assessmentResult, totalScore)]]
 		</div>
 	</template>
@@ -63,9 +63,12 @@
 						return this._blurHandler.bind(this);
 					}
 				},
+
+				/* For desktop criteria, this will be the criterion number.
+				   For mobile and total score, this will be 1 for true, -1 for false */
 				editingScore: {
-					type: Boolean,
-					value: false,
+					type: Number,
+					value: -1,
 					notify: true
 				},
 				scoreOverridden: {
@@ -75,6 +78,10 @@
 				totalScore: {
 					type: String,
 					value: null
+				},
+				criterionNum: {
+					type: Number,
+					value: 1
 				}
 			},
 
@@ -120,11 +127,12 @@
 			},
 
 			saveScore: function(score) {
-				this.editingScore = false;
+				this.editingScore = -1;
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
 				} else {
 					this.saveTotalPoints(score);
+					this.scoreOverridden = true;
 				}
 			},
 
@@ -155,12 +163,16 @@
 				return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 			},
 
-			_getOutOfClassName: function(entity, assessmentResult) {
+			_getOutOfClassName: function(entity, scoreOverridden) {
 				var className = 'score-out-of';
-				if (assessmentResult && this.scoreOverridden) {
+				if (scoreOverridden) {
 					className += ' assessed';
 				}
 				return className;
+			},
+
+			_isEditingScore: function(criterionNum, editingScore) {
+				return criterionNum === editingScore;
 			}
 		});
 	</script>

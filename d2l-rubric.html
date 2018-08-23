@@ -183,7 +183,7 @@ Polymer Web-Component to display rubrics
 						assessment-href="[[assessmentHref]]"
 						token="[[token]]"
 						read-only="[[readOnly]]"
-						editing-score="[[editingScore]]"
+						editing-score="{{editingScore}}"
 						total-score="[[_score]]"
 						entity="[[entity]]"
 						on-tap="_handleOverrideScore"
@@ -228,8 +228,8 @@ Polymer Web-Component to display rubrics
 					value: null
 				},
 				editingScore: {
-					type: Boolean,
-					value: false
+					type: Number,
+					value: -1
 				},
 				_feedback: {
 					type: String,
@@ -381,7 +381,7 @@ Polymer Web-Component to display rubrics
 				if (this.readOnly) {
 					return;
 				}
-				this.editingScore = true;
+				this.editingScore = 1;
 				fastdom.mutate(function() {
 					Polymer.dom(this.root).querySelector('#total-score-inner').focus();
 				}.bind(this));

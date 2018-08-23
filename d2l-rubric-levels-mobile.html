@@ -142,7 +142,7 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<div class="levels-container">
-			<div class="levels" role="tablist" hidden$=[[editingScore]]>
+			<div class="levels" role="tablist" hidden$=[[_isEditingScore(editingScore)]]>
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 
@@ -243,7 +243,7 @@
 				},
 
 				editingScore: {
-					type: Boolean,
+					type: Object,
 					value: false
 				}
 			},
@@ -368,7 +368,7 @@
 
 			_getOutOfClassName: function(editingScore) {
 				var className = 'level out-of';
-				if (editingScore) {
+				if (editingScore && editingScore !== -1) {
 					className += ' editing';
 				}
 				return className;
@@ -379,7 +379,7 @@
 				if (this._canEditScore(criterionHref)) {
 					className += ' assessable';
 				}
-				if (!editingScore) {
+				if (!editingScore || editingScore === -1) {
 					className += ' level-name';
 				}
 				return className;
@@ -389,10 +389,14 @@
 				if (this.readOnly) {
 					return;
 				}
-				this.editingScore = true;
+				this.editingScore = 1;
 				fastdom.mutate(function() {
 					Polymer.dom(this.root).querySelector('#score-inner').focus();
 				}.bind(this));
+			},
+
+			_isEditingScore: function(editingScore) {
+				return editingScore && editingScore !== -1
 			}
 
 		});

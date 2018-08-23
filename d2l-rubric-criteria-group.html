@@ -160,7 +160,8 @@
 									assessment-href="[[assessmentHref]]"
 									token="[[token]]"
 									read-only="[[readOnly]]"
-									editing-score="[[_isEditingScore(criterionNum, _editingScore)]]"
+									editing-score="{{editingScore}}"
+									criterion-num="[[criterionNum]]"
 								>
 								</d2l-rubric-editable-score>
 							</d2l-td>
@@ -226,7 +227,7 @@
 					type: Number,
 					value: -1
 				},
-				_editingScore: {
+				editingScore: {
 					type: Number,
 					value: -1
 				},
@@ -458,7 +459,7 @@
 				}
 				this.assessCriterionCell(event.currentTarget.dataset.href);
 				this._addingFeedback = -1;
-				this._editingScore = -1;
+				this.editingScore = -1;
 			},
 
 			_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
@@ -480,16 +481,12 @@
 				return !this.readOnly && this.canOverrideScore(this._getSelfLink(criterionEntity));
 			},
 
-			_isEditingScore: function(criterionNum, editingScore) {
-				return criterionNum === editingScore;
-			},
-
 			_handleOverrideScore: function(event) {
 				if (this.readOnly) {
 					return;
 				}
 				var criterionNum = event.model.get('criterionNum');
-				this._editingScore = criterionNum;
+				this.editingScore = criterionNum;
 				fastdom.mutate(function() {
 					Polymer.dom(this.root).querySelector('#score-inner' + criterionNum).focus();
 				}.bind(this));
