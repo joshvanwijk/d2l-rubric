@@ -37,7 +37,7 @@
 			</d2l-text-input>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
-		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(entity, scoreOverridden)]]">
+		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(scoreOverridden)]]">
 			[[_localizeOutOf(entity, assessmentResult, totalScore)]]
 		</div>
 	</template>
@@ -82,6 +82,10 @@
 				criterionNum: {
 					type: Number,
 					value: 1
+				},
+				readOnly: {
+					type: Boolean,
+					value: true
 				}
 			},
 
@@ -91,15 +95,20 @@
 			],
 
 			observers: [
-				'_onAssessmentResultChanged(criterionHref, assessmentResult)'
+				'_onAssessmentResultChanged(entity, assessmentResult)'
 			],
 
-			_onAssessmentResultChanged: function(criterionHref, assessmentResult) {
-				if (!criterionHref || !assessmentResult) {
+			_onAssessmentResultChanged: function(entity, assessmentResult) {
+				if (!entity || !assessmentResult) {
 					return;
 				}
 
-				this.scoreOverridden = this.isScoreOverridden(criterionHref);
+				if (this.totalScore) {
+					this.scoreOverridden = this.isTotalScoreOverridden();
+					return;
+				}
+
+				this.scoreOverridden = this.isScoreOverridden(this.criterionHref);
 			},
 
 			attached: function() {
@@ -132,7 +141,6 @@
 					this.saveCriterionPoints(this.criterionHref, score);
 				} else {
 					this.saveTotalPoints(score);
-					this.scoreOverridden = true;
 				}
 			},
 
@@ -163,9 +171,9 @@
 				return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 			},
 
-			_getOutOfClassName: function(entity, scoreOverridden) {
+			_getOutOfClassName: function(scoreOverridden) {
 				var className = 'score-out-of';
-				if (scoreOverridden) {
+				if (scoreOverridden && !this.readOnly) {
 					className += ' assessed';
 				}
 				return className;

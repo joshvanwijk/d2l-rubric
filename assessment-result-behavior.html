@@ -205,6 +205,17 @@
 			return !!overridden;
 		},
 
+		isTotalScoreOverridden: function() {
+			var entity = this.assessmentEntity;
+			var action = entity.getActionByName('save');
+			if (!action) {
+				return false;
+			}
+			var fields = action.fields;
+			var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+			return assessmentField.value.OverallScoreOverridden;
+		},
+
 		saveCriterionPoints: function(criterionHref, points) {
 			var saveCriterionPointsPromise = this.saveCriterionPointsPromise.bind(this, criterionHref, points);
 			this.addToQueue(saveCriterionPointsPromise);
