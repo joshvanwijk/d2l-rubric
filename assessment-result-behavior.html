@@ -169,7 +169,12 @@
 		},
 
 		addToQueue: function(promiseFactory) {
-			window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(promiseFactory);
+			window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(promiseFactory).catch(
+				function() {
+					// don't break the promise chain
+					return;
+				}
+			);
 		},
 
 		saveAssessmentFeedback: function(criterionHref, feedback) {
