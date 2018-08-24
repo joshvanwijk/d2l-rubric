@@ -149,7 +149,8 @@
 						<d2l-rubric-description-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
-							aria-label-text="[[_getAriaLabel('criterionDescriptionAriaLabel', entity.properties.name, criterionCell.properties.levelName)]]"
+							aria-label-langterm="criterionDescriptionAriaLabel"
+							criterion-name="[[entity.properties.name]]"
 							level-index="[[cellIndex]]"
 							level-count="[[descriptionCount]]"
 						></d2l-rubric-description-editor>
@@ -163,7 +164,8 @@
 						<d2l-rubric-feedback-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
-							aria-label-text="[[_getAriaLabel('criterionFeedbackAriaLabel', entity.properties.name, criterionCell.properties.levelName)]]"
+							aria-label-langterm="criterionFeedbackAriaLabel"
+							criterion-name="[[entity.properties.name]]"
 							level-index="[[cellIndex]]"
 							level-count="[[feedbackCount]]"
 						>
@@ -226,10 +228,6 @@
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
-
-			_getAriaLabel: function(langTerm, criterionName, levelName) {
-				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
-			},
 
 			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {

@@ -37,7 +37,7 @@
 		<d2l-textarea
 			id="feedback"
 			aria-invalid="[[_isAriaInvalid(_feedbackInvalid)]]"
-			aria-label="[[ariaLabelText]]"
+			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEdit]]"
 			no-border
 			hover-styles
@@ -57,7 +57,11 @@
 				/**
 				 * textarea aria-label langterm
 				 */
-				ariaLabelText: {
+				ariaLabelLangterm: {
+					type: String,
+					value: ''
+				},
+				criterionName: {
 					type: String,
 					value: ''
 				},
@@ -92,6 +96,11 @@
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
+
+			_getAriaLabel: function(langTerm, criterionName, properties) {
+				var levelName = properties.levelName || properties.name;
+				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
+			},
 
 			_getFeedback: function(entity) {
 				var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
