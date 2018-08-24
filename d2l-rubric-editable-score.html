@@ -21,6 +21,13 @@
 			.score-out-of.assessed {
 				color: var(--d2l-color-celestine);
 			}
+			.star {
+				display: none;
+				padding: 0 5px;
+			}
+			.score-out-of.assessed .star {
+				display: inline;
+			}
 			.right {
 				display: inline;
 				padding: 0 5px;
@@ -39,6 +46,7 @@
 		</div>
 		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(scoreOverridden)]]">
 			[[_localizeOutOf(entity, assessmentResult, totalScore)]]
+			<div class="star" title="[[_localizeStarLabel(totalScore)]]">*</div>
 		</div>
 	</template>
 
@@ -181,6 +189,14 @@
 
 			_isEditingScore: function(criterionNum, editingScore) {
 				return criterionNum === editingScore;
+			},
+
+			_localizeStarLabel: function(totalScore) {
+				if (totalScore) {
+					return this.localize('overriddenTotalScoreTip');
+				} else {
+					return this.localize('overriddenScoreTip');
+				}
 			}
 		});
 	</script>
