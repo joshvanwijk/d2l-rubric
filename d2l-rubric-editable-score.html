@@ -14,7 +14,6 @@
 			:host {
 				display: block;
 			}
-			/* TODO: Find a way to remove step arrows */
 			d2l-text-input {
 				max-width: 100px;
 			}
@@ -40,6 +39,9 @@
 				id="text-area"
 				value="[[getScore(entity, assessmentResult, totalScore)]]"
 				type="number"
+				step="any"
+				min="0"
+				max="100000"
 			>
 			</d2l-text-input>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
@@ -139,6 +141,10 @@
 			},
 
 			_blurHandler: function(event) {
+				var innerInput = event.target.$$('input');
+				if (!innerInput || !innerInput.checkValidity()) {
+					return;
+				}
 				var score = event.target.value;
 				this.saveScore(score);
 			},
