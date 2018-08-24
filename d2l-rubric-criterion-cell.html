@@ -72,7 +72,8 @@
 			],
 
 			_hasCustomPoints: function(criterionCell) {
-				return criterionCell && criterionCell.properties && criterionCell.properties.points !== null;
+				return criterionCell && criterionCell.properties &&
+					(!!criterionCell.properties.points || criterionCell.properties.points === 0);
 			},
 
 			_localizeCustomPoints: function(criterionCell) {
