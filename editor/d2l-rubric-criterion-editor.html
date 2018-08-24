@@ -144,30 +144,26 @@
 		</div>
 		<div class="criterion-detail">
 			<div class="criterion-text">
-				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" index-as="cellIndex" rendered-item-count="{{descriptionCount}}" >
+				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" >
 					<div class="cell">
 						<d2l-rubric-description-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
 							aria-label-langterm="criterionDescriptionAriaLabel"
 							criterion-name="[[entity.properties.name]]"
-							level-index="[[cellIndex]]"
-							level-count="[[descriptionCount]]"
 						></d2l-rubric-description-editor>
 					</div>
 				</template>
 			</div>
 			<div class="cell criterion-feedback-header">[[localize('predefinedFeedback')]]</div>
 			<div class="criterion-feedback">
-				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" index-as="cellIndex" rendered-item-count="{{feedbackCount}}" >
+				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
 					<div class="cell">
 						<d2l-rubric-feedback-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
 							aria-label-langterm="criterionFeedbackAriaLabel"
 							criterion-name="[[entity.properties.name]]"
-							level-index="[[cellIndex]]"
-							level-count="[[feedbackCount]]"
 						>
 						</d2l-rubric-feedback-editor>
 					</div>
