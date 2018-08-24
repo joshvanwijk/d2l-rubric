@@ -45,6 +45,9 @@
 			d2l-th  {
 				text-align: center;
 			}
+			d2l-rubric-editable-score {
+				min-width: 70px;
+			}
 			.level-name {
 				font-weight: 700;
 			}
@@ -139,6 +142,7 @@
 									[[criterion.properties.name]]
 								</div>
 								<d2l-button-subtle
+									h-align="text"
 									hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]"
 									text="[[localize('addFeedback')]]"
 									on-tap="_handleAddFeedback"
