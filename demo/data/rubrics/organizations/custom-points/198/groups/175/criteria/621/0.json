@@ -4,7 +4,8 @@
         "overridden"
     ],
     "properties": {
-        "points": 4.0
+        "points": 4.0,
+        "levelName": "Level 4"
     },
     "entities": [
         {

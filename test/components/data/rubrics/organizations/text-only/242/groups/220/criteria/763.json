@@ -15,6 +15,9 @@
                 "item",
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
+            "properties": {
+                "levelName": "Level 4"
+            },
             "entities": [
                 {
                     "class": [
@@ -30,7 +33,7 @@
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
@@ -62,7 +65,7 @@
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
@@ -110,6 +113,9 @@
                 "item",
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
+            "properties": {
+                "levelName": "Level 3"
+            },
             "entities": [
                 {
                     "class": [
@@ -120,24 +126,24 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                        "text": "Good use of grammar",
+                        "html": "<p>Good use of grammar</p>"
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
                                 {
                                     "type": "text",
                                     "name": "description",
-                                    "value": ""
+                                    "value": "<p>Good use of grammar</p>"
                                 },
                                 {
                                     "type": "hidden",
                                     "name": "feedback",
-                                    "value": ""
+                                    "value": "<p>Consult Strunk &amp; White</p>"
                                 }
                             ]
                         }
@@ -152,24 +158,24 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                        "text": "Consult Strunk & White",
+                        "html": "<p>Consult Strunk &amp; White</p>"
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
                                 {
                                     "type": "hidden",
                                     "name": "description",
-                                    "value": ""
+                                    "value": "<p>Good use of grammar</p>"
                                 },
                                 {
                                     "type": "text",
                                     "name": "feedback",
-                                    "value": ""
+                                    "value": "<p>Consult Strunk &amp; White</p>"
                                 }
                             ]
                         }
@@ -205,6 +211,9 @@
                 "item",
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
+            "properties": {
+                "levelName": "Level 2"
+            },
             "entities": [
                 {
                     "class": [
@@ -215,24 +224,24 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                        "text": "Satisfactory use of grammar",
+                        "html": "<p>Satisfactory use of grammar</p>"
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
                                 {
                                     "type": "text",
                                     "name": "description",
-                                    "value": ""
+                                    "value": "<p>Satisfactory use of grammar</p>"
                                 },
                                 {
                                     "type": "hidden",
                                     "name": "feedback",
-                                    "value": ""
+                                    "value": "<p>Consult Strunk &amp; White</p>"
                                 }
                             ]
                         }
@@ -247,24 +256,24 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                        "text": "Consult Strunk & White",
+                        "html": "<p>Consult Strunk &amp; White</p>"
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
                                 {
                                     "type": "hidden",
                                     "name": "description",
-                                    "value": ""
+                                    "value": "<p>Satisfactory use of grammar</p>"
                                 },
                                 {
                                     "type": "text",
                                     "name": "feedback",
-                                    "value": ""
+                                    "value": "<p>Consult Strunk &amp; White</p>"
                                 }
                             ]
                         }
@@ -300,6 +309,9 @@
                 "item",
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
+            "properties": {
+                "levelName": "Level 1"
+            },
             "entities": [
                 {
                     "class": [
@@ -310,24 +322,24 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                        "text": "Poor use of grammar",
+                        "html": "<p>Poor use of grammar</p>"
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
                                 {
                                     "type": "text",
                                     "name": "description",
-                                    "value": ""
+                                    "value": "<p>Poor use of grammar</p>"
                                 },
                                 {
                                     "type": "hidden",
                                     "name": "feedback",
-                                    "value": ""
+                                    "value": "<p>Please see me after class</p>"
                                 }
                             ]
                         }
@@ -342,24 +354,24 @@
                         "item"
                     ],
                     "properties": {
-                        "text": "",
-                        "html": ""
+                        "text": "Please see me after class",
+                        "html": "<p>Please see me after class</p>"
                     },
                     "actions": [
                         {
-                            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
+                            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
                             "name": "update",
                             "method": "PUT",
                             "fields": [
                                 {
                                     "type": "hidden",
                                     "name": "description",
-                                    "value": ""
+                                    "value": "<p>Poor use of grammar</p>"
                                 },
                                 {
                                     "type": "text",
                                     "name": "feedback",
-                                    "value": ""
+                                    "value": "<p>Please see me after class</p>"
                                 }
                             ]
                         }
@@ -404,7 +416,7 @@
     ],
     "actions": [
         {
-            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
+            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
             "name": "update",
             "method": "PUT",
             "fields": [
@@ -419,7 +431,7 @@
             ]
         },
         {
-            "href": "https://26c672ec-7f2b-4803-a678-de88c67c18b0.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
+            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
             "name": "delete",
             "method": "DELETE"
         }

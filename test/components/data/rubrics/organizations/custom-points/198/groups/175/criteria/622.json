@@ -18,7 +18,8 @@
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
             "properties": {
-                "points": 4.0
+                "points": 4.0,
+                "levelName": "Level 4"
             },
             "entities": [
                 {
@@ -79,7 +80,8 @@
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
             "properties": {
-                "points": 3.0
+                "points": 3.0,
+                "levelName": "Level 3"
             },
             "entities": [
                 {
@@ -140,7 +142,8 @@
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
             "properties": {
-                "points": 2.0
+                "points": 2.0,
+                "levelName": "Level 2"
             },
             "entities": [
                 {
@@ -201,7 +204,8 @@
                 "https://rubrics.api.brightspace.com/rels/criterion-cell"
             ],
             "properties": {
-                "points": 1.0
+                "points": 1.0,
+                "levelName": "Level 1"
             },
             "entities": [
                 {
