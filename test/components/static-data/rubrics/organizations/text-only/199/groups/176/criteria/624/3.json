@@ -2,6 +2,9 @@
     "class": [
         "criterion-cell"
     ],
+    "properties": {
+      "levelName": "Level 1"
+    },
     "entities": [
         {
             "class": [
