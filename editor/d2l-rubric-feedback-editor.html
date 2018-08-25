@@ -86,7 +86,7 @@
 			],
 
 			_getAriaLabel: function(langTerm, criterionName, properties) {
-				var levelName = properties.levelName || properties.name;
+				var levelName = properties && properties.levelName || properties && properties.name;
 				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
 			},
 
