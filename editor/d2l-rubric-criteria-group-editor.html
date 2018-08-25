@@ -68,7 +68,11 @@
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip for="group-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
-			<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-criteria-editor>
+			<d2l-rubric-criteria-editor
+				href="[[_criteriaCollectionHref]]"
+				token="[[token]]"
+				has-out-of="[[_hasOutOf(entity)]]">
+			</d2l-rubric-criteria-editor>
 		</div>
 	</template>
 
@@ -151,8 +155,7 @@
 						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
 					} else {
 						this._toggleBubble('_nameInvalid', false);
-						var fields = new FormData();
-						fields.append('name', e.target.value);
+						var fields = [{'name': 'name', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-group-name-saved');
 						}.bind(this));

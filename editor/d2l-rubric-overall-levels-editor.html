@@ -191,7 +191,7 @@
 						<d2l-rubric-description-editor
 							href="[[_getSelfLink(overallLevel)]]"
 							token="[[token]]"
-							aria-label-langterm="overallDescriptionAriaLabel"
+							aria-label-text="[[localize('overallDescriptionAriaLabel', 'levelName', overallLevel.properties.name)]]"
 							level-index="[[cellIndex]]"
 							level-count="[[descriptionCount]]"
 						></d2l-rubric-description-editor>
@@ -215,7 +215,7 @@
 						<d2l-rubric-feedback-editor
 							href="[[_getSelfLink(overallLevel)]]"
 							token="[[token]]"
-							aria-label-langterm="overallFeedbackAriaLabel"
+							aria-label-text="[[localize('overallFeedbackAriaLabel', 'levelName', overallLevel.properties.name)]]"
 							level-index="[[cellIndex]]"
 							level-count="[[feedbackCount]]"
 						></d2l-rubric-feedback-editor>

@@ -149,7 +149,7 @@
 						<d2l-rubric-description-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
-							aria-label-langterm="criterionDescriptionAriaLabel"
+							aria-label-text="[[_getAriaLabel('criterionDescriptionAriaLabel', entity.properties.name, criterionCell.properties.levelName)]]"
 							level-index="[[cellIndex]]"
 							level-count="[[descriptionCount]]"
 						></d2l-rubric-description-editor>
@@ -163,7 +163,7 @@
 						<d2l-rubric-feedback-editor
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
-							aria-label-langterm="criterionFeedbackAriaLabel"
+							aria-label-text="[[_getAriaLabel('criterionFeedbackAriaLabel', entity.properties.name, criterionCell.properties.levelName)]]"
 							level-index="[[cellIndex]]"
 							level-count="[[feedbackCount]]"
 						>
@@ -227,6 +227,10 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
+			_getAriaLabel: function(langTerm, criterionName, levelName) {
+				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
+			},
+
 			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {
 					return;
@@ -256,8 +260,7 @@
 					} else {
 						this._toggleBubble('_nameInvalid', false);
 					}
-					var fields = new FormData();
-					fields.append('name', e.target.value);
+					var fields = [{'name':'name', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function() {

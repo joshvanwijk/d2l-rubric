@@ -238,9 +238,10 @@
 					// does not respect the order, and reverts the DOM back to before it was drag-dropped.
 					// This manually updates '_criteriaEntities' by splicing the criterion from oldIndex and appending it at newIndex.
 					this.splice('_criteriaEntities', e.detail.newIndex, 0, this.splice('_criteriaEntities', e.detail.oldIndex, 1)[0]);
-					var fields = new FormData();
-					fields.append('oldIndex', e.detail.oldIndex);
-					fields.append('newIndex', e.detail.newIndex);
+					var fields = [
+						{'name': 'oldIndex', 'value': e.detail.oldIndex},
+						{'name': 'newIndex', 'value': e.detail.newIndex}
+					];
 					this.performSirenAction(action, fields).then(function() {
 					}.bind(this));
 				}

@@ -38,7 +38,7 @@
 		<d2l-textarea
 			id="description"
 			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
-			aria-label="[[localize(ariaLabelLangterm, 'level', _levelOffset, 'levelCount', levelCount)]]"
+			aria-label="[[ariaLabelText]]"
 			disabled="[[!_canEdit]]"
 			no-border
 			hover-styles
@@ -58,7 +58,7 @@
 				/**
 				 * textarea aria-label langterm
 				 */
-				ariaLabelLangterm: {
+				ariaLabelText: {
 					type: String,
 					value: ''
 				},
@@ -107,8 +107,7 @@
 				var action = description.getActionByName('update');
 				if (action) {
 					this._toggleBubble('_descriptionInvalid', false);
-					var fields = new FormData();
-					fields.append('description', e.target.value);
+					var fields = [{'name':'description', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function() {
