@@ -204,7 +204,7 @@
 		isScoreOverridden: function(criterionHref) {
 			var assessmentCriterion = this._assessmentCriterionMap[criterionHref];
 			if (!assessmentCriterion) {
-				return;
+				return false;
 			}
 			var overridden = assessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
 			return !!overridden;
