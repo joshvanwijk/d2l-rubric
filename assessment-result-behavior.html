@@ -202,11 +202,11 @@
 		},
 
 		isScoreOverridden: function(criterionHref) {
-			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
-			if (!asssessmentCriterion) {
-				return;
+			var assessmentCriterion = this._assessmentCriterionMap[criterionHref];
+			if (!assessmentCriterion) {
+				return false;
 			}
-			var overridden = asssessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
+			var overridden = assessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
 			return !!overridden;
 		},
 
