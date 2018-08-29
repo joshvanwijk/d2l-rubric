@@ -124,6 +124,10 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				element.token = 'foozleberries';
 			});
 
+			teardown(function() {
+				window.D2L.Siren.EntityStore.clear();
+			});
+
 			test('name is disabled', function() {
 				var nameTextArea = element.$$('d2l-textarea');
 				expect(nameTextArea.disabled).to.be.true;
