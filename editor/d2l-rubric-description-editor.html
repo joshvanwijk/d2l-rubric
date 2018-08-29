@@ -93,7 +93,7 @@
 
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.properties && description.properties.html || '';
+				return description && description.properties && description.properties.text || '';
 			},
 
 			_saveDescription: function(e) {
