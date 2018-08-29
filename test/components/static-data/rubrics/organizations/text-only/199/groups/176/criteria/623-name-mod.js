@@ -29,6 +29,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 4"
+					},
 					"href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json"
 				},
 				{
@@ -39,6 +42,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 3"
+					},
 					"href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json"
 				},
 				{
@@ -49,6 +55,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 2"
+					},
 					"href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/2.json"
 				},
 				{
@@ -59,6 +68,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 1"
+					},
 					"href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/3.json"
 				}
 			],

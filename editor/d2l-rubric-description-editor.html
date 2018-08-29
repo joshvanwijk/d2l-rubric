@@ -38,7 +38,7 @@
 		<d2l-textarea
 			id="description"
 			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
-			aria-label="[[ariaLabelText]]"
+			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEdit]]"
 			no-border
 			hover-styles
@@ -58,23 +58,15 @@
 				/**
 				 * textarea aria-label langterm
 				 */
-				ariaLabelText: {
+				ariaLabelLangterm: {
 					type: String,
 					value: ''
 				},
-				/**
-				 * Index of this level in the collection - useful for aria labels
-				 */
-				levelIndex: String,
-				/**
-				 * Count of levels in the collection - useful for aria labels
-				 */
-				levelCount: Number,
-
-				_levelOffset: {
-					type: Number,
-					computed: '_calcOffset(levelIndex)',
+				criterionName: {
+					type: String,
+					value: ''
 				},
+
 				_canEdit: {
 					type: Boolean,
 					computed: '_canEditDescription(entity)',
@@ -94,14 +86,16 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
+			_getAriaLabel: function(langTerm, criterionName, properties) {
+				var levelName = properties && properties.levelName || properties && properties.name;
+				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
+			},
+
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				return description && description.properties && description.properties.html || '';
 			},
 
-			_calcOffset: function(index) {
-				return parseInt(index) + 1;
-			},
 			_saveDescription: function(e) {
 				var description = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				var action = description.getActionByName('update');

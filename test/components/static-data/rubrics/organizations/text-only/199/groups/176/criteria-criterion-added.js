@@ -32,6 +32,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 4"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -81,6 +84,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 3"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -130,6 +136,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 2"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -179,6 +188,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 1"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -250,6 +262,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 4"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -299,6 +314,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 3"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -348,6 +366,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 2"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -397,6 +418,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 1"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -468,6 +492,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 4"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -517,6 +544,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 3"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -566,6 +596,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 2"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -615,6 +648,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 1"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -686,6 +722,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 4"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -735,6 +774,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 3"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -784,6 +826,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 2"
+					},
 					"entities": [{
 						"class": [
 							"richtext",
@@ -833,6 +878,9 @@ Object.assign(window.testFixtures, {
 						"item",
 						"https://rubrics.api.brightspace.com/rels/criterion-cell"
 					],
+					"properties": {
+						"levelName": "Level 1"
+					},
 					"entities": [{
 						"class": [
 							"richtext",

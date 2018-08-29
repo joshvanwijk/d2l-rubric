@@ -8,6 +8,9 @@ Object.assign(window.testFixtures,
 				"class": [
 					"criterion-cell"
 				],
+				"properties": {
+					"levelName": "Level 4"
+				},
 				"entities": [
 					{
 						"class": [
