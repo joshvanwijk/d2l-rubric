@@ -17,14 +17,14 @@
 			d2l-text-input {
 				max-width: 100px;
 			}
-			.score-out-of.assessed {
+			.score-out-of.overridden {
 				color: var(--d2l-color-celestine);
 			}
 			.star {
 				display: none;
 				padding: 0 5px;
 			}
-			.score-out-of.assessed .star {
+			.score-out-of.overridden .star {
 				display: inline;
 			}
 			.right {
@@ -188,7 +188,7 @@
 			_getOutOfClassName: function(scoreOverridden) {
 				var className = 'score-out-of';
 				if (scoreOverridden && !this.readOnly) {
-					className += ' assessed';
+					className += ' overridden';
 				}
 				return className;
 			},
