@@ -19,7 +19,18 @@
 			}
 
 			.operations {
-				text-align: right;
+				display: flex;
+				justify-content: space-between;
+				padding-top: 0.5rem;
+			}
+
+			.points {
+				display: flex;
+				align-items: center;
+			}
+
+			.points div {
+				margin-left: 0.5rem;
 			}
 
 			:host-context([dir='rtl']) .operations {
@@ -27,7 +38,7 @@
 			}
 
 			d2l-button-icon {
-				padding-top: 0.5rem;
+
 			}
 
 			[hidden] {
@@ -47,6 +58,20 @@
 			prevent-submit>
 		</d2l-text-input>
 		<div class="operations">
+			<div class="points">
+				<d2l-text-input
+					id="level-points"
+					value="[[entity.properties.points]]"
+					on-change="_savePoints"
+					aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
+					aria-label="[[localize('levelPoints')]]"
+					disabled="[[!_canEdit]]"
+					size="1"
+					required="[[_pointsRequired]]"
+					prevent-submit>
+				</d2l-text-input>
+				<div>[[localize('pointsAbbreviation')]]</div>
+			</div>
 			<d2l-button-icon
 				id="remove"
 				icon="d2l-tier1:delete"
