@@ -83,6 +83,9 @@
 		<template is="dom-if" if="[[_nameInvalid]]">
 			<d2l-tooltip for="level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 		</template>
+		<template is="dom-if" if="[[_pointsInvalid]]">
+			<d2l-tooltip for="level-points" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
+		</template>
 	</template>
 
 	<script>
@@ -108,6 +111,16 @@
 				_nameInvalidError: {
 					type: String
 				},
+				_pointsRequired: {
+					type: Boolean,
+					computed: '_isPointsRequired(entity)',
+				},
+				_pointsInvalid: {
+					type: Boolean
+				},
+				_pointsInvalidError: {
+					type: String
+				},
 			},
 
 			behaviors: [
@@ -125,6 +138,18 @@
 					return false;
 				}
 				var field = action.getFieldByName('name');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
+			_isPointsRequired: function(entity) {
+				//TODO: this may need to be changed depending on how the level update api is done for saving points.
+				var action = entity && entity.getActionByName('update');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('points');
 				if (!field) {
 					return false;
 				}
