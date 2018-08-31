@@ -24,6 +24,10 @@
 				padding-top: 0.5rem;
 			}
 
+			.operations[noOutOf] {
+				justify-content: flex-end;
+			}
+
 			.points {
 				display: flex;
 				align-items: center;
@@ -53,8 +57,8 @@
 			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-text-input>
-		<div class="operations">
-			<div class="points">
+		<div class="operations" noOutOf$=[[!hasOutOf]]>
+			<div class="points" hidden="[[!hasOutOf]]">
 				<d2l-text-input
 					id="level-points"
 					value="[[entity.properties.points]]"
@@ -89,6 +93,7 @@
 			is: 'd2l-rubric-level-editor',
 
 			properties: {
+				hasOutOf: Boolean,
 				_canEdit: {
 					type: Boolean,
 					computed: '_canEditLevel(entity)',
