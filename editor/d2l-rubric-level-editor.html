@@ -19,15 +19,22 @@
 			}
 
 			.operations {
-				text-align: right;
-			}
-
-			:host-context([dir='rtl']) .operations {
-				text-align: left;
-			}
-
-			d2l-button-icon {
+				display: flex;
+				justify-content: space-between;
 				padding-top: 0.5rem;
+			}
+
+			.points {
+				display: flex;
+				align-items: center;
+			}
+
+			.points div {
+				margin-left: 0.5rem;
+			}
+
+			:host-context([dir='rtl']) .points div {
+				margin-right: 0.5rem;
 			}
 
 			[hidden] {
@@ -47,6 +54,20 @@
 			prevent-submit>
 		</d2l-text-input>
 		<div class="operations">
+			<div class="points">
+				<d2l-text-input
+					id="level-points"
+					value="[[entity.properties.points]]"
+					on-change="_savePoints"
+					aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
+					aria-label="[[localize('levelPoints')]]"
+					disabled="[[!_canEdit]]"
+					size="1"
+					required="[[_pointsRequired]]"
+					prevent-submit>
+				</d2l-text-input>
+				<div>[[localize('pointsAbbreviation')]]</div>
+			</div>
 			<d2l-button-icon
 				id="remove"
 				icon="d2l-tier1:delete"
@@ -57,6 +78,9 @@
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">
 			<d2l-tooltip for="level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+		</template>
+		<template is="dom-if" if="[[_pointsInvalid]]">
+			<d2l-tooltip for="level-points" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 
@@ -83,6 +107,16 @@
 				_nameInvalidError: {
 					type: String
 				},
+				_pointsRequired: {
+					type: Boolean,
+					computed: '_isPointsRequired(entity)',
+				},
+				_pointsInvalid: {
+					type: Boolean
+				},
+				_pointsInvalidError: {
+					type: String
+				},
 			},
 
 			behaviors: [
@@ -100,6 +134,18 @@
 					return false;
 				}
 				var field = action.getFieldByName('name');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
+			_isPointsRequired: function(entity) {
+				//TODO: this may need to be changed depending on how the level update api is done for saving points.
+				var action = entity && entity.getActionByName('update');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('points');
 				if (!field) {
 					return false;
 				}
