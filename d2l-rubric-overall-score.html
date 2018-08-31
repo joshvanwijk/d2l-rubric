@@ -275,13 +275,13 @@
 				if (this.readOnly || !this._assessmentEntity) {
 					return null;
 				}
-				
+
 				var assessmentLevelEntity = this._getAssessmentLevel(levelEntity);
 				if (!assessmentLevelEntity) {
 					return null;
 				}
 
-				return(
+				return (
 					assessmentLevelEntity.getActionByName('select-overall-level') ||
 					assessmentLevelEntity.getActionByName('remove-overall-level-override')
 				);
@@ -304,9 +304,9 @@
 
 				window.D2L.Rubric.Assessment.promise.then(
 					function() {
-						var promise = this.performSirenAction(action).then(function(entity) {
+						return this.performSirenAction(action).then(function(entity) {
 							this._assessmentEntity = entity;
-						}.bind(this)).catch( console.error );
+						}.bind(this)).catch(console.error); // eslint-disable-line no-console
 					}.bind(this)
 				);
 			}
