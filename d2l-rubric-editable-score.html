@@ -81,6 +81,9 @@
 					value: -1,
 					notify: true
 				},
+				oldScore: {
+					type: Number
+				},
 				scoreOverridden: {
 					type: Boolean,
 					value: false
@@ -141,16 +144,20 @@
 			},
 
 			_blurHandler: function(event) {
+				this.editingScore = -1;
 				var innerInput = event.target.$$('input');
 				if (!innerInput || !innerInput.checkValidity()) {
 					return;
 				}
 				var score = event.target.value;
-				this.saveScore(score);
+				if (score === this.totalScore) {
+					// score didn't change so don't override it
+					return;
+				}
+				this._saveScore(score);
 			},
 
-			saveScore: function(score) {
-				this.editingScore = -1;
+			_saveScore: function(score) {
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
 				} else {
