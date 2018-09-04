@@ -304,9 +304,7 @@
 
 				window.D2L.Rubric.Assessment.promise.then(
 					function() {
-						return this.performSirenAction(action).then(function(entity) {
-							this._assessmentEntity = entity;
-						}.bind(this)).catch(console.error); // eslint-disable-line no-console
+						return this.performSirenAction(action).catch(console.error); // eslint-disable-line no-console
 					}.bind(this)
 				);
 			}
