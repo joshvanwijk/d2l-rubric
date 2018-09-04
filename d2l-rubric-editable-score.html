@@ -146,10 +146,15 @@
 					return;
 				}
 				var score = event.target.value;
-				this.saveScore(score);
+				if (score === this.totalScore) {
+					// score didn't change so don't override it
+					this.editingScore = -1;
+					return;
+				}
+				this._saveScore(score);
 			},
 
-			saveScore: function(score) {
+			_saveScore: function(score) {
 				this.editingScore = -1;
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
