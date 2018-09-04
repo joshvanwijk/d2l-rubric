@@ -144,7 +144,6 @@
 			},
 
 			_blurHandler: function(event) {
-				this.editingScore = -1;
 				var innerInput = event.target.$$('input');
 				if (!innerInput || !innerInput.checkValidity()) {
 					return;
@@ -152,12 +151,14 @@
 				var score = event.target.value;
 				if (score === this.totalScore) {
 					// score didn't change so don't override it
+					this.editingScore = -1;
 					return;
 				}
 				this._saveScore(score);
 			},
 
 			_saveScore: function(score) {
+				this.editingScore = -1;
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
 				} else {
