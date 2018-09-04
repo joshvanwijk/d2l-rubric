@@ -88,6 +88,12 @@
 				padding: 0;
 			}
 
+			.out-of {
+				display: flex;
+				justify-content: center;
+				padding-top: 1.4rem;
+			}
+
 			.criterion-detail .criterion-feedback-header {
 				@apply --d2l-body-compact-text;
 				flex: 0 0 auto;
@@ -170,7 +176,12 @@
 				</template>
 			</div>
 		</div>
-		<div text-only$="[[!hasOutOf]]" class="cell col-last"><span hidden="[[!hasOutOf]]">/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input></span></div>
+		<div text-only$="[[!hasOutOf]]" class="cell col-last out-of">
+			<span hidden="[[!hasOutOf]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', outOf)]]">
+				[[_formatOutOf(outOf)]]
+				<!-- <d2l-text-input value=[[outOf]] aria-label="todo" prevent-submit></d2l-text-input> -->
+			</span>
+		</div>
 		<div class="gutter-right" text-only$="[[!hasOutOf]]">
 			<d2l-button-icon
 				id="remove"
@@ -208,6 +219,10 @@
 				hasOutOf: {
 					type: Boolean,
 					value: false
+				},
+				outOf: {
+					type: Number,
+					computed: '_getOutOfValue(entity)',
 				},
 				displayNamePlaceholder: {
 					type: Boolean,
@@ -313,8 +328,20 @@
 						this.fire('d2l-rubric-criterion-deleted');
 					}.bind(this));
 				}
-			}
+			},
 
+			_getOutOfValue: function(entity) {
+				if (this.hasOutOf) {
+					var action = entity.getActionByName("update");
+					if (action && action.fields[1] && action.fields[1].name === "outOf") {
+						return action.fields[1].value;
+					}
+				}
+			},
+
+			_formatOutOf: function(outOf) {
+				return "/ " + outOf;
+			}
 		});
 	</script>
 </dom-module>
