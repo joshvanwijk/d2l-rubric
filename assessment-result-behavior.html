@@ -206,7 +206,11 @@
 			if (!assessmentCriterion) {
 				return false;
 			}
-			var overridden = assessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
+			var selectedCriterionCell = assessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
+			if (!selectedCriterionCell) {
+				return false;
+			}
+			var overridden = selectedCriterionCell.hasClass(this.HypermediaClasses.rubrics.overridden);
 			return !!overridden;
 		},
 

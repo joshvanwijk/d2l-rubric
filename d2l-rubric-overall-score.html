@@ -9,6 +9,7 @@
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 <link rel="import" href="../d2l-table/d2l-scroll-wrapper.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 
 <dom-module id="d2l-rubric-overall-score">
 	<template strip-whitespace>
@@ -48,8 +49,20 @@
 			}
 			
 			.overall-level[data-achieved] {
-				background-color: var(--d2l-color-celestine-plus-2);
+				background-color: var(--d2l-color-celestine-plus-2) !important;
 				border-color: var(--d2l-color-celestine);
+			}
+			
+			.overall-level[data-achieved] h4 > d2l-icon {
+				display: block;
+			}
+			
+			.overall-level[data-clickable] {
+				cursor: pointer;
+			}
+			
+			.overall-level[data-clickable]:hover, .overall-level[data-clickable]:focus {
+				background-color: var(--d2l-color-sylvite);
 			}
 			
 			.overall-levels[data-mobile] .overall-level {
@@ -68,8 +81,39 @@
 			}
 			
 			h4 > d2l-icon {
+				display: none;
 				float: right;
 				color: var(--d2l-color-celestine);
+			}
+			
+			.override-star {
+				display: none;
+			}
+			
+			.overall-level[data-overridden] .override-star {
+				display: inline;
+			}
+			
+			.clear-override-label {
+				display: none;
+				color: var(--d2l-color-celestine);
+				text-align: center;
+				font-size: 0.85rem;
+			}
+			
+			.overall-level[data-overridden] .clear-override-label {
+				display: block;
+			}
+			
+			.clear-override-label > d2l-icon {
+				color: var(--d2l-color-celestine);
+				vertical-align: middle;
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+			
+			.clear-override-label > b {
+				vertical-align: middle;
 			}
 			
 			d2l-scroll-wrapper {
@@ -104,16 +148,27 @@
 	<d2l-scroll-wrapper	show-actions>
 		<div class="overall-levels" data-mobile$="[[!_largeScreen]]" >
 			<template is="dom-repeat" items="[[_levels]]" as="level">
-				<div class="overall-level" data-achieved$="[[_isAchieved(level)]]">
+				<div
+					class="overall-level"
+					data-achieved$="[[_isAchieved(level, _version)]]"
+					data-clickable$="[[_isClickable(level, _version)]]"
+					data-overridden$="[[_isOverriden(level, _version)]]"
+					on-tap="_levelClicked"
+				>
 					<h4>
 						<span>[[level.properties.name]]</span>
-						<d2l-icon hidden="[[!_isAchieved(level)]]" icon="d2l-tier1:check"></d2l-icon>
+						<span class="override-star">&nbsp;*</span>
+						<d2l-icon icon="d2l-tier1:check"></d2l-icon>
 					</h4>
 					<span class="overall-level-text">
 						<span>[[_localizePoints(level)]]</span>
 						<br hidden="[[!_scoreVisible(level)]]">
 						<s-html html$="[[_getDescriptionHtml(level)]]"></s-html>
 					</span>
+					<div class="clear-override-label">
+						<d2l-icon icon="d2l-tier1:close-small"></d2l-icon>
+						<b>[[localize('clearOverride')]]</b>
+					</div>
 				</div>
 			</template>
 		</div>
@@ -132,13 +187,21 @@
 					type: Object,
 					value: null
 				},
-				_levelAchieved: String
+				_assessmentMap: {
+					type: Object,
+					value: {}
+				},
+				_version: {
+					type: Number,
+					value: 0
+				}
 			},
 
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior
 			],
 
 			observers: [
@@ -150,14 +213,16 @@
 					return;
 				}
 				this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
+				this._version = (this._version || 0) + 1;
 				Polymer.RenderStatus.afterNextRender(this, function() {
 					this.$$('d2l-scroll-wrapper').checkScrollbar();
 				}.bind(this));
 			},
 
 			_onAssessmentEntityChanged: function(assessmentEntity) {
+				this._assessmentMap = {};
+
 				if (!assessmentEntity) {
-					this._levelAchieved = null;
 					return;
 				}
 
@@ -166,17 +231,27 @@
 					return;
 				}
 
-				var level = selector.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
-				if (!level) {
-					return;
-				}
+				selector.entities.forEach(function(assessmentLevel) {
+					var rubricLevelLink = assessmentLevel.getLinkByRel(this.HypermediaRels.Rubrics.overallLevel);
+					if (rubricLevelLink && rubricLevelLink.href) {
+						this._assessmentMap[rubricLevelLink.href] = assessmentLevel;
+					}
+				}.bind(this));
+				this._version = (this._version || 0) + 1;
+			},
 
-				var rubricLevel = level.getLinkByRel(this.HypermediaRels.Rubrics.overallLevel);
-				if (!rubricLevel) {
-					return;
-				}
+			_getAssessmentLevel: function(levelEntity) {
+				return this._assessmentMap[levelEntity.getLinkByRel('self').href];
+			},
 
-				this._levelAchieved = rubricLevel.href;
+			_isAchieved: function(levelEntity) {
+				var assessmentLevel = this._getAssessmentLevel(levelEntity);
+				return assessmentLevel && assessmentLevel.hasClass(this.HypermediaClasses.rubrics.selected);
+			},
+
+			_isOverriden: function(levelEntity) {
+				var assessmentLevel = this._getAssessmentLevel(levelEntity);
+				return assessmentLevel && assessmentLevel.hasClass(this.HypermediaClasses.rubrics.overridden);
 			},
 
 			_getDescriptionHtml: function(levelEntity) {
@@ -196,9 +271,42 @@
 				return rangeStart !== null && rangeStart !== undefined;
 			},
 
-			_isAchieved: function(levelEntity) {
-				var levelHref = levelEntity.getLinkByRel('self').href;
-				return levelHref && levelHref === this._levelAchieved;
+			_getOnClickAction: function(levelEntity) {
+				if (this.readOnly || !this._assessmentEntity) {
+					return null;
+				}
+
+				var assessmentLevelEntity = this._getAssessmentLevel(levelEntity);
+				if (!assessmentLevelEntity) {
+					return null;
+				}
+
+				return (
+					assessmentLevelEntity.getActionByName('select-overall-level') ||
+					assessmentLevelEntity.getActionByName('remove-overall-level-override')
+				);
+			},
+
+			_isClickable: function(levelEntity) {
+				return !!this._getOnClickAction(levelEntity);
+			},
+
+			_levelClicked: function(event) {
+				var levelEntity = event.model.level;
+				if (!levelEntity) {
+					return;
+				}
+
+				var action = this._getOnClickAction(levelEntity);
+				if (!action) {
+					return;
+				}
+
+				window.D2L.Rubric.Assessment.promise.then(
+					function() {
+						return this.performSirenAction(action).catch(console.error); // eslint-disable-line no-console
+					}.bind(this)
+				);
 			}
 
 		});
