@@ -256,7 +256,7 @@
 				var fields = action.fields;
 				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
 				assessmentField.value.OverallScore = points;
-				assessmentField.value.OverallScoreOverridden = true;
+				assessmentField.value.TotalScoreOverridden = true;
 				this.performSirenAction(action, fields);
 			}
 		},
