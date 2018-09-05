@@ -345,14 +345,13 @@
 			_isOutOfEditable: function(entity) {
 				if (this.hasOutOf) {
 					var action = entity.getActionByName("update");
-					for (var i = 0; i < action.fields.length; i++) {
-						if (action.fields[i].name === "outOf") {
-							var outOfField = action.fields[i];
-							for (var i = 0; i < outOfField.class.length; i++) {
-								if (outOfField.class[i] === "readonly") return false;
-							}
-							return true;
+					if (!action) return false;
+					var field = action.getFieldByName("outOf");
+					if (field) {
+						for (var i = 0; i < field.class.length; i++) {
+							if (field.class[i] === "readonly") return false;
 						}
+						return true;
 					}
 					return false;
 				}
