@@ -93,11 +93,12 @@
 
 				_hasTotalScore: {
 					type: Boolean,
-					computed: '_hasTotalScore(entity)'
+					value: false
 				},
 
 				totalScore: {
-					type: Number
+					type: Number,
+					observer: '_totalScoreChanged'
 				}
 			},
 
@@ -150,9 +151,8 @@
 				var lastGroup = allGroups[allGroups.length - 1];
 				lastGroup.$$('d2l-text-input').$$('input').select();
 			},
-			_hasTotalScore: function() {
-				if (this.totalScore) return true;
-				return false;
+			_totalScoreChanged: function(totalScore) {
+				totalScore ? this._hasTotalScore = true : this._hasTotalScore = false;
 			}
 		});
 	</script>
