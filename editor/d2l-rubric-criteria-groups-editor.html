@@ -21,7 +21,7 @@
 				padding-bottom: 24px;
 			}
 
-			.group-footer {
+			.groups-footer {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
@@ -45,19 +45,21 @@
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
 		<template is="dom-repeat" items="[[_groups]]" on-dom-change="_groupsDomComplete">
-			<d2l-rubric-criteria-group-editor hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" token="[[token]]" show-group-name="[[_showGroupName(entity)]]">
+			<d2l-rubric-criteria-group-editor
+				hidden$="[[!_showContent]]"
+				href="[[_getSelfLink(item)]]"
+				token="[[token]]"
+				show-group-name="[[_showGroupName(entity)]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
-		<div class="group-footer">
+		<div class="groups-footer">
 			<d2l-button on-tap="_handleAddCriteriaGroup" hidden="[[!_canCreate]]" aria-label="[[localize('addCriteriaGroup')]]">
 				[[localize('addCriteriaGroup')]]
 			</d2l-button>
 
-			<div class="out-of-container" hidden="[[!_hasTotalScore]]" aria-label="todo">
-				<div class="out-of-text">
-					<span class="total-text">[[localize('total')]]</span><span>[[localize('dashOutOf', 'outOf', totalScore)]]</span>
-				</div>
+			<div class="out-of-text" hidden="[[!_hasTotalScore]]" aria-label$="[[localize('totalScoreAriaLabel','value',totalScore)]]">
+				<span class="total-text">[[localize('total')]]</span><span>[[localize('dashOutOf', 'outOf', totalScore)]]</span>
 			</div>
 		</div>
 
@@ -70,7 +72,7 @@
 			properties: {
 				_groups: {
 					type: Array,
-					value: function () { return []; }
+					value: function() { return []; }
 				},
 
 				_showContent: {
@@ -109,45 +111,45 @@
 				'_onEntityChanged(entity)'
 			],
 
-			_onEntityChanged: function (entity) {
+			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
 				}
 				this._groups = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criteriaGroup);
 				this._showContent = true;
 			},
-			_handleAddCriteriaGroup: function () {
+			_handleAddCriteriaGroup: function() {
 				var action = this.entity.getActionByName('create');
 				if (action) {
 					this._waitingForGroups = true;
-					this.performSirenAction(action).then(function () {
+					this.performSirenAction(action).then( function() {
 						this.fire('d2l-rubric-criteria-group-added');
-						setTimeout(function () {
+						setTimeout(function() {
 							this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
 						}.bind(this), 2000);
-					}.bind(this)).catch(function () {
+					}.bind(this)).catch(function() {
 						this._waitingForGroups = false;
 					}.bind(this));
 				}
 			},
-			_canCreateCriteriaGroup: function (entity) {
+			_canCreateCriteriaGroup: function(entity) {
 				return entity && entity.hasActionByName('create');
 			},
-			_showGroupName: function (entity) {
+			_showGroupName: function(entity) {
 				return entity.entities.length > 1;
 			},
-			_groupsDomComplete: function () {
+			_groupsDomComplete: function() {
 				if (this._waitingForGroups) {
 					this._waitingForGroups = false;
 					this._refocus();
 				}
 			},
-			_refocus: function () {
+			_refocus: function() {
 				allGroups = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
 				var lastGroup = allGroups[allGroups.length - 1];
 				lastGroup.$$('d2l-text-input').$$('input').select();
 			},
-			_hasTotalScore: function () {
+			_hasTotalScore: function() {
 				if (this.totalScore) return true;
 				return false;
 			}
