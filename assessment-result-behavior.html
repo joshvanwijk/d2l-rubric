@@ -222,7 +222,7 @@
 			}
 			var fields = action.fields;
 			var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
-			return assessmentField.value.OverallScoreOverridden;
+			return assessmentField.value.TotalScoreOverridden;
 		},
 
 		saveCriterionPoints: function(criterionHref, points) {
