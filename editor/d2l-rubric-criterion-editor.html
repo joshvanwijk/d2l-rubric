@@ -347,13 +347,8 @@
 					var action = entity.getActionByName("update");
 					if (!action) return false;
 					var field = action.getFieldByName("outOf");
-					if (field) {
-						for (var i = 0; i < field.class.length; i++) {
-							if (field.class[i] === "readonly") return false;
-						}
-						return true;
-					}
-					return false;
+					if (!field || (field && field.hasClass("readonly"))) return false;
+					return true;
 				}
 			}
 		});
