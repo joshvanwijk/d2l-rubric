@@ -382,9 +382,6 @@ Polymer Web-Component to display rubrics
 					return;
 				}
 				this.editingScore = 1;
-				fastdom.mutate(function() {
-					Polymer.dom(this.root).querySelector('#total-score-inner').focus();
-				}.bind(this));
 			}
 		});
 	</script>

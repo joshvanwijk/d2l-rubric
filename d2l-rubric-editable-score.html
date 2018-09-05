@@ -42,6 +42,7 @@
 				step="any"
 				min="0"
 				max="100000"
+				on-blur="_blurHandler"
 			>
 			</d2l-text-input>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
@@ -67,19 +68,14 @@
 					value: null
 				},
 				token: String,
-				_boundBlurHandler: {
-					type: Function,
-					value: function() {
-						return this._blurHandler.bind(this);
-					}
-				},
 
 				/* For desktop criteria, this will be the criterion number.
 				   For mobile and total score, this will be 1 for true, -1 for false */
 				editingScore: {
 					type: Number,
 					value: -1,
-					notify: true
+					notify: true,
+					observer: '_editingScoreChanged'
 				},
 				scoreOverridden: {
 					type: Boolean,
@@ -121,23 +117,17 @@
 				this.scoreOverridden = this.isScoreOverridden(this.criterionHref);
 			},
 
-			attached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
-				if (!elem) {
-					return;
-				}
-				elem.addEventListener('blur', this._boundBlurHandler);
-			},
-
-			detached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
-				if (!elem) return;
-				elem.removeEventListener('blur', this._boundBlurHandler);
-			},
-
 			focus: function() {
 				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
 				elem.focus();
+			},
+
+			_editingScoreChanged: function(newValue) {
+				if (this._isEditingScore(this.criterionNum, newValue)) {
+					Polymer.RenderStatus.afterNextRender(this, function() {
+						this.focus();
+					}.bind(this));
+				}
 			},
 
 			_blurHandler: function(event) {
