@@ -74,7 +74,13 @@
 			</d2l-button-icon>
 		</div>
 		<template is="dom-repeat" items="[[_levels]]" as="level">
-			<div class="cell"><d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]"></d2l-rubric-level-editor></div>
+			<div class="cell">
+				<d2l-rubric-level-editor
+					href="[[_getSelfLink(level)]]"
+					token="[[token]]"
+					has-out-of="[[hasOutOf]]">
+				</d2l-rubric-level-editor>
+			</div>
 		</template>
 		<div class="cell col-last" noOutOf$=[[!hasOutOf]]>
 			<d2l-button-icon

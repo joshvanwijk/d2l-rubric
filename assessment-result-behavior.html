@@ -206,7 +206,11 @@
 			if (!assessmentCriterion) {
 				return false;
 			}
-			var overridden = assessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.overridden);
+			var selectedCriterionCell = assessmentCriterion.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
+			if (!selectedCriterionCell) {
+				return false;
+			}
+			var overridden = selectedCriterionCell.hasClass(this.HypermediaClasses.rubrics.overridden);
 			return !!overridden;
 		},
 
@@ -218,7 +222,7 @@
 			}
 			var fields = action.fields;
 			var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
-			return assessmentField.value.OverallScoreOverridden;
+			return assessmentField.value.TotalScoreOverridden;
 		},
 
 		saveCriterionPoints: function(criterionHref, points) {
@@ -252,7 +256,7 @@
 				var fields = action.fields;
 				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
 				assessmentField.value.OverallScore = points;
-				assessmentField.value.OverallScoreOverridden = true;
+				assessmentField.value.TotalScoreOverridden = true;
 				this.performSirenAction(action, fields);
 			}
 		},
