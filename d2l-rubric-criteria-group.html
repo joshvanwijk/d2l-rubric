@@ -494,9 +494,6 @@
 				}
 				var criterionNum = event.model.get('criterionNum');
 				this.editingScore = criterionNum;
-				fastdom.mutate(function() {
-					Polymer.dom(this.root).querySelector('#score-inner' + criterionNum).focus();
-				}.bind(this));
 			}
 		});
 	</script>
