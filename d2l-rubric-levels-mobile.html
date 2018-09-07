@@ -390,9 +390,6 @@
 					return;
 				}
 				this.editingScore = 1;
-				fastdom.mutate(function() {
-					Polymer.dom(this.root).querySelector('#score-inner').focus();
-				}.bind(this));
 			},
 
 			_isEditingScore: function(editingScore) {
