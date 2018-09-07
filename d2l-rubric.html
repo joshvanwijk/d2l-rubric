@@ -316,7 +316,11 @@ Polymer Web-Component to display rubrics
 				var saveStateEl = this.$['rubric-save-status'];
 				({
 					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-siren-entity-save-end': function() {
+						// for Polymer 1 sometimes we aren't getting all end events so reset on end event
+						saveStateEl._saving = 1;
+						saveStateEl.end();
+					},
 					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
 			},
