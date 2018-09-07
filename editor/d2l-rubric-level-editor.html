@@ -100,7 +100,7 @@
 				},
 				_canEditName: {
 					type: Boolean,
-					computed: '_canEditName(entity)',
+					computed: '_canEditLevelName(entity)',
 				},
 				_nameRequired: {
 					type: Boolean,
@@ -114,7 +114,7 @@
 				},
 				_canEditPoints: {
 					type: Boolean,
-					computed: '_canEditPoints(entity)',
+					computed: '_canEditLevelPoints(entity)',
 				},
 				_pointsRequired: {
 					type: Boolean,
@@ -134,10 +134,10 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
-			_canEditPoints: function(entity) {
+			_canEditLevelPoints: function(entity) {
 				return entity && entity.hasActionByName('update-points');
 			},
-			_canEditName: function(entity) {
+			_canEditLevelName: function(entity) {
 				return entity && entity.hasActionByName('update-name');
 			},
 			_isNameRequired: function(entity) {

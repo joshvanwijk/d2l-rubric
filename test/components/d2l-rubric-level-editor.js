@@ -181,10 +181,19 @@ suite('<d2l-rubric-level-editor>', function() {
 			});
 
 			test('name is disabled', function() {
-				var nameTextInput = element.$$('d2l-text-input');
+				var nameTextInput = element.$$('#level-name');
 				expect(nameTextInput.disabled).to.be.true;
 			});
 
+			test('points are disabled', function() {
+				var pointsInput = element.$$('#level-points');
+				expect(pointsInput.disabled).to.be.true;
+			});
+
+			test('delete trash can is hidden', function() {
+				var deleteButton = element.$$('#remove');
+				expect(deleteButton.hidden).to.be.true;
+			});
 		});
 	});
 
