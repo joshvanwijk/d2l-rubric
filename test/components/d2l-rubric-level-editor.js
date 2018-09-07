@@ -1,6 +1,6 @@
 /* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush, stubWhitelist */
 
-//'use strict';
+'use strict';
 
 suite('<d2l-rubric-level-editor>', function() {
 
