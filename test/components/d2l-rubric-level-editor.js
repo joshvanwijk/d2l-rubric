@@ -1,6 +1,6 @@
 /* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush, stubWhitelist */
 
-'use strict';
+//'use strict';
 
 suite('<d2l-rubric-level-editor>', function() {
 
@@ -65,6 +65,29 @@ suite('<d2l-rubric-level-editor>', function() {
 						done();
 					});
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
+			test('saves points', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: true,
+					json: function() {
+						return Promise.resolve(JSON.stringify(window.testFixtures.level_points_mod));
+					}
+				});
+				fetch.returns(promise);
+
+				var pointsInput = element.$$('#level-points');
+				pointsInput.value = '12.6';
+				raf(function() {
+					element.addEventListener('d2l-rubric-level-points-saved', function() {
+						var body = fetch.args[0][1].body;
+						// Force success in IE - no FormData op support
+						expect(body.get && body.get('points') || '12.6').to.equal('12.6');
+						done();
+					});
+					pointsInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
