@@ -11,13 +11,10 @@
 		.cell {
 			border-left: var(--d2l-table-border);
 			border-top: var(--d2l-table-border);
-			padding: 1rem;
 			flex: 1 1 0%;
-			/*
-			text-input min width is 2rem + 1em, so adding cell padding to this to give cell min-width
-			This is needed to enforce the same min-width on text input and text area cells
-			*/
-			min-width: calc(2rem + 1em + 2rem);
+			/* Min width chosen so that 4 levels are visible in standard LMS tab layout.
+			After 4 levels scrolling will kick in */
+			min-width: 8rem;
 		}
 
 		:host-context([dir="rtl"]) .cell {
@@ -26,20 +23,16 @@
 		}
 
 		.gutter-left, .gutter-right {
-			flex-shrink: 0;
-			flex-grow: 0;
-			flex-basis: auto;
+			flex: 0 0 auto;
 			width: var(--d2l-rubric-editor-gutter-width);
 			padding: 0;
 			text-align: center;
 		}
 
 		.col-first {
-			flex-shrink: 0;
-			flex-grow: 0;
-			flex-basis: auto;
-			width: 23%;
-			min-width: 7rem;
+			flex: 0 0 auto;
+			width: 10.5rem;
+			min-width: auto;
 			padding: 0;
 		}
 
@@ -49,7 +42,7 @@
 
 		.col-last {
 			flex: 0 0 auto;
-			min-width: 6rem;
+			min-width: auto;
 			border-right: var(--d2l-table-border);
 		}
 
