@@ -53,7 +53,7 @@
 			on-change="_saveName"
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 			aria-label="[[localize('levelName')]]"
-			disabled="[[!_canEdit]]"
+			disabled="[[!_canEditName]]"
 			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-text-input>
@@ -65,7 +65,7 @@
 					on-change="_savePoints"
 					aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
 					aria-label="[[localize('levelPoints')]]"
-					disabled="[[!_canEdit]]"
+					disabled="[[!_canEditPoints]]"
 					size="1"
 					required="[[_pointsRequired]]"
 					prevent-submit>
@@ -94,13 +94,13 @@
 
 			properties: {
 				hasOutOf: Boolean,
-				_canEdit: {
-					type: Boolean,
-					computed: '_canEditLevel(entity)',
-				},
 				_canDelete: {
 					type: Boolean,
 					computed: '_canDeleteLevel(entity)',
+				},
+				_canEditName: {
+					type: Boolean,
+					computed: '_canEditName(entity)',
 				},
 				_nameRequired: {
 					type: Boolean,
@@ -109,11 +109,12 @@
 				_nameInvalid: {
 					type: Boolean
 				},
-				_pointsInvalid: {
-					type: Boolean
-				},
 				_nameInvalidError: {
 					type: String
+				},
+				_canEditPoints: {
+					type: Boolean,
+					computed: '_canEditPoints(entity)',
 				},
 				_pointsRequired: {
 					type: Boolean,
@@ -133,11 +134,14 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
-			_canEditLevel: function(entity) {
-				return entity && entity.hasActionByName('update');
+			_canEditPoints: function(entity) {
+				return entity && entity.hasActionByName('update-points');
+			},
+			_canEditName: function(entity) {
+				return entity && entity.hasActionByName('update-name');
 			},
 			_isNameRequired: function(entity) {
-				var action = entity && entity.getActionByName('update');
+				var action = entity && entity.getActionByName('update-name');
 				if (!action) {
 					return false;
 				}
@@ -159,7 +163,7 @@
 				return field.hasClass('required');
 			},
 			_saveName: function(e) {
-				var action = this.entity.getActionByName('update');
+				var action = this.entity.getActionByName('update-name');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
 						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));

@@ -14,16 +14,30 @@ Object.assign(window.testFixtures, {
 				"name": "Superman",
 				"points": 0.0
 			},
-			"actions": [{
-				"name": "update",
-				"method": "PUT",
-				"href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
-				"fields": [{
-					"type": "text",
-					"name": "name",
-					"value": "Superman"
-				}]
-			}],
+			"actions": [
+				{
+					"name": "update-name",
+					"method": "PATCH",
+					"href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
+					"fields": [{
+						"class": ["required"],
+						"type": "text",
+						"name": "name",
+						"value": "Superman"
+					}]
+				},
+				{
+					"name": "update-points",
+					"method": "PATCH",
+					"href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
+					"fields": [{
+						"class": ["required"],
+						"type": "number",
+						"name": "points",
+						"value": 0.0
+					}]
+				},
+			],
 			"links": [
 				{
 					"rel": [

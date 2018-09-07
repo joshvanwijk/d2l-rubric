@@ -1,64 +1,72 @@
 {
-    "class": [
-        "level"
-    ],
-    "properties": {
-        "name": "Level 1",
-        "points": 0.0
+  "class": [
+    "level"
+  ],
+  "properties": {
+    "name": "Level 1",
+    "points": 0.0
+  },
+  "actions": [
+    {
+      "name": "update-name",
+      "method": "PATCH",
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
+      "fields": [
+        {
+          "class": [
+            "required"
+          ],
+          "type": "text",
+          "name": "name",
+          "value": "Level 1"
+        }
+      ]
     },
-    "actions": [
+    {
+      "name": "update-points",
+      "method": "PATCH",
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
+      "fields": [
         {
-            "name": "update",
-            "method": "PUT",
-            "href":  "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
-            "fields": [{
-                "class": ["required"],
-                "type": "text",
-                "name": "name",
-                "value": "Level 1"
-            }]
-        },
-        {
-					"name": "update-points",
-					"method": "PATCH",
-					"href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
-					"fields": [{
-            "class": ["required"],
-						"type": "number",
-						"name": "points",
-						"value": 0.0
-					}]
-				},
-        {
-            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1476.json",
-            "name": "delete",
-            "method": "DELETE"
+          "class": [
+            "required"
+          ],
+          "type": "number",
+          "name": "points",
+          "value": 0.0
         }
-    ],
-    "links": [
-        {
-            "rel": [
-                "self"
-            ],
-            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json"
-        },
-        {
-            "rel": [
-                "up"
-            ],
-            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels.json"
-        },
-        {
-            "rel": [
-                "prev"
-            ],
-            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1477.json"
-        },
-        {
-            "rel": [
-                "next"
-            ],
-            "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1478.json"
-        }
-    ]
+      ]
+    },
+    {
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1476.json",
+      "name": "delete",
+      "method": "DELETE"
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json"
+    },
+    {
+      "rel": [
+        "up"
+      ],
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels.json"
+    },
+    {
+      "rel": [
+        "prev"
+      ],
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1477.json"
+    },
+    {
+      "rel": [
+        "next"
+      ],
+      "href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1478.json"
+    }
+  ]
 }

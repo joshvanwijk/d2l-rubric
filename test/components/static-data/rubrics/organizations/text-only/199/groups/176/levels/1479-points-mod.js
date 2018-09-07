@@ -16,7 +16,7 @@ Object.assign(window.testFixtures, {
 			},
 			"actions": [{
 				"name": "update",
-				"method": "PUT",
+				"method": "PATCH",
 				"href": "static-data/rubrics/organizations/text-only/199/groups/176/levels/1479.json",
 				"fields": [{
 					"type": "text",
