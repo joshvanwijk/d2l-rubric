@@ -11,6 +11,7 @@
 <link rel="import" href="../d2l-alert/d2l-alert.html">
 <link rel="import" href="../s-html/s-html.html">
 <link rel="import" href="../d2l-save-status/d2l-save-status.html">
+<link rel="import" href="../d2l-button/d2l-button-subtle.html">
 
 <!--
 `d2l-rubric`
@@ -68,6 +69,9 @@ Polymer Web-Component to display rubrics
 			}
 			.score-wrapper {
 				pointer-events: none;
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+				padding-left: 0.6rem;
 			}
 			.score-wrapper.assessable {
 				pointer-events: auto;
@@ -75,6 +79,13 @@ Polymer Web-Component to display rubrics
 			.score-wrapper.assessable:hover {
 				color: var(--d2l-color-celestine);
 				cursor: pointer;
+			}
+			.out-of-score-container {
+				display: inline-flex;
+			}
+			.clear-override-button {
+				flex-grow: 1;
+				flex-shrink: 1;
 			}
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
@@ -100,6 +111,10 @@ Polymer Web-Component to display rubrics
 				text-align: left;
 				padding-left: 20px;
 			}
+			.total {
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+			}
 			:host-context([dir='rtl']) .left {
 				text-align: right;
 				padding-left: 0;
@@ -111,7 +126,6 @@ Polymer Web-Component to display rubrics
 				padding-right: 20px;
 			}
 			.right {
-				width: 100%;
 				text-align: right;
 			}
 			:host-context([dir='rtl']) .right {
@@ -148,12 +162,12 @@ Polymer Web-Component to display rubrics
 			}
 
 			/* Fix for Polymer 2 */
-			d2l-rubric-overall-score[hidden] {
+			[hidden] {
 				display: none;
 			}
 
 		</style>
-		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
+		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<div id="editor-save-status-container">
 			<d2l-save-status id="rubric-save-status" class="right"></d2l-save-status>
 		</div>
@@ -176,19 +190,29 @@ Polymer Web-Component to display rubrics
 			></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text">
-					<div class="left">[[localize('total')]]</div>
-					<d2l-rubric-editable-score
-						id="total-score-inner"
-						class$="[[_getOutOfClassName(_assessmentEntity)]]"
-						assessment-href="[[assessmentHref]]"
-						token="[[token]]"
-						read-only="[[readOnly]]"
-						editing-score="{{editingScore}}"
-						total-score="[[_score]]"
-						entity="[[entity]]"
-						on-tap="_handleOverrideScore"
-					>
-					</d2l-rubric-editable-score>
+					<div class="left total">[[localize('total')]]</div>
+					<div class="out-of-score-container">
+						<d2l-button-subtle
+							class="clear-override-button"
+							icon="d2l-tier1:close-default"
+							text=[[localize('clearTotalScoreOverride')]]
+							on-tap="_clearTotalScoreOverride"
+							hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]"
+						>
+						</d2l-button-subtle>
+						<d2l-rubric-editable-score
+							id="total-score-inner"
+							class$="[[_getOutOfClassName(assessmentEntity)]]"
+							assessment-href="[[assessmentHref]]"
+							token="[[token]]"
+							read-only="[[readOnly]]"
+							editing-score="{{editingScore}}"
+							total-score="[[_score]]"
+							entity="[[entity]]"
+							on-tap="_handleOverrideScore"
+						>
+						</d2l-rubric-editable-score>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -243,7 +267,7 @@ Polymer Web-Component to display rubrics
 					type: String,
 					value: null
 				},
-				_assessmentEntity: {
+				assessmentEntity: {
 					type: Object,
 					value: null
 				},
@@ -267,7 +291,7 @@ Polymer Web-Component to display rubrics
 
 			observers: [
 				'_onEntityChanged(entity)',
-				'_onAssessmentEntityChanged(_assessmentEntity)'
+				'_onAssessmentEntityChanged(assessmentEntity)'
 			],
 
 			listeners: {
@@ -382,6 +406,35 @@ Polymer Web-Component to display rubrics
 					return;
 				}
 				this.editingScore = 1;
+			},
+
+			_showClearTotalScoreButton: function(assessmentEntity) {
+				if (this.readOnly) {
+					return false;
+				}
+				if (!assessmentEntity) {
+					return false;
+				}
+				if (!this._canEditScore(assessmentEntity)) {
+					return false;
+				}
+				return this.isTotalScoreOverridden();
+			},
+
+			_clearTotalScoreOverride: function() {
+				var clearTotalScoreOverridePromise = this._clearTotalScoreOverridePromise.bind(this);
+				this.addToQueue(clearTotalScoreOverridePromise);
+			},
+
+			_clearTotalScoreOverridePromise: function() {
+				var entity = this.assessmentEntity;
+				var action = entity.getActionByName('save');
+				if (action) {
+					var fields = action.fields;
+					var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+					assessmentField.value.TotalScoreOverridden = false;
+					this.performSirenAction(action, fields);
+				}
 			}
 		});
 	</script>
