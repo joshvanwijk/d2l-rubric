@@ -338,11 +338,11 @@
 			},
 
 			_getOutOfValue: function(entity) {
-				if (this.hasOutOf) return entity.properties.outOf;
+				if (this.hasOutOf && entity) return entity.properties.outOf;
 			},
 
 			_isOutOfEditable: function(entity) {
-				if (this.hasOutOf) {
+				if (this.hasOutOf && entity) {
 					var action = entity.getActionByName("update");
 					if (!action) return false;
 					var field = action.getFieldByName("outOf");
