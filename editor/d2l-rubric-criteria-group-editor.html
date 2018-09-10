@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
+<link rel="import" href="../../d2l-table/d2l-scroll-wrapper.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
@@ -15,6 +16,20 @@
 		<style>
 			:host {
 				display: block;
+				--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
+				--d2l-scroll-wrapper-border-color: var(--d2l-table-border-color);
+
+				--d2l-scroll-wrapper-h-scroll: {
+					overflow-x: hidden;
+				};
+
+				--d2l-scroll-wrapper-left: {
+					overflow-x: hidden;
+				};
+
+				--d2l-scroll-wrapper-right: {
+					overflow-x: hidden;
+				};
 			}
 
 			* {
@@ -40,40 +55,61 @@
 			[hidden] {
 				display: none;
 			}
+
+			.stretch-child {
+				display: flex;
+			}
 		</style>
-
-		<template is="dom-repeat" items="[[_alerts]]">
-			<d2l-alert type="[[item.alertType]]" has-close-button>
-				[[item.alertMessage]]
-			</d2l-alert>
-		</template>
-
-		<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
-			<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-			<d2l-rubric-levels-editor
-				href="[[_levelsHref]]"
-				token="[[token]]"
-				has-out-of="[[_hasOutOf(entity)]]">
-				<d2l-text-input
-					id="group-name"
-					slot="group-name-slot"
-					value="[[_groupName]]"
-					hidden="[[!showGroupName]]"
-					disabled="[[!_canEditGroupName(entity)]]"
-					on-change="_saveName"
-					aria-label$="[[localize('groupName')]]"
-					required prevent-submit>
-				</d2l-text-input>
-			</d2l-rubric-levels-editor>
-			<template is="dom-if" if="[[_nameInvalid]]">
-				<d2l-tooltip for="group-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+		<d2l-scroll-wrapper
+			id="scroll-wrapper"
+			scroll-duration="500"
+			scroll-amount="0.2"
+			start-icon="d2l-tier1:chevron-left"
+			end-icon="d2l-tier1:chevron-right"
+			show-actions
+		>
+			<template is="dom-repeat" items="[[_alerts]]">
+				<d2l-alert type="[[item.alertType]]" has-close-button>
+					[[item.alertMessage]]
+				</d2l-alert>
 			</template>
-			<d2l-rubric-criteria-editor
-				href="[[_criteriaCollectionHref]]"
-				token="[[token]]"
-				has-out-of="[[_hasOutOf(entity)]]">
-			</d2l-rubric-criteria-editor>
-		</div>
+			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
+				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
+				<d2l-rubric-levels-editor
+					href="[[_levelsHref]]"
+					token="[[token]]"
+					has-out-of="[[_hasOutOf(entity)]]"
+					on-d2l-siren-entity-changed="_notifyResize">
+					<d2l-text-input
+						id="group-name"
+						slot="group-name-slot"
+						value="[[_groupName]]"
+						hidden="[[!showGroupName]]"
+						disabled="[[!_canEditGroupName(entity)]]"
+						on-change="_saveName"
+						aria-label$="[[localize('groupName')]]"
+						required prevent-submit>
+					</d2l-text-input>
+				</d2l-rubric-levels-editor>
+				<template is="dom-if" if="[[_nameInvalid]]">
+					<d2l-tooltip for="group-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+				</template>
+				<!--
+				This flex wrapper div is required to ensure that the d2l-rubric-criteria-editor
+				fills the full width of it's parent when the d2l-rubric-criterion-editor components overflow.
+				This ensures that the criteria footer which encapsulates the Add Criteria button
+				also stretches to utilize all the available space, particularly when we are shrinking
+				the size of the editor
+				-->
+				<div class="stretch-child">
+					<d2l-rubric-criteria-editor
+						href="[[_criteriaCollectionHref]]"
+						token="[[token]]"
+						has-out-of="[[_hasOutOf(entity)]]">
+					</d2l-rubric-criteria-editor>
+				</div>
+			</div>
+		</d2l-scroll-wrapper>
 	</template>
 
 	<script>
@@ -171,6 +207,12 @@
 					this.set(invalidId, false);
 				}
 			},
+
+			_notifyResize: function() {
+				Polymer.RenderStatus.afterNextRender(this.$$('d2l-rubric-levels-editor'), function() {
+					this.$$('d2l-scroll-wrapper').notifyResize();
+				}.bind(this));
+			}
 		});
 	</script>
 </dom-module>
