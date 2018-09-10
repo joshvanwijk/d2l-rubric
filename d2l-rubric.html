@@ -158,7 +158,7 @@ Polymer Web-Component to display rubrics
 			<d2l-save-status id="rubric-save-status" class="right"></d2l-save-status>
 		</div>
 		<template is="dom-repeat" items="[[_alerts]]">
-			<d2l-alert type="[[item.alertType]]">
+			<d2l-alert type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 				[[item.alertMessage]]
 			</d2l-alert>
 		</template>
@@ -255,6 +255,10 @@ Polymer Web-Component to display rubrics
 					type: Boolean,
 					value: false,
 					reflectToAttribute: true
+				},
+				_errored: {
+					type: Boolean,
+					value: false
 				}
 			},
 
@@ -273,7 +277,9 @@ Polymer Web-Component to display rubrics
 			listeners: {
 				'd2l-siren-entity-save-start': '_onEntitySave',
 				'd2l-siren-entity-save-error': '_onEntitySave',
-				'd2l-siren-entity-save-end': '_onEntitySave'
+				'd2l-siren-entity-save-end': '_onEntitySave',
+				'd2l-siren-entity-error': '_handleError',
+				'd2l-alert-button-pressed': '_pageReload'
 			},
 
 			_onEntityChanged: function(entity) {
@@ -382,6 +388,29 @@ Polymer Web-Component to display rubrics
 					return;
 				}
 				this.editingScore = 1;
+			},
+
+			_handleError: function(e) {
+				if (this._errored) {
+					return;
+				}
+				this._errored = true;
+				this.fire('iron-announce', { text: this.localize('rubricLoadingErrorAriaAlert') }, { bubbles: true });
+				this._addAlert('error', e.detail.error.message, this.localize('errorText'));
+			},
+
+			_handleSaveError: function(e) {
+				if (this._errored) {
+					return;
+				}
+				this._errored = true;
+				this._clearAlerts();
+				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+				this._addAlert('error', e.detail.error.message, this.localize('errorText'));
+			},
+
+			_pageReload: function() {
+				window.location.reload();
 			}
 		});
 	</script>
