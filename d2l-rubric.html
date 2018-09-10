@@ -423,6 +423,7 @@ Polymer Web-Component to display rubrics
 					return;
 				}
 				this._errored = true;
+				this._clearAlerts();
 				this.fire('iron-announce', { text: this.localize('rubricLoadingErrorAriaAlert') }, { bubbles: true });
 				this._addAlert('error', e.detail.error.message, this.localize('errorText'));
 			},
