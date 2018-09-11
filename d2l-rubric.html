@@ -428,16 +428,6 @@ Polymer Web-Component to display rubrics
 				this._addAlert('error', e.detail.error.message, this.localize('errorText'));
 			},
 
-			_handleSaveError: function(e) {
-				if (this._errored) {
-					return;
-				}
-				this._errored = true;
-				this._clearAlerts();
-				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
-				this._addAlert('error', e.detail.error.message, this.localize('errorText'));
-			},
-
 			_pageReload: function() {
 				window.location.reload();
 			},
