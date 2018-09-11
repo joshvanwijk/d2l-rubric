@@ -2,6 +2,8 @@
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-offscreen/d2l-offscreen.html">
+<link rel="import" href="../../d2l-icons/d2l-icon.html">
+
 <link rel="import" href="../../d2l-button/d2l-button-subtle.html">
 <link rel="import" href="../../d2l-dnd-sortable/d2l-dnd-sortable.html">
 
@@ -16,6 +18,7 @@
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
 				display: block;
+				flex: 1 1 auto;
 			}
 
 			* {
@@ -88,45 +91,117 @@
 				cursor: move;
 			}
 
+			/* sao - weird css to work around a drag-drop render image bug */
+			.reorder-offscreen {
+				overflow: hidden;
+				width: 0;
+				height: 0;
+			}
+
+			.reorder-offscreen * {
+				overflow: hidden;
+				width: 0;
+				height: 0;
+			}
+
+			.reorder-button {
+				display: block;
+				background: none;
+				border: 1px solid transparent;
+				padding: 0 0.2rem 0 0.2rem;
+				min-height: 0;
+    			color: #565a5c;
+				font-family: inherit;
+				font-size: 0.7rem;
+				line-height: 1rem;
+				letter-spacing: 0.02rem;
+				margin: 0;
+				margin-left: auto;
+   				margin-right: auto;
+				border-radius: 0.3rem;
+				box-sizing: border-box;
+				cursor: pointer;
+				user-select: none;
+			}
+			.reorder-button[disabled] {
+				opacity: 0.5;
+    			cursor: default;
+			}
+			.reorder-button:focus, .reorder-button:hover {
+				background-color: #f2f3f5;
+				outline: none;
+				border: 1px solid #d3d9e3;
+			}
 			d2l-rubric-criterion-editor {
 				flex: 1 1 auto;
 			}
 
 		</style>
-		<d2l-dnd-sortable
-			placeholder-class="dnd-placeholder"
-			mirror-class="dnd-mirror"
-			touch-mirror-class="dnd-touch-mirror"
-			handle=".dnd-drag-handle"
-			on-d2l-dnd-sorted="_handleReorder"
-			disabled="[[!_canReorder]]"
-		>
+		<div on-keydown="_keyDownNoOp">
+			<d2l-dnd-sortable
+				placeholder-class="dnd-placeholder"
+				mirror-class="dnd-mirror"
+				touch-mirror-class="dnd-touch-mirror"
+				handle=".dnd-drag-handle"
+				on-d2l-dnd-sorted="_handleReorder"
+				disabled="[[!_canReorder]]"
+			>
 
-		<!--
-			MDB: Temporarily removing the off-screen legend as it breaks sortableJS drag and drop
-			Might have to come up with an alternate approach
-		-->
-			<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
-				<div class="fieldset">
-					<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
-					<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
-					<d2l-rubric-criterion-editor
-						animating="[[animating]]"
-						href="[[_getSelfLink(criterion)]]"
-						token="[[token]]"
-						has-out-of="[[hasOutOf]]"
-						display-name-placeholder="[[_isFirst(index)]]"
-					>
-						<d2l-icon
-							class="dnd-drag-handle"
-							slot="gutter-left"
-							icon="d2l-tier1:dragger"
-							hidden="[[!_canReorder]]"
-						></d2l-icon>
-					</d2l-rubric-criterion-editor>
-				</div>
-			</template>
-		</d2l-dnd-sortable>
+			<!--
+				MDB: Temporarily removing the off-screen legend as it breaks sortableJS drag and drop
+				Might have to come up with an alternate approach
+			-->
+				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
+					<div class="fieldset">
+						<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
+						<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
+						<d2l-rubric-criterion-editor
+							animating="[[animating]]"
+							href="[[_getSelfLink(criterion)]]"
+							token="[[token]]"
+							has-out-of="[[hasOutOf]]"
+							display-name-placeholder="[[_isFirst(index)]]"
+						>
+							<div slot="gutter-left">
+								<div class="reorder-offscreen"
+									on-focusin="_onReorderGroupFocusIn"
+									on-focusout="_onReorderGroupFocusOut"
+									on-keydown="_onReorderGroupKeydown"
+								>
+									<button id="up-button"
+										class="reorder-button"
+										title="[[_getPositionLocalize('moveCriterionUp', index)]]"
+										hidden$="[[!_canReorder]]"
+										disabled$="[[_isFirst(index)]]"
+										data-index$="[[index]]"
+										on-tap="_moveUp"
+									>
+										<d2l-icon icon="d2l-tier1:arrow-toggle-up"></d2l-icon>
+									</button>
+
+									<button id="down-button"
+										class="reorder-button"
+										title="[[_getPositionLocalize('moveCriterionDown', index)]]"
+										hidden$="[[!_canReorder]]"
+										disabled$="[[_isLast(index)]]"
+										data-index$="[[index]]"
+										on-tap="_moveDown"
+									>
+										<d2l-icon icon="d2l-tier1:arrow-toggle-down"></d2l-icon>
+									</button>
+								</div>
+
+								<d2l-icon
+									class="dnd-drag-handle"
+									icon="d2l-tier1:dragger"
+									hidden="[[!_canReorder]]"
+								></d2l-icon>
+							</div>
+						</d2l-rubric-criterion-editor>
+					</div>
+				</template>
+			</d2l-dnd-sortable>
+		</div>
 		<div class="footer">
 			<div class="gutter-left"></div>
 			<div class="footer-buttons">
@@ -179,7 +254,39 @@
 			observers: [
 				'_countCriteria(_criteriaEntities)'
 			],
+			_getPositionLocalize: function (localizeString, index) {
+				return this.localize(localizeString, 'position', index + 1)
+			},
+			_keyDownNoOp: function(e) {
+				e.stopPropagation();
+				// up arrow = 38, down arrow = 40
+				if (e.keyCode === 38 || e.keyCode === 40) e.preventDefault();
+			},
+			_onReorderGroupKeydown: function(e) {
+				var upButton = e.currentTarget.querySelector('#up-button');
+				var downButton = e.currentTarget.querySelector('#down-button');
 
+				if (!upButton || !downButton) {
+					return;
+				}
+				// up arrow = 38, down arrow = 40
+				if ( e.keyCode === 38 ) {
+					!upButton.disabled && upButton.click();
+				}
+				if ( e.keyCode === 40 ) {
+					!downButton.disabled && downButton.click();
+				}
+			},
+			_onReorderGroupFocusIn: function(e) {
+				var currentElement = e.currentTarget;
+				currentElement.classList.remove('reorder-offscreen');
+				currentElement.nextElementSibling.hidden = true;
+			},
+			_onReorderGroupFocusOut: function(e) {
+				var currentElement = e.currentTarget;
+				currentElement.classList.add('reorder-offscreen');
+				currentElement.nextElementSibling.hidden = false;
+			},
 			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {
 					return;
@@ -210,7 +317,9 @@
 			_isFirst: function(index) {
 				return index === 0;
 			},
-
+			_isLast: function(index) {
+				return index === this._criteriaEntities.length - 1;
+			},
 			_canCreateCriterion: function(entity) {
 				return entity && entity.hasActionByName('create');
 			},
@@ -232,21 +341,66 @@
 			},
 
 			_handleReorder: function(e) {
+				this._doReorder(e.detail.oldIndex, e.detail.newIndex);
+			},
+			_moveUp: function(e) {
+				var upButton = e.currentTarget;
+				var downButton = upButton.nextElementSibling;
+
+				var oldIndex = +upButton.attributes["data-index"].value;
+				var newIndex = oldIndex - 1;
+
+				var afterReorder = function() {
+					if (!upButton.disabled) {
+						upButton.focus();
+					} else {
+						downButton.focus();
+					}
+				};
+				this._doReorder(oldIndex, newIndex).then(afterReorder);
+			},
+			_moveDown: function(e) {
+				var downButton = e.currentTarget;
+				var upButton = downButton.previousElementSibling;
+
+				var oldIndex = +downButton.attributes["data-index"].value;
+				var newIndex = oldIndex + 1;
+
+				var afterReorder = function() {
+					if (!downButton.disabled) {
+						downButton.focus();
+					} else {
+						upButton.focus();
+					}
+				};
+				this._doReorder(oldIndex, newIndex).then(afterReorder);
+			},
+			_doReorder: function(oldIndex, newIndex) {
+				var newPosition = newIndex + 1;
+				var criterionName = this._getCriterionlName(oldIndex);
+
 				var action = this.entity.getActionByName('reorder');
 				if (action) {
 					// After reorder, the criteria API returns the entities in the correct SortOrder, but Polymer's dom-repeat
 					// does not respect the order, and reverts the DOM back to before it was drag-dropped.
 					// This manually updates '_criteriaEntities' by splicing the criterion from oldIndex and appending it at newIndex.
-					this.splice('_criteriaEntities', e.detail.newIndex, 0, this.splice('_criteriaEntities', e.detail.oldIndex, 1)[0]);
+					this.splice('_criteriaEntities', newIndex, 0, this.splice('_criteriaEntities', oldIndex, 1)[0]);
 					var fields = [
-						{'name': 'oldIndex', 'value': e.detail.oldIndex},
-						{'name': 'newIndex', 'value': e.detail.newIndex}
+						{'name': 'oldIndex', 'value': oldIndex},
+						{'name': 'newIndex', 'value': newIndex}
 					];
-					this.performSirenAction(action, fields).then(function() {
+					return this.performSirenAction(action, fields).then(function() {
+						this.fire('iron-announce',
+							{ text: this.localize('criterionMoved', 'name', criterionName, 'position', newPosition ) },
+							{ bubbles: true });
 					}.bind(this));
 				}
+				return Promise.resolve();
 			},
-
+			_getCriterionlName: function(index) {
+				var elms = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criterion-editor');
+				return elms.length && elms[index]? elms[index].entity.properties.name : '';
+			},
 			_countCriteria: function(criteriaArray) {
 				this.criterionCount = criteriaArray.length;
 			}
