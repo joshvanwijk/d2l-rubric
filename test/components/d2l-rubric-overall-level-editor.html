@@ -11,7 +11,6 @@
 	<script src="../../../fetch/fetch.js"></script>
 	<script src="../test-polyfill.js"></script>
 	<link rel="import" href="../../editor/d2l-rubric-overall-level-editor.html">
-	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
 </head>
 
 <body>
@@ -31,7 +30,6 @@
 			suiteSetup(function() {
 				sandbox = sinon.sandbox.create();
 				element = fixture('basic');
-				stubWhitelist();
 			});
 
 			suiteTeardown(function() {

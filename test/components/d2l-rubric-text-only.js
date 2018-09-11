@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon, stubWhitelist */
+/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
 
 'use strict';
 
@@ -15,7 +15,6 @@ suite('<d2l-rubric-text-only>', function() {
 	suiteSetup(function() {
 		sandbox = sinon.sandbox.create();
 		myElement = fixture('rub-text-only');
-		stubWhitelist();
 	});
 
 	suiteTeardown(function() {
