@@ -6,6 +6,26 @@
 	<style>
 		:host {
 			--d2l-rubric-editor-gutter-width: 2.3rem;
+
+			--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
+			--d2l-scroll-wrapper-border-color: var(--d2l-table-border-color);
+
+			--d2l-scroll-wrapper-h-scroll: {
+				overflow-x: hidden;
+				border-left: 1px dashed var(--d2l-color-mica);
+				border-right: 1px dashed var(--d2l-color-mica);
+			};
+
+			--d2l-scroll-wrapper-left: {
+				overflow-x: hidden;
+				border-left: none;
+			};
+
+			--d2l-scroll-wrapper-right: {
+				overflow-x: hidden;
+				border-right: none;
+			};
+
 		}
 
 		.cell {
@@ -44,6 +64,11 @@
 			flex: 0 0 auto;
 			min-width: auto;
 			border-right: var(--d2l-table-border);
+			width: 6rem;
+		}
+
+		.col-last[text-only] {
+			width: calc(1rem + 2.2rem); /* button width = 44px including border */
 		}
 
 		:dir(rtl) .col-last {
