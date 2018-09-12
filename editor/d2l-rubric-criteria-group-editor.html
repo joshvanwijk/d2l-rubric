@@ -13,23 +13,9 @@
 
 <dom-module id="d2l-rubric-criteria-group-editor">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-rubric-editor-cell-styles">
 			:host {
 				display: block;
-				--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
-				--d2l-scroll-wrapper-border-color: var(--d2l-table-border-color);
-
-				--d2l-scroll-wrapper-h-scroll: {
-					overflow-x: hidden;
-				};
-
-				--d2l-scroll-wrapper-left: {
-					overflow-x: hidden;
-				};
-
-				--d2l-scroll-wrapper-right: {
-					overflow-x: hidden;
-				};
 			}
 
 			* {
@@ -59,20 +45,30 @@
 			.stretch-child {
 				display: flex;
 			}
+
+			/*
+				This extra padding is needed to counteract the collapsing of the d2l-alert
+				margin with the negative margin applied by the d2l-scroll-wrapper sticky buttons
+			*/
+			.d2l-alert-container:last-of-type {
+				padding-bottom: 1px;
+			}
 		</style>
+
+		<template is="dom-repeat" items="[[_alerts]]">
+			<div class="d2l-alert-container">
+				<d2l-alert type="[[item.alertType]]" has-close-button>
+					[[item.alertMessage]]
+				</d2l-alert>
+			</div>
+		</template>
+
 		<d2l-scroll-wrapper
 			id="scroll-wrapper"
-			scroll-duration="500"
-			scroll-amount="0.2"
 			start-icon="d2l-tier1:chevron-left"
 			end-icon="d2l-tier1:chevron-right"
 			show-actions
 		>
-			<template is="dom-repeat" items="[[_alerts]]">
-				<d2l-alert type="[[item.alertType]]" has-close-button>
-					[[item.alertMessage]]
-				</d2l-alert>
-			</template>
 			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 				<d2l-rubric-levels-editor

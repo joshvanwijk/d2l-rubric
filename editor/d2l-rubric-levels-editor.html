@@ -40,6 +40,9 @@
 				justify-content: flex-end;
 				border-top-left-radius: var(--d2l-table-border-radius);
 			}
+			.col-first d2l-button-icon {
+				margin-left: 0.5rem;
+			}
 			:dir(rtl) .col-first {
 				border-top-left-radius: 0;
 				border-top-right-radius: var(--d2l-table-border-radius);;
@@ -54,9 +57,6 @@
  			:dir(rtl) .col-last {
 				border-top-right-radius: 0;
 				border-top-left-radius: var(--d2l-table-border-radius);;
-			}
-			.col-last[noOutOf] {
-				width: calc(1rem + 2.2rem); /* button width = 44px including border */
 			}
 		</style>
 
@@ -80,7 +80,7 @@
 				</d2l-rubric-level-editor>
 			</div>
 		</template>
-		<div class="cell col-last" noOutOf$=[[!hasOutOf]]>
+		<div class="cell col-last" text-only$=[[!hasOutOf]]>
 			<d2l-button-icon
 				on-tap="_handleAppendLevel"
 				on-focus="_onAppendFocus"
