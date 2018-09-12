@@ -12,7 +12,6 @@
 	<script src="../test-polyfill.js"></script>
 
 	<link rel="import" href="../../editor/d2l-rubric-overall-levels-editor.html">
-	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
 </head>
 
 <body>
@@ -32,7 +31,6 @@
 			suiteSetup(function() {
 				sandbox = sinon.sandbox.create();
 				element = fixture('basic');
-				stubWhitelist();
 			});
 
 			suiteTeardown(function() {
@@ -45,11 +43,9 @@
 					expect(element.is).to.equal('d2l-rubric-overall-levels-editor');
 				});
 			});
-		});
-	</script>
 
-	<script>
-		a11ySuite('basic');
+			a11ySuite('basic');
+		});
 	</script>
 </body>
 
