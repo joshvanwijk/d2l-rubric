@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon, stubWhitelist */
+/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
 
 'use strict';
 
@@ -16,7 +16,6 @@ suite('<d2l-rubric>', function() {
 				done();
 			}
 		}
-		stubWhitelist();
 		element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 		element.href = 'static-data/rubrics/organizations/text-only/199.json';
 		element.token = 'foozleberries';
