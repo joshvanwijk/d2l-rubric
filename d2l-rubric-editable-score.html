@@ -6,6 +6,7 @@
 <link rel="import" href="../s-html/s-html.html">
 <link rel="import" href="../d2l-text-input/d2l-text-input.html">
 <link rel="import" href="./siren-entity.html">
+<link rel="import" href="../d2l-tooltip/d2l-tooltip.html">
 
 
 <dom-module id="d2l-rubric-editable-score">
@@ -51,7 +52,8 @@
 		</div>
 		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(scoreOverridden)]]">
 			[[_localizeOutOf(entity, assessmentResult, totalScore)]]
-			<div class="star" title="[[_localizeStarLabel(totalScore)]]">*</div>
+			<div class="star" id="score-overridden-star">*</div>
+			<d2l-tooltip for="score-overridden-star" position="bottom">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
 		</div>
 	</template>
 
