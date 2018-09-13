@@ -53,7 +53,7 @@
 			on-change="_saveName"
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 			aria-label="[[localize('levelName')]]"
-			disabled="[[!_canEdit]]"
+			disabled="[[!_canEditName]]"
 			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-text-input>
@@ -65,7 +65,7 @@
 					on-change="_savePoints"
 					aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
 					aria-label="[[localize('levelPoints')]]"
-					disabled="[[!_canEdit]]"
+					disabled="[[!_canEditPoints]]"
 					size="1"
 					required="[[_pointsRequired]]"
 					prevent-submit>
@@ -94,13 +94,13 @@
 
 			properties: {
 				hasOutOf: Boolean,
-				_canEdit: {
-					type: Boolean,
-					computed: '_canEditLevel(entity)',
-				},
 				_canDelete: {
 					type: Boolean,
 					computed: '_canDeleteLevel(entity)',
+				},
+				_canEditName: {
+					type: Boolean,
+					computed: '_canEditLevelName(entity)',
 				},
 				_nameRequired: {
 					type: Boolean,
@@ -112,9 +112,13 @@
 				_nameInvalidError: {
 					type: String
 				},
+				_canEditPoints: {
+					type: Boolean,
+					computed: '_canEditLevelPoints(entity)',
+				},
 				_pointsRequired: {
 					type: Boolean,
-					computed: '_isPointsRequired(entity)',
+					computed: '_arePointsRequired(entity)',
 				},
 				_pointsInvalid: {
 					type: Boolean
@@ -130,11 +134,14 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
 
-			_canEditLevel: function(entity) {
-				return entity && entity.hasActionByName('update');
+			_canEditLevelPoints: function(entity) {
+				return entity && entity.hasActionByName('update-points');
+			},
+			_canEditLevelName: function(entity) {
+				return entity && entity.hasActionByName('update-name');
 			},
 			_isNameRequired: function(entity) {
-				var action = entity && entity.getActionByName('update');
+				var action = entity && entity.getActionByName('update-name');
 				if (!action) {
 					return false;
 				}
@@ -144,9 +151,8 @@
 				}
 				return field.hasClass('required');
 			},
-			_isPointsRequired: function(entity) {
-				//TODO: this may need to be changed depending on how the level update api is done for saving points.
-				var action = entity && entity.getActionByName('update');
+			_arePointsRequired: function(entity) {
+				var action = entity && entity.getActionByName('update-points');
 				if (!action) {
 					return false;
 				}
@@ -157,7 +163,7 @@
 				return field.hasClass('required');
 			},
 			_saveName: function(e) {
-				var action = this.entity.getActionByName('update');
+				var action = this.entity.getActionByName('update-name');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
 						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
@@ -168,6 +174,22 @@
 							this.fire('d2l-rubric-level-saved');
 						}.bind(this)).catch(function() {
 							this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+						}.bind(this));
+					}
+				}
+			},
+			_savePoints: function(e) {
+				var action = this.entity.getActionByName('update-points');
+				if (action) {
+					if (this._pointsRequired && !e.target.value.trim()) {
+						this._toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
+					} else {
+						this._toggleBubble('_pointsInvalid', false);
+						var fields = [{'name':'points', 'value':e.target.value}];
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-level-points-saved');
+						}.bind(this)).catch(function() {
+							this._toggleBubble('_pointsInvalid', true, this.localize('pointsSaveFailed'));
 						}.bind(this));
 					}
 				}
