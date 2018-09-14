@@ -172,8 +172,8 @@
 						var fields = [{'name':'name', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-saved');
-						}.bind(this)).catch(function() {
-							this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+						}.bind(this)).catch(function(e) {
+							this._toggleBubble('_nameInvalid', true, this._getErrMsg(e,'nameSaveFailed'));
 						}.bind(this));
 					}
 				}
@@ -188,11 +188,17 @@
 						var fields = [{'name':'points', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-points-saved');
-						}.bind(this)).catch(function() {
-							this._toggleBubble('_pointsInvalid', true, this.localize('pointsSaveFailed'));
+						}.bind(this)).catch(function(e) {
+							this._toggleBubble('_pointsInvalid', true, this._getErrMsg(e,'pointsSaveFailed'));
 						}.bind(this));
 					}
 				}
+			},
+			_getErrMsg: function(e, altMsg) {
+				if (e.stack) {
+					return this.localize(altMsg);
+				}
+				return e.json ? e.json.properties.detail : e.string.properties.detail;
 			},
 			_toggleBubble: function(invalidId, show, error) {
 				if (show) {
@@ -202,8 +208,8 @@
 					this.set(invalidId, false);
 				}
 			},
-			_isAriaInvalid: function(nameInvalid) {
-				return new Boolean(nameInvalid).toString();
+			_isAriaInvalid: function(valueInvalid) {
+				return new Boolean(valueInvalid).toString();
 			},
 			_canDeleteLevel: function(entity) {
 				return entity && entity.hasActionByName('delete');

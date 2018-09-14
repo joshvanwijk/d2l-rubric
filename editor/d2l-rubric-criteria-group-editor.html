@@ -172,8 +172,13 @@
 
 			_handleSaveError: function(e) {
 				this._clearAlerts();
-				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
-				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+				// only handle generic errors (without details)
+				try {
+					var errObj = e.detail.error.string ? e.detail.error.string.properties : e.detail.error.json.properties;
+				} catch(err) {
+					this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+					this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+				}
 			},
 
 			_canEditGroupName: function(entity) {
