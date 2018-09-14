@@ -195,10 +195,13 @@
 				}
 			},
 			_getErrMsg: function(e, altMsg) {
-				if (e.stack) {
-					return this.localize(altMsg);
+				if (!e.hasOwnProperty('stack')) {
+					var errObj = e.string ? e.string : e.json;
+					if (errObj.hasOwnProperty('properties')) {
+						return errObj.properties.detail;
+					}
 				}
-				return e.json ? e.json.properties.detail : e.string.properties.detail;
+				return this.localize(altMsg);
 			},
 			_toggleBubble: function(invalidId, show, error) {
 				if (show) {
