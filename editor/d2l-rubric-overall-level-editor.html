@@ -20,15 +20,29 @@
 				box-sizing: border-box;
 			}
 			.operations {
-				text-align: right;
-			}
-
-			:host-context([dir='rtl']) .operations {
-				text-align: left;
-			}
-
-			d2l-button-icon {
+				display: flex;
+				justify-content: space-between;
 				padding-top: 0.5rem;
+			}
+
+			.operations[text-only] {
+				justify-content: flex-end;
+			}
+
+			.points {
+				flex-grow: 1;
+				display: flex;
+				align-items: center;
+			}
+
+			#range-start {
+				margin-right: 0.5rem;
+				width: auto;
+			}
+
+			:host-context([dir='rtl']) #range-start {
+				margin-left: 0.5rem;
+				margin-right: 0;
 			}
 
 			[hidden] {
@@ -46,7 +60,21 @@
 			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-text-input>
-		<div class="operations">
+		<div class="operations" text-only$="[[!_hasRangeStart]]">
+			<div class="points" hidden="[[!_hasRangeStart]]">
+				<d2l-text-input
+					id="range-start"
+					value="[[entity.properties.rangeStart]]"
+					on-change="_saveRangeStart"
+					aria-invalid="[[_isAriaInvalid(_rangeStartInvalid)]]"
+					aria-label="[[localize('overallLevelRangeStart')]]"
+					disabled="[[!_canEdit]]"
+					size="1"
+					required="[[_rangeStartRequired]]"
+					prevent-submit>
+				</d2l-text-input>
+				<div>[[localize('rangeStartOrMore')]]</div>
+			</div>
 			<d2l-button-icon
 				id="remove"
 				icon="d2l-tier1:delete"
@@ -57,6 +85,9 @@
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">
 			<d2l-tooltip for="overall-level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+		</template>
+		<template is="dom-if" if="[[_rangeStartInvalid]]">
+			<d2l-tooltip for="range-start" position="bottom">[[_rangeStartInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 	<script>
@@ -81,14 +112,41 @@
 				},
 				_nameInvalidError: {
 					type: String
-				}
+				},
+				_hasRangeStart: {
+					type: Boolean,
+					computed: '_hasRangeStartValue(entity)'
+				},
+				_rangeStartRequired: {
+					type: Boolean,
+					computed: '_isRangeStartRequired(entity)',
+				},
+				_rangeStartInvalid: {
+					type: Boolean
+				},
+				_rangeStartInvalidError: {
+					type: String
+				},
 			},
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
-
+			_hasRangeStartValue: function(entity) {
+				return entity && entity.hasProperty('rangeStart') && entity.properties.rangeStart !== null;
+			},
+			_isRangeStartRequired: function(entity) {
+				var action = entity && entity.getActionByName('update');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('rangeStart');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
 			_canEditLevel: function(entity) {
 				return entity && entity.hasActionByName('update');
 			},

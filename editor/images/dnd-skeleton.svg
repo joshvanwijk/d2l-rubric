@@ -1,11 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 263 73" preserveAspectRatio="none">
-
-  <path fill="#d3d9e3" d="M255.5,72.5h-35A7.508,7.508,0,0,1,213,65V37a7.508,7.508,0,0,1,7.5-7.5h35A7.508,7.508,0,0,1,263,37V65A7.508,7.508,0,0,1,255.5,72.5Zm-35-42A6.508,6.508,0,0,0,214,37V65a6.508,6.508,0,0,0,6.5,6.5h35A6.508,6.508,0,0,0,262,65V37a6.508,6.508,0,0,0-6.5-6.5Z"/>
-  <path fill="#d3d9e3" d="M193.5,29.5H7.5A7.508,7.508,0,0,0,0,37V65a7.508,7.508,0,0,0,7.5,7.5h186A7.508,7.508,0,0,0,201,65V37A7.508,7.508,0,0,0,193.5,29.5ZM51,30.5h49v41H51Zm50,0h49v41H101ZM1,65V37a6.508,6.508,0,0,1,6.5-6.5H50v41H7.5A6.508,6.508,0,0,1,1,65Zm199,0a6.508,6.508,0,0,1-6.5,6.5H151v-41h42.5A6.508,6.508,0,0,1,200,37Z"/>
-  <rect fill="#f2f3f5" width="200" height="12" rx="5" ry="5"/>
-  <rect fill="#f2f3f5" x="10.5" y="41" width="30" height="20" rx="9.5" ry="9.5"/>
-  <rect fill="#f2f3f5" x="60.833" y="41" width="30" height="19" rx="9.5" ry="9.5"/>
-  <rect fill="#f2f3f5" x="111.167" y="41" width="30" height="19" rx="9.5" ry="9.5"/>
-  <rect fill="#f2f3f5" x="161.5" y="41" width="30" height="19" rx="9.5" ry="9.5"/>
-  <rect fill="#f2f3f5" x="223.5" y="41" width="30" height="19" rx="9.5" ry="9.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 145"  preserveAspectRatio="none">
+  <rect fill="#f2f3f5" x="137.34" y="1.024" width="1" height="145"/>
+  <rect fill="#f2f3f5" x="261.34" y="1.024" width="1" height="145"/>
+  <rect fill="#f2f3f5" x="385.34" y="1.024" width="1" height="145"/>
+  <rect fill="#f2f3f5" x="11.982" y="10.981" width="113.318" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="11.982" y="37.981" width="95.072" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="11.982" y="64.981" width="113.318" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="11.982" y="118.981" width="45.234" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="11.982" y="92.013" width="95.072" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="149.982" y="10.981" width="99.809" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="149.982" y="37.981" width="83.738" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="149.982" y="64.981" width="99.809" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="149.982" y="118.981" width="39.842" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="149.982" y="92.013" width="83.738" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="273.982" y="10.981" width="99.809" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="273.982" y="37.981" width="83.738" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="273.982" y="64.981" width="99.809" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="273.982" y="118.981" width="39.842" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="273.982" y="92.013" width="83.738" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="397.982" y="10.981" width="99.809" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="397.982" y="37.981" width="83.738" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="397.982" y="64.981" width="99.809" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="397.982" y="118.981" width="39.842" height="15" rx="7.5" ry="7.5"/>
+  <rect fill="#f2f3f5" x="397.982" y="92.013" width="83.738" height="15" rx="7.5" ry="7.5"/>
 </svg>

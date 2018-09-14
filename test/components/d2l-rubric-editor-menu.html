@@ -10,7 +10,6 @@
 	<script src="../../../web-component-tester/browser.js"></script>
 	<script src="../test-polyfill.js"></script>
 	<link rel="import" href="../../editor/d2l-rubric-editor-menu.html">
-	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
 </head>
 
 <body>
@@ -29,7 +28,6 @@
 			suiteSetup(function () {
 				sandbox = sinon.sandbox.create();
 				element = fixture('basic');
-				stubWhitelist();
 			});
 
 			suiteTeardown(function () {
@@ -48,11 +46,9 @@
 					expect(element.$$('d2l-button-subtle').hidden).to.equal(false);
 				});
 			});
-		});
-	</script>
 
-	<script>
-		a11ySuite('basic');
+			a11ySuite('basic');
+		});
 	</script>
 </body>
 

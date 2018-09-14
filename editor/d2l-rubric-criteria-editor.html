@@ -135,7 +135,9 @@
 			d2l-rubric-criterion-editor {
 				flex: 1 1 auto;
 			}
-
+			.force-hidden {
+				display:none !important;
+			}
 		</style>
 		<div on-keydown="_keyDownNoOp">
 			<d2l-dnd-sortable
@@ -160,7 +162,7 @@
 							href="[[_getSelfLink(criterion)]]"
 							token="[[token]]"
 							has-out-of="[[hasOutOf]]"
-							display-name-placeholder="[[_isFirst(index)]]"
+							display-name-placeholder="[[_isFirst(index, criterionCount)]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen"
@@ -172,7 +174,7 @@
 										class="reorder-button"
 										title="[[_getPositionLocalize('moveCriterionUp', index)]]"
 										hidden$="[[!_canReorder]]"
-										disabled$="[[_isFirst(index)]]"
+										disabled$="[[_isFirst(index, criterionCount)]]"
 										data-index$="[[index]]"
 										on-tap="_moveUp"
 									>
@@ -183,7 +185,7 @@
 										class="reorder-button"
 										title="[[_getPositionLocalize('moveCriterionDown', index)]]"
 										hidden$="[[!_canReorder]]"
-										disabled$="[[_isLast(index)]]"
+										disabled$="[[_isLast(index, criterionCount)]]"
 										data-index$="[[index]]"
 										on-tap="_moveDown"
 									>
@@ -194,7 +196,7 @@
 								<d2l-icon
 									class="dnd-drag-handle"
 									icon="d2l-tier1:dragger"
-									hidden="[[!_canReorder]]"
+									hidden="[[_hideDragHandle(index, criterionCount)]]"
 								></d2l-icon>
 							</div>
 						</d2l-rubric-criterion-editor>
@@ -280,12 +282,12 @@
 			_onReorderGroupFocusIn: function(e) {
 				var currentElement = e.currentTarget;
 				currentElement.classList.remove('reorder-offscreen');
-				currentElement.nextElementSibling.hidden = true;
+				currentElement.nextElementSibling.classList.add('force-hidden');
 			},
 			_onReorderGroupFocusOut: function(e) {
 				var currentElement = e.currentTarget;
 				currentElement.classList.add('reorder-offscreen');
-				currentElement.nextElementSibling.hidden = false;
+				currentElement.nextElementSibling.classList.remove('force-hidden');
 			},
 			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {
@@ -313,17 +315,18 @@
 			_getCriterionLegend: function(index, count) {
 				return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count);
 			},
-
-			_isFirst: function(index) {
+			_hideDragHandle: function(index, criterionCount) {
+				return !this._canReorder || (this._isFirst(index,criterionCount) && this._isLast(index,criterionCount));
+			},
+			_isFirst: function(index, criterionCount) {
 				return index === 0;
 			},
-			_isLast: function(index) {
+			_isLast: function(index, criterionCount) {
 				return index === this._criteriaEntities.length - 1;
 			},
 			_canCreateCriterion: function(entity) {
 				return entity && entity.hasActionByName('create');
 			},
-
 			_handleAddCriterion: function() {
 				var action = this.entity.getActionByName('create');
 				if (action) {
