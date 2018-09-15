@@ -1,0 +1,53 @@
+{
+    "class": [
+        "rubric",
+        "published",
+        "analytic",
+        "numeric"
+    ],
+    "properties": {
+        "name": "Custom Points",
+        "outOf": 12
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/criteria-groups"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups.json"
+        },
+        {
+            "rel": [
+                "https://api.brightspace.com/rels/organization"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points.json"
+        }
+    ]
+}
