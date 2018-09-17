@@ -1,0 +1,35 @@
+{
+    "class": [
+        "level",
+        "overridden"
+    ],
+    "properties": {
+        "name": "Level 2"
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1478.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1477.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1478.json"
+        }
+    ]
+}
