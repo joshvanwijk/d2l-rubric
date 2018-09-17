@@ -173,8 +173,8 @@
 			_handleSaveError: function(e) {
 				this._clearAlerts();
 				// only handle generic errors (without details)
-				if (!e.detail.error.hasOwnProperty('stack')) {
-					var errObj = e.detail.error.string ? e.detail.error.string : e.detail.error.json;
+				if (e.detail.error && !e.detail.error.hasOwnProperty('stack')) {
+					var errObj = e.detail.error.string ? e.detail.error.string : e.detail.error.json ? e.detail.error.json : e.detail.error;
 					if (errObj.hasOwnProperty('properties')) {
 						return;
 					}
