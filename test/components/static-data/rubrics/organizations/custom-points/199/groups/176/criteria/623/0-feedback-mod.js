@@ -13,6 +13,23 @@ Object.assign(window.testFixtures,
 					"levelName": "Level 4",
 					"points": 4
 				},
+				"actions": [
+					{
+						"name": "update-points",
+						"method": "PATCH",
+						"href": "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623/0.json",
+						"fields": [
+							{
+								"class": [
+									"required"
+								],
+								"type": "number",
+								"name": "points",
+								"value": "4"
+							}
+						]
+					}
+				],
 				"entities": [
 					{
 						"class": [

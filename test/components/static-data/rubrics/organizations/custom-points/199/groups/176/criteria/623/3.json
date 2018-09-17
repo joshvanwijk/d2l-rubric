@@ -7,6 +7,23 @@
       "levelName": "Level 1",
       "points": 1
     },
+    "actions": [
+      {
+        "name": "update-points",
+        "method": "PATCH",
+        "href": "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623/0.json",
+        "fields": [
+          {
+            "class": [
+              "required"
+            ],
+            "type": "number",
+            "name": "points",
+            "value": "1"
+          }
+        ]
+      }
+    ],
     "entities": [
         {
             "class": [

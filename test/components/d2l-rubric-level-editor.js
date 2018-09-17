@@ -179,7 +179,7 @@ suite('<d2l-rubric-level-editor>', function() {
 			var element;
 
 			setup(function(done) {
-				element = fixture('custompoints');
+				element = fixture('custom-points');
 				function waitForLoad(e) {
 					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/custom-points/199/groups/176/levels/1479.json') {
 						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
