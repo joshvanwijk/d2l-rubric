@@ -186,7 +186,7 @@
 			},
 			_computeCanEditDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.hasActionByName('update-description');
+				return description && description.hasActionByName('update');
 			},
 
 			_computeCanEditPoints: function(entity) {
