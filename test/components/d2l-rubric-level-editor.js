@@ -90,17 +90,64 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 			});
 
+			test('generates event if saving points fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({
+							'class':['error'], 'properties':{'status':'BadRequest', 'code':400, 'type':'https://rubrics.api.brightspace.com/rels/errors/invalid-number-points-error', 'title':'InvalidNumberPointsError', 'detail':'Point value must be a valid number'}
+						}));
+					}
+				});
+				fetch.returns(promise);
+
+				var pointsInput = element.$$('#level-points');
+				pointsInput.value = 'abc';
+				element.addEventListener('d2l-siren-entity-save-error', function() {
+					done();
+				});
+				pointsInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+			});
+
+			test('sets aria-invalid if saving points fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({
+							'class':['error'], 'properties':{'status':'BadRequest', 'code':400, 'type':'https://rubrics.api.brightspace.com/rels/errors/invalid-number-points-error', 'title':'InvalidNumberPointsError', 'detail':'Point value must be a valid number'}
+						}));
+					}
+				});
+				fetch.returns(promise);
+
+				var nameTextInput = element.$$('#level-points');
+				nameTextInput.value = 'abc';
+				raf(function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
+						flush(function() {
+							expect(nameTextInput.ariaInvalid).to.equal('true');
+							done();
+						});
+					});
+					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
 			test('sets aria-invalid if saving name fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: false,
 					json: function() {
-						return Promise.resolve(JSON.stringify({}));
+						return Promise.resolve(JSON.stringify({
+							'class':['error'], 'properties':{'status':'BadRequest', 'code':400, 'type':'https://rubrics.api.brightspace.com/rels/errors/invalid-number-points-error', 'title':'InvalidNumberPointsError', 'detail':'Point value must be a valid number'}
+						}));
 					}
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('d2l-text-input');
+				var nameTextInput = element.$$('#level-name');
 				nameTextInput.value = 'Superman';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -114,7 +161,7 @@ suite('<d2l-rubric-level-editor>', function() {
 			});
 
 			test('sets aria-invalid if name is empty', function(done) {
-				var nameTextInput = element.$$('d2l-text-input');
+				var nameTextInput = element.$$('#level-name');
 				nameTextInput.value = '';
 				raf(function() {
 					flush(function() {

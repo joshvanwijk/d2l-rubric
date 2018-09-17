@@ -172,6 +172,13 @@
 
 			_handleSaveError: function(e) {
 				this._clearAlerts();
+				// only handle generic errors (without details)
+				if (!e.detail.error.hasOwnProperty('stack')) {
+					var errObj = e.detail.error.string ? e.detail.error.string : e.detail.error.json;
+					if (errObj.hasOwnProperty('properties')) {
+						return;
+					}
+				}
 				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
 				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 			},

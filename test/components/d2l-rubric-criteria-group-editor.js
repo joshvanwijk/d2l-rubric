@@ -72,7 +72,9 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				var promise = Promise.resolve({
 					ok: false,
 					json: function() {
-						return Promise.resolve(JSON.stringify({}));
+						return Promise.resolve(JSON.stringify(
+							{'class':['error'], 'properties':{'status':'BadRequest', 'code':400, 'type':'https://rubrics.api.brightspace.com/rels/errors/invalid-number-points-error', 'title':'InvalidNumberPointsError', 'detail':'Point value must be a valid number'}}
+						));
 					}
 				});
 				fetch.returns(promise);
@@ -82,7 +84,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				element.$$('#group-name').dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 			});
 		});
-		
+
 		suite('readonly', function() {
 			var element;
 
@@ -97,20 +99,20 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
 				element.token = 'foozleberries';
 			});
-			
+
 			test('group name is disabled', function() {
 				expect(element.$$('#group-name').disabled).to.be.true;
 			});
 		});
 	});
 
-	suite ('Ally Test',function(){
+	suite ('Ally Test', function(){
 		suiteSetup(function(){
 			if (!isAttestInstalled()){
 				this.skip();
 			}
 		});
-        test('d2l-rubric-criteria-group-editor ally checks',function(){
+        test('d2l-rubric-criteria-group-editor ally checks', function(){
 			return ally_tests();
 		});
     });
