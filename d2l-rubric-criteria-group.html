@@ -322,9 +322,8 @@
 				return entities || [];
 			},
 
-			_hasFeedback: function(entity, assessmentResult) {
-				var entityLink = this._getSelfLink(entity);
-				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
+			_hasFeedback: function(criterionEntity, assessmentResult) {
+				return !!this.getAssessmentFeedback(criterionEntity, assessmentResult);
 			},
 
 			_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback) {
@@ -429,7 +428,7 @@
 
 				var noBottom = noBottomCells && noBottomCells[selfLink];
 				var isLastCell = criterionNum === criteria.length - 1;
-				var hasFeedback = this._hasFeedback(criterionCell, assessmentResult) || criterionNum === addingFeedback;
+				var hasFeedback = this._hasFeedback(criteria[criterionNum], assessmentResult) || criterionNum === addingFeedback;
 
 				// A cell already has a bottom border in the following cases:
 				// 1. The cell is on top of another selected cell and does not have feedback
