@@ -7,22 +7,35 @@
         "name": "Criterion 1",
         "outOf": 4
     },
-    "actions": [{
-      "name": "update",
-      "method": "PUT",
-      "href":  "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623.json",
-      "fields": [{
-        "class": ["required"],
-        "type": "text",
-        "name": "name",
-        "value": "Criterion 1"
-      }]
-    },
-    {
+    "actions": [
+      {
+        "name": "update",
+        "method": "PUT",
+        "href":  "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623.json",
+        "fields": [{
+          "class": ["required"],
+          "type": "text",
+          "name": "name",
+          "value": "Criterion 1"
+        }]
+      },
+      {
+        "name": "update-outof",
+        "method": "PATCH",
+        "href":  "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623.json",
+        "fields": [{
+          "class": ["required"],
+          "type": "number",
+          "name": "outOf",
+          "value": "4"
+        }]
+      },
+      {
         "href": "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623.json",
         "name": "delete",
         "method": "DELETE"
-    }],
+      }
+    ],
     "entities": [
         {
             "class": [
