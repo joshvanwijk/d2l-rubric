@@ -102,7 +102,7 @@
 			}
 
 			.col-last d2l-text-input {
-				width: 1.5rem;
+				width: 2.5rem;
 			}
 
 			.gutter-left, .gutter-right {
@@ -116,6 +116,10 @@
 			:host-context([dir='rtl']) .criterion-remove {
 				right: auto;
 				left: -2.5rem;
+			}
+
+			#out-of-textbox {
+				margin: 0 0.5rem;
 			}
 
 			[hidden] {
@@ -172,12 +176,19 @@
 			</div>
 		</div>
 		<div text-only$="[[!hasOutOf]]" class="cell col-last out-of">
-			<span hidden="[[!hasOutOf]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
+			<span hidden="[[!hasOutOf]]">
 				<template is="dom-if" if="[[!_outOfIsEditable]]">
-					/ [[_outOf]]
+					<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
+						/ [[_outOf]]
+					</div>
 				</template>
 				<template is="dom-if" if="[[_outOfIsEditable]]">
-					/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input>
+					/ <d2l-text-input
+						id="out-of-textbox"
+						value="[[_outOf]]"
+						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
+						prevent-submit>
+					</d2l-text-input>
 				</template>
 			</span>
 		</div>
@@ -338,13 +349,7 @@
 			},
 
 			_isOutOfEditable: function(entity) {
-				if (this.hasOutOf && entity) {
-					var action = entity.getActionByName("update");
-					if (!action) return false;
-					var field = action.getFieldByName("outOf");
-					if (!field || (field && field.hasClass("readonly"))) return false;
-					return true;
-				}
+				return this.hasOutOf && entity && entity.hasActionByName("update-outof");
 			}
 		});
 	</script>

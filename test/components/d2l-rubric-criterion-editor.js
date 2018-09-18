@@ -181,6 +181,36 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				element.$$('#remove').click();
 			});
 		});
+
+		suite('custom points', function() {
+
+			var fetch;
+			var element;
+
+			setup(function(done) {
+				element = fixture('custom');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('out-of value is editable', function() {
+				setTimeout(function() {
+					var outOfTextBox = element.$$('#out-of-textbox');
+					expect(isVisible(outOfTextBox)).to.be.true;
+				}, 100);
+			});
+		});
 	});
 
 	suite ('Ally Test',function(){
