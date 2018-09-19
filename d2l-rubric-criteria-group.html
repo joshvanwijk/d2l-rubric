@@ -91,6 +91,9 @@
 			.criterion-cell.assessable:hover {
 				background-color: var(--d2l-color-sylvite);
 			}
+			.criterion-cell.assessable:focus {
+				background-color: var(--d2l-color-sylvite);
+			}
 			.criterion-cell.assessable.selected {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
@@ -151,12 +154,12 @@
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]" on-tap="handleTap" data-href$="[[_getSelfLink(criterionCell)]]">
+							<d2l-td tabindex="0" class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities)]]" on-tap="handleTap" on-keypress="handleKey" data-href$="[[_getSelfLink(criterionCell)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]"/>
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion)]]" on-tap="_handleOverrideScore">
+							<d2l-td class$="[[_getOutOfClassName(criterion)]]" on-tap="_handleOverrideScore" tabindex="0" on-keypress="_handleScoreKeypress">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
 									class="score-wrapper"
@@ -172,7 +175,7 @@
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell">
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0">
 							<d2l-rubric-feedback
 								id="feedback-inner[[criterionNum]]"
 								class="feedback-wrapper"
@@ -468,6 +471,17 @@
 				this.editingScore = -1;
 			},
 
+			handleKey: function(event) {
+				if (this.readOnly) {
+					return;
+				}
+				if (event.keyCode === 13) { // enter key
+					this.assessCriterionCell(event.srcElement.dataset.href);
+					this._addingFeedback = -1;
+					this.editFeedback = -1;
+				}
+			},
+
 			_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
 				if (!feedbackDisplay) {
 					return;
@@ -493,6 +507,12 @@
 				}
 				var criterionNum = event.model.get('criterionNum');
 				this.editingScore = criterionNum;
+			},
+
+			_handleScoreKeypress: function(event) {
+				if (event.keyCode === 13) {
+					this._handleOverrideScore(event);
+				}
 			}
 		});
 	</script>
