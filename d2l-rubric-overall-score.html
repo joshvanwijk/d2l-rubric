@@ -18,26 +18,26 @@
 				display: block;
 				width: 100%;
 			}
-			
+
 			h4 {
 				@apply --d2l-heading-4;
 				margin: 0;
 			}
-			
+
 			h3 {
 				@apply --d2l-heading-3;
 			}
-			
+
 			.overall-levels {
 				width: 100%;
 				display: flex;
 				align-items: stretch;
 			}
-			
+
 			.overall-levels[data-mobile] {
 				flex-direction: column;
 			}
-			
+
 			.overall-level {
 				box-sizing: border-box;
 				min-width: 165px;
@@ -47,81 +47,81 @@
 				border: 1px solid var(--d2l-color-mica);
 				border-radius: 8px;
 			}
-			
+
 			.overall-level[data-achieved] {
 				background-color: var(--d2l-color-celestine-plus-2) !important;
 				border-color: var(--d2l-color-celestine);
 			}
-			
+
 			.overall-level[data-achieved] h4 > d2l-icon {
 				display: block;
 			}
-			
+
 			.overall-level[data-clickable] {
 				cursor: pointer;
 			}
-			
+
 			.overall-level[data-clickable]:hover, .overall-level[data-clickable]:focus {
 				background-color: var(--d2l-color-sylvite);
 			}
-			
+
 			.overall-levels[data-mobile] .overall-level {
 				flex-grow: 0;
 				margin-right: 0;
 				margin-bottom: 0.6rem;
 				min-width: 0;
 			}
-			
+
 			.overall-level:last-child {
 				margin-right: 0;
 			}
-			
+
 			.overall-level-text {
 				@apply --d2l-body-small-text;
 			}
-			
+
 			h4 > d2l-icon {
 				display: none;
 				float: right;
 				color: var(--d2l-color-celestine);
 			}
-			
+
 			.clear-override-label {
 				color: var(--d2l-color-celestine);
 				text-align: center;
 				font-size: 0.85rem;
 			}
-			
+
 			.clear-override-label > d2l-icon {
 				color: var(--d2l-color-celestine);
 				vertical-align: middle;
 				margin-left: 5px;
 				margin-right: 5px;
 			}
-			
+
 			.clear-override-label > b {
 				vertical-align: middle;
 			}
-			
+
 			d2l-scroll-wrapper {
-			
+
 				--d2l-scroll-wrapper-h-scroll: {
 					border-left: 1px dashed var(--d2l-color-mica);
 					border-right: 1px dashed var(--d2l-color-mica);
 				};
-				
+
 				--d2l-scroll-wrapper-left: {
 					border-left: none;
 				};
-				
+
 				--d2l-scroll-wrapper-right: {
 					border-right: none;
 				};
-				
+
 				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
-			
+
 			s-html {
 				overflow: hidden;
 				width: 100%;
@@ -140,6 +140,8 @@
 					data-achieved$="[[_isAchieved(level, _version)]]"
 					data-clickable$="[[_isClickable(level, _version)]]"
 					on-tap="_levelClicked"
+					on-keypress="_handleKeypress"
+					tabindex="0"
 				>
 					<h4>
 						<span>[[level.properties.name]]</span>
@@ -293,8 +295,13 @@
 						return this.performSirenAction(action).catch(console.error); // eslint-disable-line no-console
 					}.bind(this)
 				);
-			}
+			},
 
+			_handleKeypress: function(event) {
+				if (event.keyCode === 13) {
+					this._levelClicked(event);
+				}
+			}
 		});
 	</script>
 </dom-module>
