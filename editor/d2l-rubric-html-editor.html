@@ -1,0 +1,169 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-html-editor/d2l-html-editor.html">
+<link rel="import" href="../../d2l-text-input/d2l-text-input-shared-styles.html">
+
+<dom-module id="d2l-rubric-html-editor">
+	<template>
+	<style>
+
+		d2l-html-editor {
+		word-break: break-word;
+		word-wrap: break-word;
+		}
+
+		d2l-html-editor > .d2l-richtext-editor-container {
+		@apply --d2l-input;
+
+		padding: 0.4rem 1rem;
+		}
+
+		d2l-html-editor > .d2l-richtext-editor-container:hover,
+		d2l-html-editor > .d2l-richtext-editor-container:focus,
+		d2l-html-editor > .d2l-richtext-editor-container:active,
+		d2l-html-editor > .d2l-richtext-editor-container.html-editor-container-hover {
+		@apply --d2l-input-hover;
+
+		padding: calc(0.4rem - 1px) calc(1rem - 1px);
+		}
+
+		d2l-html-editor.invalid > .d2l-richtext-editor-container {
+		border-width: 1px;
+
+		@apply --d2l-input-invalid;
+		}
+
+		d2l-html-editor.invalid > .d2l-richtext-editor-container:hover,
+		d2l-html-editor.invalid > .d2l-richtext-editor-container:focus {
+		border-width: 2px;
+
+		@apply --d2l-input-invalid;
+		}
+
+		@media (max-width: 615px), (max-device-width: 960px) {
+		d2l-html-editor > .d2l-richtext-editor-container {
+			height: 3.9rem;
+		}
+		}
+	</style>
+	<div class="html-editor-outer-compact">
+		<d2l-html-editor editor-id=[[_uniqueId]]
+						 inline="1"
+						 auto-focus=[[autoFocus]]
+						 auto-focus-end
+						 min-rows="1"
+						 max-rows="1000"
+						 app-root=[[_appRoot]]
+						 allow-unsafe=false
+						 lang-tag=[[language]]
+						 fullpage-enabled=0
+						 content=[[_encodeURIComponent(content)]]
+						 toolbar=[[_toolbar]]
+						 plugins=[[_plugins]]
+						 object-resizing=[[objectResizing]]>
+		<div id="toolbar-shortcut" hidden></div>
+		<div class='d2l-richtext-editor-container'
+			id=[[_uniqueId]]
+			role="textbox"
+			placeholder$=[[placeholder]]
+			aria-label$=[[ariaLabel]]></div>
+		</d2l-html-editor>
+	</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-rubric-html-editor',
+			properties: {
+				language: {
+					type: String,
+				},
+				/**
+				* Every html editor element on a page MUST have a unique ID
+				*/
+				_uniqueId: {
+					type: String,
+					value: function() {
+						return 'htmleditor-' + Date.now();
+					},
+				},
+				ariaLabel: {
+					type: String,
+				},
+				invalid: {
+					type: Boolean,
+					value: false,
+					observer: '_invalidChanged',
+				},
+				inline: {
+					type: Number,
+					value: 1,
+				},
+				autoFocus: {
+					type: Number,
+					value: 1,
+				},
+				minRows: {
+					type: Number,
+					value: 1,
+				},
+				maxRows: {
+					type: Number,
+				},
+				_appRoot: {
+					type: String,
+					value: function() {
+						return this.resolveUrl('../');
+					},
+				},
+				placeholder: {
+					type: String,
+				},
+				content: {
+					type: String,
+					observer: '_contentChanged',
+				},
+				_toolbar: {
+					type: String,
+					value: 'bold italic underline bullist d2l_emoticons',
+				},
+				_plugins: {
+					type: String,
+					value: 'lists paste d2l_placeholder d2l_filter d2l_emoticons',
+				},
+				objectResizing: {
+					type: Boolean,
+					value: false,
+				},
+			},
+			attached: function() {
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					this.listen(this.$$('d2l-html-editor'), 'change', '_valueChanged');
+				}.bind(this));
+			},
+			detached: function() {
+				this.unlisten(this.$$('d2l-html-editor'), 'change', '_valueChanged');
+			},
+			_valueChanged: function(e) {
+				this.fire('value-changed', {value: e.detail.content});
+			},
+			focus: function() {
+				this.$$('d2l-html-editor').focus();
+			},
+			getContent: function() {
+				return this.$$('d2l-html-editor').getContent();
+			},
+			_contentChanged: function(newValue, oldValue) {
+				if (this._uniqueId && oldValue && newValue === '') {
+					this.$$('d2l-html-editor').clearContent();
+				}
+			},
+			_invalidChanged: function(isInvalid) {
+				var htmlEditor = this.$$('d2l-html-editor');
+				this.toggleClass('invalid', isInvalid, htmlEditor);
+			},
+			_encodeURIComponent: function(content) {
+				return content ? encodeURIComponent(content) : '';
+			},
+		});
+	</script>
+</dom-module>

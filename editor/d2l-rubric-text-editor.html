@@ -1,0 +1,109 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="./d2l-rubric-html-editor.html">
+
+<dom-module id="d2l-rubric-text-editor">
+	<template>
+	<style>
+		:host {
+			line-height: 1rem;
+			display: flex;
+			flex-grow: 1;
+
+			--d2l-textarea: {
+
+				display: block;
+				height: 100%;
+				overflow: hidden;
+				hyphens: auto;
+			};
+		}
+
+		[hidden] {
+			display: none;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		d2l-textarea {
+			display: block;
+			flex-grow: 1;
+			width: 100%;
+		}
+
+	</style>
+		<template is="dom-if" if="[[!enableHtmlEditor]]">
+			<d2l-textarea
+				id="textEditor"
+				hidden$=[[enableHtmlEditor]]
+				aria-invalid="[[ariaInvalid]]"
+				aria-label="[[ariaLabel]]"
+				disabled="[[disabled]]"
+				no-border
+				hover-styles
+				value=[[value]]
+			></d2l-textarea>
+		</template>
+		<template is="dom-if" if="[[enableHtmlEditor]]">
+			<d2l-rubric-html-editor
+				id="htmlEditor"
+				hidden$=[[!enableHtmlEditor]]
+				aria-label=[[ariaLabel]]
+				invalid=[[ariaInvalid]]
+				error-message=[[errorMessage]]
+				language=[[language]]
+				placeholder=[[placeholder]]
+				content=[[value]]
+				min-rows=[[minRows]]
+				max-rows=[[maxRows]]
+			></d2l-rubric-html-editor>
+		</template>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-rubric-text-editor',
+			properties: {
+				language: String,
+				ariaLabel: {
+					type: String,
+				},
+				ariaInvalid: {
+					type: Boolean,
+					value: false,
+				},
+				placeholder: {
+					type: String,
+				},
+				value: {
+					type: String,
+					notify: true,
+				},
+				enableHtmlEditor: {
+					type: Boolean,
+					value: true,
+				},
+				disabled: {
+					type: Boolean,
+					value: false,
+				}
+			},
+			focus: function() {
+				if (this.enableHtmlEditor) {
+					this.$$('#htmlEditor').focus();
+				} else {
+					this.$$('#textEditor').focus();
+				}
+			},
+			getContent: function() {
+				if (this.enableHtmlEditor) {
+					return this.$$('#htmlEditor').getContent();
+				} else {
+					return this.$$('#textEditor').getContent();
+				}
+			}
+		});
+	</script>
+</dom-module>

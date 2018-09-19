@@ -1,11 +1,11 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
+<link rel="import" href="./d2l-rubric-text-editor.html">
 
 <dom-module id="d2l-rubric-description-editor">
 	<template strip-whitespace>
@@ -14,37 +14,23 @@
 				display: flex;
 				flex-grow: 1;
 				min-height: 4rem;
-
-				--d2l-textarea: {
-					display: block;
-					height: 100%;
-					overflow: hidden;
-					hyphens: auto;
-				};
 			}
 
 			* {
 				box-sizing: border-box;
 			}
 
-			d2l-textarea {
-				display: block;
-				flex-grow: 1;
-				width: 100%;
-			}
-
 		</style>
-
-		<d2l-textarea
+		<d2l-rubric-text-editor
 			id="description"
 			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
 			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEdit]]"
-			no-border
-			hover-styles
 			value=[[_getDescription(entity)]]
 			on-change="_saveDescription"
-		></d2l-textarea>
+			language=[[language]]
+		>
+		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
 			<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
 		</template>

@@ -31,6 +31,7 @@
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior#^5.0.2",
     "d2l-hm-constants-behavior": "git://github.com/Brightspace/d2l-hm-constants-behavior.git#^5.17.0",
     "d2l-icons": "^5.0.3",
+    "d2l-html-editor": "Brightspace/d2l-html-editor#^0.0.127",
     "d2l-loading-spinner": "^6.0.2",
     "d2l-localize-behavior": "^1.1.0",
     "d2l-offscreen": "^3.0.3",
