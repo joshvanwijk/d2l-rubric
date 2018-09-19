@@ -167,12 +167,12 @@
 				return this._canEditFeedback(criterionEntity, assessmentEntity) || this.addingFeedback;
 			},
 
-			getAssessmentFeedbackHtml: function(criterionEntity, assessmentEntity) {
-				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, true);
+			getAssessmentFeedbackHtml: function(criterionEntity, assessmentResult) {
+				return this.getAssessmentFeedback(criterionEntity, assessmentResult, true);
 			},
 
-			getAssessmentFeedbackText: function(criterionEntity, assessmentEntity) {
-				return this.getAssessmentFeedback(criterionEntity, assessmentEntity, false);
+			getAssessmentFeedbackText: function(criterionEntity, assessmentResult) {
+				return this.getAssessmentFeedback(criterionEntity, assessmentResult, false);
 			}
 		});
 	</script>
