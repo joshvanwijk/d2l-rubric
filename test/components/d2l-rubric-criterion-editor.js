@@ -206,10 +206,10 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('out-of value is editable', function() {
-				setTimeout(function() {
+				element.async(function() {
 					var outOfTextBox = element.$$('#out-of-textbox');
 					expect(isVisible(outOfTextBox)).to.be.true;
-				}, 100);
+				});
 			});
 
 			test('generates event if saving fails', function(done) {
@@ -222,7 +222,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				setTimeout(function() {
+				element.async(function() {
 					var outOfTextArea = element.$$('#out-of-textbox');
 					outOfTextArea.value = 'five';
 					raf(function() {
@@ -234,7 +234,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 						});
 						outOfTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 					});
-				}, 100);
+				});
 			});
 		});
 	});
