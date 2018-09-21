@@ -4,7 +4,7 @@
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../s-html/s-html.html">
-<link rel="import" href="../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="../d2l-inputs/d2l-input-textarea.html">
 <link rel="import" href="./siren-entity.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 
@@ -81,12 +81,12 @@
 				<div class="feedback-heading">
 					[[localize('feedback')]]
 				</div>
-				<d2l-textarea
+				<d2l-input-textarea
 					id="text-area"
 					value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]"
 					placeholder="[[localize('editFeedback')]]"
 				>
-				</d2l-textarea>
+			</d2l-input-textarea>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
 				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
@@ -129,7 +129,7 @@
 			],
 
 			attached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				var elem = Polymer.dom(this.root).querySelector('d2l-input-textarea');
 				if (!elem) {
 					return;
 				}
@@ -137,13 +137,13 @@
 			},
 
 			detached: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				var elem = Polymer.dom(this.root).querySelector('d2l-input-textarea');
 				if (!elem) return;
 				elem.removeEventListener('blur', this._boundBlurHandler);
 			},
 
 			focus: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-textarea');
+				var elem = Polymer.dom(this.root).querySelector('d2l-input-textarea');
 				elem.focus();
 			},
 

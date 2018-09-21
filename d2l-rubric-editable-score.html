@@ -4,7 +4,7 @@
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../s-html/s-html.html">
-<link rel="import" href="../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../d2l-inputs/d2l-input-text.html">
 <link rel="import" href="./siren-entity.html">
 <link rel="import" href="../d2l-tooltip/d2l-tooltip.html">
 
@@ -15,7 +15,7 @@
 			:host {
 				display: block;
 			}
-			d2l-text-input {
+			d2l-input-text {
 				max-width: 150px;
 				min-width: 75px;
 			}
@@ -41,16 +41,16 @@
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></siren-entity>
 		<div hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
-			<d2l-text-input
-				id="text-area"
-				value="[[getScore(entity, assessmentResult, totalScore)]]"
-				type="number"
-				step="any"
-				min="0"
-				max="100000"
-				on-blur="_blurHandler"
-			>
-			</d2l-text-input>
+		<d2l-input-text
+			id="text-area"
+			value="[[getScore(entity, assessmentResult, totalScore)]]"
+			type="number"
+			step="any"
+			min="0"
+			max="100000"
+			on-blur="_blurHandler"
+		>
+		</d2l-input-text>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
 		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(scoreOverridden)]]">
@@ -125,7 +125,7 @@
 			},
 
 			focus: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-text-input');
+				var elem = Polymer.dom(this.root).querySelector('d2l-input-text');
 				elem.focus();
 			},
 

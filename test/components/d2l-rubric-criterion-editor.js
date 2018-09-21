@@ -58,7 +58,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				nameTextArea.value = 'Batman and Robin';
 				raf(function() {
 					element.addEventListener('d2l-rubric-criterion-saved', function() {
@@ -81,7 +81,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				nameTextArea.value = 'Batman and Robin';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -95,7 +95,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('sets aria-invalid if name is empty', function(done) {
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				nameTextArea.value = '';
 				raf(function() {
 					flush(function() {
@@ -128,7 +128,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('name is disabled', function() {
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				expect(nameTextArea.disabled).to.be.true;
 			});
 

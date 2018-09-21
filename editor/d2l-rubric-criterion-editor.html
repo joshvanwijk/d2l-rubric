@@ -2,8 +2,8 @@
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
-<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
-<link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-textarea.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-text.html">
 <link rel="import" href="../../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
@@ -28,9 +28,10 @@
 				max-height: 0;
 				transition: opacity 100ms ease-out, max-height 400ms ease-out;
 
-				--d2l-textarea: {
+				--d2l-input-textarea: {
 					display: block;
 					height: 100%;
+					min-height: 0;
 					overflow: hidden;
 					hyphens: auto;
 				};
@@ -45,7 +46,7 @@
 				box-sizing: border-box;
 			}
 
-			d2l-textarea {
+			d2l-input-textarea {
 				display: block;
 				flex-grow: 1;
 				width: 100%;
@@ -101,7 +102,7 @@
 				font-weight: 700;
 			}
 
-			.col-last d2l-text-input {
+			.col-last d2l-input-text {
 				width: 2.5rem;
 			}
 
@@ -131,7 +132,7 @@
 			<slot name="gutter-left"></slot>
 		</div>
 		<div class="cell col-first criterion-name">
-			<d2l-textarea
+			<d2l-input-textarea
 				id="name"
 				aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 				aria-label="[[localize('criterionNameAriaLabel')]]"
@@ -142,7 +143,7 @@
 				placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]"
 				on-change="_saveName"
 				required="[[_nameRequired]]">
-			</d2l-textarea>
+			</d2l-input-textarea>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip for="name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
@@ -183,12 +184,12 @@
 					</div>
 				</template>
 				<template is="dom-if" if="[[_outOfIsEditable]]">
-					/ <d2l-text-input
+					/ <d2l-input-text
 						id="out-of-textbox"
 						value="[[_outOf]]"
 						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
 						prevent-submit>
-					</d2l-text-input>
+					</d2l-input-text>
 				</template>
 			</span>
 		</div>

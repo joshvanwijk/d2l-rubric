@@ -1,7 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
-<link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-textarea.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-text.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
@@ -17,9 +17,10 @@
 				flex-grow: 1;
 				min-height: 4rem;
 
-				--d2l-textarea: {
+				--d2l-input-textarea: {
 					display: block;
 					height: 100%;
+					min-height: 0;
 					overflow: hidden;
 					hyphens: auto;
 				};
@@ -29,14 +30,14 @@
 				box-sizing: border-box;
 			}
 
-			d2l-textarea {
+			d2l-input-textarea {
 				display: block;
 				flex-grow: 1;
 				width: 100%;
 				min-height: 4rem;
 			}
 
-			d2l-text-input {
+			d2l-input-text {
 				width: auto;
 			}
 
@@ -59,7 +60,7 @@
 		</style>
 
 		<div class="points" hidden="[[!_showPoints]]">
-			<d2l-text-input
+			<d2l-input-text
 				id="cell-points"
 				value="[[entity.properties.points]]"
 				on-change="_savePoints"
@@ -69,10 +70,10 @@
 				size="1"
 				required="[[_pointsRequired]]"
 				prevent-submit>
-			</d2l-text-input>
+			</d2l-input-text>
 			<div>[[localize('pointsAbbreviation')]]</div>
 		</div>
-		<d2l-textarea
+		<d2l-input-textarea
 			id="description"
 			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
 			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
@@ -81,7 +82,7 @@
 			hover-styles
 			value=[[_getDescription(entity)]]
 			on-change="_saveDescription"
-		></d2l-textarea>
+		></d2l-input-textarea>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
 			<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
 		</template>
