@@ -53,7 +53,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var feedbackTextArea = element.$$('d2l-textarea');
+					var feedbackTextArea = element.$$('d2l-input-textarea');
 					feedbackTextArea.value = 'You are a grammar rockstar!';
 					raf(function() {
 						element.addEventListener('d2l-rubric-feedback-saved', function() {
@@ -76,7 +76,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var feedbackTextArea = element.$$('d2l-textarea');
+					var feedbackTextArea = element.$$('d2l-input-textarea');
 					feedbackTextArea.value = 'You are a grammar rockstar!';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -107,7 +107,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 				});
 
 				test('feedback is disabled', function() {
-					var feedbackTextArea = element.$$('d2l-textarea');
+					var feedbackTextArea = element.$$('d2l-input-textarea');
 					expect(feedbackTextArea.disabled).to.be.true;
 				});
 
@@ -151,7 +151,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var feedbackTextArea = element.$$('d2l-textarea');
+					var feedbackTextArea = element.$$('d2l-input-textarea');
 					feedbackTextArea.value = 'You are a grammar rockstar!';
 					raf(function() {
 						element.addEventListener('d2l-rubric-feedback-saved', function() {
@@ -174,7 +174,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var feedbackTextArea = element.$$('d2l-textarea');
+					var feedbackTextArea = element.$$('d2l-input-textarea');
 					feedbackTextArea.value = 'You are a grammar rockstar!';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -205,7 +205,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 				});
 
 				test('feedback is disabled', function() {
-					var feedbackTextArea = element.$$('d2l-textarea');
+					var feedbackTextArea = element.$$('d2l-input-textarea');
 					expect(feedbackTextArea.disabled).to.be.true;
 				});
 
