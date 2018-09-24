@@ -53,7 +53,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-input-textarea');
+					var descriptionTextArea = element.$$('d2l-rubric-text-editor');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-rubric-description-saved', function() {
@@ -76,7 +76,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-input-textarea');
+					var descriptionTextArea = element.$$('d2l-rubric-text-editor');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -107,7 +107,7 @@ suite('<d2l-rubric-description-editor>', function() {
 				});
 
 				test('description is disabled', function() {
-					var descriptionTextArea = element.$$('d2l-input-textarea');
+					var descriptionTextArea = element.$$('d2l-rubric-text-editor');
 					expect(descriptionTextArea.disabled).to.be.true;
 				});
 
@@ -244,7 +244,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-input-textarea');
+					var descriptionTextArea = element.$$('d2l-rubric-text-editor');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-rubric-description-saved', function() {
@@ -267,7 +267,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-input-textarea');
+					var descriptionTextArea = element.$$('d2l-rubric-text-editor');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -298,7 +298,7 @@ suite('<d2l-rubric-description-editor>', function() {
 				});
 
 				test('description is disabled', function() {
-					var descriptionTextArea = element.$$('d2l-input-textarea');
+					var descriptionTextArea = element.$$('d2l-rubric-text-editor');
 					expect(descriptionTextArea.disabled).to.be.true;
 				});
 
