@@ -135,7 +135,9 @@
 			d2l-rubric-criterion-editor {
 				flex: 1 1 auto;
 			}
-
+			.force-hidden {
+				display:none !important;
+			}
 		</style>
 		<div on-keydown="_keyDownNoOp">
 			<d2l-dnd-sortable
@@ -280,12 +282,12 @@
 			_onReorderGroupFocusIn: function(e) {
 				var currentElement = e.currentTarget;
 				currentElement.classList.remove('reorder-offscreen');
-				currentElement.nextElementSibling.hidden = true;
+				currentElement.nextElementSibling.classList.add('force-hidden');
 			},
 			_onReorderGroupFocusOut: function(e) {
 				var currentElement = e.currentTarget;
 				currentElement.classList.add('reorder-offscreen');
-				currentElement.nextElementSibling.hidden = false;
+				currentElement.nextElementSibling.classList.remove('force-hidden');
 			},
 			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {

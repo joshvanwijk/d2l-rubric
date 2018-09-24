@@ -1,7 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
-
+<link rel="import" href="../../d2l-inputs/d2l-input-text.html">
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
@@ -12,6 +12,7 @@
 		<style>
 			:host {
 				display: flex;
+				flex-direction: column;
 				flex-grow: 1;
 				min-height: 4rem;
 			}
@@ -20,12 +21,54 @@
 				box-sizing: border-box;
 			}
 
+			d2l-rubric-text-editor {
+				display: block;
+				flex-grow: 1;
+				width: 100%;
+				min-height: 4rem;
+			}
+
+			d2l-input-text {
+				width: auto;
+			}
+
+			.points {
+				display: flex;
+				align-items: center;
+				padding: 0.5rem;
+			}
+
+			.points div {
+				margin-left: 0.5rem;
+				@apply --d2l-body-compact-text;
+			}
+
+			:host-context([dir='rtl']) .points div {
+				margin-right: 0.5rem;
+				margin-left: 0;
+			}
+
 		</style>
+
+		<div class="points" hidden="[[!_showPoints]]">
+			<d2l-input-text
+				id="cell-points"
+				value="[[entity.properties.points]]"
+				on-change="_savePoints"
+				aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
+				aria-label="[[localize('cellPoints')]]"
+				disabled="[[!_canEditPoints]]"
+				size="1"
+				required="[[_pointsRequired]]"
+				prevent-submit>
+			</d2l-input-text>
+			<div>[[localize('pointsAbbreviation')]]</div>
+		</div>
 		<d2l-rubric-text-editor
 			id="description"
 			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
 			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
-			disabled="[[!_canEdit]]"
+			disabled="[[!_canEditDescription]]"
 			value=[[_getDescription(entity)]]
 			on-change="_saveDescription"
 			language=[[language]]
@@ -33,6 +76,9 @@
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
 			<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+		</template>
+		<template is="dom-if" if="[[_pointsInvalid]]">
+			<d2l-tooltip for="cell-points" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 
@@ -53,9 +99,13 @@
 					value: ''
 				},
 
-				_canEdit: {
+				_canEditDescription: {
 					type: Boolean,
-					computed: '_canEditDescription(entity)',
+					computed: '_computeCanEditDescription(entity)',
+				},
+				_canEditPoints: {
+					type: Boolean,
+					computed: '_computeCanEditPoints(entity)',
 				},
 				_descriptionInvalid: {
 					type: Boolean
@@ -63,6 +113,20 @@
 				_descriptionInvalidError: {
 					type: String
 				},
+				_pointsRequired: {
+					type: Boolean,
+					computed: '_arePointsRequired(entity)',
+				},
+				_pointsInvalid: {
+					type: Boolean
+				},
+				_pointsInvalidError: {
+					type: String
+				},
+				_showPoints: {
+					type: Boolean,
+					computed: '_computeShowPoints(entity)'
+				}
 			},
 
 			behaviors: [
@@ -90,14 +154,59 @@
 					var fields = [{'name':'description', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
-					}.bind(this)).catch(function() {
-						this._toggleBubble('_descriptionInvalid', true, this.localize('descriptionSaveFailed'));
+					}.bind(this)).catch(function(err) {
+						this._toggleBubble('_descriptionInvalid', true, this._getErrMsg(err, 'descriptionSaveFailed'));
 					}.bind(this));
 				}
 			},
-			_canEditDescription: function(entity) {
+			_getErrMsg: function(e, altMsg) {
+				if (!e.hasOwnProperty('stack')) {
+					var errObj = e.string ? e.string : e.json;
+					if (errObj.hasOwnProperty('properties')) {
+						return errObj.properties.detail;
+					}
+				}
+				return this.localize(altMsg);
+			},
+			_arePointsRequired: function(entity) {
+				var action = entity && entity.getActionByName('update-points');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('points');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
+			_computeCanEditDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				return description && description.hasActionByName('update');
+			},
+
+			_computeCanEditPoints: function(entity) {
+				return entity && entity.hasActionByName('update-points');
+			},
+
+			_computeShowPoints: function(entity) {
+				return entity && entity.hasClass(this.HypermediaClasses.rubrics.overridden);
+			},
+
+			_savePoints: function(e) {
+				var action = this.entity.getActionByName('update-points');
+				if (action) {
+					if (this._pointsRequired && !e.target.value.trim()) {
+						this._toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
+					} else {
+						this._toggleBubble('_pointsInvalid', false);
+						var fields = [{ 'name': 'points', 'value': e.target.value }];
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-criterion-cell-points-saved');
+						}.bind(this)).catch(function(err) {
+							this._toggleBubble('_pointsInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
+						}.bind(this));
+					}
+				}
 			},
 
 			_toggleBubble: function(invalidId, show, error) {
@@ -109,8 +218,8 @@
 				}
 			},
 
-			_isAriaInvalid: function(descriptionInvalid) {
-				return new Boolean(descriptionInvalid).toString();
+			_isAriaInvalid: function(valueInvalid) {
+				return new Boolean(valueInvalid).toString();
 			},
 
 		});

@@ -67,9 +67,7 @@
 				var criterionEntity = criteriaEntities[i];
 				var selectedCriterionCellEntity = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.selected);
 
-				if (!this.readOnly) {
-					this._buildRubricToAssessmentMap(assessmentCriterionMap, assessmentCriterionCellMap, criterionEntity);
-				}
+				this._buildRubricToAssessmentMap(assessmentCriterionMap, assessmentCriterionCellMap, criterionEntity);
 				if (!selectedCriterionCellEntity) {
 					// No selected cell in this row, so reset prevLink
 					prevLink = null;
@@ -152,19 +150,23 @@
 			if (!criterionEntity || !assessmentResult) {
 				return;
 			}
+			var assessedCriterion = this._assessmentCriterionMap[this._getSelfLink(criterionEntity)];
+			if (!assessedCriterion) {
+				return;
+			}
+			var assessedCriterionFeedback = assessedCriterion.getSubEntityByClass('feedback');
+			if (!assessedCriterionFeedback || !assessedCriterionFeedback.properties) {
+				return;
+			}
 			var feedback;
 			if (html) {
-				feedback = this._getItem(criterionEntity, assessmentResult, function(x) {
-					return x.feedback;
-				});
+				feedback = assessedCriterionFeedback.properties.html;
 				if (!feedback) {
 					return feedback;
 				}
 				return '<style> p { margin: 0; } </style>' + feedback;
 			}
-			feedback = this._getItem(criterionEntity, assessmentResult, function(x) {
-				return x.feedbackText;
-			});
+			feedback = assessedCriterionFeedback.properties.text;
 			return feedback;
 		},
 

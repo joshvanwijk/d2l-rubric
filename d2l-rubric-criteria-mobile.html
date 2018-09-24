@@ -118,9 +118,8 @@
 				return entity && (entity.getLinkByRel('self') || {}).href || '';
 			},
 
-			_hasFeedback: function(entity, assessmentResult) {
-				var entityLink = this._getSelfLink(entity);
-				return assessmentResult && assessmentResult[entityLink] && assessmentResult[entityLink].feedbackText;
+			_hasFeedback: function(criterionEntity, assessmentResult) {
+				return !!this.getAssessmentFeedback(criterionEntity, assessmentResult);
 			},
 
 			_getFeedback: function(entity, assessmentResult) {

@@ -165,7 +165,12 @@
 					</div>
 				</template>
 			</div>
-			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]">
+			<div
+				hidden$="[[!_hasOutOf(outOf)]]"
+				class$="[[_getOutOfClassName(editingScore)]]"
+				tabindex="0"
+				on-keypress="_handleOverrideScoreKeypress"
+			>
 				<d2l-rubric-editable-score
 					id="score-inner"
 					class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]"
@@ -390,6 +395,12 @@
 					return;
 				}
 				this.editingScore = 1;
+			},
+
+			_handleOverrideScoreKeypress: function(event) {
+				if (event.keyCode === 13) {
+					this._handleOverrideScore();
+				}
 			},
 
 			_isEditingScore: function(editingScore) {

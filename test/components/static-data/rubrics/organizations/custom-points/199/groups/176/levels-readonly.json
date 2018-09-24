@@ -1,0 +1,165 @@
+{
+    "class": [
+        "collection",
+        "levels"
+    ],
+    "properties": {
+        "total": 4
+    },
+    "entities": [
+        {
+            "class": [
+                "level",
+                "overridden"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 4"
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1476.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1477.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level",
+                "overridden"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 3"
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1477.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels.json"
+                },
+                {
+                    "rel": [
+                        "prev"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1476.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1478.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level",
+                "overridden"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 2"
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1478.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels.json"
+                },
+                {
+                    "rel": [
+                        "prev"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1477.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1479.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level",
+                "overridden"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 1"
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1479.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels.json"
+                },
+                {
+                    "rel": [
+                        "prev"
+                    ],
+                    "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1478.json"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels-readonly.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176.json"
+        }
+    ]
+}

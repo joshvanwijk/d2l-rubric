@@ -2,8 +2,8 @@
 <link rel="import" href="../../d2l-table/d2l-table-shared-styles.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
-<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
-<link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-textarea.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-text.html">
 <link rel="import" href="../../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
@@ -28,9 +28,10 @@
 				max-height: 0;
 				transition: opacity 100ms ease-out, max-height 400ms ease-out;
 
-				--d2l-textarea: {
+				--d2l-input-textarea: {
 					display: block;
 					height: 100%;
+					min-height: 0;
 					overflow: hidden;
 					hyphens: auto;
 				};
@@ -45,7 +46,7 @@
 				box-sizing: border-box;
 			}
 
-			d2l-textarea {
+			d2l-input-textarea {
 				display: block;
 				flex-grow: 1;
 				width: 100%;
@@ -101,8 +102,8 @@
 				font-weight: 700;
 			}
 
-			.col-last d2l-text-input {
-				width: 1.5rem;
+			.col-last d2l-input-text {
+				width: 2.5rem;
 			}
 
 			.gutter-left, .gutter-right {
@@ -118,6 +119,10 @@
 				left: -2.5rem;
 			}
 
+			#out-of-textbox {
+				margin: 0 0.5rem;
+			}
+
 			[hidden] {
 				display: none;
 			}
@@ -127,7 +132,7 @@
 			<slot name="gutter-left"></slot>
 		</div>
 		<div class="cell col-first criterion-name">
-			<d2l-textarea
+			<d2l-input-textarea
 				id="name"
 				aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 				aria-label="[[localize('criterionNameAriaLabel')]]"
@@ -138,7 +143,7 @@
 				placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]"
 				on-change="_saveName"
 				required="[[_nameRequired]]">
-			</d2l-textarea>
+			</d2l-input-textarea>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip for="name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
@@ -172,12 +177,24 @@
 			</div>
 		</div>
 		<div text-only$="[[!hasOutOf]]" class="cell col-last out-of">
-			<span hidden="[[!hasOutOf]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
+			<span hidden="[[!hasOutOf]]">
 				<template is="dom-if" if="[[!_outOfIsEditable]]">
-					/ [[_outOf]]
+					<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
+						/ [[_outOf]]
+					</div>
 				</template>
 				<template is="dom-if" if="[[_outOfIsEditable]]">
-					/ <d2l-text-input value="" aria-label="todo" prevent-submit></d2l-text-input>
+					/ <d2l-input-text
+						id="out-of-textbox"
+						on-change="_saveOutOf"
+						value="[[_outOf]]"
+						aria-invalid="[[_isAriaInvalid(_outOfInvalid)]]"
+						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
+						prevent-submit>
+					</d2l-input-text>
+					<template is="dom-if" if="[[_outOfInvalid]]">
+						<d2l-tooltip for="out-of-textbox" position="bottom">[[_outOfInvalidError]]</d2l-tooltip>
+					</template>
 				</template>
 			</span>
 		</div>
@@ -226,6 +243,12 @@
 				_outOf: {
 					type: Number,
 					computed: '_getOutOfValue(entity)',
+				},
+				_outOfInvalid: {
+					type: Boolean
+				},
+				_outOfInvalidError: {
+					type: String
 				},
 				displayNamePlaceholder: {
 					type: Boolean,
@@ -279,6 +302,34 @@
 						this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
 					}.bind(this));
 				}
+			},
+
+			_saveOutOf: function(e) {
+				var action = this.entity.getActionByName('update-outof');
+				if (action) {
+					if (!e.target.value.trim()) {
+						this._toggleBubble('_outOfInvalid', true, this.localize('pointsAreRequired'));
+						return;
+					} else {
+						this._toggleBubble('_outOfInvalid', false);
+					}
+					var fields = [{'name':'outOf', 'value':e.target.value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-criterion-saved');
+					}.bind(this)).catch(function(err) {
+						this._toggleBubble('_outOfInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
+					}.bind(this));
+				}
+			},
+
+			_getErrMsg: function(e, altMsg) {
+				if (!e.hasOwnProperty('stack')) {
+					var errObj = e.string ? e.string : e.json;
+					if (errObj.hasOwnProperty('properties')) {
+						return errObj.properties.detail;
+					}
+				}
+				return this.localize(altMsg);
 			},
 
 			_canEditCriterion: function(entity) {
@@ -338,13 +389,7 @@
 			},
 
 			_isOutOfEditable: function(entity) {
-				if (this.hasOutOf && entity) {
-					var action = entity.getActionByName("update");
-					if (!action) return false;
-					var field = action.getFieldByName("outOf");
-					if (!field || (field && field.hasClass("readonly"))) return false;
-					return true;
-				}
+				return this.hasOutOf && entity && entity.hasActionByName("update-outof");
 			}
 		});
 	</script>

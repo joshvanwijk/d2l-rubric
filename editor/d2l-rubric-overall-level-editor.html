@@ -2,7 +2,7 @@
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 
-<link rel="import" href="../../d2l-text-input/d2l-text-input.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-text.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 <link rel="import" href="../../d2l-button/d2l-button-icon.html">
 
@@ -45,12 +45,16 @@
 				margin-right: 0;
 			}
 
+			.points div {
+				@apply --d2l-body-compact-text;
+			}
+
 			[hidden] {
 				display: none;
 			}
 		</style>
 
-		<d2l-text-input
+		<d2l-input-text
 			id="overall-level-name"
 			value="[[entity.properties.name]]"
 			on-change="_saveName"
@@ -59,10 +63,10 @@
 			disabled="[[!_canEdit]]"
 			required="[[_nameRequired]]"
 			prevent-submit>
-		</d2l-text-input>
+		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
 			<div class="points" hidden="[[!_hasRangeStart]]">
-				<d2l-text-input
+				<d2l-input-text
 					id="range-start"
 					value="[[entity.properties.rangeStart]]"
 					on-change="_saveRangeStart"
@@ -72,7 +76,7 @@
 					size="1"
 					required="[[_rangeStartRequired]]"
 					prevent-submit>
-				</d2l-text-input>
+				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
 			</div>
 			<d2l-button-icon

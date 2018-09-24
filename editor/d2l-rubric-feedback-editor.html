@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-textarea.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
@@ -14,9 +14,10 @@
 				display: flex;
 				flex-grow: 1;
 
-				--d2l-textarea: {
+				--d2l-input-textarea: {
 					display: block;
 					height: 100%;
+					min-height: 0;
 					overflow: hidden;
 					hyphens: auto;
 				};
@@ -26,7 +27,7 @@
 				box-sizing: border-box;
 			}
 
-			d2l-textarea {
+			d2l-input-textarea {
 				display: block;
 				flex-grow: 1;
 				width: 100%;
@@ -34,7 +35,7 @@
 
 		</style>
 
-		<d2l-textarea
+		<d2l-input-textarea
 			id="feedback"
 			aria-invalid="[[_isAriaInvalid(_feedbackInvalid)]]"
 			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
@@ -43,7 +44,7 @@
 			hover-styles
 			value=[[_getFeedback(entity)]]
 			on-change="_saveFeedback"
-		></d2l-textarea>
+		></d2l-input-textarea>
 		<template is="dom-if" if="[[_feedbackInvalid]]">
 			<d2l-tooltip for="feedback" position="bottom">[[_feedbackInvalidError]]</d2l-tooltip>
 		</template>

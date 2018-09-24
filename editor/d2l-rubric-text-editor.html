@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../../d2l-textarea/d2l-textarea.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-textarea.html">
+
 <link rel="import" href="./d2l-rubric-html-editor.html">
 
 <dom-module id="d2l-rubric-text-editor">
@@ -10,10 +11,11 @@
 			display: flex;
 			flex-grow: 1;
 
-			--d2l-textarea: {
+			--d2l-input-textarea: {
 
 				display: block;
 				height: 100%;
+				min-height: 0;
 				overflow: hidden;
 				hyphens: auto;
 			};
@@ -35,7 +37,7 @@
 
 	</style>
 		<template is="dom-if" if="[[!enableHtmlEditor]]">
-			<d2l-textarea
+			<d2l-input-textarea
 				id="textEditor"
 				hidden$=[[enableHtmlEditor]]
 				aria-invalid="[[ariaInvalid]]"
@@ -44,7 +46,7 @@
 				no-border
 				hover-styles
 				value=[[value]]
-			></d2l-textarea>
+			></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[enableHtmlEditor]]">
 			<d2l-rubric-html-editor

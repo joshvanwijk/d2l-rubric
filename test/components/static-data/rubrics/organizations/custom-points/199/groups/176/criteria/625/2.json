@@ -1,0 +1,58 @@
+{
+    "class": [
+        "criterion-cell",
+        "overridden"
+    ],
+    "properties": {
+      "levelName": "Level 2",
+      "points": 2
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/levels/1478.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/625/2.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "static-data/rubrics/organizations/custom-points/199/groups/176/criteria/625.json"
+        }
+    ]
+}

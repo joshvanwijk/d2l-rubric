@@ -58,7 +58,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				nameTextArea.value = 'Batman and Robin';
 				raf(function() {
 					element.addEventListener('d2l-rubric-criterion-saved', function() {
@@ -81,7 +81,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				nameTextArea.value = 'Batman and Robin';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -95,7 +95,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('sets aria-invalid if name is empty', function(done) {
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				nameTextArea.value = '';
 				raf(function() {
 					flush(function() {
@@ -128,7 +128,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('name is disabled', function() {
-				var nameTextArea = element.$$('d2l-textarea');
+				var nameTextArea = element.$$('d2l-input-textarea');
 				expect(nameTextArea.disabled).to.be.true;
 			});
 
@@ -179,6 +179,62 @@ suite('<d2l-rubric-criterion-editor>', function() {
 					done();
 				});
 				element.$$('#remove').click();
+			});
+		});
+
+		suite('custom points', function() {
+
+			var fetch;
+			var raf = window.requestAnimationFrame;
+			var element;
+
+			setup(function(done) {
+				element = fixture('custom');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('out-of value is editable', function() {
+				element.async(function() {
+					var outOfTextBox = element.$$('#out-of-textbox');
+					expect(isVisible(outOfTextBox)).to.be.true;
+				});
+			});
+
+			test('generates event if saving fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				element.async(function() {
+					var outOfTextArea = element.$$('#out-of-textbox');
+					outOfTextArea.value = 'five';
+					raf(function() {
+						element.addEventListener('d2l-siren-entity-save-error', function() {
+							flush(function() {
+								expect(outOfTextArea.ariaInvalid).to.equal('true');
+								done();
+							});
+						});
+						outOfTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					});
+				});
 			});
 		});
 	});

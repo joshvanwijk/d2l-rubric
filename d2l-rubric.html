@@ -210,6 +210,8 @@ Polymer Web-Component to display rubrics
 							total-score="[[_score]]"
 							entity="[[entity]]"
 							on-tap="_handleOverrideScore"
+							on-keypress="_handleScoreKeypress"
+							tabindex="0"
 						>
 						</d2l-rubric-editable-score>
 					</div>
@@ -416,6 +418,12 @@ Polymer Web-Component to display rubrics
 					return;
 				}
 				this.editingScore = 1;
+			},
+
+			_handleScoreKeypress: function(event) {
+				if (event.keyCode === 13) {
+					this._handleOverrideScore();
+				}
 			},
 
 			_handleError: function(e) {
