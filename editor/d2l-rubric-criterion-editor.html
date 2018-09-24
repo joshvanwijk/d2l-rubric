@@ -186,10 +186,15 @@
 				<template is="dom-if" if="[[_outOfIsEditable]]">
 					/ <d2l-input-text
 						id="out-of-textbox"
+						on-change="_saveOutOf"
 						value="[[_outOf]]"
+						aria-invalid="[[_isAriaInvalid(_outOfInvalid)]]"
 						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
 						prevent-submit>
 					</d2l-input-text>
+					<template is="dom-if" if="[[_outOfInvalid]]">
+						<d2l-tooltip for="out-of-textbox" position="bottom">[[_outOfInvalidError]]</d2l-tooltip>
+					</template>
 				</template>
 			</span>
 		</div>
@@ -238,6 +243,12 @@
 				_outOf: {
 					type: Number,
 					computed: '_getOutOfValue(entity)',
+				},
+				_outOfInvalid: {
+					type: Boolean
+				},
+				_outOfInvalidError: {
+					type: String
 				},
 				displayNamePlaceholder: {
 					type: Boolean,
@@ -291,6 +302,34 @@
 						this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
 					}.bind(this));
 				}
+			},
+
+			_saveOutOf: function(e) {
+				var action = this.entity.getActionByName('update-outof');
+				if (action) {
+					if (!e.target.value.trim()) {
+						this._toggleBubble('_outOfInvalid', true, this.localize('pointsAreRequired'));
+						return;
+					} else {
+						this._toggleBubble('_outOfInvalid', false);
+					}
+					var fields = [{'name':'outOf', 'value':e.target.value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-criterion-saved');
+					}.bind(this)).catch(function(err) {
+						this._toggleBubble('_outOfInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
+					}.bind(this));
+				}
+			},
+
+			_getErrMsg: function(e, altMsg) {
+				if (!e.hasOwnProperty('stack')) {
+					var errObj = e.string ? e.string : e.json;
+					if (errObj.hasOwnProperty('properties')) {
+						return errObj.properties.detail;
+					}
+				}
+				return this.localize(altMsg);
 			},
 
 			_canEditCriterion: function(entity) {

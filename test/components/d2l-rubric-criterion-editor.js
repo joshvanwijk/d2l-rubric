@@ -185,6 +185,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 		suite('custom points', function() {
 
 			var fetch;
+			var raf = window.requestAnimationFrame;
 			var element;
 
 			setup(function(done) {
@@ -205,10 +206,35 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('out-of value is editable', function() {
-				setTimeout(function() {
+				element.async(function() {
 					var outOfTextBox = element.$$('#out-of-textbox');
 					expect(isVisible(outOfTextBox)).to.be.true;
-				}, 100);
+				});
+			});
+
+			test('generates event if saving fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				element.async(function() {
+					var outOfTextArea = element.$$('#out-of-textbox');
+					outOfTextArea.value = 'five';
+					raf(function() {
+						element.addEventListener('d2l-siren-entity-save-error', function() {
+							flush(function() {
+								expect(outOfTextArea.ariaInvalid).to.equal('true');
+								done();
+							});
+						});
+						outOfTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					});
+				});
 			});
 		});
 	});
