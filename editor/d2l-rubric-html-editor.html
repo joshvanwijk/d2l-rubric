@@ -1,4 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-html-editor/d2l-html-editor-client.html">
 <link rel="import" href="../../d2l-html-editor/d2l-html-editor.html">
 <link rel="import" href="../../d2l-text-input/d2l-text-input-shared-styles.html">
 
@@ -7,42 +8,42 @@
 	<style>
 
 		d2l-html-editor {
-		word-break: break-word;
-		word-wrap: break-word;
+			word-break: break-word;
+			word-wrap: break-word;
 		}
 
 		d2l-html-editor > .d2l-richtext-editor-container {
-		@apply --d2l-input;
+			@apply --d2l-input;
 
-		padding: 0.4rem 1rem;
+			padding: 0.4rem 1rem;
 		}
 
 		d2l-html-editor > .d2l-richtext-editor-container:hover,
 		d2l-html-editor > .d2l-richtext-editor-container:focus,
 		d2l-html-editor > .d2l-richtext-editor-container:active,
 		d2l-html-editor > .d2l-richtext-editor-container.html-editor-container-hover {
-		@apply --d2l-input-hover;
+			@apply --d2l-input-hover;
 
-		padding: calc(0.4rem - 1px) calc(1rem - 1px);
+			padding: calc(0.4rem - 1px) calc(1rem - 1px);
 		}
 
 		d2l-html-editor.invalid > .d2l-richtext-editor-container {
-		border-width: 1px;
+			border-width: 1px;
 
-		@apply --d2l-input-invalid;
+			@apply --d2l-input-invalid;
 		}
 
 		d2l-html-editor.invalid > .d2l-richtext-editor-container:hover,
 		d2l-html-editor.invalid > .d2l-richtext-editor-container:focus {
-		border-width: 2px;
+			border-width: 2px;
 
-		@apply --d2l-input-invalid;
+			@apply --d2l-input-invalid;
 		}
 
 		@media (max-width: 615px), (max-device-width: 960px) {
-		d2l-html-editor > .d2l-richtext-editor-container {
-			height: 3.9rem;
-		}
+			d2l-html-editor > .d2l-richtext-editor-container {
+				height: 3.9rem;
+			}
 		}
 	</style>
 	<div class="html-editor-outer-compact">
@@ -53,7 +54,6 @@
 						 min-rows="1"
 						 max-rows="1000"
 						 app-root=[[_appRoot]]
-						 allow-unsafe=false
 						 lang-tag=[[language]]
 						 fullpage-enabled=0
 						 content=[[_encodeURIComponent(content)]]
@@ -128,7 +128,7 @@
 				},
 				_plugins: {
 					type: String,
-					value: 'lists paste d2l_placeholder d2l_filter d2l_emoticons',
+					value: 'lists paste d2l_placeholder d2l_emoticons d2l_filter',
 				},
 				objectResizing: {
 					type: Boolean,
