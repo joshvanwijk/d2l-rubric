@@ -53,7 +53,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-textarea');
+					var descriptionTextArea = element.$$('d2l-input-textarea');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-rubric-description-saved', function() {
@@ -76,7 +76,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-textarea');
+					var descriptionTextArea = element.$$('d2l-input-textarea');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -107,7 +107,7 @@ suite('<d2l-rubric-description-editor>', function() {
 				});
 
 				test('description is disabled', function() {
-					var descriptionTextArea = element.$$('d2l-textarea');
+					var descriptionTextArea = element.$$('d2l-input-textarea');
 					expect(descriptionTextArea.disabled).to.be.true;
 				});
 
@@ -168,7 +168,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var pointsTextInput = element.$$('d2l-text-input');
+					var pointsTextInput = element.$$('d2l-input-text');
 					pointsTextInput.value = '10';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -199,7 +199,7 @@ suite('<d2l-rubric-description-editor>', function() {
 				});
 
 				test('points field is disabled', function() {
-					var pointsTextInput = element.$$('d2l-text-input');
+					var pointsTextInput = element.$$('d2l-input-text');
 					expect(pointsTextInput.disabled).to.be.true;
 				});
 
@@ -244,7 +244,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-textarea');
+					var descriptionTextArea = element.$$('d2l-input-textarea');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-rubric-description-saved', function() {
@@ -267,7 +267,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var descriptionTextArea = element.$$('d2l-textarea');
+					var descriptionTextArea = element.$$('d2l-input-textarea');
 					descriptionTextArea.value = 'Batman and Robin';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -298,7 +298,7 @@ suite('<d2l-rubric-description-editor>', function() {
 				});
 
 				test('description is disabled', function() {
-					var descriptionTextArea = element.$$('d2l-textarea');
+					var descriptionTextArea = element.$$('d2l-input-textarea');
 					expect(descriptionTextArea.disabled).to.be.true;
 				});
 

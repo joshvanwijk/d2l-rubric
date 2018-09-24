@@ -76,7 +76,7 @@
 					token="[[token]]"
 					has-out-of="[[_hasOutOf(entity)]]"
 					on-d2l-siren-entity-changed="_notifyResize">
-					<d2l-text-input
+					<d2l-input-text
 						id="group-name"
 						slot="group-name-slot"
 						value="[[_groupName]]"
@@ -85,7 +85,7 @@
 						on-change="_saveName"
 						aria-label$="[[localize('groupName')]]"
 						required prevent-submit>
-					</d2l-text-input>
+					</d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<template is="dom-if" if="[[_nameInvalid]]">
 					<d2l-tooltip for="group-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>

@@ -54,7 +54,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('d2l-text-input');
+				var nameTextInput = element.$$('d2l-input-text');
 				nameTextInput.value = 'Superman';
 				raf(function() {
 					element.addEventListener('d2l-rubric-level-saved', function() {
