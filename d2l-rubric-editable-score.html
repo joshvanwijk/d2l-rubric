@@ -41,16 +41,15 @@
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></siren-entity>
 		<div hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
-		<d2l-input-text
-			id="text-area"
-			value="[[getScore(entity, assessmentResult, totalScore)]]"
-			type="number"
-			step="any"
-			min="0"
-			max="100000"
-			on-blur="_blurHandler"
-		>
-		</d2l-input-text>
+			<d2l-input-text
+				id="text-area"
+				value="[[getScore(entity, assessmentResult, totalScore)]]"
+				type="number"
+				step="any"
+				min="0"
+				max="100000"
+				on-blur="_blurHandler">
+			</d2l-input-text>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
 		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(scoreOverridden)]]">
