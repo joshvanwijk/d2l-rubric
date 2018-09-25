@@ -97,7 +97,6 @@
 					type: String,
 					value: ''
 				},
-
 				_canEditDescription: {
 					type: Boolean,
 					computed: '_computeCanEditDescription(entity)',
@@ -127,14 +126,19 @@
 					computed: '_computeShowPoints(entity)'
 				}
 			},
-
+			observers: [
+				'_onEntityChanged(entity)'
+			],
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
-
+			_onEntityChanged: function(entity) {
+				this._descriptionInvalid = false;
+				this._pointsInvalid = false;
+			},
 			_getAriaLabel: function(langTerm, criterionName, properties) {
 				var levelName = properties && properties.levelName || properties && properties.name;
 				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);

@@ -134,14 +134,19 @@
 					computed: '_computeShowPoints(hasOutOf, entity)'
 				}
 			},
-
+			observers: [
+				'_onEntityChanged(entity)'
+			],
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
-
+			_onEntityChanged: function(entity) {
+				this._nameInvalid = false;
+				this._pointsInvalid = false;
+			},
 			_canEditLevelPoints: function(entity) {
 				return entity && entity.hasActionByName('update-points');
 			},
