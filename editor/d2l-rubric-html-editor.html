@@ -1,43 +1,60 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-html-editor/d2l-html-editor-client.html">
 <link rel="import" href="../../d2l-html-editor/d2l-html-editor.html">
-<link rel="import" href="../../d2l-text-input/d2l-text-input-shared-styles.html">
 <link rel="import" href="../../d2l-inputs/d2l-input-shared-styles.html">
 
 <dom-module id="d2l-rubric-html-editor">
 	<template>
-	<style>
+	<style include="d2l-input-styles">
+
+		:host {
+			display: flex;
+			width: 100%;
+		}
 
 		d2l-html-editor {
 			word-break: break-word;
 			word-wrap: break-word;
+			display: flex;
+			width: 100%;
 		}
 
-		d2l-html-editor > .d2l-richtext-editor-container {
+		.d2l-richtext-editor-container {
 			@apply --d2l-input;
-
-			padding: 0.4rem 1rem;
+			@apply --d2l-input-textarea;
+			border-color: transparent;
+			box-shadow: none;
+			border-radius: 0;
+			transition-property: none;
 		}
 
-		d2l-html-editor > .d2l-richtext-editor-container:hover,
-		d2l-html-editor > .d2l-richtext-editor-container:focus,
-		d2l-html-editor > .d2l-richtext-editor-container:active,
-		d2l-html-editor > .d2l-richtext-editor-container.html-editor-container-hover {
-			@apply --d2l-input-hover-disabled;
-
-			padding: calc(0.4rem - 1px) calc(1rem - 1px);
+		.d2l-richtext-editor-container:hover,
+		.d2l-richtext-editor-container:focus,
+		.d2l-richtext-editor-container:active,
+		.d2l-richtext-editor-container.html-editor-container-hover {
+			@apply --d2l-input-hover-focus;
 		}
 
 		d2l-html-editor.invalid > .d2l-richtext-editor-container {
-			border-width: 1px;
-
 			@apply --d2l-input-invalid;
 		}
 
+		/* .d2l-richtext-editor-container p {
+		  margin: 1rem 0;
+		} */
+		d2l-html-editor .d2l-richtext-editor-container > p:last-of-type {
+		  margin-bottom: 0;
+		}
+
+		d2l-html-editor .d2l-richtext-editor-container > p:first-of-type {
+		  margin-top: 0;
+		}
+		/* .d2l-richtext-editor-container p:only-of-type {
+		  margin: 0;
+		} */
+
 		d2l-html-editor.invalid > .d2l-richtext-editor-container:hover,
 		d2l-html-editor.invalid > .d2l-richtext-editor-container:focus {
-			border-width: 2px;
-
 			@apply --d2l-input-invalid;
 		}
 
@@ -47,28 +64,27 @@
 			}
 		}
 	</style>
-	<div class="html-editor-outer-compact">
-		<d2l-html-editor editor-id=[[_uniqueId]]
-						 inline="1"
-						 auto-focus=[[autoFocus]]
-						 auto-focus-end
-						 min-rows="1"
-						 max-rows="1000"
-						 app-root=[[_appRoot]]
-						 lang-tag=[[language]]
-						 fullpage-enabled=0
-						 content=[[_encodeURIComponent(content)]]
-						 toolbar=[[_toolbar]]
-						 plugins=[[_plugins]]
-						 object-resizing=[[objectResizing]]>
-		<div id="toolbar-shortcut" hidden></div>
-		<div class='d2l-richtext-editor-container'
-			id=[[_uniqueId]]
-			role="textbox"
-			placeholder$=[[placeholder]]
-			aria-label$=[[ariaLabel]]></div>
-		</d2l-html-editor>
-	</div>
+	<d2l-html-editor editor-id=[[_uniqueId]]
+					 inline="1"
+					 auto-focus=[[autoFocus]]
+					 auto-focus-end
+					 min-rows="1"
+					 max-rows="1000"
+					 app-root=[[_appRoot]]
+					 lang-tag=[[language]]
+					 fullpage-enabled=0
+					 content=[[_encodeURIComponent(content)]]
+					 toolbar=[[_toolbar]]
+					 plugins=[[_plugins]]
+					 object-resizing=[[objectResizing]]>
+	<div id$="[[_uniqueId]]-toolbar" class="toolbar"></div>
+	<div id$="toolbar-shortcut-[[_uniqueId]]" hidden></div>
+	<div class='d2l-richtext-editor-container'
+		id=[[_uniqueId]]
+		role="textbox"
+		placeholder$=[[placeholder]]
+		aria-label$=[[ariaLabel]]></div>
+	</d2l-html-editor>
 	</template>
 
 	<script>
@@ -165,6 +181,9 @@
 			_encodeURIComponent: function(content) {
 				return content ? encodeURIComponent(content) : '';
 			},
+			_generateUniqueId: function(clzz) {
+				return clzz + this._uniqueId;
+			}
 		});
 	</script>
 </dom-module>
