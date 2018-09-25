@@ -28,12 +28,6 @@
 			box-sizing: border-box;
 		}
 
-		d2l-input-textarea {
-			/* display: block; */
-			/* X flex-grow: 1;
-			width: 100%; */
-		}
-
 	</style>
 		<template is="dom-if" if="[[!enableHtmlEditor]]">
 			<d2l-input-textarea
@@ -84,7 +78,7 @@
 				},
 				enableHtmlEditor: {
 					type: Boolean,
-					value: true,
+					value: false,
 				},
 				disabled: {
 					type: Boolean,
