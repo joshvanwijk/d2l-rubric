@@ -48,7 +48,9 @@
 				step="any"
 				min="0"
 				max="100000"
-				on-blur="_blurHandler">
+				on-blur="_blurHandler"
+				on-keypress="_handleKey"
+			>
 			</d2l-input-text>
 			<div class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
@@ -137,6 +139,14 @@
 					Polymer.RenderStatus.afterNextRender(this, function() {
 						this.focus();
 					}.bind(this));
+				}
+			},
+
+			_handleKey: function(event) {
+				if (event.keyCode === 13) { // enter key
+					event.target.blur();
+					event.stopPropagation();
+					return;
 				}
 			},
 
