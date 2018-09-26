@@ -1,7 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-html-editor/d2l-html-editor-client.html">
 <link rel="import" href="../../d2l-html-editor/d2l-html-editor.html">
-<link rel="import" href="../../d2l-text-input/d2l-text-input-shared-styles.html">
 <link rel="import" href="../../d2l-inputs/d2l-input-shared-styles.html">
 
 <dom-module id="d2l-rubric-html-editor">
@@ -66,7 +65,8 @@
 			id=[[_uniqueId]]
 			role="textbox"
 			placeholder$=[[placeholder]]
-			aria-label$=[[ariaLabel]]></div>
+			aria-label$=[[ariaLabel]]
+			on-blur="_handleBlur"></div>
 		</d2l-html-editor>
 	</div>
 	</template>
@@ -87,6 +87,9 @@
 						return 'htmleditor-' + Date.now();
 					},
 				},
+				content: {
+					type: String,
+				},
 				ariaLabel: {
 					type: String,
 				},
@@ -101,7 +104,7 @@
 				},
 				autoFocus: {
 					type: Number,
-					value: 1,
+					value: 0,
 				},
 				minRows: {
 					type: Number,
@@ -109,6 +112,9 @@
 				},
 				maxRows: {
 					type: Number,
+				},
+				value: {
+					type: String,
 				},
 				_appRoot: {
 					type: String,
@@ -118,10 +124,6 @@
 				},
 				placeholder: {
 					type: String,
-				},
-				content: {
-					type: String,
-					observer: '_contentChanged',
 				},
 				_toolbar: {
 					type: String,
@@ -136,6 +138,9 @@
 					value: false,
 				},
 			},
+			observers: [
+				'_initializeValue(content)',
+			],
 			attached: function() {
 				Polymer.RenderStatus.afterNextRender(this, function() {
 					this.listen(this.$$('d2l-html-editor'), 'change', '_valueChanged');
@@ -144,19 +149,11 @@
 			detached: function() {
 				this.unlisten(this.$$('d2l-html-editor'), 'change', '_valueChanged');
 			},
-			_valueChanged: function(e) {
-				this.fire('value-changed', {value: e.detail.content});
-			},
 			focus: function() {
 				this.$$('d2l-html-editor').focus();
 			},
-			getContent: function() {
+			_getContent: function() {
 				return this.$$('d2l-html-editor').getContent();
-			},
-			_contentChanged: function(newValue, oldValue) {
-				if (this._uniqueId && oldValue && newValue === '') {
-					this.$$('d2l-html-editor').clearContent();
-				}
 			},
 			_invalidChanged: function(isInvalid) {
 				var htmlEditor = this.$$('d2l-html-editor');
@@ -165,6 +162,23 @@
 			_encodeURIComponent: function(content) {
 				return content ? encodeURIComponent(content) : '';
 			},
+			_initializeValue: function(content) {
+				this.value = content;
+			},
+			_valueChanged: function(e) {
+				// Change event will be fired 'onBlur' instead to match default behavior of TEXTAREAs
+				e.stopPropagation();
+			},
+			_handleBlur: function() {
+				var newValue = this._getContent();
+				if (this.value !== newValue) {
+					this.value = newValue;
+					this.dispatchEvent(new CustomEvent(
+						'change',
+						{bubbles: true, composed: true}
+					));
+				}
+			}
 		});
 	</script>
 </dom-module>

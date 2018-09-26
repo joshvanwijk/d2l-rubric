@@ -97,7 +97,6 @@
 					type: String,
 					value: ''
 				},
-
 				_canEditDescription: {
 					type: Boolean,
 					computed: '_computeCanEditDescription(entity)',
@@ -142,7 +141,7 @@
 
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.properties && description.properties.text || '';
+				return description && description.properties && description.properties.html || '';
 			},
 
 			_saveDescription: function(e) {
