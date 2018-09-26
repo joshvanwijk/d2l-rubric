@@ -73,7 +73,7 @@
 					 app-root=[[_appRoot]]
 					 lang-tag=[[language]]
 					 fullpage-enabled=0
-					 content=[[_encodeURIComponent(content)]]
+					 content=[[_encodeURIComponent(initValue)]]
 					 toolbar=[[_toolbar]]
 					 plugins=[[_plugins]]
 					 object-resizing=[[objectResizing]]>
@@ -84,6 +84,7 @@
 		role="textbox"
 		placeholder$=[[placeholder]]
 		aria-label$=[[ariaLabel]]
+		on-focus="_handleFocus"
 		on-blur="_handleBlur"></div>
 	</d2l-html-editor>
 	</template>
@@ -103,9 +104,6 @@
 					value: function() {
 						return 'htmleditor-' + Date.now();
 					},
-				},
-				content: {
-					type: String,
 				},
 				ariaLabel: {
 					type: String,
@@ -129,6 +127,9 @@
 				},
 				maxRows: {
 					type: Number,
+				},
+				initValue: {
+					type: String,
 				},
 				value: {
 					type: String,
@@ -155,16 +156,13 @@
 					value: false,
 				},
 			},
-			observers: [
-				'_initializeValue(content)',
-			],
 			attached: function() {
 				Polymer.RenderStatus.afterNextRender(this, function() {
-					this.listen(this.$$('d2l-html-editor'), 'change', '_valueChanged');
+					this.listen(this.$$('d2l-html-editor'), 'change', '_contentChanged');
 				}.bind(this));
 			},
 			detached: function() {
-				this.unlisten(this.$$('d2l-html-editor'), 'change', '_valueChanged');
+				this.unlisten(this.$$('d2l-html-editor'), 'change', '_contentChanged');
 			},
 			focus: function() {
 				this.$$('d2l-html-editor').focus();
@@ -176,23 +174,24 @@
 				var htmlEditor = this.$$('d2l-html-editor');
 				this.toggleClass('invalid', isInvalid, htmlEditor);
 			},
-			_encodeURIComponent: function(content) {
-				return content ? encodeURIComponent(content) : '';
+			_encodeURIComponent: function(value) {
+				return value ? encodeURIComponent(value) : '';
 			},
-			_generateUniqueId: function(clzz) {
-				return clzz + this._uniqueId;
-			},
-			_initializeValue: function(content) {
-				this.value = content;
-			},
-			_valueChanged: function(e) {
-				// Change event will be fired 'onBlur' instead to match default behavior of TEXTAREAs
+			_contentChanged: function(e) {
+				// Stop change event from propagating as we instead fire a
+				// 'change' event on an 'onBlur' to match the default behavior of TEXTAREAs.
 				e.stopPropagation();
 			},
-			_handleBlur: function() {
-				var newValue = this._getContent();
-				if (this.value !== newValue) {
-					this.value = newValue;
+			_handleFocus: function() {
+				if (this.value === undefined || this.value === null) {
+					this.value = this._getContent();
+				}
+			},
+			_handleBlur: function(e) {
+				var hasContentChanged = this._getContent() !== this.value;
+				var emojiCausedBlur = e.relatedTarget && e.relatedTarget.hasAttribute('data-d2l-emoji');
+				if (hasContentChanged && !emojiCausedBlur) {
+					this.value = this._getContent();
 					this.dispatchEvent(new CustomEvent(
 						'change',
 						{bubbles: true, composed: true}
