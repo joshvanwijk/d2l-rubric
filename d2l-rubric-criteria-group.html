@@ -159,7 +159,7 @@
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion)]]" on-tap="_handleOverrideScore" tabindex="0" on-keypress="_handleScoreKeypress">
+							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]" on-tap="_handleOverrideScore" tabindex="0" on-keypress="_handleScoreKeypress">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
 									class="score-wrapper"
@@ -454,9 +454,9 @@
 				return className;
 			},
 
-			_getOutOfClassName: function(criterionEntity) {
+			_getOutOfClassName: function(criterionEntity, assessmentResult) {
 				var className = 'out-of';
-				if (this._canEditScore(criterionEntity)) {
+				if (assessmentResult && this._canEditScore(criterionEntity)) {
 					className += ' assessable';
 				}
 				return className;
