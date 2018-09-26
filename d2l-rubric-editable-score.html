@@ -124,8 +124,12 @@
 			},
 
 			focus: function() {
-				var elem = Polymer.dom(this.root).querySelector('d2l-input-text');
+				var elem = this.$['text-area'];
 				elem.focus();
+				var inputElem = elem.$$('input');
+				if (inputElem) {
+					elem.$$('input').select();
+				}
 			},
 
 			_editingScoreChanged: function(newValue) {
