@@ -73,7 +73,7 @@
 					 app-root=[[_appRoot]]
 					 lang-tag=[[language]]
 					 fullpage-enabled=0
-					 content=[[_encodeURIComponent(content)]]
+					 content=[[_encodeURIComponent(initValue)]]
 					 toolbar=[[_toolbar]]
 					 plugins=[[_plugins]]
 					 object-resizing=[[objectResizing]]>
@@ -83,7 +83,9 @@
 		id=[[_uniqueId]]
 		role="textbox"
 		placeholder$=[[placeholder]]
-		aria-label$=[[ariaLabel]]></div>
+		aria-label$=[[ariaLabel]]
+		on-focus="_handleFocus"
+		on-blur="_handleBlur"></div>
 	</d2l-html-editor>
 	</template>
 
@@ -117,7 +119,7 @@
 				},
 				autoFocus: {
 					type: Number,
-					value: 1,
+					value: 0,
 				},
 				minRows: {
 					type: Number,
@@ -125,6 +127,12 @@
 				},
 				maxRows: {
 					type: Number,
+				},
+				initValue: {
+					type: String,
+				},
+				value: {
+					type: String,
 				},
 				_appRoot: {
 					type: String,
@@ -134,10 +142,6 @@
 				},
 				placeholder: {
 					type: String,
-				},
-				content: {
-					type: String,
-					observer: '_contentChanged',
 				},
 				_toolbar: {
 					type: String,
@@ -154,35 +158,45 @@
 			},
 			attached: function() {
 				Polymer.RenderStatus.afterNextRender(this, function() {
-					this.listen(this.$$('d2l-html-editor'), 'change', '_valueChanged');
+					this.listen(this.$$('d2l-html-editor'), 'change', '_contentChanged');
 				}.bind(this));
 			},
 			detached: function() {
-				this.unlisten(this.$$('d2l-html-editor'), 'change', '_valueChanged');
-			},
-			_valueChanged: function(e) {
-				this.fire('value-changed', {value: e.detail.content});
+				this.unlisten(this.$$('d2l-html-editor'), 'change', '_contentChanged');
 			},
 			focus: function() {
 				this.$$('d2l-html-editor').focus();
 			},
-			getContent: function() {
+			_getContent: function() {
 				return this.$$('d2l-html-editor').getContent();
-			},
-			_contentChanged: function(newValue, oldValue) {
-				if (this._uniqueId && oldValue && newValue === '') {
-					this.$$('d2l-html-editor').clearContent();
-				}
 			},
 			_invalidChanged: function(isInvalid) {
 				var htmlEditor = this.$$('d2l-html-editor');
 				this.toggleClass('invalid', isInvalid, htmlEditor);
 			},
-			_encodeURIComponent: function(content) {
-				return content ? encodeURIComponent(content) : '';
+			_encodeURIComponent: function(value) {
+				return value ? encodeURIComponent(value) : '';
 			},
-			_generateUniqueId: function(clzz) {
-				return clzz + this._uniqueId;
+			_contentChanged: function(e) {
+				// Stop change event from propagating as we instead fire a
+				// 'change' event on an 'onBlur' to match the default behavior of TEXTAREAs.
+				e.stopPropagation();
+			},
+			_handleFocus: function() {
+				if (this.value === undefined || this.value === null) {
+					this.value = this._getContent();
+				}
+			},
+			_handleBlur: function(e) {
+				var hasContentChanged = this._getContent() !== this.value;
+				var emojiCausedBlur = e.relatedTarget && e.relatedTarget.hasAttribute('data-d2l-emoji');
+				if (hasContentChanged && !emojiCausedBlur) {
+					this.value = this._getContent();
+					this.dispatchEvent(new CustomEvent(
+						'change',
+						{bubbles: true, composed: true}
+					));
+				}
 			}
 		});
 	</script>

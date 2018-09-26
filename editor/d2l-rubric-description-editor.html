@@ -148,7 +148,7 @@
 
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.properties && description.properties.text || '';
+				return description && description.properties && description.properties.html || '';
 			},
 
 			_saveDescription: function(e) {

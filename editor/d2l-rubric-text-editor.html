@@ -44,11 +44,10 @@
 				id="htmlEditor"
 				hidden$=[[!enableHtmlEditor]]
 				aria-label=[[ariaLabel]]
-				invalid=[[ariaInvalid]]
-				error-message=[[errorMessage]]
+				invalid=[[_stringIsTrue(ariaInvalid)]]
 				language=[[language]]
 				placeholder=[[placeholder]]
-				content=[[value]]
+				init-value=[[value]]
 				min-rows=[[minRows]]
 				max-rows=[[maxRows]]
 			></d2l-rubric-html-editor>
@@ -90,12 +89,8 @@
 					this.$$('#textEditor').focus();
 				}
 			},
-			getContent: function() {
-				if (this.enableHtmlEditor) {
-					return this.$$('#htmlEditor').getContent();
-				} else {
-					return this.$$('#textEditor').getContent();
-				}
+			_stringIsTrue: function(string) {
+				return string && string === 'true';
 			}
 		});
 	</script>
