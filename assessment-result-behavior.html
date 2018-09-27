@@ -263,6 +263,42 @@
 			}
 		},
 
+		clearCriterionOverride: function(criterionHref) {
+			var clearCriterionOverridePromise = this.clearCriterionOverridePromise.bind(this, criterionHref);
+			this.addToQueue(clearCriterionOverridePromise);
+		},
+
+		clearCriterionOverridePromise: function(criterionHref) {
+			var asssessmentCriterion = this._assessmentCriterionMap[criterionHref];
+			// Action name is typoed in the API
+			var action = asssessmentCriterion.getActionByName('update-critierion-assessment');
+
+			if (action) {
+				var fields = action.fields;
+				var scoreField = fields.find(function(field) { return field.name === 'score'; });
+				var defaultScoreField = fields.find(function(field) { return field.name === 'defaultScore'; });
+				scoreField.value = defaultScoreField.value;
+
+				this.performSirenAction(action, fields);
+			}
+		},
+
+		clearTotalScoreOverride: function() {
+			var clearTotalScoreOverridePromise = this.clearTotalScoreOverridePromise.bind(this);
+			this.addToQueue(clearTotalScoreOverridePromise);
+		},
+
+		clearTotalScoreOverridePromise: function() {
+			var entity = this.assessmentEntity;
+			var action = entity.getActionByName('save');
+			if (action) {
+				var fields = action.fields;
+				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+				assessmentField.value.TotalScoreOverridden = false;
+				this.performSirenAction(action, fields);
+			}
+		},
+
 		_escapeHtml: function(feedback) {
 			var div = document.createElement('div');
 			div.appendChild(document.createTextNode(feedback));
