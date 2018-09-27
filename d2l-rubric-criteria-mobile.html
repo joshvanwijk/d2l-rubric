@@ -22,6 +22,9 @@
 			.line {
 				border: solid 0.5px var(--d2l-color-mica);
 			}
+			.add-feedback-button {
+				margin-left: -0.6rem;
+			}
 			[hidden] {
 				display: none !important;
 			}
@@ -39,6 +42,7 @@
 				read-only="[[readOnly]]">
 			</d2l-rubric-criterion-mobile>
 			<d2l-button-subtle
+				class="add-feedback-button"
 				hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]"
 				text="[[localize('addFeedback')]]"
 				on-tap="_handleAddFeedback"
