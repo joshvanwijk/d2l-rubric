@@ -163,6 +163,7 @@
 							token="[[token]]"
 							has-out-of="[[hasOutOf]]"
 							display-name-placeholder="[[_isFirst(index, criterionCount)]]"
+							rich-text-enabled="[[richTextEnabled]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen"
@@ -243,7 +244,8 @@
 				},
 				criterionCount: {
 					type: Number,
-				}
+				},
+				richTextEnabled: Boolean
 			},
 
 			behaviors: [
@@ -256,8 +258,8 @@
 			observers: [
 				'_countCriteria(_criteriaEntities)'
 			],
-			_getPositionLocalize: function (localizeString, index) {
-				return this.localize(localizeString, 'position', index + 1)
+			_getPositionLocalize: function(localizeString, index) {
+				return this.localize(localizeString, 'position', index + 1);
 			},
 			_keyDownNoOp: function(e) {
 				e.stopPropagation();

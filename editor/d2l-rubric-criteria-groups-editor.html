@@ -50,7 +50,8 @@
 				hidden$="[[!_showContent]]"
 				href="[[_getSelfLink(item)]]"
 				token="[[token]]"
-				show-group-name="[[_showGroupName(entity)]]">
+				show-group-name="[[_showGroupName(entity)]]"
+				rich-text-enabled="[[richTextEnabled]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -99,7 +100,9 @@
 				totalScore: {
 					type: Number,
 					observer: '_totalScoreChanged'
-				}
+				},
+
+				richTextEnabled: Boolean
 			},
 
 			behaviors: [
@@ -124,7 +127,7 @@
 				var action = this.entity.getActionByName('create');
 				if (action) {
 					this._waitingForGroups = true;
-					this.performSirenAction(action).then( function() {
+					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-criteria-group-added');
 						setTimeout(function() {
 							this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });

@@ -74,7 +74,12 @@ Creates and edits a rubric
 				on-d2l-rubric-reverse-levels="_handleReverseLevels"
 				reverse-levels-enabled="[[_present(_reverseLevels)]]"></d2l-rubric-editor-menu>
 
-			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]"></d2l-rubric-criteria-groups-editor>
+			<d2l-rubric-criteria-groups-editor
+				href="[[_getHref(_criteriaGroups)]]"
+				token="[[token]]"
+				total-score="[[_totalScore]]"
+				rich-text-enabled="[[richTextEnabled]]"
+			></d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
 				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
 			</div>
@@ -86,6 +91,10 @@ Creates and edits a rubric
 			is: 'd2l-rubric-editor',
 
 			properties: {
+				richTextEnabled: {
+					type: Boolean,
+					value: false
+				},
 				_criteriaGroups: {
 					type: Object
 				},
