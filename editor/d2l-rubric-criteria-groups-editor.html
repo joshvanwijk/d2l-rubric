@@ -50,7 +50,8 @@
 				hidden$="[[!_showContent]]"
 				href="[[_getSelfLink(item)]]"
 				token="[[token]]"
-				show-group-name="[[_showGroupName(entity)]]">
+				show-group-name="[[_showGroupName(entity)]]"
+				is-holistic="[[isHolistic]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -99,6 +100,9 @@
 				totalScore: {
 					type: Number,
 					observer: '_totalScoreChanged'
+				},
+				isHolistic: {
+					type: Boolean
 				}
 			},
 
