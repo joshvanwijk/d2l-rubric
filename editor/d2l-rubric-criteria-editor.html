@@ -162,6 +162,7 @@
 							href="[[_getSelfLink(criterion)]]"
 							token="[[token]]"
 							has-out-of="[[hasOutOf]]"
+							is-holistic="[[isHolistic]]"
 							display-name-placeholder="[[_isFirst(index, criterionCount)]]"
 						>
 							<div slot="gutter-left">
@@ -243,7 +244,10 @@
 				},
 				criterionCount: {
 					type: Number,
-				}
+				},
+				isHolistic: {
+					type: Boolean
+				},
 			},
 
 			behaviors: [
@@ -256,7 +260,7 @@
 			observers: [
 				'_countCriteria(_criteriaEntities)'
 			],
-			_getPositionLocalize: function (localizeString, index) {
+			_getPositionLocalize: function(localizeString, index) {
 				return this.localize(localizeString, 'position', index + 1)
 			},
 			_keyDownNoOp: function(e) {
