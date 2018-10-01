@@ -75,6 +75,7 @@
 					href="[[_levelsHref]]"
 					token="[[token]]"
 					has-out-of="[[_hasOutOf(entity)]]"
+					is-holistic="[[isHolistic]]"
 					on-d2l-siren-entity-changed="_notifyResize">
 					<d2l-input-text
 						id="group-name"
@@ -101,7 +102,8 @@
 					<d2l-rubric-criteria-editor
 						href="[[_criteriaCollectionHref]]"
 						token="[[token]]"
-						has-out-of="[[_hasOutOf(entity)]]">
+						has-out-of="[[_hasOutOf(entity)]]"
+						is-holistic="[[isHolistic]]">
 					</d2l-rubric-criteria-editor>
 				</div>
 			</div>
@@ -114,6 +116,9 @@
 
 			properties: {
 				showGroupName: Boolean,
+				isHolistic: {
+					type: Boolean
+				},
 				_levelsHref: String,
 				_criteriaCollectionHref: String,
 				_showContent: {
