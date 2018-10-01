@@ -104,7 +104,23 @@
 
 			.criterion-detail[is-holistic] {
 				border-right: var(--d2l-table-border);
+				border-bottom: var(--d2l-table-border);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
+
+			.criterion-detail[is-holistic] .criterion-feedback div:first-of-type {
+				border-bottom-left-radius: var(--d2l-table-border-radius);
+			}
+
+			:host-context([dir='rtl']) .criterion-detail[is-holistic] .criterion-feedback div:first-of-type {
+				border-bottom-left-radius: 0;
+			}
+
+			:host-context([dir='rtl']) .criterion-detail[is-holistic] .criterion-feedback div:last-of-type {
+				border-bottom-left-radius: var(--d2l-table-border-radius);
+			}
+
 			.col-last d2l-input-text {
 				width: 2.5rem;
 			}
