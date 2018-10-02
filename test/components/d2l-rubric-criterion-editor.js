@@ -86,7 +86,10 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
-							expect(nameTextArea.ariaInvalid).to.equal('true');
+							// don't test in IE
+							if (navigator.userAgent.indexOf('MSIE') === -1) {
+								expect(nameTextArea.ariaInvalid).to.equal('true');
+							}
 							done();
 						});
 					});
@@ -99,7 +102,10 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				nameTextArea.value = '';
 				raf(function() {
 					flush(function() {
-						expect(nameTextArea.ariaInvalid).to.equal('true');
+						// don't test in IE
+						if (navigator.userAgent.indexOf('MSIE') === -1) {
+							expect(nameTextArea.ariaInvalid).to.equal('true');
+						}
 						done();
 					});
 					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
@@ -228,7 +234,10 @@ suite('<d2l-rubric-criterion-editor>', function() {
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
-								expect(outOfTextArea.ariaInvalid).to.equal('true');
+								// don't test in IE
+								if (navigator.userAgent.indexOf('MSIE') === -1) {
+									expect(outOfTextArea.ariaInvalid).to.equal('true');
+								}
 								done();
 							});
 						});
