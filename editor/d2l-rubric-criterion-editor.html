@@ -102,12 +102,19 @@
 				font-weight: 700;
 			}
 
+			.criterion-detail[is-holistic] {
+				border-right: var(--d2l-table-border);
+			}
 			.col-last d2l-input-text {
 				width: 2.5rem;
 			}
 
 			.gutter-left, .gutter-right {
 				margin-top: 1rem;
+			}
+
+			.gutter-left[is-holistic], .gutter-right[is-holistic] {
+				width: calc(2rem + 10px + 2.6rem);
 			}
 
 			.gutter-left[text-only], .gutter-right[text-only] {
@@ -129,10 +136,10 @@
 			}
 
 		</style>
-		<div class="gutter-left" text-only$="[[!hasOutOf]]">
+		<div class="gutter-left" text-only$="[[!hasOutOf]]" is-holistic$=[[isHolistic]]>
 			<slot name="gutter-left"></slot>
 		</div>
-		<div class="cell col-first criterion-name">
+		<div class="cell col-first criterion-name" hidden$=[[isHolistic]]>
 			<d2l-input-textarea
 				id="name"
 				aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
@@ -149,7 +156,7 @@
 				<d2l-tooltip for="name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
 		</div>
-		<div class="criterion-detail">
+		<div class="criterion-detail" is-holistic$=[[isHolistic]]>
 			<div class="criterion-text">
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" >
 					<div class="cell">
@@ -177,7 +184,7 @@
 				</template>
 			</div>
 		</div>
-		<div text-only$="[[!hasOutOf]]" class="cell col-last out-of">
+		<div text-only$="[[!hasOutOf]]" class="cell col-last out-of" hidden$=[[isHolistic]]>
 			<span hidden="[[!hasOutOf]]">
 				<template is="dom-if" if="[[!_outOfIsEditable]]">
 					<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
@@ -199,7 +206,7 @@
 				</template>
 			</span>
 		</div>
-		<div class="gutter-right" text-only$="[[!hasOutOf]]">
+		<div class="gutter-right" text-only$="[[!hasOutOf]]" is-holistic$=[[isHolistic]]>
 			<d2l-button-icon
 				id="remove"
 				hidden$="[[!_canDelete]]"
@@ -234,6 +241,10 @@
 					type: String
 				},
 				hasOutOf: {
+					type: Boolean,
+					value: false
+				},
+				isHolistic: {
 					type: Boolean,
 					value: false
 				},
