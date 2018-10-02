@@ -139,7 +139,7 @@
 				display:none !important;
 			}
 		</style>
-		<div on-keydown="_keyDownNoOp">
+		<div>
 			<d2l-dnd-sortable
 				placeholder-class="dnd-placeholder"
 				mirror-class="dnd-mirror"
@@ -264,11 +264,6 @@
 			_getPositionLocalize: function(localizeString, index) {
 				return this.localize(localizeString, 'position', index + 1);
 			},
-			_keyDownNoOp: function(e) {
-				e.stopPropagation();
-				// up arrow = 38, down arrow = 40
-				if (e.keyCode === 38 || e.keyCode === 40) e.preventDefault();
-			},
 			_onReorderGroupKeydown: function(e) {
 				var upButton = e.currentTarget.querySelector('#up-button');
 				var downButton = e.currentTarget.querySelector('#down-button');
@@ -277,11 +272,13 @@
 					return;
 				}
 				// up arrow = 38, down arrow = 40
-				if (e.keyCode === 38) {
-					!upButton.disabled && upButton.click();
+				if (e.keyCode === 38 && !upButton.disabled) {
+					e.preventDefault();
+					upButton.click();
 				}
-				if (e.keyCode === 40) {
-					!downButton.disabled && downButton.click();
+				if (e.keyCode === 40 && !downButton.disabled) {
+					e.preventDefault();
+					downButton.click();
 				}
 			},
 			_onReorderGroupFocusIn: function(e) {
