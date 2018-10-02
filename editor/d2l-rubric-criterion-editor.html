@@ -130,7 +130,7 @@
 			}
 
 			.gutter-left[is-holistic], .gutter-right[is-holistic] {
-				width: calc(var(--d2l-rubric-editor-gutter-width) + 2.6rem);
+				width: calc(2rem + 10px + 2.6rem);
 			}
 
 			.gutter-left[text-only], .gutter-right[text-only] {
@@ -261,7 +261,8 @@
 					value: false
 				},
 				isHolistic: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_outOfIsEditable: {
 					type: Boolean,
