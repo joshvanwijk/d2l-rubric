@@ -163,7 +163,7 @@
 							token="[[token]]"
 							has-out-of="[[hasOutOf]]"
 							is-holistic="[[isHolistic]]"
-							display-name-placeholder="[[_isFirst(index, criterionCount)]]"
+							display-name-placeholder="[[_isFirst(index)]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen"
@@ -175,7 +175,7 @@
 										class="reorder-button"
 										title="[[_getPositionLocalize('moveCriterionUp', index)]]"
 										hidden$="[[!_canReorder]]"
-										disabled$="[[_isFirst(index, criterionCount)]]"
+										disabled$="[[_isFirst(index)]]"
 										data-index$="[[index]]"
 										on-tap="_moveUp"
 									>
@@ -186,7 +186,7 @@
 										class="reorder-button"
 										title="[[_getPositionLocalize('moveCriterionDown', index)]]"
 										hidden$="[[!_canReorder]]"
-										disabled$="[[_isLast(index, criterionCount)]]"
+										disabled$="[[_isLast(index)]]"
 										data-index$="[[index]]"
 										on-tap="_moveDown"
 									>
@@ -197,7 +197,7 @@
 								<d2l-icon
 									class="dnd-drag-handle"
 									icon="d2l-tier1:dragger"
-									hidden="[[_hideDragHandle(index, criterionCount)]]"
+									hidden="[[_hideDragHandle(index)]]"
 								></d2l-icon>
 							</div>
 						</d2l-rubric-criterion-editor>
@@ -262,7 +262,7 @@
 				'_countCriteria(_criteriaEntities)'
 			],
 			_getPositionLocalize: function(localizeString, index) {
-				return this.localize(localizeString, 'position', index + 1)
+				return this.localize(localizeString, 'position', index + 1);
 			},
 			_onReorderGroupKeydown: function(e) {
 				var upButton = e.currentTarget.querySelector('#up-button');
@@ -317,13 +317,13 @@
 			_getCriterionLegend: function(index, count) {
 				return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count);
 			},
-			_hideDragHandle: function(index, criterionCount) {
-				return !this._canReorder || (this._isFirst(index,criterionCount) && this._isLast(index,criterionCount));
+			_hideDragHandle: function(index) {
+				return !this._canReorder || (this._isFirst(index) && this._isLast(index));
 			},
-			_isFirst: function(index, criterionCount) {
+			_isFirst: function(index) {
 				return index === 0;
 			},
-			_isLast: function(index, criterionCount) {
+			_isLast: function(index) {
 				return index === this._criteriaEntities.length - 1;
 			},
 			_canCreateCriterion: function(entity) {
@@ -352,7 +352,7 @@
 				var upButton = e.currentTarget;
 				var downButton = upButton.nextElementSibling;
 
-				var oldIndex = +upButton.attributes["data-index"].value;
+				var oldIndex = +upButton.attributes['data-index'].value;
 				var newIndex = oldIndex - 1;
 
 				var afterReorder = function() {
@@ -368,7 +368,7 @@
 				var downButton = e.currentTarget;
 				var upButton = downButton.previousElementSibling;
 
-				var oldIndex = +downButton.attributes["data-index"].value;
+				var oldIndex = +downButton.attributes['data-index'].value;
 				var newIndex = oldIndex + 1;
 
 				var afterReorder = function() {
@@ -396,7 +396,7 @@
 					];
 					return this.performSirenAction(action, fields).then(function() {
 						this.fire('iron-announce',
-							{ text: this.localize('criterionMoved', 'name', criterionName, 'position', newPosition ) },
+							{ text: this.localize('criterionMoved', 'name', criterionName, 'position', newPosition) },
 							{ bubbles: true });
 					}.bind(this));
 				}
@@ -404,7 +404,7 @@
 			},
 			_getCriterionlName: function(index) {
 				var elms = Polymer.dom(this.root).querySelectorAll('d2l-rubric-criterion-editor');
-				return elms.length && elms[index]? elms[index].entity.properties.name : '';
+				return elms.length && elms[index] ? elms[index].entity.properties.name : '';
 			},
 			_countCriteria: function(criteriaArray) {
 				this.criterionCount = criteriaArray.length;

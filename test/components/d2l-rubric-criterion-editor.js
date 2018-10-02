@@ -7,7 +7,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 	var sandbox;
 	var isVisible = function(elem) {
 		var style = elem && getComputedStyle(elem);
-		return style && style.visibility !== 'hidden' && style.display !== 'none';
+		return style && style.visibility !== 'hidden' && style.display !== 'none' && !elem.hasAttribute('hidden');
 	};
 
 	suiteSetup(function() {
@@ -246,15 +246,49 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 			});
 		});
+
+		suite('holistic', function() {
+
+			var element;
+
+			setup(function(done) {
+				element = fixture('holistic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/holistic/199/groups/176/criteria/623.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('name is hidden', function() {
+				var criterionNameDiv = element.$$('.criterion-name');
+				expect(isVisible(criterionNameDiv)).to.be.false;
+			});
+
+			test('remove is hidden', function() {
+				var removeButton = element.$.remove;
+				expect(isVisible(removeButton)).to.be.false;
+			});
+		});
 	});
 
-	suite ('Ally Test',function(){
-		suiteSetup(function(){
-			if (!isAttestInstalled()){
+	suite('Ally Test', function() {
+		/* eslint no-invalid-this:0 */
+		/* global isAttestInstalled */
+		/* global ally_tests */
+		suiteSetup(function() {
+			if (!isAttestInstalled()) {
 				this.skip();
 			}
 		});
-		test('d2l-rubric-criterion-edior ally checks',function(){
+		test('d2l-rubric-criterion-edior ally checks', function() {
 			ally_tests();
 		});
 	});
