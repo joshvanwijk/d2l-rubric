@@ -81,7 +81,10 @@ Creates and edits a rubric
 				rich-text-enabled="[[richTextEnabled]]"
 			></d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
-				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
+				<d2l-rubric-overall-levels-editor
+					href="[[_getHref(_overallLevels)]]"
+					token="[[token]]"
+					rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-overall-levels-editor>
 			</div>
 		</div>
 	</template>
