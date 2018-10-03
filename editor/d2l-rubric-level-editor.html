@@ -76,7 +76,7 @@
 					required="[[_pointsRequired]]"
 					prevent-submit>
 				</d2l-input-text>
-				<div>[[localize('pointsAbbreviation')]]</div>
+				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
 			<d2l-button-icon
 				id="remove"
@@ -180,6 +180,15 @@
 			},
 			_computeShowPoints: function(hasOutOf, entity) {
 				return hasOutOf && entity && !entity.hasClass(this.HypermediaClasses.rubrics.overridden);
+			},
+			_getPointsUnitText: function(entity) {
+				if (entity) {
+					if (entity.hasClass(this.HypermediaClasses.rubrics.percentage)) {
+						return '%';
+					}
+					return this.localize('pointsAbbreviation');
+				}
+				return '';
 			},
 			_saveName: function(e) {
 				var action = this.entity.getActionByName('update-name');
