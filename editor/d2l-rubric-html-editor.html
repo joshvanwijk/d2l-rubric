@@ -65,6 +65,7 @@
 		}
 	</style>
 	<d2l-html-editor editor-id=[[_uniqueId]]
+					 key=[[key]]
 					 inline="1"
 					 auto-focus=[[autoFocus]]
 					 auto-focus-end
@@ -73,7 +74,7 @@
 					 app-root=[[_appRoot]]
 					 lang-tag=[[language]]
 					 fullpage-enabled=0
-					 content=[[_encodeURIComponent(initValue)]]
+					 content=[[_encodeURIComponent(value)]]
 					 toolbar=[[_toolbar]]
 					 plugins=[[_plugins]]
 					 object-resizing=[[objectResizing]]>
@@ -84,7 +85,6 @@
 		role="textbox"
 		placeholder$=[[placeholder]]
 		aria-label$=[[ariaLabel]]
-		on-focus="_handleFocus"
 		on-blur="_handleBlur"></div>
 	</d2l-html-editor>
 	</template>
@@ -128,10 +128,10 @@
 				maxRows: {
 					type: Number,
 				},
-				initValue: {
+				value: {
 					type: String,
 				},
-				value: {
+				key: {
 					type: String,
 				},
 				_appRoot: {
@@ -145,11 +145,11 @@
 				},
 				_toolbar: {
 					type: String,
-					value: 'bold italic underline bullist d2l_emoticons',
+					value: 'bold italic bullist',
 				},
 				_plugins: {
 					type: String,
-					value: 'lists paste d2l_placeholder d2l_emoticons d2l_filter',
+					value: 'lists paste d2l_placeholder d2l_filter',
 				},
 				objectResizing: {
 					type: Boolean,
@@ -182,13 +182,8 @@
 				// 'change' event on an 'onBlur' to match the default behavior of TEXTAREAs.
 				e.stopPropagation();
 			},
-			_handleFocus: function() {
-				if (this.value === undefined || this.value === null) {
-					this.value = this._getContent();
-				}
-			},
 			_handleBlur: function(e) {
-				var hasContentChanged = this._getContent() !== this.value;
+				var hasContentChanged = this._decodeHtml(this._getContent()) !== this._decodeHtml(this.value);
 				var emojiCausedBlur = e.relatedTarget && e.relatedTarget.hasAttribute('data-d2l-emoji');
 				if (hasContentChanged && !emojiCausedBlur) {
 					this.value = this._getContent();
@@ -197,6 +192,12 @@
 						{bubbles: true, composed: true}
 					));
 				}
+			},
+			_decodeHtml: function decodeHtml(html) {
+				if (!html) return '';
+				var txt = document.createElement('textarea');
+				txt.innerHTML = html;
+				return txt.value;
 			}
 		});
 	</script>

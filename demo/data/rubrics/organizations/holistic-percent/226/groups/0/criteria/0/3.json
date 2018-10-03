@@ -1,0 +1,56 @@
+{
+    "class": [
+        "criterion-cell"
+    ],
+    "properties": {
+        "levelName": "Level 1"
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?",
+                "html": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
+            }
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/0/levels/1717.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/0/criteria/0/3.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-percent/226/groups/0/criteria/0.json"
+        }
+    ]
+}

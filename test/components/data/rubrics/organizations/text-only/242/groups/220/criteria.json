@@ -42,7 +42,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -55,6 +55,18 @@
                                             "type": "hidden",
                                             "name": "feedback",
                                             "value": "<p>Consult Strunk &amp; White</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Proper use of grammar</p>"
                                         }
                                     ]
                                 }
@@ -74,7 +86,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -83,6 +95,18 @@
                                             "name": "description",
                                             "value": "<p>Proper use of grammar</p>"
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": "<p>Consult Strunk &amp; White</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/0",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -140,7 +164,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -153,6 +177,18 @@
                                             "type": "hidden",
                                             "name": "feedback",
                                             "value": "<p>Consult Strunk &amp; White</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Good use of grammar</p>"
                                         }
                                     ]
                                 }
@@ -172,7 +208,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -181,6 +217,18 @@
                                             "name": "description",
                                             "value": "<p>Good use of grammar</p>"
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": "<p>Consult Strunk &amp; White</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/1",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -238,7 +286,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -251,6 +299,18 @@
                                             "type": "hidden",
                                             "name": "feedback",
                                             "value": "<p>Consult Strunk &amp; White</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Satisfactory use of grammar</p>"
                                         }
                                     ]
                                 }
@@ -270,7 +330,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -279,6 +339,18 @@
                                             "name": "description",
                                             "value": "<p>Satisfactory use of grammar</p>"
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": "<p>Consult Strunk &amp; White</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/2",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -336,7 +408,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -349,6 +421,18 @@
                                             "type": "hidden",
                                             "name": "feedback",
                                             "value": "<p>Please see me after class</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
+                                            "value": "<p>Poor use of grammar</p>"
                                         }
                                     ]
                                 }
@@ -368,7 +452,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -377,6 +461,18 @@
                                             "name": "description",
                                             "value": "<p>Poor use of grammar</p>"
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": "<p>Please see me after class</p>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763/3",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -411,7 +507,7 @@
             ],
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
                     "name": "update",
                     "method": "PUT",
                     "fields": [
@@ -426,7 +522,7 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/763",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -484,7 +580,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/0",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/0",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -496,6 +592,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/0",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -516,7 +624,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/0",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/0",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -525,6 +633,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/0",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -582,7 +702,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/1",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/1",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -594,6 +714,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/1",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -614,7 +746,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/1",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/1",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -623,6 +755,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/1",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -680,7 +824,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/2",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/2",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -692,6 +836,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/2",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -712,7 +868,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/2",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/2",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -721,6 +877,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/2",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -778,7 +946,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/3",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/3",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -790,6 +958,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/3",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -810,7 +990,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/3",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/3",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -819,6 +999,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764/3",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -853,7 +1045,7 @@
             ],
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764",
                     "name": "update",
                     "method": "PUT",
                     "fields": [
@@ -868,7 +1060,7 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/764",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -926,7 +1118,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/0",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/0",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -938,6 +1130,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/0",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -958,7 +1162,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/0",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/0",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -967,6 +1171,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/0",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -1024,7 +1240,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/1",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/1",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -1036,6 +1252,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/1",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -1056,7 +1284,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/1",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/1",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -1065,6 +1293,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/1",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -1122,7 +1362,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/2",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/2",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -1134,6 +1374,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/2",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -1154,7 +1406,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/2",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/2",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -1163,6 +1415,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/2",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -1220,7 +1484,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/3",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/3",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -1232,6 +1496,18 @@
                                         {
                                             "type": "hidden",
                                             "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/3",
+                                    "name": "update-description",
+                                    "method": "PATCH",
+                                    "fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "description",
                                             "value": ""
                                         }
                                     ]
@@ -1252,7 +1528,7 @@
                             },
                             "actions": [
                                 {
-                                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/3",
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/3",
                                     "name": "update",
                                     "method": "PUT",
                                     "fields": [
@@ -1261,6 +1537,18 @@
                                             "name": "description",
                                             "value": ""
                                         },
+                                        {
+                                            "type": "text",
+                                            "name": "feedback",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765/3",
+                                    "name": "update-feedback",
+                                    "method": "PATCH",
+                                    "fields": [
                                         {
                                             "type": "text",
                                             "name": "feedback",
@@ -1295,7 +1583,7 @@
             ],
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765",
                     "name": "update",
                     "method": "PUT",
                     "fields": [
@@ -1310,7 +1598,7 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria/765",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -1347,12 +1635,12 @@
     ],
     "actions": [
         {
-            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria",
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria",
             "name": "create",
             "method": "POST"
         },
         {
-            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria-reorder",
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/criteria-reorder",
             "name": "reorder",
             "method": "POST",
             "fields": [

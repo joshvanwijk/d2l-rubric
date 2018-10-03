@@ -47,7 +47,8 @@
 				invalid=[[_stringIsTrue(ariaInvalid)]]
 				language=[[language]]
 				placeholder=[[placeholder]]
-				init-value=[[value]]
+				value=[[value]]
+				key=[[key]]
 				min-rows=[[minRows]]
 				max-rows=[[maxRows]]
 			></d2l-rubric-html-editor>
@@ -58,6 +59,7 @@
 		Polymer({
 			is: 'd2l-rubric-text-editor',
 			properties: {
+				key: String,
 				language: String,
 				ariaLabel: {
 					type: String,
