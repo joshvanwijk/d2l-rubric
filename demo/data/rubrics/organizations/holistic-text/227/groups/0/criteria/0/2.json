@@ -1,0 +1,118 @@
+{
+    "class": [
+        "criterion-cell"
+    ],
+    "properties": {
+        "levelName": "Okayish"
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.",
+                "html": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
+            },
+            "actions": [
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/criteria/0/2",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/criteria/0/2",
+                    "name": "update-description",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": [
+                "richtext",
+                "feedback"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            },
+            "actions": [
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/criteria/0/2",
+                    "name": "update",
+                    "method": "PUT",
+                    "fields": [
+                        {
+                            "type": "hidden",
+                            "name": "description",
+                            "value": "<p>Percipit cotidieque ne his, et augue democritum eos, qui simul suavitate evertitur ne! Nostrud alterum menandri ea qui.</p>"
+                        },
+                        {
+                            "type": "text",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/criteria/0/2",
+                    "name": "update-feedback",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "feedback",
+                            "value": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/levels/1723.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/criteria/0/2.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/criteria/0.json"
+        }
+    ]
+}

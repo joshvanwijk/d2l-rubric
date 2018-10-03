@@ -31,19 +31,6 @@
                         "text": "Lorem ipsum dolor sit amet, ex veri vivendo mel, invidunt disputando comprehensam nec ei. Vel ad erat quodsi viderer, ferri rebum pertinacia te eos, id vim salutatus sententiae referrentur. Nam posse partem libris no, ea causae persius aliquid sed, alia cetero gubergren te nam? Ne vix dico salutandi evertitur, sale quaerendum ne sea! At sit quis dignissim. Nec ne dolore quidam recteque, utamur quaerendum ea duo, sit erat melius erroribus no.",
                         "html": "<p>Lorem ipsum dolor sit amet, ex veri vivendo mel, invidunt disputando comprehensam nec ei. Vel ad erat quodsi viderer, ferri rebum pertinacia te eos, id vim salutatus sententiae referrentur. Nam posse partem libris no, ea causae persius aliquid sed, alia cetero gubergren te nam? Ne vix dico salutandi evertitur, sale quaerendum ne sea! At sit quis dignissim. Nec ne dolore quidam recteque, utamur quaerendum ea duo, sit erat melius erroribus no.</p>"
                     }
-                },
-                {
-                    "class": [
-                        "richtext",
-                        "feedback"
-                    ],
-                    "rel": [
-                        "item"
-                    ],
-                    "properties": {
-                        "text": "",
-                        "html": ""
-                    }
                 }
             ],
             "links": [
@@ -90,19 +77,6 @@
                     "properties": {
                         "text": "Cu essent aliquam noluisse vis? Expetendis percipitur vituperatoribus ad sea, sea ludus dolorum antiopam eu, vix eu tritani vivendo partiendo.",
                         "html": "<p>Cu essent aliquam noluisse vis? Expetendis percipitur vituperatoribus ad sea, sea ludus dolorum antiopam eu, vix eu tritani vivendo partiendo.</p>"
-                    }
-                },
-                {
-                    "class": [
-                        "richtext",
-                        "feedback"
-                    ],
-                    "rel": [
-                        "item"
-                    ],
-                    "properties": {
-                        "text": "",
-                        "html": ""
                     }
                 }
             ],
@@ -157,19 +131,6 @@
                         "text": "Ad vis enim purto iracundia, ignota definiebas has et. In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.",
                         "html": "<p>Ad vis enim purto iracundia, ignota definiebas has et. In vidisse iuvaret appellantur ius, ea vel quas rebum consulatu? Suas atqui duo no, pri at ornatus interesset.</p>"
                     }
-                },
-                {
-                    "class": [
-                        "richtext",
-                        "feedback"
-                    ],
-                    "rel": [
-                        "item"
-                    ],
-                    "properties": {
-                        "text": "",
-                        "html": ""
-                    }
                 }
             ],
             "links": [
@@ -222,19 +183,6 @@
                     "properties": {
                         "text": "Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?",
                         "html": "<p>Vix tantas cotidieque no, aliquip nostrum laboramus mea ea?</p>"
-                    }
-                },
-                {
-                    "class": [
-                        "richtext",
-                        "feedback"
-                    ],
-                    "rel": [
-                        "item"
-                    ],
-                    "properties": {
-                        "text": "",
-                        "html": ""
                     }
                 }
             ],

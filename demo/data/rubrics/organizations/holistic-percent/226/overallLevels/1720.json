@@ -19,19 +19,6 @@
                 "text": "Lorem ipsum dolor sit amet, ex veri vivendo mel, invidunt disputando comprehensam nec ei. Vel ad erat quodsi viderer, ferri rebum pertinacia te eos, id vim salutatus sententiae referrentur. Nam posse partem libris no, ea causae persius aliquid sed, alia cetero gubergren te nam? Ne vix dico salutandi evertitur, sale quaerendum ne sea! At sit quis dignissim. Nec ne dolore quidam recteque, utamur quaerendum ea duo, sit erat melius erroribus no.",
                 "html": "<p>Lorem ipsum dolor sit amet, ex veri vivendo mel, invidunt disputando comprehensam nec ei. Vel ad erat quodsi viderer, ferri rebum pertinacia te eos, id vim salutatus sententiae referrentur. Nam posse partem libris no, ea causae persius aliquid sed, alia cetero gubergren te nam? Ne vix dico salutandi evertitur, sale quaerendum ne sea! At sit quis dignissim. Nec ne dolore quidam recteque, utamur quaerendum ea duo, sit erat melius erroribus no.</p>"
             }
-        },
-        {
-            "class": [
-                "richtext",
-                "feedback"
-            ],
-            "rel": [
-                "item"
-            ],
-            "properties": {
-                "text": "",
-                "html": ""
-            }
         }
     ],
     "links": [

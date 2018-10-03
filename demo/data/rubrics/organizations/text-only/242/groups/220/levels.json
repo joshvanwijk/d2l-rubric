@@ -20,9 +20,28 @@
             },
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1839",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1839",
                     "name": "update",
                     "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "text",
+                            "name": "name",
+                            "value": "Level 4"
+                        },
+                        {
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1839",
+                    "name": "update-name",
+                    "method": "PATCH",
                     "fields": [
                         {
                             "class": [
@@ -35,7 +54,21 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1839",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1839",
+                    "name": "update-points",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1839",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -74,9 +107,28 @@
             },
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1840",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1840",
                     "name": "update",
                     "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "text",
+                            "name": "name",
+                            "value": "Level 3"
+                        },
+                        {
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1840",
+                    "name": "update-name",
+                    "method": "PATCH",
                     "fields": [
                         {
                             "class": [
@@ -89,7 +141,21 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1840",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1840",
+                    "name": "update-points",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1840",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -134,9 +200,28 @@
             },
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1841",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1841",
                     "name": "update",
                     "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "text",
+                            "name": "name",
+                            "value": "Level 2"
+                        },
+                        {
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1841",
+                    "name": "update-name",
+                    "method": "PATCH",
                     "fields": [
                         {
                             "class": [
@@ -149,7 +234,21 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1841",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1841",
+                    "name": "update-points",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1841",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -194,9 +293,28 @@
             },
             "actions": [
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1842",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1842",
                     "name": "update",
                     "method": "PUT",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "text",
+                            "name": "name",
+                            "value": "Level 1"
+                        },
+                        {
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1842",
+                    "name": "update-name",
+                    "method": "PATCH",
                     "fields": [
                         {
                             "class": [
@@ -209,7 +327,21 @@
                     ]
                 },
                 {
-                    "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1842",
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1842",
+                    "name": "update-points",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "class": [
+                                "required"
+                            ],
+                            "type": "number",
+                            "name": "points"
+                        }
+                    ]
+                },
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels/1842",
                     "name": "delete",
                     "method": "DELETE"
                 }
@@ -252,7 +384,7 @@
     ],
     "actions": [
         {
-            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels",
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels",
             "name": "append",
             "method": "POST",
             "fields": [
@@ -264,7 +396,7 @@
             ]
         },
         {
-            "href": "https://a6410606-7cad-4414-b47d-e20ddf8ec801.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels",
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/groups/220/levels",
             "name": "prepend",
             "method": "POST",
             "fields": [
