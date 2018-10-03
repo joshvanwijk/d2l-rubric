@@ -176,7 +176,10 @@
 			},
 
 			_hasOutOf: function(entity) {
-				return entity && entity.hasClass(this.HypermediaClasses.rubrics.numeric);
+				return entity && (
+					entity.hasClass(this.HypermediaClasses.rubrics.numeric) ||
+					entity.hasClass(this.HypermediaClasses.rubrics.percentage)
+				);
 			},
 
 			_handleSaveError: function(e) {
