@@ -177,6 +177,7 @@
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" >
 					<div class="cell">
 						<d2l-rubric-description-editor
+							key-link-rels="[[_getCellKeyRels()]]"
 							href="[[_getSelfLink(criterionCell)]]"
 							token="[[token]]"
 							aria-label-langterm="criterionDescriptionAriaLabel"
@@ -417,7 +418,11 @@
 			},
 
 			_isOutOfEditable: function(entity) {
-				return this.hasOutOf && entity && entity.hasActionByName("update-outof");
+				return this.hasOutOf && entity && entity.hasActionByName('update-outof');
+			},
+
+			_getCellKeyRels: function() {
+				return [this.HypermediaRels.Rubrics.level, 'self'];
 			}
 		});
 	</script>
