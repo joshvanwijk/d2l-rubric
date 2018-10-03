@@ -171,7 +171,6 @@
 					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel">
 						<div class="cell">
 							<d2l-rubric-description-editor
-								key="[[_overallLevelKey()]]"
 								href="[[_getSelfLink(overallLevel)]]"
 								token="[[token]]"
 								aria-label-langterm="overallDescriptionAriaLabel"
@@ -260,9 +259,6 @@
 				Polymer.RenderStatus.afterNextRender(this, function() {
 					this.$$('d2l-scroll-wrapper').notifyResize();
 				}.bind(this));
-			},
-			_overallLevelKey: function() {
-				return ['self'];
 			}
 		});
 	</script>
