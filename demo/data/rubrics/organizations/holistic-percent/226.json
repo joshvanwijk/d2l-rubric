@@ -48,12 +48,6 @@
                 "https://api.brightspace.com/rels/organization"
             ],
             "href": "data/rubrics/holistic-percent.json"
-        },
-        {
-            "rel": [
-                "https://rubrics.api.brightspace.com/rels/overall-levels"
-            ],
-            "href": "data/rubrics/organizations/holistic-percent/226/overallLevels.json"
         }
     ]
 }

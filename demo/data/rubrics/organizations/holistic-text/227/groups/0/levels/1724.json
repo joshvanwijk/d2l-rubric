@@ -1,0 +1,90 @@
+{
+    "class": [
+        "level"
+    ],
+    "properties": {
+        "name": "Proficient",
+        "points": 0.0
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/levels/1724.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/levels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/levels/1725.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/holistic-text/227/groups/0/levels/1723.json"
+        }
+    ],
+    "actions": [
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/levels/1724",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "name",
+                    "value": "Proficient"
+                },
+                {
+                    "type": "number",
+                    "name": "points"
+                }
+            ]
+        },
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/levels/1724",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "name",
+                    "value": "Proficient"
+                }
+            ]
+        },
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/levels/1724",
+            "name": "update-points",
+            "method": "PATCH",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "number",
+                    "name": "points"
+                }
+            ]
+        },
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/227/groups/0/levels/1724",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ]
+}
