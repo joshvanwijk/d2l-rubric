@@ -54,22 +54,26 @@
 <div class="vertical-section-container">
 
 	<h1>d2l-rubric-editor demo</h1>
+	<a name="textonly-edit"></a>
 	<h3>Rubric Editor, text only, single group, with edit permissions</h3>
 	<p>To view saving error, attempt to modify any field, delete any level or criterion, or add a new criterion.</p>
 	<demo-snippet>
 		<d2l-rubric-editor href="data/rubrics/organizations/text-only/242.json" token=""></d2l-rubric-editor>
 	</demo-snippet>
 
+	<a name="textonly-noedit"></a>
 	<h3>Rubric Editor, text only, no edit permissions</h3>
 	<demo-snippet>
 		<d2l-rubric-editor href="data/rubrics/organizations/text-only-no-edit/199.json" token="foozleberries"></d2l-rubric-editor>
 	</demo-snippet>
 
+	<a name="multiple-groups-points"></a>
 	<h3>Rubric, points, multiple criteria groups, no edit permissions</h3>
 	<demo-snippet>
 		<d2l-rubric-editor href="data/rubrics/organizations/multiple-groups/203.json" token="foozleberries"></d2l-rubric-editor>
 	</demo-snippet>
 
+	<a name="custom-points"></a>
 	<h3>Rubric, custom points, no edit permissions</h3>
 	<demo-snippet>
 		<d2l-rubric-editor href="data/rubrics/organizations/custom-points/198.json" token="foozleberries"></d2l-rubric-editor>
@@ -81,12 +85,19 @@
 		<d2l-rubric-editor href="static-data/rubrics/organizations/overall-score/200.json" token="foozleberries"></d2l-rubric-editor>
 	</demo-snippet>
 
+	<a name="holistic-text"></a>
+	<h3>Rubric, holistic, text only, no edit permissions</h3>
+	<demo-snippet>
+		<d2l-rubric-editor href="data/rubrics/organizations/holistic-text/227.json" token="foozleberries"></d2l-rubric-editor>
+	</demo-snippet>
 
+	<a name="loading-error"></a>
 	<h3>Rubric loading error</h3>
 	<demo-snippet>
 		<d2l-rubric-editor href="404.json" token="foozleberries"></d2l-rubric-editor>
 	</demo-snippet>
 
+	<a name="loading"></a>
 	<h3>Rubric loading</h3>
 	<demo-snippet>
 		<d2l-rubric-loading></d2l-rubric-loading>
