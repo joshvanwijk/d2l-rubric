@@ -165,7 +165,7 @@
 				var action = description.getActionByName('update');
 				if (action) {
 					this._toggleBubble('_descriptionInvalid', false);
-					var fields = [{'name':'description', 'value':e.target.value}];
+					var fields = [{'name':'description', 'value':e.detail.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function(err) {

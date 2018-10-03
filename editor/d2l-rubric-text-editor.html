@@ -37,6 +37,7 @@
 				no-border
 				hover-styles
 				value=[[value]]
+				on-change="_onInputChange"
 			></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[enableHtmlEditor]]">
@@ -51,6 +52,7 @@
 				key=[[key]]
 				min-rows=[[minRows]]
 				max-rows=[[maxRows]]
+				on-change="_onInputChange"
 			></d2l-rubric-html-editor>
 		</template>
 	</template>
@@ -93,6 +95,15 @@
 			},
 			_stringIsTrue: function(string) {
 				return string && string === 'true';
+			},
+			_onInputChange: function(e) {
+				e.stopPropagation();
+				var value = (e.detail && e.detail.content) || e.target.value || '';
+				if (value !== this.value) {
+					this.debounce('inputChange', function() {
+						this.fire('change', { value: value });
+					}, 1000);
+				}
 			}
 		});
 	</script>
