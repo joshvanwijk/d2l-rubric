@@ -67,7 +67,7 @@
 		</div>
 		<d2l-rubric-text-editor
 			id="description"
-			key="[[_computedKey]]"
+			key="[[_key]]"
 			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
 			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEditDescription]]"
@@ -100,13 +100,13 @@
 					type: String,
 					value: ''
 				},
-				key: {
+				keyLinkRels: {
 					type: Array,
 					value: function() { return ['self']; }
 				},
-				_computedKey: {
+				_key: {
 					type: String,
-					computed: '_constructKey(key, entity)',
+					computed: '_constructKey(keyLinkRels, entity)',
 				},
 				_canEditDescription: {
 					type: Boolean,
@@ -236,10 +236,10 @@
 				return new Boolean(valueInvalid).toString();
 			},
 
-			_constructKey: function(key, entity) {
+			_constructKey: function(keyLinkRels, entity) {
 				var constructed = '';
 				if (entity && entity.hasLinkByRel) {
-					key.forEach(function(rel) {
+					keyLinkRels.forEach(function(rel) {
 						if (entity.hasLinkByRel(rel)) {
 							constructed += entity.getLinkByRel(rel).href;
 						}
