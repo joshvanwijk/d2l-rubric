@@ -5,6 +5,10 @@
 suite('<d2l-rubric-criteria-editor>', function() {
 
 	var sandbox;
+	var isVisible = function(elem) {
+		var style = elem && getComputedStyle(elem);
+		return style && style.visibility !== 'hidden' && style.display !== 'none' && !elem.hasAttribute('hidden');
+	};
 
 	suiteSetup(function() {
 		sandbox = sinon.sandbox.create();
@@ -135,17 +139,52 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			});
 
 			test('drag drop is disabled', function() {
-				var dragHandle = element.$$('.d2l-drag-handle');
-				expect(dragHandle).to.be.null;
+				var dragHandle = element.$$('d2l-dnd-sortable');
+				expect(dragHandle.disabled).to.be.true;
 			});
 		});
-		suite ('Ally Test',function(){
-			suiteSetup(function(){
-				if (!isAttestInstalled()){
+
+		suite('holistic', function() {
+
+			var element;
+
+			setup(function(done) {
+				element = fixture('holistic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/holistic/199/groups/176/criteria.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('add footer is hidden', function() {
+				var addFooter = element.$$('.footer');
+				expect(isVisible(addFooter)).to.be.false;
+			});
+
+			test('drag drop is disabled', function() {
+				var dragHandle = element.$$('d2l-dnd-sortable');
+				expect(dragHandle.disabled).to.be.true;
+			});
+		});
+
+		suite ('Ally Test', function() {
+			/* eslint no-invalid-this:0 */
+			/* global isAttestInstalled */
+			/* global ally_tests */
+			suiteSetup(function() {
+				if (!isAttestInstalled()) {
 					this.skip();
 				}
 			});
-			test('d2l-rubric-criteria-editor ally checks',function(){
+			test('d2l-rubric-criteria-editor ally checks', function() {
 				return ally_tests();
 			});
 		});

@@ -25,6 +25,23 @@
 				padding: 0.5rem;
 				background-color: var(--d2l-table-header-background-color);
 			}
+			div:nth-of-type(3)[is-holistic] { /* first col-inner */
+				border-top-left-radius: var(--d2l-table-border-radius);
+			}
+			:dir(rtl) div:nth-of-type(3)[is-holistic] {
+				border-top-left-radius: 0;
+				border-right: var(--d2l-table-border);
+				border-top-right-radius: var(--d2l-table-border-radius);
+			}
+			div:nth-last-of-type(3)[is-holistic] { /* last col-inner */
+				border-right: var(--d2l-table-border);
+				border-top-right-radius: var(--d2l-table-border-radius);
+			}
+			:dir(rtl) div:nth-last-of-type(3)[is-holistic] {
+				border-right: none;
+				border-top-right-radius: 0;
+				border-top-left-radius: var(--d2l-table-border-radius);
+			}
 			d2l-button-icon {
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-mica);
@@ -33,6 +50,10 @@
 				align-items: center;
 				--d2l-button-icon-min-height: 100%;
 			}
+			[is-holistic] d2l-button-icon {
+				background-color: var(--d2l-table-body-background-color);
+				--d2l-button-icon-min-width: 1.6rem;
+			}
 			.col-first {
 				display: flex;
 				flex-direction: row;
@@ -40,9 +61,16 @@
 				justify-content: flex-end;
 				border-top-left-radius: var(--d2l-table-border-radius);
 			}
+			.col-first[is-holistic], .col-last[is-holistic] {
+				padding-top: 3px;
+				padding-bottom: 3px;
+				width: 2.6rem;
+				border: none;
+				background-color: var(--d2l-table-body-background-color);
+			}
 			:dir(rtl) .col-first {
 				border-top-left-radius: 0;
-				border-top-right-radius: var(--d2l-table-border-radius);;
+				border-top-right-radius: var(--d2l-table-border-radius);
 			}
 			.col-last {
 				display: flex;
@@ -53,12 +81,12 @@
 			}
  			:dir(rtl) .col-last {
 				border-top-right-radius: 0;
-				border-top-left-radius: var(--d2l-table-border-radius);;
+				border-top-left-radius: var(--d2l-table-border-radius);
 			}
 		</style>
 
 		<div class="gutter-left"></div>
-		<div class="cell col-first">
+		<div class="cell col-first" is-holistic$=[[isHolistic]]>
 			<slot name="group-name-slot"></slot>
 			<d2l-button-icon
 				on-tap="_handlePrependLevel"
@@ -69,7 +97,7 @@
 			</d2l-button-icon>
 		</div>
 		<template is="dom-repeat" items="[[_levels]]" as="level">
-			<div class="cell">
+			<div class="cell" is-holistic$=[[isHolistic]]>
 				<d2l-rubric-level-editor
 					href="[[_getSelfLink(level)]]"
 					token="[[token]]"
@@ -77,7 +105,7 @@
 				</d2l-rubric-level-editor>
 			</div>
 		</template>
-		<div class="cell col-last" text-only$=[[!hasOutOf]]>
+		<div class="cell col-last" text-only$=[[!hasOutOf]] is-holistic$=[[isHolistic]]>
 			<d2l-button-icon
 				on-tap="_handleAppendLevel"
 				on-focus="_onAppendFocus"
@@ -96,6 +124,10 @@
 			properties: {
 				_levels: Array,
 				hasOutOf: {
+					type: Boolean,
+					value: false
+				},
+				isHolistic: {
 					type: Boolean,
 					value: false
 				},

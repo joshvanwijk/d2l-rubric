@@ -81,7 +81,10 @@ suite('<d2l-rubric-description-editor>', function() {
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
-								expect(descriptionTextArea.ariaInvalid).to.equal('true');
+								// don't test in IE
+								if (navigator.userAgent.indexOf('MSIE') === -1) {
+									expect(descriptionTextArea.ariaInvalid).to.equal('true');
+								}
 								done();
 							});
 						});
@@ -173,7 +176,10 @@ suite('<d2l-rubric-description-editor>', function() {
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
-								expect(pointsTextInput.ariaInvalid).to.equal('true');
+								// don't test in IE
+								if (navigator.userAgent.indexOf('MSIE') === -1) {
+									expect(pointsTextInput.ariaInvalid).to.equal('true');
+								}
 								done();
 							});
 						});
@@ -272,7 +278,10 @@ suite('<d2l-rubric-description-editor>', function() {
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
-								expect(descriptionTextArea.ariaInvalid).to.equal('true');
+								// don't test in IE
+								if (navigator.userAgent.indexOf('MSIE') === -1) {
+									expect(descriptionTextArea.ariaInvalid).to.equal('true');
+								}
 								done();
 							});
 						});

@@ -196,7 +196,7 @@ Polymer Web-Component to display rubrics
 							class="clear-override-button"
 							icon="d2l-tier1:close-default"
 							text=[[localize('clearTotalScoreOverride')]]
-							on-tap="_clearTotalScoreOverride"
+							on-tap="clearTotalScoreOverride"
 							hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]"
 						>
 						</d2l-button-subtle>
@@ -451,22 +451,6 @@ Polymer Web-Component to display rubrics
 					return false;
 				}
 				return this.isTotalScoreOverridden();
-			},
-
-			_clearTotalScoreOverride: function() {
-				var clearTotalScoreOverridePromise = this._clearTotalScoreOverridePromise.bind(this);
-				this.addToQueue(clearTotalScoreOverridePromise);
-			},
-
-			_clearTotalScoreOverridePromise: function() {
-				var entity = this.assessmentEntity;
-				var action = entity.getActionByName('save');
-				if (action) {
-					var fields = action.fields;
-					var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
-					assessmentField.value.TotalScoreOverridden = false;
-					this.performSirenAction(action, fields);
-				}
 			}
 		});
 	</script>

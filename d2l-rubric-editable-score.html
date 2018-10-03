@@ -155,21 +155,33 @@
 				if (!innerInput || !innerInput.checkValidity()) {
 					return;
 				}
-				var score = event.target.value;
-				if (score === this.totalScore) {
-					// score didn't change so don't override it
-					this.editingScore = -1;
+				this.editingScore = -1;
+				var newScore = event.target.value;
+				if (newScore === '') {
+					this._clearOverride();
 					return;
 				}
-				this._saveScore(score);
+				var oldScore = this.getScore(this.entity, this.assessmentResult, this.totalScore);
+				if (newScore === oldScore) {
+					// score didn't change so don't save it
+					return;
+				}
+				this._saveScore(newScore);
 			},
 
 			_saveScore: function(score) {
-				this.editingScore = -1;
 				if (this.criterionHref) {
 					this.saveCriterionPoints(this.criterionHref, score);
 				} else {
 					this.saveTotalPoints(score);
+				}
+			},
+
+			_clearOverride: function() {
+				if (this.criterionHref) {
+					this.clearCriterionOverride(this.criterionHref);
+				} else {
+					this.clearTotalScoreOverride();
 				}
 			},
 

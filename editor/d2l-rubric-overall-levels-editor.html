@@ -36,8 +36,8 @@
 				margin-left: calc(var(--d2l-rubric-editor-gutter-width) - 0.3rem);
 			}
 			.gutter-left, .gutter-right {
-				margin-top: 11px;
-				margin-bottom: 11px;
+				margin-top: 3px;
+				margin-bottom: 3px;
 			}
 			.editor-section {
 				display: flex;
@@ -130,6 +130,24 @@
 			:dir(rtl) #level-header div.col-center div:last-of-type {
 				border-top-right-radius: 0;
 				border-top-left-radius: var(--d2l-table-border-radius);
+			}
+
+			#description .col-center div:first-of-type {
+				border-bottom-left-radius: var(--d2l-table-border-radius);
+			}
+
+			#description .col-center div:last-of-type {
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+			}
+
+			:dir(rtl) #description .col-center div:first-of-type {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+			}
+
+			:dir(rtl) #description div.col-center div:last-of-type {
+				border-bottom-right-radius: 0;
+				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 		</style>
 

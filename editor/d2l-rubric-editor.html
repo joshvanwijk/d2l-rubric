@@ -72,14 +72,16 @@ Creates and edits a rubric
 		<div id="rubric-editor-container" hidden >
 			<d2l-rubric-editor-menu
 				on-d2l-rubric-reverse-levels="_handleReverseLevels"
-				reverse-levels-enabled="[[_present(_reverseLevels)]]"></d2l-rubric-editor-menu>
+				reverse-levels-enabled="[[_present(_reverseLevels)]]">
+			</d2l-rubric-editor-menu>
 
 			<d2l-rubric-criteria-groups-editor
 				href="[[_getHref(_criteriaGroups)]]"
 				token="[[token]]"
 				total-score="[[_totalScore]]"
 				rich-text-enabled="[[richTextEnabled]]"
-			></d2l-rubric-criteria-groups-editor>
+				is-holistic="[[_isHolistic]]">
+			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
 				<d2l-rubric-overall-levels-editor
 					href="[[_getHref(_overallLevels)]]"
@@ -95,6 +97,10 @@ Creates and edits a rubric
 
 			properties: {
 				richTextEnabled: {
+					type: Boolean,
+					value: false
+				},
+				_isHolistic: {
 					type: Boolean,
 					value: false
 				},
@@ -154,14 +160,17 @@ Creates and edits a rubric
 			},
 
 			_onEntityChanged: function(entity) {
-				if (entity && entity.hasLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups)) {
-					this._showContent = true;
-					this._displayEditor(true);
-					this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
-					this._reverseLevels = entity.getActionByName('reverse-levels') || null;
-				}
-				if (entity && entity.hasLinkByRel(this.HypermediaRels.Rubrics.overallLevels)) {
-					this._overallLevels = entity.getLinkByRel(this.HypermediaRels.Rubrics.overallLevels) || null;
+				if (entity) {
+					this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
+					if (entity.hasLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups)) {
+						this._showContent = true;
+						this._displayEditor(true);
+						this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
+						this._reverseLevels = entity.getActionByName('reverse-levels') || null;
+					}
+					if (entity.hasLinkByRel(this.HypermediaRels.Rubrics.overallLevels)) {
+						this._overallLevels = entity.getLinkByRel(this.HypermediaRels.Rubrics.overallLevels) || null;
+					}
 				}
 			},
 
