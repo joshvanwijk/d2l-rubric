@@ -150,6 +150,10 @@
 				_showPoints: {
 					type: Boolean,
 					computed: '_computeShowPoints(hasOutOf, entity)'
+				},
+				_usesPercentage: {
+					type: Boolean,
+					computed: '_computeUsesPercentage(entity)'
 				}
 			},
 			observers: [
@@ -170,6 +174,9 @@
 			},
 			_canEditLevelName: function(entity) {
 				return entity && entity.hasActionByName('update-name');
+			},
+			_computeUsesPercentage: function(entity) {
+				return entity && entity.hasClass(this.HypermediaClasses.rubrics.percentage);
 			},
 			_isNameRequired: function(entity) {
 				var action = entity && entity.getActionByName('update-name');
@@ -198,7 +205,7 @@
 			},
 			_getPointsUnitText: function(entity) {
 				if (entity) {
-					if (entity.hasClass(this.HypermediaClasses.rubrics.percentage)) {
+					if (this._usesPercentage) {
 						return '%';
 					}
 					return this.localize('pointsAbbreviation');
@@ -206,7 +213,7 @@
 				return '';
 			},
 			_showAltPercentFormat: function(percentageFormatAlternate, entity) {
-				return entity && entity.hasClass(this.HypermediaClasses.rubrics.percentage) && percentageFormatAlternate;
+				return entity && this._usesPercentage && percentageFormatAlternate;
 			},
 			_saveName: function(e) {
 				var action = this.entity.getActionByName('update-name');
@@ -228,14 +235,22 @@
 				var action = this.entity.getActionByName('update-points');
 				if (action) {
 					if (this._pointsRequired && !e.target.value.trim()) {
-						this._toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
+						if (this._usesPercentage) {
+							this._toggleBubble('_pointsInvalid', true, this.localize('rangeStartRequired'));
+						} else {
+							this._toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
+						}
 					} else {
 						this._toggleBubble('_pointsInvalid', false);
 						var fields = [{'name':'points', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-points-saved');
 						}.bind(this)).catch(function(err) {
-							this._toggleBubble('_pointsInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
+							if (this._usesPercentage) {
+								this._toggleBubble('_pointsInvalid', true, this._getErrMsg(err, 'rangeStartInvalid'));
+							} else {
+								this._toggleBubble('_pointsInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
+							}
 						}.bind(this));
 					}
 				}
