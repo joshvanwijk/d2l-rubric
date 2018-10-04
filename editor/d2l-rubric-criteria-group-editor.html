@@ -104,6 +104,7 @@
 						href="[[_criteriaCollectionHref]]"
 						token="[[token]]"
 						has-out-of="[[_hasOutOf(entity)]]"
+						rich-text-enabled="[[richTextEnabled]]"
 						is-holistic="[[isHolistic]]">
 					</d2l-rubric-criteria-editor>
 				</div>
@@ -139,7 +140,8 @@
 				},
 				_groupName: {
 					type: String
-				}
+				},
+				richTextEnabled: Boolean
 			},
 
 			behaviors: [

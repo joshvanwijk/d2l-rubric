@@ -52,7 +52,8 @@
 				token="[[token]]"
 				show-group-name="[[_showGroupName(entity)]]"
 				is-holistic="[[isHolistic]]"
-				percentage-format-alternate="[[percentageFormatAlternate]]">
+				percentage-format-alternate="[[percentageFormatAlternate]]"
+				rich-text-enabled="[[richTextEnabled]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -102,6 +103,8 @@
 					type: Number,
 					observer: '_totalScoreChanged'
 				},
+
+				richTextEnabled: Boolean,
 				isHolistic: {
 					type: Boolean,
 					value: false

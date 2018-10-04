@@ -192,6 +192,7 @@
 								href="[[_getSelfLink(overallLevel)]]"
 								token="[[token]]"
 								aria-label-langterm="overallDescriptionAriaLabel"
+								rich-text-enabled="[[richTextEnabled]]"
 							></d2l-rubric-description-editor>
 						</div>
 					</template>
@@ -205,6 +206,7 @@
 			is: 'd2l-rubric-overall-levels-editor',
 
 			properties: {
+				richTextEnabled: Boolean,
 				_overallLevels: {
 					type: Object
 				},

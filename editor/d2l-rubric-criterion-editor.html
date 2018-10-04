@@ -182,11 +182,12 @@
 							token="[[token]]"
 							aria-label-langterm="criterionDescriptionAriaLabel"
 							criterion-name="[[entity.properties.name]]"
+							rich-text-enabled="[[richTextEnabled]]"
 						></d2l-rubric-description-editor>
 					</div>
 				</template>
 			</div>
-			<div class="cell criterion-feedback-header">[[localize('predefinedFeedback')]]</div>
+			<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
 			<div class="criterion-feedback">
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
 					<div class="cell">
@@ -285,7 +286,8 @@
 				animating: {
 					type: Boolean,
 					value: false
-				}
+				},
+				richTextEnabled: Boolean
 			},
 
 			behaviors: [
