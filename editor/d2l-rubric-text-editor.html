@@ -99,11 +99,25 @@
 			_onInputChange: function(e) {
 				e.stopPropagation();
 				var value = (e.detail && e.detail.content) || e.target.value || '';
-				if (value !== this.value) {
-					this.debounce('inputChange', function() {
+				if (this._decodeHtml(value) !== this._decodeHtml(this.value)) {
+					this.debounce('fireInputChange', function() {
 						this.fire('change', { value: value });
 					}, 1000);
+
+					var activeElementId = document.activeElement && document.activeElement.id;
+					var focusedOnInput = activeElementId && e.target.querySelector('#' + activeElementId);
+					// If it is a blur event (no longer focused on input), fire change event immediately to
+					// avoid race conditions with other events.
+					if (!focusedOnInput) {
+						this.flushDebouncer('fireInputChange');
+					}
 				}
+			},
+			_decodeHtml: function(html) {
+				if (!html) return '';
+				var txt = document.createElement('textarea');
+				txt.innerHTML = html;
+				return txt.value;
 			}
 		});
 	</script>
