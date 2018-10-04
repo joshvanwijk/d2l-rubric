@@ -79,7 +79,8 @@ Creates and edits a rubric
 				href="[[_getHref(_criteriaGroups)]]"
 				token="[[token]]"
 				total-score="[[_totalScore]]"
-				is-holistic="[[_isHolistic]]">
+				is-holistic="[[_isHolistic]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
 				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
@@ -92,6 +93,10 @@ Creates and edits a rubric
 			is: 'd2l-rubric-editor',
 
 			properties: {
+				percentageFormatAlternate: {
+					type: Boolean,
+					value: false
+				},
 				_isHolistic: {
 					type: Boolean,
 					value: false

@@ -51,7 +51,8 @@
 				href="[[_getSelfLink(item)]]"
 				token="[[token]]"
 				show-group-name="[[_showGroupName(entity)]]"
-				is-holistic="[[isHolistic]]">
+				is-holistic="[[isHolistic]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -104,7 +105,8 @@
 				isHolistic: {
 					type: Boolean,
 					value: false
-				}
+				},
+				percentageFormatAlternate: Boolean
 			},
 
 			behaviors: [

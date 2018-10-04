@@ -76,6 +76,7 @@
 					token="[[token]]"
 					has-out-of="[[_hasOutOf(entity)]]"
 					is-holistic="[[isHolistic]]"
+					percentage-format-alternate="[[percentageFormatAlternate]]"
 					on-d2l-siren-entity-changed="_notifyResize">
 					<d2l-input-text
 						id="group-name"
@@ -123,6 +124,7 @@
 					type: Boolean,
 					value: false
 				},
+				percentageFormatAlternate: Boolean,
 				_levelsHref: String,
 				_criteriaCollectionHref: String,
 				_showContent: {
