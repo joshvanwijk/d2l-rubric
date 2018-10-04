@@ -34,14 +34,28 @@
 				align-items: center;
 			}
 
+			.points[alt-percent-format] {
+				flex-direction: row-reverse;
+			}
+
 			.points div {
 				margin-left: 0.5rem;
 				@apply --d2l-body-compact-text;
 			}
 
+			.points[alt-percent-format] div {
+				margin-left: 0;
+				margin-right: 0.5rem;
+			}
+
 			:host-context([dir='rtl']) .points div {
 				margin-right: 0.5rem;
 				margin-left: 0;
+			}
+
+			:host-context([dir='rtl']) .points[alt-percent-format] div {
+				margin-right: 0;
+				margin-left: 0.5rem;
 			}
 
 			[hidden] {
@@ -64,7 +78,7 @@
 			prevent-submit>
 		</d2l-input-text>
 		<div class="operations" noPoints$=[[!_showPoints]]>
-			<div class="points" hidden="[[!_showPoints]]">
+			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate, entity)]]">
 				<d2l-input-text
 					id="level-points"
 					value="[[entity.properties.points]]"
@@ -100,6 +114,7 @@
 
 			properties: {
 				hasOutOf: Boolean,
+				percentageFormatAlternate: Boolean,
 				_canDelete: {
 					type: Boolean,
 					computed: '_canDeleteLevel(entity)',
@@ -189,6 +204,9 @@
 					return this.localize('pointsAbbreviation');
 				}
 				return '';
+			},
+			_showAltPercentFormat: function(percentageFormatAlternate, entity) {
+				return entity && entity.hasClass(this.HypermediaClasses.rubrics.percentage) && percentageFormatAlternate;
 			},
 			_saveName: function(e) {
 				var action = this.entity.getActionByName('update-name');

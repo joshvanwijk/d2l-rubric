@@ -51,8 +51,9 @@
 				href="[[_getSelfLink(item)]]"
 				token="[[token]]"
 				show-group-name="[[_showGroupName(entity)]]"
-				rich-text-enabled="[[richTextEnabled]]"
-				is-holistic="[[isHolistic]]">
+				is-holistic="[[isHolistic]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]"
+				rich-text-enabled="[[richTextEnabled]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -107,7 +108,8 @@
 				isHolistic: {
 					type: Boolean,
 					value: false
-				}
+				},
+				percentageFormatAlternate: Boolean
 			},
 
 			behaviors: [

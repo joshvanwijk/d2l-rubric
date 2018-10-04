@@ -101,7 +101,8 @@
 				<d2l-rubric-level-editor
 					href="[[_getSelfLink(level)]]"
 					token="[[token]]"
-					has-out-of="[[hasOutOf]]">
+					has-out-of="[[hasOutOf]]"
+					percentage-format-alternate="[[percentageFormatAlternate]]">
 				</d2l-rubric-level-editor>
 			</div>
 		</template>
@@ -131,6 +132,7 @@
 					type: Boolean,
 					value: false
 				},
+				percentageFormatAlternate: Boolean,
 				_canPrepend: {
 					type: Boolean,
 					computed: '_canPrependLevel(entity)',
