@@ -79,10 +79,14 @@ Creates and edits a rubric
 				href="[[_getHref(_criteriaGroups)]]"
 				token="[[token]]"
 				total-score="[[_totalScore]]"
+				rich-text-enabled="[[richTextEnabled]]"
 				is-holistic="[[_isHolistic]]">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
-				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]"></d2l-rubric-overall-levels-editor>
+				<d2l-rubric-overall-levels-editor
+					href="[[_getHref(_overallLevels)]]"
+					token="[[token]]"
+					rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-overall-levels-editor>
 			</div>
 		</div>
 	</template>
@@ -92,6 +96,10 @@ Creates and edits a rubric
 			is: 'd2l-rubric-editor',
 
 			properties: {
+				richTextEnabled: {
+					type: Boolean,
+					value: false
+				},
 				_isHolistic: {
 					type: Boolean,
 					value: false

@@ -51,6 +51,7 @@
 				href="[[_getSelfLink(item)]]"
 				token="[[token]]"
 				show-group-name="[[_showGroupName(entity)]]"
+				rich-text-enabled="[[richTextEnabled]]"
 				is-holistic="[[isHolistic]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
@@ -101,6 +102,8 @@
 					type: Number,
 					observer: '_totalScoreChanged'
 				},
+
+				richTextEnabled: Boolean,
 				isHolistic: {
 					type: Boolean,
 					value: false

@@ -164,6 +164,7 @@
 							has-out-of="[[hasOutOf]]"
 							is-holistic="[[isHolistic]]"
 							display-name-placeholder="[[_isFirst(index)]]"
+							rich-text-enabled="[[richTextEnabled]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen"
@@ -245,6 +246,7 @@
 				criterionCount: {
 					type: Number,
 				},
+				richTextEnabled: Boolean,
 				isHolistic: {
 					type: Boolean,
 					value: false
