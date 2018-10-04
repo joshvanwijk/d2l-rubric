@@ -62,7 +62,7 @@ suite('<d2l-rubric-description-editor>', function() {
 							expect(body.get && body.get('description') || 'Batman and Robin').to.equal('Batman and Robin');
 							done();
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 
@@ -88,7 +88,7 @@ suite('<d2l-rubric-description-editor>', function() {
 								done();
 							});
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 			});
@@ -259,7 +259,7 @@ suite('<d2l-rubric-description-editor>', function() {
 							expect(body.get && body.get('description') || 'Batman and Robin').to.equal('Batman and Robin');
 							done();
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 
@@ -285,7 +285,7 @@ suite('<d2l-rubric-description-editor>', function() {
 								done();
 							});
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 			});
