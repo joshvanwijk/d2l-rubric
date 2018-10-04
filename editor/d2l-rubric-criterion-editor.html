@@ -182,6 +182,7 @@
 							token="[[token]]"
 							aria-label-langterm="criterionDescriptionAriaLabel"
 							criterion-name="[[entity.properties.name]]"
+							rich-text-enabled="[[richTextEnabled]]"
 						></d2l-rubric-description-editor>
 					</div>
 				</template>
@@ -285,7 +286,8 @@
 				animating: {
 					type: Boolean,
 					value: false
-				}
+				},
+				richTextEnabled: Boolean
 			},
 
 			behaviors: [

@@ -49,6 +49,10 @@
 			#cell-points {
 				min-width: calc(2.25rem + 1em);
 			}
+
+			[hidden] {
+				display: none !important;
+			}
 		</style>
 
 		<div class="points" hidden="[[!_showPoints]]">
@@ -74,6 +78,7 @@
 			value=[[_getDescription(entity)]]
 			on-change="_saveDescription"
 			language=[[language]]
+			rich-text-enabled="[[richTextEnabled]]"
 		>
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
@@ -135,7 +140,8 @@
 				_showPoints: {
 					type: Boolean,
 					computed: '_computeShowPoints(entity)'
-				}
+				},
+				richTextEnabled: Boolean
 			},
 			observers: [
 				'_onEntityChanged(entity)'
