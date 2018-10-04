@@ -84,8 +84,7 @@
 		id=[[_uniqueId]]
 		role="textbox"
 		placeholder$=[[placeholder]]
-		aria-label$=[[ariaLabel]]
-		on-blur="_handleBlur"></div>
+		aria-label$=[[ariaLabel]]></div>
 	</d2l-html-editor>
 	</template>
 
@@ -156,14 +155,6 @@
 					value: false,
 				},
 			},
-			attached: function() {
-				Polymer.RenderStatus.afterNextRender(this, function() {
-					this.listen(this.$$('d2l-html-editor'), 'change', '_contentChanged');
-				}.bind(this));
-			},
-			detached: function() {
-				this.unlisten(this.$$('d2l-html-editor'), 'change', '_contentChanged');
-			},
 			focus: function() {
 				this.$$('d2l-html-editor').focus();
 			},
@@ -176,28 +167,6 @@
 			},
 			_encodeURIComponent: function(value) {
 				return value ? encodeURIComponent(value) : '';
-			},
-			_contentChanged: function(e) {
-				// Stop change event from propagating as we instead fire a
-				// 'change' event on an 'onBlur' to match the default behavior of TEXTAREAs.
-				e.stopPropagation();
-			},
-			_handleBlur: function(e) {
-				var hasContentChanged = this._decodeHtml(this._getContent()) !== this._decodeHtml(this.value);
-				var emojiCausedBlur = e.relatedTarget && e.relatedTarget.hasAttribute('data-d2l-emoji');
-				if (hasContentChanged && !emojiCausedBlur) {
-					this.value = this._getContent();
-					this.dispatchEvent(new CustomEvent(
-						'change',
-						{bubbles: true, composed: true}
-					));
-				}
-			},
-			_decodeHtml: function decodeHtml(html) {
-				if (!html) return '';
-				var txt = document.createElement('textarea');
-				txt.innerHTML = html;
-				return txt.value;
 			}
 		});
 	</script>
