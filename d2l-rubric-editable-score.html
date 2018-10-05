@@ -91,7 +91,8 @@
 				},
 				totalScore: {
 					type: String,
-					value: null
+					value: null,
+					observer: '_totalScoreChanged'
 				},
 				criterionNum: {
 					type: Number,
@@ -229,6 +230,12 @@
 					return this.localize('overriddenTotalScoreTip');
 				} else {
 					return this.localize('overriddenScoreTip');
+				}
+			},
+
+			_totalScoreChanged: function(score) {
+				if (score) {
+					this.fire('d2l-rubric-total-score-changed', {score:score});
 				}
 			}
 		});
