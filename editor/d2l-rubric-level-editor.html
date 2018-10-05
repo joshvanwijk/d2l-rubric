@@ -78,7 +78,7 @@
 			prevent-submit>
 		</d2l-input-text>
 		<div class="operations" noPoints$=[[!_showPoints]]>
-			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate, entity)]]">
+			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate)]]">
 				<d2l-input-text
 					id="level-points"
 					value="[[entity.properties.points]]"
@@ -212,8 +212,8 @@
 				}
 				return '';
 			},
-			_showAltPercentFormat: function(percentageFormatAlternate, entity) {
-				return entity && this._usesPercentage && percentageFormatAlternate;
+			_showAltPercentFormat: function(percentageFormatAlternate) {
+				return this._usesPercentage && percentageFormatAlternate;
 			},
 			_saveName: function(e) {
 				var action = this.entity.getActionByName('update-name');
