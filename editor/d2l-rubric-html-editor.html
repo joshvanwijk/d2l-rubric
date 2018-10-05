@@ -72,7 +72,6 @@
 					 min-rows="1"
 					 max-rows="1000"
 					 app-root=[[_appRoot]]
-					 lang-tag=[[language]]
 					 fullpage-enabled=0
 					 content=[[_encodeURIComponent(value)]]
 					 toolbar=[[_toolbar]]
@@ -92,9 +91,6 @@
 		Polymer({
 			is: 'd2l-rubric-html-editor',
 			properties: {
-				language: {
-					type: String,
-				},
 				/**
 				* Every html editor element on a page MUST have a unique ID
 				*/
