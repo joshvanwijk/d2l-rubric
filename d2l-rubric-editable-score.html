@@ -15,7 +15,7 @@
 			:host {
 				display: block;
 			}
-			.edit-score-container {
+			.total-score-container {
 				display: flex;
 				justify-content: center;
 			}
@@ -45,7 +45,7 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></siren-entity>
-		<div class="edit-score-container" hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
+		<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
 			<d2l-input-text
 				id="text-area"
 				value="[[getScore(entity, assessmentResult, totalScore)]]"
@@ -225,6 +225,13 @@
 					className += ' overridden';
 				}
 				return className;
+			},
+
+			_getContainerClassName: function(criterionHref) {
+				if (!criterionHref) {
+					return 'total-score-container';
+				}
+				return '';
 			},
 
 			_isEditingScore: function(criterionNum, editingScore) {
