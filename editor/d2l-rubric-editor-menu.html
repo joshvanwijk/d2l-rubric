@@ -5,21 +5,27 @@
 
 <dom-module id="d2l-rubric-editor-menu">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-rubric-editor-cell-styles">
 			:host {
 				display: flex;
 				flex-direction: row;
 				justify-content: flex-end;
 				overflow: hidden;
 				padding-top: 0.5rem;
-				padding-bottom: 1.1rem;
-				padding-right: 46px;
+				padding-bottom: 0.7rem;
+				padding-right: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
+			}
+			:host[is-holistic] {
+				padding-right: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 			[hidden] {
 				display: none;
 			}
 			:host(:dir(rtl)) {
-				padding-left: 46px;
+				padding-left: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
+			}
+			:host(:dir(rtl))[is-holistic] {
+				padding-left: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 		</style>
 
@@ -39,6 +45,11 @@
 					type: Boolean,
 					value: false
 				},
+				isHolistic: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
+				}
 			},
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
