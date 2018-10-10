@@ -74,7 +74,6 @@
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 			aria-label="[[localize('levelName')]]"
 			disabled="[[!_canEditName]]"
-			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-input-text>
 		<div class="operations" noPoints$=[[!_showPoints]]>
@@ -87,7 +86,6 @@
 					aria-label="[[localize('levelPoints')]]"
 					disabled="[[!_canEditPoints]]"
 					size="1"
-					required="[[_pointsRequired]]"
 					prevent-submit>
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>

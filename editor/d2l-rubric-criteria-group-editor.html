@@ -88,8 +88,9 @@
 						hidden="[[!showGroupName]]"
 						disabled="[[!_canEditGroupName(entity)]]"
 						on-change="_saveName"
+						aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 						aria-label$="[[localize('groupName')]]"
-						required prevent-submit>
+						prevent-submit>
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<template is="dom-if" if="[[_nameInvalid]]">
@@ -228,6 +229,10 @@
 				} else {
 					this.set(invalidId, false);
 				}
+			},
+
+			_isAriaInvalid: function(nameInvalid) {
+				return new Boolean(nameInvalid).toString();
 			},
 
 			_notifyResize: function() {

@@ -165,8 +165,7 @@
 				hover-styles
 				value=[[entity.properties.name]]
 				placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]"
-				on-change="_saveName"
-				required="[[_nameRequired]]">
+				on-change="_saveName">
 			</d2l-input-textarea>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip for="name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>

@@ -61,7 +61,6 @@
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 			aria-label="[[localize('overallLevelName')]]"
 			disabled="[[!_canEditName]]"
-			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
@@ -74,7 +73,6 @@
 					aria-label="[[localize('overallLevelRangeStart')]]"
 					disabled="[[!_canEditRangeStart]]"
 					size="1"
-					required="[[_rangeStartRequired]]"
 					prevent-submit>
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
