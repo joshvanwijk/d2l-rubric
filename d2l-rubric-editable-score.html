@@ -15,6 +15,10 @@
 			:host {
 				display: block;
 			}
+			.total-score-container {
+				display: flex;
+				justify-content: center;
+			}
 			d2l-input-text {
 				max-width: 150px;
 				min-width: 75px;
@@ -33,6 +37,7 @@
 			.right {
 				display: inline;
 				padding: 0 5px;
+				line-height: 2.2rem;
 			}
 			[hidden] {
 				display: none;
@@ -40,7 +45,7 @@
 		</style>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></siren-entity>
-		<div hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
+		<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
 			<d2l-input-text
 				id="text-area"
 				value="[[getScore(entity, assessmentResult, totalScore)]]"
@@ -52,7 +57,7 @@
 				on-keypress="_handleKey"
 			>
 			</d2l-input-text>
-			<div class="right">[[_localizeOutOf(entity)]]</div>
+			<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
 		</div>
 		<div hidden="[[_isEditingScore(criterionNum, editingScore)]]" class$="[[_getOutOfClassName(scoreOverridden)]]">
 			[[_localizeOutOf(entity, assessmentResult, totalScore)]]
@@ -132,6 +137,8 @@
 				if (inputElem) {
 					elem.$$('input').select();
 				}
+				var outOf = this.$['out-of'];
+				outOf.scrollIntoView();
 			},
 
 			_editingScoreChanged: function(newValue) {
@@ -218,6 +225,13 @@
 					className += ' overridden';
 				}
 				return className;
+			},
+
+			_getContainerClassName: function(criterionHref) {
+				if (!criterionHref) {
+					return 'total-score-container';
+				}
+				return '';
 			},
 
 			_isEditingScore: function(criterionNum, editingScore) {
