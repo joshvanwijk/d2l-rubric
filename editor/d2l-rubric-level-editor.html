@@ -280,13 +280,15 @@
 				var action = this.entity.getActionByName('delete');
 				if (action) {
 					var deleteButton = e.currentTarget;
-					deleteButton.disabled = true;
+					deleteButton.setAttribute('disabled', '');
 					var name = this.entity.properties.name;
 					this.fire('iron-announce', { text: this.localize('levelDeleted', 'name', name) }, { bubbles: true });
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-deleted');
-					}.bind(this)).finally(function() {
-						deleteButton.disabled = false;
+					}.bind(this)).then(function() {
+						deleteButton.removeAttribute('disabled');
+					}).catch(function() {
+						deleteButton.removeAttribute('disabled');
 					});
 				}
 			}
