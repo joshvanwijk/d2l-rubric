@@ -155,6 +155,13 @@
 				return;
 			}
 			var assessedCriterionFeedback = assessedCriterion.getSubEntityByClass('feedback');
+			//if feedback does not exist on the criterion we try to get it from one of the criterion cells
+			if (!assessedCriterionFeedback) {
+				var firstCriterionCell = assessedCriterion.getSubEntitiesByClass('assessment-criterion-cell')[0];
+				if (firstCriterionCell) {
+					assessedCriterionFeedback = firstCriterionCell.getSubEntityByClass('feedback');
+				}
+			}
 			if (!assessedCriterionFeedback || !assessedCriterionFeedback.properties) {
 				return;
 			}
