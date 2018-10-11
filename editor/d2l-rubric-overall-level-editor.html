@@ -61,7 +61,6 @@
 			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
 			aria-label="[[localize('overallLevelName')]]"
 			disabled="[[!_canEditName]]"
-			required="[[_nameRequired]]"
 			prevent-submit>
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
@@ -74,7 +73,6 @@
 					aria-label="[[localize('overallLevelRangeStart')]]"
 					disabled="[[!_canEditRangeStart]]"
 					size="1"
-					required="[[_rangeStartRequired]]"
 					prevent-submit>
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
@@ -235,14 +233,16 @@
 				var action = this.entity.getActionByName('delete');
 				if (action) {
 					var deleteButton = e.currentTarget;
-					deleteButton.disabled = true;
+					deleteButton.setAttribute('disabled', '');
 					var name = this.entity.properties.name;
 					this.fire('iron-announce', { text: this.localize('overallLevelDeleted', 'name', name) }, { bubbles: true });
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-overall-level-deleted');
 
-					}.bind(this)).finally(function() {
-						deleteButton.disabled = false;
+					}.bind(this)).then(function() {
+						deleteButton.removeAttribute('disabled');
+					}).catch(function() {
+						deleteButton.removeAttribute('disabled');
 					});
 				}
 			}
