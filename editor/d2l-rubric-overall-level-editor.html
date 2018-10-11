@@ -84,7 +84,8 @@
 				icon="d2l-tier1:delete"
 				text="[[localize('removeOverallLevel', 'name', entity.properties.name)]]"
 				on-tap="_handleDeleteLevel"
-				hidden="[[!_canDelete]]">
+				hidden="[[!_canDelete]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">

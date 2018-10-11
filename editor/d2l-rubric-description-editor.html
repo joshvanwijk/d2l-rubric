@@ -151,7 +151,7 @@
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
-			_onEntityChanged: function(entity) {
+			_onEntityChanged: function() {
 				this._descriptionInvalid = false;
 				this._pointsInvalid = false;
 			},
@@ -247,6 +247,7 @@
 					keyLinkRels.forEach(function(rel) {
 						if (entity.hasLinkByRel(rel)) {
 							constructed += entity.getLinkByRel(rel).href;
+							constructed += '|';
 						}
 					});
 				}
