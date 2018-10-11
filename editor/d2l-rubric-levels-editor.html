@@ -93,7 +93,8 @@
 				on-focus="_onPrependFocus"
 				icon="d2l-tier2:add"
 				text="[[localize('addLevelPrepend', 'name', '')]]"
-				disabled="[[!_canPrepend]]">
+				disabled="[[!_canPrepend]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-repeat" items="[[_levels]]" as="level">
@@ -112,7 +113,8 @@
 				on-focus="_onAppendFocus"
 				icon="d2l-tier2:add"
 				text="[[localize('addLevelAppend', 'name', '')]]"
-				disabled="[[!_canAppend]]">
+				disabled="[[!_canAppend]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<div class="gutter-right"></div>
