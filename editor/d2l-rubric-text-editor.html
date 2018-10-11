@@ -97,25 +97,8 @@
 			_onInputChange: function(e) {
 				e.stopPropagation();
 				var value = (e.detail && e.detail.content) || e.target.value || '';
-
-				this.debounce('fireInputChange', function() {
-					this.fire('change', { value: value });
-				}, 1000);
-
-				var activeElementId = document.activeElement && document.activeElement.id;
-				var focusedOnInput = activeElementId && e.target.querySelector('#' + activeElementId);
-				// If it is a blur event (no longer focused on input), fire change event immediately to
-				// avoid race conditions with other events.
-				if (!focusedOnInput) {
-					this.flushDebouncer('fireInputChange');
-				}
+				this.fire('change', { value: value });
 			},
-			_decodeHtml: function(html) {
-				if (!html) return '';
-				var txt = document.createElement('textarea');
-				txt.innerHTML = html;
-				return txt.value;
-			}
 		});
 	</script>
 </dom-module>
