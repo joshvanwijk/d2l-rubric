@@ -63,6 +63,11 @@
 				height: 3.9rem;
 			}
 		}
+
+		[hidden] {
+			display: none;
+		}
+
 	</style>
 	<d2l-html-editor editor-id=[[_uniqueId]]
 					 key=[[key]]
@@ -76,8 +81,10 @@
 					 content=[[_encodeURIComponent(value)]]
 					 toolbar=[[_toolbar]]
 					 plugins=[[_plugins]]
-					 object-resizing=[[objectResizing]]>
-	<div id$="[[_uniqueId]]-toolbar" class="toolbar"></div>
+					 object-resizing=[[objectResizing]]
+					 on-focus="_showToolbar"
+					 on-blur="_hideToolbar">
+	<div id$="[[_uniqueId]]-toolbar" hidden class="toolbar"></div>
 	<div id$="toolbar-shortcut-[[_uniqueId]]" hidden></div>
 	<div class='d2l-richtext-editor-container'
 		id=[[_uniqueId]]
@@ -163,6 +170,12 @@
 			},
 			_encodeURIComponent: function(value) {
 				return value ? encodeURIComponent(value) : '';
+			},
+			_showToolbar: function() {
+				this.$$('.toolbar').removeAttribute('hidden');
+			},
+			_hideToolbar: function() {
+				this.$$('.toolbar').setAttribute('hidden', true);
 			}
 		});
 	</script>
