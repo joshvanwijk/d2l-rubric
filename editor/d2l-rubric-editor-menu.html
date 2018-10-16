@@ -13,6 +13,7 @@
 				overflow: hidden;
 				padding-top: 0.5rem;
 				padding-bottom: 0.7rem;
+				padding-left: 0.5rem;
 				padding-right: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
 			}
 			:host[is-holistic] {
@@ -22,9 +23,11 @@
 				display: none;
 			}
 			:host(:dir(rtl)) {
+				padding-right: 0.5rem;
 				padding-left: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
 			}
 			:host(:dir(rtl))[is-holistic] {
+				padding-right: 0.5rem;
 				padding-left: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 		</style>

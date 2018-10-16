@@ -14,6 +14,7 @@
 <link rel="import" href="./d2l-rubric-editor-menu.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
+<link rel="import" href="../../d2l-menu/d2l-menu-item-radio.html">
 
 <!--
 `d2l-rubric-editor`
@@ -52,6 +53,15 @@ Creates and edits a rubric
 				padding-left: 46px;
 			}
 
+			#rubric-editor-header {
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			d2l-dropdown-button-subtle {
+				margin: 0.5rem 0;
+			}
+
 			/* temporary spacing to stop UI shifting down on first save, until single-page rubric creation is implemented */
 			#editor-save-status-container {
 				min-height: 1.4rem;
@@ -75,11 +85,19 @@ Creates and edits a rubric
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader">
 		</div>
 		<div id="rubric-editor-container" hidden >
-			<d2l-rubric-editor-menu
-				on-d2l-rubric-reverse-levels="_handleReverseLevels"
-				reverse-levels-enabled="[[_present(_reverseLevels)]]"
-				is-holistic="[[_isHolistic]]">
-			</d2l-rubric-editor-menu>
+			<div id="rubric-editor-header">
+				<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]">
+					<d2l-dropdown-menu id="dropdown">
+						<d2l-menu label="Scoring"></d2l-menu>
+					</d2l-dropdown-menu>
+				</d2l-dropdown-button-subtle>
+
+				<d2l-rubric-editor-menu
+					on-d2l-rubric-reverse-levels="_handleReverseLevels"
+					reverse-levels-enabled="[[_present(_reverseLevels)]]"
+					is-holistic="[[_isHolistic]]">
+				</d2l-rubric-editor-menu>
+			</div>
 
 			<d2l-rubric-criteria-groups-editor
 				href="[[_getHref(_criteriaGroups)]]"
@@ -132,6 +150,14 @@ Creates and edits a rubric
 				_totalScore: {
 					type: Number,
 					computed: '_getTotalScore(entity)'
+				},
+				_scoringText: {
+					type: String,
+					value: null
+				},
+				_canConvertScoring: {
+					type: Boolean,
+					computed: '_computeCanConvertScoring(entity)'
 				}
 			},
 
@@ -155,6 +181,7 @@ Creates and edits a rubric
 			ready: function() {
 				this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
 				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
+				this.addEventListener('d2l-menu-item-change', this._setScoringText.bind(this));
 			},
 
 			attached: function() {
@@ -228,6 +255,37 @@ Creates and edits a rubric
 				if (this._hasOutOf(entity)) {
 					return entity.properties.outOf;
 				}
+			},
+			_setScoringText: function(e) {
+				this._scoringText = "Scoring: " + e.target.text;
+			},
+			_computeCanConvertScoring: function(entity) {
+				if (entity && entity.hasActionByName("update-scoring")) {
+					//Only re-populate the menu if _canConvertScoring was previously null/undefined or false
+					if (!this._canConvertScoring) {
+						this._populateConvertScoringMenu(entity);
+					}
+					return true;
+				}
+				return false;
+			},
+			_populateConvertScoringMenu: function(entity) {
+				var scoringMethods = entity.getActionByName("update-scoring").getFieldByName("scoring-method").value;
+				var menu = this.$$("d2l-menu");
+				for(var i = 0; i < scoringMethods.length; i++) {
+					var item = this._createScoringMethodSelectorItem(scoringMethods[i]);
+					Polymer.dom(menu).appendChild(item)
+				}
+			},
+			_createScoringMethodSelectorItem: function(method) {
+				var item = document.createElement("d2l-menu-item-radio");
+				Polymer.dom(item).setAttribute("text", method.title);
+				Polymer.dom(item).setAttribute("value", method.title);
+				if (method.selected) {
+					Polymer.dom(item).setAttribute("selected", "");
+					this._scoringText = "Scoring: " + method.title;
+				}
+				return item;
 			}
 		});
 	</script>

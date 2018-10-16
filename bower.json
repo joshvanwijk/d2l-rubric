@@ -49,7 +49,9 @@
     "iron-media-query": "^2.1.0",
     "iron-resizable-behavior": "^2.1.0",
     "polymer": "1 - 2",
-    "s-html": "Brightspace/s-html#^1.2.0"
+    "s-html": "Brightspace/s-html#^1.2.0",
+    "d2l-dropdown": "^6.6.1",
+    "d2l-menu": "^1.1.0"
   },
   "devDependencies": {
     "fetch": "^2.0.3",
