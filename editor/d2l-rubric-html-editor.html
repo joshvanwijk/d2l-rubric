@@ -49,6 +49,10 @@
 		d2l-html-editor .d2l-richtext-editor-container > p:first-of-type {
 		  margin-top: 0;
 		}
+
+		d2l-html-editor .d2l-richtext-editor-container * {
+		  max-width: 100%;
+		}
 		/* .d2l-richtext-editor-container p:only-of-type {
 		  margin: 0;
 		} */
@@ -140,11 +144,11 @@
 				},
 				_toolbar: {
 					type: String,
-					value: 'bold italic bullist',
+					value: 'bold italic bullist d2l_isf',
 				},
 				_plugins: {
 					type: String,
-					value: 'lists paste d2l_placeholder d2l_filter',
+					value: 'lists paste d2l_placeholder d2l_filter d2l_isf',
 				},
 				objectResizing: {
 					type: Boolean,
