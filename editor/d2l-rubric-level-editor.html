@@ -8,6 +8,7 @@
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 
 <link rel="import" href="./../localize-behavior.html">
+<link rel="import" href="./d2l-rubric-dialog-behavior.html">
 
 <dom-module id="d2l-rubric-level-editor">
 	<template strip-whitespace>
@@ -162,7 +163,8 @@
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.DialogBehavior
 			],
 			_onEntityChanged: function(entity) {
 				this._nameInvalid = false;
@@ -279,9 +281,15 @@
 			},
 			_handleDeleteLevel: function(e) {
 				var action = this.entity.getActionByName('delete');
-				if (action) {
-					var deleteButton = e.currentTarget;
-					deleteButton.setAttribute('disabled', '');
+				if (!action) return;
+				var deleteButton = e.currentTarget;
+				deleteButton.setAttribute('disabled', '');
+				this.openConfirm({
+					title: this.localize('deleteLevelConfirmationTitle'),
+					secondaryMessage: this.localize('deleteLevelConfirmationText'),
+					positiveButtonText: this.localize('deleteConfirmationYes'),
+					negativeButtonText: this.localize('deleteConfirmationNo')
+				}).then(function() {
 					var name = this.entity.properties.name;
 					this.fire('iron-announce', { text: this.localize('levelDeleted', 'name', name) }, { bubbles: true });
 					this.performSirenAction(action).then(function() {
@@ -291,7 +299,9 @@
 					}).catch(function() {
 						deleteButton.removeAttribute('disabled');
 					});
-				}
+				}.bind(this), function(){
+					deleteButton.removeAttribute('disabled');
+				});
 			}
 		});
 	</script>
