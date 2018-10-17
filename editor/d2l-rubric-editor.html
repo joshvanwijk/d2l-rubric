@@ -25,7 +25,7 @@ Creates and edits a rubric
 
 <dom-module id="d2l-rubric-editor">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-rubric-editor-cell-styles">
 			:host {
 				display: block;
 			}
@@ -60,6 +60,10 @@ Creates and edits a rubric
 
 			d2l-dropdown-button-subtle {
 				margin: 0.5rem 0;
+			}
+
+			d2l-alert {
+				margin: 0 var(--d2l-rubric-editor-gutter-width);
 			}
 
 			/* temporary spacing to stop UI shifting down on first save, until single-page rubric creation is implemented */
