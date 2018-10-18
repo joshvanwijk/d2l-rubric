@@ -160,6 +160,10 @@ Creates and edits a rubric
 					type: String,
 					value: null
 				},
+				_scoringMethod: {
+					type: String,
+					value: null
+				},
 				_canConvertScoring: {
 					type: Boolean,
 					computed: '_computeCanConvertScoring(entity)'
@@ -267,12 +271,13 @@ Creates and edits a rubric
 			},
 
 			_handleScoringChange: function(e) {
-				if (this._canConvertScoring && !e.target.selected) {
+				if (this._canConvertScoring && e.target.value != this._scoringMethod) {
 					this._disableMenu()
 					var action = this.entity.getActionByName('update-scoring');
 					var fields = [{'name':'scoring-method', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this._scoringText = this.localize('scoring', 'method', e.target.text);
+						this._scoringMethod = e.target.value;
 						this.fire('d2l-rubric-scoring-changed');
 						this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', e.target.text) }, { bubbles: true });
 					}.bind(this)).then(function() {
@@ -295,9 +300,8 @@ Creates and edits a rubric
 
 			_resetSelectedMethod: function() {
 				var items = Polymer.dom(this.root).querySelectorAll('d2l-menu-item-radio');
-				var currentMethodText = this.$$('d2l-dropdown-button-subtle').text;
 				for (var i = 0; i < items.length; i++) {
-					if (this.localize('scoring', 'method', items[i].text) === currentMethodText) {
+					if (items[i].value === this._scoringMethod) {
 						items[i].setAttribute('selected','');
 					} else {
 						items[i].removeAttribute('selected');
@@ -331,6 +335,7 @@ Creates and edits a rubric
 				Polymer.dom(item).setAttribute('value', method.value);
 				if (method.selected) {
 					Polymer.dom(item).setAttribute('selected', '');
+					this._scoringMethod = method.value;
 					this._scoringText = this.localize('scoring', 'method', method.title);
 				}
 				return item;
