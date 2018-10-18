@@ -266,7 +266,7 @@ Creates and edits a rubric
 			},
 
 			_handleScoringChange: function(e) {
-				if (this._canConvertScoring) {
+				if (this._canConvertScoring && !e.target.selected) {
 					this._disableMenu()
 					var action = this.entity.getActionByName('update-scoring');
 					var fields = [{'name':'scoring-method', 'value':e.target.value}];
@@ -281,10 +281,10 @@ Creates and edits a rubric
 						this._enableMenu();
 					}.bind(this));
 				}
+				Polymer.dom(this.$$('d2l-dropdown-menu')).removeAttribute('opened');
 			},
 
 			_disableMenu: function() {
-				Polymer.dom(this.$$('d2l-dropdown-menu')).removeAttribute('opened');
 				Polymer.dom(this.$$('d2l-dropdown-button-subtle')).setAttribute('disabled','');
 			},
 
