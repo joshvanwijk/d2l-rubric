@@ -154,6 +154,21 @@
 					type: Boolean,
 					value: false,
 				},
+				/**
+				 * The user access token
+				 */
+				token: {
+					type: String,
+				},
+			},
+			attached: function() {
+				this._fetchConfig();
+			},
+			_fetchConfig: function() {
+				var config = window.D2L.Siren.EntityStore.get('https://api.brightspace.com/rels/richtext-editor-config', this.token);
+				if (config) {
+					this.$$('d2l-html-editor').d2lPluginSettings = config.properties;
+				}
 			},
 			focus: function() {
 				this.$$('d2l-html-editor').focus();
