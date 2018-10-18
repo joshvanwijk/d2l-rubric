@@ -274,7 +274,7 @@ Creates and edits a rubric
 				if (this._canConvertScoring && e.target.value != this._scoringMethod) {
 					this._disableMenu()
 					var action = this.entity.getActionByName('update-scoring');
-					var fields = [{'name':'scoring-method', 'value':e.target.value}];
+					var fields = [{'name':'scoringMethod', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this._scoringText = this.localize('scoring', 'method', e.target.text);
 						this._scoringMethod = e.target.value;
