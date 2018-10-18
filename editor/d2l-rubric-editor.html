@@ -182,6 +182,13 @@ Creates and edits a rubric
 					if (entity.hasLinkByRel(this.HypermediaRels.Rubrics.overallLevels)) {
 						this._overallLevels = entity.getLinkByRel(this.HypermediaRels.Rubrics.overallLevels) || null;
 					}
+					if (entity.hasSubEntityByRel(this.HypermediaRels.richTextEditorConfig)) {
+						window.D2L.Siren.EntityStore.update(
+							this.HypermediaRels.richTextEditorConfig,
+							this.token,
+							entity.getSubEntityByRel(this.HypermediaRels.richTextEditorConfig)
+						);
+					}
 				}
 			},
 
