@@ -160,20 +160,31 @@
 				return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
 			},
 
-			_getDescription: function(entity) {
+			_getDescriptionAction: function(entity) {
+				// Default to 'update' if 'update-description' is not present. Mostly for BG purposes
+				// while the overall levels API is updated to use 'update-description'. Can be removed
+				// later.
+				var action;
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 				if (description) {
-					var action = description.getActionByName('update');
-					if (action) {
-						return action.getFieldByName('description').value;
+					action = description.getActionByName('update-description');
+					if (!action) {
+						action = description.getActionByName('update');
 					}
+				}
+				return action;
+			},
+
+			_getDescription: function(entity) {
+				var action = this._getDescriptionAction(entity);
+				if (action) {
+					return action.getFieldByName('description').value;
 				}
 				return '';
 			},
 
 			_saveDescription: function(e) {
-				var description = this.entity && this.entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				var action = description.getActionByName('update');
+				var action = this._getDescriptionAction(this.entity);
 				if (action) {
 					this._toggleBubble('_descriptionInvalid', false);
 					var fields = [{'name':'description', 'value':e.detail.value}];
@@ -206,7 +217,7 @@
 			},
 			_computeCanEditDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.hasActionByName('update');
+				return description && (description.hasActionByName('update-description') || description.hasActionByName('update'));
 			},
 
 			_computeCanEditPoints: function(entity) {
