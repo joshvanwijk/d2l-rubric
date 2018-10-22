@@ -162,7 +162,13 @@
 
 			_getDescription: function(entity) {
 				var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-				return description && description.properties && description.properties.html || '';
+				if (description) {
+					var action = description.getActionByName('update');
+					if (action) {
+						return action.getFieldByName('description').value;
+					}
+				}
+				return '';
 			},
 
 			_saveDescription: function(e) {
