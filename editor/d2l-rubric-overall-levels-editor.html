@@ -9,6 +9,7 @@
 <link rel="import" href="./d2l-rubric-description-editor.html">
 
 <link rel="import" href="./d2l-rubric-overall-level-editor.html">
+<link rel="import" href="../../iron-resizable-behavior/iron-resizable-behavior.html">
 
 <dom-module id="d2l-rubric-overall-levels-editor">
 	<template strip-whitespace>
@@ -171,7 +172,7 @@
 						type="button">
 					</d2l-button-icon>
 				</div>
-				<div class="col-center">
+				<div class="col-center" id="level-header-center-section">
 					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel">
 						<div class="cell">
 							<d2l-rubric-overall-level-editor href="[[_getSelfLink(overallLevel)]]" token="[[token]]"></d2l-rubric-overall-level-editor>
@@ -188,7 +189,7 @@
 			</div>
 			<div id="description" class="editor-section">
 				<div class="gutter-left"></div>
-				<div class="col-center">
+				<div class="col-center" id="description-center-section">
 					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel">
 						<div class="cell">
 							<d2l-rubric-description-editor
@@ -226,8 +227,30 @@
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				Polymer.IronResizableBehavior
 			],
+			attached: function() {
+				// Defer the offsetWidth/scrollWidth calculations until after the page has rendered
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					if (this.isAttached) {
+						this.listen(this, 'iron-resize', 'syncSize');
+						this.syncSize();
+					}
+				}.bind(this));
+			},
+			detached: function() {
+				this.unlisten(this, 'iron-resize', 'syncSize');
+			},
+			syncSize: function() {
+				this.async(function() {
+					var fromSection = this.$['level-header-center-section'];
+					var toSection = this.$['description-center-section'];
+					if (fromSection) {
+						toSection.style = 'width: ' + fromSection.offsetWidth + 'px;';
+					}
+				}.bind(this), 1);
+			},
 			observers: [
 				'_onEntityChanged(entity)',
 			],

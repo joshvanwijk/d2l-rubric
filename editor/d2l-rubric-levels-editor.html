@@ -170,8 +170,10 @@
 				this.unlisten(this, 'iron-resize', 'checkSize');
 			},
 			checkSize: function() {
-				var section = this.$['levels-section'];
-				if (section) this.fire('d2l-rubric-editor-levels-width-changed', { width: section.offsetWidth } );
+				this.async(function(){
+					var section = this.$['levels-section'];
+					if (section) this.fire('d2l-rubric-editor-levels-width-changed', { width: section.offsetWidth } );
+				}.bind(this), 1);
 			},
 			_onEntityChanged: function(entity) {
 				if (!entity) {
