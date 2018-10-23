@@ -163,6 +163,7 @@
 			start-icon="d2l-tier1:chevron-left"
 			end-icon="d2l-tier1:chevron-right"
 			show-actions
+			check-scroll-delta-value="1"
 		>
 			<div id="level-header" class="editor-section">
 				<div class="gutter-left">
@@ -234,21 +235,22 @@
 				// Defer the offsetWidth/scrollWidth calculations until after the page has rendered
 				Polymer.RenderStatus.afterNextRender(this, function() {
 					if (this.isAttached) {
-						this.listen(this, 'iron-resize', 'syncSize');
-						this.syncSize();
+						this.listen(this, 'iron-resize', 'syncMiddleSectionSize');
+						this.syncMiddleSectionSize();
 					}
 				}.bind(this));
 			},
 			detached: function() {
-				this.unlisten(this, 'iron-resize', 'syncSize');
+				this.unlisten(this, 'iron-resize', 'syncMiddleSectionSize');
 			},
-			syncSize: function() {
+			syncMiddleSectionSize: function() {
 				this.async(function() {
 					var fromSection = this.$['level-header-center-section'];
 					var toSection = this.$['description-center-section'];
 					if (fromSection) {
 						toSection.style = 'width: ' + fromSection.offsetWidth + 'px;';
 					}
+					this._notifyResize();
 				}.bind(this), 1);
 			},
 			observers: [

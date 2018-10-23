@@ -71,6 +71,7 @@
 			start-icon="d2l-tier1:chevron-left"
 			end-icon="d2l-tier1:chevron-right"
 			show-actions
+			check-scroll-delta-value="1"
 		>
 			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
@@ -164,6 +165,12 @@
 				this.addEventListener('d2l-rubric-editor-levels-width-changed', function(e) {
 					this.$$('d2l-rubric-criteria-editor').criterionDetailWidth = e.detail.width;
 				}.bind(this));
+
+				this.addEventListener('d2l-rubric-criterion-detail-width-changed', function (e) {
+					Polymer.RenderStatus.afterNextRender(this, function () {
+						this.$$('d2l-scroll-wrapper').notifyResize();
+					}.bind(this));
+				}.bind(this));
 			},
 
 			_onEntityChanged: function(entity) {
@@ -238,8 +245,8 @@
 				return new Boolean(nameInvalid).toString();
 			},
 
-			_notifyResize: function() {
-				Polymer.RenderStatus.afterNextRender(this.$$('d2l-rubric-levels-editor'), function() {
+			_notifyResize: function () {
+				Polymer.RenderStatus.afterNextRender(this.$$('d2l-rubric-levels-editor'), function () {
 					this.$$('d2l-scroll-wrapper').notifyResize();
 				}.bind(this));
 			}
