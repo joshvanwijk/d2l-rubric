@@ -5,6 +5,8 @@
 suite('<d2l-rubric-criterion-editor>', function() {
 
 	var sandbox;
+	// Internet Explorer 6-11
+	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	var isVisible = function(elem) {
 		var style = elem && getComputedStyle(elem);
 		return style && style.visibility !== 'hidden' && style.display !== 'none' && !elem.hasAttribute('hidden');
@@ -87,7 +89,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
 							// don't test in IE
-							if (navigator.userAgent.indexOf('MSIE') === -1) {
+							if (!isIE) {
 								expect(nameTextArea.ariaInvalid).to.equal('true');
 							}
 							done();
@@ -103,7 +105,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				raf(function() {
 					flush(function() {
 						// don't test in IE
-						if (navigator.userAgent.indexOf('MSIE') === -1) {
+						if (!isIE) {
 							expect(nameTextArea.ariaInvalid).to.equal('true');
 						}
 						done();
@@ -235,7 +237,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
 								// don't test in IE
-								if (navigator.userAgent.indexOf('MSIE') === -1) {
+								if (!isIE) {
 									expect(outOfTextArea.ariaInvalid).to.equal('true');
 								}
 								done();
