@@ -11,7 +11,7 @@
 				flex-direction: row;
 				justify-content: flex-end;
 				overflow: hidden;
-				padding-top: 0.5rem;
+				margin-top: 0.5rem;
 				padding-bottom: 0.7rem;
 			}
 
@@ -19,20 +19,12 @@
 				width: 0.5rem;
 			}
 
-			.gutter-right {
-				width: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
-			}
-
-			.gutter-right[holistic] {
-				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
-			}
-
 			[hidden] {
 				display: none;
 			}
 		</style>
 
-		<div class="gutter-left" holistic$="[[isHolistic]]"></div>
+		<div class="gutter-left"></div>
 		<d2l-button-subtle hidden$="[[!reverseLevelsEnabled]]"
 			on-tap="_handleReverseTap"
 			icon="d2l-tier1:reverse-order"
@@ -40,7 +32,6 @@
 			type="button"
 		>
 		</d2l-button-subtle>
-		<div class="gutter-right" holistic$="[[isHolistic]]"></div>
 	</template>
 	<script>
 		Polymer({
@@ -48,10 +39,6 @@
 
 			properties: {
 				reverseLevelsEnabled: {
-					type: Boolean,
-					value: false
-				},
-				isHolistic: {
 					type: Boolean,
 					value: false
 				}
