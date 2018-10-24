@@ -5,6 +5,8 @@
 suite('<d2l-rubric-description-editor>', function() {
 
 	var sandbox;
+	// Internet Explorer 6-11
+	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 
 	suiteSetup(function() {
 		sandbox = sinon.sandbox.create();
@@ -82,7 +84,7 @@ suite('<d2l-rubric-description-editor>', function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
 								// don't test in IE
-								if (navigator.userAgent.indexOf('MSIE') === -1) {
+								if (!isIE) {
 									expect(descriptionTextArea.ariaInvalid).to.equal('true');
 								}
 								done();
@@ -177,7 +179,7 @@ suite('<d2l-rubric-description-editor>', function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
 								// don't test in IE
-								if (navigator.userAgent.indexOf('MSIE') === -1) {
+								if (!isIE) {
 									expect(pointsTextInput.ariaInvalid).to.equal('true');
 								}
 								done();
@@ -279,7 +281,7 @@ suite('<d2l-rubric-description-editor>', function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
 							flush(function() {
 								// don't test in IE
-								if (navigator.userAgent.indexOf('MSIE') === -1) {
+								if (!isIE) {
 									expect(descriptionTextArea.ariaInvalid).to.equal('true');
 								}
 								done();
