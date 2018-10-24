@@ -100,7 +100,7 @@
 				},
 
 				totalScore: {
-					type: Number,
+					type: String,
 					observer: '_totalScoreChanged'
 				},
 
@@ -162,7 +162,7 @@
 				lastGroup.$$('d2l-input-text').$$('input').select();
 			},
 			_totalScoreChanged: function(totalScore) {
-				this._hasTotalScore = totalScore;
+				this._hasTotalScore = typeof totalScore !== 'undefined';
 			}
 		});
 	</script>
