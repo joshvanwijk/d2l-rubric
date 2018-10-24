@@ -153,7 +153,7 @@
 				return entity && entity.hasProperty('rangeStart') && entity.properties.rangeStart !== null;
 			},
 			_isRangeStartRequired: function(entity) {
-				var action = entity && entity.getActionByName('update');
+				var action = entity && entity.getActionByName('update-range-start');
 				if (!action) {
 					return false;
 				}
@@ -184,14 +184,14 @@
 				var action = this.entity.getActionByName('update-name');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
+						this._handleValidationError('_nameInvalid', 'nameIsRequired')
 					} else {
 						this._toggleBubble('_nameInvalid', false);
 						var fields = [{ 'name': 'name', 'value': e.target.value }];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-overall-level-saved');
 						}.bind(this)).catch(function() {
-							this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+							this._handleValidationError('_nameInvalid', 'nameSaveFailed')
 						}.bind(this));
 					}
 				}
@@ -200,22 +200,32 @@
 				var action = this.entity.getActionByName('update-range-start');
 				if (action) {
 					if (this._rangeStartRequired && !e.target.value.trim()) {
-						this._toggleBubble('_rangeStartInvalid', true, this.localize('rangeStartRequired'));
+						this._handleValidationError('_rangeStartInvalid', 'rangeStartRequired')
 					} else {
 						this._toggleBubble('_rangeStartInvalid', false);
 						var fields = [{'name':'rangeStart', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-overall-level-range-start-saved');
 						}.bind(this)).catch(function(e) {
-							if (!e.json) {
-								this._toggleBubble('_rangeStartInvalid', true, this.localize('rangeStartInvalid'));
-							} else {
-								this._toggleBubble('_rangeStartInvalid', true, e.json.properties.detail);
-							}
-
+							this._handleValidationError('_rangeStartInvalid', 'rangeStartInvalid', e)
 						}.bind(this));
 					}
 				}
+			},
+			_handleValidationError: function(property, langterm, error) {
+				var msgText = this._getErrMsg(error, langterm);
+				this._toggleBubble(property, true, msgText);
+				this.fire('iron-announce', { text: msgText }, { bubbles: true });
+			},
+			_getErrMsg: function(e, altMsg) {
+				if (e && !e.hasOwnProperty('stack')) {
+					var errObj = e.string ? e.string : e.json;
+					if (errObj.hasOwnProperty('properties')) {
+						return errObj.properties.detail;
+					}
+				}
+				console.log("Alt: " + altMsg);
+				return this.localize(altMsg);
 			},
 			_toggleBubble: function(invalidId, show, error) {
 				if (show) {
