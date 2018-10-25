@@ -53,10 +53,15 @@ Creates and edits a rubric
 				padding-left: 46px;
 			}
 
-			#rubric-editor-header {
+			#rubric-editor-header-content {
 				display: flex;
 				justify-content: flex-end;
 				flex-wrap: wrap;
+			}
+
+			#rubric-editor-header {
+				display: flex;
+				justify-content: flex-end;
 			}
 
 			d2l-dropdown-button-subtle {
@@ -65,6 +70,14 @@ Creates and edits a rubric
 
 			d2l-alert {
 				margin: 0 var(--d2l-rubric-editor-gutter-width);
+			}
+
+			.gutter-right {
+				width: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
+			}
+
+			.gutter-right[holistic] {
+				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 
 			/* temporary spacing to stop UI shifting down on first save, until single-page rubric creation is implemented */
@@ -91,17 +104,19 @@ Creates and edits a rubric
 		</div>
 		<div id="rubric-editor-container" hidden >
 			<div id="rubric-editor-header">
-				<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]">
-					<d2l-dropdown-menu id="dropdown">
-						<d2l-menu label="Scoring"></d2l-menu>
-					</d2l-dropdown-menu>
-				</d2l-dropdown-button-subtle>
+				<div id="rubric-editor-header-content">
+					<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]">
+						<d2l-dropdown-menu id="dropdown">
+							<d2l-menu label="Scoring"></d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown-button-subtle>
 
-				<d2l-rubric-editor-menu
-					on-d2l-rubric-reverse-levels="_handleReverseLevels"
-					reverse-levels-enabled="[[_present(_reverseLevels)]]"
-					is-holistic="[[_isHolistic]]">
-				</d2l-rubric-editor-menu>
+					<d2l-rubric-editor-menu
+						on-d2l-rubric-reverse-levels="_handleReverseLevels"
+						reverse-levels-enabled="[[_present(_reverseLevels)]]">
+					</d2l-rubric-editor-menu>
+				</div>
+				<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 			</div>
 
 			<d2l-rubric-criteria-groups-editor
