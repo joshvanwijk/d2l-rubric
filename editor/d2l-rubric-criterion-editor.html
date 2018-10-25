@@ -172,7 +172,7 @@
 				<d2l-tooltip for="name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
 		</div>
-		<div class="criterion-detail" is-holistic$=[[isHolistic]]>
+		<div class="criterion-detail" is-holistic$=[[isHolistic]] style$="width: [[criterionDetailWidth]]px;">
 			<div class="criterion-text">
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" >
 					<div class="cell">
@@ -241,6 +241,10 @@
 			is: 'd2l-rubric-criterion-editor',
 
 			properties: {
+				criterionDetailWidth: {
+					type: Number,
+					value: 0
+				},
 				_canEdit: {
 					type: Boolean,
 					computed: '_canEditCriterion(entity)',
@@ -290,7 +294,6 @@
 				},
 				richTextEnabled: Boolean
 			},
-
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
@@ -298,7 +301,10 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.DialogBehavior
 			],
-
+			observers: ['_widthChange(criterionDetailWidth)'],
+  				_widthChange: function (criterionDetailWidth) {
+	  			this.fire('d2l-rubric-criterion-detail-width-changed', {});
+  			},
 			_onEntityChanged: function(entity, oldEntity) {
 				if (!entity) {
 					return;

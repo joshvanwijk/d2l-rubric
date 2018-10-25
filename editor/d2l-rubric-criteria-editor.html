@@ -159,6 +159,7 @@
 							is-holistic="[[isHolistic]]"
 							display-name-placeholder="[[_isFirst(index)]]"
 							rich-text-enabled="[[richTextEnabled]]"
+							criterion-detail-width="[[criterionDetailWidth]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen"
@@ -221,6 +222,9 @@
 			is: 'd2l-rubric-criteria-editor',
 
 			properties: {
+				criterionDetailWidth: {
+					type: Number
+				},
 				_criteriaEntities: Array,
 				hasOutOf: {
 					type: Boolean,
