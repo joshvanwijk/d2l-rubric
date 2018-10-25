@@ -329,7 +329,7 @@
 				var action = this.entity.getActionByName('update');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this._toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
+						this._handleValidationError('_nameInvalid', 'nameIsRequired');
 						return;
 					} else {
 						this._toggleBubble('_nameInvalid', false);
@@ -338,7 +338,7 @@
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function() {
-						this._toggleBubble('_nameInvalid', true, this.localize('nameSaveFailed'));
+						this._handleValidationError('_nameInvalid', 'nameSaveFailed');
 					}.bind(this));
 				}
 			},
@@ -347,7 +347,7 @@
 				var action = this.entity.getActionByName('update-outof');
 				if (action) {
 					if (!e.target.value.trim()) {
-						this._toggleBubble('_outOfInvalid', true, this.localize('pointsAreRequired'));
+						this._handleValidationError('_outOfInvalid', 'pointsAreRequired');
 						return;
 					} else {
 						this._toggleBubble('_outOfInvalid', false);
@@ -356,13 +356,19 @@
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function(err) {
-						this._toggleBubble('_outOfInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
+						this._handleValidationError('_outOfInvalid', 'pointsSaveFailed', err);
 					}.bind(this));
 				}
 			},
 
+			_handleValidationError: function(property, langterm, error) {
+				var msgText = this._getErrMsg(error, langterm);
+				this._toggleBubble(property, true, msgText);
+				this.fire('iron-announce', { text: msgText }, { bubbles: true });
+			},
+
 			_getErrMsg: function(e, altMsg) {
-				if (!e.hasOwnProperty('stack')) {
+				if (e && !e.hasOwnProperty('stack')) {
 					var errObj = e.string ? e.string : e.json;
 					if (errObj.hasOwnProperty('properties')) {
 						return errObj.properties.detail;
