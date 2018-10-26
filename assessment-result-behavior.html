@@ -132,6 +132,20 @@
 			assessmentCriterionMap[criterionEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion).href] = criterionEntity;
 		},
 
+		_getFieldWithName: function(fields, name) {
+			if (Array.prototype.find) {
+				return fields.find(function(field) { return field.name === name; });
+			} else {
+				// Internet Explorer doesn't support the Array.find function, so use a polyfill instead
+				for (var i = 0; i < fields.length; i++) {
+					if (fields[i].name === name) {
+						return fields[i];
+					}
+				}
+				return undefined;
+			}
+		},
+
 		_getItem: function(criterionEntity, assessmentResult, itemFetcher) {
 			if (assessmentResult[this._getSelfLink(criterionEntity)]) {
 				return itemFetcher(assessmentResult[this._getSelfLink(criterionEntity)]);
@@ -197,11 +211,11 @@
 
 			if (action) {
 				var fields = action.fields;
-				var feedbackField = fields.find(function(field) { return field.name === 'feedbackText'; });
+				var feedbackField = this._getFieldWithName(fields, 'feedbackText');
 				if (feedbackField) {
 					feedbackField.value = feedback;
 				}
-				feedbackField = fields.find(function(field) { return field.name === 'feedbackHtml'; });
+				feedbackField = this._getFieldWithName(fields, 'feedbackHtml');
 				if (feedbackField) {
 					feedbackField.value = this._escapeHtml(feedback);
 				}
@@ -230,7 +244,7 @@
 				return false;
 			}
 			var fields = action.fields;
-			var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+			var assessmentField = this._getFieldWithName(fields, 'rubricAssessment');
 			return assessmentField.value.TotalScoreOverridden;
 		},
 
@@ -246,7 +260,7 @@
 
 			if (action) {
 				var fields = action.fields;
-				var scoreField = fields.find(function(field) { return field.name === 'score'; });
+				var scoreField = this._getFieldWithName(fields, 'score');
 				scoreField.value = points;
 
 				this.performSirenAction(action, fields);
@@ -263,7 +277,7 @@
 			var action = entity.getActionByName('save');
 			if (action) {
 				var fields = action.fields;
-				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+				var assessmentField = this._getFieldWithName(fields, 'rubricAssessment');
 				assessmentField.value.OverallScore = points;
 				assessmentField.value.TotalScoreOverridden = true;
 				this.performSirenAction(action, fields);
@@ -282,8 +296,8 @@
 
 			if (action) {
 				var fields = action.fields;
-				var scoreField = fields.find(function(field) { return field.name === 'score'; });
-				var defaultScoreField = fields.find(function(field) { return field.name === 'defaultScore'; });
+				var scoreField = this._getFieldWithName(fields, 'score');
+				var defaultScoreField = this._getFieldWithName(fields, 'defaultScore');
 				scoreField.value = defaultScoreField.value;
 
 				this.performSirenAction(action, fields);
@@ -300,7 +314,7 @@
 			var action = entity.getActionByName('save');
 			if (action) {
 				var fields = action.fields;
-				var assessmentField = fields.find(function(field) { return field.name === 'rubricAssessment'; });
+				var assessmentField = this._getFieldWithName(fields, 'rubricAssessment');
 				assessmentField.value.TotalScoreOverridden = false;
 				this.performSirenAction(action, fields);
 			}
