@@ -136,7 +136,7 @@
 			if( Array.prototype.find ) {
 				return fields.find(function(field) { return field.name === name; });
 			} else {
-				// Internet Explorer workaround >:(
+				// Internet Explorer doesn't support the Array.find function, so use a polyfill instead
 				for( var i = 0; i < fields.length; i++ ) {
 					if( fields[i].name === name ) {
 						return fields[i];
