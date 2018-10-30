@@ -11,7 +11,6 @@
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
 <link rel="import" href="./d2l-rubric-overall-levels-editor.html">
 
-<link rel="import" href="./d2l-rubric-editor-menu.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 <link rel="import" href="../../d2l-menu/d2l-menu-item-radio.html">
@@ -39,34 +38,56 @@ Creates and edits a rubric
 				height: 30px;
 			}
 
-			#editor-save-status-container {
-				display: flex;
-				flex-direction: row;
-				justify-content: flex-end;
-				overflow: hidden;
-				padding-right: 46px;
-			}
-			:host-context([dir='rtl']) #editor-save-status-container {
-				padding-left: 46px;
-			}
-
-			:host(:dir(rtl)) #editor-save-status-container {
-				padding-left: 46px;
-			}
-
-			#rubric-editor-header {
-
+			:dir(rtl) #rubric-editor-header {
+				text-align: right;
 			}
 
 			#rubric-editor-header-content {
 				display: flex;
-				justify-content: flex-start;
+				justify-content: space-between;
 				flex-wrap: wrap;
-				margin-left: calc(var(--d2l-rubric-editor-gutter-width) - 0.2rem);
+				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
+				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
 			}
 
-			#rubric-editor-header-content > * {
+			:dir(rtl) #rubric-editor-header-content {
+				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
+				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
+			}
+
+			#header-start-container > * {
 				margin: 0.75rem 0.3rem;
+			}
+
+			#header-start-container > *:first-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
+			#header-start-container > *:last-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-start-container > *:first-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-start-container > *:last-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
+			#header-end-container {
+				margin-top: auto;
+				margin-bottom: auto;
+				min-height: 1.2rem;
+				height: 100%;
 			}
 
 			d2l-alert {
@@ -81,19 +102,11 @@ Creates and edits a rubric
 				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 
-			/* temporary spacing to stop UI shifting down on first save, until single-page rubric creation is implemented */
-			#editor-save-status-container {
-				min-height: 1.4rem;
-			}
-
 			[hidden] {
 				display: none;
 			}
 
 		</style>
-		<div id="editor-save-status-container">
-			<d2l-save-status id="editor-save-status"></d2l-save-status>
-		</div>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]">
 				[[item.alertMessage]]
@@ -105,24 +118,29 @@ Creates and edits a rubric
 		</div>
 		<div id="rubric-editor-header">
 			<div id="rubric-editor-header-content">
-				<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]" on-d2l-menu-item-change="_handleTypeChange">
-					<d2l-dropdown-menu>
-						<d2l-menu id="rubric-type-menu" label="Type"></d2l-menu>
-					</d2l-dropdown-menu>
-				</d2l-dropdown-button-subtle>
+				<div id="header-start-container">
+					<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]" on-d2l-menu-item-change="_handleTypeChange">
+						<d2l-dropdown-menu>
+							<d2l-menu id="rubric-type-menu" label="Type"></d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown-button-subtle>
 
-				<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]" on-d2l-menu-item-change="_handleScoringChange">
-					<d2l-dropdown-menu>
-						<d2l-menu id="scoring-menu" label="Scoring"></d2l-menu>
-					</d2l-dropdown-menu>
-				</d2l-dropdown-button-subtle>
+					<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]" on-d2l-menu-item-change="_handleScoringChange">
+						<d2l-dropdown-menu>
+							<d2l-menu id="scoring-menu" label="Scoring"></d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown-button-subtle>
 
-				<d2l-button-subtle hidden$="[[!_present(_reverseLevels)]]"
-					on-tap="_handleReverseLevels"
-					icon="d2l-tier1:reverse-order"
-					text="[[localize('reverseLevelOrder')]]"
-					type="button">
-				</d2l-button-subtle>
+					<d2l-button-subtle hidden$="[[!_present(_reverseLevels)]]"
+						on-tap="_handleReverseLevels"
+						icon="d2l-tier1:reverse-order"
+						text="[[localize('reverseLevelOrder')]]"
+						type="button">
+					</d2l-button-subtle>
+				</div>
+				<div id="header-end-container">
+					<d2l-save-status id="editor-save-status"></d2l-save-status>
+				</div>
 			</div>
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
@@ -348,9 +366,6 @@ Creates and edits a rubric
 				if (!this._canConvertType || e.target.value == this._rubricTypeValue) return;
 
 				Polymer.dom(dropdownMenu).removeAttribute('opened');
-
-				var action = this.entity.getActionByName('update-type');
-				var fields = [{'name':'rubricType', 'value':e.target.value}];
 				var confirm = this._rubricTypeValue === 'Analytic' && e.target.value === 'Holistic';
 
 				var performAction = function() {
@@ -365,7 +380,7 @@ Creates and edits a rubric
 					}.bind(this)).then(function() {
 						this._enableMenu(menuButton);
 					}.bind(this)).catch(function() {
-						this._resetSelectedMethod(menuButton, this._rubricTypeValue);
+						this._resetSelectedMenuItem(menuButton, this._rubricTypeValue);
 						this._enableMenu(menuButton);
 					}.bind(this));
 				}.bind(this);
@@ -379,7 +394,7 @@ Creates and edits a rubric
 						positiveButtonText: this.localize('changeConfirmationYes'),
 						negativeButtonText: this.localize('changeConfirmationNo')
 					}).then(performAction, function() {
-						this._resetSelectedMethod(menuButton, this._rubricTypeValue);
+						this._resetSelectedMenuItem(menuButton, this._rubricTypeValue);
 					}.bind(this));
 				}
 			},
@@ -401,7 +416,7 @@ Creates and edits a rubric
 				}.bind(this)).then(function() {
 					this._enableMenu(menuButton);
 				}.bind(this)).catch(function() {
-					this._resetSelectedMethod(menuButton, this._scoringMethod);
+					this._resetSelectedMenuItem(menuButton, this._scoringMethod);
 					this._enableMenu(menuButton);
 				}.bind(this));
 
@@ -416,7 +431,7 @@ Creates and edits a rubric
 				Polymer.dom(menuButton).removeAttribute('disabled');
 			},
 
-			_resetSelectedMethod: function(menuButton, optionValue) {
+			_resetSelectedMenuItem: function(menuButton, optionValue) {
 				var items = Polymer.dom(menuButton).querySelectorAll('d2l-menu-item-radio');
 				for (var i = 0; i < items.length; i++) {
 					if (items[i].value === optionValue) {
