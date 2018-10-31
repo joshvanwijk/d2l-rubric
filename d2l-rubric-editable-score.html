@@ -96,8 +96,7 @@
 				},
 				totalScore: {
 					type: String,
-					value: null,
-					observer: '_totalScoreChanged'
+					value: null
 				},
 				criterionNum: {
 					type: Number,
@@ -115,7 +114,8 @@
 			],
 
 			observers: [
-				'_onAssessmentResultChanged(entity, assessmentResult)'
+				'_onAssessmentResultChanged(entity, assessmentResult)',
+				'_totalScoreChanged(totalScore, entity)'
 			],
 
 			_onAssessmentResultChanged: function(entity, assessmentResult) {
@@ -247,8 +247,14 @@
 				}
 			},
 
-			_totalScoreChanged: function(score) {
-				if (score) {
+			_totalScoreChanged: function(score, entity) {
+				var outOf;
+				if (entity && entity.properties) {
+					outOf = entity.properties.outOf;
+				}
+				if (score && outOf) {
+					this.fire('d2l-rubric-total-score-changed', {score:score, outOf: outOf.toString()});
+				} else if (score) {
 					this.fire('d2l-rubric-total-score-changed', {score:score});
 				}
 			}
