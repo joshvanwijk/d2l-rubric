@@ -209,6 +209,10 @@ Creates and edits a rubric
 					type: Boolean,
 					value: false
 				},
+				_refreshScoring: {
+					type: Boolean,
+					value: false
+				},
 				_canConvertType: {
 					type: Boolean,
 					value: false
@@ -270,6 +274,8 @@ Creates and edits a rubric
 					}
 					if (entity.hasLinkByRel(this.HypermediaRels.Rubrics.overallLevels)) {
 						this._overallLevels = entity.getLinkByRel(this.HypermediaRels.Rubrics.overallLevels) || null;
+					} else {
+						this._overallLevels = null;
 					}
 					if (entity.hasSubEntityByRel(this.HypermediaRels.richTextEditorConfig)) {
 						window.D2L.Siren.EntityStore.update(
@@ -284,12 +290,13 @@ Creates and edits a rubric
 							.getFieldByName('scoring-method').value || [];
 
 						//Only re-populate the menu if _canConvertScoring was previously null/undefined or false
-						if (!this._canConvertScoring) {
+						if (!this._canConvertScoring  || this._refreshScoring) {
 							var selected = this._populateDropdownMenuOptions('scoring-menu', options);
 							if (selected) {
 								this._scoringMethod = selected.value;
 								this._scoringText = this.localize('scoring', 'method', selected.title);
 							}
+							this._refreshScoring = false;
 						}
 						this._canConvertScoring = true;
 					}
@@ -372,6 +379,7 @@ Creates and edits a rubric
 					this._disableMenu(menuButton);
 					var action = this.entity.getActionByName('update-type');
 					var fields = [{'name':'rubricType', 'value':e.target.value}];
+					this._refreshScoring = true;
 					this.performSirenAction(action, fields).then(function() {
 						this._rubricTypeText = this.localize('rubricType', 'rubricType', e.target.text);
 						this._rubricTypeValue = e.target.value;
@@ -445,6 +453,12 @@ Creates and edits a rubric
 			_populateDropdownMenuOptions: function(menuId, options) {
 				var menu = this.$[menuId];
 				var selected = null;
+
+				var oldItems = Polymer.dom(menu).childNodes;
+				for(var i = 0; i < oldItems.length; i++) {
+					Polymer.dom(menu).removeChild(oldItems[i]);
+				}
+
 				for(var i = 0; i < options.length; i++) {
 					var option = options[i];
 					var item = document.createElement('d2l-menu-item-radio');
