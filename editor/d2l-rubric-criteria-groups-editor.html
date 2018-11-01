@@ -21,12 +21,20 @@
 				padding-bottom: 24px;
 			}
 
+			d2l-rubric-criteria-group-editor:last-of-type {
+				padding-bottom: 0px;
+			}
+
 			.groups-footer {
 				display: flex;
-				flex-direction: row;
+				flex-flow: row wrap;
 				justify-content: space-between;
 				align-items: center;
 				margin: 0 var(--d2l-rubric-editor-gutter-width);
+			}
+
+			.groups-footer > .footer-child {
+				padding-top: 24px;
 			}
 
 			.out-of-text {
@@ -58,11 +66,11 @@
 		</template>
 
 		<div class="groups-footer">
-			<d2l-button type="button" on-tap="_handleAddCriteriaGroup" hidden="[[!_canCreate]]" aria-label="[[localize('addCriteriaGroup')]]">
+			<d2l-button class="footer-child" type="button" on-tap="_handleAddCriteriaGroup" hidden="[[!_canCreate]]" aria-label="[[localize('addCriteriaGroup')]]">
 				[[localize('addCriteriaGroup')]]
 			</d2l-button>
 
-			<div class="out-of-text" hidden="[[!_hasTotalScore]]" aria-label$="[[localize('totalScoreAriaLabel','value',totalScore)]]">
+			<div class="out-of-text footer-child" hidden="[[!_hasTotalScore]]" aria-label$="[[localize('totalScoreAriaLabel','value',totalScore)]]">
 				<span class="total-text">[[localize('total')]]</span><span>[[localize('dashOutOf', 'outOf', totalScore)]]</span>
 			</div>
 		</div>
