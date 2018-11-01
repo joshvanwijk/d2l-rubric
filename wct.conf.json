@@ -49,7 +49,7 @@
 		  {
 			"browserName": "microsoftedge",
 			"platform": "Windows 10",
-			"version": ""
+			"version": "latest"
 		  }
 		]
 	  }

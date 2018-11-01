@@ -55,7 +55,7 @@ var platform_array =  [
     {
       "browserName": "microsoftedge",
       "platform": "Windows 10",
-      "version": ""
+      "version": "latest"
     },
     {
       "browserName": "internet explorer",
