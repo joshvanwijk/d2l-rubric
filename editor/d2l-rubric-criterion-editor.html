@@ -153,7 +153,7 @@
 			}
 
 		</style>
-		<div class="gutter-left" text-only$="[[!hasOutOf]]" is-holistic$=[[isHolistic]]>
+		<div class="gutter-left" text-only$="[[!_hasOutOf]]" is-holistic$=[[isHolistic]]>
 			<slot name="gutter-left"></slot>
 		</div>
 		<div class="cell col-first criterion-name" hidden$=[[isHolistic]]>
@@ -202,8 +202,8 @@
 				</template>
 			</div>
 		</div>
-		<div text-only$="[[!hasOutOf]]" class="cell col-last out-of" hidden$=[[isHolistic]]>
-			<span hidden="[[!hasOutOf]]">
+		<div text-only$="[[!_hasOutOf]]" class="cell col-last out-of" hidden$=[[isHolistic]]>
+			<span hidden="[[!_hasOutOf]]">
 				<template is="dom-if" if="[[!_outOfIsEditable]]">
 					<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
 						/ [[_outOf]]
@@ -224,7 +224,7 @@
 				</template>
 			</span>
 		</div>
-		<div class="gutter-right" text-only$="[[!hasOutOf]]" is-holistic$=[[isHolistic]]>
+		<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$=[[isHolistic]]>
 			<d2l-button-icon
 				id="remove"
 				hidden$="[[!_canDelete]]"
@@ -263,9 +263,9 @@
 				_nameInvalidError: {
 					type: String
 				},
-				hasOutOf: {
+				_hasOutOf: {
 					type: Boolean,
-					value: false
+					computed: '_computeHasOutOf(entity)'
 				},
 				isHolistic: {
 					type: Boolean,
@@ -323,6 +323,10 @@
 			_getCriterionCells: function(entity) {
 				var entities = entity && entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 				return entities || [];
+			},
+
+			_computeHasOutOf: function(entity) {
+				return entity && entity.properties && entity.properties.outOf;
 			},
 
 			_saveName: function(e) {
@@ -443,11 +447,13 @@
 				});
 			},
 			_getOutOfValue: function(entity) {
-				if (this.hasOutOf && entity) return entity.properties.outOf;
+				if (entity && entity.properties && entity.properties.outOf) {
+					return entity.properties.outOf;
+				}
 			},
 
 			_isOutOfEditable: function(entity) {
-				return this.hasOutOf && entity && entity.hasActionByName('update-outof');
+				return entity && entity.hasActionByName('update-outof');
 			},
 
 			_getCellKeyRels: function() {
