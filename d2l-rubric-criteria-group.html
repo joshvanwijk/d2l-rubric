@@ -169,6 +169,7 @@
 									read-only="[[readOnly]]"
 									editing-score="{{editingScore}}"
 									criterion-num="[[criterionNum]]"
+									parentElement="[[editableScoreContainer]]"
 								>
 								</d2l-rubric-editable-score>
 							</d2l-td>
@@ -239,6 +240,10 @@
 					value: -1
 				},
 				telemetryData: {
+					type: Object,
+					value: null
+				},
+				editableScoreContainer: {
 					type: Object,
 					value: null
 				}
@@ -507,6 +512,7 @@
 				}
 				var criterionNum = event.model.get('criterionNum');
 				this.editingScore = criterionNum;
+				this.editableScoreContainer = event.currentTarget;
 			},
 
 			_handleScoreKeypress: function(event) {

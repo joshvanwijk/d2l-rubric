@@ -105,6 +105,10 @@
 				readOnly: {
 					type: Boolean,
 					value: true
+				},
+				parentElement: {
+					type: Object,
+					value: null
 				}
 			},
 
@@ -175,6 +179,7 @@
 					return;
 				}
 				this._saveScore(newScore);
+				this.parentElement.focus();
 			},
 
 			_saveScore: function(score) {
