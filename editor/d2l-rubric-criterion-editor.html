@@ -86,9 +86,15 @@
 				flex: 1 1 auto;
 			}
 
-			.criterion-detail .cell {
-				padding: 0;
+			/* note start: to fix border overflow clipping */
+			.criterion-text .cell {
+				padding: 1px;
 			}
+
+			.criterion-feedback .cell {
+				padding: 1px;
+			}
+			/* note end */
 
 			.out-of {
 				display: flex;
