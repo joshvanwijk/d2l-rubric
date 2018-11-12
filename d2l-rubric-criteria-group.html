@@ -196,6 +196,10 @@
 		Polymer({
 			is: 'd2l-rubric-criteria-group',
 
+			ready: function() {
+
+			},
+
 			properties: {
 				_levelsHref: String,
 				_levelsEntity: {
@@ -259,6 +263,10 @@
 				'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 			],
 
+			ready: function() {
+				this.addEventListener('close-feedback', this._closeFeedback.bind(this));
+			},
+
 			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
@@ -308,6 +316,10 @@
 					feedbackDisplay[i] = this._hasFeedback(criteriaEntities[i], assessmentResult);
 				}
 				this._feedbackDisplay = feedbackDisplay;
+			},
+
+			_closeFeedback: function() {
+				this._addingFeedback = -1;
 			},
 
 			_getCriteriaLink: function(entity) {
