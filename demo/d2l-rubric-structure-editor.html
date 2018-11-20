@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>d2l-rubric-structure-editor demo</title>
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script>
+		'use strict';
+		window.d2lfetch = {
+			fetch: function(req) {
+				return window.fetch(req);
+			}
+		};
+	</script>
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<link rel="import" href="../../promise-polyfill/promise-polyfill.html">
+	<script src="../../fetch/fetch.js"></script>
+
+	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+	<link rel="import" href="../../d2l-typography/d2l-typography.html">
+	<link rel="import" href="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
+	<link rel="import" href="./fetch-siren-entity-whitelist.html">
+	<link rel="import" href="../editor/d2l-rubric-structure-editor.html">
+	<link rel="import" href="../d2l-rubric-title.html">
+
+	<style is="custom-style" include="demo-pages-shared-styles">
+	</style>
+	<custom-style include="d2l-typography">
+		<style is="custom-style" include="d2l-typography">
+			html {
+				font-size: 20px;
+				font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+			}
+			.rubric-title {
+				@apply --d2l-heading-3;
+			}
+		</style>
+
+	</custom-style>
+	<style>
+		.d2l-richtext-editor-container.d2l-rubric-html-editor > p:first-of-type {
+			margin-top: 0;
+		}
+		.d2l-richtext-editor-container.d2l-rubric-html-editor > p:last-of-type {
+			margin-bottom: 0;
+		}
+	</style>
+</head>
+<body class="d2l-typography">
+<div class="vertical-section-container">
+
+	<h1>d2l-rubric-structure-editor demo</h1>
+	<a name="textonly-edit"></a>
+	<h3>Rubric Editor, text only, single group, with edit permissions</h3>
+	<p>To view saving error, attempt to modify any field, delete any level or criterion, or add a new criterion.</p>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="data/rubrics/organizations/text-only/242.json" token=""></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="textonly-noedit"></a>
+	<h3>Rubric Editor, text only, no edit permissions</h3>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="data/rubrics/organizations/text-only-no-edit/199.json" token="foozleberries"></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="multiple-groups-points"></a>
+	<h3>Rubric, points, multiple criteria groups, no edit permissions</h3>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="data/rubrics/organizations/multiple-groups/203.json" token="foozleberries"></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="custom-points"></a>
+	<h3>Rubric, custom points, no edit permissions</h3>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="data/rubrics/organizations/custom-points/198.json" token="foozleberries"></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="overall-score"></a>
+	<h3>Rubric, points, overall score, no edit permissions</h3>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="static-data/rubrics/organizations/overall-score/200.json" token="foozleberries"></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="holistic-text"></a>
+	<h3>Rubric, holistic, text only, no edit permissions</h3>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="data/rubrics/organizations/holistic-text/227.json" token="foozleberries"></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="loading-error"></a>
+	<h3>Rubric loading error</h3>
+	<demo-snippet>
+		<d2l-rubric-structure-editor href="404.json" token="foozleberries"></d2l-rubric-structure-editor>
+	</demo-snippet>
+
+	<a name="loading"></a>
+	<h3>Rubric loading</h3>
+	<demo-snippet>
+		<d2l-rubric-loading></d2l-rubric-loading>
+	</demo-snippet>
+
+</div>
+</body>
+</html>

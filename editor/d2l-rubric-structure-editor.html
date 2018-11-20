@@ -1,0 +1,478 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-fetch/d2l-fetch.html">
+<link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="../../d2l-alert/d2l-alert.html">
+<link rel="import" href="../d2l-rubric-loading.html">
+<link rel="import" href="../localize-behavior.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
+<link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
+
+<link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
+<link rel="import" href="./d2l-rubric-overall-levels-editor.html">
+
+<link rel="import" href="../../d2l-save-status/d2l-save-status.html">
+<link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
+<link rel="import" href="../../d2l-menu/d2l-menu-item-radio.html">
+<link rel="import" href="./d2l-rubric-dialog-behavior.html">
+
+<!--
+`d2l-rubric-structure-editor`
+Creates and edits a rubric structue
+
+@demo demo/d2l-rubric-structure-editor.html
+
+-->
+
+<dom-module id="d2l-rubric-structure-editor">
+	<template strip-whitespace>
+		<style include="d2l-rubric-editor-cell-styles">
+			:host {
+				display: block;
+			}
+
+			.out-of-loader {
+				margin-top: 24px;
+				border: 1px solid var(--d2l-color-mica);
+				border-radius: 8px;
+				text-align: right;
+				height: 30px;
+			}
+
+			:dir(rtl) #rubric-editor-header {
+				text-align: right;
+			}
+
+			#rubric-editor-header-content {
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
+				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
+			}
+
+			:dir(rtl) #rubric-editor-header-content {
+				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
+				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
+			}
+
+			#header-start-container > * {
+				margin: 0.75rem 0.3rem;
+			}
+
+			#header-start-container > *:first-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
+			#header-start-container > *:last-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-start-container > *:first-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-start-container > *:last-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
+			#header-end-container {
+				margin-top: auto;
+				margin-bottom: auto;
+				min-height: 1.2rem;
+				height: 100%;
+			}
+
+			d2l-alert {
+				margin: 0 var(--d2l-rubric-editor-gutter-width);
+			}
+
+			.gutter-right {
+				width: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
+			}
+
+			.gutter-right[holistic] {
+				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
+			}
+
+			[hidden] {
+				display: none;
+			}
+
+		</style>
+		<template is="dom-repeat" items="[[_alerts]]">
+			<d2l-alert type="[[item.alertType]]">
+				[[item.alertMessage]]
+			</d2l-alert>
+		</template>
+		<slot></slot>
+		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
+		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader">
+		</div>
+		<div id="rubric-editor-header">
+			<div id="rubric-editor-header-content">
+				<div id="header-start-container">
+					<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]" on-d2l-menu-item-change="_handleTypeChange">
+						<d2l-dropdown-menu>
+							<d2l-menu id="rubric-type-menu" label="Type"></d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown-button-subtle>
+
+					<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]" on-d2l-menu-item-change="_handleScoringChange">
+						<d2l-dropdown-menu>
+							<d2l-menu id="scoring-menu" label="Scoring"></d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown-button-subtle>
+
+					<d2l-button-subtle hidden$="[[!_present(_reverseLevels)]]"
+						on-tap="_handleReverseLevels"
+						icon="d2l-tier1:reverse-order"
+						text="[[localize('reverseLevelOrder')]]"
+						type="button">
+					</d2l-button-subtle>
+				</div>
+				<div id="header-end-container">
+					<d2l-save-status id="editor-save-status"></d2l-save-status>
+				</div>
+			</div>
+			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
+		</div>
+		<div id="rubric-editor-container" hidden >
+			<d2l-rubric-criteria-groups-editor
+				href="[[_getHref(_criteriaGroups)]]"
+				token="[[token]]"
+				total-score="[[_totalScore]]"
+				is-holistic="[[_isHolistic]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]"
+				rich-text-enabled="[[richTextEnabled]]">
+			</d2l-rubric-criteria-groups-editor>
+			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
+				<d2l-rubric-overall-levels-editor
+					href="[[_getHref(_overallLevels)]]"
+					token="[[token]]"
+					rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-overall-levels-editor>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-rubric-structure-editor',
+
+			properties: {
+				percentageFormatAlternate: {
+					type: Boolean,
+					value: false
+				},
+				richTextEnabled: {
+					type: Boolean,
+					value: false
+				},
+				_isHolistic: {
+					type: Boolean,
+					value: false
+				},
+				_criteriaGroups: {
+					type: Object
+				},
+				_overallLevels: {
+					type: Object,
+					value: null
+				},
+				_reverseLevels: {
+					type: Object
+				},
+				_showContent: {
+					type: Boolean,
+					value: false
+				},
+				_totalScore: {
+					type: String,
+					computed: '_getTotalScore(entity)'
+				},
+				_scoringText: {
+					type: String,
+					value: null
+				},
+				_scoringMethod: {
+					type: String,
+					value: null
+				},
+				_canConvertScoring: {
+					type: Boolean,
+					value: false
+				},
+				_refreshScoring: {
+					type: Boolean,
+					value: false
+				},
+				_canConvertType: {
+					type: Boolean,
+					value: false
+				},
+				_rubricTypeText: {
+					type: String,
+					value: null
+				},
+				_rubricTypeValue: {
+					type: String,
+					value: null
+				},
+			},
+
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.EntityBehavior,
+				window.D2L.Hypermedia.HMConstantsBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.DialogBehavior
+			],
+
+			listeners: {
+				'd2l-siren-entity-save-start': '_onEntitySave',
+				'd2l-siren-entity-save-error': '_onEntitySave',
+				'd2l-siren-entity-save-end': '_onEntitySave'
+			},
+
+			observers: [
+				'_onEntityChanged(entity)'
+			],
+
+			ready: function() {
+				this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
+				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
+			},
+
+			attached: function() {
+				Polymer.IronA11yAnnouncer.requestAvailability();
+			},
+
+			_onEntitySave: function(e) {
+				var saveStateEl = this.$['editor-save-status'];
+				({
+					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
+				})[e.type]();
+			},
+
+			_onEntityChanged: function(entity) {
+				if (entity) {
+					this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
+					if (entity.hasLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups)) {
+						this._showContent = true;
+						this._displayEditor(true);
+						this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
+						this._reverseLevels = entity.getActionByName('reverse-levels') || null;
+					}
+					if (entity.hasLinkByRel(this.HypermediaRels.Rubrics.overallLevels)) {
+						this._overallLevels = entity.getLinkByRel(this.HypermediaRels.Rubrics.overallLevels) || null;
+					} else {
+						this._overallLevels = null;
+					}
+					if (entity.hasSubEntityByRel(this.HypermediaRels.richTextEditorConfig)) {
+						window.D2L.Siren.EntityStore.update(
+							this.HypermediaRels.richTextEditorConfig,
+							this.token,
+							entity.getSubEntityByRel(this.HypermediaRels.richTextEditorConfig)
+						);
+					}
+
+					if (entity.hasActionByName('update-scoring')) {
+						var options = entity.getActionByName('update-scoring')
+							.getFieldByName('scoring-method').value || [];
+
+						//Only re-populate the menu if _canConvertScoring was previously null/undefined or false
+						if (!this._canConvertScoring  || this._refreshScoring) {
+							var selected = this._populateDropdownMenuOptions('scoring-menu', options);
+							if (selected) {
+								this._scoringMethod = selected.value;
+								this._scoringText = this.localize('scoring', 'method', selected.title);
+							}
+							this._refreshScoring = false;
+						}
+						this._canConvertScoring = true;
+					}
+
+					if (entity.hasActionByName('update-type')) {
+						var options = entity.getActionByName('update-type')
+							.getFieldByName('rubric-type').value || [];
+
+						//Only re-populate the menu if _canConvertType was previously null/undefined or false
+						if (!this._canConvertType) {
+							var selected = this._populateDropdownMenuOptions('rubric-type-menu', options);
+							if (selected) {
+								this._rubricTypeValue = selected.value;
+								this._rubricTypeText = this.localize('rubricType', 'rubricType', selected.title);
+							}
+						}
+						this._canConvertType = true;
+					}
+				}
+			},
+
+			_getHref: function(link) {
+				return link && link.href;
+			},
+
+			_present: function(obj) {
+				return !!obj;
+			},
+
+			_hasOutOf: function(entity) {
+				return entity && typeof entity.properties.outOf !== 'undefined';
+			},
+
+			_hideLoading: function(showContent, hasAlerts) {
+				return showContent || hasAlerts;
+			},
+
+			_displayEditor: function(show) {
+				this.$['rubric-editor-container'].hidden = !show;
+			},
+
+			_handleReverseLevels: function() {
+				if (this._reverseLevels) {
+					this.performSirenAction(this._reverseLevels).then(function() {
+						this.fire('d2l-rubric-levels-reversed');
+						this.fire('iron-announce', { text: this.localize('reverseLevelsSuccessful') }, { bubbles: true });
+					}.bind(this));
+				}
+			},
+
+			_handleSaveError: function(e) {
+				this._clearAlerts();
+				if (e.target === this) { // handle own error events
+					this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+					this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+				}
+			},
+
+			_handleError: function(e) {
+				this.fire('iron-announce', { text: this.localize('rubricLoadingErrorAriaAlert') }, { bubbles: true });
+				this._addAlert('error', e.detail.error.message, this.localize('rubricLoadingErrorMessage'));
+				this._displayEditor(false);
+			},
+
+			_getTotalScore: function(entity) {
+				if (this._hasOutOf(entity)) {
+					return entity.properties.outOf.toString();
+				}
+			},
+
+			_handleTypeChange: function(e) {
+				var menuButton = e.currentTarget;
+				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
+				if (!this._canConvertType || e.target.value == this._rubricTypeValue) return;
+
+				Polymer.dom(dropdownMenu).removeAttribute('opened');
+				var confirm = this._rubricTypeValue === 'Analytic' && e.target.value === 'Holistic';
+
+				var performAction = function() {
+					this._disableMenu(menuButton);
+					var action = this.entity.getActionByName('update-type');
+					var fields = [{'name':'rubricType', 'value':e.target.value}];
+					this._refreshScoring = true;
+					this.performSirenAction(action, fields).then(function() {
+						this._rubricTypeText = this.localize('rubricType', 'rubricType', e.target.text);
+						this._rubricTypeValue = e.target.value;
+						this.fire('d2l-rubric-type-changed');
+						this.fire('iron-announce', { text: this.localize('changeRubricTypeSuccessful', 'rubricType', e.target.text) }, { bubbles: true });
+					}.bind(this)).then(function() {
+						this._enableMenu(menuButton);
+					}.bind(this)).catch(function() {
+						this._resetSelectedMenuItem(menuButton, this._rubricTypeValue);
+						this._enableMenu(menuButton);
+					}.bind(this));
+				}.bind(this);
+
+				if (!confirm) {
+					performAction();
+				} else {
+					this.openConfirm({
+						title: this.localize('changeRubricTypeWarnTitle'),
+						secondaryMessage: this.localize('changeRubricTypeWarnMessage'),
+						positiveButtonText: this.localize('changeConfirmationYes'),
+						negativeButtonText: this.localize('changeConfirmationNo')
+					}).then(performAction, function() {
+						this._resetSelectedMenuItem(menuButton, this._rubricTypeValue);
+					}.bind(this));
+				}
+			},
+			_handleScoringChange: function(e) {
+				var menuButton = e.currentTarget;
+				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
+
+				if (!this._canConvertScoring || e.target.value == this._scoringMethod)
+					return;
+
+				this._disableMenu(menuButton);
+				var action = this.entity.getActionByName('update-scoring');
+				var fields = [{'name':'scoringMethod', 'value':e.target.value}];
+				this.performSirenAction(action, fields).then(function() {
+					this._scoringText = this.localize('scoring', 'method', e.target.text);
+					this._scoringMethod = e.target.value;
+					this.fire('d2l-rubric-scoring-changed');
+					this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', e.target.text) }, { bubbles: true });
+				}.bind(this)).then(function() {
+					this._enableMenu(menuButton);
+				}.bind(this)).catch(function() {
+					this._resetSelectedMenuItem(menuButton, this._scoringMethod);
+					this._enableMenu(menuButton);
+				}.bind(this));
+
+				Polymer.dom(dropdownMenu).removeAttribute('opened');
+			},
+
+			_disableMenu: function(menuButton) {
+				Polymer.dom(menuButton).setAttribute('disabled','');
+			},
+
+			_enableMenu: function(menuButton) {
+				Polymer.dom(menuButton).removeAttribute('disabled');
+			},
+
+			_resetSelectedMenuItem: function(menuButton, optionValue) {
+				var items = Polymer.dom(menuButton).querySelectorAll('d2l-menu-item-radio');
+				for (var i = 0; i < items.length; i++) {
+					if (items[i].value === optionValue) {
+						items[i].setAttribute('selected','');
+					} else {
+						items[i].removeAttribute('selected');
+					}
+				}
+			},
+
+			_populateDropdownMenuOptions: function(menuId, options) {
+				var menu = this.$[menuId];
+				var selected = null;
+
+				var oldItems = Polymer.dom(menu).childNodes;
+				for(var i = 0; i < oldItems.length; i++) {
+					Polymer.dom(menu).removeChild(oldItems[i]);
+				}
+
+				for(var i = 0; i < options.length; i++) {
+					var option = options[i];
+					var item = document.createElement('d2l-menu-item-radio');
+					Polymer.dom(item).setAttribute('text', option.title);
+					Polymer.dom(item).setAttribute('value', option.value);
+					if (option.selected) {
+						selected = option;
+						Polymer.dom(item).setAttribute('selected', '');
+					}
+					Polymer.dom(menu).appendChild(item)
+				}
+				return selected;
+			}
+		});
+	</script>
+</dom-module>

@@ -2,7 +2,7 @@
 
 'use strict';
 
-suite('<d2l-rubric-editor>', function() {
+suite('<d2l-rubric-structure-editor>', function() {
 
 	var element, sandbox;
 
@@ -18,7 +18,7 @@ suite('<d2l-rubric-editor>', function() {
 	suite('smoke test', function() {
 
 		test('can be instantiated', function() {
-			expect(element.is).to.equal('d2l-rubric-editor');
+			expect(element.is).to.equal('d2l-rubric-structure-editor');
 		});
 
 	});
@@ -29,7 +29,7 @@ suite('<d2l-rubric-editor>', function() {
 				this.skip();
 			}
 		});
-		test('d2l-rubric-editor ally checks',function(){
+		test('d2l-rubric-structure-editor ally checks',function(){
 			ally_tests();
 		});
 	});
