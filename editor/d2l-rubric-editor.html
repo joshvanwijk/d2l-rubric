@@ -1,4 +1,10 @@
 <link rel="import" href="./d2l-rubric-structure-editor.html">
+<link rel="import" href="./d2l-rubric-editor-cell-styles.html">
+
+<link rel="import" href="./../localize-behavior.html">
+
+<link rel="import" href="../../d2l-accordion/d2l-accordion-collapse.html">
+<link rel="import" href="../../d2l-colors/d2l-colors.html">
 
 <!--
 `d2l-rubric-editor`
@@ -8,7 +14,20 @@ Creates and edits a rubric
 -->
 <dom-module id="d2l-rubric-editor">
 	<template strip-whitespace>
-		<style>
+		<style include="d2l-rubric-editor-cell-styles">
+			#accordion-container {
+				margin: 3rem var(--d2l-rubric-editor-gutter-width) 0;
+				padding: 1.15rem 0.5rem 1.15rem 0;
+				border-top: 1px solid var(--d2l-color-mica);
+				border-bottom: 1px solid var(--d2l-color-mica);
+			}
+			:dir(rtl) #accordion-container {
+				padding-left: 0.5rem;
+				padding-right: 0;
+			}
+			#options-container {
+				margin-top: 0.5rem;
+			}
 		</style>
 		<d2l-rubric-structure-editor
 			rich-text-enabled=[[richTextEnabled]]
@@ -17,6 +36,14 @@ Creates and edits a rubric
 			token=[[token]]>
 
 		</d2l-rubric-structure-editor>
+
+		<div id="accordion-container">
+			<d2l-accordion-collapse title="[[localize('options')]]" flex>
+				<div id="options-container">
+					<!--add options here-->
+				</div>
+			</d2l-accordion-collapse>
+		</div>
 	</template>
 	<script>
 		Polymer({
@@ -44,7 +71,10 @@ Creates and edits a rubric
 				token: {
 					type: Object,
 				}
-			}
+			},
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+			],
 		});
 	</script>
 </dom-module>
