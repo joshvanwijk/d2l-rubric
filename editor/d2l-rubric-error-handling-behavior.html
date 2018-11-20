@@ -1,0 +1,45 @@
+<link rel="import" href="./../localize-behavior.html">
+
+<script>
+	'use strict';
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
+
+	window.D2L.Rubric = window.D2L.Rubric || {};
+
+	/**
+	 * Behavior for Error Handling
+	 * @polymerBehavior
+	 */
+	D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
+		behaviors: [
+			D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+		],
+		handleValidationError: function(property, langterm, error) {
+			var msgText = this.getErrMsg(error, langterm);
+			this.toggleBubble(property, true, msgText);
+			this.fire('iron-announce', { text: msgText }, { bubbles: true });
+		},
+		getErrMsg: function(e, altMsg) {
+			if (e && !e.hasOwnProperty('stack')) {
+				var errObj = e.string ? e.string : e.json;
+				if (errObj.hasOwnProperty('properties')) {
+					return errObj.properties.detail;
+				}
+			}
+			return this.localize(altMsg);
+		},
+		toggleBubble: function(invalidId, show, error) {
+			if (show) {
+				this.set(invalidId, true);
+				this.set(invalidId + 'Error', error);
+			} else {
+				this.set(invalidId, false);
+			}
+		},
+		isAriaInvalid: function(valueInvalid) {
+			return new Boolean(valueInvalid).toString();
+		},
+	};
+</script>
