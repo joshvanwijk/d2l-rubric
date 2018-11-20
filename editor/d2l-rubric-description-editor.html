@@ -6,6 +6,7 @@
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-text-editor.html">
+<link rel="import" href="./d2l-rubric-error-handling-behavior.html">
 
 <dom-module id="d2l-rubric-description-editor">
 	<template strip-whitespace>
@@ -60,7 +61,7 @@
 				id="cell-points"
 				value="[[entity.properties.points]]"
 				on-change="_savePoints"
-				aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
+				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
 				aria-label="[[localize('cellPoints')]]"
 				disabled="[[!_canEditPoints]]"
 				size="1"
@@ -72,7 +73,7 @@
 			id="description"
 			token="[[token]]"
 			key="[[_key]]"
-			aria-invalid="[[_isAriaInvalid(_descriptionInvalid)]]"
+			aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
 			aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEditDescription]]"
 			value=[[_getDescription(entity)]]
@@ -149,7 +150,8 @@
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
 			_onEntityChanged: function() {
 				this._descriptionInvalid = false;
@@ -186,23 +188,14 @@
 			_saveDescription: function(e) {
 				var action = this._getDescriptionAction(this.entity);
 				if (action) {
-					this._toggleBubble('_descriptionInvalid', false);
+					this.toggleBubble('_descriptionInvalid', false);
 					var fields = [{'name':'description', 'value':e.detail.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function(err) {
-						this._toggleBubble('_descriptionInvalid', true, this._getErrMsg(err, 'descriptionSaveFailed'));
+						this.toggleBubble('_descriptionInvalid', true, this.getErrMsg(err, 'descriptionSaveFailed'));
 					}.bind(this));
 				}
-			},
-			_getErrMsg: function(e, altMsg) {
-				if (!e.hasOwnProperty('stack')) {
-					var errObj = e.string ? e.string : e.json;
-					if (errObj.hasOwnProperty('properties')) {
-						return errObj.properties.detail;
-					}
-				}
-				return this.localize(altMsg);
 			},
 			_arePointsRequired: function(entity) {
 				var action = entity && entity.getActionByName('update-points');
@@ -232,32 +225,19 @@
 				var action = this.entity.getActionByName('update-points');
 				if (action) {
 					if (this._pointsRequired && !e.target.value.trim()) {
-						this._toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
+						this.toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
 						this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
 					} else {
-						this._toggleBubble('_pointsInvalid', false);
+						this.toggleBubble('_pointsInvalid', false);
 						var fields = [{ 'name': 'points', 'value': e.target.value }];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-criterion-cell-points-saved');
 						}.bind(this)).catch(function(err) {
-							this._toggleBubble('_pointsInvalid', true, this._getErrMsg(err, 'pointsSaveFailed'));
-							this.fire('iron-announce', { text: this._getErrMsg(err, 'pointsSaveFailed') }, { bubbles: true });
+							this.toggleBubble('_pointsInvalid', true, this.getErrMsg(err, 'pointsSaveFailed'));
+							this.fire('iron-announce', { text: this.getErrMsg(err, 'pointsSaveFailed') }, { bubbles: true });
 						}.bind(this));
 					}
 				}
-			},
-
-			_toggleBubble: function(invalidId, show, error) {
-				if (show) {
-					this.set(invalidId, true);
-					this.set(invalidId + 'Error', error);
-				} else {
-					this.set(invalidId, false);
-				}
-			},
-
-			_isAriaInvalid: function(valueInvalid) {
-				return new Boolean(valueInvalid).toString();
 			},
 
 			_constructKey: function(keyLinkRels, entity) {

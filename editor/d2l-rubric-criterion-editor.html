@@ -14,6 +14,7 @@
 <link rel="import" href="./d2l-rubric-feedback-editor.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 <link rel="import" href="./d2l-rubric-dialog-behavior.html">
+<link rel="import" href="./d2l-rubric-error-handling-behavior.html">
 
 <dom-module id="d2l-rubric-criterion-editor">
 	<template strip-whitespace>
@@ -165,7 +166,7 @@
 		<div class="cell col-first criterion-name" hidden$=[[isHolistic]]>
 			<d2l-input-textarea
 				id="name"
-				aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
+				aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 				aria-label="[[localize('criterionNameAriaLabel')]]"
 				disabled="[[!_canEdit]]"
 				no-border
@@ -220,7 +221,7 @@
 						id="out-of-textbox"
 						on-change="_saveOutOf"
 						value="[[_outOf]]"
-						aria-invalid="[[_isAriaInvalid(_outOfInvalid)]]"
+						aria-invalid="[[isAriaInvalid(_outOfInvalid)]]"
 						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
 						prevent-submit>
 					</d2l-input-text>
@@ -305,7 +306,8 @@
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-				D2L.PolymerBehaviors.Rubric.DialogBehavior
+				D2L.PolymerBehaviors.Rubric.DialogBehavior,
+				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
 			observers: ['_widthChange(criterionDetailWidth)'],
   				_widthChange: function (criterionDetailWidth) {
@@ -339,16 +341,16 @@
 				var action = this.entity.getActionByName('update');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this._handleValidationError('_nameInvalid', 'nameIsRequired');
+						this.handleValidationError('_nameInvalid', 'nameIsRequired');
 						return;
 					} else {
-						this._toggleBubble('_nameInvalid', false);
+						this.toggleBubble('_nameInvalid', false);
 					}
 					var fields = [{'name':'name', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function() {
-						this._handleValidationError('_nameInvalid', 'nameSaveFailed');
+						this.handleValidationError('_nameInvalid', 'nameSaveFailed');
 					}.bind(this));
 				}
 			},
@@ -357,34 +359,18 @@
 				var action = this.entity.getActionByName('update-outof');
 				if (action) {
 					if (!e.target.value.trim()) {
-						this._handleValidationError('_outOfInvalid', 'pointsAreRequired');
+						this.handleValidationError('_outOfInvalid', 'pointsAreRequired');
 						return;
 					} else {
-						this._toggleBubble('_outOfInvalid', false);
+						this.toggleBubble('_outOfInvalid', false);
 					}
 					var fields = [{'name':'outOf', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function(err) {
-						this._handleValidationError('_outOfInvalid', 'pointsSaveFailed', err);
+						this.handleValidationError('_outOfInvalid', 'pointsSaveFailed', err);
 					}.bind(this));
 				}
-			},
-
-			_handleValidationError: function(property, langterm, error) {
-				var msgText = this._getErrMsg(error, langterm);
-				this._toggleBubble(property, true, msgText);
-				this.fire('iron-announce', { text: msgText }, { bubbles: true });
-			},
-
-			_getErrMsg: function(e, altMsg) {
-				if (e && !e.hasOwnProperty('stack')) {
-					var errObj = e.string ? e.string : e.json;
-					if (errObj.hasOwnProperty('properties')) {
-						return errObj.properties.detail;
-					}
-				}
-				return this.localize(altMsg);
 			},
 
 			_canEditCriterion: function(entity) {
@@ -405,19 +391,6 @@
 					return false;
 				}
 				return field.hasClass('required');
-			},
-
-			_toggleBubble: function(invalidId, show, error) {
-				if (show) {
-					this.set(invalidId, true);
-					this.set(invalidId + 'Error', error);
-				} else {
-					this.set(invalidId, false);
-				}
-			},
-
-			_isAriaInvalid: function(nameInvalid) {
-				return new Boolean(nameInvalid).toString();
 			},
 
 			_getNamePlaceholder: function(localize, displayNamePlaceholder) {
