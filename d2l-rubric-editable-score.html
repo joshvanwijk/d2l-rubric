@@ -106,7 +106,7 @@
 					type: Boolean,
 					value: true
 				},
-				parentElement: {
+				parentNode: {
 					type: Object,
 					value: null
 				}
@@ -158,6 +158,7 @@
 				if (event.keyCode === 13) { // enter key
 					event.target.blur();
 					event.stopPropagation();
+					setTimeout(function(){ this.parentNode.focus(); }.bind(this), 0);
 					return;
 				}
 			},
@@ -179,7 +180,6 @@
 					return;
 				}
 				this._saveScore(newScore);
-				this.parentElement.focus();
 			},
 
 			_saveScore: function(score) {
