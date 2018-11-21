@@ -176,17 +176,11 @@
 				this._fetchConfig();
 			},
 			_fetchConfig: function() {
-				var config = window.D2L.Siren.EntityStore.get(this.HypermediaRels.richTextEditorConfig, this.token);
-				// Temporarily handle config as a object or promise. v0.2.0 of polymer-siren-behaviors contains
-				// a breaking change to return a promise from get. The conditional can be removed once
-				// we update to v0.2.0
-				if (config.then) {
-					config.then(function(entity) {
+				window.D2L.Siren.EntityStore
+					.get(this.HypermediaRels.richTextEditorConfig, this.token)
+					.then(function(entity) {
 						this.$$('d2l-html-editor').d2lPluginSettings = entity.properties;
 					}.bind(this));
-				} else {
-					this.$$('d2l-html-editor').d2lPluginSettings = config.properties;
-				}
 			},
 			focus: function() {
 				this.$$('d2l-html-editor').focus();
