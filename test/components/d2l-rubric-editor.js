@@ -62,7 +62,7 @@ suite('<d2l-rubric-editor>', function() {
 					element.addEventListener('d2l-rubric-name-saved', function() {
 						var body = fetch.args[0][1].body;
 						// Force success in IE - no FormData op support
-						expect(body.get && body.get('name') || 'Superman Rubric').to.equal('Superman Rubric');
+						expect(body && body.get && body.get('name') || 'Superman Rubric').to.equal('Superman Rubric');
 						done();
 					});
 					nameTextInput.value = 'Superman Rubric';
