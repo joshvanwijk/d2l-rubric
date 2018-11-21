@@ -57,7 +57,6 @@ suite('<d2l-rubric-editor>', function() {
 				fetch.returns(promise);
 
 				var nameTextInput = element.$$('#rubric-name-input');
-				nameTextInput.value = 'Superman Rubric';
 				raf(function() {
 					element.addEventListener('d2l-rubric-name-saved', function() {
 						var body = fetch.args[0][1].body;
@@ -65,6 +64,7 @@ suite('<d2l-rubric-editor>', function() {
 						expect(body.get && body.get('name') || 'Superman Rubric').to.equal('Superman Rubric');
 						done();
 					});
+					nameTextInput.value = 'Superman Rubric';
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
@@ -82,7 +82,6 @@ suite('<d2l-rubric-editor>', function() {
 				fetch.returns(promise);
 
 				var nameTextInput = element.$$('#rubric-name-input');
-				nameTextInput.value = 'Superman Rubric';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
@@ -93,13 +92,13 @@ suite('<d2l-rubric-editor>', function() {
 							done();
 						});
 					});
+					nameTextInput.value = 'Superman Rubric';
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
 			test('sets aria-invalid if name is empty', function(done) {
 				var nameTextInput = element.$$('#rubric-name-input');
-				nameTextInput.value = '';
 				raf(function() {
 					flush(function() {
 						// don't test in IE
@@ -108,6 +107,7 @@ suite('<d2l-rubric-editor>', function() {
 						}
 						done();
 					});
+					nameTextInput.value = '';
 					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
