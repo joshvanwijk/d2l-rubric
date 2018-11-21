@@ -1,10 +1,17 @@
 <link rel="import" href="./d2l-rubric-structure-editor.html">
+<<<<<<< HEAD
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 
 <link rel="import" href="./../localize-behavior.html">
 
 <link rel="import" href="../../d2l-accordion/d2l-accordion-collapse.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
+=======
+<link rel="import" href="./d2l-rubric-error-handling-behavior.html">
+<link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="./d2l-rubric-editor-cell-styles.html">
+<link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
+>>>>>>> 3cabde17480d034cd4be8771401c676af8df80d0
 
 <!--
 `d2l-rubric-editor`
@@ -15,6 +22,7 @@ Creates and edits a rubric
 <dom-module id="d2l-rubric-editor">
 	<template strip-whitespace>
 		<style include="d2l-rubric-editor-cell-styles">
+<<<<<<< HEAD
 			#accordion-container {
 				margin: 3rem var(--d2l-rubric-editor-gutter-width) 0;
 				padding: 1.15rem 0.5rem 1.15rem 0;
@@ -28,7 +36,42 @@ Creates and edits a rubric
 			#options-container {
 				margin-top: 0.5rem;
 			}
+=======
+			#rubric-name {
+				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
+				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
+			}
+
+			:dir(rtl) #rubric-name {
+				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
+				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
+			}
+
+			label {
+				@apply --d2l-label-text;
+			}
+
+>>>>>>> 3cabde17480d034cd4be8771401c676af8df80d0
 		</style>
+		<div id="rubric-name">
+			<label for="rubric-name-input">[[localize('name')]]*</label>
+			<d2l-input-text
+				id="rubric-name-input"
+				value="[[_rubricName]]"
+				on-change="_saveName"
+				aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+				disabled="[[!_canEditName]]"
+				prevent-submit
+			>
+			</d2l-input-text>
+			<template is="dom-if" if="[[_nameInvalid]]">
+				<d2l-tooltip for="rubric-name-input" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+			</template>
+		</div>
 		<d2l-rubric-structure-editor
 			rich-text-enabled=[[richTextEnabled]]
 			percentage-format-alternate=[[percentageFormatAlternate]]
@@ -70,11 +113,80 @@ Creates and edits a rubric
 				*/
 				token: {
 					type: Object,
+				},
+				_rubricName: {
+					type: String,
+					computed: '_getRubricName(entity)',
+				},
+				_canEditName: {
+					type: Boolean,
+					computed: '_canEditRubricName(entity)',
+				},
+				_nameInvalid: {
+					type: Boolean,
+				},
+				_nameInvalidError: {
+					type: String
+				},
+				_nameRequired: {
+					type: Boolean,
+					computed: '_isNameRequired(entity)',
+				},
+			},
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.EntityBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
+			],
+			_canEditRubricName: function(entity) {
+				return entity && entity.hasActionByName('update-name');
+			},
+			_getRubricName: function(entity) {
+				var action = entity && entity.getActionByName('update-name');
+				if (action) {
+					var field = action.getFieldByName('name');
+					if (field) {
+						return field.value;
+					}
 				}
 			},
+<<<<<<< HEAD
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
+=======
+			_isNameRequired: function(entity) {
+				var action = entity && entity.getActionByName('update-name');
+				if (!action) {
+					return false;
+				}
+				var field = action.getFieldByName('name');
+				if (!field) {
+					return false;
+				}
+				return field.hasClass('required');
+			},
+			_onEntityChanged: function() {
+				this._nameInvalid = false;
+			},
+			_saveName: function(e) {
+				var action = this.entity.getActionByName('update-name');
+				if (action) {
+					if (this._nameRequired && !e.target.value.trim()) {
+						this.handleValidationError('_nameInvalid', 'nameIsRequired');
+					} else {
+						this.toggleBubble('_nameInvalid', false);
+						var fields = [{ 'name': 'name', 'value': e.target.value }];
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-name-saved');
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('_nameInvalid', 'nameSaveFailed', err);
+						}.bind(this));
+					}
+				}
+			},
+>>>>>>> 3cabde17480d034cd4be8771401c676af8df80d0
 		});
 	</script>
 </dom-module>
