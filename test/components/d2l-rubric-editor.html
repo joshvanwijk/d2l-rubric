@@ -8,42 +8,34 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 	<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 	<script src="../../../web-component-tester/browser.js"></script>
+	<script src="../../node_modules/attest/attest.js"></script>
+	<script src="./ally-test-script.js"></script>
+
+	<link rel="import" href="../../../promise-polyfill/promise-polyfill.html">
+	<script src="../../../fetch/fetch.js"></script>
 	<script src="../test-polyfill.js"></script>
+	<link rel="import" href="../../../d2l-polymer-siren-behaviors/store/entity-store.html">
 	<link rel="import" href="../../editor/d2l-rubric-editor.html">
+
+	<script src="static-data/rubrics/organizations/text-only/199-name-mod.js"></script>
 </head>
 
 <body>
 	<test-fixture id="basic">
 		<template>
-			<d2l-rubric-editor></d2l-rubric-editor>
+			<d2l-rubric-editor
+				href="static-data/rubrics/organizations/text-only/199.json"
+			>
+			</d2l-rubric-editor>
 		</template>
 	</test-fixture>
-	<script>
-		'use strict';
-
-		suite('<d2l-rubric-editor>', function () {
-
-			var element, sandbox;
-
-			suiteSetup(function () {
-				sandbox = sinon.sandbox.create();
-				element = fixture('basic');
-			});
-
-			suiteTeardown(function () {
-				sandbox.restore();
-			});
-
-			suite('smoke test', function () {
-
-				test('can be instantiated', function () {
-					expect(element.is).to.equal('d2l-rubric-editor');
-				});
-			});
-
-			a11ySuite('basic');
-		});
-	</script>
+	<test-fixture id="readonly">
+		<template>
+			<d2l-rubric-editor href="static-data/rubrics/organizations/text-only/200.json">
+			</d2l-rubric-editor>
+		</template>
+	</test-fixture>
+	<script src="d2l-rubric-editor.js"></script>
 </body>
 
 </html>
