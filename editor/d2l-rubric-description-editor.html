@@ -16,6 +16,16 @@
 				flex-direction: column;
 				flex-grow: 1;
 				min-height: 4rem;
+
+				--d2l-input-textarea: {
+					min-height: 0;
+					overflow: hidden;
+					hyphens: auto;
+					border-color: transparent;
+					box-shadow: none;
+					border-radius: 0;
+					transition-property: none;
+				};
 			}
 
 			* {
@@ -78,7 +88,7 @@
 			disabled="[[!_canEditDescription]]"
 			value=[[_getDescription(entity)]]
 			on-change="_saveDescription"
-			rich-text-enabled="[[richTextEnabled]]"
+			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
 		>
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
@@ -251,6 +261,10 @@
 					});
 				}
 				return constructed;
+			},
+
+			_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
+				return richTextEnabled && canEditDescription;
 			}
 		});
 	</script>
