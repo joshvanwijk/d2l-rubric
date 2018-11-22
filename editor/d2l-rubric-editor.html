@@ -8,6 +8,7 @@
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
+<link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 
 <!--
 `d2l-rubric-editor`
@@ -34,7 +35,7 @@ Creates and edits a rubric
 				margin-top: 0.5rem;
 			}
 
-			#rubric-name {
+			#rubric-name-container {
 				margin-left: var(--d2l-rubric-editor-gutter-width);
 				margin-right: var(--d2l-rubric-editor-gutter-width);
 			}
@@ -43,11 +44,20 @@ Creates and edits a rubric
 				@apply --d2l-label-text;
 			}
 
+			d2l-rubric-text-editor {
+				min-height: 4rem;
+			}
+
+			.d2l-body-compact {
+				padding-top: 1px;
+				padding-bottom: 0.8rem;
+			}
+
 		</style>
-		<div id="rubric-name">
-			<label for="rubric-name-input">[[localize('name')]]*</label>
+		<div id="rubric-name-container">
+			<label for="rubric-name">[[localize('name')]]*</label>
 			<d2l-input-text
-				id="rubric-name-input"
+				id="rubric-name"
 				value="[[_rubricName]]"
 				on-change="_saveName"
 				aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
@@ -56,7 +66,7 @@ Creates and edits a rubric
 			>
 			</d2l-input-text>
 			<template is="dom-if" if="[[_nameInvalid]]">
-				<d2l-tooltip for="rubric-name-input" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+				<d2l-tooltip for="rubric-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
 		</div>
 		<d2l-rubric-structure-editor
@@ -71,6 +81,23 @@ Creates and edits a rubric
 			<d2l-accordion-collapse title="[[localize('options')]]" flex>
 				<div id="options-container">
 					<!--add options here-->
+					<div id="rubric-description-container">
+						<label for="rubric-description">[[localize('description')]]</label>
+						<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
+						<d2l-rubric-text-editor
+							id="rubric-description"
+							token="[[token]]"
+							aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
+							disabled="[[!_canEditDescription]]"
+							value=[[_rubricDescription]]
+							on-change="_saveDescription"
+							rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
+						>
+						</d2l-rubric-text-editor>
+						<template is="dom-if" if="[[_descriptionInvalid]]">
+							<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+						</template>
+					</div>
 				</div>
 			</d2l-accordion-collapse>
 		</div>
@@ -119,10 +146,29 @@ Creates and edits a rubric
 					type: Boolean,
 					computed: '_isNameRequired(entity)',
 				},
+				_descriptionEntity: {
+					type: Object,
+					computed: '_getRubricDescriptionEntity(entity)'
+				},
+				_rubricDescription: {
+					type: String,
+					computed: '_getRubricDescription(_descriptionEntity)',
+				},
+				_canEditDescription: {
+					type: Boolean,
+					computed: '_canEditRubricDescription(_descriptionEntity)',
+				},
+				_descriptionInvalid: {
+					type: Boolean,
+				},
+				_descriptionInvalidError: {
+					type: String
+				},
 			},
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
@@ -149,6 +195,21 @@ Creates and edits a rubric
 				}
 				return field.hasClass('required');
 			},
+			_getRubricDescriptionEntity: function(entity) {
+				return entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
+			},
+			_canEditRubricDescription: function(entity) {
+				return entity && entity.hasActionByName('update-description');
+			},
+			_getRubricDescription: function(entity) {
+				var action = entity && entity.getActionByName('update-description');
+				if (action) {
+					var field = action.getFieldByName('description');
+					if (field) {
+						return field.value;
+					}
+				}
+			},
 			_onEntityChanged: function() {
 				this._nameInvalid = false;
 			},
@@ -168,6 +229,21 @@ Creates and edits a rubric
 					}
 				}
 			},
+			_saveDescription: function(e) {
+				var action = this._descriptionEntity.getActionByName('update-description');
+				if (action) {
+					this.toggleBubble('_descriptionInvalid', false);
+					var fields = [{ 'name': 'description', 'value': e.detail.value }];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-description-saved');
+					}.bind(this)).catch(function(err) {
+						this.toggleBubble('_descriptionInvalid', true, this.getErrMsg(err, 'descriptionSaveFailed'));
+					}.bind(this));
+				}
+			},
+			_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
+				return richTextEnabled && canEditDescription;
+			}
 		});
 	</script>
 </dom-module>
