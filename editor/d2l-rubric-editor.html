@@ -61,6 +61,7 @@ Creates and edits a rubric
 				value="[[_rubricName]]"
 				on-change="_saveName"
 				aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+				aria-label="[[localize('name')]]"
 				disabled="[[!_canEditName]]"
 				prevent-submit
 			>
