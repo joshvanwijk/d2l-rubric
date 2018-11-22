@@ -8,6 +8,7 @@
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
+<link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 
 <!--
 `d2l-rubric-editor`
@@ -149,13 +150,17 @@ Creates and edits a rubric
 					type: Boolean,
 					computed: '_isNameRequired(entity)',
 				},
+				_descriptionEntity: {
+					type: Object,
+					computed: '_getRubricDescriptionEntity(entity)'
+				},
 				_rubricDescription: {
 					type: String,
-					computed: '_getRubricDescription(entity)',
+					computed: '_getRubricDescription(_descriptionEntity)',
 				},
 				_canEditDescription: {
 					type: Boolean,
-					computed: '_canEditRubricDescription(entity)',
+					computed: '_canEditRubricDescription(_descriptionEntity)',
 				},
 				_descriptionInvalid: {
 					type: Boolean,
@@ -167,6 +172,7 @@ Creates and edits a rubric
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
@@ -192,6 +198,9 @@ Creates and edits a rubric
 					return false;
 				}
 				return field.hasClass('required');
+			},
+			_getRubricDescriptionEntity: function(entity) {
+				return entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
 			},
 			_canEditRubricDescription: function(entity) {
 				return entity && entity.hasActionByName('update-description');
@@ -225,7 +234,7 @@ Creates and edits a rubric
 				}
 			},
 			_saveDescription: function(e) {
-				var action = this.entity.getActionByName('update-description');
+				var action = this._descriptionEntity.getActionByName('update-description');
 				if (action) {
 					this.toggleBubble('_descriptionInvalid', false);
 					var fields = [{ 'name': 'description', 'value': e.detail.value }];
