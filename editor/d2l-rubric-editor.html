@@ -89,6 +89,7 @@ Creates and edits a rubric
 							id="rubric-description"
 							token="[[token]]"
 							aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
+							aria-label="[[localize('description')]]"
 							disabled="[[!_canEditDescription]]"
 							value=[[_rubricDescription]]
 							on-change="_saveDescription"
