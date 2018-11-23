@@ -157,7 +157,9 @@
 				if (event.keyCode === 13) { // enter key
 					event.target.blur();
 					event.stopPropagation();
-					setTimeout(function() { this.parentCell.focus(); }.bind(this), 0);
+					if (this.parentCell) {
+						setTimeout(function() { this.parentCell.focus(); }.bind(this), 0);
+					}
 					return;
 				}
 			},
