@@ -107,7 +107,7 @@
 					type: Boolean,
 					value: true
 				},
-				parentNode: {
+				parentCell: {
 					type: Object,
 					value: null
 				}
@@ -157,7 +157,7 @@
 				if (event.keyCode === 13) { // enter key
 					event.target.blur();
 					event.stopPropagation();
-					setTimeout(function(){ this.parentNode.focus(); }.bind(this), 0);
+					setTimeout(function(){ this.parentCell.focus(); }.bind(this), 0);
 					return;
 				}
 			},
