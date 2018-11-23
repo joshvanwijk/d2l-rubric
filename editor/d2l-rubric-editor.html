@@ -1,6 +1,7 @@
 <link rel="import" href="./d2l-rubric-structure-editor.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 <link rel="import" href="./d2l-rubric-error-handling-behavior.html">
+<link rel="import" href="./d2l-rubric-editor-header.html">
 
 <link rel="import" href="./../localize-behavior.html">
 
@@ -44,6 +45,10 @@ Creates and edits a rubric
 			}
 
 		</style>
+		<d2l-rubric-editor-header
+			id="rubric-header"
+			is-single-page-rubric="[[isSinglePageRubric]]"
+			rubric-name="[[entity.properties.name]]"></d2l-rubric-editor-header>
 		<div id="rubric-name">
 			<label for="rubric-name-input">[[localize('name')]]*</label>
 			<d2l-input-text
@@ -60,6 +65,7 @@ Creates and edits a rubric
 			</template>
 		</div>
 		<d2l-rubric-structure-editor
+			is-single-page-rubric="[[isSinglePageRubric]]"
 			rich-text-enabled=[[richTextEnabled]]
 			percentage-format-alternate=[[percentageFormatAlternate]]
 			href=[[href]]
@@ -119,6 +125,11 @@ Creates and edits a rubric
 					type: Boolean,
 					computed: '_isNameRequired(entity)',
 				},
+				isSinglePageRubric: {
+					type: Boolean,
+					value: true,
+					readOnly: true,
+				},
 			},
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -126,6 +137,11 @@ Creates and edits a rubric
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
+			listeners: {
+				'd2l-siren-entity-save-start': '_onEntitySave',
+				'd2l-siren-entity-save-error': '_onEntitySave',
+				'd2l-siren-entity-save-end': '_onEntitySave'
+			},
 			_canEditRubricName: function(entity) {
 				return entity && entity.hasActionByName('update-name');
 			},
@@ -167,6 +183,9 @@ Creates and edits a rubric
 						}.bind(this));
 					}
 				}
+			},
+			_onEntitySave: function(e) {
+				this.$$('#rubric-header').onEntitySave(e);
 			},
 		});
 	</script>

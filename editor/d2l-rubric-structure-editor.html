@@ -7,11 +7,11 @@
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
+<link rel="import" href="./d2l-rubric-editor-header.html">
 
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
 <link rel="import" href="./d2l-rubric-overall-levels-editor.html">
 
-<link rel="import" href="../../d2l-save-status/d2l-save-status.html">
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 <link rel="import" href="../../d2l-menu/d2l-menu-item-radio.html">
 <link rel="import" href="./d2l-rubric-dialog-behavior.html">
@@ -41,11 +41,11 @@ Creates and edits a rubric structue
 				height: 30px;
 			}
 
-			:dir(rtl) #rubric-editor-header {
+			:dir(rtl) #rubric-structure-editor-header {
 				text-align: right;
 			}
 
-			#rubric-editor-header-content {
+			#rubric-structure-editor-header-content {
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
@@ -55,7 +55,7 @@ Creates and edits a rubric structue
 				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
 			}
 
-			:dir(rtl) #rubric-editor-header-content {
+			:dir(rtl) #rubric-structure-editor-header-content {
 				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
 				margin-right: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
 				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
@@ -105,15 +105,12 @@ Creates and edits a rubric structue
 				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 
-			#editor-save-status {
-				display: inline-block;
-			}
-
 			[hidden] {
 				display: none;
 			}
 
 		</style>
+		<d2l-rubric-editor-header id="rubric-header"></d2l-rubric-editor-header>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]">
 				[[item.alertMessage]]
@@ -123,8 +120,8 @@ Creates and edits a rubric structue
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader">
 		</div>
-		<div id="rubric-editor-header">
-			<div id="rubric-editor-header-content">
+		<div id="rubric-structure-editor-header">
+			<div id="rubric-structure-editor-header-content">
 				<div id="header-start-container">
 					<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]" on-d2l-menu-item-change="_handleTypeChange">
 						<d2l-dropdown-menu>
@@ -156,7 +153,7 @@ Creates and edits a rubric structue
 			</div>
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
-		<div id="rubric-editor-container" hidden >
+		<div id="rubric-structure-editor-container" hidden >
 			<d2l-rubric-criteria-groups-editor
 				href="[[_getHref(_criteriaGroups)]]"
 				token="[[token]]"
@@ -186,6 +183,10 @@ Creates and edits a rubric structue
 				richTextEnabled: {
 					type: Boolean,
 					value: false
+				},
+				isSinglePageRubric: {
+					type: Boolean,
+					value: false,
 				},
 				_isHolistic: {
 					type: Boolean,
@@ -279,12 +280,9 @@ Creates and edits a rubric structue
 			},
 
 			_onEntitySave: function(e) {
-				var saveStateEl = this.$['editor-save-status'];
-				({
-					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
-					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
-				})[e.type]();
+				if (!this.isSinglePageRubric) {
+					this.$$('#rubric-header').onEntitySave(e);
+				}
 			},
 
 			_onEntityChanged: function(entity) {
@@ -374,7 +372,7 @@ Creates and edits a rubric structue
 			},
 
 			_displayEditor: function(show) {
-				this.$['rubric-editor-container'].hidden = !show;
+				this.$['rubric-structure-editor-container'].hidden = !show;
 			},
 
 			_handleReverseLevels: function() {
