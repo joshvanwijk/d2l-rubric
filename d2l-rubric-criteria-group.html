@@ -166,7 +166,7 @@
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]" on-tap="_handleOverrideScore" tabindex="0" on-keypress="_handleScoreKeypress">
+							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]" on-tap="_handleOverrideScore" tabindex="0" on-mousedown="_handleMouseDown" on-keypress="_handleScoreKeypress">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
 									class="score-wrapper"
@@ -253,6 +253,14 @@
 				editableScoreContainer: {
 					type: Object,
 					value: null
+				},
+				_childIsInEditMode: {
+					type: Boolean,
+					value: false,
+				},
+				_blockOnTapEvent: {
+					type: Boolean,
+					value: false,
 				}
 			},
 
@@ -271,6 +279,10 @@
 				'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 			],
 
+			listeners: {
+				'editable-score-blurred': '_handleChildBlurred'
+			},
+
 			_onEntityChanged: function(entity) {
 				if (!entity) {
 					return;
@@ -283,6 +295,18 @@
 				}
 				this._levelsHref = this._getLevelsLink(entity);
 				this._criteriaCollectionHref = this._getCriteriaLink(entity);
+			},
+
+			_handleChildBlurred: function() {
+				this._childIsInEditMode = false;
+			},
+
+			_handleMouseDown: function() {
+				if (this._childIsInEditMode) {
+					this._blockOnTapEvent = true;
+				} else {
+					this._blockOnTapEvent = false;
+				}
 			},
 
 			_onLevelsEntityChanged: function(levelsEntity) {
@@ -517,9 +541,10 @@
 			},
 
 			_handleOverrideScore: function(event) {
-				if (this.readOnly) {
+				if (this.readOnly || this._blockOnTapEvent) {
 					return;
 				}
+				this._childIsInEditMode = true;
 				var criterionNum = event.model.get('criterionNum');
 				this.editingScore = criterionNum;
 				this.editableScoreContainer = event.currentTarget;

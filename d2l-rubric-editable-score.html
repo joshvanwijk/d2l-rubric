@@ -167,6 +167,7 @@
 				if (!innerInput || !innerInput.checkValidity()) {
 					return;
 				}
+				this.fire("editable-score-blurred");
 				this.editingScore = -1;
 				var newScore = event.target.value;
 				if (newScore === '') {
