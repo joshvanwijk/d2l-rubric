@@ -9,6 +9,7 @@
 
 <link rel="import" href="./../localize-behavior.html">
 <link rel="import" href="./d2l-rubric-dialog-behavior.html">
+<link rel="import" href="./d2l-rubric-error-handling-behavior.html">
 
 <dom-module id="d2l-rubric-level-editor">
 	<template strip-whitespace>
@@ -72,7 +73,7 @@
 			id="level-name"
 			value="[[entity.properties.name]]"
 			on-change="_saveName"
-			aria-invalid="[[_isAriaInvalid(_nameInvalid)]]"
+			aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 			aria-label="[[localize('levelName')]]"
 			disabled="[[!_canEditName]]"
 			prevent-submit>
@@ -83,7 +84,7 @@
 					id="level-points"
 					value="[[entity.properties.points]]"
 					on-change="_savePoints"
-					aria-invalid="[[_isAriaInvalid(_pointsInvalid)]]"
+					aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
 					aria-label="[[localize('levelPoints')]]"
 					disabled="[[!_canEditPoints]]"
 					size="1"
@@ -164,7 +165,8 @@
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-				D2L.PolymerBehaviors.Rubric.DialogBehavior
+				D2L.PolymerBehaviors.Rubric.DialogBehavior,
+				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
 			_onEntityChanged: function(entity) {
 				this._nameInvalid = false;
@@ -220,14 +222,14 @@
 				var action = this.entity.getActionByName('update-name');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this._handleValidationError('_nameInvalid', 'nameIsRequired');
+						this.handleValidationError('_nameInvalid', 'nameIsRequired');
 					} else {
-						this._toggleBubble('_nameInvalid', false);
+						this.toggleBubble('_nameInvalid', false);
 						var fields = [{'name':'name', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-saved');
 						}.bind(this)).catch(function(err) {
-							this._handleValidationError('_nameInvalid', 'nameSaveFailed', err);
+							this.handleValidationError('_nameInvalid', 'nameSaveFailed', err);
 						}.bind(this));
 					}
 				}
@@ -237,49 +239,24 @@
 				if (action) {
 					if (this._pointsRequired && !e.target.value.trim()) {
 						if (this._usesPercentage) {
-							this._handleValidationError('_pointsInvalid', 'rangeStartRequired');
+							this.handleValidationError('_pointsInvalid', 'rangeStartRequired');
 						} else {
-							this._handleValidationError('_pointsInvalid', 'pointsAreRequired');
+							this.handleValidationError('_pointsInvalid', 'pointsAreRequired');
 						}
 					} else {
-						this._toggleBubble('_pointsInvalid', false);
+						this.toggleBubble('_pointsInvalid', false);
 						var fields = [{'name':'points', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-points-saved');
 						}.bind(this)).catch(function(err) {
 							if (this._usesPercentage) {
-								this._handleValidationError('_pointsInvalid', 'rangeStartInvalid', err);
+								this.handleValidationError('_pointsInvalid', 'rangeStartInvalid', err);
 							} else {
-								this._handleValidationError('_pointsInvalid', 'pointsSaveFailed', err);
+								this.handleValidationError('_pointsInvalid', 'pointsSaveFailed', err);
 							}
 						}.bind(this));
 					}
 				}
-			},
-			_handleValidationError: function(property, langterm, error) {
-				var msgText = this._getErrMsg(error, langterm);
-				this._toggleBubble(property, true, msgText);
-				this.fire('iron-announce', { text: msgText }, { bubbles: true });
-			},
-			_getErrMsg: function(e, altMsg) {
-				if (e && !e.hasOwnProperty('stack')) {
-					var errObj = e.string ? e.string : e.json;
-					if (errObj.hasOwnProperty('properties')) {
-						return errObj.properties.detail;
-					}
-				}
-				return this.localize(altMsg);
-			},
-			_toggleBubble: function(invalidId, show, error) {
-				if (show) {
-					this.set(invalidId, true);
-					this.set(invalidId + 'Error', error);
-				} else {
-					this.set(invalidId, false);
-				}
-			},
-			_isAriaInvalid: function(valueInvalid) {
-				return new Boolean(valueInvalid).toString();
 			},
 			_canDeleteLevel: function(entity) {
 				return entity && entity.hasActionByName('delete');
