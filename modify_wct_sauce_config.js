@@ -51,7 +51,7 @@ var platform_array =  [
       "browserName": "safari",
       "platform": "OS X 10.13",
       "version": ""
-    },
+	}/*,
     {
       "browserName": "microsoftedge",
       "platform": "Windows 10",
@@ -61,7 +61,7 @@ var platform_array =  [
       "browserName": "internet explorer",
       "platform": "Windows 10",
       "version": ""
-    }
+    }*/
   ]
 
 //add two random platforms to the json
