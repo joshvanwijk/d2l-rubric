@@ -1,16 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../d2l-rubric-entity-behavior.html">
-<link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
-<link rel="import" href="./d2l-rubric-dropdown-menu-behavior.html">
 
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
-<link rel="import" href="../../d2l-dropdown/d2l-dropdown-button-subtle.html">
-<link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
-<link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 
 <dom-module id="d2l-rubric-editor-header">
 	<template strip-whitespace>
@@ -85,18 +79,10 @@
 		</style>
 		<div id="rubric-editor-header">
 			<div id="rubric-editor-header-content">
-				<template is="dom-if" if="[[isSinglePageRubric]]">
-					<div id="title">Edit Rubric</div>
-				</template>
+				<div id="title"><slot name="title"></slot></div>
 				<div id="header-end-container">
 					<d2l-save-status id="editor-save-status"></d2l-save-status>
-					<template is="dom-if" if="[[isSinglePageRubric]]">
-						<d2l-dropdown-button-subtle text="[[_rubricStatusText]]" hidden$="[[!_canChangeStatus]]" on-d2l-menu-item-change="_handleStatusChange">
-							<d2l-dropdown-menu>
-								<d2l-menu id="status-menu" label="Status"></d2l-menu>
-							</d2l-dropdown-menu>
-						</d2l-dropdown-button-subtle>
-					</template>
+					<slot name="header-end-content"></slot>
 				</div>
 			</div>
 		</div>
@@ -104,90 +90,20 @@
 	<script>
 		Polymer({
 			is: 'd2l-rubric-editor-header',
-			properties: {
-				/**
-				* The user access token
-				*/
-				token: {
-					type: Object,
-				},
-				isSinglePageRubric: {
-					type: Boolean,
-					value: false
-				},
-				_canChangeStatus: {
-					type: Boolean,
-					value: false
-				},
-				_rubricStatusText: {
-					type: String,
-					value: null
-				},
-				_rubricStatus: {
-					type: String,
-					value: null
-				}
-			},
+			properties: {},
 			behaviors: [
-				D2L.PolymerBehaviors.Rubric.EntityBehavior,
-				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-				D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior
 			],
-			observers: [
-				'_onEntityChanged(entity)'
-			],
-			attached: function() {
-				Polymer.IronA11yAnnouncer.requestAvailability();
-			},
-			_onEntityChanged: function(entity) {
-				if (entity) {
-					if (entity.hasActionByName('update-status')) {
-						var options = entity.getActionByName('update-status')
-							.getFieldByName('rubric-status').value || [];
-
-						//Only re-populate the menu if _canChangeStatus was previously null/undefined or false
-						if (!this._canChangeStatus) {
-							var selected = this.populateDropdownMenuOptions('status-menu', options);
-							if (selected) {
-								this._rubricStatus = selected.value;
-								this._rubricStatusText = this.localize('rubricStatus', 'status', selected.title);
-							}
-						}
-						this._canChangeStatus = true;
-					}
-				}
-			},
 			onEntitySave: function(e) {
 				var saveStateEl = this.$['editor-save-status'];
-				({
-					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
-					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
-				})[e.type]();
+				if (saveStateEl) {
+					({
+						'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+						'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+						'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
+					})[e.type]();
+				}
 			},
-			_handleStatusChange: function(e) {
-				var menuButton = e.currentTarget;
-				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
-				if (!this._canChangeStatus || e.target.value === this._rubricStatus) return;
-
-				Polymer.dom(dropdownMenu).removeAttribute('opened');
-				this.disableMenu(menuButton);
-
-				var action = this.entity.getActionByName('update-status');
-				var fields = [{'name':'status', 'value':e.target.value}];
-				this.performSirenAction(action, fields).then(function() {
-					this._rubricStatusText = this.localize('rubricStatus', 'status', e.target.text);
-					this._rubricStatus = e.target.value;
-					this.fire('d2l-rubric-status-changed');
-					this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', e.target.text) }, { bubbles: true });
-				}.bind(this)).then(function() {
-					this.enableMenu(menuButton);
-				}.bind(this)).catch(function() {
-					this.resetSelectedMenuItem(menuButton, this._rubricStatus);
-					this.enableMenu(menuButton);
-				}.bind(this));
-			}
 		});
 	</script>
 </dom-module>

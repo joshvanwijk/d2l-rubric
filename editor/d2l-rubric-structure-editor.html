@@ -112,10 +112,7 @@ Creates and edits a rubric structue
 
 		</style>
 		<template is="dom-if" if="[[!isSinglePageRubric]]">
-			<d2l-rubric-editor-header id="rubric-header"
-				href="[[href]]"
-				token="[[token]]"
-			></d2l-rubric-editor-header>
+			<d2l-rubric-editor-header id="rubric-header"></d2l-rubric-editor-header>
 		</template>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]">
@@ -269,8 +266,9 @@ Creates and edits a rubric structue
 			},
 
 			_onEntitySave: function(e) {
-				if (!this.isSinglePageRubric) {
-					this.$$('#rubric-header').onEntitySave(e);
+				var rubricHeader = this.$$('#rubric-header');
+				if (!this.isSinglePageRubric && rubricHeader) {
+					rubricHeader.onEntitySave(e);
 				}
 			},
 
