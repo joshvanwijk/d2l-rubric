@@ -48,7 +48,9 @@ Creates and edits a rubric
 		<d2l-rubric-editor-header
 			id="rubric-header"
 			is-single-page-rubric="[[isSinglePageRubric]]"
-			rubric-name="[[entity.properties.name]]"></d2l-rubric-editor-header>
+			href=[[href]]
+			token=[[token]]
+		></d2l-rubric-editor-header>
 		<div id="rubric-name">
 			<label for="rubric-name-input">[[localize('name')]]*</label>
 			<d2l-input-text
@@ -69,9 +71,8 @@ Creates and edits a rubric
 			rich-text-enabled=[[richTextEnabled]]
 			percentage-format-alternate=[[percentageFormatAlternate]]
 			href=[[href]]
-			token=[[token]]>
-
-		</d2l-rubric-structure-editor>
+			token=[[token]]
+		></d2l-rubric-structure-editor>
 
 		<div id="accordion-container">
 			<d2l-accordion-collapse title="[[localize('options')]]" flex>

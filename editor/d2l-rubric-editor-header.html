@@ -1,8 +1,15 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../d2l-rubric-entity-behavior.html">
+<link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="./../localize-behavior.html">
 
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 <link rel="import" href="../../d2l-save-status/d2l-save-status.html">
+<link rel="import" href="../../d2l-dropdown/d2l-dropdown-button-subtle.html">
+<link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 
 <dom-module id="d2l-rubric-editor-header">
 	<template strip-whitespace>
@@ -29,6 +36,30 @@
 				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
 			}
 
+			#header-end-container > * {
+				margin: 0.75rem 0.3rem;
+			}
+
+			#header-end-container > *:first-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
+			#header-end-container > *:last-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-end-container > *:first-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-end-container > *:last-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
 			#header-end-container {
 				margin-top: auto;
 				margin-bottom: auto;
@@ -47,6 +78,12 @@
 					</template>
 					<div id="header-end-container">
 						<d2l-save-status id="editor-save-status"></d2l-save-status>
+						<d2l-dropdown-button-subtle text="[[_rubricStatusText]]" hidden$="[[!_canChangeStatus]]" on-d2l-menu-item-change="_handleStatusChange">
+							<d2l-dropdown-menu>
+								<d2l-menu id="status-menu" label="Status"></d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-button-subtle>
+					</div>
 				</div>
 			</div>
 	</template>
@@ -62,20 +99,54 @@
 				},
 				isSinglePageRubric: {
 					type: Boolean,
-					value: false,
-				},
-				rubricName: {
-					type: String,
-					value: null,
+					value: false
 				},
 				_title: {
 					type: String,
-					computed: '_getTitle(rubricName)',
+					computed: '_getTitle(entity)'
 				},
+				_canChangeStatus: {
+					type: Boolean,
+					value: false
+				},
+				_rubricStatusText: {
+					type: String,
+					value: null
+				},
+				_rubricStatus: {
+					type: String,
+					value: null
+				}
 			},
 			behaviors: [
-				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+				D2L.PolymerBehaviors.Rubric.EntityBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 			],
+			observers: [
+				'_onEntityChanged(entity)'
+			],
+			attached: function() {
+				Polymer.IronA11yAnnouncer.requestAvailability();
+			},
+			_onEntityChanged: function(entity) {
+				if (entity) {
+					if (entity.hasActionByName('update-status')) {
+						var options = entity.getActionByName('update-status')
+							.getFieldByName('rubric-status').value || [];
+
+						//Only re-populate the menu if _canChangeStatus was previously null/undefined or false
+						if (!this._canChangeStatus) {
+							var selected = this._populateDropdownMenuOptions('status-menu', options);
+							if (selected) {
+								this._rubricStatus = selected.value;
+								this._rubricStatusText = this.localize('rubricStatus', 'status', selected.title);
+							}
+						}
+						this._canChangeStatus = true;
+					}
+				}
+			},
 			onEntitySave: function(e) {
 				var saveStateEl = this.$['editor-save-status'];
 				({
@@ -84,9 +155,74 @@
 					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
 			},
-			_getTitle: function(rubricName) {
-				return 'Edit Rubric - ' + rubricName;
+			_getTitle: function(entity) {
+				var title = 'Edit Rubric';
+				if (entity && entity.properties && entity.properties.name) {
+					title += ' - ' + entity.properties.name;
+				}
+				return title;
 			},
+			_handleStatusChange: function(e) {
+				var menuButton = e.currentTarget;
+				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
+				if (!this._canChangeStatus || e.target.value === this._rubricStatus) return;
+
+				Polymer.dom(dropdownMenu).removeAttribute('opened');
+				this._disableMenu(menuButton);
+
+				var action = this.entity.getActionByName('update-status');
+				var fields = [{'name':'status', 'value':e.target.value}];
+				this.performSirenAction(action, fields).then(function() {
+					this._rubricStatusText = this.localize('rubricStatus', 'status', e.target.text);
+					this._rubricStatus = e.target.value;
+					this.fire('d2l-rubric-status-changed');
+					this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', e.target.text) }, { bubbles: true });
+				}.bind(this)).then(function() {
+					this._enableMenu(menuButton);
+				}.bind(this)).catch(function() {
+					this._resetSelectedMenuItem(menuButton, this._rubricStatus);
+					this._enableMenu(menuButton);
+				}.bind(this));
+			},
+			_disableMenu: function(menuButton) {
+				Polymer.dom(menuButton).setAttribute('disabled','');
+			},
+
+			_enableMenu: function(menuButton) {
+				Polymer.dom(menuButton).removeAttribute('disabled');
+			},
+			_resetSelectedMenuItem: function(menuButton, optionValue) {
+				var items = Polymer.dom(menuButton).querySelectorAll('d2l-menu-item-radio');
+				for (var i = 0; i < items.length; i++) {
+					if (items[i].value === optionValue) {
+						items[i].setAttribute('selected', '');
+					} else {
+						items[i].removeAttribute('selected');
+					}
+				}
+			},
+			_populateDropdownMenuOptions: function(menuId, options) {
+				var menu = this.$[menuId];
+				var selected = null;
+
+				var oldItems = Polymer.dom(menu).childNodes;
+				for (var i = 0; i < oldItems.length; i++) {
+					Polymer.dom(menu).removeChild(oldItems[i]);
+				}
+
+				for (var i = 0; i < options.length; i++) {
+					var option = options[i];
+					var item = document.createElement('d2l-menu-item-radio');
+					Polymer.dom(item).setAttribute('text', option.title);
+					Polymer.dom(item).setAttribute('value', option.value);
+					if (option.selected) {
+						selected = option;
+						Polymer.dom(item).setAttribute('selected', '');
+					}
+					Polymer.dom(menu).appendChild(item);
+				}
+				return selected;
+			}
 		});
 	</script>
 </dom-module>
