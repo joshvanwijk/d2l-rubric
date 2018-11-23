@@ -15,10 +15,12 @@
 <dom-module id="d2l-rubric-editor-header">
 	<template strip-whitespace>
 		<style include="d2l-rubric-editor-cell-styles">
-			#title {
-				@apply --d2l-heading-1;
-				margin-top: 0;
+			#rubric-editor-header {
+				margin-bottom: 1.0rem;
+				margin-left: var(--d2l-rubric-editor-gutter-width);
+				margin-right: var(--d2l-rubric-editor-gutter-width);
 			}
+
 			:dir(rtl) #rubric-editor-header {
 				text-align: right;
 			}
@@ -27,18 +29,34 @@
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
-				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
-				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
 			}
 
-			:dir(rtl) #rubric-editor-header-content {
-				margin-right: 0;
-				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
-				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
+			#title {
+				@apply --d2l-heading-1;
+				margin-top: 0;
+				margin-bottom: 0;
+				flex: 1;
+				margin-right: 0.3rem;
+			}
+
+			:dir(rtl) #title {
+				margin-right: unset;
+				margin-left: 0.3rem;
+			}
+
+			#header-end-container {
+				margin-bottom: auto;
+    			margin-top: 0.5rem;
+				margin-left: auto;
+			}
+
+			:dir(rtl) #header-end-container {
+				margin-left: unset;
+				margin-right: auto;
 			}
 
 			#header-end-container > * {
-				margin: 0.75rem 0.3rem;
+				margin: 0 0.3rem;
 			}
 
 			#header-end-container > *:first-child {
@@ -48,7 +66,7 @@
 
 			#header-end-container > *:last-child {
 				margin-left: 0.3rem;
-				margin-right: unset;
+				margin-right: -0.7rem; /** edge of dropdown arrow to align with rubric **/
 			}
 
 			:dir(rtl) #header-end-container > *:first-child {
@@ -57,15 +75,8 @@
 			}
 
 			:dir(rtl) #header-end-container > *:last-child {
-				margin-left: unset;
+				margin-left: -0.7rem; /** edge of dropdown arrow to align with rubric **/
 				margin-right: 0.3rem;
-			}
-
-			#header-end-container {
-				margin-top: auto;
-				margin-bottom: auto;
-				min-height: 1.2rem;
-				height: 100%;
 			}
 
 			#editor-save-status {
@@ -73,20 +84,22 @@
 			}
 		</style>
 		<div id="rubric-editor-header">
-				<div id="rubric-editor-header-content">
+			<div id="rubric-editor-header-content">
+				<template is="dom-if" if="[[isSinglePageRubric]]">
+					<div id="title">Edit Rubric</div>
+				</template>
+				<div id="header-end-container">
+					<d2l-save-status id="editor-save-status"></d2l-save-status>
 					<template is="dom-if" if="[[isSinglePageRubric]]">
-						<div id="title">[[_title]]</div>
-					</template>
-					<div id="header-end-container">
-						<d2l-save-status id="editor-save-status"></d2l-save-status>
 						<d2l-dropdown-button-subtle text="[[_rubricStatusText]]" hidden$="[[!_canChangeStatus]]" on-d2l-menu-item-change="_handleStatusChange">
 							<d2l-dropdown-menu>
 								<d2l-menu id="status-menu" label="Status"></d2l-menu>
 							</d2l-dropdown-menu>
 						</d2l-dropdown-button-subtle>
-					</div>
+					</template>
 				</div>
 			</div>
+		</div>
 	</template>
 	<script>
 		Polymer({
@@ -101,10 +114,6 @@
 				isSinglePageRubric: {
 					type: Boolean,
 					value: false
-				},
-				_title: {
-					type: String,
-					computed: '_getTitle(entity)'
 				},
 				_canChangeStatus: {
 					type: Boolean,
@@ -156,13 +165,6 @@
 					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
 					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 				})[e.type]();
-			},
-			_getTitle: function(entity) {
-				var title = 'Edit Rubric';
-				if (entity && entity.properties && entity.properties.name) {
-					title += ' - ' + entity.properties.name;
-				}
-				return title;
 			},
 			_handleStatusChange: function(e) {
 				var menuButton = e.currentTarget;
