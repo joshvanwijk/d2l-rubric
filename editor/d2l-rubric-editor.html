@@ -9,6 +9,7 @@
 <link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-checkbox.html">
 
 <!--
 `d2l-rubric-editor`
@@ -35,6 +36,10 @@ Creates and edits a rubric
 				margin-top: 0.5rem;
 			}
 
+			#options-container > div:not(:first-child) {
+				margin-top: 2.5rem;
+			}
+
 			#rubric-name-container {
 				margin-left: var(--d2l-rubric-editor-gutter-width);
 				margin-right: var(--d2l-rubric-editor-gutter-width);
@@ -51,6 +56,10 @@ Creates and edits a rubric
 			.d2l-body-compact {
 				padding-top: 1px;
 				padding-bottom: 0.8rem;
+			}
+
+			#hide-score-checkbox {
+				padding-top: 0.5rem;
 			}
 
 		</style>
@@ -99,6 +108,16 @@ Creates and edits a rubric
 						<template is="dom-if" if="[[_descriptionInvalid]]">
 							<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
 						</template>
+					</div>
+					<div id="hide-score-container">
+						<label for="hide-score-checkbox">[[localize('hideScoreHeader')]]</label>
+						<d2l-input-checkbox
+							id="hide-score-checkbox"
+							disabled="[[!_canHideScore]]"
+							checked$="[[_scoreIsHidden]]"
+						>
+							[[localize('hideScore')]]
+						</d2l-input-checkbox>
 					</div>
 				</div>
 			</d2l-accordion-collapse>
@@ -166,6 +185,14 @@ Creates and edits a rubric
 				_descriptionInvalidError: {
 					type: String
 				},
+				_canHideScore: {
+					type: Boolean,
+					computed: '_canHideScoreVisibility(entity)',
+				},
+				_scoreIsHidden: {
+					type: Boolean,
+					computed: '_computeScoreIsHidden(entity)'
+				}
 			},
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -245,6 +272,12 @@ Creates and edits a rubric
 			},
 			_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
 				return richTextEnabled && canEditDescription;
+			},
+			_canHideScoreVisibility: function(entity) {
+				return entity && entity.hasActionByName('update-score-visibility');
+			},
+			_computeScoreIsHidden: function(entity) {
+				return entity && entity.hasClass('scoresHiddenForStudents');
 			}
 		});
 	</script>
