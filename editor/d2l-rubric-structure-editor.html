@@ -115,7 +115,7 @@ Creates and edits a rubric structue
 			<d2l-rubric-editor-header id="rubric-header"></d2l-rubric-editor-header>
 		</template>
 		<template is="dom-repeat" items="[[_alerts]]">
-			<d2l-alert type="[[item.alertType]]">
+			<d2l-alert type="[[item.alertType]]" has-close-button>
 				[[item.alertMessage]]
 			</d2l-alert>
 		</template>
