@@ -16,6 +16,7 @@ z<link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-inputs/d2l-input-checkbox.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-button-subtle.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../../d2l-alert/d2l-alert.html">
 
 <!--
 `d2l-rubric-editor`
@@ -47,8 +48,7 @@ Creates and edits a rubric
 			}
 
 			#rubric-name-container {
-				margin-left: var(--d2l-rubric-editor-gutter-width);
-				margin-right: var(--d2l-rubric-editor-gutter-width);
+				margin: 0.5rem var(--d2l-rubric-editor-gutter-width);
 			}
 
 			label {
@@ -93,6 +93,11 @@ Creates and edits a rubric
 				</d2l-dropdown-menu>
 			</d2l-dropdown-button-subtle>
 		</d2l-rubric-editor-header>
+		<template is="dom-repeat" items="[[_alerts]]">
+			<d2l-alert type="[[item.alertType]]" has-close-button>
+				[[item.alertMessage]]
+			</d2l-alert>
+		</template>
 		<div id="rubric-name-container">
 			<label for="rubric-name">[[localize('name')]]*</label>
 			<d2l-input-text
@@ -257,8 +262,18 @@ Creates and edits a rubric
 			observers: [
 				'_onEntityChanged(entity)'
 			],
+			ready: function() {
+				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
+			},
 			attached: function() {
 				Polymer.IronA11yAnnouncer.requestAvailability();
+			},
+			_handleSaveError: function(e) {
+				this._clearAlerts();
+				if (e.target === this) { // handle own error events
+					this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+					this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+				}
 			},
 			_canEditRubricName: function(entity) {
 				return entity && entity.hasActionByName('update-name');
