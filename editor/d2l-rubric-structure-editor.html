@@ -7,16 +7,17 @@
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../d2l-rubric-entity-behavior.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
+<link rel="import" href="./d2l-rubric-editor-header.html">
 
 <link rel="import" href="./d2l-rubric-criteria-groups-editor.html">
 <link rel="import" href="./d2l-rubric-overall-levels-editor.html">
 
-<link rel="import" href="../../d2l-save-status/d2l-save-status.html">
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 <link rel="import" href="../../d2l-menu/d2l-menu-item-radio.html">
 <link rel="import" href="./d2l-rubric-dialog-behavior.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-button-subtle.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="./d2l-rubric-dropdown-menu-behavior.html">
 
 <!--
 `d2l-rubric-structure-editor`
@@ -41,11 +42,11 @@ Creates and edits a rubric structue
 				height: 30px;
 			}
 
-			:dir(rtl) #rubric-editor-header {
+			:dir(rtl) #rubric-structure-editor-header {
 				text-align: right;
 			}
 
-			#rubric-editor-header-content {
+			#rubric-structure-editor-header-content {
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
@@ -55,7 +56,7 @@ Creates and edits a rubric structue
 				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
 			}
 
-			:dir(rtl) #rubric-editor-header-content {
+			:dir(rtl) #rubric-structure-editor-header-content {
 				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
 				margin-right: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
 				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
@@ -76,12 +77,12 @@ Creates and edits a rubric structue
 				margin-right: unset;
 			}
 
-			:dir(rtl) #header-start-container > *:first-child, #header-end-container > *:first-child {
+			:dir(rtl) #header-start-container > *:first-child, :dir(rtl) #header-end-container > *:first-child {
 				margin-left: 0.3rem;
 				margin-right: unset;
 			}
 
-			:dir(rtl) #header-start-container > *:last-child, #header-end-container > *:last-child {
+			:dir(rtl) #header-start-container > *:last-child, :dir(rtl) #header-end-container > *:last-child {
 				margin-left: unset;
 				margin-right: 0.3rem;
 			}
@@ -105,17 +106,16 @@ Creates and edits a rubric structue
 				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
 			}
 
-			#editor-save-status {
-				display: inline-block;
-			}
-
 			[hidden] {
 				display: none;
 			}
 
 		</style>
+		<template is="dom-if" if="[[!isSinglePageRubric]]">
+			<d2l-rubric-editor-header id="rubric-header"></d2l-rubric-editor-header>
+		</template>
 		<template is="dom-repeat" items="[[_alerts]]">
-			<d2l-alert type="[[item.alertType]]">
+			<d2l-alert type="[[item.alertType]]" has-close-button>
 				[[item.alertMessage]]
 			</d2l-alert>
 		</template>
@@ -123,8 +123,8 @@ Creates and edits a rubric structue
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader">
 		</div>
-		<div id="rubric-editor-header">
-			<div id="rubric-editor-header-content">
+		<div id="rubric-structure-editor-header">
+			<div id="rubric-structure-editor-header-content">
 				<div id="header-start-container">
 					<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]" on-d2l-menu-item-change="_handleTypeChange">
 						<d2l-dropdown-menu>
@@ -146,17 +146,11 @@ Creates and edits a rubric structue
 					</d2l-button-subtle>
 				</div>
 				<div id="header-end-container">
-					<d2l-save-status id="editor-save-status"></d2l-save-status>
-					<d2l-dropdown-button-subtle text="[[_rubricStatusText]]" hidden$="[[!_canChangeStatus]]" on-d2l-menu-item-change="_handleStatusChange">
-						<d2l-dropdown-menu>
-							<d2l-menu id="status-menu" label="Status"></d2l-menu>
-						</d2l-dropdown-menu>
-					</d2l-dropdown-button-subtle>
 				</div>
 			</div>
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
-		<div id="rubric-editor-container" hidden >
+		<div id="rubric-structure-editor-container" hidden >
 			<d2l-rubric-criteria-groups-editor
 				href="[[_getHref(_criteriaGroups)]]"
 				token="[[token]]"
@@ -186,6 +180,10 @@ Creates and edits a rubric structue
 				richTextEnabled: {
 					type: Boolean,
 					value: false
+				},
+				isSinglePageRubric: {
+					type: Boolean,
+					value: false,
 				},
 				_isHolistic: {
 					type: Boolean,
@@ -236,18 +234,6 @@ Creates and edits a rubric structue
 				_rubricTypeValue: {
 					type: String,
 					value: null
-				},
-				_canChangeStatus: {
-					type: Boolean,
-					value: false
-				},
-				_rubricStatusText: {
-					type: String,
-					value: null
-				},
-				_rubricStatus: {
-					type: String,
-					value: null
 				}
 			},
 
@@ -256,7 +242,8 @@ Creates and edits a rubric structue
 				window.D2L.Hypermedia.HMConstantsBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-				D2L.PolymerBehaviors.Rubric.DialogBehavior
+				D2L.PolymerBehaviors.Rubric.DialogBehavior,
+				D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior
 			],
 
 			listeners: {
@@ -279,12 +266,10 @@ Creates and edits a rubric structue
 			},
 
 			_onEntitySave: function(e) {
-				var saveStateEl = this.$['editor-save-status'];
-				({
-					'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
-					'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
-					'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
-				})[e.type]();
+				var rubricHeader = this.$$('#rubric-header');
+				if (!this.isSinglePageRubric && rubricHeader) {
+					rubricHeader.onEntitySave(e);
+				}
 			},
 
 			_onEntityChanged: function(entity) {
@@ -315,7 +300,7 @@ Creates and edits a rubric structue
 
 						//Only re-populate the menu if _canConvertScoring was previously null/undefined or false
 						if (!this._canConvertScoring  || this._refreshScoring) {
-							var selected = this._populateDropdownMenuOptions('scoring-menu', options);
+							var selected = this.populateDropdownMenuOptions('scoring-menu', options);
 							if (selected) {
 								this._scoringMethod = selected.value;
 								this._scoringText = this.localize('scoring', 'method', selected.title);
@@ -331,28 +316,13 @@ Creates and edits a rubric structue
 
 						//Only re-populate the menu if _canConvertType was previously null/undefined or false
 						if (!this._canConvertType) {
-							var selected = this._populateDropdownMenuOptions('rubric-type-menu', options);
+							var selected = this.populateDropdownMenuOptions('rubric-type-menu', options);
 							if (selected) {
 								this._rubricTypeValue = selected.value;
 								this._rubricTypeText = this.localize('rubricType', 'rubricType', selected.title);
 							}
 						}
 						this._canConvertType = true;
-					}
-
-					if (entity.hasActionByName('update-status')) {
-						var options = entity.getActionByName('update-status')
-							.getFieldByName('rubric-status').value || [];
-
-						//Only re-populate the menu if _canChangeStatus was previously null/undefined or false
-						if (!this._canChangeStatus) {
-							var selected = this._populateDropdownMenuOptions('status-menu', options);
-							if (selected) {
-								this._rubricStatus = selected.value;
-								this._rubricStatusText = this.localize('rubricStatus', 'status', selected.title);
-							}
-						}
-						this._canChangeStatus = true;
 					}
 				}
 			},
@@ -374,7 +344,7 @@ Creates and edits a rubric structue
 			},
 
 			_displayEditor: function(show) {
-				this.$['rubric-editor-container'].hidden = !show;
+				this.$['rubric-structure-editor-container'].hidden = !show;
 			},
 
 			_handleReverseLevels: function() {
@@ -415,7 +385,7 @@ Creates and edits a rubric structue
 				var confirm = this._rubricTypeValue === 'Analytic' && e.target.value === 'Holistic';
 
 				var performAction = function() {
-					this._disableMenu(menuButton);
+					this.disableMenu(menuButton);
 					var action = this.entity.getActionByName('update-type');
 					var fields = [{'name':'rubricType', 'value':e.target.value}];
 					this._refreshScoring = true;
@@ -425,10 +395,10 @@ Creates and edits a rubric structue
 						this.fire('d2l-rubric-type-changed');
 						this.fire('iron-announce', { text: this.localize('changeRubricTypeSuccessful', 'rubricType', e.target.text) }, { bubbles: true });
 					}.bind(this)).then(function() {
-						this._enableMenu(menuButton);
+						this.enableMenu(menuButton);
 					}.bind(this)).catch(function() {
-						this._resetSelectedMenuItem(menuButton, this._rubricTypeValue);
-						this._enableMenu(menuButton);
+						this.resetSelectedMenuItem(menuButton, this._rubricTypeValue);
+						this.enableMenu(menuButton);
 					}.bind(this));
 				}.bind(this);
 
@@ -441,7 +411,7 @@ Creates and edits a rubric structue
 						positiveButtonText: this.localize('changeConfirmationYes'),
 						negativeButtonText: this.localize('changeConfirmationNo')
 					}).then(performAction, function() {
-						this._resetSelectedMenuItem(menuButton, this._rubricTypeValue);
+						this.resetSelectedMenuItem(menuButton, this._rubricTypeValue);
 					}.bind(this));
 				}
 			},
@@ -452,7 +422,7 @@ Creates and edits a rubric structue
 				if (!this._canConvertScoring || e.target.value == this._scoringMethod)
 					return;
 
-				this._disableMenu(menuButton);
+				this.disableMenu(menuButton);
 				var action = this.entity.getActionByName('update-scoring');
 				var fields = [{'name':'scoringMethod', 'value':e.target.value}];
 				this.performSirenAction(action, fields).then(function() {
@@ -461,78 +431,13 @@ Creates and edits a rubric structue
 					this.fire('d2l-rubric-scoring-changed');
 					this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', e.target.text) }, { bubbles: true });
 				}.bind(this)).then(function() {
-					this._enableMenu(menuButton);
+					this.enableMenu(menuButton);
 				}.bind(this)).catch(function() {
-					this._resetSelectedMenuItem(menuButton, this._scoringMethod);
-					this._enableMenu(menuButton);
+					this.resetSelectedMenuItem(menuButton, this._scoringMethod);
+					this.enableMenu(menuButton);
 				}.bind(this));
 
 				Polymer.dom(dropdownMenu).removeAttribute('opened');
-			},
-
-			_disableMenu: function(menuButton) {
-				Polymer.dom(menuButton).setAttribute('disabled','');
-			},
-
-			_enableMenu: function(menuButton) {
-				Polymer.dom(menuButton).removeAttribute('disabled');
-			},
-
-			_resetSelectedMenuItem: function(menuButton, optionValue) {
-				var items = Polymer.dom(menuButton).querySelectorAll('d2l-menu-item-radio');
-				for (var i = 0; i < items.length; i++) {
-					if (items[i].value === optionValue) {
-						items[i].setAttribute('selected', '');
-					} else {
-						items[i].removeAttribute('selected');
-					}
-				}
-			},
-
-			_populateDropdownMenuOptions: function(menuId, options) {
-				var menu = this.$[menuId];
-				var selected = null;
-
-				var oldItems = Polymer.dom(menu).childNodes;
-				for(var i = 0; i < oldItems.length; i++) {
-					Polymer.dom(menu).removeChild(oldItems[i]);
-				}
-
-				for(var i = 0; i < options.length; i++) {
-					var option = options[i];
-					var item = document.createElement('d2l-menu-item-radio');
-					Polymer.dom(item).setAttribute('text', option.title);
-					Polymer.dom(item).setAttribute('value', option.value);
-					if (option.selected) {
-						selected = option;
-						Polymer.dom(item).setAttribute('selected', '');
-					}
-					Polymer.dom(menu).appendChild(item);
-				}
-				return selected;
-			},
-
-			_handleStatusChange: function(e) {
-				var menuButton = e.currentTarget;
-				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
-				if (!this._canChangeStatus || e.target.value === this._rubricStatus) return;
-
-				Polymer.dom(dropdownMenu).removeAttribute('opened');
-				this._disableMenu(menuButton);
-
-				var action = this.entity.getActionByName('update-status');
-				var fields = [{'name':'status', 'value':e.target.value}];
-				this.performSirenAction(action, fields).then(function() {
-					this._rubricStatusText = this.localize('rubricStatus', 'status', e.target.text);
-					this._rubricStatus = e.target.value;
-					this.fire('d2l-rubric-status-changed');
-					this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', e.target.text) }, { bubbles: true });
-				}.bind(this)).then(function() {
-					this._enableMenu(menuButton);
-				}.bind(this)).catch(function() {
-					this._resetSelectedMenuItem(menuButton, this._rubricStatus);
-					this._enableMenu(menuButton);
-				}.bind(this));
 			}
 		});
 	</script>

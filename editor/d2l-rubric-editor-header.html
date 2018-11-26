@@ -1,0 +1,113 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="./../localize-behavior.html">
+
+<link rel="import" href="../../d2l-colors/d2l-colors.html">
+<link rel="import" href="../../d2l-typography/d2l-typography-shared-styles.html">
+<link rel="import" href="./d2l-rubric-editor-cell-styles.html">
+<link rel="import" href="../../d2l-save-status/d2l-save-status.html">
+
+<dom-module id="d2l-rubric-editor-header">
+	<template strip-whitespace>
+		<style include="d2l-rubric-editor-cell-styles">
+			#rubric-editor-header {
+				margin-bottom: 1.0rem;
+				margin-left: var(--d2l-rubric-editor-gutter-width);
+				margin-right: var(--d2l-rubric-editor-gutter-width);
+			}
+
+			:dir(rtl) #rubric-editor-header {
+				text-align: right;
+			}
+
+			#rubric-editor-header-content {
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+			}
+
+			#title {
+				@apply --d2l-heading-1;
+				margin-top: 0;
+				margin-bottom: 0;
+				flex: 1;
+				margin-right: 0.3rem;
+			}
+
+			:dir(rtl) #title {
+				margin-right: unset;
+				margin-left: 0.3rem;
+			}
+
+			#header-end-container {
+				margin-bottom: auto;
+    			margin-top: 0.5rem;
+				margin-left: auto;
+			}
+
+			:dir(rtl) #header-end-container {
+				margin-left: unset;
+				margin-right: auto;
+			}
+
+			#header-end-container > * {
+				margin: 0 0.3rem;
+			}
+
+			#header-end-container > *:first-child {
+				margin-left: unset;
+				margin-right: 0.3rem;
+			}
+
+			#header-end-container > *:last-child {
+				margin-left: 0.3rem;
+				margin-right: -0.7rem; /** edge of dropdown arrow to align with rubric **/
+			}
+
+			:dir(rtl) #header-end-container > *:first-child {
+				margin-left: 0.3rem;
+				margin-right: unset;
+			}
+
+			:dir(rtl) #header-end-container > *:last-child {
+				margin-left: -0.7rem; /** edge of dropdown arrow to align with rubric **/
+				margin-right: 0.3rem;
+			}
+
+			#editor-save-status {
+				display: inline-block;
+			}
+
+			d2l-alert {
+				margin: 0 var(--d2l-rubric-editor-gutter-width);
+			}
+		</style>
+		<div id="rubric-editor-header">
+			<div id="rubric-editor-header-content">
+				<div id="title"><slot name="title"></slot></div>
+				<div id="header-end-container">
+					<d2l-save-status id="editor-save-status"></d2l-save-status>
+					<slot name="header-end-content"></slot>
+				</div>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-rubric-editor-header',
+			properties: {},
+			behaviors: [
+				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+			],
+			onEntitySave: function(e) {
+				var saveStateEl = this.$['editor-save-status'];
+				if (saveStateEl) {
+					({
+						'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+						'd2l-siren-entity-save-end': function() { saveStateEl.end(); },
+						'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
+					})[e.type]();
+				}
+			},
+		});
+	</script>
+</dom-module>
