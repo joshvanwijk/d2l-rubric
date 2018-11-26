@@ -86,6 +86,10 @@ Creates and edits a rubric
 				margin: 0 var(--d2l-rubric-editor-gutter-width);
 			}
 
+			d2l-input-checkbox {
+				margin: 0;
+			}
+
 		</style>
 		<d2l-rubric-editor-header
 			id="rubric-header">
@@ -133,7 +137,21 @@ Creates and edits a rubric
 		<div id="accordion-container">
 			<d2l-accordion-collapse title="[[localize('options')]]" flex>
 				<div id="options-container">
-					<!--add options here-->
+					<div id="hide-score-container">
+						<label id="hide-score-checkbox-label" for="hide-score-checkbox">[[localize('hideScoreHeader')]]</label>
+						<d2l-input-checkbox
+							id="hide-score-checkbox"
+							disabled="[[!_canHideScore]]"
+							on-change="_toggleHideScore"
+							checked$="[[_scoreIsHidden]]"
+							aria-invalid="[[isAriaInvalid(_setScoreVisibilityFailed)]]"
+						>
+							[[localize('hideScore')]]
+						</d2l-input-checkbox>
+						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
+							<d2l-tooltip for="hide-score-checkbox" position="bottom">[[_setScoreVisibilityFailedError]]</d2l-tooltip>
+						</template>
+					</div>
 					<div id="rubric-description-container">
 						<label for="rubric-description">[[localize('description')]]</label>
 						<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
@@ -150,21 +168,6 @@ Creates and edits a rubric
 						</d2l-rubric-text-editor>
 						<template is="dom-if" if="[[_descriptionInvalid]]">
 							<d2l-tooltip for="rubric-description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
-						</template>
-					</div>
-					<div id="hide-score-container">
-						<label id="hide-score-checkbox-label" for="hide-score-checkbox">[[localize('hideScoreHeader')]]</label>
-						<d2l-input-checkbox
-							id="hide-score-checkbox"
-							disabled="[[!_canHideScore]]"
-							on-change="_toggleHideScore"
-							checked$="[[_scoreIsHidden]]"
-							aria-invalid="[[isAriaInvalid(_setScoreVisibilityFailed)]]"
-						>
-							[[localize('hideScore')]]
-						</d2l-input-checkbox>
-						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
-							<d2l-tooltip for="hide-score-checkbox" position="bottom">[[_setScoreVisibilityFailedError]]</d2l-tooltip>
 						</template>
 					</div>
 				</div>
