@@ -4,25 +4,8 @@
         "published"
     ],
     "properties": {
-        "name": "Text Only Rubric"
+        "name": "Read Only Rubric"
     },
-    "actions": [
-      {
-        "href": "static-data/rubrics/organizations/text-only/199.json",
-        "name": "update-name",
-        "method": "PATCH",
-        "fields": [
-          {
-            "class": [
-              "required"
-            ],
-            "type": "text",
-            "name": "name",
-            "value": "Text Only Rubric"
-          }
-        ]
-      }
-    ],
     "entities": [
         {
             "class": [
@@ -35,21 +18,7 @@
             "properties": {
                 "text": "",
                 "html": ""
-            },
-            "actions": [
-              {
-                "href": "static-data/rubrics/organizations/text-only/199.json",
-                "name": "update-description",
-                "method": "PATCH",
-                "fields": [
-                  {
-                    "type": "text",
-                    "name": "description",
-                    "value": ""
-                  }
-                ]
-              }
-            ]
+            }
         }
     ],
     "links": [
@@ -57,7 +26,7 @@
             "rel": [
                 "self"
             ],
-            "href": "static-data/rubrics/organizations/text-only/199.json"
+            "href": "static-data/rubrics/organizations/text-only/200.json"
         },
         {
             "rel": [

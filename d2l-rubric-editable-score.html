@@ -55,6 +55,7 @@
 				max="100000"
 				on-blur="_blurHandler"
 				on-keypress="_handleKey"
+				prevent-submit
 			>
 			</d2l-input-text>
 			<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
@@ -138,8 +139,6 @@
 				if (inputElem) {
 					elem.$$('input').select();
 				}
-				var outOf = this.$['out-of'];
-				outOf.scrollIntoView();
 			},
 
 			_editingScoreChanged: function(newValue) {
