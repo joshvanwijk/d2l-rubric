@@ -78,6 +78,10 @@ Creates and edits a rubric
 				margin-right: 0.3rem;
 			}
 
+			d2l-alert {
+				margin: 0 var(--d2l-rubric-editor-gutter-width);
+			}
+
 		</style>
 		<d2l-rubric-editor-header
 			id="rubric-header">
@@ -141,7 +145,7 @@ Creates and edits a rubric
 						>
 						</d2l-rubric-text-editor>
 						<template is="dom-if" if="[[_descriptionInvalid]]">
-							<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+							<d2l-tooltip for="rubric-description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
 						</template>
 					</div>
 					<div id="hide-score-container">
