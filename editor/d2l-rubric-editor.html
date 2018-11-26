@@ -398,7 +398,11 @@ Creates and edits a rubric
 					var fields = [{ 'name': 'scoreVisible', 'value': !checkbox.checked }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-score-visibility-set');
-						this.fire('iron-announce', { text: this.localize('setScoreVisibilitySuccessful', 'checked', checkbox.checked) }, { bubbles: true });
+						if (checkbox.checked) {
+							this.fire('iron-announce', { text: this.localize('scoresVisibilityHidden') }, { bubbles: true });
+						} else {
+							this.fire('iron-announce', { text: this.localize('scoresVisibilityVisible') }, { bubbles: true });
+						}
 					}.bind(this)).then(function() {
 						checkbox.disabled = false;
 					}.bind(this)).catch(function(err) {
