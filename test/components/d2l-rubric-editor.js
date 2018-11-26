@@ -205,6 +205,78 @@ suite('<d2l-rubric-editor>', function() {
 			});
 		});
 
+		suite('set score visibility', function() {
+
+			var fetch;
+			var raf = window.requestAnimationFrame;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('saves visibility change', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: true,
+					json: function() {
+						return Promise.resolve(JSON.stringify(window.testFixtures.rubric_score_vis_mod));
+					}
+				});
+				fetch.returns(promise);
+
+				var hideScoreCheckbox = element.$$('#hide-score-checkbox');
+				expect(hideScoreCheckbox.checked).to.be.false;
+				raf(function() {
+					element.addEventListener('d2l-rubric-score-visibility-set', function() {
+						expect(hideScoreCheckbox.checked).to.be.true;
+						done();
+					});
+					expect(hideScoreCheckbox.disabled).to.be.false;
+					hideScoreCheckbox.checked = true;
+					hideScoreCheckbox.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
+			test('sets aria-invalid if saving score visibility change fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				var hideScoreCheckbox = element.$$('#hide-score-checkbox');
+				raf(function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
+						flush(function() {
+							// don't test in IE
+							if (!isIE) {
+								expect(hideScoreCheckbox.ariaInvalid).to.equal('true');
+							}
+							done();
+						});
+					});
+					hideScoreCheckbox.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+		});
+
 		suite('readonly', function() {
 			var element;
 

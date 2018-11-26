@@ -21,6 +21,21 @@
             "value": "Text Only Rubric"
           }
         ]
+      },
+      {
+        "href": "static-data/rubrics/organizations/text-only/199.json",
+        "name": "update-score-visibility",
+        "method": "PATCH",
+        "fields": [
+          {
+            "class": [
+              "required"
+            ],
+            "type": "checkbox",
+            "name": "scoreVisible",
+            "value": "false"
+          }
+        ]
       }
     ],
     "entities": [
