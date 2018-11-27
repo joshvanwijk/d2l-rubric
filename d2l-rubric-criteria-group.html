@@ -190,6 +190,7 @@
 								assessment-href="[[assessmentHref]]"
 								token="[[token]]"
 								read-only="[[readOnly]]"
+								on-close-feedback="_closeFeedback"
 							>
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -265,10 +266,6 @@
 				'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)',
 				'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 			],
-
-			ready: function() {
-				this.addEventListener('close-feedback', this._closeFeedback.bind(this));
-			},
 
 			_onEntityChanged: function(entity) {
 				if (!entity) {
