@@ -190,6 +190,7 @@
 								assessment-href="[[assessmentHref]]"
 								token="[[token]]"
 								read-only="[[readOnly]]"
+								on-close-feedback="_closeFeedback"
 							>
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -315,6 +316,10 @@
 					feedbackDisplay[i] = this._hasFeedback(criteriaEntities[i], assessmentResult);
 				}
 				this._feedbackDisplay = feedbackDisplay;
+			},
+
+			_closeFeedback: function() {
+				this._addingFeedback = -1;
 			},
 
 			_getCriteriaLink: function(entity) {
