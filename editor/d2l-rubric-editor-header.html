@@ -29,6 +29,8 @@
 				@apply --d2l-heading-1;
 				margin-top: 0;
 				margin-bottom: 0;
+				display: flex;
+				align-items: center;
 				flex: 1;
 				margin-right: 0.3rem;
 			}
@@ -40,7 +42,7 @@
 
 			#header-end-container {
 				margin-bottom: auto;
-    			margin-top: 0.5rem;
+				margin-top: 0.5rem;
 				margin-left: auto;
 			}
 
@@ -83,7 +85,10 @@
 		</style>
 		<div id="rubric-editor-header">
 			<div id="rubric-editor-header-content">
-				<div id="title"><slot name="title"></slot></div>
+				<div id="title">
+					<slot name="title"></slot>
+					<slot name="title-dropdown-menu"></slot>
+				</div>
 				<div id="header-end-container">
 					<d2l-save-status id="editor-save-status"></d2l-save-status>
 					<slot name="header-end-content"></slot>
