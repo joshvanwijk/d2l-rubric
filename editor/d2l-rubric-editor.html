@@ -110,7 +110,7 @@ Creates and edits a rubric
 				<d2l-dropdown-menu>
 					<d2l-menu id="title-menu">
 						<d2l-menu-item
-							text="Statistics"
+							text="[[localize('statistics')]]"
 							disabled="[[!_hasStatisticsLink]]"
 							on-d2l-menu-item-select="_handleSelectStatistics">
 						</d2l-menu-item>
@@ -291,12 +291,12 @@ Creates and edits a rubric
 					value: null
 				},
 				_hasStatisticsLink: {
-					type: String,
+					type: Boolean,
 					computed: '_checkForStatisticsLink(entity)'
 				},
 				_statisticsLink: {
 					type: String,
-					computed: '_getStatsticsLink(entity)'
+					computed: '_getStatisticsLink(entity)'
 				}
 			},
 			behaviors: [
@@ -354,7 +354,7 @@ Creates and edits a rubric
 			_checkForStatisticsLink: function(entity) {
 				return entity && entity.hasLinkByClass('statistics');
 			},
-			_getStatsticsLink: function(entity) {
+			_getStatisticsLink: function(entity) {
 				var linkEntity = entity && entity.getLinkByClass('statistics');
 				if (linkEntity) {
 					return linkEntity.href;
