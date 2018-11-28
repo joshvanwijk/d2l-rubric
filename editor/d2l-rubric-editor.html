@@ -87,6 +87,33 @@ Creates and edits a rubric
 				margin: 0 var(--d2l-rubric-editor-gutter-width);
 			}
 
+			.checkbox-fieldset {
+				border: 0;
+				margin-inline-end: 0;
+				margin-inline-start: 0;
+				padding: 0;
+				padding-block-start: 0;
+				padding-inline-start: 0;
+				padding-block-end: 0;
+				padding-inline-end: 0;
+			}
+			.checkbox-fieldset > legend {
+				padding-inline-start: 0;
+    			padding-inline-end: 0;
+			}
+			.checkbox-fieldset > div[aria-invalid=true] {
+				border-style: solid;
+				border-width: 1px;
+				border-color: #cd2026;
+				border-radius: 0.3rem;
+				padding: 8px;
+			}
+			.checkbox-fieldset > div[aria-invalid=true]:hover {
+				border-width: 2px;
+			}
+			.checkbox-fieldset d2l-input-checkbox:last-of-type {
+				margin-bottom: 0;
+			}
 		</style>
 		<d2l-rubric-editor-header
 			id="rubric-header">
@@ -166,6 +193,27 @@ Creates and edits a rubric
 						<template is="dom-if" if="[[_descriptionInvalid]]">
 							<d2l-tooltip for="rubric-description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
 						</template>
+					</div>
+					<div id="advanced-availability-associations"
+						hidden$="[[_isArrayEmpty(_associations)]]"
+						on-change="_handleAssociations">
+						<label>[[localize('advancedAvailabilityHeader')]]</label>
+
+						<fieldset class="checkbox-fieldset" id="associations">
+							<legend class="d2l-body-compact">[[localize('newAssociationLabel')]]</legend>
+							<div aria-invalid$="[[isAriaInvalid(_associationsInvalid)]]">
+								<template is="dom-repeat" items="[[_associations]]" as="assn">
+									<d2l-input-checkbox
+										checked$="[[assn.selected]]"
+										value="[[assn.value]]">
+										[[assn.title]]
+									</d2l-input-checkbox>
+								</template>
+							</div>
+							<template is="dom-if" if="[[_associationsInvalid]]">
+								<d2l-tooltip for="associations" position="bottom">[[_associationsInvalidError]]</d2l-tooltip>
+							</template>
+						</fieldset>
 					</div>
 				</div>
 			</d2l-accordion-collapse>
@@ -263,6 +311,16 @@ Creates and edits a rubric
 				_rubricStatus: {
 					type: String,
 					value: null
+				},
+				_associations: {
+					type: Object,
+					computed: '_computeAssociations(entity)'
+				},
+				_associationsInvalid: {
+					type: Boolean
+				},
+				_associationsInvalidError: {
+					type: String
 				}
 			},
 			behaviors: [
@@ -287,12 +345,33 @@ Creates and edits a rubric
 			attached: function() {
 				Polymer.IronA11yAnnouncer.requestAvailability();
 			},
+			_isArrayEmpty(obj) {
+				return obj && Array.isArray(obj) && obj.length < 1;
+			},
 			_handleSaveError: function(e) {
 				this._clearAlerts();
 				if (e.target === this) { // handle own error events
 					this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
 					this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 				}
+			},
+			_handleAssociations: function(e) {
+				var checks = Array.prototype.slice.call(e.currentTarget.querySelectorAll("d2l-input-checkbox[checked]"));
+				var action = this.entity.getActionByName('update-associations');
+				if (!action) return;
+				this.toggleBubble('_associationsInvalid', false);
+
+				var fields = checks.map( function(check) {
+					return {
+						name: 'associations',
+						value: check.value
+					}
+				});
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-associations-saved');
+				}.bind(this)).catch(function(err) {
+					this.handleValidationError('_associationsInvalid', 'associationsSaveFailed', err);
+				}.bind(this));
 			},
 			_canEditRubricName: function(entity) {
 				return entity && entity.hasActionByName('update-name');
@@ -334,6 +413,7 @@ Creates and edits a rubric
 			},
 			_onEntityChanged: function(entity) {
 				this._nameInvalid = false;
+				this._associationsInvalid = false;
 
 				if (entity) {
 					if (entity.hasActionByName('update-status')) {
@@ -416,6 +496,11 @@ Creates and edits a rubric
 						this.toggleBubble('_setScoreVisibilityFailed', true, this.getErrMsg(err, 'setScoreVisibilityFailed'));
 					}.bind(this));
 				}
+			},
+			_computeAssociations: function(entity) {
+				var action = entity && entity.getActionByName('update-associations');
+				var field = action && action.getFieldByName('associations');
+				return field && field.value || [];
 			},
 			_handleStatusChange: function(e) {
 				var menuButton = e.currentTarget;
