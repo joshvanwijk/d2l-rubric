@@ -86,7 +86,6 @@ Creates and edits a rubric
 			#title-dropdown {
 				margin-left: 0.5rem;
 				margin-right: 0;
-				margin-bottom: 0.4rem;
 			}
 
 			:dir(rtl) #title-dropdown {
@@ -104,9 +103,8 @@ Creates and edits a rubric
 			<div slot="title">[[localize('editRubric')]]</div>
 			<d2l-dropdown
 				id="title-dropdown"
-				slot="title-dropdown-menu"
-				on-d2l-menu-item-change="_handleStatusChange">
-				<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down" text="Bookmark"></d2l-button-icon>
+				slot="title-dropdown-menu">
+				<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down"></d2l-button-icon>
 				<d2l-dropdown-menu>
 					<d2l-menu id="title-menu">
 						<d2l-menu-item
