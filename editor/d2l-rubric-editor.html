@@ -139,6 +139,11 @@ Creates and edits a rubric
 							disabled="[[!_hasStatisticsLink]]"
 							on-d2l-menu-item-select="_handleSelectStatistics">
 						</d2l-menu-item>
+						<d2l-menu-item
+							text="[[localize('preview')]]"
+							disabled="[[!_hasPreviewLink]]"
+							on-d2l-menu-item-select="_openPreviewDialog">
+						</d2l-menu-item>
 					</d2l-menu>
 				</d2l-dropdown-menu>
 			</d2l-dropdown>
@@ -343,7 +348,19 @@ Creates and edits a rubric
 				_statisticsLink: {
 					type: String,
 					computed: '_getStatisticsLink(entity)'
-        },
+				},
+				_hasPreviewLink: {
+					type: Boolean,
+					computed: '_checkForPreviewLink(entity)'
+				},
+				_previewLink: {
+					type: String,
+					computed: '_getPreviewLink(entity)'
+				},
+				_previewDialog: {
+					type: Object,
+					value: null
+				},
 				_associations: {
 					type: Object,
 					computed: '_computeAssociations(entity)'
@@ -433,6 +450,15 @@ Creates and edits a rubric
 			},
 			_getStatisticsLink: function(entity) {
 				var linkEntity = entity && entity.getLinkByClass('statistics');
+				if (linkEntity) {
+					return linkEntity.href;
+				}
+			},
+			_checkForPreviewLink: function(entity) {
+				return entity && entity.hasLinkByClass('preview');
+			},
+			_getPreviewLink: function(entity) {
+				var linkEntity = entity && entity.getLinkByClass('preview');
 				if (linkEntity) {
 					return linkEntity.href;
 				}
@@ -572,6 +598,32 @@ Creates and edits a rubric
 					ni.SetTarget('_blank');
 					Nav.Go( ni );
 				}
+			},
+			_openPreviewDialog: function() {
+				if (!this._hasPreviewLink) {
+					return;
+				}
+
+				if (this._previewDialog != null) {
+					this._previewDialog.Close();
+				}
+
+				var dialogName = Math.random().toString();
+				dialogName = 'previewRubric_' + dialogName.replace( '\.', '' );
+				this._previewDialog = new D2L.NonModalDialog( dialogName );
+				var title = new D2L.LP.Text.PlainText( this.localize('preview') );
+				this._previewDialog.SetTitle( title );
+				this._previewDialog.SetButtonTableOffset( 27 );
+				this._previewDialog.AddPrimaryButton( D2L.Control.Button.Type.Close );
+				this._previewDialog.SetSize( '1315px', '650px' );
+				var relativeUrl = this._getRelativeUrl(this._previewLink);
+				this._previewDialog.SetSrc( relativeUrl );
+				this._previewDialog.Open();
+			},
+			_getRelativeUrl: function(absoluteUrl) {
+				var a = document.createElement('a');
+				a.href = absoluteUrl;
+				return a.pathname + a.search;
 			}
 		});
 	</script>
