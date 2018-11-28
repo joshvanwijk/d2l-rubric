@@ -7,6 +7,8 @@
 <link rel="import" href="../d2l-inputs/d2l-input-textarea.html">
 <link rel="import" href="./siren-entity.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../d2l-icons/d2l-icon.html">
+<link rel="import" href="../d2l-tooltip/d2l-tooltip.html">
 
 
 <dom-module id="d2l-rubric-feedback">
@@ -38,7 +40,14 @@
 				z-index: 1;
 			}
 			.clear-feedback-button {
-				float: right;
+				margin-top: -1px;
+				margin-left: auto;
+				border-radius: 5px;
+				padding: 5px;
+				border: solid transparent 1px;
+			}
+			.clear-feedback-button:hover {
+				border-color: darkgray;
 			}
 			.feedback-wrapper[data-desktop] {
 				padding: 0.5rem;
@@ -55,7 +64,8 @@
 			}
 			.feedback-heading {
 				@apply --d2l-label-text;
-				padding-top: 0.5rem;
+				margin-top: -1px;
+				margin-left: 1rem;
 			}
 			.feedback-text {
 				@apply --d2l-body-compact-text;
@@ -69,6 +79,10 @@
 				padding: 18px;
 				padding-bottom: 24px;
 			}
+			.feedback-header-wrapper {
+				display: flex;
+			}
+
 		</style>
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
@@ -78,8 +92,12 @@
 				<div class="feedback-arrow-inner"></div>
 			</div>
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
-				<div class="feedback-heading">
-					[[localize('feedback')]]
+				<div class="feedback-header-wrapper">
+					<div class="feedback-heading">
+						[[localize('feedback')]]
+					</div>
+					<d2l-icon id="clear-feedback" class="clear-feedback-button" tabindex="0" icon="d2l-tier1:close-small" on-tap="_clearFeedback"></d2l-icon>
+					<d2l-tooltip for="clear-feedback" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
 				<d2l-input-textarea
 					id="text-area"
@@ -154,6 +172,11 @@
 
 			saveFeedback: function(feedback) {
 				this.saveAssessmentFeedback(this.criterionHref, feedback);
+			},
+
+			_clearFeedback: function() {
+				this.saveFeedback('');
+				this.fire('close-feedback');
 			},
 
 			_canEditFeedback: function(criterionEntity, assessmentEntity) {
