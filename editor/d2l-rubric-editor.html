@@ -83,6 +83,16 @@ Creates and edits a rubric
 				margin-right: 0.3rem;
 			}
 
+			#title-dropdown {
+				margin-left: 0.5rem;
+				margin-right: 0;
+			}
+
+			:dir(rtl) #title-dropdown {
+				margin-left: 0;
+				margin-right: 0.5rem;
+			}
+
 			d2l-alert {
 				margin: 0 var(--d2l-rubric-editor-gutter-width);
 			}
@@ -118,6 +128,20 @@ Creates and edits a rubric
 		<d2l-rubric-editor-header
 			id="rubric-header">
 			<div slot="title">[[localize('editRubric')]]</div>
+			<d2l-dropdown
+				id="title-dropdown"
+				slot="title-dropdown-menu">
+				<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down"></d2l-button-icon>
+				<d2l-dropdown-menu>
+					<d2l-menu id="title-menu">
+						<d2l-menu-item
+							text="[[localize('statistics')]]"
+							disabled="[[!_hasStatisticsLink]]"
+							on-d2l-menu-item-select="_handleSelectStatistics">
+						</d2l-menu-item>
+					</d2l-menu>
+				</d2l-dropdown-menu>
+			</d2l-dropdown>
 			<d2l-dropdown-button-subtle
 				id="status-dropdown"
 				slot="header-end-content"
@@ -312,6 +336,14 @@ Creates and edits a rubric
 					type: String,
 					value: null
 				},
+				_hasStatisticsLink: {
+					type: Boolean,
+					computed: '_checkForStatisticsLink(entity)'
+				},
+				_statisticsLink: {
+					type: String,
+					computed: '_getStatisticsLink(entity)'
+        },
 				_associations: {
 					type: Object,
 					computed: '_computeAssociations(entity)'
@@ -395,6 +427,15 @@ Creates and edits a rubric
 					return false;
 				}
 				return field.hasClass('required');
+			},
+			_checkForStatisticsLink: function(entity) {
+				return entity && entity.hasLinkByClass('statistics');
+			},
+			_getStatisticsLink: function(entity) {
+				var linkEntity = entity && entity.getLinkByClass('statistics');
+				if (linkEntity) {
+					return linkEntity.href;
+				}
 			},
 			_getRubricDescriptionEntity: function(entity) {
 				return entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
@@ -523,6 +564,14 @@ Creates and edits a rubric
 					this.resetSelectedMenuItem(menuButton, this._rubricStatus);
 					this.enableMenu(menuButton);
 				}.bind(this));
+			},
+			_handleSelectStatistics: function() {
+				if (this._statisticsLink) {
+					var ni = new D2L.NavInfo();
+					ni.SetNavigation(this._statisticsLink);
+					ni.SetTarget('_blank');
+					Nav.Go( ni );
+				}
 			}
 		});
 	</script>
