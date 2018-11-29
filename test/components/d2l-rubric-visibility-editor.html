@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html>
+
+<head>
+	<title>d2l-rubric-visibility-editor test</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+	<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../../web-component-tester/browser.js"></script>
+	<script src="../../node_modules/attest/attest.js"></script>
+	<script src="./ally-test-script.js"></script>
+
+	<link rel="import" href="../../../promise-polyfill/promise-polyfill.html">
+	<script src="../../../fetch/fetch.js"></script>
+	<script src="../test-polyfill.js"></script>
+	<link rel="import" href="../../../d2l-polymer-siren-behaviors/store/entity-store.html">
+	<link rel="import" href="../../editor/d2l-rubric-visibility-editor.html">
+
+	<script src="static-data/rubrics/organizations/text-only/199-name-mod.js"></script>
+	<script src="static-data/rubrics/organizations/text-only/199-description-mod.js"></script>
+</head>
+
+<body>
+	<test-fixture id="basic">
+		<template>
+			<d2l-rubric-visibility-editor
+				href="static-data/rubrics/organizations/text-only/199.json"
+			>
+			</d2l-rubric-visibility-editor>
+		</template>
+	</test-fixture>
+	<test-fixture id="readonly">
+		<template>
+			<d2l-rubric-visibility-editor href="static-data/rubrics/organizations/text-only/200.json">
+			</d2l-rubric-visibility-editor>
+		</template>
+	</test-fixture>
+	<script src="d2l-rubric-visibility-editor.js"></script>
+</body>
+
+</html>

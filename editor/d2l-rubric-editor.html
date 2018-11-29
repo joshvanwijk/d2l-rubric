@@ -18,6 +18,8 @@ z<link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
 
+<link rel="import" href="./d2l-rubric-visibility-editor.html">
+
 <!--
 `d2l-rubric-editor`
 Creates and edits a rubric
@@ -190,6 +192,12 @@ Creates and edits a rubric
 		<div id="accordion-container">
 			<d2l-accordion-collapse title="[[localize('options')]]" flex>
 				<div id="options-container">
+					<div>
+						<d2l-rubric-visibility-editor
+							href=[[href]]
+							token=[[token]]
+						></d2l-rubric-visibility-editor>
+					</div>
 					<div id="hide-score-container">
 						<label id="hide-score-checkbox-label" for="hide-score-checkbox">[[localize('hideScoreHeader')]]</label>
 						<d2l-input-checkbox
