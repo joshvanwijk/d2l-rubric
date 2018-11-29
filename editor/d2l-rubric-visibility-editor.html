@@ -41,6 +41,19 @@
 		Polymer({
 			is: 'd2l-rubric-visibility-editor',
 			properties: {
+				/**
+				* The href for this siren entity
+				*/
+				href: {
+					type: String,
+					reflectToAttribute: true
+				},
+				/**
+				* The user access token
+				*/
+				token: {
+					type: Object,
+				},
 				_selected: {
 					type: String,
 					observer: '_updateSelected'
