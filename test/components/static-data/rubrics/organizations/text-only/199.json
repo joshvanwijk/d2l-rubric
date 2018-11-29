@@ -36,7 +36,26 @@
             "value": "false"
           }
         ]
-      }
+      },
+      {
+        "href": "static-data/rubrics/organizations/text-only/199.json",
+        "name": "update-visibility",
+        "method": "PATCH",
+        "fields": [{
+          "type": "radio",
+          "name": "visibility",
+          "value": [{
+              "value": "AlwaysVisible",
+              "selected": false
+            }, {
+              "value": "VisibleOnceFeedbackPosted",
+              "selected": true
+            }, {
+              "value": "NeverVisible",
+              "selected": false
+          }]
+        }]
+        }
     ],
     "entities": [
         {

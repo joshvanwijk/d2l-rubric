@@ -171,14 +171,14 @@ Polymer-based web component for D2L radio buttons
 			 */
 			get isChecked() {
 				try {
-					var c = this.querySelector('input').checked;
+					var c = this._input().checked;
 					return c;
 				} catch (e) {
 					return false;
 				}
 			},
 			focus: function() {
-				this.querySelector('input').focus();
+				this._input().focus();
 			},
 			_handleChange: function(e) {
 				this.checked = e.target.checked;
@@ -199,6 +199,10 @@ Polymer-based web component for D2L radio buttons
 					'focus',
 					{bubbles: true, composed: false}
 				));
+			},
+			_input: function() {
+				return (Polymer.Element || !Polymer.Settings.useShadow) ?
+					this.querySelector('input') : Polymer.dom(this.root).querySelector('input');
 			},
 			_attachDom: function(dom) {
 				var slot = dom.querySelector('.d2l-input-radio-button-label');

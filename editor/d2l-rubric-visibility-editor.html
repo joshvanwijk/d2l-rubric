@@ -24,16 +24,28 @@
 				display: inline-block;
 				margin-bottom: 0.5rem;
 			}
+			d2l-input-radio-rubric {
+				display: block;
+			}
+			d2l-input-radio-rubric:last-of-type  {
+				/* This is required because we cannot override the internal bottom margin on the radio button - yuck to light dom */
+				margin-bottom: -0.9rem;
+			}
 		</style>
 		<label class="heading" for="hide-score-checkbox">[[localize('rubricVisibility')]]</label>
-		<d2l-input-radio-rubric name="visibility">[[localize('rubricVisibilityAlways')]]</d2l-input-radio-rubric>
-		<d2l-input-radio-rubric name="visibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]</d2l-input-radio-rubric>
-		<d2l-input-radio-rubric name="visibility">[[localize('rubricVisibilityNever')]]</d2l-input-radio-rubric>
+		<d2l-input-radio-rubric id="AlwaysVisible" name="visibility">[[localize('rubricVisibilityAlways')]]</d2l-input-radio-rubric>
+		<d2l-input-radio-rubric id="VisibleOnceFeedbackPosted" name="visibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]</d2l-input-radio-rubric>
+		<d2l-input-radio-rubric id="NeverVisible" name="visibility">[[localize('rubricVisibilityNever')]]</d2l-input-radio-rubric>
 	</template>
 	<script>
 		Polymer({
 			is: 'd2l-rubric-visibility-editor',
-			properties: {},
+			properties: {
+				_selected: {
+					type: String,
+					observer: '_updateSelected'
+				}
+			},
 			behaviors: [
 				D2L.PolymerBehaviors.Rubric.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
@@ -41,6 +53,22 @@
 				D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
 			],
+			_onEntityChanged: function(entity) {
+				var action = entity && entity.getActionByName('update-visibility');
+				if (action) {
+					var field = action.getFieldByName('visibility');
+					if (field && Array.isArray(field.value)) {
+						for (var i = 0; i < field.value.length; i++) {
+							if (field.value[i].selected) {
+								this._selected = field.value[i].value;
+							}
+						}
+					}
+				}
+			},
+			_updateSelected: function(selected) {
+				Polymer.dom(this.root).querySelector('#' + selected).checked = true;
+			}
 		});
 	</script>
 </dom-module>
