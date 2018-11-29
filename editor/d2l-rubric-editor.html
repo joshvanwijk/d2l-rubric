@@ -402,7 +402,7 @@ Creates and edits a rubric
 			attached: function() {
 				Polymer.IronA11yAnnouncer.requestAvailability();
 			},
-			_isArrayEmpty(obj) {
+			_isArrayEmpty: function(obj) {
 				return obj && Array.isArray(obj) && obj.length < 1;
 			},
 			_handleSaveError: function(e) {
