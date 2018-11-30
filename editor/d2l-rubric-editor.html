@@ -17,6 +17,7 @@ z<link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-button-subtle.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../../d2l-alert/d2l-alert.html">
+<link rel="import" href="../../d2l-link/d2l-link.html">
 
 <link rel="import" href="./d2l-rubric-visibility-editor.html">
 
@@ -126,6 +127,10 @@ Creates and edits a rubric
 			}
 			.checkbox-fieldset d2l-input-checkbox:last-of-type {
 				margin-bottom: 0;
+			}
+			.help-link {
+				margin-top: 0.5rem;
+				margin-bottom: 0.7rem;
 			}
 		</style>
 		<d2l-rubric-editor-header
@@ -252,6 +257,9 @@ Creates and edits a rubric
 								<d2l-tooltip for="associations" position="bottom">[[_associationsInvalidError]]</d2l-tooltip>
 							</template>
 						</fieldset>
+						<div class="help-link">
+							<d2l-link small on-click="_openHelpDialog">[[localize('helpAssociations')]]</d2l-link>
+						</div>
 					</div>
 				</div>
 			</d2l-accordion-collapse>
@@ -379,6 +387,10 @@ Creates and edits a rubric
 				},
 				_associationsInvalidError: {
 					type: String
+				},
+				_helpAssociations: {
+					type: Object,
+					computed: '_getHelpAssociations(entity)'
 				}
 			},
 			behaviors: [
@@ -486,6 +498,9 @@ Creates and edits a rubric
 						return field.value;
 					}
 				}
+			},
+			_getHelpAssociations: function (entity) {
+				return entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.associations);
 			},
 			_onEntityChanged: function(entity) {
 				this._nameInvalid = false;
@@ -633,6 +648,15 @@ Creates and edits a rubric
 				var a = document.createElement('a');
 				a.href = absoluteUrl;
 				return a.pathname + a.search;
+			},
+			_openHelpDialog: function() {
+				if(!this._helpAssociations) {
+					return;
+				}
+				D2L.LP.Web.UI.Desktop.Controls.InlineHelp.PopupHelp(
+					this._helpAssociations.properties.titleLangTerm,
+					this._helpAssociations.properties.descriptionLangTerm
+				);
 			}
 		});
 	</script>
