@@ -1,4 +1,4 @@
-z<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="./d2l-rubric-structure-editor.html">
 <link rel="import" href="./d2l-rubric-editor-cell-styles.html">
 <link rel="import" href="./d2l-rubric-error-handling-behavior.html">
@@ -408,10 +408,8 @@ Creates and edits a rubric
 			},
 			_handleSaveError: function(e) {
 				this._clearAlerts();
-				if (e.target === this) { // handle own error events
-					this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
-					this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
-				}
+				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 			},
 			_handleAssociations: function(e) {
 				var checks = Array.prototype.slice.call(e.currentTarget.querySelectorAll("d2l-input-checkbox[checked]"));

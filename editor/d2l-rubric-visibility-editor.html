@@ -5,7 +5,7 @@
 <link rel="import" href="../../iron-a11y-announcer/iron-a11y-announcer.html">
 <link rel="import" href="../../d2l-tooltip/d2l-tooltip.html">
 <link rel="import" href="../../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
-<link rel="import" href="../../d2l-inputs/d2l-input-checkbox.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-shared-styles.html">
 <link rel="import" href="../../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 
 <link rel="import" href="./../d2l-rubric-entity-behavior.html">
@@ -16,9 +16,21 @@
 
 <dom-module id="d2l-rubric-visibility-editor">
 	<template strip-whitespace>
-		<style include="d2l-input-radio-styles">
+		<style include="d2l-input-radio-styles d2l-input-styles">
 			:host {
-				display: block;
+				display: inline-block;
+				overflow: hidden;
+			}
+			:host([aria-invalid="true"]) {
+				padding: var(--d2l-input-padding);
+				border: solid 1px transparent;
+				border-radius: var(--d2l-input-border-radius);
+				border-color: var(--d2l-color-cinnabar);
+			}
+			:host([aria-invalid="true"]):hover,
+			:host([aria-invalid="true"]):focus {
+				padding: var(--d2l-input-padding-focus);
+				border-width: 2px;
 			}
 
 			label {
@@ -28,24 +40,19 @@
 				display: block;
 				margin-bottom: 0.5rem;
 			}
-			#visibility-group {
-				display: inline-block;
-			}
 		</style>
 		<label class="heading">[[localize('rubricVisibility')]]</label>
-		<div id="visibility-group" aria-invalid$="[[isAriaInvalid(_visibilityInvalid)]]">
-			<label class="d2l-input-radio-label">
-				<input type="radio" id="AlwaysVisible" value="AlwaysVisible" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityAlways')]]
-			</label>
-			<label class="d2l-input-radio-label">
-				<input type="radio" id="VisibleOnceFeedbackPosted" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityOnceFeedbackPosted')]]
-			</label>
-			<label class="d2l-input-radio-label">
-				<input type="radio" id="NeverVisible" value="NeverVisible" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityNever')]]
-			</label>
-		</div>
+		<label class="d2l-input-radio-label">
+			<input type="radio" id="AlwaysVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="AlwaysVisible" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityAlways')]]
+		</label>
+		<label class="d2l-input-radio-label">
+			<input type="radio" id="NeverVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="NeverVisible" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityNever')]]
+		</label>
+		<label class="d2l-input-radio-label">
+			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityOnceFeedbackPosted')]]
+		</label>
 		<template is="dom-if" if="[[_visibilityInvalid]]">
-			<d2l-tooltip for="visibility-group" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
+			<d2l-tooltip position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 	<script>
@@ -65,9 +72,13 @@
 				token: {
 					type: Object,
 				},
-				_selected: {
+				_debounceSelected: {
 					type: String,
-					observer: '_updateSelected'
+				},
+				ariaInvalid: {
+					type: String,
+					reflectToAttribute: true,
+					computed: '_computeAriaInvalid(_visibilityInvalid)'
 				},
 				_visibilityInvalid: {
 					type: Boolean
@@ -84,34 +95,59 @@
 				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
 			],
 			_onEntityChanged: function(entity) {
+				if (this.isDebouncerActive('change')) {
+					return;
+				}
 				var action = entity && entity.getActionByName('update-visibility');
 				if (action) {
 					var field = action.getFieldByName('visibility');
 					if (field && Array.isArray(field.value)) {
 						for (var i = 0; i < field.value.length; i++) {
 							if (field.value[i].selected) {
-								this._selected = field.value[i].value;
+								Polymer.dom(this.root).querySelector('#' + field.value[i].value).checked = true;
 							}
 						}
 					}
 				}
 			},
-			_updateSelected: function(selected) {
-				Polymer.dom(this.root).querySelector('#' + selected).checked = true;
-			},
 			_changeVisibility: function(e) {
-				var action = this.entity.getActionByName('update-visibility');
-				if (action) {
-					var button = e.target;
-					this.toggleBubble('_visibilityInvalid', false);
-					var fields = [{ 'name': 'visibility', 'value': button.value }];
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-visibility-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('_visibilityInvalid', 'changeVisibilityFailed', err);
-					}.bind(this));
+				this._debounceSelected = e.target.value;
+				this.debounce('change', function() {
+					var action = this.entity.getActionByName('update-visibility');
+					if (action) {
+						this.toggleBubble('_visibilityInvalid', false);
+						var fields = [{ 'name': 'visibility', 'value': this._debounceSelected }];
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-visibility-saved');
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('_visibilityInvalid', 'rubricVisibilitySaveFailed', err);
+						}.bind(this));
+					}
+				}.bind(this), 200);
+			},
+			_computeAriaInvalid: function(_visibilityInvalid) {
+				return _visibilityInvalid ? 'true' : 'false';
+			},
+			_handleFocus: function() {
+				// in shady DOM the input's "focus" event does not bubble,
+				// so  need to fire it
+				if (!Polymer.Settings.useShadow) {
+					this.dispatchEvent(new CustomEvent(
+						'focus',
+						{bubbles: true, composed: true}
+					));
 				}
 			},
+			_handleBlur: function() {
+				// in shady DOM the input's "blur" event does not bubble,
+				// so need to fire it
+				if (!Polymer.Settings.useShadow) {
+					this.dispatchEvent(new CustomEvent(
+						'blur',
+						{bubbles: true, composed: true}
+					));
+				}
+			}
 		});
 	</script>
 </dom-module>

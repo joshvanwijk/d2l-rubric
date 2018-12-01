@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush */
+/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush*/
 
 'use strict';
 
@@ -94,7 +94,7 @@ suite('<d2l-rubric-visibility-editor>', function() {
 				});
 			});
 
-			test.only('sets aria-invalid if visibility fails', function(done) {
+			test('sets aria-invalid if visibility fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: false,
@@ -104,13 +104,12 @@ suite('<d2l-rubric-visibility-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var alwaysVisibleButton = element.$$('#AlwaysVisible');
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
 							// don't test in IE
 							if (!isIE) {
-								expect(alwaysVisibleButton.ariaInvalid).to.equal('true');
+								expect(element.getAttribute('aria-invalid')).to.equal('true');
 							}
 							done();
 						});
