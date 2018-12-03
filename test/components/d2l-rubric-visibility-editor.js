@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush */
+/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, flush*/
 
 'use strict';
 
@@ -44,10 +44,80 @@ suite('<d2l-rubric-visibility-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
-			test.only('populates fields from action', function() {
-				var checkedRadio = Polymer.dom(element.root).querySelector('#VisibleOnceFeedbackPosted');
-				expect(checkedRadio.isChecked).to.be.true;
+			test('populates fields from action', function() {
+				var checkedRadio = element.$$('#VisibleOnceFeedbackPosted');
+				expect(checkedRadio.checked).to.be.true;
 			});
+		});
+
+		suite('change rubric visibility', function() {
+
+			var fetch;
+			var raf = window.requestAnimationFrame;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('saves visibility change', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: true,
+					json: function() {
+						return Promise.resolve(JSON.stringify(window.testFixtures.rubric_visibility_mod));
+					}
+				});
+				fetch.returns(promise);
+
+				expect(element.$$('#VisibleOnceFeedbackPosted').checked).to.be.true;
+				raf(function() {
+					element.addEventListener('d2l-rubric-visibility-saved', function() {
+						expect(element.$$('#VisibleOnceFeedbackPosted').checked).to.be.false;
+						expect(element.$$('#AlwaysVisible').checked).to.be.true;
+						done();
+					});
+					element.$$('#AlwaysVisible').click();
+				});
+			});
+
+			test('sets aria-invalid if visibility fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				raf(function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
+						flush(function() {
+							// don't test in IE
+							if (!isIE) {
+								expect(element.getAttribute('aria-invalid')).to.equal('true');
+							}
+							done();
+						});
+					});
+					element.$$('#AlwaysVisible').click();
+				});
+			});
+
 		});
 	});
 
