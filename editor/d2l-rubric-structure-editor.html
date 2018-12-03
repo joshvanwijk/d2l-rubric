@@ -126,13 +126,15 @@ Creates and edits a rubric structue
 		<div id="rubric-structure-editor-header">
 			<div id="rubric-structure-editor-header-content">
 				<div id="header-start-container">
-					<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]" on-d2l-menu-item-change="_handleTypeChange">
+					<d2l-dropdown-button-subtle text="[[_rubricTypeText]]" hidden$="[[!_canConvertType]]"
+						on-d2l-menu-item-change="_handleTypeChange">
 						<d2l-dropdown-menu>
 							<d2l-menu id="rubric-type-menu" label="Type"></d2l-menu>
 						</d2l-dropdown-menu>
 					</d2l-dropdown-button-subtle>
 
-					<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]" on-d2l-menu-item-change="_handleScoringChange">
+					<d2l-dropdown-button-subtle text="[[_scoringText]]" hidden$="[[!_canConvertScoring]]"
+						on-d2l-menu-item-change="_handleScoringChange">
 						<d2l-dropdown-menu>
 							<d2l-menu id="scoring-menu" label="Scoring"></d2l-menu>
 						</d2l-dropdown-menu>

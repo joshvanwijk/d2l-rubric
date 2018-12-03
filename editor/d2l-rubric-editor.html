@@ -20,6 +20,8 @@
 <link rel="import" href="../../d2l-link/d2l-link.html">
 
 <link rel="import" href="./d2l-rubric-visibility-editor.html">
+<link rel="import" href="../d2l-rubric.html">
+<link rel="import" href="../../s-html/s-html.html">
 
 <!--
 `d2l-rubric-editor`
@@ -132,6 +134,11 @@ Creates and edits a rubric
 				margin-top: 0.5rem;
 				margin-bottom: 0.7rem;
 			}
+
+			d2l-rubric {
+				margin-left: var(--d2l-rubric-editor-gutter-width);
+				margin-right: var(--d2l-rubric-editor-gutter-width);
+			}
 		</style>
 		<d2l-rubric-editor-header
 			id="rubric-header">
@@ -173,30 +180,46 @@ Creates and edits a rubric
 		</template>
 		<div id="rubric-name-container">
 			<label for="rubric-name">[[localize('name')]]*</label>
-			<d2l-input-text
-				id="rubric-name"
-				value="[[_rubricName]]"
-				on-change="_saveName"
-				aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
-				aria-label="[[localize('name')]]"
-				disabled="[[!_canEditName]]"
-				prevent-submit
-			>
-			</d2l-input-text>
-			<template is="dom-if" if="[[_nameInvalid]]">
-				<d2l-tooltip for="rubric-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+			<template is="dom-if" if="[[!_isLocked]]">
+				<d2l-input-text
+					id="rubric-name"
+					value="[[_rubricName]]"
+					on-change="_saveName"
+					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+					aria-label="[[localize('name')]]"
+					disabled="[[!_canEditName]]"
+					prevent-submit
+				>
+				</d2l-input-text>
+
+				<template is="dom-if" if="[[_nameInvalid]]">
+					<d2l-tooltip for="rubric-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+				</template>
+			</template>
+			<template is="dom-if" if="[[_isLocked]]">
+				<h4>[[_rubricName]]</h4>
 			</template>
 		</div>
-		<d2l-rubric-structure-editor
-			is-single-page-rubric="[[isSinglePageRubric]]"
-			rich-text-enabled=[[richTextEnabled]]
-			percentage-format-alternate=[[percentageFormatAlternate]]
-			href=[[href]]
-			token=[[token]]
-		></d2l-rubric-structure-editor>
+		<template is="dom-if" if="[[!_isLocked]]">
+			<d2l-rubric-structure-editor
+				is-single-page-rubric="[[isSinglePageRubric]]"
+				rich-text-enabled=[[richTextEnabled]]
+				percentage-format-alternate=[[percentageFormatAlternate]]
+				href=[[href]]
+				token=[[token]]>
+			</d2l-rubric-structure-editor>
+		</template>
+		<template is="dom-if" if="[[_isLocked]]">
+			<d2l-rubric
+				token=[[token]]
+				href=[[href]]
+				overall-score-flag
+				read-only >
+			</d2l-rubric>
+		</template>
 
 		<div id="accordion-container">
-			<d2l-accordion-collapse title="[[localize('options')]]" flex>
+			<d2l-accordion-collapse title="[[localize('options')]]" flex opened$="[[_isLocked]]">
 				<div id="options-container">
 					<div>
 						<d2l-rubric-visibility-editor
@@ -220,21 +243,36 @@ Creates and edits a rubric
 						</template>
 					</div>
 					<div id="rubric-description-container">
-						<label for="rubric-description">[[localize('description')]]</label>
-						<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-						<d2l-rubric-text-editor
-							id="rubric-description"
-							token="[[token]]"
-							aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
-							aria-label="[[localize('description')]]"
-							disabled="[[!_canEditDescription]]"
-							value=[[_rubricDescription]]
-							on-change="_saveDescription"
-							rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
-						>
-						</d2l-rubric-text-editor>
-						<template is="dom-if" if="[[_descriptionInvalid]]">
-							<d2l-tooltip for="rubric-description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+						<template is="dom-if" if="[[!_isLocked]]">
+							<label for="rubric-description">[[localize('description')]]</label>
+							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
+							<d2l-rubric-text-editor
+								id="rubric-description"
+								token="[[token]]"
+								aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
+								aria-label="[[localize('description')]]"
+								disabled="[[!_canEditDescription]]"
+								value=[[_rubricDescription]]
+								on-change="_saveDescription"
+								rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
+							>
+							</d2l-rubric-text-editor>
+							<template is="dom-if" if="[[_descriptionInvalid]]">
+								<d2l-tooltip for="rubric-description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+							</template>
+						</template>
+						<template is="dom-if" if="[[_isLocked]]">
+							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
+							<template is="dom-if" if="[[richTextEnabled]]">
+								<div>
+									<s-html html$="[[_getReadOnlyDescription(_rubricDescription)]]"></s-html>
+								</div>
+							</template>
+							<template is="dom-if" if="[[!richTextEnabled]]">
+								<h4>
+									[[_getReadOnlyDescription(_rubricDescription)]]"
+								</h4>
+							</template>
 						</template>
 					</div>
 					<div id="advanced-availability-associations"
@@ -391,6 +429,14 @@ Creates and edits a rubric
 				_helpAssociations: {
 					type: Object,
 					computed: '_getHelpAssociations(entity)'
+				},
+				_isLocked: {
+					type: Boolean,
+					value: false
+				},
+				_isHolistic: {
+					type: Boolean,
+					value: false
 				}
 			},
 			behaviors: [
@@ -414,6 +460,9 @@ Creates and edits a rubric
 			},
 			attached: function() {
 				Polymer.IronA11yAnnouncer.requestAvailability();
+			},
+			_getReadOnlyDescription: function(value) {
+				return value || '<p>' + this.localize('descriptionReadOnlyPlaceholder') + '</p>';
 			},
 			_isArrayEmpty: function(obj) {
 				return obj && Array.isArray(obj) && obj.length < 1;
@@ -519,7 +568,10 @@ Creates and edits a rubric
 						}
 						this._canChangeStatus = true;
 					}
+					this._isLocked = entity.hasClass('locked');
+					this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
 				}
+
 			},
 			_saveName: function(e) {
 				var action = this.entity.getActionByName('update-name');
