@@ -318,19 +318,17 @@ suite('<d2l-rubric-description-editor>', function() {
 	});
 
 	suite('Ally Test', function() {
-	/* eslint no-invalid-this:0 */
-	/* global isAttestInstalled */
-	/* global ally_tests */
-	suiteSetup(function() {
-		if (!isAttestInstalled()) {
-			console.log(`Skipping Ally Test in d2l-rubric-description-editor`);
-			this.skip();
-		}
+		/* eslint no-invalid-this:0 */
+		/* global isAttestInstalled */
+		/* global ally_tests */
+		suiteSetup(function() {
+			if (!isAttestInstalled()) {
+				this.skip();
+			}
+		});
+		test('d2l-rubric-description-edior ally checks', function() {
+			ally_tests();
+		});
 	});
-	test('d2l-rubric-description-edior ally checks', function() {
-		console.log(`Ally Test in d2l-rubric-description-editor`);
-		ally_tests();
-	});
-});
 
 });
