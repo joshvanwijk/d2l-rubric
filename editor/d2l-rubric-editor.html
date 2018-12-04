@@ -49,7 +49,7 @@ Creates and edits a rubric
 			}
 
 			#options-container > div:not(:first-child) {
-				margin-top: 2.5rem;
+				margin-top: 2.15rem;
 			}
 
 			#rubric-name-container {
@@ -74,7 +74,7 @@ Creates and edits a rubric
 			}
 
 			#hide-score-checkbox {
-				padding-top: 0.5rem;
+				padding-top: 0.45rem;
 				margin: 0;
 			}
 
@@ -116,6 +116,7 @@ Creates and edits a rubric
 			.checkbox-fieldset > legend {
 				padding-inline-start: 0;
     			padding-inline-end: 0;
+				padding-bottom: 0.6rem;
 			}
 			.checkbox-fieldset > div[aria-invalid=true] {
 				border-style: solid;
@@ -126,6 +127,9 @@ Creates and edits a rubric
 			}
 			.checkbox-fieldset > div[aria-invalid=true]:hover {
 				border-width: 2px;
+			}
+			.checkbox-fieldset d2l-input-checkbox {
+				margin-bottom: 0.6rem;
 			}
 			.checkbox-fieldset d2l-input-checkbox:last-of-type {
 				margin-bottom: 0;
@@ -138,6 +142,13 @@ Creates and edits a rubric
 			d2l-rubric {
 				margin-left: var(--d2l-rubric-editor-gutter-width);
 				margin-right: var(--d2l-rubric-editor-gutter-width);
+			}
+			#description-html-container {
+				margin-top: 8px;
+				margin-bottom: 8px;
+			}
+			#description-html-container > s-html::shadow > * {
+				margin: 0px;
 			}
 		</style>
 		<d2l-rubric-editor-header
@@ -264,7 +275,7 @@ Creates and edits a rubric
 						<template is="dom-if" if="[[_isLocked]]">
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
 							<template is="dom-if" if="[[richTextEnabled]]">
-								<div>
+								<div id="description-html-container">
 									<s-html html$="[[_getReadOnlyDescription(_rubricDescription)]]"></s-html>
 								</div>
 							</template>
