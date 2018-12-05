@@ -52,15 +52,10 @@
             },
             "actions": [
               {
-                "name": "update",
-                "method": "PUT",
+                "name": "update-feedback",
+                "method": "PATCH",
                 "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json",
                 "fields": [
-                  {
-                    "type": "hidden",
-                    "name": "description",
-                    "value": "Proper use of grammar"
-                  },
                   {
                     "type": "text",
                     "name": "feedback",
