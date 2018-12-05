@@ -495,6 +495,7 @@ Creates and edits a rubric
 						value: check.value
 					}
 				});
+				fields.push({'name':'updateAssociations', 'value':true});
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-associations-saved');
 				}.bind(this)).catch(function(err) {
