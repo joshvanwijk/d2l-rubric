@@ -6,7 +6,7 @@
 'd2l-input-radio-styles'
 Styles for radio button
 
-@demo demo/d2l-input-radio-rubric.html
+@demo demo/d2l-input-radio-styles.html
 -->
 
 <dom-module id="d2l-input-radio-styles">
@@ -21,6 +21,12 @@ Styles for radio button
 				@apply --d2l-body-compact-text;
 				color: var(--d2l-color-ferrite);
 				margin-bottom: 0.9rem;
+			}
+			.d2l-input-radio-label.disabled {
+				opacity: 0.5;
+			}
+			.d2l-input-radio-label.disabled > input[type="radio"] {
+				opacity: 1.0;
 			}
 			.d2l-input-radio-label:last-of-type {
 				margin-bottom: 0;
