@@ -131,7 +131,7 @@
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-feedback-saved');
 					}.bind(this)).catch(function() {
-						this.toggleBubble('_feedbackInvalid', true, this.localize('feedbackSaveFailed'));
+						this.handleValidationError('_feedbackInvalid', 'feedbackSaveFailed', err);
 					}.bind(this));
 				}
 			},

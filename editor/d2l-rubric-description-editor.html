@@ -203,7 +203,7 @@
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function(err) {
-						this.toggleBubble('_descriptionInvalid', true, this.getErrMsg(err, 'descriptionSaveFailed'));
+						this.handleValidationError('_descriptionInvalid', 'descriptionSaveFailed', err);
 					}.bind(this));
 				}
 			},
@@ -243,8 +243,7 @@
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-criterion-cell-points-saved');
 						}.bind(this)).catch(function(err) {
-							this.toggleBubble('_pointsInvalid', true, this.getErrMsg(err, 'pointsSaveFailed'));
-							this.fire('iron-announce', { text: this.getErrMsg(err, 'pointsSaveFailed') }, { bubbles: true });
+							this.handleValidationError('_pointsInvalid', 'pointsSaveFailed', err);
 						}.bind(this));
 					}
 				}
