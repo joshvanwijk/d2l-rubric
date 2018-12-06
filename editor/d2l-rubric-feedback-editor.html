@@ -130,8 +130,8 @@
 					var fields = [{'name':'feedback', 'value':e.detail.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-feedback-saved');
-					}.bind(this)).catch(function() {
-						this.toggleBubble('_feedbackInvalid', true, this.localize('feedbackSaveFailed'));
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('_feedbackInvalid', 'feedbackSaveFailed', err);
 					}.bind(this));
 				}
 			},
