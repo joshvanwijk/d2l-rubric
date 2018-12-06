@@ -62,36 +62,21 @@ Creates and edits a rubric structue
 				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
 				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
 			}
-
-			#header-start-container > *, #header-end-container > * {
-				margin: 0.75rem 0.3rem;
+			#header-start-container {
+				margin-left: -0.58rem; /* [by design] to shift header a bit so the subtle button will align with the grid instead of shifting each buttons */
 			}
-
-			#header-start-container > *:first-child, #header-end-container > *:first-child {
+			:dir(rtl) #header-start-container {
 				margin-left: unset;
-				margin-right: 0.3rem;
+				margin-right: -0.58rem;
 			}
-
-			#header-start-container > *:last-child, #header-end-container > *:last-child {
-				margin-left: 0.3rem;
+			#header-start-container > * {
+				margin-top: 0.75rem;
+				margin-bottom: 0.75rem;
+				margin-right: 0.6rem;
+			}
+			:dir(rtl) #header-start-container > * {
+				margin-left: 0.6rem;
 				margin-right: unset;
-			}
-
-			:dir(rtl) #header-start-container > *:first-child, :dir(rtl) #header-end-container > *:first-child {
-				margin-left: 0.3rem;
-				margin-right: unset;
-			}
-
-			:dir(rtl) #header-start-container > *:last-child, :dir(rtl) #header-end-container > *:last-child {
-				margin-left: unset;
-				margin-right: 0.3rem;
-			}
-
-			#header-end-container {
-				margin-top: auto;
-				margin-bottom: auto;
-				min-height: 1.2rem;
-				height: 100%;
 			}
 
 			d2l-alert {
@@ -146,8 +131,6 @@ Creates and edits a rubric structue
 						text="[[localize('reverseLevelOrder')]]"
 						type="button">
 					</d2l-button-subtle>
-				</div>
-				<div id="header-end-container">
 				</div>
 			</div>
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
