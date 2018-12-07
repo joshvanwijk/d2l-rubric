@@ -19,6 +19,37 @@
                 "text": "",
                 "html": ""
             }
+        },
+        {
+          "class": [
+            "collection",
+            "associations"
+          ],
+          "rel": [
+            "https://rubrics.api.brightspace.com/rels/allowed-associations"
+          ],
+          "entities": [
+            {
+              "class": [
+                "association"
+              ],
+              "rel": [
+                "item"
+              ],
+              "title": "Competencies",
+              "properties": {
+                "allowed": true
+              },
+              "links": [
+                {
+                  "rel": [
+                    "self"
+                  ],
+                  "href": "static-data/rubrics/organizations/text-only/200/allowedAssociations/Competency"
+                }
+              ]
+            }
+          ]
         }
     ],
     "links": [

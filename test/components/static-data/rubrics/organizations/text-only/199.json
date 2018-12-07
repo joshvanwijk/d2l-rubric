@@ -84,6 +84,51 @@
                 ]
               }
             ]
+        },
+        {
+          "class": [
+            "collection",
+            "associations"
+          ],
+          "rel": [
+            "https://rubrics.api.brightspace.com/rels/allowed-associations"
+          ],
+          "entities": [
+            {
+              "class": [
+                "association"
+              ],
+              "rel": [
+                "item"
+              ],
+              "title": "Competencies",
+              "properties": {
+                "allowed": true
+              },
+              "actions": [
+                {
+                  "href": "static-data/rubrics/organizations/text-only/199/allowedAssociations/Competency",
+                  "name": "update",
+                  "method": "PUT",
+                  "fields": [
+                    {
+                      "type": "checkbox",
+                      "name": "allowed",
+                      "value": true
+                    }
+                  ]
+                }
+              ],
+              "links": [
+                {
+                  "rel": [
+                    "self"
+                  ],
+                  "href": "static-data/rubrics/organizations/text-only/199/allowedAssociations/Competency"
+                }
+              ]
+            }
+          ]
         }
     ],
     "links": [
