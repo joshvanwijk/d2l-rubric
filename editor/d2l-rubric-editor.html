@@ -280,12 +280,12 @@ Creates and edits a rubric
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
 							<template is="dom-if" if="[[richTextEnabled]]">
 								<div id="description-html-container">
-									<s-html html$="[[_getReadOnlyDescription(_rubricDescription)]]"></s-html>
+									<s-html html$="[[_getReadOnlyDescription(_rubricDescription, 1)]]"></s-html>
 								</div>
 							</template>
 							<template is="dom-if" if="[[!richTextEnabled]]">
 								<h4>
-									[[_getReadOnlyDescription(_rubricDescription)]]"
+									[[_getReadOnlyDescription(_rubricDescription, 0)]]
 								</h4>
 							</template>
 						</template>
@@ -476,8 +476,11 @@ Creates and edits a rubric
 			attached: function() {
 				Polymer.IronA11yAnnouncer.requestAvailability();
 			},
-			_getReadOnlyDescription: function(value) {
-				return value || '<p>' + this.localize('descriptionReadOnlyPlaceholder') + '</p>';
+			_getReadOnlyDescription: function(value, isHtml) {
+				if (isHtml) {
+					return value || '<p>' + this.localize('descriptionReadOnlyPlaceholder') + '</p>';
+				}
+				return value || this.localize('descriptionReadOnlyPlaceholder');
 			},
 			_isArrayEmpty: function(obj) {
 				return obj && Array.isArray(obj) && obj.length < 1;
@@ -516,6 +519,8 @@ Creates and edits a rubric
 					if (field) {
 						return field.value;
 					}
+				} else {
+					return entity && entity.properties.name;
 				}
 			},
 			_isNameRequired: function(entity) {
@@ -560,6 +565,10 @@ Creates and edits a rubric
 					if (field) {
 						return field.value;
 					}
+				} else {
+					var descriptionEntity = this._getRubricDescriptionEntity(this.entity);
+					return descriptionEntity &&
+						(this.richTextEnabled ? descriptionEntity.properties.html : descriptionEntity.properties.text);
 				}
 			},
 			_getHelpAssociations: function (entity) {
