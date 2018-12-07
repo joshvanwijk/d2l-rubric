@@ -291,8 +291,7 @@ Creates and edits a rubric
 						</template>
 					</div>
 					<div id="advanced-availability-associations"
-						hidden$="[[_isArrayEmpty(_associations)]]"
-						on-change="_handleAssociations">
+						hidden$="[[_isArrayEmpty(_associations)]]">
 						<label>[[localize('advancedAvailabilityHeader')]]</label>
 
 						<fieldset class="checkbox-fieldset" id="associations">
@@ -300,8 +299,11 @@ Creates and edits a rubric
 							<div aria-invalid$="[[isAriaInvalid(_associationsInvalid)]]">
 								<template is="dom-repeat" items="[[_associations]]" as="assn">
 									<d2l-input-checkbox
-										checked$="[[assn.selected]]"
-										value="[[assn.value]]">
+										class="association"
+										checked$="[[_isAssociationChecked(assn)]]"
+										disabled="[[!_canUpdateAssociation(assn)]]"
+										value="[[index]]"
+										on-change="_handleAssociations">
 										[[assn.title]]
 									</d2l-input-checkbox>
 								</template>
@@ -491,23 +493,21 @@ Creates and edits a rubric
 				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
 			},
 			_handleAssociations: function(e) {
-				var checks = Array.prototype.slice.call(e.currentTarget.querySelectorAll("d2l-input-checkbox[checked]"));
-				var action = this.entity.getActionByName('update-associations');
+				var associationEntity = this._associations[e.currentTarget.value];
+
+				var action = associationEntity.getActionByName('update');
 				if (!action) return;
 				this.toggleBubble('_associationsInvalid', false);
 
-				var fields = checks.map( function(check) {
-					return {
-						name: 'associations',
-						value: check.value
-					}
-				});
-				fields.push({'name':'updateAssociations', 'value':true});
+				var fields = [{ 'name': 'allowed', 'value': e.currentTarget.checked }];
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-associations-saved');
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('_associationsInvalid', 'associationsSaveFailed', err);
 				}.bind(this));
+			},
+			_canUpdateAssociation: function(associationEntity) {
+				return associationEntity.hasActionByName('update');
 			},
 			_canEditRubricName: function(entity) {
 				return entity && entity.hasActionByName('update-name');
@@ -572,7 +572,7 @@ Creates and edits a rubric
 				}
 			},
 			_getHelpAssociations: function (entity) {
-				return entity && entity.getSubEntityByClass('associations');
+				return entity && entity.getSubEntityByRel('help');
 			},
 			_onEntityChanged: function(entity) {
 				this._nameInvalid = false;
@@ -664,9 +664,17 @@ Creates and edits a rubric
 				}
 			},
 			_computeAssociations: function(entity) {
-				var action = entity && entity.getActionByName('update-associations');
-				var field = action && action.getFieldByName('associations');
-				return field && field.value || [];
+				var associations = entity && entity.getSubEntityByRel(this.HypermediaRels.Rubrics.allowedAssociations);
+				var associationEntities = associations && associations.getSubEntitiesByRel('item');
+				return associationEntities || [];
+			},
+			_isAssociationChecked: function(associationEntity) {
+				var action = associationEntity.getActionByName('update');
+				if(action) {
+					var field = action.getFieldByName('allowed')
+					return field.value;
+				}
+				return associationEntity.properties.allowed;
 			},
 			_handleStatusChange: function(e) {
 				var menuButton = e.currentTarget;

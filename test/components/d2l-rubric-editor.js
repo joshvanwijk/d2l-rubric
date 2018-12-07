@@ -277,6 +277,79 @@ suite('<d2l-rubric-editor>', function() {
 			});
 		});
 
+		suite('set association', function() {
+
+			var fetch;
+			var raf = window.requestAnimationFrame;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				function waitForLoad(e) {
+					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199.json') {
+						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
+						done();
+					}
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('saves association change', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: true,
+					json: function() {
+						return Promise.resolve(JSON.stringify(window.testFixtures.rubric_association_mod));
+					}
+				});
+				fetch.returns(promise);
+
+				raf(function() {
+					element.addEventListener('d2l-rubric-associations-saved', function() {
+						expect(associationCheckbox.checked).to.be.false;
+						done();
+					});
+					var associationCheckbox = element.$$('.association');
+					expect(associationCheckbox.checked).to.be.true;
+					associationCheckbox.checked = false;
+					associationCheckbox.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+
+			test('sets aria-invalid if saving association change fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				raf(function() {
+					element.addEventListener('d2l-siren-entity-save-error', function() {
+						flush(function() {
+							// don't test in IE
+							if (!isIE) {
+								expect(associationFieldDiv.getAttribute('aria-invalid')).to.equal('true');
+							}
+							done();
+						});
+					});
+					var associationCheckbox = element.$$('.association');
+					var associationFieldDiv = element.$$('#associations div');
+					associationCheckbox.checked = false;
+					associationCheckbox.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				});
+			});
+		});
+
 		suite('readonly', function() {
 			var element;
 
@@ -300,6 +373,13 @@ suite('<d2l-rubric-editor>', function() {
 			test('description is disabled', function() {
 				var descriptionTextEditor = element.$$('#rubric-description');
 				expect(descriptionTextEditor.disabled).to.be.true;
+			});
+
+			test('associations are disabled', function() {
+				flush(function() {
+					var association = element.$$('.association');
+					expect(association.disabled).to.be.true;
+				});
 			});
 		});
 	});
