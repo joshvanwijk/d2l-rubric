@@ -88,12 +88,8 @@
 				type="button">
 			</d2l-button-icon>
 		</div>
-		<template is="dom-if" if="[[_nameInvalid]]">
-			<d2l-tooltip for="overall-level-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-		</template>
-		<template is="dom-if" if="[[_rangeStartInvalid]]">
-			<d2l-tooltip for="range-start" position="bottom">[[_rangeStartInvalidError]]</d2l-tooltip>
-		</template>
+		<d2l-tooltip id="overall-level-name-bubble" for="overall-level-name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+		<d2l-tooltip id="range-start-bubble" for="range-start" hidden$="[[!_rangeStartInvalid]]" position="bottom">[[_rangeStartInvalidError]]</d2l-tooltip>
 	</template>
 	<script>
 		Polymer({
@@ -186,14 +182,14 @@
 				var action = this.entity.getActionByName('update-name');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this.handleValidationError('_nameInvalid', 'nameIsRequired');
+						this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
 					} else {
-						this.toggleBubble('_nameInvalid', false);
+						this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
 						var fields = [{ 'name': 'name', 'value': e.target.value }];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-overall-level-saved');
-						}.bind(this)).catch(function() {
-							this.handleValidationError('_nameInvalid', 'nameSaveFailed');
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
 						}.bind(this));
 					}
 				}
@@ -202,14 +198,14 @@
 				var action = this.entity.getActionByName('update-range-start');
 				if (action) {
 					if (this._rangeStartRequired && !e.target.value.trim()) {
-						this.handleValidationError('_rangeStartInvalid', 'rangeStartRequired');
+						this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
 					} else {
-						this.toggleBubble('_rangeStartInvalid', false);
+						this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
 						var fields = [{'name':'rangeStart', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-overall-level-range-start-saved');
-						}.bind(this)).catch(function(e) {
-							this.handleValidationError('_rangeStartInvalid', 'rangeStartInvalid', e);
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
 						}.bind(this));
 					}
 				}
@@ -233,7 +229,6 @@
 					this.fire('iron-announce', { text: this.localize('overallLevelDeleted', 'name', name) }, { bubbles: true });
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-overall-level-deleted');
-
 					}.bind(this)).then(function() {
 						deleteButton.removeAttribute('disabled');
 					}).catch(function(err) {

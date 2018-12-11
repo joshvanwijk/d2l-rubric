@@ -50,9 +50,7 @@
 		<label class="d2l-input-radio-label">
 			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityOnceFeedbackPosted')]]
 		</label>
-		<template is="dom-if" if="[[_visibilityInvalid]]">
-			<d2l-tooltip position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
-		</template>
+		<d2l-tooltip id="visibility-bubble" hidden$="[[!_visibilityInvalid]]" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
 	</template>
 	<script>
 		Polymer({
@@ -114,12 +112,12 @@
 				this.debounce('change', function() {
 					var action = this.entity.getActionByName('update-visibility');
 					if (action) {
-						this.toggleBubble('_visibilityInvalid', false);
+						this.toggleBubble('_visibilityInvalid', false, 'visibility-bubble');
 						var fields = [{ 'name': 'visibility', 'value': this._debounceSelected }];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-visibility-saved');
 						}.bind(this)).catch(function(err) {
-							this.handleValidationError('_visibilityInvalid', 'rubricVisibilitySaveFailed', err);
+							this.handleValidationError('visibility-bubble', '_visibilityInvalid', 'rubricVisibilitySaveFailed', err);
 						}.bind(this));
 					}
 				}.bind(this), 200);

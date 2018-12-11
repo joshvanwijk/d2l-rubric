@@ -122,9 +122,7 @@
 						prevent-submit>
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
-				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip for="group-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-				</template>
+				<d2l-tooltip id="group-name-bubble" for="group-name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 				<!--
 				This flex wrapper div is required to ensure that the d2l-rubric-criteria-editor
 				fills the full width of it's parent when the d2l-rubric-criterion-editor components overflow.
@@ -250,14 +248,14 @@
 				var action = this.entity.getActionByName('update');
 				if (action) {
 					if (!e.target.value.trim()) {
-						this.toggleBubble('_nameInvalid', true, this.localize('nameIsRequired'));
+						this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
 					} else {
-						this.toggleBubble('_nameInvalid', false);
+						this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
 						var fields = [{'name': 'name', 'value':e.target.value}];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-group-name-saved');
 						}.bind(this)).catch(function(err) {
-							this.handleValidationError('_nameInvalid', 'groupNameSaveFailed', err);
+							this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
 						}.bind(this));
 					}
 				}

@@ -38,7 +38,7 @@
     "d2l-offscreen": "^3.0.3",
     "d2l-table": "BrightspaceUI/table#^1.7.5",
     "d2l-typography": "^6.1.2",
-    "d2l-tooltip": "BrightspaceUI/tooltip#^2.0.4",
+    "d2l-tooltip": "BrightspaceUI/tooltip#^2.0.7",
     "d2l-button": "BrightspaceUI/button#^4.9.0",
     "d2l-fastdom-import": "Brightspace/fastdom-import#^1.0.2",
     "d2l-polymer-siren-behaviors": "Brightspace/polymer-siren-behaviors#^0.3.1",

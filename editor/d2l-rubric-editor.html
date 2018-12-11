@@ -207,9 +207,7 @@ Creates and edits a rubric
 				>
 				</d2l-input-text>
 
-				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip for="rubric-name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-				</template>
+				<d2l-tooltip id="name-bubble" for="rubric-name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 			</template>
 			<template is="dom-if" if="[[_isLocked]]">
 				<h4>[[_rubricName]]</h4>
@@ -253,9 +251,7 @@ Creates and edits a rubric
 						>
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
-						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
-							<d2l-tooltip for="hide-score-checkbox" position="bottom">[[_setScoreVisibilityFailedError]]</d2l-tooltip>
-						</template>
+						<d2l-tooltip id="hide-score-bubble" for="hide-score-checkbox" hidden$="[[!_setScoreVisibilityFailed]]" position="bottom">[[_setScoreVisibilityFailedError]]</d2l-tooltip>
 					</div>
 					<div id="rubric-description-container">
 						<template is="dom-if" if="[[!_isLocked]]">
@@ -272,9 +268,7 @@ Creates and edits a rubric
 								rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
 							>
 							</d2l-rubric-text-editor>
-							<template is="dom-if" if="[[_descriptionInvalid]]">
-								<d2l-tooltip for="rubric-description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
-							</template>
+							<d2l-tooltip id="rubric-description-bubble" for="rubric-description" hidden$="[[!_descriptionInvalid]]" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
 						</template>
 						<template is="dom-if" if="[[_isLocked]]">
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
@@ -308,9 +302,7 @@ Creates and edits a rubric
 									</d2l-input-checkbox>
 								</template>
 							</div>
-							<template is="dom-if" if="[[_associationsInvalid]]">
-								<d2l-tooltip for="associations" position="bottom">[[_associationsInvalidError]]</d2l-tooltip>
-							</template>
+							<d2l-tooltip id="associations-bubble" for="associations" hidden$="[[!_associationsInvalid]]" position="bottom">[[_associationsInvalidError]]</d2l-tooltip>
 						</fieldset>
 						<div class="help-link d2l-body-compact">
 							<d2l-link on-click="_openHelpDialog">[[localize('helpAssociations')]]</d2l-link>
@@ -497,13 +489,13 @@ Creates and edits a rubric
 
 				var action = associationEntity.getActionByName('update');
 				if (!action) return;
-				this.toggleBubble('_associationsInvalid', false);
+				this.toggleBubble('_associationsInvalid', false, 'associations-bubble');
 
 				var fields = [{ 'name': 'allowed', 'value': e.currentTarget.checked }];
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-associations-saved');
 				}.bind(this)).catch(function(err) {
-					this.handleValidationError('_associationsInvalid', 'associationsSaveFailed', err);
+					this.handleValidationError('associations-bubble', '_associationsInvalid', 'associationsSaveFailed', err);
 				}.bind(this));
 			},
 			_canUpdateAssociation: function(associationEntity) {
@@ -602,14 +594,14 @@ Creates and edits a rubric
 				var action = this.entity.getActionByName('update-name');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this.handleValidationError('_nameInvalid', 'nameIsRequired');
+						this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
 					} else {
-						this.toggleBubble('_nameInvalid', false);
+						this.toggleBubble('_nameInvalid', false, 'name-bubble');
 						var fields = [{ 'name': 'name', 'value': e.target.value }];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-name-saved');
 						}.bind(this)).catch(function(err) {
-							this.handleValidationError('_nameInvalid', 'nameSaveFailed', err);
+							this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
 						}.bind(this));
 					}
 				}
@@ -620,12 +612,12 @@ Creates and edits a rubric
 			_saveDescription: function(e) {
 				var action = this._descriptionEntity.getActionByName('update-description');
 				if (action) {
-					this.toggleBubble('_descriptionInvalid', false);
+					this.toggleBubble('_descriptionInvalid', false, 'rubric-description-bubble');
 					var fields = [{ 'name': 'description', 'value': e.detail.value }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function(err) {
-						this.handleValidationError('_descriptionInvalid', 'descriptionSaveFailed', err);
+						this.handleValidationError('rubric-description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
 					}.bind(this));
 				}
 			},
@@ -644,7 +636,7 @@ Creates and edits a rubric
 					var checkbox = e.target;
 					checkbox.style.borderColor = "";
 					checkbox.disabled = true;
-					this.toggleBubble('_setScoreVisibilityFailed', false);
+					this.toggleBubble('_setScoreVisibilityFailed', false, 'hide-score-bubble');
 					var fields = [{ 'name': 'scoreVisible', 'value': !checkbox.checked }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-score-visibility-set');
@@ -659,7 +651,7 @@ Creates and edits a rubric
 						checkbox.checked = !checkbox.checked;
 						checkbox.style.borderColor = '#cd2026';
 						checkbox.disabled = false;
-						this.handleValidationError('_setScoreVisibilityFailed', 'setScoreVisibilityFailed', err);
+						this.handleValidationError('hide-score-bubble', '_setScoreVisibilityFailed', 'setScoreVisibilityFailed', err);
 					}.bind(this));
 				}
 			},

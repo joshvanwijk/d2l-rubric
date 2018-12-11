@@ -91,12 +91,8 @@
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
 		>
 		</d2l-rubric-text-editor>
-		<template is="dom-if" if="[[_descriptionInvalid]]">
-			<d2l-tooltip for="description" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
-		</template>
-		<template is="dom-if" if="[[_pointsInvalid]]">
-			<d2l-tooltip for="cell-points" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
-		</template>
+		<d2l-tooltip id="description-bubble" for="description" hidden$="[[!_descriptionInvalid]]" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+		<d2l-tooltip id="cell-points-bubble" for="cell-points" hidden$="[[!_pointsInvalid]]" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
 	</template>
 
 	<script>
@@ -198,12 +194,12 @@
 			_saveDescription: function(e) {
 				var action = this._getDescriptionAction(this.entity);
 				if (action) {
-					this.toggleBubble('_descriptionInvalid', false);
+					this.toggleBubble('_descriptionInvalid', false, 'description-bubble');
 					var fields = [{'name':'description', 'value':e.detail.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-description-saved');
 					}.bind(this)).catch(function(err) {
-						this.handleValidationError('_descriptionInvalid', 'descriptionSaveFailed', err);
+						this.handleValidationError('description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
 					}.bind(this));
 				}
 			},
@@ -235,15 +231,15 @@
 				var action = this.entity.getActionByName('update-points');
 				if (action) {
 					if (this._pointsRequired && !e.target.value.trim()) {
-						this.toggleBubble('_pointsInvalid', true, this.localize('pointsAreRequired'));
+						this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
 						this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
 					} else {
-						this.toggleBubble('_pointsInvalid', false);
+						this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
 						var fields = [{ 'name': 'points', 'value': e.target.value }];
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-criterion-cell-points-saved');
 						}.bind(this)).catch(function(err) {
-							this.handleValidationError('_pointsInvalid', 'pointsSaveFailed', err);
+							this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
 						}.bind(this));
 					}
 				}

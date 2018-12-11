@@ -46,9 +46,7 @@
 			on-change="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEdit)]]"
 		>
-		<template is="dom-if" if="[[_feedbackInvalid]]">
-			<d2l-tooltip for="feedback" position="bottom">[[_feedbackInvalidError]]</d2l-tooltip>
-		</template>
+		<d2l-tooltip id="feedback-bubble" for="feedback" hidden$="[[!_feedbackInvalid]]" position="bottom">[[_feedbackInvalidError]]</d2l-tooltip>
 	</template>
 
 	<script>
@@ -126,12 +124,12 @@
 			_saveFeedback: function(e) {
 				var action = this._getFeedbackAction(this.entity);
 				if (action) {
-					this.toggleBubble('_feedbackInvalid', false);
+					this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 					var fields = [{'name':'feedback', 'value':e.detail.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-feedback-saved');
 					}.bind(this)).catch(function(err) {
-						this.handleValidationError('_feedbackInvalid', 'feedbackSaveFailed', err);
+						this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
 					}.bind(this));
 				}
 			},

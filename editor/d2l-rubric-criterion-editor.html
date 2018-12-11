@@ -175,9 +175,7 @@
 				placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]"
 				on-change="_saveName">
 			</d2l-input-textarea>
-			<template is="dom-if" if="[[_nameInvalid]]">
-				<d2l-tooltip for="name" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-			</template>
+			<d2l-tooltip id="criterion-name-bubble" for="name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
 		</div>
 		<div class="criterion-detail" is-holistic$=[[isHolistic]] style$="width: [[criterionDetailWidth]]px;">
 			<div class="criterion-text">
@@ -227,9 +225,7 @@
 						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
 						prevent-submit>
 					</d2l-input-text>
-					<template is="dom-if" if="[[_outOfInvalid]]">
-						<d2l-tooltip for="out-of-textbox" position="bottom">[[_outOfInvalidError]]</d2l-tooltip>
-					</template>
+					<d2l-tooltip id="out-of-bubble" for="out-of-textbox" hidden$="[[!_outOfInvalid]]" position="bottom">[[_outOfInvalidError]]</d2l-tooltip>
 				</template>
 			</span>
 		</div>
@@ -343,16 +339,16 @@
 				var action = this.entity.getActionByName('update');
 				if (action) {
 					if (this._nameRequired && !e.target.value.trim()) {
-						this.handleValidationError('_nameInvalid', 'nameIsRequired');
+						this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
 						return;
 					} else {
-						this.toggleBubble('_nameInvalid', false);
+						this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
 					}
 					var fields = [{'name':'name', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
-					}.bind(this)).catch(function() {
-						this.handleValidationError('_nameInvalid', 'nameSaveFailed');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
 					}.bind(this));
 				}
 			},
@@ -361,16 +357,16 @@
 				var action = this.entity.getActionByName('update-outof');
 				if (action) {
 					if (!e.target.value.trim()) {
-						this.handleValidationError('_outOfInvalid', 'pointsAreRequired');
+						this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
 						return;
 					} else {
-						this.toggleBubble('_outOfInvalid', false);
+						this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
 					}
 					var fields = [{'name':'outOf', 'value':e.target.value}];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');
 					}.bind(this)).catch(function(err) {
-						this.handleValidationError('_outOfInvalid', 'pointsSaveFailed', err);
+						this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
 					}.bind(this));
 				}
 			},
