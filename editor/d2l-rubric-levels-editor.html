@@ -196,6 +196,8 @@
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-added');
 						this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
+					}.bind(this)).catch(function(err) {
+						this.fire('d2l-rubric-editor-save-error', { message: err.message });
 					}.bind(this));
 				}
 			},
@@ -206,6 +208,8 @@
 					this.performSirenAction(action).then(function() {
 						this.fire('d2l-rubric-level-added');
 						this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
+					}.bind(this)).catch(function(err) {
+						this.fire('d2l-rubric-editor-save-error', { message: err.message });
 					}.bind(this));
 				}
 			},

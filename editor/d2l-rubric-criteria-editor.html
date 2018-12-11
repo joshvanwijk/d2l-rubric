@@ -334,6 +334,8 @@
 						setTimeout(function() {
 							this.fire('iron-announce', { text: this.localize('criterionAdded') }, { bubbles: true });
 						}.bind(this), 2000);
+					}.bind(this)).catch(function(err) {
+						this.fire('d2l-rubric-editor-save-error', { message: err.message });
 					}.bind(this));
 				}
 			},
@@ -395,6 +397,8 @@
 						this.fire('iron-announce',
 							{ text: this.localize('criterionMoved', 'name', criterionName, 'position', newPosition) },
 							{ bubbles: true });
+					}.bind(this)).catch(function(err) {
+						this.fire('d2l-rubric-editor-save-error', { message: err.message });
 					}.bind(this));
 				}
 				return Promise.resolve();

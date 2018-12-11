@@ -189,7 +189,7 @@
 			],
 
 			ready: function() {
-				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
+				this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
 				this.addEventListener('d2l-rubric-editor-levels-width-changed', function(e) {
 					this.$$('d2l-rubric-criteria-editor').criterionDetailWidth = e.detail.width;
 				}.bind(this));
@@ -239,7 +239,7 @@
 					}
 				}
 				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
-				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+				this._addAlert('error', e.message, this.localize('rubricSavingErrorMessage'));
 			},
 
 			_canEditGroupName: function(entity) {
