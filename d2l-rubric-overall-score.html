@@ -293,16 +293,17 @@
 					return;
 				}
 
-				var action = this._getOnClickAction(levelEntity);
-				if (!action) {
-					return;
-				}
-
-				window.D2L.Rubric.Assessment.promise.then(
+				window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(
 					function() {
-						return this.performSirenAction(action).catch(console.error); // eslint-disable-line no-console
+						// Gets the most up-to-date version of the action
+						var action = this._getOnClickAction(levelEntity);
+						if (!action) {
+							return;
+						}
+
+						return this.performSirenAction(action);
 					}.bind(this)
-				);
+				).catch(console.error); // eslint-disable-line no-console
 			},
 
 			_handleKeypress: function(event) {
