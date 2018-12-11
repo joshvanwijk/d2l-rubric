@@ -106,6 +106,10 @@
 				readOnly: {
 					type: Boolean,
 					value: true
+				},
+				parentCell: {
+					type: Object,
+					value: null
 				}
 			},
 
@@ -153,6 +157,9 @@
 				if (event.keyCode === 13) { // enter key
 					event.target.blur();
 					event.stopPropagation();
+					if (this.parentCell) {
+						setTimeout(function() { this.parentCell.focus(); }.bind(this), 0);
+					}
 					return;
 				}
 			},
