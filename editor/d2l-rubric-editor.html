@@ -473,7 +473,7 @@ Creates and edits a rubric
 				'_onEntityChanged(entity)'
 			],
 			ready: function() {
-				this.addEventListener('d2l-siren-entity-save-error', this._handleSaveError.bind(this));
+				this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
 			},
 			attached: function() {
 				Polymer.IronA11yAnnouncer.requestAvailability();
@@ -490,7 +490,7 @@ Creates and edits a rubric
 			_handleSaveError: function(e) {
 				this._clearAlerts();
 				this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
-				this._addAlert('error', e.detail.error.message, this.localize('rubricSavingErrorMessage'));
+				this._addAlert('error', e.message, this.localize('rubricSavingErrorMessage'));
 			},
 			_handleAssociations: function(e) {
 				var associationEntity = this._associations[e.currentTarget.value];
@@ -693,9 +693,10 @@ Creates and edits a rubric
 					this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', e.target.text) }, { bubbles: true });
 				}.bind(this)).then(function() {
 					this.enableMenu(menuButton);
-				}.bind(this)).catch(function() {
+				}.bind(this)).catch(function(err) {
 					this.resetSelectedMenuItem(menuButton, this._rubricStatus);
 					this.enableMenu(menuButton);
+					this.fire('d2l-rubric-editor-save-error', { message: err.message });
 				}.bind(this));
 			},
 			_handleSelectStatistics: function() {
