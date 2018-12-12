@@ -37,8 +37,9 @@ Creates and edits a rubric
 			}
 
 			#accordion-container {
-				margin: 3rem var(--d2l-rubric-editor-gutter-width) 0;
-				padding: 1.15rem 0.5rem 1.15rem 0;
+				margin: 3rem var(--d2l-rubric-editor-end-gutter-width) 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				padding: 0.9rem 0.5rem 0.9rem 0;
 				border-top: 1px solid var(--d2l-color-mica);
 				border-bottom: 1px solid var(--d2l-color-mica);
 			}
@@ -46,20 +47,26 @@ Creates and edits a rubric
 			:dir(rtl) #accordion-container {
 				padding-left: 0.5rem;
 				padding-right: 0;
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
 			}
 
 			#options-container {
-				margin-top: 0.5rem;
+				margin-top: 1.2rem;
 			}
 
-			#options-container > div:not(:first-child) {
+			#hide-score-container {
 				margin-top: 2.15rem;
 			}
 
 			#rubric-name-container {
-				margin: 0.5rem var(--d2l-rubric-editor-gutter-width);
+				margin: 0.5rem var(--d2l-rubric-editor-end-gutter-width);
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
 			}
-
+			:dir(rtl) #rubric-name-container {
+				margin-left:  var(--d2l-rubric-editor-end-gutter-width);
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+			}
 			label {
 				@apply --d2l-label-text;
 			}
@@ -78,7 +85,7 @@ Creates and edits a rubric
 			}
 
 			#hide-score-checkbox {
-				padding-top: 0.45rem;
+				padding-top: 0.5rem;
 				margin: 0;
 			}
 
@@ -103,9 +110,14 @@ Creates and edits a rubric
 			}
 
 			d2l-alert {
-				margin: 0 var(--d2l-rubric-editor-gutter-width);
+				margin: 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			}
-
+			:dir(rtl) d2l-alert {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
+			}
 			.checkbox-fieldset {
 				border: 0;
 				margin: 0;
@@ -133,19 +145,24 @@ Creates and edits a rubric
 				border-width: 2px;
 			}
 			.checkbox-fieldset d2l-input-checkbox {
-				margin-bottom: 0.6rem;
+				margin-bottom: 0.7rem;
 			}
 			.checkbox-fieldset d2l-input-checkbox:last-of-type {
 				margin-bottom: 0;
 			}
 			.help-link {
-				margin-top: 0.5rem;
+				margin-top: 0.6rem;
 				margin-bottom: 0.7rem;
 			}
 
 			d2l-rubric {
-				margin-left: var(--d2l-rubric-editor-gutter-width);
-				margin-right: var(--d2l-rubric-editor-gutter-width);
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
+			}
+
+			:dir(rtl) d2l-rubric {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
 			#description-html-container {
 				margin-top: 8px;
@@ -153,6 +170,20 @@ Creates and edits a rubric
 			}
 			#description-html-container > s-html::shadow > * {
 				margin: 0px;
+			}
+			#rubric-description-container {
+				margin-top: 2.3rem;
+			}
+
+			#rubric-description-container > .d2l-body-compact {
+				padding-top: 0.1rem;
+				padding-bottom: 0.5rem;
+			}
+			#advanced-availability-associations {
+				margin-top: 2.3rem;
+			}
+			#associations-options {
+				margin-top: 0.05rem;
 			}
 		</style>
 		<d2l-rubric-editor-header
@@ -290,7 +321,7 @@ Creates and edits a rubric
 
 						<fieldset class="checkbox-fieldset" id="associations">
 							<legend class="d2l-body-compact">[[localize('newAssociationLabel')]]</legend>
-							<div aria-invalid$="[[isAriaInvalid(_associationsInvalid)]]">
+							<div id="associations-options" aria-invalid$="[[isAriaInvalid(_associationsInvalid)]]">
 								<template is="dom-repeat" items="[[_associations]]" as="assn">
 									<d2l-input-checkbox
 										class="association"

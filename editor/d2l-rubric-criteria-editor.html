@@ -48,7 +48,9 @@
 			}
 
 			.dnd-placeholder::after {
-				margin: 0 var(--d2l-rubric-editor-gutter-width);
+				margin: 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 				content: "";
 				position: absolute;
 				top: 0;
@@ -59,6 +61,11 @@
 				background-color: white;
 			}
 
+			:dir(rtl) .dnd-placeholder::after {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
+			}
+
 			.dnd-placeholder d2l-rubric-criterion-editor {
 				visibility: hidden;
 			}
@@ -67,7 +74,7 @@
 			}
 
 			.dnd-touch-mirror::after {
-				margin: 0 var(--d2l-rubric-editor-gutter-width);
+				margin: 0 var(--d2l-rubric-editor-end-gutter-width);
 				content: "";
 				position: absolute;
 				top: 0;

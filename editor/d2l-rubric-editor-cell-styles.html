@@ -5,7 +5,8 @@
   <template>
 	<style>
 		:host {
-			--d2l-rubric-editor-gutter-width: calc(2rem + 10px); /* trash can width = 50px including halo */
+			--d2l-rubric-editor-start-gutter-width: calc(1.3rem);
+			--d2l-rubric-editor-end-gutter-width: calc(2rem + 10px); /* trash can width = 50px including halo */
 
 			--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
 			--d2l-scroll-wrapper-border-color: var(--d2l-table-border-color);
@@ -44,9 +45,13 @@
 
 		.gutter-left, .gutter-right {
 			flex: 0 0 auto;
-			width: var(--d2l-rubric-editor-gutter-width);
+			width: var(--d2l-rubric-editor-start-gutter-width);
 			padding: 0;
 			text-align: center;
+		}
+
+		.gutter-right {
+			width: var(--d2l-rubric-editor-end-gutter-width);
 		}
 
 		.col-first {

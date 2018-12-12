@@ -30,7 +30,14 @@
 				flex-flow: row wrap;
 				justify-content: space-between;
 				align-items: center;
-				margin: 0 var(--d2l-rubric-editor-gutter-width);
+				margin: 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
+			}
+
+			:dir(rtl) .groups-footer {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
 
 			.groups-footer > .footer-child {

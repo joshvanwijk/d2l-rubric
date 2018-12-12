@@ -50,17 +50,17 @@ Creates and edits a rubric structue
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
-				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
-				margin-left: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
-				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
-				margin-right: calc(var(--d2l-rubric-editor-gutter-width));
+				margin-left: var(--d2l-rubric-editor-start-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-start-gutter-width) - 0.1rem);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-end-gutter-width));
 			}
 
 			:dir(rtl) #rubric-structure-editor-header-content {
-				margin-right: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
-				margin-right: calc(var(--d2l-rubric-editor-gutter-width) - 0.1rem);
-				margin-left: var(--d2l-rubric-editor-gutter-width); /* ie11 fix */
-				margin-left: calc(var(--d2l-rubric-editor-gutter-width));
+				margin-right: var(--d2l-rubric-editor-start-gutter-width); /* ie11 fix */
+				margin-right: calc(var(--d2l-rubric-editor-start-gutter-width) - 0.1rem);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width); /* ie11 fix */
+				margin-left: calc(var(--d2l-rubric-editor-end-gutter-width));
 			}
 			#header-start-container {
 				margin-left: -0.58rem; /* [by design] to shift header a bit so the subtle button will align with the grid instead of shifting each buttons */
@@ -80,15 +80,20 @@ Creates and edits a rubric structue
 			}
 
 			d2l-alert {
-				margin: 0 var(--d2l-rubric-editor-gutter-width);
+				margin: 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			}
-
+			:dir(rtl) d2l-alert {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
+			}
 			.gutter-right {
-				width: calc( var(--d2l-rubric-editor-gutter-width) - 0.6rem );
+				width: calc( var(--d2l-rubric-editor-end-gutter-width) - 0.6rem );
 			}
 
 			.gutter-right[holistic] {
-				width: calc( var(--d2l-rubric-editor-gutter-width) + 42px );
+				width: calc( var(--d2l-rubric-editor-end-gutter-width) + 42px );
 			}
 
 			[hidden] {

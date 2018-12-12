@@ -137,9 +137,12 @@
 				margin-top: 1rem;
 			}
 
-			.gutter-left[is-holistic], .gutter-right[is-holistic] {
-				width: calc(2rem + 10px + 2.6rem);
+			.gutter-left[is-holistic] {
+				width: calc(var(--d2l-rubric-editor-start-gutter-width) + 2.6rem);
 			}
+			.gutter-right[is-holistic] {
+				width: calc(var(--d2l-rubric-editor-end-gutter-width) + 2.6rem);
+			 }
 
 			.gutter-left[text-only], .gutter-right[text-only] {
 				margin-top: 0;

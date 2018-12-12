@@ -11,12 +11,14 @@
 		<style include="d2l-rubric-editor-cell-styles">
 			#rubric-editor-header {
 				margin-bottom: 1.0rem;
-				margin-left: var(--d2l-rubric-editor-gutter-width);
-				margin-right: var(--d2l-rubric-editor-gutter-width);
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			}
 
 			:dir(rtl) #rubric-editor-header {
 				text-align: right;
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
 			}
 
 			#rubric-editor-header-content {
@@ -40,14 +42,7 @@
 			}
 
 			#header-end-container {
-				margin-bottom: auto;
 				margin-top: 0.5rem;
-				margin-left: auto;
-			}
-
-			:dir(rtl) #header-end-container {
-				margin-left: unset;
-				margin-right: auto;
 			}
 
 			#header-end-container > * {
@@ -79,7 +74,13 @@
 			}
 
 			d2l-alert {
-				margin: 0 var(--d2l-rubric-editor-gutter-width);
+				margin: 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
+			}
+			:dir(rtl) d2l-alert {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
 		</style>
 		<div id="rubric-editor-header">
