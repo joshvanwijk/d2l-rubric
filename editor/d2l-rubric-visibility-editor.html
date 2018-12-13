@@ -50,7 +50,8 @@
 		<label class="d2l-input-radio-label">
 			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility"></input>[[localize('rubricVisibilityOnceFeedbackPosted')]]
 		</label>
-		<d2l-tooltip id="visibility-bubble" hidden$="[[!_visibilityInvalid]]" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
+		<d2l-tooltip
+			id="visibility-bubble" hidden$="[[!_visibilityInvalid]]" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
 	</template>
 	<script>
 		Polymer({
@@ -78,10 +79,12 @@
 					computed: '_computeAriaInvalid(_visibilityInvalid)'
 				},
 				_visibilityInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_visibilityInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 			},
 			behaviors: [

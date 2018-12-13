@@ -91,8 +91,20 @@
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
 		>
 		</d2l-rubric-text-editor>
-		<d2l-tooltip id="description-bubble" for="description" hidden$="[[!_descriptionInvalid]]" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
-		<d2l-tooltip id="cell-points-bubble" for="cell-points" hidden$="[[!_pointsInvalid]]" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
+		<d2l-tooltip
+			id="description-bubble"
+			for="description"
+			hidden$="[[!_descriptionInvalid]]"
+			position="bottom">
+			[[_descriptionInvalidError]]
+		</d2l-tooltip>
+		<d2l-tooltip
+			id="cell-points-bubble"
+			for="cell-points"
+			hidden$="[[!_pointsInvalid]]"
+			position="bottom">
+			[[_pointsInvalidError]]
+		</d2l-tooltip>
 	</template>
 
 	<script>
@@ -128,20 +140,24 @@
 					computed: '_computeCanEditPoints(entity)',
 				},
 				_descriptionInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_descriptionInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				_pointsRequired: {
 					type: Boolean,
 					computed: '_arePointsRequired(entity)',
 				},
 				_pointsInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_pointsInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				_showPoints: {
 					type: Boolean,

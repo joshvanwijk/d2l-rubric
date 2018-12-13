@@ -101,8 +101,20 @@
 				type="button">
 			</d2l-button-icon>
 		</div>
-		<d2l-tooltip id="level-name-bubble" for="level-name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-		<d2l-tooltip id="points-bubble" for="level-points" hidden$="[[!_pointsInvalid]]" position="bottom">[[_pointsInvalidError]]</d2l-tooltip>
+		<d2l-tooltip
+			id="level-name-bubble"
+			for="level-name"
+			hidden$="[[!_nameInvalid]]"
+			position="bottom">
+			[[_nameInvalidError]]
+		</d2l-tooltip>
+		<d2l-tooltip
+			id="points-bubble"
+			for="level-points"
+			hidden$="[[!_pointsInvalid]]"
+			position="bottom">
+			[[_pointsInvalidError]]
+		</d2l-tooltip>
 	</template>
 
 	<script>
@@ -125,10 +137,12 @@
 					computed: '_isNameRequired(entity)',
 				},
 				_nameInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_nameInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				_canEditPoints: {
 					type: Boolean,
@@ -139,10 +153,12 @@
 					computed: '_arePointsRequired(entity)',
 				},
 				_pointsInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_pointsInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				_showPoints: {
 					type: Boolean,

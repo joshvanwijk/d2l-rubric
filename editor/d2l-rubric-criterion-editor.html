@@ -178,7 +178,13 @@
 				placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]"
 				on-change="_saveName">
 			</d2l-input-textarea>
-			<d2l-tooltip id="criterion-name-bubble" for="name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+			<d2l-tooltip
+				id="criterion-name-bubble"
+				for="name"
+				hidden$="[[!_nameInvalid]]"
+				position="bottom">
+				[[_nameInvalidError]]
+			</d2l-tooltip>
 		</div>
 		<div class="criterion-detail" is-holistic$=[[isHolistic]] style$="width: [[criterionDetailWidth]]px;">
 			<div class="criterion-text">
@@ -228,7 +234,13 @@
 						aria-label="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]"
 						prevent-submit>
 					</d2l-input-text>
-					<d2l-tooltip id="out-of-bubble" for="out-of-textbox" hidden$="[[!_outOfInvalid]]" position="bottom">[[_outOfInvalidError]]</d2l-tooltip>
+					<d2l-tooltip
+						id="out-of-bubble"
+						for="out-of-textbox"
+						hidden$="[[!_outOfInvalid]]"
+						position="bottom">
+						[[_outOfInvalidError]]
+					</d2l-tooltip>
 				</template>
 			</span>
 		</div>
@@ -266,10 +278,12 @@
 					computed: '_isNameRequired(entity)',
 				},
 				_nameInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false,
 				},
 				_nameInvalidError: {
-					type: String
+					type: String,
+					value: null,
 				},
 				_hasOutOf: {
 					type: Boolean,
@@ -288,10 +302,12 @@
 					computed: '_getOutOfValue(entity)',
 				},
 				_outOfInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_outOfInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				displayNamePlaceholder: {
 					type: Boolean,
