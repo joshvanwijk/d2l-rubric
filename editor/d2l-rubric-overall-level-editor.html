@@ -88,8 +88,20 @@
 				type="button">
 			</d2l-button-icon>
 		</div>
-		<d2l-tooltip id="overall-level-name-bubble" for="overall-level-name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
-		<d2l-tooltip id="range-start-bubble" for="range-start" hidden$="[[!_rangeStartInvalid]]" position="bottom">[[_rangeStartInvalidError]]</d2l-tooltip>
+		<d2l-tooltip
+			id="overall-level-name-bubble"
+			for="overall-level-name"
+			hidden$="[[!_nameInvalid]]"
+			position="bottom">
+			[[_nameInvalidError]]
+		</d2l-tooltip>
+		<d2l-tooltip
+			id="range-start-bubble"
+			for="range-start"
+			hidden$="[[!_rangeStartInvalid]]"
+			position="bottom">
+			[[_rangeStartInvalidError]]
+		</d2l-tooltip>
 	</template>
 	<script>
 		Polymer({
@@ -113,10 +125,12 @@
 					computed: '_isNameRequired(entity)',
 				},
 				_nameInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_nameInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				_hasRangeStart: {
 					type: Boolean,
@@ -127,10 +141,12 @@
 					computed: '_isRangeStartRequired(entity)',
 				},
 				_rangeStartInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_rangeStartInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 			},
 			observers: [

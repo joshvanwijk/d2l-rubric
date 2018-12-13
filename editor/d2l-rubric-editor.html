@@ -238,7 +238,13 @@ Creates and edits a rubric
 				>
 				</d2l-input-text>
 
-				<d2l-tooltip id="name-bubble" for="rubric-name" hidden$="[[!_nameInvalid]]" position="bottom">[[_nameInvalidError]]</d2l-tooltip>
+				<d2l-tooltip
+					id="name-bubble"
+					for="rubric-name"
+					hidden$="[[!_nameInvalid]]"
+					position="bottom">
+					[[_nameInvalidError]]
+				</d2l-tooltip>
 			</template>
 			<template is="dom-if" if="[[_isLocked]]">
 				<h4>[[_rubricName]]</h4>
@@ -282,7 +288,13 @@ Creates and edits a rubric
 						>
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
-						<d2l-tooltip id="hide-score-bubble" for="hide-score-checkbox" hidden$="[[!_setScoreVisibilityFailed]]" position="bottom">[[_setScoreVisibilityFailedError]]</d2l-tooltip>
+						<d2l-tooltip
+							id="hide-score-bubble"
+							for="hide-score-checkbox"
+							hidden$="[[!_setScoreVisibilityFailed]]"
+							position="bottom">
+							[[_setScoreVisibilityFailedError]]
+						</d2l-tooltip>
 					</div>
 					<div id="rubric-description-container">
 						<template is="dom-if" if="[[!_isLocked]]">
@@ -299,7 +311,13 @@ Creates and edits a rubric
 								rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]"
 							>
 							</d2l-rubric-text-editor>
-							<d2l-tooltip id="rubric-description-bubble" for="rubric-description" hidden$="[[!_descriptionInvalid]]" position="bottom">[[_descriptionInvalidError]]</d2l-tooltip>
+							<d2l-tooltip
+								id="rubric-description-bubble"
+								for="rubric-description"
+								hidden$="[[!_descriptionInvalid]]"
+								position="bottom">
+								[[_descriptionInvalidError]]
+							</d2l-tooltip>
 						</template>
 						<template is="dom-if" if="[[_isLocked]]">
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
@@ -333,7 +351,13 @@ Creates and edits a rubric
 									</d2l-input-checkbox>
 								</template>
 							</div>
-							<d2l-tooltip id="associations-bubble" for="associations" hidden$="[[!_associationsInvalid]]" position="bottom">[[_associationsInvalidError]]</d2l-tooltip>
+							<d2l-tooltip
+								id="associations-bubble"
+								for="associations"
+								hidden$="[[!_associationsInvalid]]"
+								position="bottom">
+								[[_associationsInvalidError]]
+							</d2l-tooltip>
 						</fieldset>
 						<div class="help-link d2l-body-compact">
 							<d2l-link on-click="_openHelpDialog">[[localize('helpAssociations')]]</d2l-link>
@@ -379,9 +403,11 @@ Creates and edits a rubric
 				},
 				_nameInvalid: {
 					type: Boolean,
+					value: false,
 				},
 				_nameInvalidError: {
-					type: String
+					type: String,
+					value: null,
 				},
 				_nameRequired: {
 					type: Boolean,
@@ -406,9 +432,11 @@ Creates and edits a rubric
 				},
 				_descriptionInvalid: {
 					type: Boolean,
+					value: false,
 				},
 				_descriptionInvalidError: {
-					type: String
+					type: String,
+					value: false,
 				},
 				_canHideScore: {
 					type: Boolean,
@@ -419,10 +447,12 @@ Creates and edits a rubric
 					computed: '_computeScoreIsHidden(entity)'
 				},
 				_setScoreVisibilityFailed: {
-					type: Boolean
+					type: Boolean,
+					value: false,
 				},
 				_setScoreVisibilityFailedError: {
-					type: String
+					type: String,
+					value: null,
 				},
 				_canChangeStatus: {
 					type: Boolean,
@@ -461,10 +491,12 @@ Creates and edits a rubric
 					computed: '_computeAssociations(entity)'
 				},
 				_associationsInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false,
 				},
 				_associationsInvalidError: {
-					type: String
+					type: String,
+					value: null,
 				},
 				_helpAssociations: {
 					type: Object,

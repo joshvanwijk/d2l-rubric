@@ -46,7 +46,13 @@
 			on-change="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEdit)]]"
 		>
-		<d2l-tooltip id="feedback-bubble" for="feedback" hidden$="[[!_feedbackInvalid]]" position="bottom">[[_feedbackInvalidError]]</d2l-tooltip>
+		<d2l-tooltip
+			id="feedback-bubble"
+			for="feedback"
+			hidden$="[[!_feedbackInvalid]]"
+			position="bottom">
+			[[_feedbackInvalidError]]
+		</d2l-tooltip>
 	</template>
 
 	<script>
@@ -71,10 +77,12 @@
 					computed: '_canEditFeedback(entity)',
 				},
 				_feedbackInvalid: {
-					type: Boolean
+					type: Boolean,
+					value: false
 				},
 				_feedbackInvalidError: {
-					type: String
+					type: String,
+					value: null
 				},
 				keyLinkRels: {
 					type: Array,
