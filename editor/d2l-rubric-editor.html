@@ -55,6 +55,10 @@ Creates and edits a rubric
 				margin-top: 1.2rem;
 			}
 
+			#visibility-container {
+				line-height: 0;
+			}
+
 			#hide-score-container {
 				margin-top: 2.15rem;
 			}
@@ -271,7 +275,7 @@ Creates and edits a rubric
 		<div id="accordion-container">
 			<d2l-accordion-collapse title="[[localize('options')]]" flex opened$="[[_isLocked]]">
 				<div id="options-container">
-					<div>
+					<div id="visibility-container">
 						<d2l-rubric-visibility-editor
 							href=[[href]]
 							token=[[token]]
