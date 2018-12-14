@@ -70,6 +70,20 @@
 				border: none;
 				background-color: var(--d2l-table-body-background-color);
 			}
+			.col-first[is-holistic] {
+				padding-left: 0;
+			}
+			:dir(rtl) .col-first[is-holistic] {
+				padding-left: 0.5rem;
+				padding-right: 0;
+			}
+			.col-last[is-holistic] {
+				padding-right: 0;
+			}
+			:dir(rtl) .col-last[is-holistic] {
+				padding-right: 0.5rem;
+				padding-left: 0;
+			}
 			:dir(rtl) .col-first {
 				border-top-left-radius: 0;
 				border-top-right-radius: var(--d2l-table-border-radius);
