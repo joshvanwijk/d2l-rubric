@@ -364,7 +364,7 @@ Creates and edits a rubric
 							</d2l-tooltip>
 						</fieldset>
 						<div class="help-link d2l-body-compact">
-							<d2l-link on-click="_openHelpDialog">[[localize('helpAssociations')]]</d2l-link>
+							<d2l-link on-click="_openHelpDialog" href="">[[localize('helpAssociations')]]</d2l-link>
 						</div>
 					</div>
 				</div>
@@ -792,8 +792,9 @@ Creates and edits a rubric
 				a.href = absoluteUrl;
 				return a.pathname + a.search;
 			},
-			_openHelpDialog: function() {
-				if(!this._helpAssociations) {
+			_openHelpDialog: function(e) {
+				e.preventDefault();
+				if (!this._helpAssociations) {
 					return;
 				}
 				D2L.LP.Web.UI.Desktop.Controls.InlineHelp.PopupHelp(
