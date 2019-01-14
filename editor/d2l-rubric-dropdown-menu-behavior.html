@@ -18,7 +18,7 @@
 			Polymer.IronA11yAnnouncer.requestAvailability();
 		},
 		disableMenu: function(menuButton) {
-			Polymer.dom(menuButton).setAttribute('disabled','');
+			Polymer.dom(menuButton).setAttribute('disabled', '');
 		},
 
 		enableMenu: function(menuButton) {
@@ -42,7 +42,7 @@
 			for (var i = 0; i < oldItems.length; i++) {
 				Polymer.dom(menu).removeChild(oldItems[i]);
 			}
-
+			// eslint-disable-next-line no-redeclare
 			for (var i = 0; i < options.length; i++) {
 				var option = options[i];
 				var item = document.createElement('d2l-menu-item-radio');

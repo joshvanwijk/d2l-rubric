@@ -322,11 +322,13 @@
 			},
 			// note: don't remove criterionCount otherwise, DD handle won't refresh when add and delete critierons
 			_hideDragHandle: function(index, criterionCount) {
-				return !this._canReorder || (this._isFirst(index,criterionCount) && this._isLast(index,criterionCount));
+				return !this._canReorder || (this._isFirst(index, criterionCount) && this._isLast(index, criterionCount));
 			},
+			// eslint-disable-next-line no-unused-vars
 			_isFirst: function(index, criterionCount) {
 				return index === 0;
 			},
+			// eslint-disable-next-line no-unused-vars
 			_isLast: function(index, criterionCount) {
 				return index === this._criteriaEntities.length - 1;
 			},

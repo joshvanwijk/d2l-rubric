@@ -630,7 +630,7 @@ Creates and edits a rubric
 						(this.richTextEnabled ? descriptionEntity.properties.html : descriptionEntity.properties.text);
 				}
 			},
-			_getHelpAssociations: function (entity) {
+			_getHelpAssociations: function(entity) {
 				return entity && entity.getSubEntityByRel('help');
 			},
 			_onEntityChanged: function(entity) {
@@ -701,7 +701,7 @@ Creates and edits a rubric
 				var action = this.entity.getActionByName('update-score-visibility');
 				if (action) {
 					var checkbox = e.target;
-					checkbox.style.borderColor = "";
+					checkbox.style.borderColor = '';
 					checkbox.disabled = true;
 					this.toggleBubble('_setScoreVisibilityFailed', false, 'hide-score-bubble');
 					var fields = [{ 'name': 'scoreVisible', 'value': !checkbox.checked }];
@@ -729,8 +729,8 @@ Creates and edits a rubric
 			},
 			_isAssociationChecked: function(associationEntity) {
 				var action = associationEntity.getActionByName('update');
-				if(action) {
-					var field = action.getFieldByName('allowed')
+				if (action) {
+					var field = action.getFieldByName('allowed');
 					return field.value;
 				}
 				return associationEntity.properties.allowed;
@@ -763,7 +763,7 @@ Creates and edits a rubric
 					var ni = new D2L.NavInfo();
 					ni.SetNavigation(this._statisticsLink);
 					ni.SetTarget('_blank');
-					Nav.Go( ni );
+					Nav.Go(ni); // eslint-disable-line no-undef
 				}
 			},
 			_openPreviewDialog: function() {
@@ -771,20 +771,20 @@ Creates and edits a rubric
 					return;
 				}
 
-				if (this._previewDialog != null) {
+				if (this._previewDialog !== null) {
 					this._previewDialog.Close();
 				}
 
 				var dialogName = Math.random().toString();
-				dialogName = 'previewRubric_' + dialogName.replace( '\.', '' );
-				this._previewDialog = new D2L.NonModalDialog( dialogName );
-				var title = new D2L.LP.Text.PlainText( this.localize('preview') );
-				this._previewDialog.SetTitle( title );
-				this._previewDialog.SetButtonTableOffset( 27 );
-				this._previewDialog.AddPrimaryButton( D2L.Control.Button.Type.Close );
-				this._previewDialog.SetSize( '1315px', '650px' );
+				dialogName = 'previewRubric_' + dialogName.replace('.', '');
+				this._previewDialog = new D2L.NonModalDialog(dialogName);
+				var title = new D2L.LP.Text.PlainText(this.localize('preview'));
+				this._previewDialog.SetTitle(title);
+				this._previewDialog.SetButtonTableOffset(27);
+				this._previewDialog.AddPrimaryButton(D2L.Control.Button.Type.Close);
+				this._previewDialog.SetSize('1315px', '650px');
 				var relativeUrl = this._getRelativeUrl(this._previewLink);
-				this._previewDialog.SetSrc( relativeUrl );
+				this._previewDialog.SetSrc(relativeUrl);
 				this._previewDialog.Open();
 			},
 			_getRelativeUrl: function(absoluteUrl) {

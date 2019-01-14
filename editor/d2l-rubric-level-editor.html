@@ -180,6 +180,7 @@
 				D2L.PolymerBehaviors.Rubric.DialogBehavior,
 				D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 			],
+			// eslint-disable-next-line no-unused-vars
 			_onEntityChanged: function(entity) {
 				this._nameInvalid = false;
 				this._pointsInvalid = false;
@@ -294,7 +295,7 @@
 						deleteButton.removeAttribute('disabled');
 						this.fire('d2l-rubric-editor-save-error', { message: err.message });
 					});
-				}.bind(this), function(){
+				}.bind(this), function() {
 					deleteButton.removeAttribute('disabled');
 				});
 			}

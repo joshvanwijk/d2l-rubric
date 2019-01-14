@@ -205,8 +205,8 @@
 					this.$$('d2l-rubric-criteria-editor').criterionDetailWidth = e.detail.width;
 				}.bind(this));
 
-				this.addEventListener('d2l-rubric-criterion-detail-width-changed', function (e) {
-					Polymer.RenderStatus.afterNextRender(this, function () {
+				this.addEventListener('d2l-rubric-criterion-detail-width-changed', function() {
+					Polymer.RenderStatus.afterNextRender(this, function() {
 						this.$$('d2l-scroll-wrapper').notifyResize();
 					}.bind(this));
 				}.bind(this));

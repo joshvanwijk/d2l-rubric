@@ -301,11 +301,13 @@ Creates and edits a rubric structue
 					}
 
 					if (entity.hasActionByName('update-type')) {
+						// eslint-disable-next-line no-redeclare
 						var options = entity.getActionByName('update-type')
 							.getFieldByName('rubric-type').value || [];
 
 						//Only re-populate the menu if _canConvertType was previously null/undefined or false
 						if (!this._canConvertType) {
+							// eslint-disable-next-line no-redeclare
 							var selected = this.populateDropdownMenuOptions('rubric-type-menu', options);
 							if (selected) {
 								this._rubricTypeValue = selected.value;
@@ -370,7 +372,7 @@ Creates and edits a rubric structue
 			_handleTypeChange: function(e) {
 				var menuButton = e.currentTarget;
 				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
-				if (!this._canConvertType || e.target.value == this._rubricTypeValue) return;
+				if (!this._canConvertType || e.target.value === this._rubricTypeValue) return;
 
 				Polymer.dom(dropdownMenu).removeAttribute('opened');
 				var confirm = this._rubricTypeValue === 'Analytic' && e.target.value === 'Holistic';
@@ -411,7 +413,7 @@ Creates and edits a rubric structue
 				var menuButton = e.currentTarget;
 				var dropdownMenu = Polymer.dom(menuButton).querySelector('d2l-dropdown-menu');
 
-				if (!this._canConvertScoring || e.target.value == this._scoringMethod)
+				if (!this._canConvertScoring || e.target.value === this._scoringMethod)
 					return;
 
 				this.disableMenu(menuButton);
