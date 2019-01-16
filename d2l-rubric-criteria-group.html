@@ -295,7 +295,7 @@
 				if (Polymer.Element) {
 					Polymer.RenderStatus.beforeNextRender(this, function() {
 						this.notifyResize();
-					});
+					}.bind(this));
 				} else {
 					requestAnimationFrame(function() {
 						this.notifyResize();

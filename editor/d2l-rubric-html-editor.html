@@ -6,92 +6,92 @@
 
 <dom-module id="d2l-rubric-html-editor">
 	<template>
-	<style include="d2l-input-styles">
+		<style include="d2l-input-styles">
 
-		:host {
-			display: flex;
-			width: 100%;
-		}
-
-		d2l-html-editor {
-			word-wrap: break-word;
-			display: flex;
-			width: 100%;
-		}
-
-		.d2l-richtext-editor-container {
-			@apply --d2l-input;
-			@apply --d2l-input-textarea;
-		}
-
-		.d2l-richtext-editor-container:hover,
-		.d2l-richtext-editor-container:focus,
-		.d2l-richtext-editor-container:active,
-		.d2l-richtext-editor-container.html-editor-container-hover {
-			@apply --d2l-input-hover-focus;
-		}
-
-		d2l-html-editor.invalid > .d2l-richtext-editor-container {
-			@apply --d2l-input-invalid;
-		}
-
-		/* .d2l-richtext-editor-container p {
-		  margin: 1rem 0;
-		} */
-		d2l-html-editor .d2l-richtext-editor-container > p:last-of-type {
-		  margin-bottom: 0;
-		}
-
-		d2l-html-editor .d2l-richtext-editor-container > p:first-of-type {
-		  margin-top: 0;
-		}
-
-		d2l-html-editor .d2l-richtext-editor-container * {
-		  max-width: 100%;
-		}
-		/* .d2l-richtext-editor-container p:only-of-type {
-		  margin: 0;
-		} */
-
-		d2l-html-editor.invalid > .d2l-richtext-editor-container:hover,
-		d2l-html-editor.invalid > .d2l-richtext-editor-container:focus {
-			@apply --d2l-input-invalid;
-		}
-
-		@media (max-width: 615px), (max-device-width: 960px) {
-			d2l-html-editor > .d2l-richtext-editor-container {
-				height: 3.9rem;
+			:host {
+				display: flex;
+				width: 100%;
 			}
-		}
 
-		[hidden] {
-			display: none;
-		}
+			d2l-html-editor {
+				word-wrap: break-word;
+				display: flex;
+				width: 100%;
+			}
 
-	</style>
-	<d2l-html-editor editor-id=[[_uniqueId]]
-					 key=[[key]]
-					 inline="1"
-					 auto-focus=[[autoFocus]]
-					 auto-focus-end
-					 min-rows="1"
-					 max-rows="1000"
-					 app-root=[[_appRoot]]
-					 fullpage-enabled=0
-					 content=[[_encodeURIComponent(value)]]
-					 toolbar=[[_toolbar]]
-					 plugins=[[_plugins]]
-					 object-resizing=[[objectResizing]]
-					 on-focus="_showToolbar"
-					 on-blur="_hideToolbar">
-	<div id$="[[_uniqueId]]-toolbar" hidden class="toolbar"></div>
-	<div id$="toolbar-shortcut-[[_uniqueId]]" hidden></div>
-	<div class='d2l-richtext-editor-container'
-		id=[[_uniqueId]]
-		role="textbox"
-		placeholder$=[[placeholder]]
-		aria-label$=[[ariaLabel]]></div>
-	</d2l-html-editor>
+			.d2l-richtext-editor-container {
+				@apply --d2l-input;
+				@apply --d2l-input-textarea;
+			}
+
+			.d2l-richtext-editor-container:hover,
+			.d2l-richtext-editor-container:focus,
+			.d2l-richtext-editor-container:active,
+			.d2l-richtext-editor-container.html-editor-container-hover {
+				@apply --d2l-input-hover-focus;
+			}
+
+			d2l-html-editor.invalid > .d2l-richtext-editor-container {
+				@apply --d2l-input-invalid;
+			}
+
+			/* .d2l-richtext-editor-container p {
+			margin: 1rem 0;
+			} */
+			d2l-html-editor .d2l-richtext-editor-container > p:last-of-type {
+			margin-bottom: 0;
+			}
+
+			d2l-html-editor .d2l-richtext-editor-container > p:first-of-type {
+			margin-top: 0;
+			}
+
+			d2l-html-editor .d2l-richtext-editor-container * {
+			max-width: 100%;
+			}
+			/* .d2l-richtext-editor-container p:only-of-type {
+			margin: 0;
+			} */
+
+			d2l-html-editor.invalid > .d2l-richtext-editor-container:hover,
+			d2l-html-editor.invalid > .d2l-richtext-editor-container:focus {
+				@apply --d2l-input-invalid;
+			}
+
+			@media (max-width: 615px), (max-device-width: 960px) {
+				d2l-html-editor > .d2l-richtext-editor-container {
+					height: 3.9rem;
+				}
+			}
+
+			[hidden] {
+				display: none;
+			}
+
+		</style>
+		<d2l-html-editor editor-id=[[_uniqueId]]
+						key=[[key]]
+						inline="1"
+						auto-focus=[[autoFocus]]
+						auto-focus-end
+						min-rows="1"
+						max-rows="1000"
+						app-root=[[_appRoot]]
+						fullpage-enabled=0
+						content=[[_encodeURIComponent(value)]]
+						toolbar=[[_toolbar]]
+						plugins=[[_plugins]]
+						object-resizing=[[objectResizing]]
+						on-focus="_showToolbar"
+						on-blur="_hideToolbar">
+		<div id$="[[_uniqueId]]-toolbar" hidden class="toolbar"></div>
+		<div id$="toolbar-shortcut-[[_uniqueId]]" hidden></div>
+		<div class='d2l-richtext-editor-container'
+			id=[[_uniqueId]]
+			role="textbox"
+			placeholder$=[[placeholder]]
+			aria-label$=[[ariaLabel]]></div>
+		</d2l-html-editor>
 	</template>
 
 	<script>
