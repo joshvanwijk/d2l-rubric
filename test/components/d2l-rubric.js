@@ -72,13 +72,16 @@ suite('<d2l-rubric>', function() {
 		});
 	});
 
-	suite ('Ally Test',function(){
-		suiteSetup(function(){
-			if (!isAttestInstalled()){
+	suite('Ally Test', function() {
+		/* eslint no-invalid-this:0 */
+		/* global isAttestInstalled */
+		/* global ally_tests */
+		suiteSetup(function() {
+			if (!isAttestInstalled()) {
 				this.skip();
 			}
 		});
-		test('d2l-rubric ally checks',function(){
+		test('d2l-rubric ally checks', function() {
 			ally_tests();
 		});
 	});
