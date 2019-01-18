@@ -1,0 +1,76 @@
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-telemetry-browser-client/d2l-telemetry-browser-client.js';
+window.D2L = window.D2L || {};
+window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
+
+/**
+ * Behavior for sending telemetry messages to the telemetry service
+ * @polymerBehavior
+ */
+D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
+
+	_logEvent: function(id, eventType, eventBody, telemetryData) {
+		if (!telemetryData || !telemetryData.endpoint) {
+			return;
+		}
+
+		var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: telemetryData.endpoint });
+
+		eventBody.setAction('Open')
+			.setObject(encodeURIComponent(id), 'Rubric', id)
+			.addCustom('rubricMode', telemetryData.rubricMode || 'unkown')
+			.addCustom('originTool', telemetryData.originTool || 'unkown');
+
+		var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
+			.setDate(new Date())
+			.setType(eventType)
+			.setSourceId('rubric')
+			.setBody(eventBody);
+
+		client.logUserEvent(event);
+	},
+
+	perfMark: function(name) {
+		if (!window.performance || !window.performance.mark) {
+			return;
+		}
+		window.performance.mark(name);
+	},
+
+	perfMeasure: function(name, startMark, endMark) {
+		if (!window.performance || !window.performance.measure) {
+			return;
+		}
+		/* contrary to spec, start & end marks are not optional in IE */
+		if (!startMark) {
+			startMark = 'navigationStart';
+		}
+		if (!endMark) {
+			this.perfMark(name);
+			endMark = name;
+		}
+		window.performance.measure(name, startMark, endMark);
+	},
+
+	// Should Performance events take in an isMobile flag?
+	logPerformanceEvent: function(id, telemetryData) {
+		var eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+			.addUserTiming(window.performance.getEntriesByType('measure'));
+
+		this._logEvent(id, 'PerformanceEvent', eventBody, telemetryData);
+	},
+
+	logTelemetryEvent: function(id, isMobile, telemetryData) {
+		var eventBody = new window.d2lTelemetryBrowserClient.EventBody()
+			.addCustom('isMobile', isMobile);
+
+		this._logEvent(id, 'TelemetryEvent', eventBody, telemetryData);
+	}
+};
+
+/** @polymerBehavior */
+D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior = [
+	D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl,
+	window.D2L.Hypermedia.HMConstantsBehavior
+];

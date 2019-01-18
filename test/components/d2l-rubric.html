@@ -5,14 +5,14 @@
 		<title>d2l-rubric test</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
-		<script src="../../../web-component-tester/browser.js"></script>
-		<script src="../../../fetch/fetch.js"></script>
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script src="../../../wct-browser-legacy/browser.js"></script>
+		<script src="../../../whatwg-fetch/fetch.js"></script>
 		<script src="../test-polyfill.js"></script>
 		<script src="../../node_modules/attest/attest.js"></script>
 		<script src="./ally-test-script.js"></script>
 
-		<link rel="import" href="../../d2l-rubric.html">
+		<script type="module" src="../../d2l-rubric.js"></script>
 	</head>
 	<body>
 		<test-fixture id="basic">
@@ -20,21 +20,21 @@
 				<d2l-rubric></d2l-rubric>
 			</template>
 		</test-fixture>
-		<script src="d2l-rubric.js"></script>
+		<script type="module" src="./d2l-rubric.js"></script>
 
 		<test-fixture id="rub-text-only">
 			<template>
 				<d2l-rubric href='data/rubrics/organizations/text-only-no-edit/199.json' token='foozleberries'></d2l-rubric>
 			</template>
 		</test-fixture>
-		<script src="d2l-rubric-text-only.js"></script>
+		<script type="module" src="./d2l-rubric-text-only.js"></script>
 
 		<test-fixture id="rub-overall-score">
 			<template>
 				<d2l-rubric href='data/rubrics/organizations/overall-score/200.json' token='foozleberries'></d2l-rubric>
 			</template>
 		</test-fixture>
-		<script src="d2l-rubric-overall-score.js"></script>
+		<script type="module" src="./d2l-rubric-overall-score.js"></script>
 
 	</body>
 </html>

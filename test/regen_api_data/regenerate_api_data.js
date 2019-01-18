@@ -9,10 +9,10 @@ if (myArgs[2] == 'copy_files'){
 }
 
 var options = {
-    args: option_args
+	args: option_args
   };
 
 PythonShell.run('regenerate_api_data.py', options,function (err) {
-    if (err) throw err;
-    console.log('completed');
+	if (err) throw err;
+	console.log('completed');
   });

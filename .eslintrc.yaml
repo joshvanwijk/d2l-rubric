@@ -1,9 +1,11 @@
 extends:
-  brightspace/polymer-config
+  brightspace/wct-polymer-3-config
 rules:
   object-shorthand: [2, "never"]
+  no-useless-escape: 0
 globals:
-  Promise: false
-  Map: false
   fastdom: false
-  Symbol: false
+  attest: false
+env:
+  node: true
+  es6: true

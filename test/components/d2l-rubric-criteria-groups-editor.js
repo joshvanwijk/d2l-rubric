@@ -17,10 +17,10 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 	suite('smoke test', function() {
 
 		test('can be instantiated', function() {
-            var element = fixture('basic');
-            expect(element.is).to.equal('d2l-rubric-criteria-groups-editor');
-        });
-        
+			var element = fixture('basic');
+			expect(element.is).to.equal('d2l-rubric-criteria-groups-editor');
+		});
+
 		suite('add criteria group', function() {
 
 			var fetch;
@@ -33,19 +33,19 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
-                }
-                element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-                element.token = 'foozleberries';
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
 			});
 
 			teardown(function() {
-                fetch && fetch.restore();
+				fetch && fetch.restore();
 				window.D2L.Siren.EntityStore.clear();
 			});
 
 			test('adds criteria group', function(done) {
-                expect(element._groups.length).to.equal(1);
-                
+				expect(element._groups.length).to.equal(1);
+
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
@@ -56,13 +56,13 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 				fetch.returns(promise);
 
 				element.addEventListener('d2l-rubric-criteria-group-added', function() {
-                    expect(element._groups.length).to.equal(2);
+					expect(element._groups.length).to.equal(2);
 					done();
-                });
+				});
 
-                element.$$('d2l-button').click();
-            });
-            
+				element.$$('d2l-button').click();
+			});
+
 			test('generates event if adding fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
@@ -78,8 +78,8 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 				});
 				element.$$('d2l-button').click();
 			});
-        });
-        
+		});
+
 		suite('readonly', function() {
 
 			var element;
@@ -91,9 +91,9 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
 						done();
 					}
-                }
-                element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-                element.token = 'foozleberries';
+				}
+				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
+				element.token = 'foozleberries';
 			});
 
 			test('add is disabled', function() {
@@ -102,14 +102,17 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 			});
 		});
 	});
-	
-	suite ('Ally Test',function(){
-		suiteSetup(function(){
-			if (!isAttestInstalled()){
+
+	suite('Ally Test', function() {
+		/* eslint no-invalid-this:0 */
+		/* global isAttestInstalled */
+		/* global ally_tests */
+		suiteSetup(function() {
+			if (!isAttestInstalled()) {
 				this.skip();
 			}
 		});
-		test('d2l-rubric-criteria-groups-editor ally checks',function(){
+		test('d2l-rubric-criteria-groups-editor ally checks', function() {
 			ally_tests();
 		});
 	});

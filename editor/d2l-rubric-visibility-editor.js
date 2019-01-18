@@ -1,0 +1,155 @@
+import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-colors/d2l-colors.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
+import '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
+import 'd2l-tooltip/d2l-tooltip.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-inputs/d2l-input-shared-styles.js';
+import 'd2l-inputs/d2l-input-radio-styles.js';
+import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import '../d2l-rubric-entity-behavior.js';
+import '../localize-behavior.js';
+import './d2l-rubric-error-handling-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import { useShadow } from '@polymer/polymer/lib/utils/settings.js';
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-visibility-editor">
+	<template strip-whitespace="">
+		<style include="d2l-input-radio-styles d2l-input-styles">
+			:host {
+				display: inline-block;
+			}
+			:host([aria-invalid="true"]) {
+				padding: var(--d2l-input-padding);
+				border: solid 1px var(--d2l-color-cinnabar);;
+				border-radius: var(--d2l-input-border-radius);
+			}
+			:host([aria-invalid="true"]):hover,
+			:host([aria-invalid="true"]):focus {
+				padding: var(--d2l-input-padding-focus);
+				border-width: 2px;
+			}
+			[hidden] {
+				display: none;
+			}
+			label {
+				@apply --d2l-label-text;
+			}
+			.heading {
+				display: block;
+				margin-bottom: 0.7rem;
+			}
+		</style>
+		<label class="heading">[[localize('rubricVisibility')]]</label>
+		<label class="d2l-input-radio-label">
+			<input type="radio" id="AlwaysVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="AlwaysVisible" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityAlways')]]
+		</label>
+		<label class="d2l-input-radio-label">
+			<input type="radio" id="NeverVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="NeverVisible" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityNever')]]
+		</label>
+		<label class="d2l-input-radio-label">
+			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]
+		</label>
+		<d2l-tooltip id="visibility-bubble" hidden$="[[!_visibilityInvalid]]" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
+	</template>
+
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);
+Polymer({
+	is: 'd2l-rubric-visibility-editor',
+	properties: {
+		/**
+		* The href for this siren entity
+		*/
+		href: {
+			type: String,
+			reflectToAttribute: true
+		},
+		/**
+		* The user access token
+		*/
+		token: {
+			type: Object,
+		},
+		_debounceSelected: {
+			type: String,
+		},
+		ariaInvalid: {
+			type: String,
+			reflectToAttribute: true,
+			computed: '_computeAriaInvalid(_visibilityInvalid)'
+		},
+		_visibilityInvalid: {
+			type: Boolean,
+			value: false
+		},
+		_visibilityInvalidError: {
+			type: String,
+			value: null
+		},
+	},
+	behaviors: [
+		D2L.PolymerBehaviors.Rubric.EntityBehavior,
+		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		window.D2L.Hypermedia.HMConstantsBehavior,
+		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
+	],
+	_onEntityChanged: function(entity) {
+		if (this.isDebouncerActive('change')) {
+			return;
+		}
+		var action = entity && entity.getActionByName('update-visibility');
+		if (action) {
+			var field = action.getFieldByName('visibility');
+			if (field && Array.isArray(field.value)) {
+				for (var i = 0; i < field.value.length; i++) {
+					if (field.value[i].selected) {
+						dom(this.root).querySelector('#' + field.value[i].value).checked = true;
+					}
+				}
+			}
+		}
+	},
+	_changeVisibility: function(e) {
+		this._debounceSelected = e.target.value;
+		this.debounce('change', function() {
+			var action = this.entity.getActionByName('update-visibility');
+			if (action) {
+				this.toggleBubble('_visibilityInvalid', false, 'visibility-bubble');
+				var fields = [{ 'name': 'visibility', 'value': this._debounceSelected }];
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-visibility-saved');
+				}.bind(this)).catch(function(err) {
+					this.handleValidationError('visibility-bubble', '_visibilityInvalid', 'rubricVisibilitySaveFailed', err);
+				}.bind(this));
+			}
+		}.bind(this), 200);
+	},
+	_computeAriaInvalid: function(_visibilityInvalid) {
+		return _visibilityInvalid ? 'true' : 'false';
+	},
+	_handleFocus: function() {
+		// in shady DOM the input's "focus" event does not bubble,
+		// so  need to fire it
+		if (!useShadow) {
+			this.dispatchEvent(new CustomEvent(
+				'focus',
+				{bubbles: true, composed: true}
+			));
+		}
+	},
+	_handleBlur: function() {
+		// in shady DOM the input's "blur" event does not bubble,
+		// so need to fire it
+		if (!useShadow) {
+			this.dispatchEvent(new CustomEvent(
+				'blur',
+				{bubbles: true, composed: true}
+			));
+		}
+	}
+});

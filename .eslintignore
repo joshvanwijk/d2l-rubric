@@ -1,0 +1,7 @@
+test/components/data/*
+test/components/static-data/*
+test/regen_api_data/*
+test/test-polyfill.js
+coverage
+test/acceptance/*
+reports

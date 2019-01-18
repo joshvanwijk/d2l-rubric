@@ -6,30 +6,54 @@
 
 	<title>d2l-rubric-structure-editor demo</title>
 
-	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-	<script>
-		'use strict';
-		window.d2lfetch = {
-			fetch: function(req) {
-				return window.fetch(req);
-			}
-		};
-	</script>
+	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script type="module">
+import '@polymer/promise-polyfill/promise-polyfill.js';
+import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+import '@polymer/iron-demo-helpers/demo-snippet.js';
+import 'd2l-typography/d2l-typography.js';
+import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
+import './fetch-siren-entity-whitelist.js';
+import '../editor/d2l-rubric-structure-editor.js';
+import '../d2l-rubric-title.js';
+window.d2lfetch = {
+	fetch: function(req) {
+		return window.fetch(req);
+	}
+};
+</script>
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-	<link rel="import" href="../../promise-polyfill/promise-polyfill.html">
-	<script src="../../fetch/fetch.js"></script>
+	<script type="module" src="../../@polymer/promise-polyfill/promise-polyfill.js"></script>
+	<script src="../../whatwg-fetch/fetch.js"></script>
 
-	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-	<link rel="import" href="../../d2l-typography/d2l-typography.html">
-	<link rel="import" href="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
-	<link rel="import" href="./fetch-siren-entity-whitelist.html">
-	<link rel="import" href="../editor/d2l-rubric-structure-editor.html">
-	<link rel="import" href="../d2l-rubric-title.html">
+	<script type="module" src="../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+	<script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
+	<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
+	<script type="module" src="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js"></script>
+	<script type="module" src="./fetch-siren-entity-whitelist.js"></script>
+	<script type="module" src="../editor/d2l-rubric-structure-editor.js"></script>
+	<script type="module" src="../d2l-rubric-title.js"></script>
 
-	<style is="custom-style" include="demo-pages-shared-styles">
-	</style>
-	<custom-style include="d2l-typography">
+	<!-- FIXME(polymer-modulizer):
+		These imperative modules that innerHTML your HTML are
+		a hacky way to be sure that any mixins in included style
+		modules are ready before any elements that reference them are
+		instantiated, otherwise the CSS @apply mixin polyfill won't be
+		able to expand the underlying CSS custom properties.
+		See: https://github.com/Polymer/polymer-modulizer/issues/154
+		-->
+	<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<style is="custom-style" include="demo-pages-shared-styles">
+	</style>`;
+
+document.head.appendChild($_documentContainer.content);
+</script>
+	<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 		<style is="custom-style" include="d2l-typography">
 			html {
 				font-size: 20px;
@@ -40,18 +64,30 @@
 			}
 		</style>
 
-	</custom-style>
-	<style>
+	</custom-style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
+	<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<style>
 		.d2l-richtext-editor-container.d2l-rubric-html-editor > p:first-of-type {
 			margin-top: 0;
 		}
 		.d2l-richtext-editor-container.d2l-rubric-html-editor > p:last-of-type {
 			margin-bottom: 0;
 		}
-	</style>
+	</style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
 </head>
 <body class="d2l-typography">
-<div class="vertical-section-container">
+<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container">
 
 	<h1>d2l-rubric-structure-editor demo</h1>
 	<a name="textonly-edit"></a>
@@ -103,6 +139,9 @@
 		<d2l-rubric-loading></d2l-rubric-loading>
 	</demo-snippet>
 
-</div>
+</div>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 /* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
 
 'use strict';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 
 suite('<d2l-rubric-overall-score>', function() {
 
@@ -8,9 +9,9 @@ suite('<d2l-rubric-overall-score>', function() {
 	function myAsyncFunction(callback) {
 		// 500ms delay before callback
 		setTimeout(function() {
-		  callback(myElement);
+			callback(myElement);
 		}, 500);
-	  }
+	}
 
 	suiteSetup(function() {
 		sandbox = sinon.sandbox.create();
@@ -22,15 +23,15 @@ suite('<d2l-rubric-overall-score>', function() {
 	});
 
 	suite('Rubric with Overall Score', function() {
-		
+
 		test('Overall Score section is rendered', function(done) {
-			myAsyncFunction(function(myElement){
-				expect(!!Polymer.dom(myElement.root).querySelector('.overall-levels'));
+			myAsyncFunction(function(myElement) {
+				expect(!!dom(myElement.root).querySelector('.overall-levels'));
 				done();
 			});
 		});
 	});
-	
+
 	suite('Ally Test', function() {
 		/* eslint no-invalid-this:0 */
 		/* global isAttestInstalled */
