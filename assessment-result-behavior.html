@@ -71,6 +71,19 @@
 				if (!selectedCriterionCellEntity) {
 					// No selected cell in this row, so reset prevLink
 					prevLink = null;
+
+					if (criterionEntity.properties && criterionEntity.properties.score != null) { //eslint-disable-line eqeqeq
+						var criterionHref = criterionEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion).href;
+						var feedback = criterionEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback) || {};
+						assessmentMap[criterionHref] = {
+							score: criterionEntity.properties.score,
+							level: null,
+							feedback: feedback.text,
+							feedbackText: feedback.html,
+							cellEntity: null
+						};
+					}
+
 					continue;
 				}
 
