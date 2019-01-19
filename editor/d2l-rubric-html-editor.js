@@ -1,6 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-html-editor/d2l-html-editor-client.js';
-import 'd2l-html-editor/d2l-html-editor-component.js';
 import 'd2l-html-editor/d2l-html-editor.js';
 import 'd2l-inputs/d2l-input-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';

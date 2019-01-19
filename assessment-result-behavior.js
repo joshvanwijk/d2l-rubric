@@ -1,5 +1,5 @@
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
+import './d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
