@@ -401,19 +401,20 @@ Polymer({
 	},
 	_handleScoringChange: function(e) {
 		var menuButton = e.currentTarget;
+		var menuItem = e.target;
 		var dropdownMenu = dom(menuButton).querySelector('d2l-dropdown-menu');
 
-		if (!this._canConvertScoring || e.target.value === this._scoringMethod)
+		if (!this._canConvertScoring || menuItem.value === this._scoringMethod)
 			return;
 
 		this.disableMenu(menuButton);
 		var action = this.entity.getActionByName('update-scoring');
-		var fields = [{'name':'scoringMethod', 'value':e.target.value}];
+		var fields = [{'name':'scoringMethod', 'value':menuItem.value}];
 		this.performSirenAction(action, fields).then(function() {
-			this._scoringText = this.localize('scoring', 'method', e.target.text);
-			this._scoringMethod = e.target.value;
+			this._scoringText = this.localize('scoring', 'method', menuItem.text);
+			this._scoringMethod = menuItem.value;
 			this.fire('d2l-rubric-scoring-changed');
-			this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', e.target.text) }, { bubbles: true });
+			this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', menuItem.text) }, { bubbles: true });
 		}.bind(this)).then(function() {
 			this.enableMenu(menuButton);
 		}.bind(this)).catch(function(err) {
