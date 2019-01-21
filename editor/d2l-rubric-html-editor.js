@@ -1,6 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-html-editor/d2l-html-editor-client.js';
-import 'd2l-html-editor/d2l-html-editor-component.js';
 import 'd2l-html-editor/d2l-html-editor.js';
 import 'd2l-inputs/d2l-input-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
@@ -71,8 +70,7 @@ Polymer({
 			}
 
 		</style>
-		<d2l-html-editor editor-id="[[_uniqueId]]" key="[[key]]" inline="1" auto-focus="[[autoFocus]]" auto-focus-end="" min-rows="1" max-rows="1000" app-root="[[_appRoot]]" fullpage-enabled="0" content="[[_encodeURIComponent(value)]]" toolbar="[[_toolbar]]" plugins="[[_plugins]]" object-resizing="[[objectResizing]]" on-focus="_showToolbar" on-blur="_hideToolbar">
-		<div id$="[[_uniqueId]]-toolbar" hidden="" class="toolbar"></div>
+		<d2l-html-editor editor-id="[[_uniqueId]]" key="[[key]]" inline="1" auto-focus="[[autoFocus]]" auto-focus-end="" min-rows="1" max-rows="1000" app-root="[[_appRoot]]" fullpage-enabled="0" content="[[_encodeURIComponent(value)]]" toolbar="[[_toolbar]]" plugins="[[_plugins]]" object-resizing="[[objectResizing]]">
 		<div id$="toolbar-shortcut-[[_uniqueId]]" hidden=""></div>
 		<div class="d2l-richtext-editor-container" id="[[_uniqueId]]" role="textbox" placeholder$="[[placeholder]]" aria-label$="[[ariaLabel]]"></div>
 		</d2l-html-editor>
@@ -181,13 +179,5 @@ Polymer({
 
 	_encodeURIComponent: function(value) {
 		return value ? encodeURIComponent(value) : '';
-	},
-
-	_showToolbar: function() {
-		this.$$('.toolbar').removeAttribute('hidden');
-	},
-
-	_hideToolbar: function() {
-		this.$$('.toolbar').setAttribute('hidden', true);
 	}
 });

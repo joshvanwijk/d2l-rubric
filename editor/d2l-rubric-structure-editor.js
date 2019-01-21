@@ -144,7 +144,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-structure-editor">
 		</div>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -360,22 +360,23 @@ Polymer({
 
 	_handleTypeChange: function(e) {
 		var menuButton = e.currentTarget;
+		var menuItem = e.target;
 		var dropdownMenu = dom(menuButton).querySelector('d2l-dropdown-menu');
-		if (!this._canConvertType || e.target.value === this._rubricTypeValue) return;
+		if (!this._canConvertType || menuItem.value === this._rubricTypeValue) return;
 
 		dom(dropdownMenu).removeAttribute('opened');
-		var confirm = this._rubricTypeValue === 'Analytic' && e.target.value === 'Holistic';
+		var confirm = this._rubricTypeValue === 'Analytic' && menuItem.value === 'Holistic';
 
 		var performAction = function() {
 			this.disableMenu(menuButton);
 			var action = this.entity.getActionByName('update-type');
-			var fields = [{'name':'rubricType', 'value':e.target.value}];
+			var fields = [{'name':'rubricType', 'value':menuItem.value}];
 			this._refreshScoring = true;
 			this.performSirenAction(action, fields).then(function() {
-				this._rubricTypeText = this.localize('rubricType', 'rubricType', e.target.text);
-				this._rubricTypeValue = e.target.value;
+				this._rubricTypeText = this.localize('rubricType', 'rubricType', menuItem.text);
+				this._rubricTypeValue = menuItem.value;
 				this.fire('d2l-rubric-type-changed');
-				this.fire('iron-announce', { text: this.localize('changeRubricTypeSuccessful', 'rubricType', e.target.text) }, { bubbles: true });
+				this.fire('iron-announce', { text: this.localize('changeRubricTypeSuccessful', 'rubricType', menuItem.text) }, { bubbles: true });
 			}.bind(this)).then(function() {
 				this.enableMenu(menuButton);
 			}.bind(this)).catch(function(err) {
@@ -400,19 +401,20 @@ Polymer({
 	},
 	_handleScoringChange: function(e) {
 		var menuButton = e.currentTarget;
+		var menuItem = e.target;
 		var dropdownMenu = dom(menuButton).querySelector('d2l-dropdown-menu');
 
-		if (!this._canConvertScoring || e.target.value === this._scoringMethod)
+		if (!this._canConvertScoring || menuItem.value === this._scoringMethod)
 			return;
 
 		this.disableMenu(menuButton);
 		var action = this.entity.getActionByName('update-scoring');
-		var fields = [{'name':'scoringMethod', 'value':e.target.value}];
+		var fields = [{'name':'scoringMethod', 'value':menuItem.value}];
 		this.performSirenAction(action, fields).then(function() {
-			this._scoringText = this.localize('scoring', 'method', e.target.text);
-			this._scoringMethod = e.target.value;
+			this._scoringText = this.localize('scoring', 'method', menuItem.text);
+			this._scoringMethod = menuItem.value;
 			this.fire('d2l-rubric-scoring-changed');
-			this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', e.target.text) }, { bubbles: true });
+			this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', menuItem.text) }, { bubbles: true });
 		}.bind(this)).then(function() {
 			this.enableMenu(menuButton);
 		}.bind(this)).catch(function(err) {

@@ -674,19 +674,20 @@ Polymer({
 	},
 	_handleStatusChange: function(e) {
 		var menuButton = e.currentTarget;
+		var menuItem = e.target;
 		var dropdownMenu = dom(menuButton).querySelector('d2l-dropdown-menu');
-		if (!this._canChangeStatus || e.target.value === this._rubricStatus) return;
+		if (!this._canChangeStatus || menuItem.value === this._rubricStatus) return;
 
 		dom(dropdownMenu).removeAttribute('opened');
 		this.disableMenu(menuButton);
 
 		var action = this.entity.getActionByName('update-status');
-		var fields = [{'name':'status', 'value':e.target.value}];
+		var fields = [{'name':'status', 'value':menuItem.value}];
 		this.performSirenAction(action, fields).then(function() {
-			this._rubricStatusText = this.localize('rubricStatus', 'status', e.target.text);
-			this._rubricStatus = e.target.value;
+			this._rubricStatusText = this.localize('rubricStatus', 'status', menuItem.text);
+			this._rubricStatus = menuItem.value;
 			this.fire('d2l-rubric-status-changed');
-			this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', e.target.text) }, { bubbles: true });
+			this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', menuItem.text) }, { bubbles: true });
 		}.bind(this)).then(function() {
 			this.enableMenu(menuButton);
 		}.bind(this)).catch(function(err) {
