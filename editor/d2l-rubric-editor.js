@@ -377,7 +377,7 @@ Polymer({
 		},
 		_descriptionInvalidError: {
 			type: String,
-			value: false,
+			value: null,
 		},
 		_canHideScore: {
 			type: Boolean,
