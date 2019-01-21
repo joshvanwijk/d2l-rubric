@@ -35,14 +35,12 @@ D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior = {
 	populateDropdownMenuOptions: function(menuId, options) {
 		var menu = this.$[menuId];
 		var selected = null;
-
 		var oldItems = dom(menu).childNodes;
-		for (var i = 0; i < oldItems.length; i++) {
+		for (var i = oldItems.length - 1; i >= 0; i--) {
 			dom(menu).removeChild(oldItems[i]);
 		}
-		// eslint-disable-next-line no-redeclare
-		for (var i = 0; i < options.length; i++) {
-			var option = options[i];
+		for (var j = 0; j < options.length; j++) {
+			var option = options[j];
 			var item = document.createElement('d2l-menu-item-radio');
 			dom(item).setAttribute('text', option.title);
 			dom(item).setAttribute('value', option.value);
