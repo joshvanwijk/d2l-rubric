@@ -13,7 +13,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-levels-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-levels-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -154,33 +154,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-levels-edito
 			:dir(rtl) #description div.col-center div:last-of-type {
 				border-bottom-right-radius: 0;
 				border-bottom-left-radius: var(--d2l-table-border-radius);
-			}
-
-			#scroll-wrapper[h-scrollbar]::shadow > d2l-sticky-element,
-			#scroll-wrapper[h-scrollbar]::shadow > div#wrapper {
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			}
-
-			#scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > d2l-sticky-element,
-			#scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > div#wrapper {
-				margin-left: unset;
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			}
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > d2l-sticky-element,
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > div#wrapper {
-				margin-left: var(--d2l-rubric-editor-end-gutter-width);
-				margin-right: unset;
-			}
-			#scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > d2l-sticky-element,
-			#scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > div#wrapper {
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: unset;
-			}
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > d2l-sticky-element,
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > div#wrapper {
-				margin-left: unset;
-				margin-right: var(--d2l-rubric-editor-start-gutter-width);
 			}
 		</style>
 

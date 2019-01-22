@@ -14,7 +14,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-group-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -64,32 +64,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 			:dir(rtl) .d2l-alert-container {
 				padding-right: var(--d2l-rubric-editor-start-gutter-width);
 				padding-left: var(--d2l-rubric-editor-end-gutter-width);
-			}
-			#scroll-wrapper[h-scrollbar]::shadow > d2l-sticky-element,
-			#scroll-wrapper[h-scrollbar]::shadow > div#wrapper {
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			}
-
-			#scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > d2l-sticky-element,
-			#scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > div#wrapper {
-				margin-left: unset;
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			}
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > d2l-sticky-element,
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-left]::shadow > div#wrapper {
-				margin-left: var(--d2l-rubric-editor-end-gutter-width);
-				margin-right: unset;
-			}
-			#scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > d2l-sticky-element,
-			#scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > div#wrapper {
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: unset;
-			}
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > d2l-sticky-element,
-			:dir(rtl) #scroll-wrapper[h-scrollbar][scrollbar-right]::shadow > div#wrapper {
-				margin-left: unset;
-				margin-right: var(--d2l-rubric-editor-start-gutter-width);
 			}
 		</style>
 
