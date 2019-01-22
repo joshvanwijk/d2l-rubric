@@ -396,6 +396,8 @@ Polymer({
 				negativeButtonText: this.localize('changeConfirmationNo')
 			}).then(performAction, function() {
 				this.resetSelectedMenuItem(menuButton, this._rubricTypeValue);
+			}.bind(this)).finally(function() {
+				menuButton.focus();
 			}.bind(this));
 		}
 	},
