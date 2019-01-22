@@ -379,10 +379,12 @@ Polymer({
 				this.fire('iron-announce', { text: this.localize('changeRubricTypeSuccessful', 'rubricType', menuItem.text) }, { bubbles: true });
 			}.bind(this)).then(function() {
 				this.enableMenu(menuButton);
+				menuButton.focus();
 			}.bind(this)).catch(function(err) {
 				this.resetSelectedMenuItem(menuButton, this._rubricTypeValue);
 				this.enableMenu(menuButton);
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				menuButton.focus();
 			}.bind(this));
 		}.bind(this);
 
@@ -396,6 +398,7 @@ Polymer({
 				negativeButtonText: this.localize('changeConfirmationNo')
 			}).then(performAction, function() {
 				this.resetSelectedMenuItem(menuButton, this._rubricTypeValue);
+				menuButton.focus();
 			}.bind(this));
 		}
 	},
