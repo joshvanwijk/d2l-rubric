@@ -2,13 +2,15 @@ import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor-cell-styles">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-styles">
   <template>
 	<style>
 		:host {
 			--d2l-rubric-editor-start-gutter-width: 1.5rem;
 			--d2l-rubric-editor-end-gutter-width: 2.5rem; /* trash can width = 50px including halo */
+		}
 
+		#scroll-wrapper {
 			--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
 			--d2l-scroll-wrapper-border-color: var(--d2l-table-border-color);
 
@@ -16,16 +18,27 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor-cell-styles">
 				overflow-y: hidden;
 				border-left: 1px dashed var(--d2l-color-mica);
 				border-right: 1px dashed var(--d2l-color-mica);
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
+			};
+
+			--d2l-scroll-wrapper-sticky: {
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			};
 
 			--d2l-scroll-wrapper-left: {
 				overflow-y: hidden;
 				border-left: none;
+				margin-left: unset;
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			};
 
 			--d2l-scroll-wrapper-right: {
 				overflow-y: hidden;
 				border-right: none;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: unset;
 			};
 
 		}
