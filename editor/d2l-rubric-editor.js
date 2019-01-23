@@ -24,10 +24,10 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-link/d2l-link.js';
 import './d2l-rubric-visibility-editor.js';
-import '../d2l-rubric.js';
 import 's-html/s-html.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import('../d2l-rubric.js');
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor">
