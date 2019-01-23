@@ -5,6 +5,12 @@ import 'd2l-inputs/d2l-input-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+
+let htmlEditorId = 0;
+function getNextEditorId() {
+	return ++htmlEditorId;
+}
+
 Polymer({
 	_template: html`
 		<style include="d2l-input-styles">
@@ -87,7 +93,7 @@ Polymer({
 		_uniqueId: {
 			type: String,
 			value: function() {
-				return 'htmleditor-' + Date.now();
+				return 'htmleditor-' + getNextEditorId();
 			},
 		},
 		ariaLabel: {
