@@ -326,12 +326,14 @@ Polymer({
 		var newIndex = oldIndex - 1;
 
 		var afterReorder = function() {
+			upButton = this._getUpButton(newIndex);
+			downButton = this._getDownButton(newIndex);
 			if (!upButton.disabled) {
 				upButton.focus();
 			} else {
 				downButton.focus();
 			}
-		};
+		}.bind(this);
 		this._doReorder(oldIndex, newIndex).then(afterReorder);
 	},
 	_moveDown: function(e) {
@@ -342,12 +344,14 @@ Polymer({
 		var newIndex = oldIndex + 1;
 
 		var afterReorder = function() {
+			upButton = this._getUpButton(newIndex);
+			downButton = this._getDownButton(newIndex);
 			if (!downButton.disabled) {
 				downButton.focus();
 			} else {
 				upButton.focus();
 			}
-		};
+		}.bind(this);
 		this._doReorder(oldIndex, newIndex).then(afterReorder);
 	},
 	_doReorder: function(oldIndex, newIndex) {
@@ -373,6 +377,22 @@ Polymer({
 			}.bind(this));
 		}
 		return Promise.resolve();
+	},
+	_getUpButton: function(index) {
+		var upButtons = dom(this.root).querySelectorAll('#up-button');
+		for (var i = 0; i < upButtons.length; i++) {
+			if (parseInt(upButtons[i].attributes['data-index'].value) === index) {
+				return upButtons[i];
+			}
+		}
+	},
+	_getDownButton: function(index) {
+		var downButtons = dom(this.root).querySelectorAll('#down-button');
+		for (var i = 0; i < downButtons.length; i++) {
+			if (parseInt(downButtons[i].attributes['data-index'].value) === index) {
+				return downButtons[i];
+			}
+		}
 	},
 	_getCriterionlName: function(index) {
 		var elms = dom(this.root).querySelectorAll('d2l-rubric-criterion-editor');
