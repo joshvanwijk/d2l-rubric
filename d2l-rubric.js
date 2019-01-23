@@ -119,7 +119,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				padding-top: 0.5rem;
 				padding-bottom: 0.5rem;
 			}
-			:host-context([dir='rtl']) .left {
+			:dir(rtl) .left {
 				text-align: right;
 				padding-left: 0;
 				padding-right: 20px;
@@ -132,7 +132,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			.right {
 				text-align: right;
 			}
-			:host-context([dir='rtl']) .right {
+			:dir(rtl) .right {
 				text-align: left;
 				padding-left: 20px;
 			}
@@ -157,7 +157,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				padding-right: 0.12rem
 			}
 
-			:host-context([dir='rtl']) #editor-save-status-container {
+			:dir(rtl) #editor-save-status-container {
 				padding-left: 0.12rem
 			}
 
@@ -206,7 +206,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 		</div>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

@@ -54,7 +54,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 				@apply --d2l-body-compact-text;
 			}
 
-			:host-context([dir='rtl']) .points div {
+			:dir(rtl) .points div {
 				margin-right: 0.5rem;
 				margin-left: 0;
 			}

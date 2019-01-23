@@ -50,12 +50,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 				margin-right: 0.5rem;
 			}
 
-			:host-context([dir='rtl']) .points div {
+			:dir(rtl) .points div {
 				margin-right: 0.5rem;
 				margin-left: 0;
 			}
 
-			:host-context([dir='rtl']) .points[alt-percent-format] div {
+			:dir(rtl) .points[alt-percent-format] div {
 				margin-right: 0;
 				margin-left: 0.5rem;
 			}

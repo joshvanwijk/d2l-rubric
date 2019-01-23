@@ -42,7 +42,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-level-editor
 				min-width: calc(2.25rem + 1em);
 			}
 
-			:host-context([dir='rtl']) #range-start {
+			:dir(rtl) #range-start {
 				margin-left: 0.5rem;
 				margin-right: 0;
 			}

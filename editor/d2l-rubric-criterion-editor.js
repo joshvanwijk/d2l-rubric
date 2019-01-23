@@ -122,11 +122,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			:host-context([dir='rtl']) .criterion-detail[is-holistic] .criterion-feedback div:first-of-type {
+			:dir(rtl) .criterion-detail[is-holistic] .criterion-feedback div:first-of-type {
 				border-bottom-left-radius: 0;
 			}
 
-			:host-context([dir='rtl']) .criterion-detail[is-holistic] .criterion-feedback div:last-of-type {
+			:dir(rtl) .criterion-detail[is-holistic] .criterion-feedback div:last-of-type {
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
@@ -149,7 +149,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				margin-top: 0;
 			}
 
-			:host-context([dir='rtl']) .criterion-remove {
+			:dir(rtl) .criterion-remove {
 				right: auto;
 				left: -2.5rem;
 			}
@@ -213,7 +213,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 		</div>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

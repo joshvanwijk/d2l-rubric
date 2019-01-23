@@ -52,7 +52,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 			min-width: 8rem;
 		}
 
-		:host-context([dir="rtl"]) .cell {
+		:dir(rtl) .cell {
 			/* border-left: none;
 			border-right: var(--d2l-table-border); */
 		}
