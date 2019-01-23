@@ -76,7 +76,8 @@ Polymer({
 
 	_onInputChange: function(e) {
 		e.stopPropagation();
-		var value = (e.detail && e.detail.content) || e.target.value || '';
+		var value = (e.detail && e.detail.hasOwnProperty('content')) ?
+			e.detail.content : e.target.value || '';
 		this.fire('change', { value: value });
 	}
 });
