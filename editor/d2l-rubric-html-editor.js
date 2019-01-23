@@ -29,6 +29,13 @@ Polymer({
 			.d2l-richtext-editor-container {
 				@apply --d2l-input;
 				@apply --d2l-input-textarea;
+				/* The following transtion override is required to fix what appears to be a bug in Chrome with
+					shadow DOM enabled related to contenteditable elements nested in multiple
+					shadow roots. The transition on the border seems to cause the contenteditable
+					cursor to not show the text style, and also causes the contenteditable to
+					randomly immediately lose focus whenever you try and click on it.
+				*/
+				transition-property: none;
 			}
 
 			.d2l-richtext-editor-container:hover,
