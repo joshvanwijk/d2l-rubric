@@ -37,6 +37,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					min-height: 0;
 					overflow: hidden;
 					hyphens: auto;
+					border-color: transparent;
+					box-shadow: none;
+					border-radius: 0;
+					transition-property: none;
 				};
 			}
 
@@ -168,7 +172,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			<slot name="gutter-left"></slot>
 		</div>
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" no-border="" hover-styles="" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
+			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 			</d2l-input-textarea>
 			<d2l-tooltip id="criterion-name-bubble" for="name" hidden$="[[!_nameInvalid]]" position="bottom">
 				[[_nameInvalidError]]
