@@ -143,15 +143,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-editor">
 			}
 		</style>
 		<div>
-			<d2l-dnd-sortable placeholder-class="dnd-placeholder" mirror-class="dnd-mirror" touch-mirror-class="dnd-touch-mirror" handle=".dnd-drag-handle" on-d2l-dnd-sorted="_handleReorder" disabled="[[!_canReorder]]">
-
-			<!--
-				MDB: Temporarily removing the off-screen legend as it breaks sortableJS drag and drop
-				Might have to come up with an alternate approach
-			-->
-				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
+			<d2l-dnd-sortable placeholder-class="dnd-placeholder" mirror-class="dnd-mirror" touch-mirror-class="dnd-touch-mirror" handle=".dnd-drag-handle" on-d2l-dnd-sorted="_handleDrag" disabled="[[!_canDrag]]">
+				<template id="criteria-repeater" is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
 					<div class="fieldset">
-						<!-- <legend><d2l-offscreen>[[_getCriterionLegend(index, criterionCount)]]</d2l-offscreen></legend> -->
 						<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
 						<d2l-rubric-criterion-editor animating="[[animating]]" href="[[_getSelfLink(criterion)]]" token="[[token]]" is-holistic="[[isHolistic]]" display-name-placeholder="[[_isFirst(index, criterionCount)]]" rich-text-enabled="[[richTextEnabled]]" criterion-detail-width="[[criterionDetailWidth]]">
 							<div slot="gutter-left">
@@ -165,7 +159,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-editor">
 									</button>
 								</div>
 
-								<d2l-icon class="dnd-drag-handle" icon="d2l-tier1:dragger" hidden="[[_hideDragHandle(index, criterionCount)]]"></d2l-icon>
+								<d2l-icon class="dnd-drag-handle" icon="d2l-tier1:dragger" hidden="[[_hideDragHandle(_canReorder, index, criterionCount)]]"></d2l-icon>
 							</div>
 						</d2l-rubric-criterion-editor>
 					</div>
@@ -181,8 +175,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-editor">
 			<div class="gutter-right"></div>
 		</div>
 	</template>
-
-
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -201,6 +193,14 @@ Polymer({
 		_canCreate: {
 			type: Boolean,
 			computed: '_canCreateCriterion(entity)',
+		},
+		_dragEnabled: {
+			type: Boolean,
+			value: true,
+		},
+		_canDrag: {
+			type: Boolean,
+			computed: '_canDragCriterion(_canReorder, _dragEnabled)',
 		},
 		_canReorder: {
 			type: Boolean,
@@ -283,8 +283,8 @@ Polymer({
 		return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count);
 	},
 	// note: don't remove criterionCount otherwise, DD handle won't refresh when add and delete critierons
-	_hideDragHandle: function(index, criterionCount) {
-		return !this._canReorder || (this._isFirst(index, criterionCount) && this._isLast(index, criterionCount));
+	_hideDragHandle: function(canReorder, index, criterionCount) {
+		return !canReorder || (this._isFirst(index, criterionCount) && this._isLast(index, criterionCount));
 	},
 	// eslint-disable-next-line no-unused-vars
 	_isFirst: function(index, criterionCount) {
@@ -315,8 +315,23 @@ Polymer({
 		return entity && entity.hasActionByName('reorder');
 	},
 
-	_handleReorder: function(e) {
-		this._doReorder(e.detail.oldIndex, e.detail.newIndex);
+	_canDragCriterion: function(canReorder, dragEnabled) {
+		return canReorder && dragEnabled;
+	},
+
+	_handleDrag: function(e) {
+		// Disable drag and drop whilst there is a drag operation in progress otherwise
+		// we can have responses returning which are inconsistent with the current dragged state
+		this._dragEnabled = false;
+
+		// This hackery is necessary to keep the repeater's templates in the same order
+		// as the actual DOM nodes following the drag and drop.
+		const criteriaRepeater = this.$$('#criteria-repeater');
+		criteriaRepeater.__instances.splice(e.detail.newIndex, 0, criteriaRepeater.__instances.splice(e.detail.oldIndex, 1)[0]);
+
+		this._doReorder(e.detail.oldIndex, e.detail.newIndex).then(function() {
+			this._dragEnabled = true;
+		}.bind(this));
 	},
 	_moveUp: function(e) {
 		var upButton = e.currentTarget;
