@@ -61,9 +61,9 @@ D2L.PolymerBehaviors.Rubric.EntityBehaviorImpl = {
 		}
 
 		// when the next css transition finishes (which should be the one we just triggered)
-		element.addEventListener('transitionend', function() {
+		element.addEventListener('transitionend', function transitionEnd() {
 			// remove this event listener so it only gets triggered once
-			element.removeEventListener('transitionend', arguments.callee);
+			element.removeEventListener('transitionend', transitionEnd);
 
 			// remove "max-height" from the element's inline styles, so it can return to its initial value
 			fastdom.mutate(function() {
