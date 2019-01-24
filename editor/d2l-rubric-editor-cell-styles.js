@@ -31,13 +31,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 				overflow-y: hidden;
 				border-left: none;
 				margin-left: unset;
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			};
 
 			--d2l-scroll-wrapper-right: {
 				overflow-y: hidden;
 				border-right: none;
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
 				margin-right: unset;
 			};
 
