@@ -238,7 +238,7 @@ Polymer({
 			var fromSection = this.$['level-header-center-section'];
 			var toSection = this.$['description-center-section'];
 			if (fromSection) {
-				toSection.style = 'width: ' + fromSection.offsetWidth + 'px;';
+				toSection.style.cssText = 'width: ' + fromSection.offsetWidth + 'px;';
 			}
 			this._notifyResize();
 		}.bind(this), 1);
