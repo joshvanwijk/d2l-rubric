@@ -49,23 +49,23 @@ Polymer({
 				@apply --d2l-input-invalid;
 			}
 
-			/* .d2l-richtext-editor-container p {
-			margin: 1rem 0;
-			} */
 			d2l-html-editor .d2l-richtext-editor-container > p:last-of-type {
-			margin-bottom: 0;
+				margin-bottom: 0;
 			}
 
 			d2l-html-editor .d2l-richtext-editor-container > p:first-of-type {
-			margin-top: 0;
+				margin-top: 0;
 			}
 
 			d2l-html-editor .d2l-richtext-editor-container * {
-			max-width: 100%;
+				max-width: 100%;
 			}
-			/* .d2l-richtext-editor-container p:only-of-type {
-			margin: 0;
-			} */
+
+			@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+				d2l-html-editor .d2l-richtext-editor-container * {
+					max-width: none;
+				}
+			}
 
 			d2l-html-editor.invalid > .d2l-richtext-editor-container:hover,
 			d2l-html-editor.invalid > .d2l-richtext-editor-container:focus {
