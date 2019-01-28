@@ -30,7 +30,7 @@ import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import('../d2l-rubric.js');
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -728,7 +728,7 @@ Polymer({
 	_getRelativeUrl: function(absoluteUrl) {
 		var a = document.createElement('a');
 		a.href = absoluteUrl;
-		return a.pathname + a.search;
+		return (a.pathname[0] == '/' ? '' : '/') + a.pathname + a.search;
 	},
 	_openHelpDialog: function(e) {
 		e.preventDefault();
