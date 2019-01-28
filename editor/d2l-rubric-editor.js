@@ -728,7 +728,7 @@ Polymer({
 	_getRelativeUrl: function(absoluteUrl) {
 		var a = document.createElement('a');
 		a.href = absoluteUrl;
-		return (a.pathname[0] == '/' ? '' : '/') + a.pathname + a.search;
+		return (a.pathname[0] === '/' ? '' : '/') + a.pathname + a.search;
 	},
 	_openHelpDialog: function(e) {
 		e.preventDefault();
