@@ -151,8 +151,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			}
 			.overall-feedback-text {
 				@apply --d2l-body-compact-text;
+				display: inline-block;
 			}
-
+			.quotation-mark-icon{
+				margin-right: 20px
+			}
 			#editor-save-status-container {
 				padding-right: 0.12rem
 			}
@@ -201,7 +204,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<d2l-rubric-overall-score read-only="[[readOnly]]" href="[[_getOverallLevels(entity)]]" assessment-href="[[assessmentHref]]" token="[[token]]"></d2l-rubric-overall-score>
 		</template>
 		<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
-			<div class="overall-feedback-header">[[localize('overallFeedback')]]</div>
+			<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
+			<img class="quotation-mark-icon"src="../editor/images/quotation-mark-icon.svg"> </img>
 			<s-html class="overall-feedback-text" html$="[[_feedback]]"></s-html>
 		</div>
 	</template>
