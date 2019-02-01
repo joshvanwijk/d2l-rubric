@@ -491,7 +491,7 @@ Polymer({
 
 	_handleAddFeedback: function(event) {
 		var criterionNum = event.model.get('criterionNum');
-		if (event.currentTarget.hasAttribute("addFeedback")) {
+		if (event.currentTarget.hasAttribute('addFeedback')) {
 			this._addingFeedback = criterionNum;
 		}
 		fastdom.mutate(function() {
@@ -505,7 +505,7 @@ Polymer({
 			dom(this.root).querySelector('#feedback-inner' + criterionNum).addBorderToFeedbackWrapper();
 		}.bind(this));
 	},
-	
+
 	_hoverFeedbackOff: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		fastdom.mutate(function() {

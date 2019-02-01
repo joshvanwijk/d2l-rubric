@@ -192,22 +192,22 @@ Polymer({
 	addBorderToFeedbackWrapper: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		var feedbackWrapper = elem.parentElement.parentElement;
-		feedbackWrapper.style.backgroundColor = "#f2f3f5";
-		feedbackWrapper.style.borderColor = "#006fbf";
-		feedbackWrapper.style.borderWidth = "2px";
+		feedbackWrapper.style.backgroundColor = '#f2f3f5';
+		feedbackWrapper.style.borderColor = '#006fbf';
+		feedbackWrapper.style.borderWidth = '2px';
 		var feedbackArrowInner1 = feedbackWrapper.firstChild.firstChild;
-		feedbackArrowInner1.style.borderBottomColor = "#006fbf";		
+		feedbackArrowInner1.style.borderBottomColor = '#006fbf';
 	},
 
 	removeBorderFromFeedbackWrapper: function() {
 		if (!this.feedbackInFocus) {
 			var elem = dom(this.root).querySelector('d2l-input-textarea');
 			var feedbackWrapper = elem.parentElement.parentElement;
-			feedbackWrapper.style.backgroundColor = "white";
-			feedbackWrapper.style.borderWidth = "";
-			feedbackWrapper.style.borderColor = "";
+			feedbackWrapper.style.backgroundColor = 'white';
+			feedbackWrapper.style.borderWidth = '';
+			feedbackWrapper.style.borderColor = '';
 			var feedbackArrowInner1 = feedbackWrapper.firstChild.firstChild;
-			feedbackArrowInner1.style.borderBottomColor = "#d3d9e3";
+			feedbackArrowInner1.style.borderBottomColor = '#d3d9e3';
 		}
 	},
 
