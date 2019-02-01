@@ -24,13 +24,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				width: 0;
 				height: 0;
 				border: 12px solid transparent;
-				border-bottom-color: var(--d2l-table-border-color);
 				position: absolute;
 			}
 			.feedback-arrow[data-mobile] {
 				display: none;
 			}
-			.feedback-arrow-inner {
+			.feedback-arrow-inner1 {
 				position: relative;
 				top: 1px;
 				left: -12px;
@@ -39,7 +38,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				border-left: 12px solid transparent;
 				border-right: 12px solid transparent;
 				border-bottom: 12px solid white;
-				z-index: 1;
+				border-bottom-color: var(--d2l-table-border-color)
+			}
+			.feedback-arrow-inner2 {
+				position: relative;
+				top: -7px;
+				left: -12px;
+				width: 0;
+				height: 0;
+				border-left: 12px solid transparent;
+				border-right: 12px solid transparent;
+				border-bottom: 11px solid white;
 			}
 			.clear-feedback-button {
 				margin-top: -1px;
@@ -67,7 +76,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-heading {
 				@apply --d2l-label-text;
 				margin-top: -1px;
-				margin-left: 1rem;
+				color: var(--d2l-color-galena);
 			}
 			.feedback-text {
 				@apply --d2l-body-compact-text;
@@ -91,22 +100,23 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
 		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]">
 			<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]">
-				<div class="feedback-arrow-inner"></div>
+				<div class="feedback-arrow-inner1"></div>
+				<div class="feedback-arrow-inner2"></div>
 			</div>
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
 				<div class="feedback-header-wrapper">
 					<div class="feedback-heading">
-						[[localize('feedback')]]
+						[[localize('criterionFeedback')]]
 					</div>
 					<d2l-icon id="clear-feedback" class="clear-feedback-button" tabindex="0" icon="d2l-tier1:close-small" on-tap="_clearFeedback"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]" placeholder="[[localize('editFeedback')]]">
+				<d2l-input-textarea no-border no-padding id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]" placeholder="[[localize('editFeedback')]]">
 				</d2l-input-textarea>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
 				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
-					<div class="feedback-heading">[[localize('feedback')]]</div>
+					<div class="feedback-heading">[[localize('criterionFeedback')]]</div>
 					<div class="feedback-text">
 						<s-html html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"></s-html>
 					</div>
@@ -139,6 +149,10 @@ Polymer({
 		addingFeedback: {
 			type: Boolean,
 			value: false
+		},
+		feedbackInFocus: {
+			type: Boolean,
+			value: false
 		}
 	},
 
@@ -164,11 +178,37 @@ Polymer({
 	focus: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		elem.focus();
+		this.feedbackInFocus = true;
+		this.addBorderToFeedbackWrapper();
 	},
 
 	_blurHandler: function(event) {
 		var feedback = event.target.$.textarea.value;
 		this.saveFeedback(feedback);
+		this.feedbackInFocus = false;
+		this.removeBorderFromFeedbackWrapper();
+	},
+
+	addBorderToFeedbackWrapper: function() {
+		var elem = dom(this.root).querySelector('d2l-input-textarea');
+		var feedbackWrapper = elem.parentElement.parentElement;
+		feedbackWrapper.style.backgroundColor = "#f2f3f5";
+		feedbackWrapper.style.borderColor = "#006fbf";
+		feedbackWrapper.style.borderWidth = "2px";
+		var feedbackArrowInner1 = feedbackWrapper.firstChild.firstChild;
+		feedbackArrowInner1.style.borderBottomColor = "#006fbf";		
+	},
+
+	removeBorderFromFeedbackWrapper: function() {
+		if (!this.feedbackInFocus) {
+			var elem = dom(this.root).querySelector('d2l-input-textarea');
+			var feedbackWrapper = elem.parentElement.parentElement;
+			feedbackWrapper.style.backgroundColor = "white";
+			feedbackWrapper.style.borderWidth = "";
+			feedbackWrapper.style.borderColor = "";
+			var feedbackArrowInner1 = feedbackWrapper.firstChild.firstChild;
+			feedbackArrowInner1.style.borderBottomColor = "#d3d9e3";
+		}
 	},
 
 	saveFeedback: function(feedback) {

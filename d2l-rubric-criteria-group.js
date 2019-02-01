@@ -152,7 +152,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								<div>
 									[[criterion.properties.name]]
 								</div>
-								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]" addFeedback></d2l-button-subtle>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
@@ -169,7 +169,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0">
-							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" on-close-feedback="_closeFeedback">
+							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" on-close-feedback="_closeFeedback" on-tap="_handleAddFeedback" on-mouseover="_hoverFeedbackOn" on-mouseout="_hoverFeedbackOff">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -491,9 +491,25 @@ Polymer({
 
 	_handleAddFeedback: function(event) {
 		var criterionNum = event.model.get('criterionNum');
-		this._addingFeedback = criterionNum;
+		if (event.currentTarget.hasAttribute("addFeedback")) {
+			this._addingFeedback = criterionNum;
+		}
 		fastdom.mutate(function() {
 			dom(this.root).querySelector('#feedback-inner' + criterionNum).focus();
+		}.bind(this));
+	},
+
+	_hoverFeedbackOn: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		fastdom.mutate(function() {
+			dom(this.root).querySelector('#feedback-inner' + criterionNum).addBorderToFeedbackWrapper();
+		}.bind(this));
+	},
+	
+	_hoverFeedbackOff: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		fastdom.mutate(function() {
+			dom(this.root).querySelector('#feedback-inner' + criterionNum).removeBorderFromFeedbackWrapper();
 		}.bind(this));
 	},
 
