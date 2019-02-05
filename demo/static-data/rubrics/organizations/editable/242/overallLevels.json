@@ -1,0 +1,455 @@
+{
+    "class": [
+      "collection",
+      "overall-levels"
+    ],
+    "properties": {
+      "total": 4
+    },
+    "entities": [
+      {
+        "class": [
+          "overall-level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/overall-level"
+        ],
+        "properties": {
+          "name": "Level 4",
+          "rangeStart": 11
+        },
+        "entities": [
+          {
+            "class": [
+              "richtext",
+              "description"
+            ],
+            "rel": [
+              "item"
+            ],
+            "properties": {
+              "text": "When is the stadium show",
+              "html": "<p>When is the stadium show<\/p>"
+            },
+            "actions": [
+              {
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/33",
+                "name": "update-description",
+                "method": "PATCH",
+                "fields": [
+                  {
+                    "type": "text",
+                    "name": "description",
+                    "value": "<p>When is the stadium show<\/p>"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/33",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Level 4"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/33",
+            "name": "update-range-start",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "rangeStart",
+                "value": 11
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/33",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/33"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels"
+          },
+          {
+            "rel": [
+              "next"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32"
+          }
+        ]
+      },
+      {
+        "class": [
+          "overall-level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/overall-level"
+        ],
+        "properties": {
+          "name": "Level 3",
+          "rangeStart": 8
+        },
+        "entities": [
+          {
+            "class": [
+              "richtext",
+              "description"
+            ],
+            "rel": [
+              "item"
+            ],
+            "properties": {
+              "text": "Send me tickets to your first gig",
+              "html": "<p>Send me tickets to your first gig<\/p>"
+            },
+            "actions": [
+              {
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32",
+                "name": "update-description",
+                "method": "PATCH",
+                "fields": [
+                  {
+                    "type": "text",
+                    "name": "description",
+                    "value": "<p>Send me tickets to your first gig<\/p>"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Level 3"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32",
+            "name": "update-range-start",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "rangeStart",
+                "value": 8
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels"
+          },
+          {
+            "rel": [
+              "prev"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/33"
+          },
+          {
+            "rel": [
+              "next"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31"
+          }
+        ]
+      },
+      {
+        "class": [
+          "overall-level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/overall-level"
+        ],
+        "properties": {
+          "name": "Level 2",
+          "rangeStart": 5
+        },
+        "entities": [
+          {
+            "class": [
+              "richtext",
+              "description"
+            ],
+            "rel": [
+              "item"
+            ],
+            "properties": {
+              "text": "Don't give up your day job",
+              "html": "<p>Don&#39;t give up your day job<\/p>"
+            },
+            "actions": [
+              {
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31",
+                "name": "update-description",
+                "method": "PATCH",
+                "fields": [
+                  {
+                    "type": "text",
+                    "name": "description",
+                    "value": "<p>Don't give up your day job<\/p>"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Level 2"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31",
+            "name": "update-range-start",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "rangeStart",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels"
+          },
+          {
+            "rel": [
+              "prev"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/32"
+          },
+          {
+            "rel": [
+              "next"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/30"
+          }
+        ]
+      },
+      {
+        "class": [
+          "overall-level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/overall-level"
+        ],
+        "properties": {
+          "name": "Level 1",
+          "rangeStart": 0
+        },
+        "entities": [
+          {
+            "class": [
+              "richtext",
+              "description"
+            ],
+            "rel": [
+              "item"
+            ],
+            "properties": {
+              "text": "Maybe try the piano.",
+              "html": "<p>Maybe try the piano.<\/p>"
+            },
+            "actions": [
+              {
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/30",
+                "name": "update-description",
+                "method": "PATCH",
+                "fields": [
+                  {
+                    "type": "text",
+                    "name": "description",
+                    "value": "<p>Maybe try the piano.<\/p>"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/30",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Level 1"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/30",
+            "name": "update-range-start",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "rangeStart",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/30",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/30"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels"
+          },
+          {
+            "rel": [
+              "prev"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels\/31"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "rel": [
+          "self"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels"
+      },
+      {
+        "rel": [
+          "up"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6"
+      }
+    ],
+    "actions": [
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels",
+        "name": "append",
+        "method": "POST",
+        "fields": [
+          {
+            "type": "hidden",
+            "name": "relativePosition",
+            "value": "Append"
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/overallLevels",
+        "name": "prepend",
+        "method": "POST",
+        "fields": [
+          {
+            "type": "hidden",
+            "name": "relativePosition",
+            "value": "Prepend"
+          }
+        ]
+      }
+    ]
+  }
