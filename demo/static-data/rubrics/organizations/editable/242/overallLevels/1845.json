@@ -1,0 +1,103 @@
+{
+    "class": [
+        "overall-level"
+    ],
+    "properties": {
+        "name": "Level 3",
+        "rangeStart": null
+    },
+    "entities": [
+        {
+            "class": [
+                "richtext",
+                "description"
+            ],
+            "rel": [
+                "item"
+            ],
+            "properties": {
+                "text": "",
+                "html": ""
+            },
+            "actions": [
+                {
+                    "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/overallLevels/1845",
+                    "name": "update",
+                    "method": "PATCH",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "description",
+                            "value": {
+                                "Text": "",
+                                "Html": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/overallLevels/1845.json"
+        },
+        {
+            "rel": [
+                "up"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/overallLevels.json"
+        },
+        {
+            "rel": [
+                "prev"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/overallLevels/1846.json"
+        },
+        {
+            "rel": [
+                "next"
+            ],
+            "href": "data/rubrics/organizations/text-only/242/overallLevels/1844.json"
+        }
+    ],
+    "actions": [
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/overallLevels/1845",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "name",
+                    "value": "Level 3"
+                }
+            ]
+        },
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/overallLevels/1845",
+            "name": "update-range-start",
+            "method": "PATCH",
+            "fields": [
+                {
+                    "class": [
+                        "required"
+                    ],
+                    "type": "text",
+                    "name": "rangeStart"
+                }
+            ]
+        },
+        {
+            "href": "https://79e1a784-c080-4906-8788-ee0d15ea91a1.rubrics.api.dev.brightspace.com/organizations/131646/242/overallLevels/1845",
+            "name": "delete",
+            "method": "DELETE"
+        }
+    ]
+}
