@@ -161,7 +161,7 @@ Polymer({
 		},
 		_plugins: {
 			type: String,
-			value: 'lists paste d2l_placeholder d2l_isf d2l_replacestring d2l_equation',
+			value: 'lists paste d2l_placeholder d2l_isf d2l_replacestring d2l_equation d2l_xsplconverter',
 		},
 		objectResizing: {
 			type: Boolean,
