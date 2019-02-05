@@ -24,31 +24,24 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				width: 0;
 				height: 0;
 				border: 12px solid transparent;
+				border-bottom-color: var(--d2l-table-border-color);
 				position: absolute;
+				-moz-box-sizing: border-box;
 			}
 			.feedback-arrow[data-mobile] {
 				display: none;
 			}
-			.feedback-arrow-inner1 {
+			.feedback-arrow-inner {
 				position: relative;
-				top: 1px;
+				top: 2px;
 				left: -12px;
 				width: 0;
 				height: 0;
 				border-left: 12px solid transparent;
 				border-right: 12px solid transparent;
 				border-bottom: 12px solid white;
-				border-bottom-color: var(--d2l-table-border-color)
-			}
-			.feedback-arrow-inner2 {
-				position: relative;
-				top: -7px;
-				left: -12px;
-				width: 0;
-				height: 0;
-				border-left: 12px solid transparent;
-				border-right: 12px solid transparent;
-				border-bottom: 11px solid white;
+				z-index: 1;
+				-moz-box-sizing: border-box;
 			}
 			.clear-feedback-button {
 				margin-top: -1px;
@@ -100,8 +93,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
 		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]">
 			<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]">
-				<div class="feedback-arrow-inner1"></div>
-				<div class="feedback-arrow-inner2"></div>
+				<div class="feedback-arrow-inner"></div>
 			</div>
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
 				<div class="feedback-header-wrapper">
@@ -192,22 +184,18 @@ Polymer({
 	addBorderToFeedbackWrapper: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		var feedbackWrapper = elem.parentElement.parentElement;
-		feedbackWrapper.style.backgroundColor = '#f2f3f5';
-		feedbackWrapper.style.borderColor = '#006fbf';
-		feedbackWrapper.style.borderWidth = '2px';
-		var feedbackArrowInner1 = feedbackWrapper.firstChild.firstChild;
-		feedbackArrowInner1.style.borderBottomColor = '#006fbf';
+		feedbackWrapper.style.cursor = 'text';
+		var feedbackArrow = feedbackWrapper.firstChild;
+		feedbackArrow.style.borderBottomColor = '#006fbf';
 	},
 
 	removeBorderFromFeedbackWrapper: function() {
 		if (!this.feedbackInFocus) {
 			var elem = dom(this.root).querySelector('d2l-input-textarea');
 			var feedbackWrapper = elem.parentElement.parentElement;
-			feedbackWrapper.style.backgroundColor = 'white';
-			feedbackWrapper.style.borderWidth = '';
-			feedbackWrapper.style.borderColor = '';
-			var feedbackArrowInner1 = feedbackWrapper.firstChild.firstChild;
-			feedbackArrowInner1.style.borderBottomColor = '#d3d9e3';
+			var feedbackArrow = feedbackWrapper.firstChild;
+			feedbackArrow.style.borderBottomColor = '#d3d9e3';
+			feedbackWrapper.style.cursor = 'default';
 		}
 	},
 
