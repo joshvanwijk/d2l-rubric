@@ -80,12 +80,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', entity.properties.name)]]" on-tap="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
 			</d2l-button-icon>
 		</div>
-		<d2l-tooltip id="level-name-bubble" for="level-name" hidden$="[[!_nameInvalid]]" position="bottom">
-			[[_nameInvalidError]]
-		</d2l-tooltip>
-		<d2l-tooltip id="points-bubble" for="level-points" hidden$="[[!_pointsInvalid]]" position="bottom">
-			[[_pointsInvalidError]]
-		</d2l-tooltip>
+		<template is="dom-if" if="[[_nameInvalid]]">
+			<d2l-tooltip id="level-name-bubble" for="level-name" position="bottom">
+				[[_nameInvalidError]]
+			</d2l-tooltip>
+		</template>
+		<template is="dom-if" if="[[_pointsInvalid]]">
+			<d2l-tooltip id="points-bubble" for="level-points" position="bottom">
+				[[_pointsInvalidError]]
+			</d2l-tooltip>
+		</template>
+
 	</template>
 
 
