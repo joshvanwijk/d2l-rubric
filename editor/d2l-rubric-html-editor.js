@@ -83,9 +83,22 @@ Polymer({
 			}
 
 		</style>
-		<d2l-html-editor editor-id="[[_uniqueId]]" key="[[key]]" inline="1" auto-focus="[[autoFocus]]" auto-focus-end="" min-rows="1" max-rows="1000" app-root="[[_appRoot]]" fullpage-enabled="0" content="[[_encodeURIComponent(value)]]" toolbar="[[_toolbar]]" plugins="[[_plugins]]" object-resizing="[[objectResizing]]">
-		<div id$="toolbar-shortcut-[[_uniqueId]]" hidden=""></div>
-		<div class="d2l-richtext-editor-container" id="[[_uniqueId]]" role="textbox" placeholder$="[[placeholder]]" aria-label$="[[ariaLabel]]"></div>
+		<d2l-html-editor 
+			editor-id="[[_uniqueId]]" 
+			inline="1" 
+			auto-focus="[[autoFocus]]" 
+			auto-focus-end="" 
+			min-rows="1" 
+			max-rows="1000" 
+			app-root="[[_appRoot]]" 
+			fullpage-enabled="0" 
+			toolbar="[[_toolbar]]" 
+			plugins="[[_plugins]]" 
+			object-resizing="[[objectResizing]]">
+
+			<div id$="toolbar-shortcut-[[_uniqueId]]" hidden=""></div>
+			<div class="d2l-richtext-editor-container" id="[[_uniqueId]]" role="textbox" placeholder$="[[placeholder]]" aria-label$="[[ariaLabel]]"></div>
+			
 		</d2l-html-editor>
 `,
 
@@ -131,6 +144,7 @@ Polymer({
 		},
 		key: {
 			type: String,
+			observer: '_keyChanged',
 		},
 		_appRoot: {
 			type: String,
@@ -147,7 +161,7 @@ Polymer({
 		},
 		_plugins: {
 			type: String,
-			value: 'lists paste d2l_placeholder d2l_filter d2l_isf d2l_replacestring d2l_equation',
+			value: 'lists paste d2l_placeholder d2l_isf d2l_replacestring d2l_equation',
 		},
 		objectResizing: {
 			type: Boolean,
@@ -173,7 +187,7 @@ Polymer({
 		window.D2L.Siren.EntityStore
 			.get(this.HypermediaRels.richTextEditorConfig, this.token)
 			.then(function(entity) {
-				this.$$('d2l-html-editor').d2lPluginSettings = entity.properties;
+				this.$$('d2l-html-editor').d2lPluginSettings = entity ? entity.properties : {};
 			}.bind(this));
 	},
 
@@ -190,7 +204,7 @@ Polymer({
 		this.toggleClass('invalid', isInvalid, htmlEditor);
 	},
 
-	_encodeURIComponent: function(value) {
-		return value ? encodeURIComponent(value) : '';
-	}
+	_keyChanged: function(newKey, oldKey) {
+		this.$$('#' + this._uniqueId).innerHTML = this.value;
+	},
 });
