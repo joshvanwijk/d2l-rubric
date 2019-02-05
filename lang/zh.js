@@ -21,7 +21,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'cellPoints': '标准单元格分数',
 		'changeScoringSuccessful': '评分方法更改为 {method}',
 		'clearOverride': '清除改写',
-		'clearTotalScoreOverride': '清除改写',
 		'clearFeedback': '清除反馈',
 		'criterionAdded': '已添加新标准',
 		'criterionAriaLabel': '标准 {index, number}，共 {count, number} 条标准',

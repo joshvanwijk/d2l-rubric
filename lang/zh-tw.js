@@ -21,7 +21,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'cellPoints': '標準儲存格分數',
 		'changeScoringSuccessful': '評分方法已變更為 {method}',
 		'clearOverride': '清除覆寫',
-		'clearTotalScoreOverride': '清除覆寫',
 		'clearFeedback': '清除意見反應',
 		'criterionAdded': '已新增標準',
 		'criterionAriaLabel': '標準 {index, number}/{count, number}',

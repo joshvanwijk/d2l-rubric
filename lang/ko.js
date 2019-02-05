@@ -21,7 +21,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'cellPoints': '기준 셀 점수',
 		'changeScoringSuccessful': '{method}(으)로 점수 산정법 변경됨',
 		'clearOverride': '재설정 지우기',
-		'clearTotalScoreOverride': '재설정 지우기',
 		'clearFeedback': '피드백 지우기',
 		'criterionAdded': '새 기준이 추가되었습니다.',
 		'criterionAriaLabel': '기준 {index, number}/{count, number}',
