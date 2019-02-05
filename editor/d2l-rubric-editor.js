@@ -27,7 +27,6 @@ import './d2l-rubric-visibility-editor.js';
 import 's-html/s-html.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import('../d2l-rubric.js');
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
@@ -445,7 +444,8 @@ Polymer({
 		},
 		_isLocked: {
 			type: Boolean,
-			value: false
+			value: false,
+			observer: '_loadRubricPreviewComponents'
 		},
 		_isHolistic: {
 			type: Boolean,
@@ -739,5 +739,10 @@ Polymer({
 			this._helpAssociations.properties.titleLangTerm,
 			this._helpAssociations.properties.descriptionLangTerm
 		);
+	},
+	_loadRubricPreviewComponents: function(isLocked) {
+		if (isLocked) {
+			import('../d2l-rubric.js');
+		}
 	}
 });
