@@ -37,10 +37,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback-editor">
 
 		</style>
 		<d2l-rubric-text-editor id="feedback" token="[[token]]" key="[[_key]]" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]" disabled="[[!_canEdit]]" value="[[_getFeedback(entity)]]" on-change="_saveFeedback" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEdit)]]">
-		<d2l-tooltip id="feedback-bubble" for="feedback" hidden$="[[!_feedbackInvalid]]" position="bottom">
-			[[_feedbackInvalidError]]
-		</d2l-tooltip>
-	</d2l-rubric-text-editor></template>
+		</d2l-rubric-text-editor>
+		<template is="dom-if" if="[[_feedbackInvalid]]">
+			<d2l-tooltip id="feedback-bubble" for="feedback" position="bottom">
+				[[_feedbackInvalidError]]
+			</d2l-tooltip>
+		</template>
+	</template>
 
 	
 </dom-module>`;
