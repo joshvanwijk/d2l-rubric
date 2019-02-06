@@ -27,6 +27,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				border-bottom-color: var(--d2l-table-border-color);
 				position: absolute;
 				-moz-box-sizing: border-box;
+				transition-property: border-color;
+				transition-timing-function: ease;
+				transition: border-color 0.5s;
 			}
 			.feedback-arrow[data-mobile] {
 				display: none;
@@ -70,6 +73,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				@apply --d2l-label-text;
 				margin-top: -1px;
 				color: var(--d2l-color-galena);
+				padding-top: 0.6rem;
 			}
 			.feedback-text {
 				@apply --d2l-body-compact-text;
@@ -103,7 +107,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 					<d2l-icon id="clear-feedback" class="clear-feedback-button" tabindex="0" icon="d2l-tier1:close-small" on-tap="_clearFeedback"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border no-padding id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]" placeholder="[[localize('editFeedback')]]">
+				<d2l-input-textarea no-border no-padding id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]">
 				</d2l-input-textarea>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
@@ -183,19 +187,27 @@ Polymer({
 
 	addBorderToFeedbackWrapper: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
-		var feedbackWrapper = elem.parentElement.parentElement;
+		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+		var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
+		var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
 		feedbackWrapper.style.cursor = 'text';
-		var feedbackArrow = feedbackWrapper.firstChild;
+		feedbackWrapper.style.padding = 'calc(0.5rem - 1px)';
+		feedbackWrapper.style.paddingLeft = 'calc(1rem - 1px)';
 		feedbackArrow.style.borderBottomColor = '#006fbf';
+		feedbackArrowInner.style.top = '3px';
 	},
 
 	removeBorderFromFeedbackWrapper: function() {
 		if (!this.feedbackInFocus) {
 			var elem = dom(this.root).querySelector('d2l-input-textarea');
-			var feedbackWrapper = elem.parentElement.parentElement;
-			var feedbackArrow = feedbackWrapper.firstChild;
-			feedbackArrow.style.borderBottomColor = '#d3d9e3';
+			var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+			var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
+			var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
+			feedbackWrapper.style.padding = '0.5rem';
+			feedbackWrapper.style.paddingLeft = '1rem';
 			feedbackWrapper.style.cursor = 'default';
+			feedbackArrow.style.borderBottomColor = '#d3d9e3';
+			feedbackArrowInner.style.top = '2px';
 		}
 	},
 
