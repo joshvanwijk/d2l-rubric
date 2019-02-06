@@ -77,17 +77,19 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 		return new Boolean(valueInvalidError).toString();
 	},
 	_onBubbleShow: function(e) {
-		if (e.target.hidden) {
-			return;
+		var targets = e.composedPath();
+		var target;
+		if (targets.length > 0) {
+			target = targets[0];
 		}
 		var cache = this.constructor.prototype.__rubricEditorBubbleCache;
 		if (cache.bubble) {
 			cache.bubble.forceShow = false;
 		}
 
-		e.target.forceShow = true;
+		target.forceShow = true;
 		e.stopPropagation();
-		cache.bubble = e.target;
+		cache.bubble = target;
 		cache.host = this;
 	}
 };
