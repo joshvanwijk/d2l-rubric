@@ -1,5 +1,7 @@
 import '../localize-behavior.js';
 import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
@@ -52,15 +54,22 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 			this.set(invalidId + 'Error', errMsg);
 			if (bubble) {
 				bubble.show();
+			} else {
+				afterNextRender(this, function() {
+					var newBubble = this.$$('#' + bubbleId);
+					newBubble.show();
+				}.bind(this));
 			}
 		} else {
 			this.set(invalidId, false);
 			this.set(invalidId + 'Error', '');
-			bubble.forceShow = false;
-			var cache = this.constructor.prototype.__rubricEditorBubbleCache;
-			if (bubble && cache.bubble === bubble) {
-				cache.bubble = null;
-				cache.host = null;
+			if (bubble) {
+				bubble.forceShow = false;
+				var cache = this.constructor.prototype.__rubricEditorBubbleCache;
+				if (cache.bubble === bubble) {
+					cache.bubble = null;
+					cache.host = null;
+				}
 			}
 		}
 	},
@@ -68,17 +77,19 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 		return new Boolean(valueInvalidError).toString();
 	},
 	_onBubbleShow: function(e) {
-		if (e.target.hidden) {
-			return;
+		var targets = e.composedPath();
+		var target;
+		if (targets.length > 0) {
+			target = targets[0];
 		}
 		var cache = this.constructor.prototype.__rubricEditorBubbleCache;
 		if (cache.bubble) {
 			cache.bubble.forceShow = false;
 		}
 
-		e.target.forceShow = true;
+		target.forceShow = true;
 		e.stopPropagation();
-		cache.bubble = e.target;
+		cache.bubble = target;
 		cache.host = this;
 	}
 };

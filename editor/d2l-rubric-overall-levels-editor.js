@@ -240,7 +240,12 @@ Polymer({
 			if (fromSection) {
 				toSection.style.cssText = 'width: ' + fromSection.offsetWidth + 'px;';
 			}
-			this._notifyResize();
+			// It's not clear why this was added - It was added in a later PR so presumably to fix an issue
+			// we had seen. However it causes an infinite loop because it tells the scroll wrapper to resize
+			// itself which then fires iron-resize on it's descendants, which just calls this method again.
+			// So leaving here as a reminder for now, not to add it back. But if we see resize issues we
+			// may have to come up with an alternate solution.
+			// this._notifyResize();
 		}.bind(this), 1);
 	},
 	observers: [
