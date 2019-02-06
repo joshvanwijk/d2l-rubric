@@ -93,21 +93,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				color: var(--d2l-color-celestine);
 				text-align: center;
 				font-size: 0.85rem;
+				margin-bottom: -1rem;
+				width: 100%;
 			}
 
 			.clear-override-label[hidden] {
 				display:none;
-			}
-
-			.clear-override-label > d2l-icon {
-				color: var(--d2l-color-celestine);
-				vertical-align: middle;
-				margin-left: 5px;
-				margin-right: 5px;
-			}
-
-			.clear-override-label > b {
-				vertical-align: middle;
 			}
 
 			d2l-scroll-wrapper {
@@ -153,12 +144,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 						<br hidden="[[!_scoreVisible(level)]]">
 						<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
 					</span>
+					<span class="clear-override-label">
 					<d2l-button-subtle
 					class="clear-override-label"
 					hidden="[[!_showClearOverrideButton(level, _version)]]"
 					icon="d2l-tier1:close-small"
 					text="[[localize('clearOverride')]]"
 					></d2l-button-subtle>
+					</span>
 				</div>
 			</template>
 		</div>
