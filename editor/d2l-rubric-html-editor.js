@@ -204,7 +204,7 @@ Polymer({
 		this.toggleClass('invalid', isInvalid, htmlEditor);
 	},
 
-	_keyChanged: function(newKey, oldKey) {
+	_keyChanged: function() {
 		this.$$('#' + this._uniqueId).innerHTML = this.value;
 	},
 });
