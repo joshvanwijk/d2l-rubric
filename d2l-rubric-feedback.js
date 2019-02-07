@@ -19,24 +19,31 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			:host {
 				display: block;
 			}
-			.feedback-arrow {
+			.feedback-arrow,
+			.feedback-arrow-with-hover {
 				margin-top: calc(-0.5rem - 25px);
 				width: 0;
 				height: 0;
 				border: 12px solid transparent;
-				border-bottom-color: var(--d2l-table-border-color);
 				position: absolute;
 				-moz-box-sizing: border-box;
 				transition-property: border-color;
 				transition-timing-function: ease;
 				transition: border-color 0.5s;
 			}
+			.feedback-arrow {
+				border-bottom-color: var(--d2l-table-border-color);
+			}
 			.feedback-arrow[data-mobile] {
 				display: none;
 			}
-			.feedback-arrow-inner {
+			.feedback-arrow-with-hover {
+				border-bottom-color: var(--d2l-color-celestine);
+			}
+			.feedback-arrow-inner,
+			.feedback-arrow-inner-with-hover
+			 {
 				position: relative;
-				top: 2px;
 				left: -12px;
 				width: 0;
 				height: 0;
@@ -45,6 +52,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				border-bottom: 12px solid white;
 				z-index: 1;
 				-moz-box-sizing: border-box;
+			}
+			.feedback-arrow-inner {
+				top: 2px;
+			}
+			.feedback-arrow-inner-with-hover {
+				top: 3px;
 			}
 			.clear-feedback-button {
 				margin-top: -1px;
@@ -59,7 +72,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-wrapper[data-desktop] {
 				padding: 0.5rem;
 				padding-left: 1rem;
-				border: 1px solid transparent;
+				padding-bottom: calc(0.5rem - 1px);
 			}
 			.feedback-wrapper-editable:hover {
 				background: var(--d2l-color-sylvite);
@@ -68,6 +81,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			}
 			.feedback-wrapper-editable:hover .feedback-arrow-inner {
 				border-bottom: 12px solid var(--d2l-color-sylvite);
+			}
+			.feedback-wrapper-with-hover {
+				cursor: text;
+				padding: calc(0.5rem - 1px);
+				padding-left: calc(1rem - 1px);
 			}
 			.feedback-heading {
 				@apply --d2l-label-text;
@@ -146,7 +164,7 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		feedbackInFocus: {
+		_feedbackInFocus: {
 			type: Boolean,
 			value: false
 		}
@@ -174,38 +192,42 @@ Polymer({
 	focus: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		elem.focus();
-		this.feedbackInFocus = true;
+		this._feedbackInFocus = true;
 		this.addBorderToFeedbackWrapper();
 	},
 
 	_blurHandler: function(event) {
 		var feedback = event.target.$.textarea.value;
 		this.saveFeedback(feedback);
-		this.feedbackInFocus = false;
+		this._feedbackInFocus = false;
 		this.removeBorderFromFeedbackWrapper();
 	},
 
 	addBorderToFeedbackWrapper: function() {
 		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+		if (feedbackWrapper === null) {
+				feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper-with-hover');
+			}
 		var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
 		var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
-		feedbackWrapper.style.cursor = 'text';
-		feedbackWrapper.style.padding = 'calc(0.5rem - 1px)';
-		feedbackWrapper.style.paddingLeft = 'calc(1rem - 1px)';
-		feedbackArrow.style.borderBottomColor = 'var(--d2l-color-celestine)';
-		feedbackArrowInner.style.top = '3px';
+		feedbackWrapper.classList.add('feedback-wrapper-with-hover');
+		feedbackWrapper.classList.remove('feedback-wrapper');
+		feedbackArrow.classList.add('feedback-arrow-with-hover');
+		feedbackArrowInner.classList.add('feedback-arrow-inner-with-hover');
 	},
 
 	removeBorderFromFeedbackWrapper: function() {
-		if (!this.feedbackInFocus) {
-			var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+		if (!this._feedbackInFocus) {
+			var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper-with-hover');
+			if (feedbackWrapper === null) {
+				feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+			}
 			var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
 			var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
-			feedbackWrapper.style.padding = '0.5rem';
-			feedbackWrapper.style.paddingLeft = '1rem';
-			feedbackWrapper.style.cursor = 'default';
-			feedbackArrow.style.borderBottomColor = 'var(--d2l-table-border-color)';
-			feedbackArrowInner.style.top = '2px';
+			feedbackWrapper.classList.add('feedback-wrapper');
+			feedbackWrapper.classList.remove('feedback-wrapper-with-hover');
+			feedbackArrow.classList.remove('feedback-arrow-with-hover');
+			feedbackArrowInner.classList.remove('feedback-arrow-inner-with-hover');
 		}
 	},
 
