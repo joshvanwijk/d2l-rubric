@@ -186,7 +186,6 @@ Polymer({
 	},
 
 	addBorderToFeedbackWrapper: function() {
-		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
 		var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
 		var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
@@ -199,7 +198,6 @@ Polymer({
 
 	removeBorderFromFeedbackWrapper: function() {
 		if (!this.feedbackInFocus) {
-			var elem = dom(this.root).querySelector('d2l-input-textarea');
 			var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
 			var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
 			var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
