@@ -27,6 +27,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'criterionAriaLabel': '標準 {index, number}/{count, number}',
 		'criterionDeleted': '已刪除 {name} 標準',
 		'criterionDescriptionAriaLabel': '標準 {criterionName} 層級 {levelName} 的說明',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': '對於標準 {criterionName} 層級 {levelName} 的意見反應',
 		'criterionNameAriaLabel': '標準名稱',
 		'criterionOutOf': '標準 {name} 的總分為 {value} 分',

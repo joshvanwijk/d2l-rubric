@@ -27,6 +27,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'criterionAriaLabel': 'Critério {index, number} de {count, number}',
 		'criterionDeleted': 'Critério {name} excluído',
 		'criterionDescriptionAriaLabel': 'Descrição para o critério {criterionName}, nível {levelName}',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': 'Comentário para o critério {criterionName}, nível {levelName}',
 		'criterionNameAriaLabel': 'Nome do critério',
 		'criterionOutOf': 'O critério {name} vale {value} pontos',

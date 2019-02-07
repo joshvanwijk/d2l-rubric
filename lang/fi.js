@@ -27,6 +27,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'criterionAriaLabel': 'Criterion {index, number} of {count, number}',
 		'criterionDeleted': '{name} criterion deleted',
 		'criterionDescriptionAriaLabel': 'Description for criterion {criterionName}, level {levelName}',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': 'Feedback for criterion {criterionName}, level {levelName}',
 		'criterionNameAriaLabel': 'Criterion name',
 		'criterionOutOf': 'Criterion {name} is out of {value} points',

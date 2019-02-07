@@ -27,6 +27,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'criterionAriaLabel': 'Kriterium {index, number} af {count, number}',
 		'criterionDeleted': '{name} kriterium blev slettet',
 		'criterionDescriptionAriaLabel': 'Beskrivelse af kriterium {criterionName}, niveau {levelName}',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': 'Feedback på kriterium {criterionName}, niveau {levelName}',
 		'criterionNameAriaLabel': 'Kriterienavn',
 		'criterionOutOf': 'Kriterium {name} er ud af {value} point',

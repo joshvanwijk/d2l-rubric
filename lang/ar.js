@@ -27,6 +27,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'criterionAriaLabel': 'المعيار {index, number} من {count, number}',
 		'criterionDeleted': 'تم حذف المعيار {name}',
 		'criterionDescriptionAriaLabel': 'وصف المعيار {criterionName}، المستوى {levelName}',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': 'ملاحظات حول المعيار {criterionName}، المستوى {levelName}',
 		'criterionNameAriaLabel': 'اسم المعيار',
 		'criterionOutOf': 'المعيار {name} من أصل {value} من النقاط',
