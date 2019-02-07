@@ -193,7 +193,7 @@ Polymer({
 		feedbackWrapper.style.cursor = 'text';
 		feedbackWrapper.style.padding = 'calc(0.5rem - 1px)';
 		feedbackWrapper.style.paddingLeft = 'calc(1rem - 1px)';
-		feedbackArrow.style.borderBottomColor = '#006fbf';
+		feedbackArrow.style.borderBottomColor = 'var(--d2l-color-celestine)';
 		feedbackArrowInner.style.top = '3px';
 	},
 
@@ -206,7 +206,7 @@ Polymer({
 			feedbackWrapper.style.padding = '0.5rem';
 			feedbackWrapper.style.paddingLeft = '1rem';
 			feedbackWrapper.style.cursor = 'default';
-			feedbackArrow.style.borderBottomColor = '#d3d9e3';
+			feedbackArrow.style.borderBottomColor = 'var(--d2l-table-border-color)';
 			feedbackArrowInner.style.top = '2px';
 		}
 	},
