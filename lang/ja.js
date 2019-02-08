@@ -21,7 +21,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'cellPoints': '条件セルのポイント',
 		'changeScoringSuccessful': 'スコアリング方法が {method} に変更されました',
 		'clearOverride': '上書きのクリア',
-		'clearTotalScoreOverride': '上書きのクリア',
 		'clearFeedback': 'フィードバックのクリア',
 		'criterionAdded': '新規条件が追加されました',
 		'criterionAriaLabel': '条件 {index, number}/{count, number}',
