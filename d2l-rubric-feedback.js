@@ -206,8 +206,8 @@ Polymer({
 	addBorderToFeedbackWrapper: function() {
 		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
 		if (feedbackWrapper === null) {
-				feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper-with-hover');
-			}
+			feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper-with-hover');
+		}
 		var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
 		var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
 		feedbackWrapper.classList.add('feedback-wrapper-with-hover');
