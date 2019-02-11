@@ -168,7 +168,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0" custom-border>
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0" focused>
 							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" on-close-feedback="_closeFeedback" on-tap="_handleAddFeedback" on-mouseover="_hoverFeedbackOn" on-mouseout="_hoverFeedbackOff">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -505,20 +505,20 @@ Polymer({
 	_hoverFeedbackOn: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback-inner' + criterionNum).addBorderToFeedbackWrapper();
+			dom(this.root).querySelector('#feedback-inner' + criterionNum).addFocusStylingToFeedbackWrapper();
 		}.bind(this));
 		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback' + criterionNum).addBorderToFloat();
+			dom(this.root).querySelector('#feedback' + criterionNum).addFocusStylingToFloat();
 		}.bind(this));
 	},
 
 	_hoverFeedbackOff: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback-inner' + criterionNum).removeBorderFromFeedbackWrapper();
+			dom(this.root).querySelector('#feedback-inner' + criterionNum).removeFocusStylingFromFeedbackWrapper();
 		}.bind(this));
 		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback' + criterionNum).removeBorderFromFloat();
+			dom(this.root).querySelector('#feedback' + criterionNum).removeFocusStylingFromFloat();
 		}.bind(this));
 	},
 
