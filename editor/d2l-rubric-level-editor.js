@@ -69,11 +69,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			}
 		</style>
 
-		<d2l-input-text id="level-name" value="[[entity.properties.name]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label="[[localize('levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="level-name" value="[[entity.properties.name]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" nopoints$="[[!_showPoints]]">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
-				<d2l-input-text id="level-points" value="[[entity.properties.points]]" on-change="_savePoints" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label="[[localize('levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
+				<d2l-input-text id="level-points" value="[[entity.properties.points]]" on-change="_savePoints" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>

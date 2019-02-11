@@ -56,11 +56,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-level-editor
 			}
 		</style>
 
-		<d2l-input-text id="overall-level-name" value="[[entity.properties.name]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="overall-level-name" value="[[entity.properties.name]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
 			<div class="points" hidden="[[!_hasRangeStart]]">
-				<d2l-input-text id="range-start" value="[[entity.properties.rangeStart]]" on-change="_saveRangeStart" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
+				<d2l-input-text id="range-start" value="[[entity.properties.rangeStart]]" on-change="_saveRangeStart" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
 			</div>

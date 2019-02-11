@@ -222,7 +222,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 		<div id="rubric-name-container">
 			<label for="rubric-name">[[localize('name')]]*</label>
 			<template is="dom-if" if="[[!_isLocked]]">
-				<d2l-input-text id="rubric-name" value="[[_rubricName]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label="[[localize('name')]]" disabled="[[!_canEditName]]" prevent-submit="">
+				<d2l-input-text id="rubric-name" value="[[_rubricName]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('name')]]" disabled="[[!_canEditName]]" prevent-submit="">
 				</d2l-input-text>
 
 				<d2l-tooltip id="name-bubble" for="rubric-name" hidden$="[[!_nameInvalid]]" position="bottom">
@@ -261,7 +261,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 						<template is="dom-if" if="[[!_isLocked]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-							<d2l-rubric-text-editor id="rubric-description" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="[[_rubricDescription]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+							<d2l-rubric-text-editor id="rubric-description" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="[[_rubricDescription]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<d2l-tooltip id="rubric-description-bubble" for="rubric-description" hidden$="[[!_descriptionInvalid]]" position="bottom">
 								[[_descriptionInvalidError]]
