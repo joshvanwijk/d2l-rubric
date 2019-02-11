@@ -1,0 +1,419 @@
+{
+    "class": [
+      "collection",
+      "levels"
+    ],
+    "properties": {
+      "total": 4
+    },
+    "entities": [
+      {
+        "class": [
+          "level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/level"
+        ],
+        "properties": {
+          "name": "Advanced",
+          "points": 10
+        },
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/29",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Advanced"
+              },
+              {
+                "type": "number",
+                "name": "points",
+                "value": 10
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/29",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Advanced"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/29",
+            "name": "update-points",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "number",
+                "name": "points",
+                "value": 10
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/29",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/29"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels"
+          },
+          {
+            "rel": [
+              "next"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28"
+          }
+        ]
+      },
+      {
+        "class": [
+          "level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/level"
+        ],
+        "properties": {
+          "name": "Very Proficient",
+          "points": 8
+        },
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Very Proficient"
+              },
+              {
+                "type": "number",
+                "name": "points",
+                "value": 8
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Very Proficient"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28",
+            "name": "update-points",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "number",
+                "name": "points",
+                "value": 8
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels"
+          },
+          {
+            "rel": [
+              "prev"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/29"
+          },
+          {
+            "rel": [
+              "next"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27"
+          }
+        ]
+      },
+      {
+        "class": [
+          "level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/level"
+        ],
+        "properties": {
+          "name": "Proficient",
+          "points": 6
+        },
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Proficient"
+              },
+              {
+                "type": "number",
+                "name": "points",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Proficient"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27",
+            "name": "update-points",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "number",
+                "name": "points",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels"
+          },
+          {
+            "rel": [
+              "prev"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/28"
+          },
+          {
+            "rel": [
+              "next"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/26"
+          }
+        ]
+      },
+      {
+        "class": [
+          "level"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/level"
+        ],
+        "properties": {
+          "name": "Less than Proficient",
+          "points": 4
+        },
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/26",
+            "name": "update",
+            "method": "PUT",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Less than Proficient"
+              },
+              {
+                "type": "number",
+                "name": "points",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/26",
+            "name": "update-name",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Less than Proficient"
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/26",
+            "name": "update-points",
+            "method": "PATCH",
+            "fields": [
+              {
+                "class": [
+                  "required"
+                ],
+                "type": "number",
+                "name": "points",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/26",
+            "name": "delete",
+            "method": "DELETE"
+          }
+        ],
+        "links": [
+          {
+            "rel": [
+              "self"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/26"
+          },
+          {
+            "rel": [
+              "up"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels"
+          },
+          {
+            "rel": [
+              "prev"
+            ],
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels\/27"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "rel": [
+          "self"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels"
+      },
+      {
+        "rel": [
+          "up"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4"
+      }
+    ],
+    "actions": [
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels",
+        "name": "append",
+        "method": "POST",
+        "fields": [
+          {
+            "type": "hidden",
+            "name": "relativePosition",
+            "value": "Append"
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/groups\/4\/levels",
+        "name": "prepend",
+        "method": "POST",
+        "fields": [
+          {
+            "type": "hidden",
+            "name": "relativePosition",
+            "value": "Prepend"
+          }
+        ]
+      }
+    ]
+  }

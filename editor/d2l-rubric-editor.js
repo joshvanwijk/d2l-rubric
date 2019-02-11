@@ -27,7 +27,6 @@ import './d2l-rubric-visibility-editor.js';
 import 's-html/s-html.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import('../d2l-rubric.js');
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
@@ -224,10 +223,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 			<template is="dom-if" if="[[!_isLocked]]">
 				<d2l-input-text id="rubric-name" value="[[_rubricName]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('name')]]" disabled="[[!_canEditName]]" prevent-submit="">
 				</d2l-input-text>
-
-				<d2l-tooltip id="name-bubble" for="rubric-name" hidden$="[[!_nameInvalid]]" position="bottom">
-					[[_nameInvalidError]]
-				</d2l-tooltip>
+				<template is="dom-if" if="[[_nameInvalid]]">
+					<d2l-tooltip id="name-bubble" for="rubric-name" position="bottom">
+						[[_nameInvalidError]]
+					</d2l-tooltip>
+				</template>
 			</template>
 			<template is="dom-if" if="[[_isLocked]]">
 				<h4>[[_rubricName]]</h4>
@@ -253,9 +253,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 						<d2l-input-checkbox id="hide-score-checkbox" disabled="[[!_canHideScore]]" on-change="_toggleHideScore" checked$="[[_scoreIsHidden]]" aria-invalid="[[isAriaInvalid(_setScoreVisibilityFailed)]]">
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
-						<d2l-tooltip id="hide-score-bubble" for="hide-score-checkbox" hidden$="[[!_setScoreVisibilityFailed]]" position="bottom">
-							[[_setScoreVisibilityFailedError]]
-						</d2l-tooltip>
+						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
+							<d2l-tooltip id="hide-score-bubble" for="hide-score-checkbox" position="bottom">
+								[[_setScoreVisibilityFailedError]]
+							</d2l-tooltip>
+						</template>
 					</div>
 					<div id="rubric-description-container">
 						<template is="dom-if" if="[[!_isLocked]]">
@@ -263,9 +265,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
 							<d2l-rubric-text-editor id="rubric-description" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="[[_rubricDescription]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
-							<d2l-tooltip id="rubric-description-bubble" for="rubric-description" hidden$="[[!_descriptionInvalid]]" position="bottom">
-								[[_descriptionInvalidError]]
-							</d2l-tooltip>
+							<template is="dom-if" if="[[_descriptionInvalid]]">
+								<d2l-tooltip id="rubric-description-bubble" for="rubric-description" position="bottom">
+									[[_descriptionInvalidError]]
+								</d2l-tooltip>
+							</template>
+
 						</template>
 						<template is="dom-if" if="[[_isLocked]]">
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
@@ -293,9 +298,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 									</d2l-input-checkbox>
 								</template>
 							</div>
-							<d2l-tooltip id="associations-bubble" for="associations" hidden$="[[!_associationsInvalid]]" position="bottom">
-								[[_associationsInvalidError]]
-							</d2l-tooltip>
+							<template is="dom-if" if="[[_associationsInvalid]]">
+								<d2l-tooltip id="associations-bubble" for="associations" position="bottom">
+									[[_associationsInvalidError]]
+								</d2l-tooltip>
+							</template>
+
 						</fieldset>
 						<div class="help-link d2l-body-compact">
 							<d2l-link on-click="_openHelpDialog" href="">[[localize('helpAssociations')]]</d2l-link>
@@ -445,7 +453,8 @@ Polymer({
 		},
 		_isLocked: {
 			type: Boolean,
-			value: false
+			value: false,
+			observer: '_loadRubricPreviewComponents'
 		},
 		_isHolistic: {
 			type: Boolean,
@@ -739,5 +748,10 @@ Polymer({
 			this._helpAssociations.properties.titleLangTerm,
 			this._helpAssociations.properties.descriptionLangTerm
 		);
+	},
+	_loadRubricPreviewComponents: function(isLocked) {
+		if (isLocked) {
+			import('../d2l-rubric.js');
+		}
 	}
 });

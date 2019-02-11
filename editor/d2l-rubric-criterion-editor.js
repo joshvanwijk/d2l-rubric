@@ -174,10 +174,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
 			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 			</d2l-input-textarea>
-			<d2l-tooltip id="criterion-name-bubble" for="name" hidden$="[[!_nameInvalid]]" position="bottom">
-				[[_nameInvalidError]]
-			</d2l-tooltip>
-		</div>
+			<template is="dom-if" if="[[_nameInvalid]]">
+				<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
+					[[_nameInvalidError]]
+				</d2l-tooltip>
+			</template>
+			</div>
 		<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
 			<div class="criterion-text">
 				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
@@ -206,9 +208,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				<template is="dom-if" if="[[_outOfIsEditable]]">
 					/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
 					</d2l-input-text>
-					<d2l-tooltip id="out-of-bubble" for="out-of-textbox" hidden$="[[!_outOfInvalid]]" position="bottom">
-						[[_outOfInvalidError]]
-					</d2l-tooltip>
+					<template is="dom-if" if="[[_outOfInvalid]]">
+						<d2l-tooltip id="out-of-bubble" for="out-of-textbox" position="bottom">
+							[[_outOfInvalidError]]
+						</d2l-tooltip>
+					</template>
 				</template>
 			</span>
 		</div>

@@ -82,9 +82,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					<d2l-input-text id="group-name" slot="group-name-slot" value="[[_groupName]]" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
-				<d2l-tooltip id="group-name-bubble" for="group-name" hidden$="[[!_nameInvalid]]" position="bottom">
-					[[_nameInvalidError]]
-				</d2l-tooltip>
+				<template is="dom-if" if="[[_nameInvalid]]">
+					<d2l-tooltip id="group-name-bubble" for="group-name" position="bottom">
+						[[_nameInvalidError]]
+					</d2l-tooltip>
+				</template>
 				<!--
 				This flex wrapper div is required to ensure that the d2l-rubric-criteria-editor
 				fills the full width of it's parent when the d2l-rubric-criterion-editor components overflow.

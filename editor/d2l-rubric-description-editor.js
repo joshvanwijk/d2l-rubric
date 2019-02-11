@@ -92,12 +92,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			on-change="_saveDescription"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
-		<d2l-tooltip id="description-bubble" for="description" hidden$="[[!_descriptionInvalid]]" position="bottom">
-			[[_descriptionInvalidError]]
-		</d2l-tooltip>
-		<d2l-tooltip id="cell-points-bubble" for="cell-points" hidden$="[[!_pointsInvalid]]" position="bottom">
-			[[_pointsInvalidError]]
-		</d2l-tooltip>
+		<template is="dom-if" if="[[_descriptionInvalid]]">
+			<d2l-tooltip id="description-bubble" for="description" position="bottom">
+				[[_descriptionInvalidError]]
+			</d2l-tooltip>
+		</template>
+		<template is="dom-if" if="[[_pointsInvalid]]">
+			<d2l-tooltip id="cell-points-bubble" for="cell-points" position="bottom">
+				[[_pointsInvalidError]]
+			</d2l-tooltip>
+		</template>
 	</template>
 
 

@@ -21,7 +21,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'cellPoints': 'نقاط خلية المعيار',
 		'changeScoringSuccessful': 'تم تغيير طريقة وضع الدرجات إلى {method}',
 		'clearOverride': 'مسح التجاوز',
-		'clearTotalScoreOverride': 'مسح التجاوز',
 		'clearFeedback': 'مسح الملاحظات',
 		'criterionAdded': 'تمت إضافة معيار جديد',
 		'criterionAriaLabel': 'المعيار {index, number} من {count, number}',

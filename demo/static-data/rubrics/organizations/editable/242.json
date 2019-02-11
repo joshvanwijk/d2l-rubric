@@ -1,0 +1,340 @@
+{
+    "class": [
+      "rubric",
+      "draft",
+      "analytic",
+      "numeric"
+    ],
+    "properties": {
+      "name": "Guitar Playing",
+      "outOf": 120
+    },
+    "entities": [
+      {
+        "class": [
+          "richtext",
+          "description"
+        ],
+        "rel": [
+          "item"
+        ],
+        "properties": {
+          "text": "A nice rubric with some real data and lots of empty criterion to allow performance testing in the rubrics editor demo page",
+          "html": "<p>A nice rubric with some real data and lots of empty criterion to allow performance testing in the rubrics editor demo page<\/p>"
+        },
+        "actions": [
+          {
+            "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6",
+            "name": "update-description",
+            "method": "PATCH",
+            "fields": [
+              {
+                "type": "text",
+                "name": "description",
+                "value": "<p>A nice rubric with some real data and lots of empty criterion to allow performance testing in the rubrics editor demo page<\/p>"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "class": [
+          "richtext-editor-config"
+        ],
+        "rel": [
+          "https:\/\/api.brightspace.com\/rels\/richtext-editor-config"
+        ],
+        "properties": {
+          "orgUnit": {
+            "OrgId": "6606",
+            "OrgUnitId": "121213"
+          },
+          "d2l_filter": {
+            "endpoint": "\/d2l\/lp\/htmleditor\/converttoabsolute?ou=121213"
+          },
+          "d2l_isf": {
+            "endpoint": "\/d2l\/common\/dialogs\/isf\/selectItem.d2l?ou=121213&filterMode=Strict"
+          }
+        }
+      },
+      {
+        "class": [
+          "associations"
+        ],
+        "rel": [
+          "help"
+        ],
+        "properties": {
+          "titleLangTerm": "Rubrics.Shared:Help.hlpAssociationsTitle",
+          "descriptionLangTerm": "Rubrics.Shared:Help.hlpAssociationsDescription"
+        }
+      },
+      {
+        "class": [
+          "collection",
+          "associations"
+        ],
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/allowed-associations"
+        ],
+        "entities": [
+          {
+            "class": [
+              "association"
+            ],
+            "rel": [
+              "item"
+            ],
+            "title": "Competencies",
+            "properties": {
+              "allowed": true
+            },
+            "actions": [
+              {
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/allowedAssociations\/Competency",
+                "name": "update",
+                "method": "PUT",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "name": "allowed",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "links": [
+              {
+                "rel": [
+                  "self"
+                ],
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/allowedAssociations\/Competency"
+              }
+            ]
+          },
+          {
+            "class": [
+              "association"
+            ],
+            "rel": [
+              "item"
+            ],
+            "title": "ePortfolio",
+            "properties": {
+              "allowed": true
+            },
+            "actions": [
+              {
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/allowedAssociations\/ePortfolio",
+                "name": "update",
+                "method": "PUT",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "name": "allowed",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "links": [
+              {
+                "rel": [
+                  "self"
+                ],
+                "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/allowedAssociations\/ePortfolio"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "rel": [
+          "self"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6"
+      },
+      {
+        "rel": [
+          "up"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213"
+      },
+      {
+        "class": [
+          "statistics"
+        ],
+        "rel": [
+          "alternate"
+        ],
+        "href": "https:\/\/alafqa1.devlms.brightspace.com\/d2l\/lp\/rubrics\/stats_selectAssociation.d2l?rubricId=6&ou=121213"
+      },
+      {
+        "class": [
+          "preview"
+        ],
+        "rel": [
+          "alternate"
+        ],
+        "href": "https:\/\/alafqa1.devlms.brightspace.com\/d2l\/lp\/rubrics\/preview.d2l?rubricId=6&originTool=rubrics&ou=121213"
+      },
+      {
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/criteria-groups"
+        ],
+        "href": "static-data/rubrics/organizations/editable/242/groups.json"
+      },
+      {
+        "rel": [
+          "https:\/\/api.brightspace.com\/rels\/organization"
+        ],
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.organizations.api.dev.brightspace.com\/121213"
+      },
+      {
+        "rel": [
+          "https:\/\/rubrics.api.brightspace.com\/rels\/overall-levels"
+        ],
+        "href": "static-data/rubrics/organizations/editable/242/overallLevels.json"
+      }
+    ],
+    "actions": [
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/reverseLevels",
+        "name": "reverse-levels",
+        "method": "POST"
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/updateScoring",
+        "name": "update-scoring",
+        "method": "POST",
+        "fields": [
+          {
+            "type": "radio",
+            "name": "scoring-method",
+            "value": [
+              {
+                "value": "TextOnly",
+                "title": "No Score",
+                "selected": false
+              },
+              {
+                "value": "Points",
+                "title": "Points",
+                "selected": true
+              },
+              {
+                "value": "CustomPoints",
+                "title": "Custom Points",
+                "selected": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6\/convertType",
+        "name": "update-type",
+        "method": "POST",
+        "fields": [
+          {
+            "type": "radio",
+            "name": "rubric-type",
+            "value": [
+              {
+                "value": "Holistic",
+                "title": "Holistic",
+                "selected": false
+              },
+              {
+                "value": "Analytic",
+                "title": "Analytic",
+                "selected": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6",
+        "name": "update-name",
+        "method": "PATCH",
+        "fields": [
+          {
+            "class": [
+              "required"
+            ],
+            "type": "text",
+            "name": "name",
+            "value": "Guitar Playing"
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6",
+        "name": "update-visibility",
+        "method": "PATCH",
+        "fields": [
+          {
+            "type": "radio",
+            "name": "visibility",
+            "value": [
+              {
+                "value": "AlwaysVisible",
+                "selected": true
+              },
+              {
+                "value": "VisibleOnceFeedbackPosted",
+                "selected": false
+              },
+              {
+                "value": "NeverVisible",
+                "selected": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6",
+        "name": "update-score-visibility",
+        "method": "PATCH",
+        "fields": [
+          {
+            "type": "checkbox",
+            "name": "scoreVisible",
+            "value": true
+          }
+        ]
+      },
+      {
+        "href": "https:\/\/35adaf3f-6feb-46ac-8649-3df89f049393.rubrics.api.dev.brightspace.com\/organizations\/121213\/6",
+        "name": "update-status",
+        "method": "PATCH",
+        "fields": [
+          {
+            "type": "radio",
+            "name": "rubric-status",
+            "value": [
+              {
+                "value": "Published",
+                "title": "Published",
+                "selected": false
+              },
+              {
+                "value": "Archived",
+                "title": "Archived",
+                "selected": false
+              },
+              {
+                "value": "Draft",
+                "title": "Draft",
+                "selected": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
