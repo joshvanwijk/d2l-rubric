@@ -69,11 +69,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 		</style>
 
 		<div class="points" hidden="[[!_showPoints]]">
-			<d2l-input-text id="cell-points" value="[[entity.properties.points]]" on-change="_savePoints" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label="[[localize('cellPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
+			<d2l-input-text
+				id="cell-points"
+				value="[[entity.properties.points]]"
+				on-change="_savePoints"
+				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
+				aria-label$="[[localize('cellPoints')]]"
+				disabled="[[!_canEditPoints]]"
+				size="1"
+				prevent-submit="">
 			</d2l-input-text>
 			<div>[[localize('pointsAbbreviation')]]</div>
 		</div>
-		<d2l-rubric-text-editor id="description" token="[[token]]" key="[[_key]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]" disabled="[[!_canEditDescription]]" value="[[_getDescription(entity)]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+		<d2l-rubric-text-editor
+			id="description"
+			token="[[token]]"
+			key="[[_key]]"
+			aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
+			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
+			disabled="[[!_canEditDescription]]"
+			value="[[_getDescription(entity)]]"
+			on-change="_saveDescription"
+			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
 			<d2l-tooltip id="description-bubble" for="description" position="bottom">

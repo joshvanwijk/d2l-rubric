@@ -36,7 +36,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback-editor">
 			}
 
 		</style>
-		<d2l-rubric-text-editor id="feedback" token="[[token]]" key="[[_key]]" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" aria-label="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]" disabled="[[!_canEdit]]" value="[[_getFeedback(entity)]]" on-change="_saveFeedback" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEdit)]]">
+		<d2l-rubric-text-editor id="feedback" token="[[token]]" key="[[_key]]" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]" disabled="[[!_canEdit]]" value="[[_getFeedback(entity)]]" on-change="_saveFeedback" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_feedbackInvalid]]">
 			<d2l-tooltip id="feedback-bubble" for="feedback" position="bottom">
@@ -45,7 +45,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback-editor">
 		</template>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
