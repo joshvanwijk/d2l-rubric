@@ -498,7 +498,7 @@ Polymer({
 			dom(this.root).querySelector('#feedback-inner' + criterionNum).focus();
 		}.bind(this));
 		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback' + criterionNum).focus();
+			dom(this.root).querySelector('#feedback' + criterionNum).focusFeedback();
 		}.bind(this));
 	},
 
