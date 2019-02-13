@@ -507,18 +507,12 @@ Polymer({
 		fastdom.mutate(function() {
 			dom(this.root).querySelector('#feedback-inner' + criterionNum).addFocusStylingToFeedbackWrapper();
 		}.bind(this));
-		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback' + criterionNum).addFocusStylingToFloat();
-		}.bind(this));
 	},
 
 	_hoverFeedbackOff: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		fastdom.mutate(function() {
 			dom(this.root).querySelector('#feedback-inner' + criterionNum).removeFocusStylingFromFeedbackWrapper();
-		}.bind(this));
-		fastdom.mutate(function() {
-			dom(this.root).querySelector('#feedback' + criterionNum).removeFocusStylingFromFloat();
 		}.bind(this));
 	},
 
