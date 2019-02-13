@@ -20,7 +20,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				display: block;
 			}
 			.feedback-arrow,
-			.feedback-arrow-focused {
+			:host([_hovered]) .feedback-arrow {
 				margin-top: calc(-0.5rem - 25px);
 				width: 0;
 				height: 0;
@@ -37,12 +37,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-arrow[data-mobile] {
 				display: none;
 			}
-			.feedback-arrow-focused {
+			:host([_hovered]) .feedback-arrow {
 				border-bottom-color: var(--d2l-color-celestine);
 			}
 			.feedback-arrow-inner,
-			.feedback-arrow-inner-focused
-			 {
+			:host([_hovered]) .feedback-arrow-inner {
 				position: relative;
 				left: -12px;
 				width: 0;
@@ -56,7 +55,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-arrow-inner {
 				top: 2px;
 			}
-			.feedback-arrow-inner-focused {
+			:host([_hovered]) .feedback-arrow-inner {
 				top: 3px;
 			}
 			.clear-feedback-button {
@@ -82,7 +81,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-wrapper-editable:hover .feedback-arrow-inner {
 				border-bottom: 12px solid var(--d2l-color-sylvite);
 			}
-			.feedback-wrapper-focused {
+			:host([_hovered]) .feedback-wrapper {
 				cursor: text;
 				padding: calc(0.5rem - 1px);
 				padding-left: calc(1rem - 1px);
@@ -167,6 +166,11 @@ Polymer({
 		_feedbackInFocus: {
 			type: Boolean,
 			value: false
+		},
+		_hovered: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
 		}
 	},
 
@@ -204,30 +208,12 @@ Polymer({
 	},
 
 	addFocusStylingToFeedbackWrapper: function() {
-		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
-		if (feedbackWrapper === null) {
-			feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper-focused');
-		}
-		var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
-		var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
-		feedbackWrapper.classList.add('feedback-wrapper-focused');
-		feedbackWrapper.classList.remove('feedback-wrapper');
-		feedbackArrow.classList.add('feedback-arrow-focused');
-		feedbackArrowInner.classList.add('feedback-arrow-inner-focused');
+		this._hovered = true;
 	},
 
 	removeFocusStylingFromFeedbackWrapper: function() {
 		if (!this._feedbackInFocus) {
-			var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper-focused');
-			if (feedbackWrapper === null) {
-				feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
-			}
-			var feedbackArrow = dom(this.root).querySelector('.feedback-arrow');
-			var feedbackArrowInner = dom(this.root).querySelector('.feedback-arrow-inner');
-			feedbackWrapper.classList.add('feedback-wrapper');
-			feedbackWrapper.classList.remove('feedback-wrapper-focused');
-			feedbackArrow.classList.remove('feedback-arrow-focused');
-			feedbackArrowInner.classList.remove('feedback-arrow-inner-focused');
+			this._hovered = false;
 		}
 	},
 
