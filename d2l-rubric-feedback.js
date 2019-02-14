@@ -29,8 +29,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				transition-property: border-color;
 				transition-timing-function: ease;
 				transition: border-color 0.5s;
-			}
-			.feedback-arrow {
 				border-bottom-color: var(--d2l-table-border-color);
 			}
 			.feedback-arrow[data-mobile] {
@@ -41,6 +39,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			}
 			.feedback-arrow-inner {
 				position: relative;
+				top: 2px;
 				left: -12px;
 				width: 0;
 				height: 0;
@@ -49,9 +48,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				border-bottom: 12px solid white;
 				z-index: 1;
 				-moz-box-sizing: border-box;
-			}
-			.feedback-arrow-inner {
-				top: 2px;
 			}
 			:host([_focus-styling]) .feedback-arrow-inner {
 				top: 3px;
