@@ -19,8 +19,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			:host {
 				display: block;
 			}
-			.feedback-arrow,
-			:host([_hovered]) .feedback-arrow {
+			.feedback-arrow {
 				margin-top: calc(-0.5rem - 25px);
 				width: 0;
 				height: 0;
@@ -37,11 +36,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-arrow[data-mobile] {
 				display: none;
 			}
-			:host([_hovered]) .feedback-arrow {
+			:host([_focus-styling]) .feedback-arrow {
 				border-bottom-color: var(--d2l-color-celestine);
 			}
-			.feedback-arrow-inner,
-			:host([_hovered]) .feedback-arrow-inner {
+			.feedback-arrow-inner {
 				position: relative;
 				left: -12px;
 				width: 0;
@@ -55,7 +53,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-arrow-inner {
 				top: 2px;
 			}
-			:host([_hovered]) .feedback-arrow-inner {
+			:host([_focus-styling]) .feedback-arrow-inner {
 				top: 3px;
 			}
 			.clear-feedback-button {
@@ -81,7 +79,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			.feedback-wrapper-editable:hover .feedback-arrow-inner {
 				border-bottom: 12px solid var(--d2l-color-sylvite);
 			}
-			:host([_hovered]) .feedback-wrapper {
+			:host([_focus-styling]) .feedback-wrapper {
 				cursor: text;
 				padding: calc(0.5rem - 1px);
 				padding-left: calc(1rem - 1px);
@@ -112,7 +110,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
-		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]">
+		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]" on-mouseover="_addFocusStylingToFeedbackWrapper" on-mouseout="_removeFocusStylingFromFeedbackWrapper">
 			<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]">
 				<div class="feedback-arrow-inner"></div>
 			</div>
@@ -159,6 +157,18 @@ Polymer({
 				return this._blurHandler.bind(this);
 			}
 		},
+		_boundFocusOutHandler: {
+			type: Function,
+			value: function() {
+				return this._focusOutHandler.bind(this);
+			}
+		},
+		_boundFocusInHandler: {
+			type: Function,
+			value: function() {
+				return this._focusInHandler.bind(this);
+			}
+		},
 		addingFeedback: {
 			type: Boolean,
 			value: false
@@ -167,7 +177,7 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		_hovered: {
+		_focusStyling: {
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
@@ -185,35 +195,47 @@ Polymer({
 			return;
 		}
 		elem.addEventListener('blur', this._boundBlurHandler);
+		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+		feedbackWrapper.addEventListener('focusout', this._boundFocusOutHandler);
+		feedbackWrapper.addEventListener('focusin', this._boundFocusInHandler);
 	},
 
 	detached: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		if (!elem) return;
 		elem.removeEventListener('blur', this._boundBlurHandler);
+		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
+		feedbackWrapper.removeEventListener('focusout', this._boundFocusOutHandler);
+		feedbackWrapper.removeEventListener('focusin', this._boundFocusInHandler);
 	},
 
 	focus: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		elem.focus();
+	},
+
+	_focusInHandler: function() {
 		this._feedbackInFocus = true;
-		this.addFocusStylingToFeedbackWrapper();
+		this._addFocusStylingToFeedbackWrapper();
+	},
+
+	_focusOutHandler: function() {
+		this._feedbackInFocus = false;
+		this._removeFocusStylingFromFeedbackWrapper();
 	},
 
 	_blurHandler: function(event) {
 		var feedback = event.target.$.textarea.value;
 		this.saveFeedback(feedback);
-		this._feedbackInFocus = false;
-		this.removeFocusStylingFromFeedbackWrapper();
 	},
 
-	addFocusStylingToFeedbackWrapper: function() {
-		this._hovered = true;
+	_addFocusStylingToFeedbackWrapper: function() {
+		this._focusStyling = true;
 	},
 
-	removeFocusStylingFromFeedbackWrapper: function() {
+	_removeFocusStylingFromFeedbackWrapper: function() {
 		if (!this._feedbackInFocus) {
-			this._hovered = false;
+			this._focusStyling = false;
 		}
 	},
 
