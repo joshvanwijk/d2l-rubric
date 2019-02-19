@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-activity-alignments/d2l-select-outcomes.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -174,6 +175,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
 			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 			</d2l-input-textarea>
+			<d2l-button-subtle hidden$="[[_hideBrowseOutcomesButton()]]" type="button" on-tap="_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
 					[[_nameInvalidError]]
@@ -424,5 +426,14 @@ Polymer({
 
 	_getCellKeyRels: function() {
 		return [this.HypermediaRels.Rubrics.level, 'self'];
+	},
+
+	//TODO: get LD flag for outcomes
+	//hide browser outcomes button when holistic or text only or LD flag is off
+	_hideBrowseOutcomesButton: function() {
+		return this._hasOutOf || this.isHolistic;
+	},
+	_showBrowseOutcomes: function() {
+
 	}
 });
