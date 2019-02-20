@@ -15,6 +15,7 @@ import './d2l-rubric-feedback-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
 import './d2l-rubric-dialog-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
+import './simple-overlay.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -164,6 +165,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				min-width: calc(2.25rem + 1em);
 			}
 
+			#browseOutcomesButton{
+				margin-bottom: 5px;
+			}
+
 			[hidden] {
 				display: none;
 			}
@@ -172,10 +177,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div class="gutter-left" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
 			<slot name="gutter-left"></slot>
 		</div>
+
+		<simple-overlay id="overlay" tabindex="-1">
+			<h2>Browse Outcomes</h2>
+			<p>This can be closed by pressing the ESC key too.</p>
+			<button on-tap= "_closeBrowseOutcomes">Close</button>
+		</simple-overlay>
+
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
 			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 			</d2l-input-textarea>
-			<d2l-button-subtle hidden$="[[_hideBrowseOutcomesButton()]]" type="button" on-tap="_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
+			<d2l-button-subtle id= "browseOutcomesButton"hidden$="[[_hideBrowseOutcomesButton()]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
 					[[_nameInvalidError]]
@@ -433,7 +445,12 @@ Polymer({
 	_hideBrowseOutcomesButton: function() {
 		return this._hasOutOf || this.isHolistic;
 	},
-	_showBrowseOutcomes: function() {
 
+	_showBrowseOutcomes: function() {
+		this.$.overlay.open();
+	},
+
+	_closeBrowseOutcomes: function() {
+		this.$.overlay.close();
 	}
 });
