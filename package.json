@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/Brightspace/d2l-rubric",
   "name": "d2l-rubric",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "directories": {
     "test": "test"
   },
@@ -75,7 +75,7 @@
     "d2l-tooltip": "BrightspaceUI/tooltip#semver:^3",
     "d2l-typography": "BrightspaceUI/typography#semver:^7",
     "fastdom": "^1.0.8",
-    "s-html": "Brightspace/s-html#semver:^2.0.0"
+    "s-html": "Brightspace/s-html#semver:^2"
   },
   "resolutions": {
     "inherits": "2.0.3",
