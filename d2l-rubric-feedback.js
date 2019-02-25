@@ -56,6 +56,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				border-radius: 5px;
 				padding: 5px;
 				border: solid transparent 1px;
+				cursor: pointer;
 			}
 			.clear-feedback-button:hover {
 				border-color: darkgray;
