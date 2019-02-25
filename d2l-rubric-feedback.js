@@ -25,7 +25,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				height: 0;
 				border: 12px solid transparent;
 				position: absolute;
-				-moz-box-sizing: border-box;
 				transition-property: border-color;
 				transition-timing-function: ease;
 				transition: border-color 0.5s;
@@ -47,7 +46,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				border-right: 12px solid transparent;
 				border-bottom: 12px solid white;
 				z-index: 1;
-				-moz-box-sizing: border-box;
 			}
 			:host([_focus-styling]) .feedback-arrow-inner {
 				top: 3px;
