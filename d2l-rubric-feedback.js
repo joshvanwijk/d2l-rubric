@@ -178,7 +178,6 @@ Polymer({
 			return;
 		}
 		elem.addEventListener('blur', this._boundBlurHandler);
-		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
 	},
 
 	detached: function() {
