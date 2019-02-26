@@ -26,6 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'criterionAriaLabel': '条件 {index, number}/{count, number}',
 		'criterionDeleted': '{name} 条件を削除しました',
 		'criterionDescriptionAriaLabel': '条件 {criterionName}、レベル {levelName} の説明',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': '条件 {criterionName}、レベル {levelName} のフィードバック',
 		'criterionNameAriaLabel': '条件名',
 		'criterionOutOf': '条件 {name} は最大 {value} ポイントです',

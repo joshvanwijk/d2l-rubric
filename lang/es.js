@@ -26,6 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'criterionAriaLabel': 'Criterio {index, number} de {count, number}',
 		'criterionDeleted': 'Criterio {name} eliminado',
 		'criterionDescriptionAriaLabel': 'Descripción del criterio {criterionName}, nivel {levelName}',
+		'criterionFeedback': 'Criterion Feedback',
 		'criterionFeedbackAriaLabel': 'Comentario del criterio {criterionName}, nivel {levelName}',
 		'criterionNameAriaLabel': 'Nombre del criterio',
 		'criterionOutOf': 'Se le restaron {value} puntos al criterio {name}',

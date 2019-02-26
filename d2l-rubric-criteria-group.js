@@ -168,7 +168,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0">
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0" focused-styling>
 							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
