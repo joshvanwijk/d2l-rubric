@@ -105,7 +105,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
 		<siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></siren-entity>
-		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]" on-mouseover="_addFocusStylingToFeedbackWrapper" on-mouseout="_removeFocusStylingFromFeedbackWrapper">
+		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]" on-mouseover="_addFocusStylingToFeedbackWrapper" on-mouseout="_removeFocusStylingFromFeedbackWrapper" on-focusin="_focusInHandler" on-focusout="_focusOutHandler">
 			<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]">
 				<div class="feedback-arrow-inner"></div>
 			</div>
@@ -152,18 +152,6 @@ Polymer({
 				return this._blurHandler.bind(this);
 			}
 		},
-		_boundFocusOutHandler: {
-			type: Function,
-			value: function() {
-				return this._focusOutHandler.bind(this);
-			}
-		},
-		_boundFocusInHandler: {
-			type: Function,
-			value: function() {
-				return this._focusInHandler.bind(this);
-			}
-		},
 		addingFeedback: {
 			type: Boolean,
 			value: false
@@ -191,17 +179,11 @@ Polymer({
 		}
 		elem.addEventListener('blur', this._boundBlurHandler);
 		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
-		feedbackWrapper.addEventListener('focusout', this._boundFocusOutHandler);
-		feedbackWrapper.addEventListener('focusin', this._boundFocusInHandler);
 	},
 
 	detached: function() {
 		var elem = dom(this.root).querySelector('d2l-input-textarea');
 		if (!elem) return;
-		elem.removeEventListener('blur', this._boundBlurHandler);
-		var feedbackWrapper = dom(this.root).querySelector('.feedback-wrapper');
-		feedbackWrapper.removeEventListener('focusout', this._boundFocusOutHandler);
-		feedbackWrapper.removeEventListener('focusin', this._boundFocusInHandler);
 	},
 
 	focus: function() {
