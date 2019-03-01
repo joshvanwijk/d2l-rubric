@@ -273,7 +273,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 			var scoreField = this._getFieldWithName(fields, 'score');
 			scoreField.value = points;
 
-			this.performSirenAction(action, fields);
+			return this.performSirenAction(action, fields);
 		}
 	},
 
@@ -290,7 +290,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 			var assessmentField = this._getFieldWithName(fields, 'rubricAssessment');
 			assessmentField.value.OverallScore = points;
 			assessmentField.value.TotalScoreOverridden = true;
-			this.performSirenAction(action, fields);
+			return this.performSirenAction(action, fields);
 		}
 	},
 
@@ -310,7 +310,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 			var defaultScoreField = this._getFieldWithName(fields, 'defaultScore');
 			scoreField.value = defaultScoreField.value;
 
-			this.performSirenAction(action, fields);
+			return this.performSirenAction(action, fields);
 		}
 	},
 
@@ -326,7 +326,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 			var fields = action.fields;
 			var assessmentField = this._getFieldWithName(fields, 'rubricAssessment');
 			assessmentField.value.TotalScoreOverridden = false;
-			this.performSirenAction(action, fields);
+			return this.performSirenAction(action, fields);
 		}
 	},
 
