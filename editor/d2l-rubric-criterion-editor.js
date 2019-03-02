@@ -197,7 +197,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			  token="[[token]]"
 			>
 			</d2l-select-outcomes>
-			<button on-tap= "_closeBrowseOutcomes">Close</button>
 		</simple-overlay>
 
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
@@ -325,6 +324,12 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
 	],
 	observers: ['_widthChange(criterionDetailWidth)'],
+
+	ready: function() {
+		this.addEventListener('d2l-alignment-list-added', this._closeBrowseOutcomes);
+		this.addEventListener('d2l-alignment-list-cancelled', this._closeBrowseOutcomes);
+		this.addEventListener('d2l-select-outcomes-closed', this._closeBrowseOutcomes);
+	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
 		this.fire('d2l-rubric-criterion-detail-width-changed', {});
@@ -456,14 +461,16 @@ Polymer({
 		return [this.HypermediaRels.Rubrics.level, 'self'];
 	},
 
-	//TODO: get LD flag for outcomes
 	//hide browser outcomes button when holistic or text only or LD flag is off
 	_hideBrowseOutcomesButton: function() {
-		return this._hasOutOf || this.isHolistic;
+		const isFlagOff = this.HypermediaRels.Activities && this.HypermediaRels.Activities.activityUsage;
+		return !isFlagOff || this._hasOutOf || this.isHolistic;
 	},
 
 	_getOutcomeRel: function() {
-		return this.HypermediaRels.Activities.activityUsage;
+		if (this.HypermediaRels && this.HypermediaRels.Activities) {
+			return this.HypermediaRels.Activities.activityUsage;
+		}
 	},
 
 	_getOutcomeHref: function(entity) {
