@@ -1,5 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
+import 'd2l-activity-alignments/d2l-activity-alignments.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -155,6 +156,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				margin-top: 0;
 			}
 
+			.with-margin {
+				margin: 24px 40px;
+			}
+
+			.scrollable {
+				border: 1px solid lightgray;
+				padding: 24px;
+				@apply --layout-scroll;
+			}
+
 			:dir(rtl) .criterion-remove {
 				right: auto;
 				left: -2.5rem;
@@ -178,9 +189,14 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			<slot name="gutter-left"></slot>
 		</div>
 
-		<simple-overlay id="overlay" tabindex="-1">
+		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
 			<h2>Browse Outcomes</h2>
-			<p>This can be closed by pressing the ESC key too.</p>
+			<d2l-select-outcomes
+			  rel= "[[_getOutcomeRel()]]"
+              href="[[_getOutcomeHref(entity)]]"
+			  token="[[token]]"
+			>
+			</d2l-select-outcomes>
 			<button on-tap= "_closeBrowseOutcomes">Close</button>
 		</simple-overlay>
 
@@ -446,11 +462,21 @@ Polymer({
 		return this._hasOutOf || this.isHolistic;
 	},
 
+	_getOutcomeRel: function() {
+		return this.HypermediaRels.Activities.activityUsage;
+	},
+
+	_getOutcomeHref: function(entity) {
+		if (entity) {
+			return entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage).href;
+		}
+	},
+
 	_showBrowseOutcomes: function() {
 		this.$.overlay.open();
 	},
 
 	_closeBrowseOutcomes: function() {
 		this.$.overlay.close();
-	}
+	},
 });

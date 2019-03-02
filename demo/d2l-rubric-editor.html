@@ -16,11 +16,6 @@ import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
 import './fetch-siren-entity-whitelist.js';
 import '../editor/d2l-rubric-editor.js';
 import '../d2l-rubric-title.js';
-window.d2lfetch = {
-	fetch: function(req) {
-		return window.fetch(req);
-	}
-};
 </script>
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<script type="module" src="../../@polymer/promise-polyfill/promise-polyfill.js"></script>
@@ -95,7 +90,9 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container">
 	<h3>Rubric Editor</h3>
 	<p></p>
 	<demo-snippet>
-		<d2l-rubric-editor rich-text-enabled href="static-data/rubrics/organizations/editable/242.json" token=""></d2l-rubric-editor>
+		<d2l-rubric-editor rich-text-enabled
+		href="https://a2f76728-9423-4098-b1c8-55bc8eed1240.rubrics.api.proddev.d2l/organizations/6609/2"
+		token="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ijk3MzNkMWVhLTk2MzktNDFlMy05ZDZiLWQyMjJjNTg0MDQ5MyJ9.eyJ0ZW5hbnRpZCI6ImEyZjc2NzI4LTk0MjMtNDA5OC1iMWM4LTU1YmM4ZWVkMTI0MCIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiIxYjY0MDMyMC1iMjkyLTQ2Y2MtOTNjZC03NDM1ZmQ4NjcxN2UiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTUxNTY5MjMwLCJuYmYiOjE1NTE1NjU2MzB9.KDupmtsBXeaO8RKWQztuVQfv7h7suZTTvctQm55SAp60iga-2A7fC5k9pgIkRJQ8MHOWQIHbAKZqC1agSNtJ4OrjRY2Ih8o2r1rpchOewz9ClcK0snavecYif3YRLAOREJOFi7m8e9MnBH3njAk1hte6_CHztJYXDH6P5EB6wtMIe5Xebby-LxCkuhILZlA9i7vYRZbkAqjbIGFlJhM2dzx3ubHEfziLWSOa2Vr5Gwt2KZ1nGhuLgB8jWZvacVB6Y0TYH1f4JxIkV1HcmFCx_jE3ggOSxxmYn3FNQzz09i8A9QTLMzDqNP-TGdN3ZIHwXUCJgwdbWSk-sm28w98WKA">
 	</demo-snippet>
 </div>`;
 
