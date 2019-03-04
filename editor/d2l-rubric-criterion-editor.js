@@ -202,7 +202,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
 			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 			</d2l-input-textarea>
-			<d2l-button-subtle id= "browseOutcomesButton"hidden$="[[_hideBrowseOutcomesButton()]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
+			<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
 					[[_nameInvalidError]]
@@ -273,6 +273,10 @@ Polymer({
 		_nameRequired: {
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
+		},
+		_hideBrowseOutcomesButton:{
+			type: Boolean,
+			computed: '_canHideBrowseOutcomesButton(entity)',
 		},
 		_nameInvalid: {
 			type: Boolean,
@@ -462,19 +466,22 @@ Polymer({
 	},
 
 	//hide browser outcomes button when holistic or text only or LD flag is off
-	_hideBrowseOutcomesButton: function() {
-		const isFlagOff = this.HypermediaRels.Activities && this.HypermediaRels.Activities.activityUsage;
+	_canHideBrowseOutcomesButton: function(entity) {
+		const isFlagOff = entity &&
+			this.HypermediaRels.Activities &&
+			this.HypermediaRels.Activities.activityUsage &&
+			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 		return !isFlagOff || this._hasOutOf || this.isHolistic;
 	},
 
 	_getOutcomeRel: function() {
-		if (this.HypermediaRels && this.HypermediaRels.Activities) {
+		if (this.HypermediaRels && this.HypermediaRels.Activities && !this._hideBrowseOutcomesButton) {
 			return this.HypermediaRels.Activities.activityUsage;
 		}
 	},
 
 	_getOutcomeHref: function(entity) {
-		if (entity) {
+		if (entity && this.HypermediaRels.Activities && !this._hideBrowseOutcomesButton) {
 			return entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage).href;
 		}
 	},

@@ -18,20 +18,23 @@ import { IronOverlayBehavior } from '@polymer/iron-overlay-behavior/iron-overlay
 Polymer({
 	_template: html`
     <style>
-      :host {
-        background: white;
-        color: black;
-        padding: 24px;
-        box-shadow: rgba(0, 0, 0, 0.24) -2px 5px 12px 0px, rgba(0, 0, 0, 0.12) 0px 0px 12px 0px;
-      }
-	  .with-margin {
+		:host {
+			background: white;
+			color: black;
+			padding: 24px;
+			box-shadow: rgba(0, 0, 0, 0.24) -2px 5px 12px 0px, rgba(0, 0, 0, 0.12) 0px 0px 12px 0px;
+		}
+
+	  	.with-margin {
             margin: 24px 40px;
-          }
-          .scrollable {
+        }
+
+        .scrollable {
             border: 1px solid lightgray;
             padding: 24px;
             @apply --layout-scroll;
         }
+
     </style>
     <slot></slot>
 `,
