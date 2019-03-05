@@ -10,7 +10,7 @@ import './d2l-rubric-error-handling-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-level-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-level-editor">
 	<template strip-whitespace="">
 		<style>
 			:host {

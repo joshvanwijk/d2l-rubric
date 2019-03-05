@@ -340,7 +340,8 @@ Polymer({
 		* The user access token
 		*/
 		token: {
-			type: Object,
+			type: String,
+			reflectToAttribute: true
 		},
 		_rubricName: {
 			type: String,

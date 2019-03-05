@@ -1,4 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-activity-alignments/d2l-select-outcomes.js';
+import 'd2l-activity-alignments/d2l-activity-alignments.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -14,10 +16,11 @@ import './d2l-rubric-feedback-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
 import './d2l-rubric-dialog-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
+import './simple-overlay.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -153,6 +156,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				margin-top: 0;
 			}
 
+			.with-margin {
+				margin: 24px 40px;
+			}
+
+			.scrollable {
+				border: 1px solid lightgray;
+				padding: 24px;
+				@apply --layout-scroll;
+			}
+
 			:dir(rtl) .criterion-remove {
 				right: auto;
 				left: -2.5rem;
@@ -163,6 +176,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				min-width: calc(2.25rem + 1em);
 			}
 
+			#browseOutcomesButton{
+				margin-bottom: 5px;
+			}
+
 			[hidden] {
 				display: none;
 			}
@@ -171,9 +188,21 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 		<div class="gutter-left" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
 			<slot name="gutter-left"></slot>
 		</div>
+
+		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
+			<h2>Browse Outcomes</h2>
+			<d2l-select-outcomes
+			  rel= "[[_getOutcomeRel(_hideBrowseOutcomesButton)]]"
+              href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]"
+			  token="[[token]]"
+			>
+			</d2l-select-outcomes>
+		</simple-overlay>
+
 		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
 			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 			</d2l-input-textarea>
+			<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
 			<template is="dom-if" if="[[_nameInvalid]]">
 				<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
 					[[_nameInvalidError]]
@@ -245,6 +274,10 @@ Polymer({
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
 		},
+		_hideBrowseOutcomesButton:{
+			type: Boolean,
+			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic)',
+		},
 		_nameInvalid: {
 			type: Boolean,
 			value: false,
@@ -295,6 +328,12 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
 	],
 	observers: ['_widthChange(criterionDetailWidth)'],
+
+	ready: function() {
+		this.addEventListener('d2l-alignment-list-added', this._closeBrowseOutcomes);
+		this.addEventListener('d2l-alignment-list-cancelled', this._closeBrowseOutcomes);
+		this.addEventListener('d2l-select-outcomes-closed', this._closeBrowseOutcomes);
+	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
 		this.fire('d2l-rubric-criterion-detail-width-changed', {});
@@ -424,5 +463,34 @@ Polymer({
 
 	_getCellKeyRels: function() {
 		return [this.HypermediaRels.Rubrics.level, 'self'];
-	}
+	},
+
+	//hide browse outcomes button when holistic or text only or LD flag is off
+	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic) {
+		const isFlagOff = entity &&
+			this.HypermediaRels.Activities &&
+			this.HypermediaRels.Activities.activityUsage &&
+			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
+		return !isFlagOff || !_hasOutOf || isHolistic;
+	},
+
+	_getOutcomeRel: function(_hideBrowseOutcomesButton) {
+		if (this.HypermediaRels && this.HypermediaRels.Activities && !_hideBrowseOutcomesButton) {
+			return this.HypermediaRels.Activities.activityUsage;
+		}
+	},
+
+	_getOutcomeHref: function(entity, _hideBrowseOutcomesButton) {
+		if (entity && this.HypermediaRels.Activities && !_hideBrowseOutcomesButton) {
+			return entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage).href;
+		}
+	},
+
+	_showBrowseOutcomes: function() {
+		this.$.overlay.open();
+	},
+
+	_closeBrowseOutcomes: function() {
+		this.$.overlay.close();
+	},
 });

@@ -8,20 +8,15 @@
 
 	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 	<script type="module">
-import '@polymer/promise-polyfill/promise-polyfill.js';
-import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-import '@polymer/iron-demo-helpers/demo-snippet.js';
-import 'd2l-typography/d2l-typography.js';
-import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
-import './fetch-siren-entity-whitelist.js';
-import '../editor/d2l-rubric-editor.js';
-import '../d2l-rubric-title.js';
-window.d2lfetch = {
-	fetch: function(req) {
-		return window.fetch(req);
-	}
-};
-</script>
+		import '@polymer/promise-polyfill/promise-polyfill.js';
+		import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+		import '@polymer/iron-demo-helpers/demo-snippet.js';
+		import 'd2l-typography/d2l-typography.js';
+		import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
+		import './fetch-siren-entity-whitelist.js';
+		import '../editor/d2l-rubric-editor.js';
+		import '../d2l-rubric-title.js';
+	</script>
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<script type="module" src="../../@polymer/promise-polyfill/promise-polyfill.js"></script>
 	<script src="../../whatwg-fetch/fetch.js"></script>
@@ -43,17 +38,17 @@ window.d2lfetch = {
 		See: https://github.com/Polymer/polymer-modulizer/issues/154
 		-->
 	<script type="module">
-const $_documentContainer = document.createElement('template');
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<style is="custom-style" include="demo-pages-shared-styles">
+		$_documentContainer.innerHTML = `<style is="custom-style" include="demo-pages-shared-styles">
 	</style>`;
 
-document.head.appendChild($_documentContainer.content);
-</script>
+		document.head.appendChild($_documentContainer.content);
+	</script>
 	<script type="module">
-const $_documentContainer = document.createElement('template');
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
+		$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 		<style is="custom-style" include="d2l-typography">
 			html {
 				font-size: 20px;
@@ -66,12 +61,12 @@ $_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 
 	</custom-style>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
+		document.body.appendChild($_documentContainer.content);
+	</script>
 	<script type="module">
-const $_documentContainer = document.createElement('template');
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<style>
+		$_documentContainer.innerHTML = `<style>
 		.d2l-richtext-editor-container.d2l-rubric-html-editor > p:first-of-type {
 			margin-top: 0;
 		}
@@ -80,14 +75,15 @@ $_documentContainer.innerHTML = `<style>
 		}
 	</style>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
+		document.body.appendChild($_documentContainer.content);
+	</script>
 </head>
-<body class="d2l-typography">
-<script type="module">
-const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<div class="vertical-section-container">
+<body class="d2l-typography">
+	<script type="module">
+		const $_documentContainer = document.createElement('template');
+
+		$_documentContainer.innerHTML = `<div class="vertical-section-container">
 
 	<h1>d2l-rubric-editor demo</h1>
 	<a name="textonly-edit"></a>
@@ -98,7 +94,8 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container">
 	</demo-snippet>
 </div>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
+		document.body.appendChild($_documentContainer.content);
+	</script>
 </body>
+
 </html>
