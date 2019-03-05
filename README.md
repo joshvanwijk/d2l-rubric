@@ -30,9 +30,9 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 ```html
 <head>
 	<link rel="import" href="../d2l-rubric/d2l-rubric.html">
-	<d2l-rubric 
-		href="href for rubric" 
-		token="User token" 
+	<d2l-rubric
+		href="href for rubric"
+		token="User token"
 		assessment-href="href for assessment"
 	/>
 </head>
@@ -45,9 +45,9 @@ Normally user permissions are used to determine which actions are available on a
  ```html
 <head>
 	<link rel="import" href="../d2l-rubric/d2l-rubric.html">
-	<d2l-rubric 
-		href="href for rubric" 
-		token="User token" 
+	<d2l-rubric
+		href="href for rubric"
+		token="User token"
 		assessment-href="href for assessment"
 		read-only
 	/>
@@ -61,6 +61,9 @@ $ polymer serve
 ```
 
 The demo can be viewed at http://127.0.0.1:8081/components/d2l-rubric/demo/index.html
+
+The d2l-rubric-editor demo can be viewed at http://127.0.0.1:8081/components/d2l-rubric/demo/d2l-rubric-editor.html
+To test outcome inside editor, change the URL and Token point to local LMS inside d2l-rubric-editor.html(inside demo file)
 
 ## Running Tests
 

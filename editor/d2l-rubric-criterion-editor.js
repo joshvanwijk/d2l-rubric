@@ -465,7 +465,7 @@ Polymer({
 		return [this.HypermediaRels.Rubrics.level, 'self'];
 	},
 
-	//hide browser outcomes button when holistic or text only or LD flag is off
+	//hide browse outcomes button when holistic or text only or LD flag is off
 	_canHideBrowseOutcomesButton: function(entity) {
 		const isFlagOff = entity &&
 			this.HypermediaRels.Activities &&
