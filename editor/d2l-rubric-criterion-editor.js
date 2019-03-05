@@ -192,8 +192,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
 			<h2>Browse Outcomes</h2>
 			<d2l-select-outcomes
-			  rel= "[[_getOutcomeRel()]]"
-              href="[[_getOutcomeHref(entity)]]"
+			  rel= "[[_getOutcomeRel(_hideBrowseOutcomesButton)]]"
+              href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]"
 			  token="[[token]]"
 			>
 			</d2l-select-outcomes>
@@ -276,7 +276,7 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			computed: '_canHideBrowseOutcomesButton(entity)',
+			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic)',
 		},
 		_nameInvalid: {
 			type: Boolean,
@@ -466,22 +466,22 @@ Polymer({
 	},
 
 	//hide browse outcomes button when holistic or text only or LD flag is off
-	_canHideBrowseOutcomesButton: function(entity) {
+	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic) {
 		const isFlagOff = entity &&
 			this.HypermediaRels.Activities &&
 			this.HypermediaRels.Activities.activityUsage &&
 			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
-		return !isFlagOff || this._hasOutOf || this.isHolistic;
+		return !isFlagOff || !_hasOutOf || isHolistic;
 	},
 
-	_getOutcomeRel: function() {
-		if (this.HypermediaRels && this.HypermediaRels.Activities && !this._hideBrowseOutcomesButton) {
+	_getOutcomeRel: function(_hideBrowseOutcomesButton) {
+		if (this.HypermediaRels && this.HypermediaRels.Activities && !_hideBrowseOutcomesButton) {
 			return this.HypermediaRels.Activities.activityUsage;
 		}
 	},
 
-	_getOutcomeHref: function(entity) {
-		if (entity && this.HypermediaRels.Activities && !this._hideBrowseOutcomesButton) {
+	_getOutcomeHref: function(entity, _hideBrowseOutcomesButton) {
+		if (entity && this.HypermediaRels.Activities && !_hideBrowseOutcomesButton) {
 			return entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage).href;
 		}
 	},
