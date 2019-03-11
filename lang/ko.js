@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'criterionAriaLabel': '기준 {index, number}/{count, number}',
 		'criterionDeleted': '{name} 기준 삭제됨',
 		'criterionDescriptionAriaLabel': '기준 {criterionName}, 수준 {levelName}에 대한 설명',
-		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedback': '기준 피드백',
 		'criterionFeedbackAriaLabel': '기준 {criterionName}, 수준 {levelName}에 대한 피드백',
 		'criterionNameAriaLabel': '기준 이름',
 		'criterionOutOf': '기준 {name}에 {value}점 부족',
