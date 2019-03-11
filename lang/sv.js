@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'criterionAriaLabel': 'Kriterium {index, number} av {count, number}',
 		'criterionDeleted': 'Kriteriet {name} borttaget',
 		'criterionDescriptionAriaLabel': 'Beskrivning av kriterium {criterionName}, nivå {levelName}',
-		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedback': 'Kriteriefeedback',
 		'criterionFeedbackAriaLabel': 'Feedback för kriterium {criterionName}, nivå {levelName}',
 		'criterionNameAriaLabel': 'Namn på kriterium',
 		'criterionOutOf': 'Kriteriet {name} är av {value} poäng',

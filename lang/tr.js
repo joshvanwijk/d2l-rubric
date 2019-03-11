@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'criterionAriaLabel': '{index, number}/{count, number} kriter',
 		'criterionDeleted': '{name} kriteri silindi',
 		'criterionDescriptionAriaLabel': '{criterionName} kriteri için açıklama, seviye: {levelName}',
-		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedback': 'Kriter Geri Bildirimi',
 		'criterionFeedbackAriaLabel': '{criterionName} kriteri için geri bildirim, seviye: {levelName}',
 		'criterionNameAriaLabel': 'Kriter adı',
 		'criterionOutOf': '{name} kriteri, {value} puan üzerindendir',

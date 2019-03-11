@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'criterionAriaLabel': 'Criterium {index, number} van {count, number}',
 		'criterionDeleted': '{name} criterium verwijderd',
 		'criterionDescriptionAriaLabel': 'Beschrijving van criterium {criterionName}, niveau {levelName}',
-		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedback': 'Criterium feedback',
 		'criterionFeedbackAriaLabel': 'Feedback voor criterium {criterionName}, niveau {levelName}',
 		'criterionNameAriaLabel': 'Criteriumnaam',
 		'criterionOutOf': 'Het criterium {name} is gebaseerd op een totale score van {value} punten',

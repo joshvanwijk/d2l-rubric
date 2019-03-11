@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'criterionAriaLabel': 'Kriterium {index, number} von {count, number}',
 		'criterionDeleted': 'Kriterium {name} gelöscht',
 		'criterionDescriptionAriaLabel': 'Beschreibung für Kriterium {criterionName}, Stufe {levelName}',
-		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedback': 'Feedback zum Kriterium',
 		'criterionFeedbackAriaLabel': 'Feedback für Kriterium {criterionName}, Stufe {levelName}',
 		'criterionNameAriaLabel': 'Name des Kriteriums',
 		'criterionOutOf': 'Das Kriterium {name} zählt für maximal {value} Punkte',

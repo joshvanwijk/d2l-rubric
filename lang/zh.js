@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'criterionAriaLabel': '标准 {index, number}，共 {count, number} 条标准',
 		'criterionDeleted': '已删除 {name} 标准',
 		'criterionDescriptionAriaLabel': '{criterionName} 标准，{levelName} 级别描述',
-		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedback': '标准反馈',
 		'criterionFeedbackAriaLabel': '{criterionName} 标准，{levelName} 级别反馈',
 		'criterionNameAriaLabel': '标准名称',
 		'criterionOutOf': '{name} 超出 {value} 分',
