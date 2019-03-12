@@ -9,7 +9,7 @@ import './d2l-rubric-error-handling-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-editor">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -36,7 +36,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback-editor">
 			}
 
 		</style>
-		<d2l-rubric-text-editor id="feedback" token="[[token]]" key="[[_key]]" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]" disabled="[[!_canEdit]]" value="[[_getFeedback(entity)]]" on-change="_saveFeedback" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEdit)]]">
+		<d2l-rubric-text-editor
+			id="feedback"
+			token="[[token]]"
+			key="[[_key]]"
+			aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]"
+			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
+			disabled="[[!_canEdit]]"
+			value="[[_getFeedback(entity)]]"
+			on-change="_saveFeedback"
+			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_feedbackInvalid]]">
 			<d2l-tooltip id="feedback-bubble" for="feedback" position="bottom">
@@ -148,8 +157,9 @@ Polymer({
 		return constructed;
 	},
 
-	_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
-		return richTextEnabled && canEditDescription;
+	_richTextAndEditEnabled: function(entity, richTextEnabled, canEditFeedback) {
+		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
+		return richTextEnabled && canEditFeedback && feedback.hasClass(this.HypermediaClasses.text.richtext);
 	}
 
 });
