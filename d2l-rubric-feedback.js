@@ -13,7 +13,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 	<template strip-whitespace="">
 		<style>
 			:host {

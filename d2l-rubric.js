@@ -22,7 +22,7 @@ import 'd2l-button/d2l-button-subtle.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 	<template strip-whitespace="">
 		<style>
 			:host {

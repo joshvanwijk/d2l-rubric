@@ -1,6 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
-import 'd2l-activity-alignments/d2l-activity-alignments.js';
+import 'd2l-activity-alignments/d2l-activity-alignment-tags.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -8,10 +8,12 @@ import 'd2l-inputs/d2l-input-textarea.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-button/d2l-button-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
+import 'd2l-table/d2l-tspan.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
 import './d2l-rubric-description-editor.js';
+import '../d2l-rubric-feedback.js';
 import './d2l-rubric-feedback-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
 import './d2l-rubric-dialog-behavior.js';
@@ -85,6 +87,48 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			.criterion-text, .criterion-feedback {
 				display: flex;
 				flex-direction: row;
+			}
+
+			#outcometag{
+				border-right: var(--d2l-table-border);
+				margin-right: 50px;
+				display: inline-flex;
+			}
+
+			#tag{
+				margin-left: 10px;
+				margin-top: 6px;
+			}
+
+			#outcomeText{
+				margin-left: 16px;
+				margin-top: 10px;
+				margin-bottom: 3px;
+			}
+
+			.feedback-arrow {
+				margin-top: -25px;
+				margin-left: 30px;
+				width: 0;
+				height: 0;
+				border: 12px solid transparent;
+				position: absolute;
+				transition-property: border-color;
+				transition-timing-function: ease;
+				transition: border-color 0.5s;
+				border-bottom-color: var(--d2l-table-border-color);
+			}
+
+			.feedback-arrow-inner {
+				position: relative;
+				top: 2px;
+				left: -12px;
+				width: 0;
+				height: 0;
+				border-left: 12px solid transparent;
+				border-right: 12px solid transparent;
+				border-bottom: 12px solid white;
+				z-index: 1;
 			}
 
 			.criterion-text {
@@ -199,55 +243,68 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			</d2l-select-outcomes>
 		</simple-overlay>
 
-		<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-			<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
-			</d2l-input-textarea>
-			<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
-			<template is="dom-if" if="[[_nameInvalid]]">
-				<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
-					[[_nameInvalidError]]
-				</d2l-tooltip>
-			</template>
-			</div>
-		<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
-			<div class="criterion-text">
-				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
-					<div class="cell">
-						<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-description-editor>
-					</div>
-				</template>
-			</div>
-			<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
-			<div class="criterion-feedback">
-				<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
-					<div class="cell">
-						<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]">
-						</d2l-rubric-feedback-editor>
-					</div>
-				</template>
-			</div>
-		</div>
-		<div text-only$="[[!_hasOutOf]]" class="cell col-last out-of" hidden$="[[isHolistic]]">
-			<span hidden="[[!_hasOutOf]]">
-				<template is="dom-if" if="[[!_outOfIsEditable]]">
-					<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
-						/ [[_outOf]]
-					</div>
-				</template>
-				<template is="dom-if" if="[[_outOfIsEditable]]">
-					/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
-					</d2l-input-text>
-					<template is="dom-if" if="[[_outOfInvalid]]">
-						<d2l-tooltip id="out-of-bubble" for="out-of-textbox" position="bottom">
-							[[_outOfInvalidError]]
+		<div style="display:flex; flex-direction:column;">
+			<div style="display:flex">
+				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
+					</d2l-input-textarea>
+					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
+					<template is="dom-if" if="[[_nameInvalid]]">
+						<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
+							[[_nameInvalidError]]
 						</d2l-tooltip>
 					</template>
-				</template>
-			</span>
-		</div>
-		<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
-			<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', entity.properties.name)]]" on-tap="_handleDeleteCriterion" type="button"></d2l-button-icon>
-		</div>
+				</div>
+				<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
+					<div class="criterion-text">
+						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
+							<div class="cell">
+								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-description-editor>
+							</div>
+						</template>
+					</div>
+					<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
+					<div class="criterion-feedback">
+						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
+							<div class="cell">
+								<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]">
+								</d2l-rubric-feedback-editor>
+							</div>
+						</template>
+					</div>
+				</div>
+				<div text-only$="[[!_hasOutOf]]" class="cell col-last out-of" hidden$="[[isHolistic]]">
+					<span hidden="[[!_hasOutOf]]">
+						<template is="dom-if" if="[[!_outOfIsEditable]]">
+							<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
+								/ [[_outOf]]
+							</div>
+						</template>
+						<template is="dom-if" if="[[_outOfIsEditable]]">
+							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
+							</d2l-input-text>
+							<template is="dom-if" if="[[_outOfInvalid]]">
+								<d2l-tooltip id="out-of-bubble" for="out-of-textbox" position="bottom">
+									[[_outOfInvalidError]]
+								</d2l-tooltip>
+							</template>
+						</template>
+					</span>
+				</div>
+
+				<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
+					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', entity.properties.name)]]" on-tap="_handleDeleteCriterion" type="button"></d2l-button-icon>
+				</div>
+				</div>
+				<div class="cell" id="outcometag" hidden$="[[_isAlignmentListEmpty]]">
+					<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_isAlignmentListEmpty]]">
+						<div class="feedback-arrow-inner" hidden$="[[_isAlignmentListEmpty]]"></div>
+					</div>
+					<h5 id="outcomeText" hidden$="[[_isAlignmentListEmpty]]">Outcomes</h4>
+					<d2l-activity-alignment-tags  hidden$="[[_isAlignmentListEmpty]]"" empty="{{_isAlignmentListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]" token="[[token]]">
+					</d2l-activity-alignment-tags>
+				</div>
+			</div>
 	</template>
 
 
@@ -276,7 +333,10 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic)',
+			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic, _isAlignmentListEmpty)',
+		},
+		_isAlignmentListEmpty:{
+			type:Boolean,
 		},
 		_nameInvalid: {
 			type: Boolean,
@@ -330,9 +390,11 @@ Polymer({
 	observers: ['_widthChange(criterionDetailWidth)'],
 
 	ready: function() {
+		this.addEventListener('d2l-activity-alignment-tags-update', this._showBrowseOutcomes);
 		this.addEventListener('d2l-alignment-list-added', this._closeBrowseOutcomes);
 		this.addEventListener('d2l-alignment-list-cancelled', this._closeBrowseOutcomes);
 		this.addEventListener('d2l-select-outcomes-closed', this._closeBrowseOutcomes);
+		this.addEventListener('siren-entity-loading-fetched', this._resizeOverlay);
 	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
@@ -466,12 +528,12 @@ Polymer({
 	},
 
 	//hide browse outcomes button when holistic or text only or LD flag is off
-	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic) {
+	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic, _isAlignmentListEmpty) {
 		const isFlagOff = entity &&
 			this.HypermediaRels.Activities &&
 			this.HypermediaRels.Activities.activityUsage &&
 			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
-		return !isFlagOff || !_hasOutOf || isHolistic;
+		return !isFlagOff || !_hasOutOf || isHolistic || !_isAlignmentListEmpty;
 	},
 
 	_getOutcomeRel: function(_hideBrowseOutcomesButton) {
@@ -493,4 +555,8 @@ Polymer({
 	_closeBrowseOutcomes: function() {
 		this.$.overlay.close();
 	},
+
+	_resizeOverlay: function() {
+		this.$.overlay.refit();
+	}
 });
