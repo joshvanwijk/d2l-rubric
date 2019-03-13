@@ -67,6 +67,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 				margin-top: 2.15rem;
 			}
 
+			#rubric-name {
+				transition-property: none;
+			}
+
 			#rubric-name-container {
 				margin: 0.5rem var(--d2l-rubric-editor-end-gutter-width);
 				margin-left: var(--d2l-rubric-editor-start-gutter-width);
@@ -221,7 +225,14 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 		<div id="rubric-name-container">
 			<label for="rubric-name">[[localize('name')]]*</label>
 			<template is="dom-if" if="[[!_isLocked]]">
-				<d2l-input-text id="rubric-name" value="[[_rubricName]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('name')]]" disabled="[[!_canEditName]]" prevent-submit="">
+				<d2l-input-text
+					id="rubric-name"
+					value="[[_rubricName]]"
+					on-change="_saveName"
+					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+					aria-label$="[[localize('name')]]"
+					disabled="[[!_canEditName]]"
+					prevent-submit="">
 				</d2l-input-text>
 				<template is="dom-if" if="[[_nameInvalid]]">
 					<d2l-tooltip id="name-bubble" for="rubric-name" position="bottom">
@@ -580,11 +591,16 @@ Polymer({
 	_getHelpAssociations: function(entity) {
 		return entity && entity.getSubEntityByRel('help');
 	},
-	_onEntityChanged: function(entity) {
+	_onEntityChanged: function(entity, oldEntity) {
 		this._nameInvalid = false;
 		this._associationsInvalid = false;
 
 		if (entity) {
+			if (!oldEntity) {
+				setTimeout(function() {
+					this.$$('#rubric-name').focus();
+				}.bind(this));
+			}
 			if (entity.hasActionByName('update-status')) {
 				var options = entity.getActionByName('update-status')
 					.getFieldByName('rubric-status').value || [];
