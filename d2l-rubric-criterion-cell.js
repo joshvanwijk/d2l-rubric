@@ -6,7 +6,7 @@ import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import './d2l-rubric-entity-behavior.js';
 import 's-html/s-html.js';
 import 'd2l-icons/d2l-icon.js';
-import './siren-entity.js';
+import './rubric-siren-entity.js';
 import './assessment-result-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -59,7 +59,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-cell">
 				min-width: 80px;
 			}
 		</style>
-		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div class$="[[_getCellClassName(entity)]]" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden="[[!_hasCustomPoints(entity)]]">
 				[[_localizeCustomPoints(entity)]]
