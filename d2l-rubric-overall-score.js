@@ -4,7 +4,7 @@ import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-colors/d2l-colors.js';
 import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import './siren-entity.js';
+import './rubric-siren-entity.js';
 import 's-html/s-html.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
@@ -127,7 +127,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			}
 		</style>
 
-	<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></siren-entity>
+	<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
 	<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 	<h3>[[localize('overallScore')]]</h3>
 	<d2l-scroll-wrapper show-actions="">

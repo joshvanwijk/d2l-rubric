@@ -3,7 +3,7 @@ import './d2l-rubric-entity-behavior.js';
 import './localize-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 Polymer({
-	is: 'siren-entity',
+	is: 'rubric-siren-entity',
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,

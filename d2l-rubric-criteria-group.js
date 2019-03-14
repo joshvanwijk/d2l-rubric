@@ -17,7 +17,7 @@ import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-res
 import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './d2l-rubric-criterion-cell.js';
-import './siren-entity.js';
+import './rubric-siren-entity.js';
 import './assessment-result-behavior.js';
 import 's-html/s-html.js';
 import 'd2l-button/d2l-button-subtle.js';
@@ -116,9 +116,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		</style>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
-		<siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></siren-entity>
-		<siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></siren-entity>
+		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></rubric-siren-entity>
 		<d2l-table aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult, rubricType)]]" aria-rowcount$="[[_getRowCount(_criteriaEntities)]]" hidden$="[[!_showContent]]">
 			<d2l-offscreen>
 				[[localize('rubricSummaryA11y')]]
