@@ -224,6 +224,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				margin-bottom: 5px;
 			}
 
+			#closeButton{
+				right: 0;
+				margin-top: -60px;
+				position: absolute;
+				margin-right: 5px;
+			}
+
 			[hidden] {
 				display: none;
 			}
@@ -234,7 +241,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		</div>
 
 		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
-			<h2>Browse Outcomes</h2>
+			<div>
+				<h2>Browse Outcomes </h2>
+				<d2l-button-icon icon="d2l-tier1:close-large" id="closeButton" on-tap= "_closeBrowseOutcomes"></d2l-button-icon>
+			</div>
+
 			<d2l-select-outcomes
 			  rel= "[[_getOutcomeRel(_hideBrowseOutcomesButton)]]"
               href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]"
