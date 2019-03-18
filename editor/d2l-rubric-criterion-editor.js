@@ -239,6 +239,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			  rel= "[[_getOutcomeRel(_hideBrowseOutcomesButton)]]"
               href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]"
 			  token="[[token]]"
+			  empty="{{_isOutcomeEmpty}}"
 			>
 			</d2l-select-outcomes>
 		</simple-overlay>
@@ -337,6 +338,10 @@ Polymer({
 		},
 		_isAlignmentListEmpty:{
 			type:Boolean,
+		},
+		_isOutcomeEmpty: {
+			type: Boolean,
+			value: false,
 		},
 		_nameInvalid: {
 			type: Boolean,
@@ -527,13 +532,14 @@ Polymer({
 		return [this.HypermediaRels.Rubrics.level, 'self'];
 	},
 
-	//hide browse outcomes button when holistic or text only or LD flag is off
-	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic, _isAlignmentListEmpty) {
+	// hide browse outcomes button when holistic or text only or LD flag is off or tag list is empty
+	// there is no outcome to browser
+	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic, _isAlignmentListEmpty, _isOutcomeEmpty) {
 		const isFlagOff = entity &&
 			this.HypermediaRels.Activities &&
 			this.HypermediaRels.Activities.activityUsage &&
 			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
-		return !isFlagOff || !_hasOutOf || isHolistic || !_isAlignmentListEmpty;
+		return !isFlagOff || !_hasOutOf || isHolistic || !_isAlignmentListEmpty || _isOutcomeEmpty;
 	},
 
 	_getOutcomeRel: function(_hideBrowseOutcomesButton) {
