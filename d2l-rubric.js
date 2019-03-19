@@ -19,6 +19,7 @@ import 'd2l-alert/d2l-alert.js';
 import 's-html/s-html.js';
 import 'd2l-save-status/d2l-save-status.js';
 import 'd2l-button/d2l-button-subtle.js';
+import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -174,7 +175,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 			}
 
 		</style>
-		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div id="editor-save-status-container">
 			<d2l-save-status id="rubric-save-status" class="right"></d2l-save-status>
 		</div>
