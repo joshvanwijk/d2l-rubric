@@ -207,7 +207,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			.scrollable {
 				border: 1px solid lightgray;
 				padding: 24px;
-				@apply --layout-scroll;
+				display: flex;
+				flex-direction: column;
 			}
 
 			:dir(rtl) .criterion-remove {
