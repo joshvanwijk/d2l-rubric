@@ -1,0 +1,21 @@
+{
+    "class": [
+        "activity-usage",
+        "criterion-activity"
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://activities.api.brightspace.com/rels/activity-usage",
+                "self"
+            ],
+            "href": "data/activities/text-only_rcriterion_242-R-765/usages/text-only.json"
+        },
+        {
+            "rel": [
+                "https://alignments.api.brightspace.com/rels/alignments"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-765/text-only.json"
+        }
+    ]
+}

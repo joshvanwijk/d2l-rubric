@@ -1,0 +1,47 @@
+{
+    "class": [
+        "collection",
+        "alignments"
+    ],
+    "entities": [
+        {
+            "class": [
+                "alignment"
+            ],
+            "rel": [
+                "item"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-763/text-only/intent1.json",
+            "properties": {
+                "relationshipType": "owned"
+            }
+        },
+        {
+            "class": [
+                "alignment"
+            ],
+            "rel": [
+                "item"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-763/text-only/intent2.json",
+            "properties": {
+                "relationshipType": "owned"
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-763/text-only.json"
+        },
+        {
+            "rel": [
+                "https://activities.api.brightspace.com/rels/activity-usage"
+            ],
+            "href": "data/activities/text-only_rcriterion_242-R-763/usages/text-only.json"
+        }
+    ],
+    "actions": []
+}

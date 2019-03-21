@@ -539,6 +539,12 @@
                         "up"
                     ],
                     "href": "data/rubrics/organizations/text-only/242/groups/220/criteria.json"
+                },
+                {
+                    "rel": [
+                        "https://activities.api.brightspace.com/rels/activity-usage"
+                    ],
+                    "href": "data/activities/text-only_rcriterion_242-R-763/usages/text-only.json"
                 }
             ]
         },
@@ -1615,6 +1621,12 @@
                         "up"
                     ],
                     "href": "data/rubrics/organizations/text-only/242/groups/220/criteria.json"
+                },
+                {
+                    "rel": [
+                        "https://activities.api.brightspace.com/rels/activity-usage"
+                    ],
+                    "href": "data/activities/text-only_rcriterion_242-R-765/usages/text-only.json"
                 }
             ]
         }

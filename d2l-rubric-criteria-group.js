@@ -23,6 +23,7 @@ import 's-html/s-html.js';
 import 'd2l-button/d2l-button-subtle.js';
 import 'fastdom/fastdom.js';
 import './d2l-rubric-editable-score.js';
+import './d2l-rubric-alignments-indicator';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
@@ -109,6 +110,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				border-left-color: var(--d2l-color-celestine);
 			}
 
+			.criterion-name {
+				float: left;
+			}
+
+			d2l-rubric-alignments-indicator {
+				float: right;
+			}
 
 			[hidden] {
 				display: none !important;
@@ -149,7 +157,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
 						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
 							<d2l-td class="criteria" role="rowheader">
-								<div>
+								<d2l-rubric-alignments-indicator 
+									href="[[_getActivityLink(criterion)]]" 
+									token="[[token]]"
+									outcomes-title-text="[[_getOutcomesTitleText()]]"
+								></d2l-rubric-alignments-indicator>
+								<div class="criterion-name">
 									[[criterion.properties.name]]
 								</div>
 								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
@@ -314,6 +327,11 @@ Polymer({
 
 	_getLevelsLink: function(entity) {
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Rubrics.levels);
+		return link && link.href || '';
+	},
+
+	_getActivityLink: function(entity) {
+		var link = entity && entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 		return link && link.href || '';
 	},
 
@@ -513,6 +531,16 @@ Polymer({
 	_handleScoreKeypress: function(event) {
 		if (event.keyCode === 13) {
 			this._handleOverrideScore(event);
+		}
+	},
+
+	_getOutcomesTitleText: function() {
+		if (D2L
+			&& D2L.Custom
+			&& D2L.Custom.Outcomes
+			&& D2L.Custom.Outcomes.TermTitleText
+		) {
+			return D2L.Custom.Outcomes.TermTitleText;
 		}
 	}
 });
