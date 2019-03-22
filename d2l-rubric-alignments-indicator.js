@@ -79,7 +79,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 </div>
 		`;
 	}
-	
+
 	_getAlignmentsLink(entity) {
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Alignments.alignments);
 		return link && link.href || '';
@@ -123,6 +123,6 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 	_hasOutcomes(outcomeMap) {
 		return outcomeMap && Object.keys(outcomeMap).length > 0;
 	}
-};
+}
 
 customElements.define('d2l-rubric-alignments-indicator', RubricAlignmentsIndicator);
