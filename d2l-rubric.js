@@ -443,11 +443,13 @@ Polymer({
 	},
 
 	_updateOutcomesTitleText: function() {
-		if (!this.outcomesTitleText || !this.outcomesTitleText.length > 0) {
+		if (!this.outcomesTitleText
+			|| !this.outcomesTitleText.length > 0
+			|| !D2L
+		) {
 			return;
 		}
 
-		D2L = D2L || {};
 		D2L.Custom = D2L.Custom || {};
 		D2L.Custom.Outcomes = D2L.Custom.Outcomes || {};
 		D2L.Custom.Outcomes.TermTitleText = this.outcomesTitleText;
