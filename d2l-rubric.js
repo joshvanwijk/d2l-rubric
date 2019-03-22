@@ -224,6 +224,10 @@ Polymer({
 			value: false,
 			reflectToAttribute: true
 		},
+		outcomesTitleText: {
+			type: String,
+			notify: true
+		},
 		_criteriaGroups: {
 			type: Object
 		},
@@ -288,6 +292,10 @@ Polymer({
 		'd2l-siren-entity-save-end': '_onEntitySave',
 		'd2l-siren-entity-error': '_handleError',
 		'd2l-alert-button-pressed': '_pageReload'
+	},
+
+	ready: function() {
+		this._updateOutcomesTitleText();
 	},
 
 	_onEntityChanged: function(entity) {
@@ -433,5 +441,18 @@ Polymer({
 			return false;
 		}
 		return this.isTotalScoreOverridden();
+	},
+
+	_updateOutcomesTitleText: function() {
+		if (!this.outcomesTitleText
+			|| !this.outcomesTitleText.length > 0
+			|| !D2L
+		) {
+			return;
+		}
+
+		D2L.Custom = D2L.Custom || {};
+		D2L.Custom.Outcomes = D2L.Custom.Outcomes || {};
+		D2L.Custom.Outcomes.TermTitleText = this.outcomesTitleText;
 	}
 });

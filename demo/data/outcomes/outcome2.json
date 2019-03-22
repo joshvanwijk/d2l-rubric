@@ -1,0 +1,24 @@
+{
+    "class": [
+        "outcome"
+    ],
+    "properties": {
+        "notation": "",
+        "altNotation": "",
+        "label": "Overall Expectation",
+        "listId": "A2.",
+        "description": "Crushes opponents in a battle of wit",
+        "subjects": [
+            "English"
+        ],
+        "source": "asn"
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/outcomes/outcome2.json"
+        }
+    ]
+}

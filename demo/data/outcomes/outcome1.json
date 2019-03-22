@@ -1,0 +1,24 @@
+{
+    "class": [
+        "outcome"
+    ],
+    "properties": {
+        "notation": "",
+        "altNotation": "",
+        "label": "Overall Expectation",
+        "listId": "A1.",
+        "description": "Construct sentences with proper grammer",
+        "subjects": [
+            "English"
+        ],
+        "source": "asn"
+    },
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/outcomes/outcome1.json"
+        }
+    ]
+}
