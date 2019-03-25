@@ -346,14 +346,13 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic, _isAlignmentTagListEmpty)',
+			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
 		},
 		_isAlignmentTagListEmpty:{
 			type:Boolean,
 		},
 		_isOutcomeEmpty: {
 			type: Boolean,
-			value: false,
 		},
 		_nameInvalid: {
 			type: Boolean,
