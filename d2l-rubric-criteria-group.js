@@ -109,11 +109,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			.criterion-cell.first.holistic.selected {
 				border-left-color: var(--d2l-color-celestine);
 			}
-
-			.criterion-name {
-				float: left;
-			}
-
+			
 			d2l-rubric-alignments-indicator {
 				float: right;
 			}
