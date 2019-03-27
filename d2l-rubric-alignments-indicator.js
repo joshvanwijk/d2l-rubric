@@ -7,6 +7,8 @@ import 'd2l-colors/d2l-colors.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import './d2l-siren-entity-resolver.js';
 
+const _trim = str => str ? str.trim() : str;
+
 class RubricAlignmentsIndicator extends mixinBehaviors([
 	D2L.Hypermedia.HMConstantsBehavior,
 	D2L.PolymerBehaviors.Siren.EntityBehavior
@@ -60,7 +62,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 	<d2l-icon id="alignments-icon" icon="d2l-tier1:bullseye"></d2l-icon>
 	<d2l-tooltip for="alignments-icon" position="right">
 		<div><b>[[outcomesTitleText]]</b></div>
-		<template is="dom-repeat" items="[[_getOutcomeNames(_outcomeMap)]]">
+		<template is="dom-repeat" items="[[_getTooltipOutcomes(_outcomeMap)]]">
 			<div>[[item]]</div>
 		</template>
 	</d2l-tooltip>
@@ -112,16 +114,27 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		}).filter(href => !!href);
 	}
 
-	_getOutcomeNames(outcomeMap) {
+	_getTooltipOutcomes(outcomeMap) {
 		if (!outcomeMap || !Object.keys(outcomeMap).length) return [];
 
-		return Object.values(outcomeMap).map(outcome => {
-			return `${outcome.properties.label} ${outcome.properties.listId}`;
-		});
+		return Object.values(outcomeMap)
+			.map(this._getOutcomeText)
+			.filter(text => !!text);
+	}
+
+	_getOutcomeText(outcome) {
+		if (!outcome || !outcome.properties) {
+			return null;
+		}
+
+		const props = outcome.properties;
+		return _trim(props.notation)
+			|| _trim(props.altNotation)
+			|| _trim(props.description);
 	}
 
 	_hasOutcomes(outcomeMap) {
-		return outcomeMap && Object.keys(outcomeMap).length > 0;
+		return this._getTooltipOutcomes(outcomeMap).length > 0;
 	}
 }
 

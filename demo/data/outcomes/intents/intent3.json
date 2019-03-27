@@ -1,0 +1,19 @@
+{
+    "class": [
+        "intent"
+    ],
+    "links": [
+        {
+            "rel": [
+                "https://outcomes.api.brightspace.com/rels/outcome"
+            ],
+            "href": "data/outcomes/outcome3.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/outcomes/intents/intent3.json"
+        }
+    ]
+}

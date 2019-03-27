@@ -3,8 +3,8 @@
         "outcome"
     ],
     "properties": {
-        "notation": "",
-        "altNotation": "",
+        "notation": "E.G.10.1.1",
+        "altNotation": "ABC.123",
         "label": "Overall Expectation",
         "listId": "A1.",
         "description": "Construct sentences with proper grammer",

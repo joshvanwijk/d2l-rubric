@@ -1,0 +1,29 @@
+{
+    "class": [
+        "alignment"
+    ],
+    "properties": {
+        "relationshipType": "owned"
+    },
+    "links": [
+        {
+            "rel": [
+                "collection"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-763/text-only.json"
+        },
+        {
+            "rel": [
+                "https://outcomes.api.brightspace.com/rels/intent"
+            ],
+            "href": "data/outcomes/intents/intent3.json"
+        },
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-763/text-only/intent3.json"
+        }
+    ],
+    "actions": []
+}
