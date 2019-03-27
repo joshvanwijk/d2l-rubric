@@ -155,6 +155,12 @@
                 "https://api.brightspace.com/rels/organization"
             ],
             "href": "static-data/rubrics/organizations/text-only.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/overall-levels"
+            ],
+            "href": "static-data/rubrics/organizations/text-only/199/overall-levels.json"
         }
     ]
 }

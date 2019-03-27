@@ -32,14 +32,8 @@ suite('<d2l-rubric-criteria-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('basic');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				/* global getLoadedElement */
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json', done);
 			});
 
 			teardown(function() {
@@ -89,14 +83,7 @@ suite('<d2l-rubric-criteria-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('basic');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json', done);
 			});
 
 			teardown(function() {
@@ -119,14 +106,7 @@ suite('<d2l-rubric-criteria-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('readonly');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria-readonly.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria-readonly.json', done);
 			});
 
 			teardown(function() {
@@ -150,14 +130,7 @@ suite('<d2l-rubric-criteria-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('holistic');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/holistic/199/groups/176/criteria.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/holistic/199/groups/176/criteria.json', done);
 			});
 
 			teardown(function() {

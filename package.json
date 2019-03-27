@@ -25,7 +25,7 @@
     "test:local": "npm run test:lint && npm run test:wct:local",
     "test:wct": "polymer test",
     "test:wct:local": "cross-env LAUNCHPAD_BROWSERS=chrome polymer test --skip-plugin sauce",
-    "test:wct:debug": "cross-env LAUNCHPAD_BROWSERS=chrome wct --config-file debug.wct.conf.json -p --skip-plugin sauce"
+    "test:wct:debug": "cross-env LAUNCHPAD_BROWSERS=chrome polymer test --config-file debug.wct.conf.json -p --skip-plugin sauce"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",

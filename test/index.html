@@ -9,6 +9,12 @@
 </head>
 
 <body>
+	<style>
+	#subsuites {
+			width: 1200px !important;
+		}
+	</style>
+		
 	<script>
 		/* global WCT */
 		'use strict';
@@ -32,11 +38,12 @@
 			'./components/d2l-rubric.html'
 		];
 
-		var shadyTests = baseTests.map(function(x) { return x + '?wc-shadydom=true&wc-ce=true'; });
-		var shadowTests = baseTests.map(function(x) { return x + '?dom=shadow'; });
-		var shadowLazyTests = baseTests.map(function(x) { return x + '?dom=shadow&lazyRegister=true&useNativeCSSProperties=true'; });
+		// var shadyTests = baseTests.map(function(x) { return x + '?wc-shadydom=true&wc-ce=true'; });
+		// var shadowTests = baseTests.map(function(x) { return x + '?dom=shadow'; });
+		// var shadowLazyTests = baseTests.map(function(x) { return x + '?dom=shadow&lazyRegister=true&useNativeCSSProperties=true'; });
 
-		WCT.loadSuites(Array.prototype.concat(baseTests, shadyTests, shadowTests, shadowLazyTests));
+		// WCT.loadSuites(Array.prototype.concat(baseTests, shadyTests, shadowTests, shadowLazyTests));
+		WCT.loadSuites(baseTests);
 	</script>
 </body>
 

@@ -20,8 +20,10 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 	suite('smoke test', function() {
 
-		test('can be instantiated', function() {
+		test('can be instantiated', function(done) {
 			var element = fixture('basic');
+			/* global getLoadedElement */
+			element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176.json', done);
 			expect(element.is).to.equal('d2l-rubric-criteria-group-editor');
 		});
 
@@ -32,14 +34,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('basic');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176.json', done);
 			});
 
 			teardown(function() {
@@ -94,14 +89,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('readonly');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176-readonly.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176-readonly.json', done);
 			});
 
 			test('group name is disabled', function() {
@@ -114,14 +102,7 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('holistic');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/holistic/199/groups/176.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176.json', done);
 			});
 
 			test('group name is hidden', function() {

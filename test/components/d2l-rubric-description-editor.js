@@ -31,14 +31,8 @@ suite('<d2l-rubric-description-editor>', function() {
 
 				setup(function(done) {
 					element = fixture('basic-criterion');
-					function waitForLoad(e) {
-						if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json') {
-							element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-							done();
-						}
-					}
-					element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-					element.token = 'foozleberries';
+					/* global getLoadedElement */
+					element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json', done);
 				});
 
 				teardown(function() {
@@ -101,14 +95,7 @@ suite('<d2l-rubric-description-editor>', function() {
 
 				setup(function(done) {
 					element = fixture('readonly-criterion');
-					function waitForLoad(e) {
-						if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json') {
-							element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-							done();
-						}
-					}
-					element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-					element.token = 'foozleberries';
+					element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/1.json', done);
 				});
 
 				test('description is disabled', function() {
@@ -126,14 +113,7 @@ suite('<d2l-rubric-description-editor>', function() {
 
 				setup(function(done) {
 					element = fixture('basic-custom-points');
-					function waitForLoad(e) {
-						if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623/0.json') {
-							element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-							done();
-						}
-					}
-					element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-					element.token = 'foozleberries';
+					element = getLoadedElement(element, 'static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623/0.json', done);
 				});
 
 				teardown(function() {
@@ -196,14 +176,7 @@ suite('<d2l-rubric-description-editor>', function() {
 
 				setup(function(done) {
 					element = fixture('readonly-custom-points');
-					function waitForLoad(e) {
-						if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623/1.json') {
-							element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-							done();
-						}
-					}
-					element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-					element.token = 'foozleberries';
+					element = getLoadedElement(element, 'static-data/rubrics/organizations/custom-points/199/groups/176/criteria/623/1.json', done);
 				});
 
 				test('points field is disabled', function() {
@@ -228,14 +201,7 @@ suite('<d2l-rubric-description-editor>', function() {
 
 				setup(function(done) {
 					element = fixture('basic-overall-level');
-					function waitForLoad(e) {
-						if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/overall-levels/1.json') {
-							element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-							done();
-						}
-					}
-					element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-					element.token = 'foozleberries';
+					element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria/623/0.json', done);
 				});
 
 				teardown(function() {
@@ -298,14 +264,7 @@ suite('<d2l-rubric-description-editor>', function() {
 
 				setup(function(done) {
 					element = fixture('readonly-overall-level');
-					function waitForLoad(e) {
-						if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/overall-levels/2.json') {
-							element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-							done();
-						}
-					}
-					element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-					element.token = 'foozleberries';
+					element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/overall-levels/2.json', done);
 				});
 
 				test('description is disabled', function() {

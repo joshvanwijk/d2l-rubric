@@ -28,14 +28,8 @@ suite('<d2l-rubric-levels-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('basic');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				/* global getLoadedElement */
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/levels.json', done);
 			});
 
 			teardown(function() {
@@ -104,14 +98,7 @@ suite('<d2l-rubric-levels-editor>', function() {
 
 			setup(function(done) {
 				element = fixture('readonly');
-				function waitForLoad(e) {
-					if (e.detail.entity.getLinkByRel('self').href === 'static-data/rubrics/organizations/text-only/199/groups/176/levels-readonly.json') {
-						element.removeEventListener('d2l-siren-entity-changed', waitForLoad);
-						done();
-					}
-				}
-				element.addEventListener('d2l-siren-entity-changed', waitForLoad);
-				element.token = 'foozleberries';
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199.json', done);
 			});
 
 			test('add is disabled', function() {
