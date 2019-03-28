@@ -95,7 +95,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				the size of the editor
 				-->
 				<div class="stretch-child">
-					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]">
+					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]" outcomes-title="[[outcomesTitle]]">
 					</d2l-rubric-criteria-editor>
 				</div>
 			</div>
@@ -119,6 +119,12 @@ Polymer({
 			value: false
 		},
 		percentageFormatAlternate: Boolean,
+		/**
+		* Outcomes langterm set in config variables
+		*/
+		outcomesTitle: {
+			type: String
+		},
 		_levelsHref: String,
 		_criteriaCollectionHref: String,
 		_showContent: {

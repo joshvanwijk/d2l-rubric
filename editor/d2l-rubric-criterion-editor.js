@@ -261,7 +261,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
 					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
 					</d2l-input-textarea>
-					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="Browse Outcomes"></d2l-button-subtle>
+					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
 						<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
 							[[_nameInvalidError]]
@@ -331,6 +331,12 @@ Polymer({
 		criterionDetailWidth: {
 			type: Number,
 			value: 0
+		},
+		/**
+		* Outcomes langterm set in config variables
+		*/
+		outcomesTitle: {
+			type: String
 		},
 		_canEdit: {
 			type: Boolean,
