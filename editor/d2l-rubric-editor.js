@@ -491,6 +491,22 @@ Polymer({
 	],
 	ready: function() {
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
+
+		// stop firefox opening random extra tabs when dragging (DE33486)
+		if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+			document.body.ondragover = function(event) {
+				if (event.dataTransfer) {
+					event.stopPropagation();
+					event.preventDefault();
+				}
+			};
+			document.body.ondrop = function(event) {
+				if (event.dataTransfer) {
+					event.stopPropagation();
+					event.preventDefault();
+				}
+			};
+		}
 	},
 	attached: function() {
 		IronA11yAnnouncer.requestAvailability();
