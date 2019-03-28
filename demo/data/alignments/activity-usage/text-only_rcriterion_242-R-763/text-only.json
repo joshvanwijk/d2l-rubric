@@ -27,6 +27,18 @@
             "properties": {
                 "relationshipType": "owned"
             }
+        },
+        {
+            "class": [
+                "alignment"
+            ],
+            "rel": [
+                "item"
+            ],
+            "href": "data/alignments/activity-usage/text-only_rcriterion_242-R-763/text-only/intent3.json",
+            "properties": {
+                "relationshipType": "owned"
+            }
         }
     ],
     "links": [

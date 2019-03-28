@@ -4,10 +4,10 @@
     ],
     "properties": {
         "notation": "",
-        "altNotation": "E.10.2.1-O",
-        "label": "Overall Expectation",
-        "listId": "A2.",
-        "description": "Crushes opponents in a battle of wit",
+        "altNotation": "",
+        "label": "Specific Expectation",
+        "listId": "A2.1",
+        "description": "Bust some sick rhymes",
         "subjects": [
             "English"
         ],
@@ -18,7 +18,7 @@
             "rel": [
                 "self"
             ],
-            "href": "data/outcomes/outcome2.json"
+            "href": "data/outcomes/outcome3.json"
         }
     ]
 }
