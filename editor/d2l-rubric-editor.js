@@ -494,18 +494,18 @@ Polymer({
 
 		// stop firefox opening random extra tabs when dragging (DE33486)
 		if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-			document.body.ondragover = function(event) {
+			addEventListener('dragover', event => {
 				if (event.dataTransfer) {
 					event.stopPropagation();
 					event.preventDefault();
 				}
-			};
-			document.body.ondrop = function(event) {
+			});
+			addEventListener('drop', event => {
 				if (event.dataTransfer) {
 					event.stopPropagation();
 					event.preventDefault();
 				}
-			};
+			});
 		}
 	},
 	attached: function() {
