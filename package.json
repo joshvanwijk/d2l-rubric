@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/Brightspace/d2l-rubric",
   "name": "d2l-rubric",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "directories": {
     "test": "test"
   },
