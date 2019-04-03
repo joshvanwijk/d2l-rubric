@@ -165,9 +165,6 @@ Polymer({
 		},
 		richTextEnabled: Boolean
 	},
-	observers: [
-		'_onEntityChanged(entity)'
-	],
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,

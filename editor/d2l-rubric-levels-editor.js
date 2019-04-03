@@ -160,9 +160,6 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		IronResizableBehavior
 	],
-	observers: [
-		'_onEntityChanged(entity)',
-	],
 	attached: function() {
 		// Defer the offsetWidth/scrollWidth calculations until after the page has rendered
 		afterNextRender(this, function() {
