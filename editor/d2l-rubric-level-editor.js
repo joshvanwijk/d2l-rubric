@@ -148,9 +148,6 @@ Polymer({
 			computed: '_computeUsesPercentage(entity)'
 		}
 	},
-	observers: [
-		'_onEntityChanged(entity)'
-	],
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,

@@ -237,10 +237,6 @@ Polymer({
 		'd2l-siren-entity-save-end': '_onEntitySave'
 	},
 
-	observers: [
-		'_onEntityChanged(entity)'
-	],
-
 	ready: function() {
 		this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));

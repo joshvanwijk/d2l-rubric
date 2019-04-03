@@ -153,10 +153,6 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
-	observers: [
-		'_onEntityChanged(entity)',
-	],
-
 	ready: function() {
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
 		this.addEventListener('d2l-rubric-editor-levels-width-changed', function(e) {

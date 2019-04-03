@@ -248,9 +248,6 @@ Polymer({
 			// this._notifyResize();
 		}.bind(this), 1);
 	},
-	observers: [
-		'_onEntityChanged(entity)',
-	],
 	_onEntityChanged: function(entity) {
 		if (!entity) {
 			return;

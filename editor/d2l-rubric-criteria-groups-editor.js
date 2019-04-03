@@ -138,10 +138,6 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior
 	],
 
-	observers: [
-		'_onEntityChanged(entity)'
-	],
-
 	_onEntityChanged: function(entity) {
 		if (!entity) {
 			return;
