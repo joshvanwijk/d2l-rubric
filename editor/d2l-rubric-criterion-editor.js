@@ -352,7 +352,6 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			value: true,
 			computed: '_canHideBrowseOutcomesButton(entity, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
 		},
 		_hideOutcomes:{
