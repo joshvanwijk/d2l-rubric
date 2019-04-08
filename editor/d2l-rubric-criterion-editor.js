@@ -309,12 +309,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', entity.properties.name)]]" on-tap="_handleDeleteCriterion" type="button"></d2l-button-icon>
 				</div>
 				</div>
-				<div class="cell" id="outcometag" hidden$="[[_isAlignmentTagListEmpty]]">
-					<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_isAlignmentTagListEmpty]]">
-						<div class="feedback-arrow-inner" hidden$="[[_isAlignmentTagListEmpty]]"></div>
+				<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
+					<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
+						<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
 					</div>
-					<h5 id="outcomeText" hidden$="[[_isAlignmentTagListEmpty]]">Outcomes</h4>
-					<d2l-activity-alignment-tags  hidden$="[[_isAlignmentTagListEmpty]]"" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]" token="[[token]]">
+					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">Outcomes</h4>
+					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]" token="[[token]]">
 					</d2l-activity-alignment-tags>
 				</div>
 			</div>
@@ -352,7 +352,13 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			computed: '_canHideBrowseOutcomesButton(entity, _hasOutOf, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
+			value: true,
+			computed: '_canHideBrowseOutcomesButton(entity, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
+		},
+		_hideOutcomes:{
+			type: Boolean,
+			value: true,
+			computed: '_canHideOutcomes(isHolistic, _isAlignmentTagListEmpty)',
 		},
 		_isAlignmentTagListEmpty:{
 			type:Boolean,
@@ -551,12 +557,16 @@ Polymer({
 
 	// hide browse outcomes button when holistic or text only or LD flag is off or tag list is empty
 	// there is no outcome to browse
-	_canHideBrowseOutcomesButton: function(entity, _hasOutOf, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty) {
+	_canHideBrowseOutcomesButton: function(entity, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty) {
 		const isFlagOff = entity &&
 			this.HypermediaRels.Activities &&
 			this.HypermediaRels.Activities.activityUsage &&
 			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
-		return !isFlagOff || !_hasOutOf || isHolistic || !_isAlignmentTagListEmpty || _isOutcomeEmpty;
+		return !isFlagOff || isHolistic || !_isAlignmentTagListEmpty || _isOutcomeEmpty;
+	},
+
+	_canHideOutcomes: function(isHolistic, _isAlignmentTagListEmpty) {
+		return isHolistic || _isAlignmentTagListEmpty;
 	},
 
 	_getOutcomeRel: function(_hideBrowseOutcomesButton) {
