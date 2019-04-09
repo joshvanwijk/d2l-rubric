@@ -554,7 +554,7 @@ Polymer({
 		return [this.HypermediaRels.Rubrics.level, 'self'];
 	},
 
-	// hide browse outcomes button when holistic or text only or LD flag is off or tag list is empty
+	// hide browse outcomes button when holistic or LD flag is off or tag list is empty
 	// there is no outcome to browse
 	_canHideBrowseOutcomesButton: function(entity, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty) {
 		const isFlagOff = entity &&
