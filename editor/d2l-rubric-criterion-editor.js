@@ -248,8 +248,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			</div>
 
 			<d2l-select-outcomes
-			  rel= "[[_getOutcomeRel(_hideBrowseOutcomesButton)]]"
-              href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]"
+			  rel= "[[_getOutcomeRel()]]"
+              href="[[_getOutcomeHref(entity)]]"
 			  token="[[token]]"
 			  empty="{{_isOutcomeEmpty}}"
 			>
@@ -352,7 +352,7 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			computed: '_canHideBrowseOutcomesButton(entity, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
+			computed: '_canHideBrowseOutcomesButton(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
 		},
 		_hideOutcomes:{
 			type: Boolean,
@@ -380,6 +380,10 @@ Polymer({
 		isHolistic: {
 			type: Boolean,
 			value: false
+		},
+		_isFlagOn: {
+			type: Boolean,
+			computed: '_computeIsFlagOn(entity)'
 		},
 		_outOfIsEditable: {
 			type: Boolean,
@@ -556,26 +560,33 @@ Polymer({
 
 	// hide browse outcomes button when holistic or LD flag is off or tag list is empty
 	// there is no outcome to browse
-	_canHideBrowseOutcomesButton: function(entity, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty) {
-		const isFlagOff = entity &&
-			this.HypermediaRels.Activities &&
-			this.HypermediaRels.Activities.activityUsage &&
-			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
-		return !isFlagOff || isHolistic || !_isAlignmentTagListEmpty || _isOutcomeEmpty;
+	_canHideBrowseOutcomesButton: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty) {
+		return !_isFlagOn || isHolistic || !_isAlignmentTagListEmpty || _isOutcomeEmpty;
 	},
 
 	_canHideOutcomes: function(isHolistic, _isAlignmentTagListEmpty) {
 		return isHolistic || _isAlignmentTagListEmpty;
 	},
 
-	_getOutcomeRel: function(_hideBrowseOutcomesButton) {
-		if (this.HypermediaRels && this.HypermediaRels.Activities && !_hideBrowseOutcomesButton) {
+	_computeIsFlagOn: function(entity) {
+		return entity &&
+			this.HypermediaRels.Activities &&
+			this.HypermediaRels.Activities.activityUsage &&
+			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
+	},
+
+	_canCheckOutcomes: function() {
+		return this._isFlagOn && !this.isHolistic && this._isAlignmentTagListEmpty;
+	},
+
+	_getOutcomeRel: function() {
+		if (this.HypermediaRels && this.HypermediaRels.Activities && this._canCheckOutcomes()) {
 			return this.HypermediaRels.Activities.activityUsage;
 		}
 	},
 
-	_getOutcomeHref: function(entity, _hideBrowseOutcomesButton) {
-		if (entity && this.HypermediaRels.Activities && !_hideBrowseOutcomesButton) {
+	_getOutcomeHref: function(entity) {
+		if (entity && this.HypermediaRels.Activities && this._canCheckOutcomes()) {
 			return entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage).href;
 		}
 	},
