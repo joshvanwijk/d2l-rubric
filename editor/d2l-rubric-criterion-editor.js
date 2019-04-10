@@ -248,8 +248,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			</div>
 
 			<d2l-select-outcomes
-			  rel= "[[_getOutcomeRel()]]"
-              href="[[_getOutcomeHref(entity)]]"
+			  rel= "[[_getOutcomeRel(_isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]"
+              href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]"
 			  token="[[token]]"
 			  empty="{{_isOutcomeEmpty}}"
 			>
@@ -314,7 +314,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 						<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
 					</div>
 					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">Outcomes</h4>
-					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _hideBrowseOutcomesButton)]]" token="[[token]]">
+					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]" token="[[token]]">
 					</d2l-activity-alignment-tags>
 				</div>
 			</div>
@@ -575,18 +575,18 @@ Polymer({
 			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 	},
 
-	_canCheckOutcomes: function() {
-		return this._isFlagOn && !this.isHolistic && this._isAlignmentTagListEmpty;
+	_canCheckOutcomes: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty) {
+		return _isFlagOn && !isHolistic && _isAlignmentTagListEmpty;
 	},
 
-	_getOutcomeRel: function() {
-		if (this.HypermediaRels && this.HypermediaRels.Activities && this._canCheckOutcomes()) {
+	_getOutcomeRel: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty) {
+		if (this.HypermediaRels && this.HypermediaRels.Activities && this._canCheckOutcomes(_isFlagOn, isHolistic, _isAlignmentTagListEmpty)) {
 			return this.HypermediaRels.Activities.activityUsage;
 		}
 	},
 
-	_getOutcomeHref: function(entity) {
-		if (entity && this.HypermediaRels.Activities && this._canCheckOutcomes()) {
+	_getOutcomeHref: function(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty) {
+		if (entity && this.HypermediaRels.Activities && this._canCheckOutcomes(_isFlagOn, isHolistic, _isAlignmentTagListEmpty)) {
 			return entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage).href;
 		}
 	},
