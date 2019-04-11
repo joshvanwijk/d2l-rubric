@@ -82,14 +82,16 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 		if (targets.length > 0) {
 			target = targets[0];
 		}
+		// filter out d2l-tooltips that are not being used for errors
+		if (target.hasAttribute('is-not-error') ||
+			(target.offsetParent && target.offsetParent.nodeName === 'D2L-MULTI-SELECT-LIST-ITEM')) {
+			return;
+		}
 		var cache = this.constructor.prototype.__rubricEditorBubbleCache;
 		if (cache.bubble) {
 			cache.bubble.forceShow = false;
 		}
-		// filter out d2l-tooltips that are not being used for errors
-		if (target.offsetParent && target.offsetParent.nodeName !== 'D2L-MULTI-SELECT-LIST-ITEM') {
-			target.forceShow = true;
-		}
+		target.forceShow = true;
 		e.stopPropagation();
 		cache.bubble = target;
 		cache.host = this;
