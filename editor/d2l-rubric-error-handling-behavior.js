@@ -87,7 +87,7 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 			cache.bubble.forceShow = false;
 		}
 		// filter out d2l-tooltips that are not being used for errors
-		if (target.offsetParent && target.offsetParent.nodeName != 'D2L-MULTI-SELECT-LIST-ITEM') {
+		if (target.offsetParent && target.offsetParent.nodeName !== 'D2L-MULTI-SELECT-LIST-ITEM') {
 			target.forceShow = true;
 		}
 		e.stopPropagation();
