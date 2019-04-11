@@ -83,7 +83,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip id="group-name-bubble" for="group-name" position="bottom">
+					<d2l-tooltip id="group-name-bubble" class="is-error" for="group-name" position="bottom">
 						[[_nameInvalidError]]
 					</d2l-tooltip>
 				</template>

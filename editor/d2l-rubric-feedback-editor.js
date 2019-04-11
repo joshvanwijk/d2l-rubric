@@ -48,7 +48,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_feedbackInvalid]]">
-			<d2l-tooltip id="feedback-bubble" for="feedback" position="bottom">
+			<d2l-tooltip id="feedback-bubble" class="is-error" for="feedback" position="bottom">
 				[[_feedbackInvalidError]]
 			</d2l-tooltip>
 		</template>

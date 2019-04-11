@@ -263,7 +263,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
-						<d2l-tooltip id="criterion-name-bubble" for="name" position="bottom">
+						<d2l-tooltip id="criterion-name-bubble" class="is-error" for="name" position="bottom">
 							[[_nameInvalidError]]
 						</d2l-tooltip>
 					</template>
@@ -297,7 +297,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
 							</d2l-input-text>
 							<template is="dom-if" if="[[_outOfInvalid]]">
-								<d2l-tooltip id="out-of-bubble" for="out-of-textbox" position="bottom">
+								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
 									[[_outOfInvalidError]]
 								</d2l-tooltip>
 							</template>
