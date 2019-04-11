@@ -83,8 +83,7 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 			target = targets[0];
 		}
 		// filter out d2l-tooltips that are not being used for errors
-		if (target.hasAttribute('is-not-error') ||
-			(target.offsetParent && target.offsetParent.nodeName === 'D2L-MULTI-SELECT-LIST-ITEM')) {
+		if (!target.classList.contains('is-error')) {
 			return;
 		}
 		var cache = this.constructor.prototype.__rubricEditorBubbleCache;

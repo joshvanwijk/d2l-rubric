@@ -53,7 +53,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-visibility-editor">
 			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]
 		</label>
 		<template is="dom-if" if="[[_visibilityInvalid]]">
-			<d2l-tooltip id="visibility-bubble" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
+			<d2l-tooltip id="visibility-bubble" class="is-error" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 </dom-module>`;

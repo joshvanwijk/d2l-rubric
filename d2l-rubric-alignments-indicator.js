@@ -60,7 +60,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 
 <template is="dom-if" if="[[_hasOutcomes(_outcomeMap)]]">
 	<d2l-icon id="alignments-icon" icon="d2l-tier1:bullseye"></d2l-icon>
-	<d2l-tooltip for="alignments-icon" position="right" is-not-error>
+	<d2l-tooltip for="alignments-icon" position="right">
 		<div><b>[[outcomesTitleText]]</b></div>
 		<template is="dom-repeat" items="[[_getTooltipOutcomes(_outcomeMap)]]">
 			<div>[[item]]</div>
