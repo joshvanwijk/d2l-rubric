@@ -78,6 +78,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				border: none;
 				margin: -1rem;
 				height: 100%;
+				position: relative;
 			}
 
 			.criterion-cell.selected {

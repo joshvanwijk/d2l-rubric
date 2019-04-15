@@ -61,9 +61,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 			.clear-feedback-button:hover {
 				border-color: darkgray;
 			}
-			.feedback-wrapper {
-				position: relative;
-			}
 			.feedback-wrapper[data-desktop] {
 				padding: 0.5rem;
 				padding-left: 1rem;
