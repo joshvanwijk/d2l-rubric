@@ -35,6 +35,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		<style include="d2l-table-style">
 			:host {
 				display: block;
+				position: relative;
 			}
 			d2l-td.out-of {
 				text-align: right;
