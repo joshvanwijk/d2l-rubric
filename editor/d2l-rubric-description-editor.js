@@ -93,7 +93,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
-			<d2l-tooltip id="description-bubble" for="description" position="bottom">
+			<d2l-tooltip id="description-bubble" class="is-error" for="description" position="bottom">
 				[[_descriptionInvalidError]]
 			</d2l-tooltip>
 		</template>

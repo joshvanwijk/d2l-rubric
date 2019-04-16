@@ -235,7 +235,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 					prevent-submit="">
 				</d2l-input-text>
 				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip id="name-bubble" for="rubric-name" position="bottom">
+					<d2l-tooltip id="name-bubble" class="is-error" for="rubric-name" position="bottom">
 						[[_nameInvalidError]]
 					</d2l-tooltip>
 				</template>
@@ -265,7 +265,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
 						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
-							<d2l-tooltip id="hide-score-bubble" for="hide-score-checkbox" position="bottom">
+							<d2l-tooltip id="hide-score-bubble" class="is-error" for="hide-score-checkbox" position="bottom">
 								[[_setScoreVisibilityFailedError]]
 							</d2l-tooltip>
 						</template>
@@ -277,7 +277,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 							<d2l-rubric-text-editor id="rubric-description" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="[[_rubricDescription]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
-								<d2l-tooltip id="rubric-description-bubble" for="rubric-description" position="bottom">
+								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
 									[[_descriptionInvalidError]]
 								</d2l-tooltip>
 							</template>
@@ -310,7 +310,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 								</template>
 							</div>
 							<template is="dom-if" if="[[_associationsInvalid]]">
-								<d2l-tooltip id="associations-bubble" for="associations" position="bottom">
+								<d2l-tooltip id="associations-bubble" class="is-error" for="associations" position="bottom">
 									[[_associationsInvalidError]]
 								</d2l-tooltip>
 							</template>

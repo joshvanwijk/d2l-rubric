@@ -82,11 +82,14 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 		if (targets.length > 0) {
 			target = targets[0];
 		}
+		// filter out d2l-tooltips that are not being used for errors
+		if (!target.classList.contains('is-error')) {
+			return;
+		}
 		var cache = this.constructor.prototype.__rubricEditorBubbleCache;
 		if (cache.bubble) {
 			cache.bubble.forceShow = false;
 		}
-
 		target.forceShow = true;
 		e.stopPropagation();
 		cache.bubble = target;
