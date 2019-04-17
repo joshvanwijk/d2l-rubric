@@ -93,6 +93,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				box-shadow: -1px 0 0 var(--d2l-color-celestine), 0 1px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
 			}
+			.criterion-cell.selected.is-last {
+				border-bottom-color: var(--d2l-color-celestine);
+			}
 			.criterion-cell.assessable {
 				cursor: pointer;
 			}
@@ -448,13 +451,13 @@ Polymer({
 
 		// A cell already has a bottom border in the following cases:
 		// 1. The cell is on top of another selected cell and does not have feedback
-		// 2. The cell is the last cell of a criteria group and does not have feedback
-		var isBottomless = (noBottom || isLastCell) && !hasFeedback;
+		var isBottomless = noBottom && !hasFeedback;
 		return !isBottomless;
 	},
 
 	_getCriteriaClassName: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities, cellNum) {
 		var className = 'criterion-cell';
+		var isLastCell = criterionNum === criteriaEntities.length - 1;
 		if (cellNum === 0 && this.rubricType === 'holistic') {
 			className += ' first holistic';
 		}
@@ -466,6 +469,9 @@ Polymer({
 		}
 		if (this._hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities)) {
 			className += ' has-bottom';
+		}
+		if (isLastCell) {
+			className += ' is-last';
 		}
 		return className;
 	},
