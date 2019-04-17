@@ -446,7 +446,6 @@ Polymer({
 		var selfLink = this._getSelfLink(criterionCell);
 
 		var noBottom = noBottomCells && noBottomCells[selfLink];
-		var isLastCell = criterionNum === criteria.length - 1;
 		var hasFeedback = this._hasFeedback(criteria[criterionNum], assessmentResult) || criterionNum === addingFeedback;
 
 		// A cell already has a bottom border in the following cases:
