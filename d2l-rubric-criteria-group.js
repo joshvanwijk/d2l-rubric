@@ -37,8 +37,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				display: block;
 				position: relative;
 			}
-			d2l-td.out-of {
-				text-align: right;
+			d2l-table[type="default"] d2l-td.out-of {
+				text-align: left;
+				vertical-align: text-top;
 				min-width: 0;
 				pointer-events: none;
 			}
@@ -70,9 +71,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				background-color: var(--d2l-table-header-background-color);
 				vertical-align: text-top;
 			}
-			.criterion-cell {
+			d2l-table[type="default"] d2l-td.criterion-cell {
 				@apply --d2l-body-compact-text;
 				vertical-align: text-top;
+				position: relative;
 			}
 			.feedback-wrapper {
 				border: none;
@@ -87,14 +89,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				background-color: var(--d2l-color-celestine-plus-2);
 				text-decoration-color: var(--d2l-color-celestine-minus-1);
 				color: var(--d2l-color-celestine-minus-1);
-				box-shadow: -1px 0 0 var(--d2l-color-celestine); /* left border */
+				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
+				border-width: 2px;
 			}
-			.criterion-cell.selected.has-bottom {
-				box-shadow: -1px 0 0 var(--d2l-color-celestine), 0 1px 0 var(--d2l-color-celestine);
+			.criterion-cell.selected.has-bottom,
+			.criterion-cell.assessable.has-bottom:focus {
+				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
 			}
 			.criterion-cell.selected.is-last {
 				border-bottom-color: var(--d2l-color-celestine);
+				border-bottom-width: 2px;
 			}
 			.criterion-cell.assessable {
 				cursor: pointer;
@@ -104,6 +109,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			}
 			.criterion-cell.assessable:focus {
 				background-color: var(--d2l-color-sylvite);
+				border-color: var(--d2l-color-celestine);
+				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
+				border-width: 2px;
+				outline: none;
 			}
 			.criterion-cell.assessable.selected {
 				background-color: var(--d2l-color-celestine-plus-2);
