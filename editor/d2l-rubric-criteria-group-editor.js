@@ -143,10 +143,7 @@ Polymer({
 			type: String
 		},
 		richTextEnabled: Boolean,
-		outcomesToolIntegrationEnabled: {
-			type: Boolean,
-			reflectToAttribute: true
-		},
+		outcomesToolIntegrationEnabled: Boolean,
 	},
 
 	behaviors: [

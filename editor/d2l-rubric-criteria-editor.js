@@ -216,10 +216,7 @@ Polymer({
 			type: Number,
 		},
 		richTextEnabled: Boolean,
-		outcomesToolIntegrationEnabled: {
-			type: Boolean,
-			reflectToAttribute: true
-		},
+		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {
 			type: Boolean,
 			value: false

@@ -401,10 +401,7 @@ Polymer({
 			type: String,
 			value: null
 		},
-		outcomesToolIntegrationEnabled: {
-			type: Boolean,
-			reflectToAttribute: true
-		},
+		outcomesToolIntegrationEnabled: Boolean,
 		displayNamePlaceholder: {
 			type: Boolean,
 		},

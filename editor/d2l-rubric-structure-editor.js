@@ -162,8 +162,7 @@ Polymer({
 		},
 		outcomesToolIntegrationEnabled: {
 			type: Boolean,
-			value: false,
-			reflectToAttribute: true
+			value: false
 		},
 		isSinglePageRubric: {
 			type: Boolean,
