@@ -61,7 +61,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
 		<template is="dom-repeat" items="[[_groups]]" on-dom-change="_groupsDomComplete">
-			<d2l-rubric-criteria-group-editor hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" token="[[token]]" show-group-name="[[_showGroupName(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]">
+			<d2l-rubric-criteria-group-editor hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" token="[[token]]" show-group-name="[[_showGroupName(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -116,6 +116,7 @@ Polymer({
 		},
 
 		richTextEnabled: Boolean,
+		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {
 			type: Boolean,
 			value: false

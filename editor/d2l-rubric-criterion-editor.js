@@ -352,7 +352,7 @@ Polymer({
 		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
-			computed: '_canHideBrowseOutcomesButton(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty)',
+			computed: '_canHideBrowseOutcomesButton(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty, outcomesToolIntegrationEnabled)',
 		},
 		_hideOutcomes:{
 			type: Boolean,
@@ -401,6 +401,7 @@ Polymer({
 			type: String,
 			value: null
 		},
+		outcomesToolIntegrationEnabled: Boolean,
 		displayNamePlaceholder: {
 			type: Boolean,
 		},
@@ -560,8 +561,8 @@ Polymer({
 
 	// hide browse outcomes button when holistic or LD flag is off or tag list is empty
 	// there is no outcome to browse
-	_canHideBrowseOutcomesButton: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty) {
-		return !_isFlagOn || isHolistic || !_isAlignmentTagListEmpty || _isOutcomeEmpty;
+	_canHideBrowseOutcomesButton: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty, outcomesToolIntegrationEnabled) {
+		return !_isFlagOn || isHolistic || !_isAlignmentTagListEmpty || _isOutcomeEmpty || !outcomesToolIntegrationEnabled;
 	},
 
 	_canHideOutcomes: function(isHolistic, _isAlignmentTagListEmpty) {
