@@ -136,7 +136,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
 		<div id="rubric-structure-editor-container" hidden="">
-			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]">
+			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
 				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-overall-levels-editor>
@@ -159,6 +159,11 @@ Polymer({
 		richTextEnabled: {
 			type: Boolean,
 			value: false
+		},
+		outcomesToolIntegrationEnabled: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
 		},
 		isSinglePageRubric: {
 			type: Boolean,
