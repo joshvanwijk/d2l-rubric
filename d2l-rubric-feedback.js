@@ -83,7 +83,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				@apply --d2l-label-text;
 				margin-top: -1px;
 				color: var(--d2l-color-galena);
-				padding-top: 0.6rem;
+				padding-top: 5px;
+				padding-bottom: 5px;
 			}
 			.feedback-text {
 				@apply --d2l-body-compact-text;
@@ -99,6 +100,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 			}
 			.feedback-header-wrapper {
 				display: flex;
+				padding-top: 0.6rem;
 			}
 
 		</style>
