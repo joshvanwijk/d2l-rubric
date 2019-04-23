@@ -99,7 +99,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				--d2l-button-icon-min-width: 23px;
 			}
 			.level-name {
-				font-weight: 700;
+				display: flex;
+			}
+			.level-text {
+				font-weight: bold;
+				padding-right: 4px;
 			}
 			.level-name.assessed {
 				color: var(--d2l-color-celestine-minus-1);
@@ -122,7 +126,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
 				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
 					<div class$="[[_getLevelNameClass(_levelEntities, _selected, _assessedLevelHref)]]">
-						[[_getSelectedLevelText(_selected, _levelEntities, criterionCell)]]
+						<div class="level-text"> [[_getSelectedLevelText(_selected, _levelEntities, criterionCell)]] </div>
+						<div> [[_getSelectedNumberText(_selected, _levelEntities, criterionCell)]] </div>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
 						<s-html class="criterion-description-html" html="[[_getCriterionCellText(criterionCell)]]"></s-html>
@@ -286,28 +291,46 @@ Polymer({
 		return selected === this._total - 1 || selected === -1;
 	},
 
-	_getSelectedLevelText: function(selected, levels, criterionCell) {
-		if (!levels || !levels[selected]) {
-			return null;
-		}
+	_getPoints: function(selected, levels, criterionCell) {
 		// check for overrides
 		var points = levels[selected].properties.points;
 		if (criterionCell && criterionCell.hasClass(this.HypermediaClasses.rubrics.overridden)) {
 			points = criterionCell.properties.points;
 		}
+		return points;
+	},
+
+	_getSelectedLevelText: function(selected, levels, criterionCell) {
+		if (!levels || !levels[selected]) {
+			return null;
+		}
+
+		var points = this._getPoints(selected, levels, criterionCell);
 
 		var levelTitle = levels[selected].properties.name;
 		if (points === undefined || points === null) {
 			return levelTitle;
 		}
 
-		if (this.isHolistic) {
-			return this.localize('levelNameAndPercentage', 'levelName', levelTitle, 'number', points.toString());
-		}
-		if (this.isNumeric) {
-			return this.localize('levelNameAndPoints', 'levelName', levelTitle, 'number', points.toString());
+		if (this.isNumeric || this.isHolistic) {
+			return this.localize('levelNameAndBulletPoint', 'levelName', levelTitle);
 		}
 		return levelTitle;
+	},
+
+	_getSelectedNumberText: function(selected, levels, criterionCell) {
+		if (!levels || !levels[selected]) {
+			return null;
+		}
+
+		var points = this._getPoints(selected, levels, criterionCell);
+
+		if (this.isHolistic) {
+			return this.localize('numberAndPercentage', 'number', points.toString());
+		}
+		if (this.isNumeric) {
+			return this.localize('numberAndPoints', 'number', points.toString());
+		}
 	},
 
 	_getCriterionCellText: function(criterionCell) {
