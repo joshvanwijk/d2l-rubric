@@ -202,7 +202,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 			</div>
 		</div>
 		<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
-			<d2l-rubric-overall-score read-only="[[readOnly]]" href="[[_getOverallLevels(entity)]]" assessment-href="[[assessmentHref]]" token="[[token]]"></d2l-rubric-overall-score>
+			<d2l-rubric-overall-score read-only="[[readOnly]]" href="[[_getOverallLevels(entity)]]" assessment-href="[[assessmentHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-overall-score>
 		</template>
 		<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
 			<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
