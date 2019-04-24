@@ -120,8 +120,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			.criterion-cell.first.holistic {
 				border-left: var(--d2l-table-border);
 			}
+			.criterion-cell.first.holistic:focus {
+				border-left-color: var(--d2l-color-celestine);
+				border-width: 2px;
+			}
 			.criterion-cell.first.holistic.selected {
 				border-left-color: var(--d2l-color-celestine);
+				border-width: 2px;
 			}
 			
 			d2l-rubric-alignments-indicator {
