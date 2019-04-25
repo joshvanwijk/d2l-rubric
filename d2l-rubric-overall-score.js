@@ -185,6 +185,9 @@ Polymer({
 			type: String,
 			value: null,
 			observer: '_overallLevelChanged'
+		},
+		hasOutOf: {
+			type: Boolean
 		}
 	},
 
@@ -261,6 +264,10 @@ Polymer({
 	},
 
 	_showClearOverrideButton: function(levelEntity) {
+		// clear override button should not show up for text-only rubrics
+		if (!this.hasOutOf) {
+			return false;
+		}
 		var action = this._getOnClickAction(levelEntity);
 		return action && action.name === 'remove-overall-level-override';
 	},
