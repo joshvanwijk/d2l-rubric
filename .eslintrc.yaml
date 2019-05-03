@@ -5,7 +5,6 @@ rules:
   no-useless-escape: 0
 globals:
   fastdom: false
-  attest: false
 env:
   node: true
   es6: true

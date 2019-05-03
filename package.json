@@ -15,7 +15,6 @@
     "test": "test"
   },
   "scripts": {
-    "install_attest": "npm install attest --registry http://agora.dequecloud.com/artifactory/api/npm/attest/ && node remove_attest_from_project.js",
     "regenerate_data": "cd test/regen_api_data && node regenerate_api_data.js",
     "serve": "polymer analyze > analysis.json && polymer serve",
     "test": "npm run test:lint && npm run test:wct",

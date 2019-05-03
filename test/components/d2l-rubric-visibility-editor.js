@@ -107,18 +107,4 @@ suite('<d2l-rubric-visibility-editor>', function() {
 
 		});
 	});
-
-	suite('Ally Test', function() {
-		/* eslint no-invalid-this:0 */
-		/* global isAttestInstalled */
-		/* global ally_tests */
-		suiteSetup(function() {
-			if (!isAttestInstalled()) {
-				this.skip();
-			}
-		});
-		test('d2l-rubric-visibility-editor ally checks', function() {
-			ally_tests();
-		});
-	});
 });

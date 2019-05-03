@@ -147,19 +147,5 @@ suite('<d2l-rubric-criteria-editor>', function() {
 				expect(dragHandle.disabled).to.be.true;
 			});
 		});
-
-		suite ('Ally Test', function() {
-			/* eslint no-invalid-this:0 */
-			/* global isAttestInstalled */
-			/* global ally_tests */
-			suiteSetup(function() {
-				if (!isAttestInstalled()) {
-					this.skip();
-				}
-			});
-			test('d2l-rubric-criteria-editor ally checks', function() {
-				return ally_tests();
-			});
-		});
 	});
 });

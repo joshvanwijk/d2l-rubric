@@ -6,7 +6,6 @@ sudo: required
 before_install:
   - printf "_auth=${AGORA_TOKEN}\nalways-auth = true\nemail = Dave.Westerveld@d2l.com" > .npmrc
 before_script:
-# - npm run install_attest
 - npm run test:lint
 script:
 - set -e

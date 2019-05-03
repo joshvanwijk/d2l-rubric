@@ -9,9 +9,7 @@
 	<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 	<script src="../../../wct-browser-legacy/browser.js"></script>
 	<script src="../../../whatwg-fetch/fetch.js"></script>
-	<script src="../../node_modules/attest/attest.js"></script>
 	<script src="../test-polyfill.js"></script>
-	<script src="./ally-test-script.js"></script>
 	<script src="./utilities/wait.js"></script>
 	<script type="module" src="../../editor/d2l-rubric-overall-level-editor.js"></script>
 </head>
@@ -43,20 +41,6 @@ suite('<d2l-rubric-overall-level-editor>', function() {
 
 		test('can be instantiated', function() {
 			expect(element.is).to.equal('d2l-rubric-overall-level-editor');
-		});
-	});
-
-	suite('Ally Test', function() {
-		/* eslint no-invalid-this:0 */
-		/* global isAttestInstalled */
-		/* global ally_tests */
-		suiteSetup(function() {
-			if (!isAttestInstalled()) {
-				this.skip();
-			}
-		});
-		test('d2l-rubric-overall-level-editor ally checks', function() {
-			ally_tests();
 		});
 	});
 });
