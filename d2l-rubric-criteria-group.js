@@ -28,6 +28,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import Icons from './icons.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-group">
@@ -132,6 +133,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			d2l-rubric-alignments-indicator {
 				float: right;
 			}
+			
+			.criterion-competencies {
+				float: right;
+				margin-top: 6px;
+			}
 
 			[hidden] {
 				display: none !important;
@@ -178,7 +184,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 									outcomes-title-text="[[_getOutcomesTitleText()]]"
 								></d2l-rubric-alignments-indicator>
 								<div class="criterion-name">
-									[[criterion.properties.name]]
+									<span>
+										[[criterion.properties.name]]
+									</span>
+									<template is="dom-if" if="[[_hasCompetencies(assessmentEntity, criterion, readOnly)]]">
+										<img
+											class="criterion-competencies"
+											src="[[_getIconData('competency')]]"
+											title="[[_getCompetencyTitleText(assessmentEntity, criterion)]]"
+										></img>
+									</template>
 								</div>
 								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 							</d2l-td>
@@ -497,6 +512,43 @@ Polymer({
 		return className;
 	},
 
+	_hasCompetencies: function(assessmentEntity, criterion, readOnly) {
+		return !readOnly && !!this._getCriterionCompetencies(assessmentEntity, criterion).length;
+	},
+
+	_getCompetencyTitleText: function(assessmentEntity, criterion) {
+		return this._getCriterionCompetencies(assessmentEntity, criterion).join('\n');
+	},
+
+	_getCriterionCompetencies: function(assessmentEntity, criterion) {
+		if (!assessmentEntity || !assessmentEntity.entities || !criterion) {
+			return [];
+		}
+
+		var criterionHref = criterion.getLinkByRel('self');
+		if (!criterionHref || !criterionHref.href) {
+			return [];
+		}
+		criterionHref = criterionHref.href;
+
+		for (var i = 0; i < assessmentEntity.entities.length; i++) {
+			var criterionEntity = assessmentEntity.entities[i];
+			if (!criterionEntity.hasClass(this.HypermediaClasses.rubrics.criterionCellSelector)) {
+				continue;
+			}
+			var criterionLink = criterionEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
+			if (criterionLink && criterionLink.href === criterionHref) {
+				if (criterionEntity.properties) {
+					return criterionEntity.properties.competencies || [];
+				} else {
+					return [];
+				}
+			}
+		}
+
+		return [];
+	},
+
 	handleTap: function(event) {
 		if (this.readOnly) {
 			return;
@@ -559,5 +611,9 @@ Polymer({
 		) {
 			return D2L.Custom.Outcomes.TermTitleText;
 		}
+	},
+
+	_getIconData: function(icon) {
+		return Icons[icon];
 	}
 });
