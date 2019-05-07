@@ -69,7 +69,6 @@ class RubricCompetenciesIcon extends PolymerElement {
 	_onClick(event) {
 		if (this.mobile && !this._mobileTooltipOpen) {
 			this._mobileTooltipOpen = true;
-			event.stopPropagation();
 		}
 	}
 
