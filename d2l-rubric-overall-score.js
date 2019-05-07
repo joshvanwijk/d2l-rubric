@@ -12,6 +12,8 @@ import 'd2l-icons/tier1-icons.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import Icons from './icons.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
@@ -119,6 +121,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
+			
+			.criterion-competencies {
+				margin-left: 4px;
+				margin-top: 6px;
+			}
 
 			s-html {
 				overflow: hidden;
@@ -129,7 +136,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 
 	<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
 	<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-	<h3>[[localize('overallScore')]]</h3>
+	<h3>
+		<span>[[localize('overallScore')]]</span>
+		<template is="dom-if" if="[[_largeScreen]]">
+			<template is="dom-if" if="[[_hasCompetencies(_competencies,readOnly)]]">
+				<img
+					class="criterion-competencies"
+					src="[[_getIconData('competency')]]"
+					title="[[_getCompetencyTitleText(_competencies)]]"
+				></img>
+			</template>
+		</template>
+	</h3>
 	<d2l-scroll-wrapper show-actions="">
 		<div class="overall-levels" data-mobile$="[[!_largeScreen]]">
 			<template is="dom-repeat" items="[[_levels]]" as="level">
@@ -168,6 +186,7 @@ Polymer({
 	properties: {
 		readOnly: Boolean,
 		_levels: Array,
+		_competencies: Array,
 		_largeScreen: Boolean,
 		_assessmentEntity: {
 			type: Object,
@@ -215,6 +234,7 @@ Polymer({
 
 	_onAssessmentEntityChanged: function(assessmentEntity) {
 		this._assessmentMap = {};
+		this._competencies = [];
 
 		if (!assessmentEntity) {
 			return;
@@ -223,6 +243,10 @@ Polymer({
 		var selector = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallLevelSelector);
 		if (!selector) {
 			return;
+		}
+
+		if (selector.properties && selector.properties.competencies) {
+			this._competencies = selector.properties.competencies;
 		}
 
 		selector.entities.forEach(function(assessmentLevel) {
@@ -244,6 +268,14 @@ Polymer({
 	_isAchieved: function(levelEntity) {
 		var assessmentLevel = this._getAssessmentLevel(levelEntity);
 		return assessmentLevel && assessmentLevel.hasClass(this.HypermediaClasses.rubrics.selected);
+	},
+
+	_hasCompetencies: function(competencies, readOnly) {
+		return competencies && competencies.length && !readOnly;
+	},
+
+	_getCompetencyTitleText: function(competencies) {
+		return (competencies || []).join('\n');
 	},
 
 	_getDescriptionHtml: function(levelEntity) {
@@ -319,5 +351,9 @@ Polymer({
 
 	_overallLevelChanged: function(levelName) {
 		this.fire('d2l-rubric-overall-level-changed', {name: levelName});
+	},
+
+	_getIconData: function(icon) {
+		return Icons[icon];
 	}
 });
