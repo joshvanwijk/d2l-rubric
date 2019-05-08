@@ -1,6 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import 'd2l-button/d2l-button-subtle.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import Icons from './icons.js';
 
@@ -17,27 +16,19 @@ class RubricCompetenciesIcon extends PolymerElement {
 					white-space: pre;
 				}
 			</style>
-			<template is="dom-if" if="[[!mobile]]">
-				<img id="icon-desktop" src="[[_getIconData('competency')]]"></img>
-				<d2l-tooltip
-					for="icon-desktop"
-					position="[[tooltipPosition]]"
-				>
-					<span>[[_getTooltip(competencyNames)]]</span>
-				</d2l-tooltip>
-			</template>
-			<template is="dom-if" if="[[mobile]]">
-				<d2l-button-subtle id="icon-mobile" on-click="_onClick">
-					<img src="[[_getIconData('competency')]]"></img>
-				</d2l-button-subtle>
-				<d2l-tooltip 
-					for="icon-mobile" 
-					position="[[tooltipPosition]]"
-					force-show="[[_mobileTooltipOpen]]"
-				>
-					<span>[[_getTooltip(competencyNames)]]</span>
-				</d2l-tooltip>
-			</template>
+			
+			<img
+				id="icon"
+				src="[[_getIconData('competency')]]"
+				tabindex="0"
+			></img>
+			<d2l-tooltip
+				for="icon"
+				position="[[tooltipPosition]]"
+				force-show="[[_hasFocus]]"
+			>
+				<span>[[_getTooltip(competencyNames)]]</span>
+			</d2l-tooltip>
 		`;
 		template.setAttribute('strip-whitespace', true);
 		return template;
@@ -55,7 +46,7 @@ class RubricCompetenciesIcon extends PolymerElement {
 				type: String,
 				value: 'top'
 			},
-			_mobileTooltipOpen: {
+			_hasFocus: {
 				type: Boolean,
 				value: false
 			}
@@ -64,13 +55,8 @@ class RubricCompetenciesIcon extends PolymerElement {
 
 	ready() {
 		super.ready();
-		this.addEventListener('blur', () => this._mobileTooltipOpen = false);
-	}
-
-	_onClick(event) {
-		if (this.mobile && !this._mobileTooltipOpen) {
-			this._mobileTooltipOpen = true;
-		}
+		this.addEventListener('blur', () => this._hasFocus = false);
+		this.addEventListener('focus', () => this._hasFocus = true);
 	}
 
 	_getTooltip(competencyNames) {

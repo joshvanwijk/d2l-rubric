@@ -113,8 +113,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				display: none !important;
 			}
 			d2l-rubric-competencies-icon {
+				margin-top: 3px;
 				float: right;
-				margin-top: -0.5rem;
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>

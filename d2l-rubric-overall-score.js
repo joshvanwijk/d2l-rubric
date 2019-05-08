@@ -122,14 +122,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
 			
-			d2l-rubric-competencies-icon:not([mobile]) {
+			d2l-rubric-competencies-icon {
 				margin-top: 1px;
 				margin-left: 4px;
 			}
 			
 			d2l-rubric-competencies-icon[mobile] {
 				float: right;
-				margin-top: -3px;
 			}
 
 			s-html {
@@ -147,7 +146,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			<d2l-rubric-competencies-icon
 				competency-names="[[_competencies]]"
 				mobile="[[!_largeScreen]]"
-				tooltip-position="left"
+				tooltip-position="[[_competenciesIconTooltipPosition(_largeScreen)]]"
 			></d2l-rubric-competencies-icon>
 		</template>
 	</h3>
@@ -275,6 +274,10 @@ Polymer({
 
 	_showCompetencies: function(competencies, readOnly) {
 		return competencies && competencies.length && !readOnly;
+	},
+
+	_competenciesIconTooltipPosition: function(largeScreen) {
+		return largeScreen ? 'top' : 'left';
 	},
 
 	_getDescriptionHtml: function(levelEntity) {
