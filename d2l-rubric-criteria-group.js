@@ -28,7 +28,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import Icons from './icons.js';
+import './d2l-rubric-competencies-icon.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-group">
@@ -134,9 +134,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				float: right;
 			}
 			
-			.criterion-competencies {
+			d2l-rubric-competencies-icon {
 				float: right;
-				margin-top: 6px;
+				margin-top: 3px;
 			}
 
 			[hidden] {
@@ -187,12 +187,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 									<span>
 										[[criterion.properties.name]]
 									</span>
-									<template is="dom-if" if="[[_hasCompetencies(assessmentEntity, criterion, readOnly)]]">
-										<img
-											class="criterion-competencies"
-											src="[[_getIconData('competency')]]"
-											title="[[_getCompetencyTitleText(assessmentEntity, criterion)]]"
-										></img>
+									<template is="dom-if" if="[[_showCompetencies(assessmentEntity, criterion, readOnly)]]">
+										<d2l-rubric-competencies-icon
+											competency-names="[[_getCriterionCompetencies(assessmentEntity, criterion)]]"
+										></d2l-rubric-competencies-icon>
 									</template>
 								</div>
 								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
@@ -512,12 +510,8 @@ Polymer({
 		return className;
 	},
 
-	_hasCompetencies: function(assessmentEntity, criterion, readOnly) {
+	_showCompetencies: function(assessmentEntity, criterion, readOnly) {
 		return !readOnly && !!this._getCriterionCompetencies(assessmentEntity, criterion).length;
-	},
-
-	_getCompetencyTitleText: function(assessmentEntity, criterion) {
-		return this._getCriterionCompetencies(assessmentEntity, criterion).join('\n');
 	},
 
 	_getCriterionCompetencies: function(assessmentEntity, criterion) {
@@ -611,9 +605,6 @@ Polymer({
 		) {
 			return D2L.Custom.Outcomes.TermTitleText;
 		}
-	},
-
-	_getIconData: function(icon) {
-		return Icons[icon];
 	}
+
 });

@@ -10,6 +10,7 @@ import 's-html/s-html.js';
 import './assessment-result-behavior.js';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import './d2l-rubric-competencies-icon.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
@@ -111,10 +112,21 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			[hidden] {
 				display: none !important;
 			}
+			d2l-rubric-competencies-icon {
+				margin-top: 3px;
+				float: right;
+			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div class="criterion-name">
-			[[_name]]
+			<span>[[_name]]</span>
+			<template is="dom-if" if="[[_showCompetencies(assessmentEntity, href, readOnly)]]">
+				<d2l-rubric-competencies-icon
+					competency-names="[[_getCompetencies(assessmentEntity, href)]]"
+					tooltip-position="left"
+					mobile
+				></d2l-rubric-competencies-icon>
+			</template>
 		</div>
 		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
 		</d2l-rubric-levels-mobile>
@@ -243,6 +255,33 @@ Polymer({
 	_hasDescription: function(criterionCell) {
 		var description = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description);
 		return !!(description && description.properties && description.properties.html);
+	},
+
+	_showCompetencies: function(assessmentEntity, href, readOnly) {
+		return !readOnly && !!this._getCompetencies(assessmentEntity, href).length;
+	},
+
+	_getCompetencies: function(assessmentEntity, href) {
+		if (!assessmentEntity || !assessmentEntity.entities || !href) {
+			return [];
+		}
+
+		for (var i = 0; i < assessmentEntity.entities.length; i++) {
+			var criterionEntity = assessmentEntity.entities[i];
+			if (!criterionEntity.hasClass(this.HypermediaClasses.rubrics.criterionCellSelector)) {
+				continue;
+			}
+			var criterionLink = criterionEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
+			if (criterionLink && criterionLink.href === href) {
+				if (criterionEntity.properties) {
+					return criterionEntity.properties.competencies || [];
+				} else {
+					return [];
+				}
+			}
+		}
+
+		return [];
 	},
 
 	_selectedChanged: function(newValue, oldValue) {
