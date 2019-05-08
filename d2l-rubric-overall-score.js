@@ -122,8 +122,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
 			
-			d2l-rubric-competencies-icon {
+			d2l-rubric-competencies-icon:not([mobile]) {
+				margin-top: 1px;
+				margin-left: 4px;
+			}
+			
+			d2l-rubric-competencies-icon[mobile] {
 				float: right;
+				margin-top: -3px;
 			}
 
 			s-html {

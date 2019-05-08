@@ -48,7 +48,8 @@ class RubricCompetenciesIcon extends PolymerElement {
 			competencyNames: Array,
 			mobile: {
 				type: Boolean,
-				value: false
+				value: false,
+				reflectToAttribute: true
 			},
 			tooltipPosition: {
 				type: String,
