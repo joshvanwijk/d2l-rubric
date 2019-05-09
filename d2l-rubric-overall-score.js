@@ -124,11 +124,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			
 			d2l-rubric-competencies-icon {
 				margin-top: 1px;
-				margin-left: 4px;
+				margin-left: 10px;
 			}
 			
 			d2l-rubric-competencies-icon[mobile] {
 				float: right;
+				margin-left: 2px;
 			}
 
 			s-html {
