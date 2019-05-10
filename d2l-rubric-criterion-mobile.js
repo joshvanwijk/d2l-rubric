@@ -8,6 +8,7 @@ import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import './d2l-rubric-entity-behavior.js';
 import 's-html/s-html.js';
 import './assessment-result-behavior.js';
+import './d2l-rubric-alignments-indicator';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import './d2l-rubric-competencies-icon.js';
@@ -116,6 +117,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				margin-top: 3px;
 				float: right;
 			}
+			d2l-rubric-alignments-indicator {
+				margin-right: 5px;
+				float: right;
+			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div class="criterion-name">
@@ -127,6 +132,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 					mobile
 				></d2l-rubric-competencies-icon>
 			</template>
+			<d2l-rubric-alignments-indicator 
+				href="[[_getActivityLink(_entity)]]" 
+				token="[[token]]"
+				outcomes-title-text="[[_getOutcomesTitleText()]]"
+				mobile
+			></d2l-rubric-alignments-indicator>
 		</div>
 		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
 		</d2l-rubric-levels-mobile>
@@ -394,5 +405,20 @@ Polymer({
 			}
 		}
 		return className;
+	},
+
+	_getActivityLink: function(entity) {
+		var link = entity && entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
+		return link && link.href || '';
+	},
+
+	_getOutcomesTitleText: function() {
+		if (D2L
+			&& D2L.Custom
+			&& D2L.Custom.Outcomes
+			&& D2L.Custom.Outcomes.TermTitleText
+		) {
+			return D2L.Custom.Outcomes.TermTitleText;
+		}
 	}
 });

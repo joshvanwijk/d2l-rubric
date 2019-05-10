@@ -5,6 +5,8 @@ import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-tooltip/d2l-tooltip.js';
+import 'd2l-icons/tier1-icons.js';
+import 'd2l-icons/d2l-icon.js';
 import './d2l-siren-entity-resolver.js';
 
 const _trim = str => str ? str.trim() : str;
@@ -17,6 +19,10 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		return {
 			outcomesTitleText: {
 				type: String
+			},
+			mobile: {
+				type: Boolean,
+				value: false
 			},
 			_alignmentCollectionMap: {
 				type: Object,
@@ -33,6 +39,10 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 			_outcomeMap: {
 				type: Object,
 				value: {}
+			},
+			_hasFocus: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -59,8 +69,8 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 </style>
 
 <template is="dom-if" if="[[_hasOutcomes(_outcomeMap)]]">
-	<d2l-icon id="alignments-icon" icon="d2l-tier1:bullseye"></d2l-icon>
-	<d2l-tooltip for="alignments-icon" position="right">
+	<d2l-icon id="alignments-icon" tabindex="0" icon="d2l-tier1:bullseye"></d2l-icon>
+	<d2l-tooltip for="alignments-icon" position="[[_getTooltipPosition(mobile)]]" force-show="[[_hasFocus]]">
 		<div><b>[[outcomesTitleText]]</b></div>
 		<template is="dom-repeat" items="[[_getTooltipOutcomes(_outcomeMap)]]">
 			<div>[[item]]</div>
@@ -80,6 +90,12 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 	</template>
 </div>
 		`;
+	}
+
+	ready() {
+		super.ready();
+		this.addEventListener('blur', () => this._hasFocus = false);
+		this.addEventListener('focus', () => this._hasFocus = true);
 	}
 
 	_getAlignmentsLink(entity) {
@@ -120,6 +136,10 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		return Object.values(outcomeMap)
 			.map(this._getOutcomeText)
 			.filter(text => !!text);
+	}
+
+	_getTooltipPosition(mobile) {
+		return mobile ? 'left' : 'right';
 	}
 
 	_getOutcomeText(outcome) {
