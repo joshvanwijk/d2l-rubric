@@ -246,8 +246,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 			</d2l-alert>
 		</template>
 		<div id="rubric-name-container">
-			<label for="rubric-name">[[localize('name')]]*</label>
 			<template is="dom-if" if="[[!_isLocked]]">
+				<label for="rubric-name">[[localize('name')]]*</label>
 				<d2l-input-text
 					id="rubric-name"
 					value="[[_rubricName]]"
