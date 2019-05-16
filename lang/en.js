@@ -54,6 +54,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'numberAndPercentage': '{number} %',
 		'levelPoints': 'Level points',
 		'levelPrepended': 'A new level has been added before {name}',
+		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
 		'name': 'Name',
 		'nameIsRequired': 'Name is required',
 		'nameSaveFailed': 'Saving name failed',

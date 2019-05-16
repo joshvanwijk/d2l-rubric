@@ -54,6 +54,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'levelNameAndPercentage': '{levelName} - {number} %',
 		'levelPoints': '層級分數',
 		'levelPrepended': '已在 {name} 前新增層級',
+		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
 		'name': '名稱',
 		'nameIsRequired': '「名稱」為必填',
 		'nameSaveFailed': '名稱儲存失敗',

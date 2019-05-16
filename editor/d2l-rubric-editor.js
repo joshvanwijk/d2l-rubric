@@ -121,6 +121,23 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 				margin-right: 0.5rem;
 			}
 
+			#locked-alert {
+				margin: 0;
+				margin-left: var(--d2l-rubric-editor-start-gutter-width);
+				margin-right: var(--d2l-rubric-editor-end-gutter-width);
+				max-width: unset;
+				width: unset;
+			}
+			
+			:dir(rtl) #locked-alert {
+				margin-right: var(--d2l-rubric-editor-start-gutter-width);
+				margin-left: var(--d2l-rubric-editor-end-gutter-width);
+			}
+			
+			#locked-alert-icon {
+				vertical-align: text-top;
+			}
+
 			d2l-alert {
 				margin: 0;
 				margin-left: var(--d2l-rubric-editor-start-gutter-width);
@@ -217,6 +234,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 				</d2l-dropdown-menu>
 			</d2l-dropdown-button-subtle>
 		</d2l-rubric-editor-header>
+		<template is="dom-if" if="[[_isLocked]]">
+			<d2l-alert id ="locked-alert" type="default" >
+				<d2l-icon id = "locked-alert-icon" icon="d2l-tier1:lock-locked"></d2l-icon>
+				[[localize('lockedAlertText')]]
+			</d2l-alert>
+		</template>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]" has-close-button="">
 				[[item.alertMessage]]
