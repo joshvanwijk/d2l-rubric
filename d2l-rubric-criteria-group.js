@@ -44,7 +44,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				min-width: 0;
 				pointer-events: none;
 			}
-			d2l-td.out-of.assessable {
+			d2l-table[type="default"] d2l-td.out-of.assessable {
 				pointer-events: auto;
 			}
 			d2l-td.out-of.assessable:hover {
