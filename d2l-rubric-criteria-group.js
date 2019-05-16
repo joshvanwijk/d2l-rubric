@@ -197,19 +197,19 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
-							<d2l-td tabindex="0" class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]" on-tap="handleTap" on-keypress="handleKey" data-href$="[[_getSelfLink(criterionCell)]]">
+							<d2l-td tabindex$="[[_handleTabIndex()]]" class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]" on-tap="handleTap" on-keypress="handleKey" data-href$="[[_getSelfLink(criterionCell)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]">
 							</d2l-rubric-criterion-cell></d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]" on-tap="_handleOverrideScore" tabindex="0" on-keypress="_handleScoreKeypress">
+							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]" on-tap="_handleOverrideScore" tabindex$="[[_handleTabIndex()]]" on-keypress="_handleScoreKeypress">
 								<d2l-rubric-editable-score id="score-inner[[criterionNum]]" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
 							</d2l-td>
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex="0" focused-styling>
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex$="[[_handleTabIndex()]]" focused-styling$="[[!_isStaticView()]]">
 							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -605,6 +605,16 @@ Polymer({
 		) {
 			return D2L.Custom.Outcomes.TermTitleText;
 		}
-	}
+	},
 
+	_isStaticView: function() {
+		return this.readOnly || !this.assessmentHref;
+	},
+
+	_handleTabIndex: function() {
+		if (this._isStaticView()) {
+			return undefined;
+		}
+		return 0;
+	}
 });

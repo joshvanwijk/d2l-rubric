@@ -193,6 +193,9 @@ Polymer({
 	},
 
 	_focusInHandler: function() {
+		if (this.readOnly || !this.assessmentHref) {
+			return;
+		}
 		this._feedbackInFocus = true;
 		this._addFocusStylingToFeedbackWrapper();
 	},
@@ -208,6 +211,9 @@ Polymer({
 	},
 
 	_addFocusStylingToFeedbackWrapper: function() {
+		if (this.readOnly || !this.assessmentHref) {
+			return;
+		}
 		this._focusStyling = true;
 	},
 
