@@ -124,7 +124,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div class="criterion-name">
-			<span>[[_name]]</span>
 			<template is="dom-if" if="[[_showCompetencies(assessmentEntity, href, readOnly)]]">
 				<d2l-rubric-competencies-icon
 					competency-names="[[_getCompetencies(assessmentEntity, href)]]"
@@ -138,6 +137,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				outcomes-title-text="[[_getOutcomesTitleText()]]"
 				mobile
 			></d2l-rubric-alignments-indicator>
+			<span>[[_name]]</span>
 		</div>
 		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
 		</d2l-rubric-levels-mobile>

@@ -183,15 +183,15 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 									token="[[token]]"
 									outcomes-title-text="[[_getOutcomesTitleText()]]"
 								></d2l-rubric-alignments-indicator>
+								<template is="dom-if" if="[[_showCompetencies(assessmentEntity, criterion, readOnly)]]">
+									<d2l-rubric-competencies-icon
+										competency-names="[[_getCriterionCompetencies(assessmentEntity, criterion)]]"
+									></d2l-rubric-competencies-icon>
+								</template>
 								<div class="criterion-name">
 									<span>
 										[[criterion.properties.name]]
 									</span>
-									<template is="dom-if" if="[[_showCompetencies(assessmentEntity, criterion, readOnly)]]">
-										<d2l-rubric-competencies-icon
-											competency-names="[[_getCriterionCompetencies(assessmentEntity, criterion)]]"
-										></d2l-rubric-competencies-icon>
-									</template>
 								</div>
 								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 							</d2l-td>
