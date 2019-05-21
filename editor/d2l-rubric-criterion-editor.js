@@ -243,7 +243,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 
 		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
 			<div>
-				<h2>Browse Outcomes </h2>
+				<h2>[[browseOutcomesText]]</h2>
 				<d2l-button-icon icon="d2l-tier1:close-large" id="closeButton" on-tap= "_closeBrowseOutcomes"></d2l-button-icon>
 			</div>
 
@@ -313,7 +313,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
 						<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
 					</div>
-					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">Outcomes</h4>
+					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
 					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]" token="[[token]]">
 					</d2l-activity-alignment-tags>
 				</div>
@@ -336,6 +336,9 @@ Polymer({
 		* Outcomes langterm set in config variables
 		*/
 		outcomesTitle: {
+			type: String
+		},
+		browseOutcomesText: {
 			type: String
 		},
 		_canEdit: {
