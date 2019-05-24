@@ -268,7 +268,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isLocked]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isLocked]]">
@@ -385,6 +385,9 @@ Polymer({
 		* Outcomes langterm set in config variables
 		*/
 		outcomesTitle: {
+			type: String
+		},
+		browseOutcomesText: {
 			type: String
 		},
 		_rubricName: {

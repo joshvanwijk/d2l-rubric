@@ -147,7 +147,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 				<template id="criteria-repeater" is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
 					<div class="fieldset">
 						<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
-						<d2l-rubric-criterion-editor animating="[[animating]]" href="[[_getSelfLink(criterion)]]" token="[[token]]" is-holistic="[[isHolistic]]" display-name-placeholder="[[_isFirst(index, criterionCount)]]" rich-text-enabled="[[richTextEnabled]]" criterion-detail-width="[[criterionDetailWidth]]" outcomes-title="[[outcomesTitle]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+						<d2l-rubric-criterion-editor animating="[[animating]]" href="[[_getSelfLink(criterion)]]" token="[[token]]" is-holistic="[[isHolistic]]" display-name-placeholder="[[_isFirst(index, criterionCount)]]" rich-text-enabled="[[richTextEnabled]]" criterion-detail-width="[[criterionDetailWidth]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 							<div slot="gutter-left">
 								<div class="reorder-offscreen" on-focusin="_onReorderGroupFocusIn" on-focusout="_onReorderGroupFocusOut" on-keydown="_onReorderGroupKeydown">
 									<button id="up-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionUp', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isFirst(index, criterionCount)]]" data-index$="[[index]]" on-tap="_moveUp">
@@ -189,6 +189,9 @@ Polymer({
 		* Outcomes langterm set in config variables
 		*/
 		outcomesTitle: {
+			type: String
+		},
+		browseOutcomesText: {
 			type: String
 		},
 		_criteriaEntities: Array,
