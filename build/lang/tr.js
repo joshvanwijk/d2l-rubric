@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'overallScoreDescription': 'Her gönderi, genel rubrik puanına göre bir başarı seviyesine atanır.',
 		'overallScoreHeader': 'Toplam Puan',
 		'overallScore': 'Toplam Puan',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'Kriter puanı etkisizleştirildi',
 		'overriddenTotalScoreTip': 'Toplam rubrik puanı etkisizleştirildi. Puan, şu andan itibaren rubrik üzerinde yapılan değişikliklere bağlı olarak güncellenmeyecek.',
 		'points': '{number} {number, plural, one {puan} other {puan}}',

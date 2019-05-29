@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'overallScoreDescription': '전체 루브릭 점수에 따라 각 제출에 성취 수준이 할당됩니다.',
 		'overallScoreHeader': '전체 점수',
 		'overallScore': '전체 점수',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': '기준 점수가 재설정되었음',
 		'overriddenTotalScoreTip': '전체 루브릭 점수가 재설정되었습니다. 이제는 루브릭의 변경 사항에 따라 점수가 업데이트되지 않습니다.',
 		'points': '{number} {number, plural, one {점수} other {점수}}',

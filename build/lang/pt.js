@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'overallScoreDescription': 'Um nível de desempenho é atribuído a cada envio com base na pontuação geral da rubrica.',
 		'overallScoreHeader': 'Pontuação geral',
 		'overallScore': 'Pontuação geral',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'A pontuação do critério foi substituída',
 		'overriddenTotalScoreTip': 'A pontuação geral da rubrica foi substituída. A pontuação não será mais atualizada com base nas alterações da rubrica.',
 		'points': '{number} {number, plural, one {ponto} other {pontos}}',

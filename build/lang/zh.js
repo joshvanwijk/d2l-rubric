@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'overallScoreDescription': '根据其总量规分数为每次提交分配成绩级别。',
 		'overallScoreHeader': '总分数',
 		'overallScore': '总分数',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': '标准分数已改写',
 		'overriddenTotalScoreTip': '总量规分数已改写。该分数将不再根据量规更改进行更新。',
 		'points': '{number} {number, plural, one {分数} other {分数}}',

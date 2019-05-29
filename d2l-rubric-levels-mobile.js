@@ -17,6 +17,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			:host{
 				display:block;
 			}
+			:host([overridden-styling]) .out-of {	
+				background-color: var(--d2l-color-celestine-plus-2);
+			}
 			.levels-container {
 				display: inline-flex;
 				width: 100%;
@@ -108,7 +111,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				min-width: 40px;
 				margin-left: 15px;
 				margin-right: 5px;
-				padding: 0 5px;
+				padding: 0 6px;
 				flex: 0 0 auto;
 			}
 			.out-of:hover {
@@ -116,9 +119,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				background-color: transparent;
 			}
 			.out-of.editing {
-				width: calc(100% - 10px);
-				height: 45px;
-				text-align: center;
+				width: calc(100% - 20px);
+				height: 55px;
 				margin-bottom: 5px;
 				margin-left: 5px;
 				display: block;
@@ -155,7 +157,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				</template>
 			</div>
 			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]" tabindex="0" on-keypress="_handleOverrideScoreKeypress">
-				<d2l-rubric-editable-score id="score-inner" class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]" criterion-href="[[criterionHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" on-tap="_handleOverrideScore">
+				<d2l-rubric-editable-score id="score-inner" class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]" criterion-href="[[criterionHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" overridden-styling="{{overriddenStyling}}" on-tap="_handleOverrideScore">
 				</d2l-rubric-editable-score>
 			</div>
 		</div>
@@ -227,6 +229,11 @@ Polymer({
 
 		editingScore: {
 			type: Object,
+			value: false
+		},
+		overriddenStyling: {
+			type: Boolean,
+			reflectToAttribute: true,
 			value: false
 		}
 	},

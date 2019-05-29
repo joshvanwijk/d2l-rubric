@@ -69,6 +69,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'overallScoreDescription': 'Each submission is assigned a level of achievement based on its overall rubric score.',
 		'overallScoreHeader': 'Overall Score',
 		'overallScore': 'Overall Score',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'Criterion score has been overridden',
 		'overriddenTotalScoreTip': 'The overall rubric score has been overridden. The score will no longer update based on changes to the rubric.',
 		'points': '{number} {number, plural, one {point} other {points}}',

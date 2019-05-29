@@ -57,6 +57,7 @@
 	"overallScoreDescription": "各提出物には、その全体の注釈スコアに基づいて、達成レベルが指定されます。",
 	"overallScoreHeader": "全体のスコア",
 	"overallScore": "全体のスコア",
+  "overrideLabel": "Override",
 	"overriddenScoreTip": "条件スコアが上書きされました。",
 	"overriddenTotalScoreTip": "全体の注釈スコアが上書きされました。注釈の変更に基づくスコアの更新が行われなくなります。",
 	"points": "{number} {number, plural, one {ポイント} other {ポイント}}",

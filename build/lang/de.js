@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'overallScoreDescription': 'Jeder Abgabe wird basierend auf der Bewertungsschema-Gesamtpunktzahl eine Leistungsstufe zugewiesen.',
 		'overallScoreHeader': 'Gesamtpunktzahl',
 		'overallScore': 'Gesamtpunktzahl',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'Kriterium-Punktzahl wurde außer Kraft gesetzt',
 		'overriddenTotalScoreTip': 'Die Bewertungsschema-Gesamtpunktzahl wurde außer Kraft gesetzt. Die Punktzahl wird nicht mehr durch Änderungen am Bewertungsschema aktualisiert.',
 		'points': '{number} {number, plural, one {Punkt} other {Punkte}}',

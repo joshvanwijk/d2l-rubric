@@ -46,6 +46,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			}
 			d2l-table[type="default"] d2l-td.out-of.assessable {
 				pointer-events: auto;
+				max-width: 75px;
 			}
 			d2l-td.out-of.assessable:hover {
 				color: var(--d2l-color-celestine);
@@ -202,8 +203,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 							</d2l-rubric-criterion-cell></d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]" on-tap="_handleOverrideScore" tabindex$="[[_handleTabIndex()]]" on-keypress="_handleScoreKeypress">
-								<d2l-rubric-editable-score id="score-inner[[criterionNum]]" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
+							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]">
+								<d2l-rubric-editable-score id="score-inner[[criterionNum]]" on-tap="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
 							</d2l-td>
 						</template>
@@ -588,7 +589,7 @@ Polymer({
 		}
 		var criterionNum = event.model.get('criterionNum');
 		this.editingScore = criterionNum;
-		this.editableScoreContainer = event.currentTarget;
+		this.editableScoreContainer = event.currentTarget.parentNode;
 	},
 
 	_handleScoreKeypress: function(event) {

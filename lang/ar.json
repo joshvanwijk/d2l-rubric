@@ -57,6 +57,7 @@
 	"overallScoreDescription": "إن كل إرسال معيّن لمستوى تحصيل استنادًا إلى مجموع درجات آلية التقييم الإجمالية.",
 	"overallScoreHeader": "مجموع الدرجات الإجمالي",
 	"overallScore": "مجموع الدرجات الإجمالي",
+  "overrideLabel": "Override",
 	"overriddenScoreTip": "تم استبدال مجموع درجات المعيار",
 	"overriddenTotalScoreTip": "تم استبدال مجموع درجات آلية التقييم الإجمالية. لن يتم تحديث مجموع العلامات بعد الآن استنادًا إلى التغييرات في آلية التقييم.",
 	"points": "{number} {number, plural, one {نقطة} other {نقاط}}",

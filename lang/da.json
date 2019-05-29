@@ -57,6 +57,7 @@
 	"overallScoreDescription": "Hver aflevering får tildelt et præstationsniveau på baggrund af dens samlede rubrikscore.",
 	"overallScoreHeader": "Samlet score",
 	"overallScore": "Samlet score",
+  "overrideLabel": "Override",
 	"overriddenScoreTip": "Kriteriescore er blevet tilsidesat",
 	"overriddenTotalScoreTip": "Den samlede rubrikscore er blevet tilsidesat. Scoren opdateres ikke længere afhængigt af ændringer i rubrikken.",
 	"points": "{number} {number, plural, one {point} other {point}}",

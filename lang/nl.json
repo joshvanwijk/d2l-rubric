@@ -57,6 +57,7 @@
 	"overallScoreDescription": "Elk middel wordt een niveau van voltooiing toegewezen op basis van de algemene rubricscore.",
 	"overallScoreHeader": "Algemene score",
 	"overallScore": "Algemene score",
+  "overrideLabel": "Override",
 	"overriddenScoreTip": "Criteriumscore is overschreven",
 	"overriddenTotalScoreTip": "De algemene rubricscore is overschreven. De score wordt niet meer bijgewerkt op basis van wijzigingen aan de rubric.",
 	"points": "{number} {number, plural, one {punt} other {punten}}",

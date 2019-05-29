@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'overallScoreDescription': 'A cada material enviado se le asigna un nivel de logro según su puntación general de rúbrica.',
 		'overallScoreHeader': 'Puntuación general',
 		'overallScore': 'Puntuación general',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'Se anuló la puntuación del criterio',
 		'overriddenTotalScoreTip': 'Se anuló la puntuación general de rúbrica. La puntuación ya no se actualizará según los cambios realizados en la rúbrica.',
 		'points': '{number} {number, plural, one {punto} other {puntos}}',

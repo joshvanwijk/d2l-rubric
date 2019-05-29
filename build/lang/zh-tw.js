@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'overallScoreDescription': '每項提交項目已依其整體量規分數指派達成等級。',
 		'overallScoreHeader': '整體分數',
 		'overallScore': '整體分數',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': '已覆寫標準分數',
 		'overriddenTotalScoreTip': '已覆寫整體量規分數。分數將不再根據量規變動而更新。',
 		'points': '{number} {number, plural, one {分} other {分}}',

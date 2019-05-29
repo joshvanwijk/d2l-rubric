@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'overallScoreDescription': 'Chaque soumission se fait attribuer un niveau d\'accomplissement basé sur la note globale de rubrique.',
 		'overallScoreHeader': 'Note globale',
 		'overallScore': 'Note globale',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'La note du critère a été remplacée',
 		'overriddenTotalScoreTip': 'La note globale de rubrique a été remplacée. La note ne s\'actualisera plus en fonction des modifications apportées à la rubrique.',
 		'points': '{number} {number, plural, one {point} other {points}}',

@@ -68,6 +68,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'overallScoreDescription': 'Varje inlämning tilldelas en prestationsnivå baserat på dess övergripande rubriceringsbetyg.',
 		'overallScoreHeader': 'Totalbetyg',
 		'overallScore': 'Totalbetyg',
+		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'Kriteriebetyg har åsidosatts',
 		'overriddenTotalScoreTip': 'Det övergripande rubriceringsbetyget har åsidosatts. Betyget uppdateras inte längre baserat på ändringar av rubriceringen.',
 		'points': '{number} {number, plural, one {poäng} other {poäng}}',
