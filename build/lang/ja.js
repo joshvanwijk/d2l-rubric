@@ -54,7 +54,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'numberAndPercentage': '{number} %',
 		'levelPoints': 'レベルポイント',
 		'levelPrepended': '新規レベルが {name} の前に追加されました',
-		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
+		'lockedAlertText': 'この注釈はすでに受講者の作業を評価するために使用されているため、編集できません',
 		'name': '名前',
 		'nameIsRequired': '名前は必須です',
 		'nameSaveFailed': '名前を保存できませんでした',

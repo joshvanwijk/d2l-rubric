@@ -54,7 +54,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'numberAndPercentage': '{number} %',
 		'levelPoints': '수준 점수',
 		'levelPrepended': '{name} 앞에 새 수준이 추가되었습니다.',
-		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
+		'lockedAlertText': '이 루브릭은 이미 학습자 수행 평가에 사용되었으므로 편집할 수 없음',
 		'name': '이름',
 		'nameIsRequired': '이름이 필요함',
 		'nameSaveFailed': '이름 저장 실패',

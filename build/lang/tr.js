@@ -54,7 +54,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'levelNameAndPercentage': '%{levelName} - {number}',
 		'levelPoints': 'Seviye puanları',
 		'levelPrepended': '{name} öncesine yeni bir seviye eklendi',
-		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
+		'lockedAlertText': 'Öğrenci çalışmalarını değerlendirmek için zaten kullanıldığından bu rubrik düzenlenemiyor',
 		'name': 'Ad',
 		'nameIsRequired': 'Ad gerekli',
 		'nameSaveFailed': 'Ad kaydedilemedi',
