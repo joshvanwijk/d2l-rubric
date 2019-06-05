@@ -201,11 +201,15 @@ Polymer({
 
 		if (this.totalScore) {
 			this.scoreOverridden = this.isTotalScoreOverridden();
-			this.overriddenStyling = this.scoreOverridden;
+			if (!this._isStaticView()) {
+				this.overriddenStyling = this.scoreOverridden;
+			}
 			return;
 		}
 		this.scoreOverridden = this.isScoreOverridden(this.criterionHref);
-		this.overriddenStyling = this.scoreOverridden;
+		if (!this._isStaticView()) {
+			this.overriddenStyling = this.scoreOverridden;
+		}
 	},
 
 	focus: function() {
@@ -345,6 +349,7 @@ Polymer({
 			this.fire('d2l-rubric-total-score-changed', {score:score});
 		}
 	},
+
 	_editingState: function(entity, criterionNum, editingScore) {
 		if (!entity) {
 			return;
@@ -355,12 +360,17 @@ Polymer({
 		}
 		if (!this._isEditingScore(criterionNum, editingScore)) {
 			this.editorStyling = false;
-			if (this.scoreOverridden) {
+			if (this.scoreOverridden && !this._isStaticView()) {
 				this.overriddenStyling = true;
 			}
 		}
 	},
+
 	_handleTooltip: function(scoreOverridden, criterionNum, editingScore) {
 		return !scoreOverridden || this._isEditingScore(criterionNum, editingScore);
-	}
+	},
+
+	_isStaticView: function() {
+		return this.readOnly || !this.assessmentHref;
+	},
 });
