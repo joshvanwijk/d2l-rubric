@@ -26,6 +26,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				:host(:not([editor-styling])) {
 					padding: 0.5rem 0.5rem 0.5rem 0.6rem;
 				}
+				:host(:focus:not([editor-styling])),
 				:host(:hover:not([editor-styling])) {
 					padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 					border-radius: 0.3rem;

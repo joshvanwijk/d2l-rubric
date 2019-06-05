@@ -206,7 +206,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 					<div class="out-of-score-container">
 						<d2l-button-subtle class="clear-override-button" icon="d2l-tier1:close-small" text="[[localize('clearOverride')]]" on-tap="clearTotalScoreOverride" hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">
 						</d2l-button-subtle>
-						<d2l-rubric-editable-score id="total-score-inner" class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" total-score="[[_score]]" entity="[[entity]]" on-tap="_handleOverrideScore" on-keypress="_handleScoreKeypress" tabindex="0">
+						<d2l-rubric-editable-score id="total-score-inner" class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" total-score="[[_score]]" entity="[[entity]]" on-tap="_handleOverrideScore" on-keypress="_handleScoreKeypress" tabindex$="[[_handleTabIndex()]]">
 						</d2l-rubric-editable-score>
 					</div>
 				</div>
@@ -468,5 +468,16 @@ Polymer({
 		D2L.Custom = D2L.Custom || {};
 		D2L.Custom.Outcomes = D2L.Custom.Outcomes || {};
 		D2L.Custom.Outcomes.TermTitleText = this.outcomesTitleText;
-	}
+	},
+
+	_isStaticView: function() {
+		return this.readOnly || !this.assessmentHref;
+	},
+
+	_handleTabIndex: function() {
+		if (this._isStaticView()) {
+			return undefined;
+		}
+		return 0;
+	},
 });

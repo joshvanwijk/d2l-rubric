@@ -84,7 +84,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				height: 100%;
 				position: relative;
 			}
-
+			.feedback-button-focused {
+				padding: 0;
+				border-radius: 0.3rem;
+				border: 1px solid var(--d2l-color-celestine);
+			}
 			.criterion-cell.selected {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
@@ -129,6 +133,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			.criterion-cell.first.holistic.selected {
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
+			}
+			
+			d2l-button-subtle {
+				margin-left: -13px;
+				padding: 1px 1px 1px 1px;
+			}
+			
+			d2l-button-subtle:hover {
+				padding: 0;
+				border-radius: 0.3rem;
+				border: 1px solid var(--d2l-color-celestine);
 			}
 			
 			d2l-rubric-alignments-indicator {
@@ -194,23 +209,30 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 										[[criterion.properties.name]]
 									</span>
 								</div>
-								<d2l-button-subtle h-align="text" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+								<d2l-button-subtle aria-hidden on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
-							<d2l-td tabindex$="[[_handleTabIndex()]]" class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]" on-tap="handleTap" on-keypress="handleKey" data-href$="[[_getSelfLink(criterionCell)]]">
+							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]" on-tap="handleTap" data-href$="[[_getSelfLink(criterionCell)]]">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]">
-							</d2l-rubric-criterion-cell></d2l-td>
+								</d2l-rubric-criterion-cell>
+								<d2l-offscreen>
+									<input hidden="[[_isStaticView()]]" on-keypress="_handleUnselect" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, assessmentResult)]]">
+								</d2l-offscreen>
+							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
 							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]">
-								<d2l-rubric-editable-score id="score-inner[[criterionNum]]" on-tap="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
+								<d2l-rubric-editable-score id="score-inner[[criterionNum]]"  tabindex$="[[_handleTabIndex()]]" on-tap="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
+									<d2l-offscreen>
+										<d2l-button-subtle id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+									</d2l-offscreen>	
 							</d2l-td>
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell" tabindex$="[[_handleTabIndex()]]" focused-styling$="[[!_isStaticView()]]">
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[!_isStaticView()]]">
 							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -617,5 +639,38 @@ Polymer({
 			return undefined;
 		}
 		return 0;
+	},
+
+	_handleInvisibleFeedbackFocusin: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var elem = dom(this.root).querySelector('#addFeedback' + this._getRowIndex(criterionNum));
+		elem.classList.add('feedback-button-focused');
+	},
+
+	_handleInvisibleFeedbackFocusout: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var elem = dom(this.root).querySelector('#addFeedback' + this._getRowIndex(criterionNum));
+		elem.classList.remove('feedback-button-focused');
+	},
+
+	_handleVisibleFeedbackFocusin: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var elem = dom(this.root).querySelector('#invisible-addFeedback' + this._getRowIndex(criterionNum));
+		fastdom.mutate(function() {
+			elem.focus();
+		}.bind(this));
+	},
+
+	_handleUnselect: function(event) {
+		if (this.readOnly) {
+			return;
+		}
+		var criterionCell = event.model.get('criterionCell');
+		var assessmentResult = event.model.get('assessmentResult');
+		if (event.keyCode === 32 && this._isSelected(criterionCell, assessmentResult)) { // space bar
+			this.assessCriterionCell(event.currentTarget.parentNode.parentNode.dataset.href);
+			this._addingFeedback = -1;
+			this.editFeedback = -1;
+		}
 	}
 });

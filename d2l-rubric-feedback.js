@@ -9,6 +9,7 @@ import './rubric-siren-entity.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
+import 'd2l-offscreen/d2l-offscreen.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
@@ -58,8 +59,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				border: solid transparent 1px;
 				cursor: pointer;
 			}
+			.clear-feedback-button.is-focused,
 			.clear-feedback-button:hover {
-				border-color: darkgray;
+				border-color: var(--d2l-color-celestine);
 			}
 			.feedback-wrapper[data-desktop] {
 				padding: 0.5rem;
@@ -116,11 +118,14 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<div class="feedback-heading">
 						[[localize('criterionFeedback')]]
 					</div>
-					<d2l-icon id="clear-feedback" class="clear-feedback-button" tabindex="0" icon="d2l-tier1:close-small" on-tap="_clearFeedback"></d2l-icon>
-					<d2l-tooltip for="clear-feedback" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
+					<d2l-icon aria-hidden id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-tap="_clearFeedback" on-focusin="_handleVisibleFocusin"></d2l-icon>
+					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
 				<d2l-input-textarea no-border no-padding id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]">
 				</d2l-input-textarea>
+				<d2l-offscreen>
+					<d2l-icon id="clear-feedback-invisible" tabindex="0" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-keypress="_handleKey"></d2l-icon>
+				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
 				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
@@ -159,6 +164,10 @@ Polymer({
 			value: false
 		},
 		_feedbackInFocus: {
+			type: Boolean,
+			value: false
+		},
+		_clearFeedbackInFocus: {
 			type: Boolean,
 			value: false
 		},
@@ -229,6 +238,12 @@ Polymer({
 		}.bind(this));
 	},
 
+	_handleKey: function(event) {
+		if (event.keyCode === 13) { // enter key
+			this._clearFeedback();
+		}
+	},
+
 	saveFeedback: function(feedback) {
 		this.saveAssessmentFeedback(this.criterionHref, feedback);
 	},
@@ -255,5 +270,28 @@ Polymer({
 
 	getAssessmentFeedbackText: function(criterionEntity, assessmentResult) {
 		return this.getAssessmentFeedback(criterionEntity, assessmentResult, false);
+	},
+
+	_handleInvisibleFocusin: function() {
+		var elem = dom(this.root).querySelector('#clear-feedback');
+		elem.classList.add('is-focused');
+		this._clearFeedbackInFocus = true;
+	},
+
+	_handleInvisibleFocusout: function() {
+		var elem = dom(this.root).querySelector('#clear-feedback');
+		elem.classList.remove('is-focused');
+		this._clearFeedbackInFocus = false;
+	},
+
+	_handleVisibleFocusin: function() {
+		var elem = dom(this.root).querySelector('#clear-feedback-invisible');
+		fastdom.mutate(function() {
+			elem.focus();
+		}.bind(this));
+	},
+
+	_handleTooltip: function(_clearFeedbackInFocus) {
+		return _clearFeedbackInFocus;
 	}
 });
