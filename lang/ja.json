@@ -21,7 +21,7 @@
    "clearOverride" : "上書きのクリア",
    "closeDialog" : "閉じる",
    "criterionAdded" : "新規条件が追加されました",
-   "criterionAriaLabel" : "条件 {index, number}、{count, number} 個",
+   "criterionAriaLabel" : "条件 {index, number}/{count, number} 個",
    "criterionDeleted" : "{name} 条件が削除されました",
    "criterionDescriptionAriaLabel" : "条件 {criterionName}、レベル {levelName} の説明",
    "criterionFeedback" : "条件のフィードバック",

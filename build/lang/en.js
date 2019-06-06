@@ -5,14 +5,14 @@ window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
 window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior || {};
 
 /*
-* En lang terms
-* @polymerBehavior D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior
+ * En lang terms
+ * @polymerBehavior D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 	en: {
 		'addCriteriaGroup': 'Add Criteria Group',
 		'addCriterion': 'Add Criterion',
-		'addFeedback':'Add Feedback',
+		'addFeedback': 'Add Feedback',
 		'addLevel': 'Add Level',
 		'addLevelPrepend': 'Add new level before {name}',
 		'addLevelAppend': 'Add new level after {name}',
@@ -76,7 +76,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'pointsAreRequired': 'Point value is required',
 		'pointsMinimum': '{number} {number, plural, one {point} other {points}} minimum',
 		'pointsSaveFailed': 'Saving points failed',
-		'percentage': '\{number\} %',
+		'percentage': '{number} %',
 		'preview': 'Preview',
 		'initialFeedback': 'Initial Feedback',
 		'refreshText': 'refresh the page',
