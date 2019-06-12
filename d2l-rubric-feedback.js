@@ -121,7 +121,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<d2l-icon aria-hidden id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-tap="_clearFeedback" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border no-padding id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]">
+				<d2l-input-textarea no-border$="[[_largeScreen]]" no-padding$="[[_largeScreen]]" id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]">
 				</d2l-input-textarea>
 				<d2l-offscreen>
 					<d2l-icon id="clear-feedback-invisible" tabindex="0" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-keypress="_handleKey"></d2l-icon>
@@ -175,7 +175,8 @@ Polymer({
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
-		}
+		},
+		_largeScreen: Boolean
 	},
 
 	behaviors: [
@@ -220,7 +221,7 @@ Polymer({
 	},
 
 	_addFocusStylingToFeedbackWrapper: function() {
-		if (this.readOnly || !this.assessmentHref) {
+		if (this.readOnly || !this.assessmentHref || !this._largeScreen) {
 			return;
 		}
 		this._focusStyling = true;

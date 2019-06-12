@@ -7,6 +7,7 @@ import './d2l-rubric-feedback.js';
 import 'd2l-colors/d2l-colors.js';
 import './d2l-rubric-entity-behavior.js';
 import './assessment-result-behavior.js';
+import './rubric-siren-entity.js';
 import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
@@ -26,20 +27,24 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				border: solid 0.5px var(--d2l-color-mica);
 			}
 			.add-feedback-button {
-				margin-left: -0.6rem;
+				margin-left:1.8rem;
+			}
+			d2l-rubric-feedback {
+				margin-left: 48px;
+				margin-right: 42px;
 			}
 			[hidden] {
 				display: none !important;
 			}
 		</style>
-		<siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></siren-entity>
+		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<hr class="line">
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion" index-as="criterionNum">
 			<d2l-rubric-criterion-mobile href="[[_getSelfLink(criterion)]]" levels-href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[isHolistic]]" is-numeric="[[isNumeric]]" read-only="[[readOnly]]">
 			</d2l-rubric-criterion-mobile>
 			<d2l-button-subtle class="add-feedback-button" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]">
-				<d2l-rubric-feedback id="feedback[[criterionNum]]" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]">
+				<d2l-rubric-feedback id="feedback[[criterionNum]]" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]" on-close-feedback="_closeFeedback">
 				</d2l-rubric-feedback>
 			</template>
 			<hr class="line">
@@ -153,5 +158,9 @@ Polymer({
 		fastdom.mutate(function() {
 			dom(this.root).querySelector('#feedback' + criterionNum).focus();
 		}.bind(this));
+	},
+
+	_closeFeedback: function() {
+		this._addingFeedback = -1;
 	}
 });
