@@ -132,12 +132,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 					mobile
 				></d2l-rubric-competencies-icon>
 			</template>
-			<d2l-rubric-alignments-indicator 
-				href="[[_getActivityLink(_entity)]]" 
-				token="[[token]]"
-				outcomes-title-text="[[_getOutcomesTitleText()]]"
-				mobile
-			></d2l-rubric-alignments-indicator>
+			<template is="dom-if" if="[[!isHolistic]]" restamp>
+				<d2l-rubric-alignments-indicator 
+					href="[[_getActivityLink(_entity)]]" 
+					token="[[token]]"
+					outcomes-title-text="[[_getOutcomesTitleText()]]"
+					mobile
+				></d2l-rubric-alignments-indicator>
+			</template>
 			<span>[[_name]]</span>
 		</div>
 		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
@@ -367,6 +369,9 @@ Polymer({
 		}
 
 		var points = this._getPoints(selected, levels, criterionCell);
+		if (points === null || points === undefined) {
+			return null;
+		}
 
 		if (this.isHolistic) {
 			return this.localize('numberAndPercentage', 'number', points.toString());
