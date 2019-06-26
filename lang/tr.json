@@ -84,7 +84,7 @@
    "overallScoreHeader" : "Toplam Puan",
    "overriddenScoreTip" : "Kriter puanı etkisizleştirildi",
    "overriddenTotalScoreTip" : "Toplam rubrik puanı etkisizleştirildi. Puan, şu andan itibaren rubrik üzerinde yapılan değişikliklere bağlı olarak güncellenmeyecek.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "Etkisizleştir",
    "percentage" : "%{number}",
    "points" : "{number} {number, plural, one {puan} other {puan}}",
    "pointsAbbreviation" : "puan",

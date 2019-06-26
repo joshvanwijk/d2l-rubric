@@ -84,7 +84,7 @@
    "overallScoreHeader" : "مجموع الدرجات الإجمالي",
    "overriddenScoreTip" : "تم استبدال مجموع درجات المعيار",
    "overriddenTotalScoreTip" : "تم استبدال مجموع درجات آلية التقييم الإجمالية. لن يتم بعد الآن تحديث مجموع الدرجات استنادًا إلى التغييرات في آلية التقييم.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "تجاوز",
    "percentage" : "{number} %",
    "points" : "{number} {number, plural, one {نقطة} other {من النقاط}}",
    "pointsAbbreviation" : "نقطة",

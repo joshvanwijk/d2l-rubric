@@ -84,7 +84,7 @@
    "overallScoreHeader" : "Note globale",
    "overriddenScoreTip" : "La note du critère a été remplacée",
    "overriddenTotalScoreTip" : "La note globale de la grille d’évaluation a été remplacée. La note ne s’actualisera plus en fonction des modifications apportées à la grille d’évaluation.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "Remplacer",
    "percentage" : "{number} %",
    "points" : "{number} {number, plural, one {point} other {points}}",
    "pointsAbbreviation" : "pt",

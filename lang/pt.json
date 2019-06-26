@@ -84,7 +84,7 @@
    "overallScoreHeader" : "Pontuação geral",
    "overriddenScoreTip" : "A pontuação do critério foi substituída",
    "overriddenTotalScoreTip" : "A pontuação geral da rubrica foi substituída. A pontuação não será mais atualizada com base nas alterações da rubrica.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "Substituir",
    "percentage" : "{number} %",
    "points" : "{number} {number, plural, one {ponto} other {pontos}}",
    "pointsAbbreviation" : "pts",

@@ -84,7 +84,7 @@
    "overallScoreHeader" : "Totalbetyg",
    "overriddenScoreTip" : "Kriteriebetyg har åsidosatts",
    "overriddenTotalScoreTip" : "Det övergripande rubriceringsbetyget har åsidosatts. Betyget uppdateras inte längre baserat på ändringar av rubriceringen.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "Åsidosätt",
    "percentage" : "{number} %",
    "points" : "{number} {number, plural, one {poäng} other {poäng}}",
    "pointsAbbreviation" : "pt",

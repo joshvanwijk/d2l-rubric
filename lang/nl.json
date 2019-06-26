@@ -84,7 +84,7 @@
    "overallScoreHeader" : "Algemene score",
    "overriddenScoreTip" : "Criteriumscore is overschreven",
    "overriddenTotalScoreTip" : "De algemene rubricscore is overschreven. De score wordt niet meer bijgewerkt op basis van wijzigingen aan de rubric.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "Overschrijven",
    "percentage" : "{number} %",
    "points" : "{number} {number, plural, one {punt} other {punten}}",
    "pointsAbbreviation" : "punt",

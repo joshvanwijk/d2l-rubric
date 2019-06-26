@@ -84,7 +84,7 @@
    "overallScoreHeader" : "전체 점수",
    "overriddenScoreTip" : "기준 점수가 재설정되었음",
    "overriddenTotalScoreTip" : "전체 루브릭 점수가 재설정되었습니다. 이제는 루브릭의 변경 사항에 따라 점수가 업데이트되지 않습니다.",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "재설정",
    "percentage" : "{number}%",
    "points" : "{number} {number, plural, one {point} other {points}}",
    "pointsAbbreviation" : "점수",

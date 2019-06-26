@@ -84,7 +84,7 @@
    "overallScoreHeader" : "总分数",
    "overriddenScoreTip" : "标准分数已改写",
    "overriddenTotalScoreTip" : "总量规分数已改写。该分数将不再根据量规更改进行更新。",
-   "overrideLabel" : "Override",
+   "overrideLabel" : "改写",
    "percentage" : "{number} %",
    "points" : "{number} {number, plural, one {分} other {分}}",
    "pointsAbbreviation" : "分数",
