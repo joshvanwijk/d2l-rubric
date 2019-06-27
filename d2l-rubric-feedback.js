@@ -10,6 +10,7 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-offscreen/d2l-offscreen.js';
+import 'd2l-button/d2l-button-subtle.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
@@ -118,13 +119,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<div class="feedback-heading">
 						[[localize('criterionFeedback')]]
 					</div>
-					<d2l-icon aria-hidden id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-tap="_clearFeedback" on-focusin="_handleVisibleFocusin"></d2l-icon>
+					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-tap="_clearFeedback" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
 				<d2l-input-textarea no-border$="[[_largeScreen]]" no-padding$="[[_largeScreen]]" id="text-area" value="[[getAssessmentFeedbackText(criterionEntity, assessmentResult)]]">
 				</d2l-input-textarea>
 				<d2l-offscreen>
-					<d2l-icon id="clear-feedback-invisible" tabindex="0" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-keypress="_handleKey"></d2l-icon>
+					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" tabindex="0" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-tap="_clearFeedback">
 				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
@@ -237,12 +238,6 @@ Polymer({
 		fastdom.mutate(function() {
 			dom(this.root).querySelector('#text-area').focus();
 		}.bind(this));
-	},
-
-	_handleKey: function(event) {
-		if (event.keyCode === 13) { // enter key
-			this._clearFeedback();
-		}
 	},
 
 	saveFeedback: function(feedback) {
