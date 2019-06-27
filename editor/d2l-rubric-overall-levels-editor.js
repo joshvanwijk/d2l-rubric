@@ -72,7 +72,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 
 			d2l-button-icon {
 				border-radius: 0.3rem;
-				border: 1px solid var(--d2l-color-mica);
+				border: 1px solid var(--d2l-color-galena);
 				height: 100%;
 				align-items: center;
 				--d2l-button-icon-min-height: 100%;
@@ -84,7 +84,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 
 			#description .cell {
 				padding: 1px;
-				border-bottom: var(--d2l-table-border);
+				border-bottom: 1px solid var(--d2l-color-galena);
 			}
 
 			d2l-rubric-description-editor {
@@ -105,11 +105,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 
 			:dir(rtl) .col-center div:first-of-type {
-				border-right: var(--d2l-table-border);
+				border-right: 1px solid var(--d2l-color-galena);
 			}
 
 			.col-center div:last-of-type {
-				border-right: var(--d2l-table-border);
+				border-right: 1px solid var(--d2l-color-galena);
 			}
 
 			:dir(rtl) .col-center div:last-of-type {

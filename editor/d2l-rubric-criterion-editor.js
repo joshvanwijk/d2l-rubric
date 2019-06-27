@@ -90,7 +90,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			}
 
 			#outcometag{
-				border-right: var(--d2l-table-border);
+				border-right: 1px solid var(--d2l-color-galena);
 				margin-right: 50px;
 				display: inline-flex;
 			}
@@ -116,7 +116,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				transition-property: border-color;
 				transition-timing-function: ease;
 				transition: border-color 0.5s;
-				border-bottom-color: var(--d2l-table-border-color);
+				border-bottom-color: var(--d2l-color-galena);
 			}
 
 			.feedback-arrow-inner {
@@ -163,8 +163,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			}
 
 			.criterion-detail[is-holistic] {
-				border-right: var(--d2l-table-border);
-				border-bottom: var(--d2l-table-border);
+				border-right: 1px solid var(--d2l-color-galena);
+				border-bottom: 1px solid var(--d2l-color-galena);
 				border-bottom-right-radius: var(--d2l-table-border-radius);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}

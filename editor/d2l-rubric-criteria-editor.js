@@ -43,7 +43,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 				text-align: center;
 				padding: 0.45rem;
 				flex: 1 1 auto;
-				border: var(--d2l-table-border);
+				border: 1px solid var(--d2l-color-galena);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 				border-bottom-right-radius: var(--d2l-table-border-radius);
 				background-color: var(--d2l-table-header-background-color);
@@ -59,7 +59,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 				bottom: 0;
 				right: 0;
 				left: 0;
-				border-top: var(--d2l-table-border);
+				border-top: 1px solid var(--d2l-color-galena);
 				background-color: white;
 			}
 
@@ -87,7 +87,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 				background-image: url('./images/dnd-skeleton.svg');
 				background-repeat: no-repeat;
 				background-clip: padding-box;
-				border: var(--d2l-table-border);
+				border: 1px solid var(--d2l-color-galena);
 			}
 
 			.dnd-drag-handle {

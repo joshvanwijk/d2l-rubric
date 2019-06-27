@@ -44,8 +44,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 				margin: 3rem var(--d2l-rubric-editor-end-gutter-width) 0;
 				margin-left: var(--d2l-rubric-editor-start-gutter-width);
 				padding: 0.9rem 0.5rem 0.9rem 0;
-				border-top: 1px solid var(--d2l-color-mica);
-				border-bottom: 1px solid var(--d2l-color-mica);
+				border-top: 1px solid var(--d2l-color-galena);
+				border-bottom: 1px solid var(--d2l-color-galena);
 			}
 
 			:dir(rtl) #accordion-container {

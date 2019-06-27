@@ -37,7 +37,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 
 			.out-of-loader {
 				margin-top: 24px;
-				border: 1px solid var(--d2l-color-mica);
+				border: 1px solid var(--d2l-color-galena);
 				border-radius: 8px;
 				text-align: right;
 				height: 30px;

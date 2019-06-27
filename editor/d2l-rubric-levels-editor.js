@@ -35,11 +35,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-edito
 			}
 			:dir(rtl) #levels-section > div:first-of-type[is-holistic] {
 				border-top-left-radius: 0;
-				border-right: var(--d2l-table-border);
+				border-right: 1px solid var(--d2l-color-galena);
 				border-top-right-radius: var(--d2l-table-border-radius);
 			}
 			#levels-section > div:last-of-type[is-holistic] { /* last col-inner */
-				border-right: var(--d2l-table-border);
+				border-right: 1px solid var(--d2l-color-galena);
 				border-top-right-radius: var(--d2l-table-border-radius);
 			}
 			:dir(rtl) #levels-section > div:last-of-type[is-holistic] {
@@ -50,7 +50,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-edito
 
 			d2l-button-icon {
 				border-radius: 0.3rem;
-				border: 1px solid var(--d2l-color-mica);
+				border: 1px solid var(--d2l-color-galena);
 				background-color: var(--d2l-color-sylvite);
 				height: 100%;
 				align-items: center;

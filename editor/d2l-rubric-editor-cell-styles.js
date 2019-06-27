@@ -12,12 +12,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 
 		#scroll-wrapper {
 			--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
-			--d2l-scroll-wrapper-border-color: var(--d2l-table-border-color);
+			--d2l-scroll-wrapper-border-color: var(--d2l-color-galena);
 
 			--d2l-scroll-wrapper-h-scroll: {
 				overflow-y: hidden;
-				border-left: 1px dashed var(--d2l-color-mica);
-				border-right: 1px dashed var(--d2l-color-mica);
+				border-left: 1px dashed var(--d2l-color-galena);
+				border-right: 1px dashed var(--d2l-color-galena);
 				margin-left: var(--d2l-rubric-editor-start-gutter-width);
 				margin-right: var(--d2l-rubric-editor-end-gutter-width);
 			};
@@ -42,8 +42,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 		}
 
 		.cell {
-			border-left: var(--d2l-table-border);
-			border-top: var(--d2l-table-border);
+			border-left: 1px solid var(--d2l-color-galena);
+			border-top: 1px solid var(--d2l-color-galena);
 			flex: 1 1 0%;
 			/* Min width chosen so that 4 levels are visible in standard LMS tab layout.
 			After 4 levels scrolling will kick in */
@@ -74,13 +74,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 		}
 
 		:dir(rtl) .col-first {
-			border-right: var(--d2l-table-border);
+			border-right: 1px solid var(--d2l-color-galena);
 		}
 
 		.col-last {
 			flex: 0 0 auto;
 			min-width: auto;
-			border-right: var(--d2l-table-border);
+			border-right: 1px solid var(--d2l-color-galena);
 			width: 6rem;
 		}
 
