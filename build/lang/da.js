@@ -97,6 +97,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'rubricVisibilitySaveFailed': 'Det lykkedes ikke af ændre rubrikkens synlighed.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoring': 'Score: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Det lykkedes ikke at indstille scorens synlighed.',
 		'scoresVisibilityHidden': 'Scorer er skjult for elever',
 		'scoresVisibilityVisible': 'Scorer er synlig for elever',

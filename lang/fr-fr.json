@@ -117,6 +117,8 @@
    "scoresVisibilityHidden" : "Les notes sont masquées de la vue des apprenants",
    "scoresVisibilityVisible" : "Les notes sont visibles par les apprenants",
    "scoring" : "Méthode d’attribution de note : {method}",
+   "selectNextLevel": "Select Next Level",
+   "selectPreviousLevel": "Select Previous Level",
    "setScoreVisibilityFailed" : "Échec du réglage de la visibilité des notes.",
    "statistics" : "Statistiques",
    "total" : "Total",

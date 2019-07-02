@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'scoresVisibilityHidden': 'As pontuações estão ocultas para os alunos',
 		'scoresVisibilityVisible': 'As pontuações estão visíveis para os alunos',
 		'scoring': 'Pontuação: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Falha na configuração da visibilidade da pontuação.',
 		'statistics': 'Estatísticas',
 		'total': 'Total',

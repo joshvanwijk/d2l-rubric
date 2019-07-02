@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'scoresVisibilityHidden': '分数已向学生隐藏',
 		'scoresVisibilityVisible': '分数对学生可见',
 		'scoring': '评分方法：{method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': '设置分数可见性失败。',
 		'statistics': '统计',
 		'total': '总计',

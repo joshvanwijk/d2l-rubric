@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'scoresVisibilityHidden': 'Les notes ne sont pas visibles par les élèves',
 		'scoresVisibilityVisible': 'Les notes sont visibles par les élèves',
 		'scoring': 'Notation : {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Le paramétrage de la visibilité des notes a échoué.',
 		'statistics': 'Statistiques',
 		'total': 'Total',

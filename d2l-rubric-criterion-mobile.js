@@ -147,7 +147,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 
 		<div id="description" class="criterion-description-container">
 			<div class="criterion-prev-container" hidden="[[_hideLeftChevron(_selected)]]" on-tap="_handleTapLeft">
-				<d2l-button-icon id="left-chevron" icon="d2l-tier1:chevron-left"></d2l-button-icon>
+				<d2l-button-icon aria-label$="[[localize('selectNextLevel')]]" id="left-chevron" icon="d2l-tier1:chevron-left"></d2l-button-icon>
 			</div>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
 				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
@@ -162,7 +162,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				</div>
 			</template>
 			<div class="criterion-next-container" hidden="[[_hideRightChevron(_selected)]]" on-tap="_handleTapRight">
-				<d2l-button-icon id="right-chevron" icon="d2l-tier1:chevron-right"></d2l-button-icon>
+				<d2l-button-icon aria-label$="[[localize('selectPreviousLevel')]]" id="right-chevron" icon="d2l-tier1:chevron-right"></d2l-button-icon>
 			</div>
 		</div>
 	</template>

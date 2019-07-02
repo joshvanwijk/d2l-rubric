@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'scoresVisibilityHidden': 'Scores zijn verborgen voor cursisten',
 		'scoresVisibilityVisible': 'Scores zijn zichtbaar voor cursisten',
 		'scoring': 'Scoremethode: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Instellen van scorezichtbaarheid mislukt.',
 		'statistics': 'Statistieken',
 		'total': 'Totaal',

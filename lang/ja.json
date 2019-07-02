@@ -117,6 +117,8 @@
    "scoresVisibilityHidden" : "スコアは受講生に表示されません",
    "scoresVisibilityVisible" : "スコアは受講生に表示されます",
    "scoring" : "スコアリング: {method}",
+   "selectNextLevel": "Select Next Level",
+   "selectPreviousLevel": "Select Previous Level",
    "setScoreVisibilityFailed" : "スコアの表示を設定できませんでした。",
    "statistics" : "統計",
    "total" : "合計",

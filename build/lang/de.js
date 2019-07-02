@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'scoresVisibilityHidden': 'Punktzahlen für Kursteilnehmer ausgeblendet',
 		'scoresVisibilityVisible': 'Punktzahlen für Kursteilnehmer sichtbar',
 		'scoring': 'Bewertungsmethode',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.',
 		'statistics': 'Statistik',
 		'total': 'Gesamt',

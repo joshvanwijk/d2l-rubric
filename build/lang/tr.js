@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'scoresVisibilityHidden': 'Puanlar öğrencilerden gizlendi',
 		'scoresVisibilityVisible': 'Puanlar öğrenciler tarafından görülebilir',
 		'scoring': 'Puanlama Yöntemi: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Puan görünürlüğünü ayarlama işlemi başarısız oldu.',
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',

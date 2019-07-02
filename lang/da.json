@@ -117,6 +117,8 @@
    "scoresVisibilityHidden" : "Scorer er skjult for elever",
    "scoresVisibilityVisible" : "Scorer er synlig for elever",
    "scoring" : "Score: {method}",
+   "selectNextLevel": "Select Next Level",
+   "selectPreviousLevel": "Select Previous Level",
    "setScoreVisibilityFailed" : "Det lykkedes ikke at indstille scorens synlighed.",
    "statistics" : "Statistik",
    "total" : "Samlet",

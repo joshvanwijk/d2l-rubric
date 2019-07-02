@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'scoresVisibilityHidden': '점수를 학생에게 표시하지 않음',
 		'scoresVisibilityVisible': '점수를 학생에게 표시',
 		'scoring': '점수 산정: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': '점수 표시 여부 설정에 실패했습니다.',
 		'statistics': '통계',
 		'total': '총',

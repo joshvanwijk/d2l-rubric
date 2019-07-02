@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'scoresVisibilityHidden': 'Betygen är dolda för elever',
 		'scoresVisibilityVisible': 'Betygen är synliga för elever',
 		'scoring': 'Betygsättning: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',

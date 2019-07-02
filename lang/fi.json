@@ -87,6 +87,8 @@
 	"rubricVisibilitySaveFailed": "Changing rubric visibility failed.",
 	"scoreOutOf": "{score}\u00A0/\u00A0{outOf}",
 	"scoring": "Scoring: {method}",
+  "selectNextLevel": "Select Next Level",
+  "selectPreviousLevel": "Select Previous Level",
 	"setScoreVisibilityFailed": "Setting score visibility failed.",
 	"scoresVisibilityHidden": "Scores are hidden from students",
 	"scoresVisibilityVisible": "Scores are visible to students",

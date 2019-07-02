@@ -128,6 +128,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'scoresVisibilityHidden': 'إن مجموع الدرجات مخفي عن الطلاب',
 		'scoresVisibilityVisible': 'إن مجموع الدرجات مرئي للطلاب',
 		'scoring': 'طرق تسجيل النقاط: {method}',
+		'selectNextLevel': 'Select Next Level',
+		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'تعذّر إعداد إمكانية رؤية مجموع العلامات.',
 		'statistics': 'الإحصاءات',
 		'total': 'المجموع',

@@ -117,6 +117,8 @@
    "scoresVisibilityHidden" : "Punktzahlen für Kursteilnehmer ausgeblendet",
    "scoresVisibilityVisible" : "Punktzahlen für Kursteilnehmer sichtbar",
    "scoring" : "Bewertungsmethode: {method}",
+   "selectNextLevel": "Select Next Level",
+   "selectPreviousLevel": "Select Previous Level",
    "setScoreVisibilityFailed" : "Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.",
    "statistics" : "Statistik",
    "total" : "Gesamt",
