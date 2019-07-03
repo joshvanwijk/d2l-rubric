@@ -122,5 +122,6 @@
    "setScoreVisibilityFailed" : "Échec du réglage de la visibilité des notes.",
    "statistics" : "Statistiques",
    "total" : "Total",
+   "totalScoreLabel": "Rubric Total Score",
    "totalScoreAriaLabel" : "La grille d’évaluation affiche une note sur un total de {value} points."
 }

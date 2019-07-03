@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'setScoreVisibilityFailed': 'تعذّر إعداد إمكانية رؤية مجموع العلامات.',
 		'statistics': 'الإحصاءات',
 		'total': 'المجموع',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.'
 	}
 };

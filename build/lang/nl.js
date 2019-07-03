@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'setScoreVisibilityFailed': 'Instellen van scorezichtbaarheid mislukt.',
 		'statistics': 'Statistieken',
 		'total': 'Totaal',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.'
 	}
 };

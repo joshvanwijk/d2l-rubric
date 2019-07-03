@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'setScoreVisibilityFailed': 'Puan görünürlüğünü ayarlama işlemi başarısız oldu.',
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.'
 	}
 };

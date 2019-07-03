@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'setScoreVisibilityFailed': 'Se produjo un error al establecer la visibilidad de la puntuación.',
 		'statistics': 'Estadísticas',
 		'total': 'Total',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'La rúbrica tiene una puntuación total de {value} puntos.'
 	}
 };

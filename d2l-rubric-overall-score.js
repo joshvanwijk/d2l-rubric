@@ -9,6 +9,7 @@ import 's-html/s-html.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-icons/tier1-icons.js';
+import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
@@ -151,7 +152,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			></d2l-rubric-competencies-icon>
 		</template>
 	</h3>
-	<d2l-scroll-wrapper show-actions="">
+	<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
+		<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
 		<div class="overall-levels" data-mobile$="[[!_largeScreen]]">
 			<template is="dom-repeat" items="[[_levels]]" as="level">
 				<div class="overall-level" data-achieved$="[[_isAchieved(level, _version)]]" data-clickable$="[[_isClickable(level, _version)]]" on-tap="_levelClicked" on-keypress="_handleKeypress" tabindex$="[[_handleTabIndex()]]">

@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'setScoreVisibilityFailed': 'Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.',
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von .'
 	}
 };

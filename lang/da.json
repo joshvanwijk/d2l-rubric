@@ -122,5 +122,6 @@
    "setScoreVisibilityFailed" : "Det lykkedes ikke at indstille scorens synlighed.",
    "statistics" : "Statistik",
    "total" : "Samlet",
+   "totalScoreLabel": "Rubric Total Score",
    "totalScoreAriaLabel" : "Rubrikken er ud fra en samlet score på {value} point."
 }

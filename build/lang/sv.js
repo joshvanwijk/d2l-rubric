@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.'
 	}
 };

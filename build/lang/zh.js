@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'setScoreVisibilityFailed': '设置分数可见性失败。',
 		'statistics': '统计',
 		'total': '总计',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': '量规超出了总分数值 {value}。'
 	}
 };

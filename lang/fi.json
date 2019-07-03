@@ -94,6 +94,7 @@
 	"scoresVisibilityVisible": "Scores are visible to students",
 	"statistics": "Statistics",
 	"total": "Total",
+  "totalScoreLabel": "Rubric Total Score",
 	"totalScoreAriaLabel": "The rubric is out of a total score of {value} points.",
 	"moveCriterionUp": "Move criterion {position} up",
 	"moveCriterionDown": "Move criterion {position} down",

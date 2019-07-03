@@ -201,7 +201,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
 			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" read-only="[[readOnly]]" telemetry-data="[[_telemetryData]]"></d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
-				<div class="out-of-text">
+				<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
+					<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
 					<div class="left total">[[localize('total')]]</div>
 					<div class="out-of-score-container">
 						<d2l-button-subtle class="clear-override-button" icon="d2l-tier1:close-small" text="[[localize('clearOverride')]]" on-tap="clearTotalScoreOverride" hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">

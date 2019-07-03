@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'setScoreVisibilityFailed': 'Le paramétrage de la visibilité des notes a échoué.',
 		'statistics': 'Statistiques',
 		'total': 'Total',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.'
 	}
 };

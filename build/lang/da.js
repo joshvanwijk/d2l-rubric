@@ -104,6 +104,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'scoresVisibilityVisible': 'Scorer er synlig for elever',
 		'statistics': 'Statistik',
 		'total': 'Samlet',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'Rubrikken er ud fra en samlet score på {value} point.',
 		'moveCriterionUp': 'Flyt kriterium {position} op',
 		'moveCriterionDown': 'Flyt kriterium {position} ned',

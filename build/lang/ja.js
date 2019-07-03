@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'setScoreVisibilityFailed': 'スコアの表示を設定できませんでした。',
 		'statistics': '統計',
 		'total': '合計',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': '注釈は最大スコア合計 {value} ポイントです。'
 	}
 };

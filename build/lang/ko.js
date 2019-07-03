@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'setScoreVisibilityFailed': '점수 표시 여부 설정에 실패했습니다.',
 		'statistics': '통계',
 		'total': '총',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': '루브릭이 총 {value}점의 점수에서 벗어났습니다.'
 	}
 };

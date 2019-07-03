@@ -133,6 +133,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'setScoreVisibilityFailed': 'Falha na configuração da visibilidade da pontuação.',
 		'statistics': 'Estatísticas',
 		'total': 'Total',
+		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.'
 	}
 };
