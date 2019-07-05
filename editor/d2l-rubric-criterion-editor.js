@@ -314,7 +314,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 						<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
 					</div>
 					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
-					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]" token="[[token]]">
+					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]" token="[[token]]" browse-outcomes-text="[[browseOutcomesText]]">
 					</d2l-activity-alignment-tags>
 				</div>
 			</div>
