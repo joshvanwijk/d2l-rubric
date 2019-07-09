@@ -244,7 +244,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
 			<div>
 				<h2>[[browseOutcomesText]]</h2>
-				<d2l-button-icon icon="d2l-tier1:close-large" id="closeButton" on-tap= "_closeBrowseOutcomes"></d2l-button-icon>
+				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-tap= "_closeBrowseOutcomes"></d2l-button-icon>
 			</div>
 
 			<d2l-select-outcomes
