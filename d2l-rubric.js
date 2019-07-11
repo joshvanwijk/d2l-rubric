@@ -188,7 +188,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div id="editor-save-status-container" hidden="[[readOnly]]">
-			<d2l-save-status id="rubric-save-status" class="right"></d2l-save-status>
+			<d2l-save-status aria-hidden="true" id="rubric-save-status" class="right"></d2l-save-status>
 		</div>
 		<template is="dom-repeat" items="[[_alerts]]">
 			<d2l-alert type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
