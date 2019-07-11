@@ -350,6 +350,7 @@ Polymer({
 
 	_handleKeypress: function(event) {
 		if (event.keyCode === 13) {
+			event.preventDefault();
 			this._levelClicked(event);
 		}
 	},
