@@ -132,7 +132,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
 					<div class="feedback-heading">[[localize('criterionFeedback')]]</div>
 					<div class="feedback-text">
-						<s-html html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"></s-html>
+						<s-html style="white-space: pre-line;" html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"></s-html>
 					</div>
 				</div>
 			</div>
