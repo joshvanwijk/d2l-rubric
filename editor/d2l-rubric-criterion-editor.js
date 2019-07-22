@@ -98,11 +98,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			#tag{
 				margin-left: 10px;
 				margin-top: 6px;
+				margin-bottom: 6px;
 			}
 
 			#outcomeText{
 				margin-left: 16px;
-				margin-top: 10px;
+				margin-top: 13px;
 				margin-bottom: 3px;
 			}
 
@@ -223,6 +224,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 
 			#browseOutcomesButton{
 				margin-bottom: 5px;
+				margin-left: 5px;
 			}
 
 			#closeButton{

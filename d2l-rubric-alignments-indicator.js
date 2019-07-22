@@ -56,11 +56,18 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 	
 	d2l-tooltip {
 		margin-left: 8px;
+		font-size: 14px;
 	}
 
 	d2l-icon:hover {
 		color: var(--d2l-color-primary-accent-action);
 		cursor: pointer;
+	}
+
+	.outcome-item {
+		margin-bottom: 6px;
+		max-width: 360px;
+		line-height: 1.3em;
 	}
 
 	[hidden] {
@@ -73,7 +80,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 	<d2l-tooltip for="alignments-icon" position="[[_getTooltipPosition(mobile)]]" force-show="[[_hasFocus]]">
 		<div><b>[[outcomesTitleText]]</b></div>
 		<template is="dom-repeat" items="[[_getTooltipOutcomes(_outcomeMap)]]">
-			<div>[[item]]</div>
+			<div class="outcome-item">[[item]]</div>
 		</template>
 	</d2l-tooltip>
 </template>

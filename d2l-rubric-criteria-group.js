@@ -148,6 +148,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			
 			d2l-rubric-alignments-indicator {
 				float: right;
+				margin-left: 8px;
 			}
 			
 			d2l-rubric-competencies-icon {
