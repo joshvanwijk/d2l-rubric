@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "學生看不到分數",
    "scoresVisibilityVisible" : "學生可看到分數",
    "scoring" : "評分方法：{method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "選取下個層級",
+   "selectPreviousLevel" : "選取上個層級",
    "setScoreVisibilityFailed" : "分數能見度設定失敗。",
    "statistics" : "統計",
    "total" : "總計",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "量規超出總分 ({value} 分)。"
+   "totalScoreAriaLabel" : "量規超出總分 ({value} 分)。",
+   "totalScoreLabel" : "量規總分數"
 }

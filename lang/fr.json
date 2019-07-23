@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "Les notes ne sont pas visibles par les élèves",
    "scoresVisibilityVisible" : "Les notes sont visibles par les élèves",
    "scoring" : "Notation : {method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "Sélectionner le niveau suivant",
+   "selectPreviousLevel" : "Sélectionner le niveau précédent",
    "setScoreVisibilityFailed" : "Le paramétrage de la visibilité des notes a échoué.",
    "statistics" : "Statistiques",
    "total" : "Total",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "La grille d’évaluation compte pour la note totale de {value} points."
+   "totalScoreAriaLabel" : "La grille d’évaluation compte pour la note totale de {value} points.",
+   "totalScoreLabel" : "Note finale de la grille d’évaluation"
 }

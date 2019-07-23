@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "Las puntuaciones están ocultas a los estudiantes",
    "scoresVisibilityVisible" : "Las puntuaciones son visibles para los estudiantes",
    "scoring" : "Puntuación: {method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "Seleccionar el nivel siguiente",
+   "selectPreviousLevel" : "Seleccionar el nivel anterior",
    "setScoreVisibilityFailed" : "Se produjo un error al establecer la visibilidad de la puntuación.",
    "statistics" : "Estadísticas",
    "total" : "Total",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "La rúbrica tiene una puntuación total de {value} puntos."
+   "totalScoreAriaLabel" : "La rúbrica tiene una puntuación total de {value} puntos.",
+   "totalScoreLabel" : "Puntuación total según la rúbrica"
 }

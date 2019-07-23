@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "점수를 학생에게 표시하지 않음",
    "scoresVisibilityVisible" : "점수를 학생에게 표시",
    "scoring" : "점수 산정: {method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "다음 수준 선택",
+   "selectPreviousLevel" : "이전 수준 선택",
    "setScoreVisibilityFailed" : "점수 표시 여부 설정에 실패했습니다.",
    "statistics" : "통계",
    "total" : "총",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "루브릭이 총 {value}점의 점수에서 벗어났습니다."
+   "totalScoreAriaLabel" : "루브릭이 총 {value}점의 점수에서 벗어났습니다.",
+   "totalScoreLabel" : "루브릭 총점"
 }

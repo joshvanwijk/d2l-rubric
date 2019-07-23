@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "As pontuações estão ocultas para os alunos",
    "scoresVisibilityVisible" : "As pontuações estão visíveis para os alunos",
    "scoring" : "Pontuação: {method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "Selecionar próximo nível",
+   "selectPreviousLevel" : "Selecionar nível anterior",
    "setScoreVisibilityFailed" : "Falha na configuração da visibilidade da pontuação.",
    "statistics" : "Estatísticas",
    "total" : "Total",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "A rubrica refere-se à pontuação total máxima de {value} pontos."
+   "totalScoreAriaLabel" : "A rubrica refere-se à pontuação total máxima de {value} pontos.",
+   "totalScoreLabel" : "Pontuação total da rubrica"
 }

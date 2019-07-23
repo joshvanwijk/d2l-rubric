@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "Scores zijn verborgen voor cursisten",
    "scoresVisibilityVisible" : "Scores zijn zichtbaar voor cursisten",
    "scoring" : "Scoremethode: {method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "Volgend niveau selecteren",
+   "selectPreviousLevel" : "Vorig niveau selecteren",
    "setScoreVisibilityFailed" : "Instellen van scorezichtbaarheid mislukt.",
    "statistics" : "Statistieken",
    "total" : "Totaal",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "De rubric is gebaseerd op een totale score van {value} punten."
+   "totalScoreAriaLabel" : "De rubric is gebaseerd op een totale score van {value} punten.",
+   "totalScoreLabel" : "Rubric-totaalscore"
 }

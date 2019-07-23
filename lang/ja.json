@@ -117,11 +117,11 @@
    "scoresVisibilityHidden" : "スコアは受講生に表示されません",
    "scoresVisibilityVisible" : "スコアは受講生に表示されます",
    "scoring" : "スコアリング: {method}",
-   "selectNextLevel": "Select Next Level",
-   "selectPreviousLevel": "Select Previous Level",
+   "selectNextLevel" : "次のレベルの選択",
+   "selectPreviousLevel" : "前のレベルの選択",
    "setScoreVisibilityFailed" : "スコアの表示を設定できませんでした。",
    "statistics" : "統計",
    "total" : "合計",
-   "totalScoreLabel": "Rubric Total Score",
-   "totalScoreAriaLabel" : "注釈は最大スコア合計 {value} ポイントです。"
+   "totalScoreAriaLabel" : "注釈は最大スコア合計 {value} ポイントです。",
+   "totalScoreLabel" : "注釈の合計スコア"
 }
