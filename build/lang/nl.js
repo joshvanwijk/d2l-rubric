@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'overallScoreHeader': 'Algemene score',
 		'overriddenScoreTip': 'Criteriumscore is overschreven',
 		'overriddenTotalScoreTip': 'De algemene rubricscore is overschreven. De score wordt niet meer bijgewerkt op basis van wijzigingen aan de rubric.',
-		'overrideLabel': 'Override',
+		'overrideLabel': 'Overschrijven',
 		'percentage': '{number} %',
 		'points': '{number} {number, plural, one {punt} other {punten}}',
 		'pointsAbbreviation': 'punt',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'scoresVisibilityHidden': 'Scores zijn verborgen voor cursisten',
 		'scoresVisibilityVisible': 'Scores zijn zichtbaar voor cursisten',
 		'scoring': 'Scoremethode: {method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': 'Volgend niveau selecteren',
+		'selectPreviousLevel': 'Vorig niveau selecteren',
 		'setScoreVisibilityFailed': 'Instellen van scorezichtbaarheid mislukt.',
 		'statistics': 'Statistieken',
 		'total': 'Totaal',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.'
+		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.',
+		'totalScoreLabel': 'Rubric-totaalscore'
 	}
 };

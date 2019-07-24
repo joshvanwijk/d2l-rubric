@@ -65,7 +65,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'helpAssociations': 'İlişkiler nelerdir?',
 		'hideScore': 'Puanları öğrencilerden gizle',
 		'hideScoreHeader': 'Puan Görünürlüğü',
-		'initialFeedback': 'İlk Geri Bildirim',
+		'initialFeedback': 'İlk Geri Bildirim',
 		'levelAchieved': 'Ulaşılan Seviye:',
 		'levelAppended': '{name} sonrasına yeni bir seviye eklendi',
 		'levelDeleted': '{name} seviyesi silindi',
@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'overallScoreHeader': 'Toplam Puan',
 		'overriddenScoreTip': 'Kriter puanı etkisizleştirildi',
 		'overriddenTotalScoreTip': 'Toplam rubrik puanı etkisizleştirildi. Puan, şu andan itibaren rubrik üzerinde yapılan değişikliklere bağlı olarak güncellenmeyecek.',
-		'overrideLabel': 'Override',
+		'overrideLabel': 'Etkisizleştir',
 		'percentage': '%{number}',
 		'points': '{number} {number, plural, one {puan} other {puan}}',
 		'pointsAbbreviation': 'puan',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'scoresVisibilityHidden': 'Puanlar öğrencilerden gizlendi',
 		'scoresVisibilityVisible': 'Puanlar öğrenciler tarafından görülebilir',
 		'scoring': 'Puanlama Yöntemi: {method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': 'Sonraki Seviyeyi Seçin',
+		'selectPreviousLevel': 'Önceki Seviyeyi Seçin',
 		'setScoreVisibilityFailed': 'Puan görünürlüğünü ayarlama işlemi başarısız oldu.',
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.'
+		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
+		'totalScoreLabel': 'Rubrik Toplam Puan'
 	}
 };

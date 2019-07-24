@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'overallScoreHeader': '总分数',
 		'overriddenScoreTip': '标准分数已改写',
 		'overriddenTotalScoreTip': '总量规分数已改写。该分数将不再根据量规更改进行更新。',
-		'overrideLabel': 'Override',
+		'overrideLabel': '改写',
 		'percentage': '{number} %',
 		'points': '{number} {number, plural, one {分} other {分}}',
 		'pointsAbbreviation': '分数',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'scoresVisibilityHidden': '分数已向学生隐藏',
 		'scoresVisibilityVisible': '分数对学生可见',
 		'scoring': '评分方法：{method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': '选择下一级别',
+		'selectPreviousLevel': '选择上一级别',
 		'setScoreVisibilityFailed': '设置分数可见性失败。',
 		'statistics': '统计',
 		'total': '总计',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': '量规超出了总分数值 {value}。'
+		'totalScoreAriaLabel': '量规超出了总分数值 {value}。',
+		'totalScoreLabel': '量规总分'
 	}
 };

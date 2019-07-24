@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'overallScoreHeader': 'Note globale',
 		'overriddenScoreTip': 'La note du critère a été remplacée',
 		'overriddenTotalScoreTip': 'La note globale de la grille d’évaluation a été remplacée. La note ne s’actualisera plus en fonction des modifications apportées à la grille d’évaluation.',
-		'overrideLabel': 'Override',
+		'overrideLabel': 'Remplacer',
 		'percentage': '{number} %',
 		'points': '{number} {number, plural, one {point} other {points}}',
 		'pointsAbbreviation': 'pt',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'scoresVisibilityHidden': 'Les notes ne sont pas visibles par les élèves',
 		'scoresVisibilityVisible': 'Les notes sont visibles par les élèves',
 		'scoring': 'Notation : {method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': 'Sélectionner le niveau suivant',
+		'selectPreviousLevel': 'Sélectionner le niveau précédent',
 		'setScoreVisibilityFailed': 'Le paramétrage de la visibilité des notes a échoué.',
 		'statistics': 'Statistiques',
 		'total': 'Total',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.'
+		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
+		'totalScoreLabel': 'Note finale de la grille d’évaluation'
 	}
 };

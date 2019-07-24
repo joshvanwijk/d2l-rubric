@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'overallScoreHeader': 'Pontuação geral',
 		'overriddenScoreTip': 'A pontuação do critério foi substituída',
 		'overriddenTotalScoreTip': 'A pontuação geral da rubrica foi substituída. A pontuação não será mais atualizada com base nas alterações da rubrica.',
-		'overrideLabel': 'Override',
+		'overrideLabel': 'Substituir',
 		'percentage': '{number} %',
 		'points': '{number} {number, plural, one {ponto} other {pontos}}',
 		'pointsAbbreviation': 'pts',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'scoresVisibilityHidden': 'As pontuações estão ocultas para os alunos',
 		'scoresVisibilityVisible': 'As pontuações estão visíveis para os alunos',
 		'scoring': 'Pontuação: {method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': 'Selecionar próximo nível',
+		'selectPreviousLevel': 'Selecionar nível anterior',
 		'setScoreVisibilityFailed': 'Falha na configuração da visibilidade da pontuação.',
 		'statistics': 'Estatísticas',
 		'total': 'Total',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.'
+		'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.',
+		'totalScoreLabel': 'Pontuação total da rubrica'
 	}
 };

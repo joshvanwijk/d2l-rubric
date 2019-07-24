@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'overallScoreHeader': '전체 점수',
 		'overriddenScoreTip': '기준 점수가 재설정되었음',
 		'overriddenTotalScoreTip': '전체 루브릭 점수가 재설정되었습니다. 이제는 루브릭의 변경 사항에 따라 점수가 업데이트되지 않습니다.',
-		'overrideLabel': 'Override',
+		'overrideLabel': '재설정',
 		'percentage': '{number}%',
 		'points': '{number} {number, plural, one {point} other {points}}',
 		'pointsAbbreviation': '점수',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'scoresVisibilityHidden': '점수를 학생에게 표시하지 않음',
 		'scoresVisibilityVisible': '점수를 학생에게 표시',
 		'scoring': '점수 산정: {method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': '다음 수준 선택',
+		'selectPreviousLevel': '이전 수준 선택',
 		'setScoreVisibilityFailed': '점수 표시 여부 설정에 실패했습니다.',
 		'statistics': '통계',
 		'total': '총',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': '루브릭이 총 {value}점의 점수에서 벗어났습니다.'
+		'totalScoreAriaLabel': '루브릭이 총 {value}점의 점수에서 벗어났습니다.',
+		'totalScoreLabel': '루브릭 총점'
 	}
 };

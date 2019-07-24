@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'overallScoreHeader': 'Totalbetyg',
 		'overriddenScoreTip': 'Kriteriebetyg har åsidosatts',
 		'overriddenTotalScoreTip': 'Det övergripande rubriceringsbetyget har åsidosatts. Betyget uppdateras inte längre baserat på ändringar av rubriceringen.',
-		'overrideLabel': 'Override',
+		'overrideLabel': 'Åsidosätt',
 		'percentage': '{number} %',
 		'points': '{number} {number, plural, one {poäng} other {poäng}}',
 		'pointsAbbreviation': 'pt',
@@ -128,12 +128,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'scoresVisibilityHidden': 'Betygen är dolda för elever',
 		'scoresVisibilityVisible': 'Betygen är synliga för elever',
 		'scoring': 'Betygsättning: {method}',
-		'selectNextLevel': 'Select Next Level',
-		'selectPreviousLevel': 'Select Previous Level',
+		'selectNextLevel': 'Välj nästa nivå',
+		'selectPreviousLevel': 'Välj föregående nivå',
 		'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.'
+		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.',
+		'totalScoreLabel': 'Totala rubriceringspoäng'
 	}
 };
