@@ -278,15 +278,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 							</div>
 						</template>
 					</div>
-					<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
-					<div class="criterion-feedback">
-						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
-							<div class="cell">
-								<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]">
-								</d2l-rubric-feedback-editor>
-							</div>
-						</template>
-					</div>
+					<template is="dom-if" if="[[!isHolistic]]" restamp>
+						<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
+						<div class="criterion-feedback">
+							<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
+								<div class="cell">
+									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]">
+									</d2l-rubric-feedback-editor>
+								</div>
+							</template>
+						</div>
+					</template>
 				</div>
 				<div text-only$="[[!_hasOutOf]]" class="cell col-last out-of" hidden$="[[isHolistic]]">
 					<span hidden="[[!_hasOutOf]]">
