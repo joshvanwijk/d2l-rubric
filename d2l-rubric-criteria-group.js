@@ -172,7 +172,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			<d2l-thead>
 				<d2l-tr aria-rowindex="1">
 					<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
-						<d2l-td class="group-name">
+						<d2l-td role="columnheader" class="group-name">
 							[[entity.properties.name]]
 						</d2l-td>
 					</template>
