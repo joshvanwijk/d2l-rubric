@@ -31,7 +31,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'criterionNameAriaLabel': 'Criterion name',
 		'criterionOutOf': 'Criterion {name} is out of {value} points',
 		'criterionPlaceholder': 'Click to edit criterion',
-		'dashOutOf': '\u2014 / {outOf}',
+		'dashOutOf': '— / {outOf}',
 		'description': 'Description',
 		'descriptionInfo': 'Add a description for your personal reference. It will not be shared with students',
 		'descriptionSaveFailed': 'Saving description failed',
@@ -59,7 +59,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'nameIsRequired': 'Name is required',
 		'nameSaveFailed': 'Saving name failed',
 		'options': 'Options',
-		'outOf': '/\u00A0{outOf}',
+		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': 'Overall description for level {levelName}',
 		'overallFeedback': 'Overall Feedback',
 		'overallFeedbackAriaLabel': 'Overall feedback for level {levelName}',
@@ -95,7 +95,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'rubricVisibilityOnceFeedbackPosted': 'Rubric is hidden from students until feedback is published',
 		'rubricVisibilityNever': 'Rubric is hidden from students',
 		'rubricVisibilitySaveFailed': 'Changing rubric visibility failed.',
-		'scoreOutOf': '{score}\u00A0/\u00A0{outOf}',
+		'scoreOutOf': '{score} / {outOf}',
 		'scoring': 'Scoring: {method}',
 		'selectNextLevel': 'Select Next Level',
 		'selectPreviousLevel': 'Select Previous Level',
@@ -134,6 +134,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'associationsSaveFailed': 'Saving associations failed',
 		'descriptionReadOnlyMode': 'Description (not visible to students)',
 		'descriptionReadOnlyPlaceholder': 'No description',
-		'groupNameSaveFailed': 'Saving criteria group name failed'
-	}
+		'groupNameSaveFailed': 'Saving criteria group name failed',
+		'makeRubricAvailableHeader': 'Make rubric available to'
+}
 };
