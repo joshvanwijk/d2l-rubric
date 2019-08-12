@@ -123,5 +123,6 @@
 	"associationsSaveFailed": "Saving associations failed",
 	"descriptionReadOnlyMode": "Description (not visible to students)",
 	"descriptionReadOnlyPlaceholder": "No description",
-	"groupNameSaveFailed": "Saving criteria group name failed"
+	"groupNameSaveFailed": "Saving criteria group name failed",
+	"makeRubricAvailableHeader": "Make rubric available to"
 }

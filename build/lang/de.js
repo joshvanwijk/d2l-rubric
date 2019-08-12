@@ -134,6 +134,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
 		'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',
-		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema'
-	}
+		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema',
+		'makeRubricAvailableHeader': 'Make rubric available to'
+}
 };

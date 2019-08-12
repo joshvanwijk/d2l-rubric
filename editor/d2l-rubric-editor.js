@@ -25,11 +25,14 @@ import 'd2l-alert/d2l-alert.js';
 import 'd2l-link/d2l-link.js';
 import './d2l-rubric-visibility-editor.js';
 import 's-html/s-html.js';
+import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
+
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-const $_documentContainer = document.createElement('template');
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
+const $_documentContainer = html `
+<dom-module id="d2l-rubric-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -128,12 +131,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 				max-width: unset;
 				width: unset;
 			}
-			
+
 			:dir(rtl) #locked-alert {
 				margin-right: var(--d2l-rubric-editor-start-gutter-width);
 				margin-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
-			
+
 			#locked-alert-icon {
 				vertical-align: text-top;
 			}
@@ -304,7 +307,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 									[[_descriptionInvalidError]]
 								</d2l-tooltip>
 							</template>
-
 						</template>
 						<template is="dom-if" if="[[_isLocked]]">
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
@@ -342,6 +344,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor">
 						<div class="help-link d2l-body-compact">
 							<d2l-link on-click="_openHelpDialog" href="">[[localize('helpAssociations')]]</d2l-link>
 						</div>
+					</div>
+					<div id="make-rubric-available-container" hidden$="[[!_canShare]]">
+						<label>[[localize('makeRubricAvailableHeader')]]</label>
+						<d2l-organization-availability-set></d2l-organization-availability-set>
 					</div>
 				</div>
 			</d2l-accordion-collapse>
@@ -439,6 +445,10 @@ Polymer({
 			type: Boolean,
 			computed: '_canHideScoreVisibility(entity)',
 		},
+		_canShare: {
+			type: Boolean,
+			computed: '_computeCanShare(entity)'
+		},
 		_scoreIsHidden: {
 			type: Boolean,
 			computed: '_computeScoreIsHidden(entity)'
@@ -521,6 +531,9 @@ Polymer({
 		'd2l-siren-entity-save-start': '_onEntitySave',
 		'd2l-siren-entity-save-error': '_onEntitySave',
 		'd2l-siren-entity-save-end': '_onEntitySave'
+	},
+	_computeCanShare(entity) {
+		return entity && entity.hasLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
 	},
 	ready: function() {
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));

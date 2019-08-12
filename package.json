@@ -78,7 +78,8 @@
     "d2l-tooltip": "BrightspaceUI/tooltip#semver:^3",
     "d2l-typography": "BrightspaceUI/typography#semver:^7",
     "fastdom": "^1.0.8",
-    "s-html": "Brightspace/s-html#semver:^2"
+    "s-html": "Brightspace/s-html#semver:^2",
+    "d2l-organizations": "BrightspaceHypermediaComponents/organizations#semver:^5"
   },
   "resolutions": {
     "inherits": "2.0.3",
