@@ -200,9 +200,6 @@ const $_documentContainer = html `
 				margin-top: 8px;
 				margin-bottom: 8px;
 			}
-			#description-html-container > s-html::shadow > * {
-				margin: 0px;
-			}
 			#rubric-description-container {
 				margin-top: 2.3rem;
 			}
@@ -255,6 +252,7 @@ const $_documentContainer = html `
 					id="rubric-name"
 					value="[[_rubricName]]"
 					on-change="_saveName"
+					on-input="_saveNameOnInput"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 					aria-label$="[[localize('name')]]"
 					disabled="[[!_canEditName]]"
@@ -312,7 +310,7 @@ const $_documentContainer = html `
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
 							<template is="dom-if" if="[[richTextEnabled]]">
 								<div id="description-html-container">
-									<s-html html$="[[_getReadOnlyDescription(_rubricDescription, 1)]]"></s-html>
+									<s-html id="description-html-content" html$="[[_getReadOnlyDescription(_rubricDescription, 1)]]"></s-html>
 								</div>
 							</template>
 							<template is="dom-if" if="[[!richTextEnabled]]">
@@ -532,7 +530,8 @@ Polymer({
 		'd2l-siren-entity-save-error': '_onEntitySave',
 		'd2l-siren-entity-save-end': '_onEntitySave'
 	},
-	_computeCanShare(entity) {
+
+	_computeCanShare: function(entity) {
 		return entity && entity.hasLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
 	},
 	ready: function() {
@@ -551,6 +550,13 @@ Polymer({
 					event.stopPropagation();
 					event.preventDefault();
 				}
+			});
+		}
+
+		var elem = dom(this.root).querySelector('#description-html-content');
+		if (elem && elem.shadowRoot) {
+			elem.shadowRoot.querySelectorAll('*').forEach(el => {
+				el.style.margin = 0;
 			});
 		}
 	},
@@ -697,6 +703,25 @@ Polymer({
 				}.bind(this));
 			}
 		}
+	},
+	_saveNameOnInput: function(e) {
+		var action = this.entity.getActionByName('update-name');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._nameRequired && !value.trim()) {
+					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'name-bubble');
+					var fields = [{ 'name': 'name', 'value': value }];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-name-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
 	},
 	_onEntitySave: function(e) {
 		this.$$('#rubric-header').onEntitySave(e);

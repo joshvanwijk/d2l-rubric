@@ -136,5 +136,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'totalScoreAriaLabel': '量规超出了总分数值 {value}。',
 		'totalScoreLabel': '量规总分',
 		'makeRubricAvailableHeader': 'Make rubric available to'
-}
+	}
 };

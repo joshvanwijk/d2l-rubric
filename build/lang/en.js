@@ -136,5 +136,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'descriptionReadOnlyPlaceholder': 'No description',
 		'groupNameSaveFailed': 'Saving criteria group name failed',
 		'makeRubricAvailableHeader': 'Make rubric available to'
-}
+	}
 };

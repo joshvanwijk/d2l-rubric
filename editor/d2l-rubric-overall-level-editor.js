@@ -56,11 +56,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 		</style>
 
-		<d2l-input-text id="overall-level-name" value="[[entity.properties.name]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="overall-level-name" value="[[entity.properties.name]]" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
 			<div class="points" hidden="[[!_hasRangeStart]]">
-				<d2l-input-text id="range-start" value="[[entity.properties.rangeStart]]" on-change="_saveRangeStart" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
+				<d2l-input-text id="range-start" value="[[entity.properties.rangeStart]]" on-change="_saveRangeStart" on-input="_saveRangeStartOnInput" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
 			</div>
@@ -202,6 +202,44 @@ Polymer({
 				}.bind(this));
 			}
 		}
+	},
+	_saveNameOnInput: function(e) {
+		var action = this.entity.getActionByName('update-name');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._nameRequired && !value.trim()) {
+					this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
+					var fields = [{'name': 'name', 'value': value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-overall-level-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
+	},
+	_saveRangeStartOnInput: function(e) {
+		var action = this.entity.getActionByName('update-range-start');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._rangeStartRequired && !value.trim()) {
+					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
+				} else {
+					this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
+					var fields = [{'name': 'rangeStart', 'value': value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-overall-level-range-start-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
 	},
 	_canDeleteLevel: function(entity) {
 		return entity && entity.hasActionByName('delete');

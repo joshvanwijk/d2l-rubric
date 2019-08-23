@@ -136,5 +136,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
 		'totalScoreLabel': 'Rubrik Toplam Puan',
 		'makeRubricAvailableHeader': 'Make rubric available to'
-}
+	}
 };

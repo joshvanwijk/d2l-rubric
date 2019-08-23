@@ -136,5 +136,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.',
 		'totalScoreLabel': 'مجموع درجات آلية التقييم',
 		'makeRubricAvailableHeader': 'Make rubric available to'
-}
+	}
 };

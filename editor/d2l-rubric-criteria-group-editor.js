@@ -79,7 +79,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" on-d2l-siren-entity-changed="_notifyResize">
-					<d2l-input-text id="group-name" slot="group-name-slot" value="[[_groupName]]" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
+					<d2l-input-text id="group-name" slot="group-name-slot" value="[[_groupName]]" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<template is="dom-if" if="[[_nameInvalid]]">
@@ -230,6 +230,26 @@ Polymer({
 				}.bind(this));
 			}
 		}
+	},
+
+	_saveNameOnInput: function(e) {
+		var action = this.entity.getActionByName('update');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (!value.trim()) {
+					this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
+					var fields = [{'name': 'name', 'value': value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-group-name-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
 	},
 
 	_notifyResize: function() {

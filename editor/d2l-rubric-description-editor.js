@@ -73,6 +73,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 				id="cell-points"
 				value="[[entity.properties.points]]"
 				on-change="_savePoints"
+				on-input="_savePointsOnInput"
 				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
 				aria-label$="[[localize('cellPoints')]]"
 				disabled="[[!_canEditPoints]]"
@@ -256,6 +257,27 @@ Polymer({
 				}.bind(this));
 			}
 		}
+	},
+
+	_savePointsOnInput: function(e) {
+		var action = this.entity.getActionByName('update-points');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._pointsRequired && !value.trim()) {
+					this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
+					this.fire('iron-announce', {text: this.localize('pointsAreRequired')}, {bubbles: true});
+				} else {
+					this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
+					var fields = [{'name': 'points', 'value': value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-criterion-cell-points-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
 	},
 
 	_constructKey: function(keyLinkRels, entity) {

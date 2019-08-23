@@ -136,5 +136,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'totalScoreAriaLabel': '注釈は最大スコア合計 {value} ポイントです。',
 		'totalScoreLabel': '注釈の合計スコア',
 		'makeRubricAvailableHeader': 'Make rubric available to'
-}
+	}
 };

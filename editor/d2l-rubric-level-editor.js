@@ -69,11 +69,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			}
 		</style>
 
-		<d2l-input-text id="level-name" value="[[entity.properties.name]]" on-change="_saveName" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="level-name" value="[[entity.properties.name]]" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" nopoints$="[[!_showPoints]]">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
-				<d2l-input-text id="level-points" value="[[entity.properties.points]]" on-change="_savePoints" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
+				<d2l-input-text id="level-points" value="[[entity.properties.points]]" on-change="_savePoints" on-input="_savePointsOnInput" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
@@ -246,6 +246,52 @@ Polymer({
 				}.bind(this));
 			}
 		}
+	},
+	_saveNameOnInput: function(e) {
+		var action = this.entity.getActionByName('update-name');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._nameRequired && !value.trim()) {
+					this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameIsRequired');
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
+					var fields = [{'name': 'name', 'value': value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-level-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
+	},
+	_savePointsOnInput: function(e) {
+		var action = this.entity.getActionByName('update-points');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._pointsRequired && !value.trim()) {
+					if (this._usesPercentage) {
+						this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartRequired');
+					} else {
+						this.handleValidationError('points-bubble', '_pointsInvalid', 'pointsAreRequired');
+					}
+				} else {
+					this.toggleBubble('_pointsInvalid', false, 'points-bubble');
+					var fields = [{'name': 'points', 'value': value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-level-points-saved');
+					}.bind(this)).catch(function(err) {
+						if (this._usesPercentage) {
+							this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartInvalid', err);
+						} else {
+							this.handleValidationError('points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+						}
+					}.bind(this));
+				}
+			}
+		}.bind(this), 500);
 	},
 	_canDeleteLevel: function(entity) {
 		return entity && entity.hasActionByName('delete');
