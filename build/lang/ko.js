@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'levelPoints': '수준 점수',
 		'levelPrepended': '{name} 앞에 새 수준이 추가되었음',
 		'lockedAlertText': '이 루브릭은 이미 학습자 수행 평가에 사용되었으므로 편집할 수 없음',
+		'makeRubricAvailableHeader': '루브릭 제공 대상',
 		'moveCriterionDown': '{position} 아래로 기준 이동',
 		'moveCriterionUp': '{position} 위로 기준 이동',
 		'name': '이름',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'statistics': '통계',
 		'total': '총',
 		'totalScoreAriaLabel': '루브릭이 총 {value}점의 점수에서 벗어났습니다.',
-		'totalScoreLabel': '루브릭 총점',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': '루브릭 총점'
 	}
 };

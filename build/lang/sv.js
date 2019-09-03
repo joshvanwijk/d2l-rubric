@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'levelPoints': 'Nivåpoäng',
 		'levelPrepended': 'En ny nivå har lagts till före {name}',
 		'lockedAlertText': 'Denna rubricering kan inte redigeras eftersom den redan har använts för utvärdering av elevarbete',
+		'makeRubricAvailableHeader': 'Gör rubricering tillgänglig för',
 		'moveCriterionDown': 'Flytta ned kriterium {position}',
 		'moveCriterionUp': 'Flytta upp kriterium {position}',
 		'name': 'Namn',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',
 		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.',
-		'totalScoreLabel': 'Totala rubriceringspoäng',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'Totala rubriceringspoäng'
 	}
 };

@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'levelPoints': 'Stufenpunkte',
 		'levelPrepended': 'Eine neue Stufe wurde vor {name} hinzugefügt',
 		'lockedAlertText': 'Dieses Bewertungsschema kann nicht bearbeitet werden, da damit bereits auf Arbeit von Lernern bewertet wurde.',
+		'makeRubricAvailableHeader': 'Bewertungsschema verfügbar machen für',
 		'moveCriterionDown': 'Kriterium {position} nach unten verschieben',
 		'moveCriterionUp': 'Kriterium {position} nach oben verschieben',
 		'name': 'Name',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
 		'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',
-		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema'
 	}
 };

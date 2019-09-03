@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'levelPoints': 'レベルポイント',
 		'levelPrepended': '新規レベルが {name} の前に追加されました',
 		'lockedAlertText': 'この注釈はすでに受講者の作業を評価するために使用されているため、編集できません',
+		'makeRubricAvailableHeader': '次に対して注釈を使用可能にする',
 		'moveCriterionDown': '条件 {position} を下に移動',
 		'moveCriterionUp': '条件 {position} を上に移動',
 		'name': '名前',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'statistics': '統計',
 		'total': '合計',
 		'totalScoreAriaLabel': '注釈は最大スコア合計 {value} ポイントです。',
-		'totalScoreLabel': '注釈の合計スコア',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': '注釈の合計スコア'
 	}
 };

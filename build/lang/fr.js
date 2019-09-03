@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'levelPoints': 'Pointage du niveau',
 		'levelPrepended': 'Un nouveau niveau a été ajouté devant {name}',
 		'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée parce qu’elle a déjà été utilisée pour évaluer le travail d’un élève',
+		'makeRubricAvailableHeader': 'Rendre la rubrique disponible à :',
 		'moveCriterionDown': 'Déplacer le critère {position} vers le bas',
 		'moveCriterionUp': 'Déplacer le critère {position} vers le haut',
 		'name': 'Nom',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'statistics': 'Statistiques',
 		'total': 'Total',
 		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
-		'totalScoreLabel': 'Note finale de la grille d’évaluation',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'Note finale de la grille d’évaluation'
 	}
 };

@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'levelPoints': 'نقاط المستوى',
 		'levelPrepended': 'تمت إضافة مستوى جديد قبل {name}',
 		'lockedAlertText': 'لا يمكن تحرير آلية التقييم هذه بسبب استخدامها مسبقًا لتقييم عمل المتعلّم',
+		'makeRubricAvailableHeader': 'توفير آلية التقييم لـ',
 		'moveCriterionDown': 'نقل المعيار {position} إلى الأسفل',
 		'moveCriterionUp': 'نقل المعيار {position} إلى الأعلى',
 		'name': 'الاسم',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'statistics': 'الإحصاءات',
 		'total': 'المجموع',
 		'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.',
-		'totalScoreLabel': 'مجموع درجات آلية التقييم',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'مجموع درجات آلية التقييم'
 	}
 };

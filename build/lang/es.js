@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'levelPoints': 'Puntos de nivel',
 		'levelPrepended': 'Se agregó un nuevo nivel antes de {name}',
 		'lockedAlertText': 'Esta rúbrica no se puede editar porque ya se utilizó para evaluar el trabajo del estudiante',
+		'makeRubricAvailableHeader': 'Rúbrica disponible para',
 		'moveCriterionDown': 'Baje el criterio {position}',
 		'moveCriterionUp': 'Suba el criterio {position}',
 		'name': 'Nombre',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'statistics': 'Estadísticas',
 		'total': 'Total',
 		'totalScoreAriaLabel': 'La rúbrica tiene una puntuación total de {value} puntos.',
-		'totalScoreLabel': 'Puntuación total según la rúbrica',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'Puntuación total según la rúbrica'
 	}
 };

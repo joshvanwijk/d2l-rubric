@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'levelPoints': '層級分數',
 		'levelPrepended': '已在 {name} 前新增層級',
 		'lockedAlertText': '此量規已用於評量學習者作業，因此無法編輯',
+		'makeRubricAvailableHeader': '使量規可用於',
 		'moveCriterionDown': '下移標準 {position}',
 		'moveCriterionUp': '上移標準 {position}',
 		'name': '名稱',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'statistics': '統計',
 		'total': '總計',
 		'totalScoreAriaLabel': '量規超出總分 ({value} 分)。',
-		'totalScoreLabel': '量規總分數',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': '量規總分數'
 	}
 };

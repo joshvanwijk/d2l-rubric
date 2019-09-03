@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'levelPoints': 'Seviye puanları',
 		'levelPrepended': '{name} öncesine yeni bir seviye eklendi',
 		'lockedAlertText': 'Öğrenci çalışmalarını değerlendirmek için zaten kullanıldığından bu rubrik düzenlenemiyor',
+		'makeRubricAvailableHeader': 'Şunların rubriği kullanmasına izin ver:',
 		'moveCriterionDown': 'Kriteri {position} aşağı taşı',
 		'moveCriterionUp': 'Kriteri {position} yukarı taşı',
 		'name': 'Ad',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
-		'totalScoreLabel': 'Rubrik Toplam Puan',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'Rubrik Toplam Puan'
 	}
 };

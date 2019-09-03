@@ -74,6 +74,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'levelPoints': 'Niveaupunten',
 		'levelPrepended': 'Een nieuw niveau is toegevoegd voor {name}',
 		'lockedAlertText': 'Deze rubric kan niet worden bewerkt omdat deze al is gebruikt om het werk van de cursist te beoordelen',
+		'makeRubricAvailableHeader': 'Rubric beschikbaar maken voor',
 		'moveCriterionDown': 'Criterium {position} omlaag verplaatsen',
 		'moveCriterionUp': 'Criterium {position} omhoog verplaatsen',
 		'name': 'Naam',
@@ -134,7 +135,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'statistics': 'Statistieken',
 		'total': 'Totaal',
 		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.',
-		'totalScoreLabel': 'Rubric-totaalscore',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'totalScoreLabel': 'Rubric-totaalscore'
 	}
 };
