@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'deleteLevelConfirmationText': 'Bu eylem, bu seviyeyi ve içeriğini kalıcı olarak silecek.',
 		'deleteLevelConfirmationTitle': 'Bu seviye silinsin mi?',
 		'description': 'Açıklama',
-		'descriptionInfo': 'Kişisel referansınız için bir açıklama ekleyin. Öğrencilerle paylaşılmayacaktır',
+		'descriptionInfo': 'Kişisel referansınız için bir açıklama ekleyin. Öğrencilerle paylaşılmayacaktır.',
 		'descriptionReadOnlyMode': 'Açıklama (Öğrencilere görünmez)',
 		'descriptionReadOnlyPlaceholder': 'Açıklama yok',
 		'descriptionSaveFailed': 'Açıklama kaydedilemedi',

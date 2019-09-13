@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'deleteLevelConfirmationText': 'Det här tar bort nivån och dess innehåll permanent.',
 		'deleteLevelConfirmationTitle': 'Vill du ta bort nivån?',
 		'description': 'Beskrivning',
-		'descriptionInfo': 'Lägg till en beskrivning för ditt personliga bruk. Den kommer inte att delas med eleverna',
+		'descriptionInfo': 'Lägg till en beskrivning för ditt personliga bruk. Den kommer inte att delas med eleverna.',
 		'descriptionReadOnlyMode': 'Beskrivning (inte synlig för elever)',
 		'descriptionReadOnlyPlaceholder': 'Ingen beskrivning',
 		'descriptionSaveFailed': 'Beskrivningen kunde inte sparas',
