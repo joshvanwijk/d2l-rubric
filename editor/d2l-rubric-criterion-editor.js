@@ -140,15 +140,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				flex: 1 1 auto;
 			}
 
-			/* note start: to fix border overflow clipping */
-			.criterion-text .cell {
-				padding: 1px;
+			.criterion-detail .cell {
+				padding: 0px;
 			}
-
-			.criterion-feedback .cell {
-				padding: 1px;
-			}
-			/* note end */
 
 			.out-of {
 				display: flex;
@@ -170,15 +164,15 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			.criterion-detail[is-holistic] .criterion-feedback div:first-of-type {
+			.criterion-detail[is-holistic] .criterion-text div:first-of-type {
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			:dir(rtl) .criterion-detail[is-holistic] .criterion-feedback div:first-of-type {
+			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
 				border-bottom-left-radius: 0;
 			}
 
-			:dir(rtl) .criterion-detail[is-holistic] .criterion-feedback div:last-of-type {
+			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
@@ -272,9 +266,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				</div>
 				<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
 					<div class="criterion-text">
-						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
+						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
 							<div class="cell">
-								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-description-editor>
+								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
 					</div>
@@ -335,6 +329,9 @@ Polymer({
 		criterionDetailWidth: {
 			type: Number,
 			value: 0
+		},
+		criterionCellCount: {
+			type: Number
 		},
 		/**
 		* Outcomes langterm set in config variables
@@ -651,5 +648,12 @@ Polymer({
 
 	_resizeOverlay: function() {
 		this.$.overlay.refit();
+	},
+	// eslint-disable-next-line no-unused-vars
+	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {
+		return isHolistic && index === 0;
+	},
+	_isLastAndCorner: function(isHolistic, index, criterionCellCount) {
+		return isHolistic && index === criterionCellCount - 1;
 	}
 });
