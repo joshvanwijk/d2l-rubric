@@ -25,7 +25,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 					hyphens: auto;
 					border-color: transparent;
 					box-shadow: none;
-					border-radius: 0;
+					border-radius: 0 0 var(--input-border-bottom-right-radius, 0) var(--input-border-bottom-left-radius, 0);
 					transition-property: none;
 				};
 			}
@@ -61,6 +61,30 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 
 			#cell-points {
 				min-width: calc(2.25rem + 1em);
+			}
+
+			:host([first-and-corner]) {
+				--input-border-bottom-left-radius: var(--d2l-table-border-radius);
+			}
+
+			:host([last-and-corner]){
+				--input-border-bottom-right-radius: var(--d2l-table-border-radius);
+			}
+
+			:host([first-and-corner]) :dir(rtl) {
+				--input-border-bottom-right-radius: var(--d2l-table-border-radius);
+			}
+
+			:host([first-and-corner]:not([last-and-corner])) :dir(rtl) {
+				--input-border-bottom-left-radius: 0;
+			}
+
+			:host([last-and-corner]) :dir(rtl) {
+				--input-border-bottom-left-radius: var(--d2l-table-border-radius);
+			}
+
+			:host([last-and-corner]:not([first-and-corner])) :dir(rtl) {
+				--input-border-bottom-right-radius: 0;
 			}
 
 			[hidden] {

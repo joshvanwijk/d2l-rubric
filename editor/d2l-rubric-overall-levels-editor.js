@@ -83,7 +83,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 
 			#description .cell {
-				padding: 1px;
+				padding: 0px;
 				border-bottom: 1px solid var(--d2l-color-galena);
 			}
 
@@ -183,9 +183,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			<div id="description" class="editor-section">
 				<div class="gutter-left"></div>
 				<div class="col-center" id="description-center-section">
-					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel">
+					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel" rendered-item-count="{{levelCount}}">
 						<div class="cell">
-							<d2l-rubric-description-editor href="[[_getSelfLink(overallLevel)]]" token="[[token]]" aria-label-langterm="overallDescriptionAriaLabel" rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-description-editor>
+							<d2l-rubric-description-editor href="[[_getSelfLink(overallLevel)]]" token="[[token]]" aria-label-langterm="overallDescriptionAriaLabel" rich-text-enabled="[[richTextEnabled]]" first-and-corner$="[[_isFirstAndCorner(index, levelCount)]]" last-and-corner$="[[_isLastAndCorner(index, levelCount)]]"></d2l-rubric-description-editor>
 						</div>
 					</template>
 				</div>
@@ -212,6 +212,9 @@ Polymer({
 		_canAppend: {
 			type: Boolean,
 			computed: '_canAppendOverallLevel(entity)',
+		},
+		levelCount: {
+			type: Number
 		}
 	},
 	behaviors: [
@@ -303,5 +306,12 @@ Polymer({
 		afterNextRender(this, function() {
 			this.$$('d2l-scroll-wrapper').notifyResize();
 		}.bind(this));
+	},
+	// eslint-disable-next-line no-unused-vars
+	_isFirstAndCorner: function(index, levelCount) {
+		return index === 0;
+	},
+	_isLastAndCorner: function(index, levelCount) {
+		return index === levelCount - 1;
 	}
 });
