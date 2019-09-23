@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'deleteLevelConfirmationText': '此操作将永久删除此级别及其内容。',
 		'deleteLevelConfirmationTitle': '删除此级别？',
 		'description': '描述',
-		'descriptionInfo': '为您的个人参考添加描述。该内容不会与学生共享',
+		'descriptionInfo': '为您的个人参考添加描述。该内容不会与学生共享。',
 		'descriptionReadOnlyMode': '描述（对学生不可见）',
 		'descriptionReadOnlyPlaceholder': '无描述',
 		'descriptionSaveFailed': '保存描述失败',

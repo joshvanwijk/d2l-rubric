@@ -33,7 +33,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'criterionPlaceholder': 'Klik for at redigere kriterium',
 		'dashOutOf': '— / {outOf}',
 		'description': 'Beskrivelse',
-		'descriptionInfo': 'Tilføj en beskrivelse til egen reference. Den vil ikke blive delt med elever',
+		'descriptionInfo': 'Tilføj en beskrivelse til egen reference. Den vil ikke blive delt med elever.',
 		'descriptionSaveFailed': 'Det lykkedes ikke at gemme beskrivelsen',
 		'editFeedback': 'Rediger feedback',
 		'errorText': 'Hovsa! Vi har problemer med at oprette forbindelse. Du kan prøve at opdatere siden eller prøve igen senere.',

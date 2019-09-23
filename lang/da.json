@@ -38,7 +38,7 @@
    "deleteLevelConfirmationText" : "Denne handling sletter niveauet og dens indhold permanent.",
    "deleteLevelConfirmationTitle" : "Skal dette niveau slettes?",
    "description" : "Beskrivelse",
-   "descriptionInfo" : "Tilføj en beskrivelse til egen reference. Den vil ikke blive delt med elever",
+   "descriptionInfo" : "Tilføj en beskrivelse til egen reference. Den vil ikke blive delt med elever.",
    "descriptionReadOnlyMode" : "Beskrivelse (ikke synlig for elever)",
    "descriptionReadOnlyPlaceholder" : "Ingen beskrivelse",
    "descriptionSaveFailed" : "Det lykkedes ikke at gemme beskrivelsen",

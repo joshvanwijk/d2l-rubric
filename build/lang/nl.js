@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'deleteLevelConfirmationText': 'Hierdoor wordt het niveau en de inhoud permanent gewist.',
 		'deleteLevelConfirmationTitle': 'Dit niveau verwijderen?',
 		'description': 'Beschrijving',
-		'descriptionInfo': 'Voeg een beschrijving toe voor uw persoonlijke referentie. Deze wordt niet met cursisten gedeeld',
+		'descriptionInfo': 'Voeg een beschrijving toe voor uw persoonlijke referentie. Deze wordt niet met cursisten gedeeld.',
 		'descriptionReadOnlyMode': 'Beschrijving (niet zichtbaar voor cursisten)',
 		'descriptionReadOnlyPlaceholder': 'Geen beschrijving',
 		'descriptionSaveFailed': 'Opslaan van beschrijving mislukt',

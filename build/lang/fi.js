@@ -33,7 +33,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'criterionPlaceholder': 'Click to edit criterion',
 		'dashOutOf': '\u2014 / {outOf}',
 		'description': 'Description',
-		'descriptionInfo': 'Add a description for your personal reference. It will not be shared with students',
+		'descriptionInfo': 'Add a description for your personal reference. It will not be shared with students.',
 		'descriptionSaveFailed': 'Saving description failed',
 		'editFeedback': 'Edit Feedback',
 		'errorText': 'Oops! We\'re having trouble connecting you. You might want to refresh the page, or try again later.',

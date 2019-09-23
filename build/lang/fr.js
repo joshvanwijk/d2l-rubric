@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'deleteLevelConfirmationText': 'Cette action supprimera le niveau et son contenu de façon permanente.',
 		'deleteLevelConfirmationTitle': 'Supprimer ce niveau?',
 		'description': 'Description',
-		'descriptionInfo': 'Ajouter une description pour votre référence personnelle. Cela ne sera pas partagé avec les élèves',
+		'descriptionInfo': 'Ajouter une description pour votre référence personnelle. Cela ne sera pas partagé avec les élèves.',
 		'descriptionReadOnlyMode': 'Description (non visible pour les élèves)',
 		'descriptionReadOnlyPlaceholder': 'Aucune description',
 		'descriptionSaveFailed': 'Échec de l’enregistrement de la description',
