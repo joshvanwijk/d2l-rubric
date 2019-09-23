@@ -21,7 +21,7 @@ Polymer({
 
 		</style>
 		<template is="dom-if" if="[[!richTextEnabled]]">
-			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="[[value]]" on-change="_onInputChange" on-input="_duringInputChange"></d2l-input-textarea>
+			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="{{value}}" on-change="_onInputChange" on-input="_duringInputChange"></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[richTextEnabled]]">
 			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-change="_onInputChange" on-input="_duringInputChange"></d2l-rubric-html-editor>
@@ -60,6 +60,11 @@ Polymer({
 		token: {
 			type: String,
 		},
+		inputChanging: {
+			type: Boolean,
+			value: false,
+			notify: true
+		}
 	},
 
 	focus: function() {
@@ -82,6 +87,7 @@ Polymer({
 	},
 
 	_duringInputChange: function(e) {
+		this.inputChanging = true;
 		e.stopPropagation();
 		var value;
 		if (this.richTextEnabled) {
@@ -91,6 +97,7 @@ Polymer({
 				e.detail.content : e.target.value || '';
 		}
 		this.debounce('input', function() {
+			this.inputChanging = false;
 			this.fire('change', { value: value });
 		}.bind(this), 500);
 	}

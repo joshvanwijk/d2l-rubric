@@ -43,7 +43,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 			aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]"
 			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEdit]]"
-			value="[[_getFeedback(entity)]]"
+			value="{{_feedbackText}}"
+			input-changing={{_inputChanging}}
 			on-change="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
@@ -73,7 +74,9 @@ Polymer({
 			type: String,
 			value: ''
 		},
-
+		_feedbackText: {
+			type: String
+		},
 		_canEdit: {
 			type: Boolean,
 			computed: '_canEditFeedback(entity)',
@@ -94,6 +97,10 @@ Polymer({
 			type: String,
 			computed: '_constructKey(keyLinkRels, entity)',
 		},
+		_inputChanging: {
+			type: Boolean,
+			value: false
+		}
 	},
 
 	behaviors: [
@@ -103,6 +110,12 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
+
+	_onEntityChanged: function(entity) {
+		if(entity && !this._inputChanging) {
+			this._feedbackText = this._getFeedback(entity);
+		}
+	},
 
 	_getAriaLabel: function(langTerm, criterionName, properties) {
 		var levelName = properties && properties.levelName || properties && properties.name;

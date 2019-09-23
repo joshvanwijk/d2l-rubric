@@ -250,7 +250,7 @@ const $_documentContainer = html `
 				<label for="rubric-name">[[localize('name')]]*</label>
 				<d2l-input-text
 					id="rubric-name"
-					value="[[_rubricName]]"
+					value="{{_rubricName}}"
 					on-change="_saveName"
 					on-input="_saveNameOnInput"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
@@ -298,7 +298,7 @@ const $_documentContainer = html `
 						<template is="dom-if" if="[[!_isLocked]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="[[_rubricDescription]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_inputChanging}}" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
 								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
@@ -396,7 +396,6 @@ Polymer({
 		},
 		_rubricName: {
 			type: String,
-			computed: '_getRubricName(entity)',
 		},
 		_canEditName: {
 			type: Boolean,
@@ -425,7 +424,6 @@ Polymer({
 		},
 		_rubricDescription: {
 			type: String,
-			computed: '_getRubricDescription(_descriptionEntity)',
 		},
 		_canEditDescription: {
 			type: Boolean,
@@ -515,6 +513,10 @@ Polymer({
 		_isHolistic: {
 			type: Boolean,
 			value: false
+		},
+		_inputChanging: {
+			type: Boolean,
+			value: false,
 		}
 	},
 	behaviors: [
@@ -685,6 +687,11 @@ Polymer({
 			}
 			this._isLocked = entity.hasClass('locked');
 			this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
+
+			if (!this._inputChanging) {
+				this._rubricName = this._getRubricName(entity);
+				this._rubricDescription = this._getRubricDescription(entity);
+			}
 		}
 
 	},
@@ -705,9 +712,11 @@ Polymer({
 		}
 	},
 	_saveNameOnInput: function(e) {
+		this._inputChanging = true;
 		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._inputChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');

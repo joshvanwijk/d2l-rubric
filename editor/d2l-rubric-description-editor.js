@@ -95,7 +95,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 		<div class="points" hidden="[[!_showPoints]]">
 			<d2l-input-text
 				id="cell-points"
-				value="[[entity.properties.points]]"
+				value="{{_points}}"
 				on-change="_savePoints"
 				on-input="_savePointsOnInput"
 				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
@@ -113,7 +113,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
 			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEditDescription]]"
-			value="[[_getDescription(entity)]]"
+			value="{{_description}}"
+			input-changing="{{_inputChanging}}"
 			on-change="_saveDescription"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
@@ -147,6 +148,12 @@ Polymer({
 		criterionName: {
 			type: String,
 			value: ''
+		},
+		_description: {
+			type: String,
+		},
+		_points: {
+			type: Number,
 		},
 		keyLinkRels: {
 			type: Array,
@@ -188,7 +195,11 @@ Polymer({
 			type: Boolean,
 			computed: '_computeShowPoints(entity)'
 		},
-		richTextEnabled: Boolean
+		richTextEnabled: Boolean,
+		_inputChanging: {
+			type: Boolean,
+			value: false
+		}
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -197,9 +208,14 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
-	_onEntityChanged: function() {
+	_onEntityChanged: function(entity) {
 		this._descriptionInvalid = false;
 		this._pointsInvalid = false;
+
+		if (entity && !this._inputChanging) {
+			this._points = entity.properties.points;
+			this._description = this._getDescription(entity);
+		}
 	},
 	_getAriaLabel: function(langTerm, criterionName, properties) {
 		var levelName = properties && properties.levelName || properties && properties.name;
@@ -284,9 +300,11 @@ Polymer({
 	},
 
 	_savePointsOnInput: function(e) {
+		this._inputChanging = true;
 		var action = this.entity.getActionByName('update-points');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._inputChanging = false;
 			if (action) {
 				if (this._pointsRequired && !value.trim()) {
 					this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));

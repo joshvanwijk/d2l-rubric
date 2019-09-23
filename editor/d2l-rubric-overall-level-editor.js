@@ -56,11 +56,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 		</style>
 
-		<d2l-input-text id="overall-level-name" value="[[entity.properties.name]]" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="overall-level-name" value="{{_overallLevelName}}" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
 			<div class="points" hidden="[[!_hasRangeStart]]">
-				<d2l-input-text id="range-start" value="[[entity.properties.rangeStart]]" on-change="_saveRangeStart" on-input="_saveRangeStartOnInput" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
+				<d2l-input-text id="range-start" value="{{_rangeStart}}" on-change="_saveRangeStart" on-input="_saveRangeStartOnInput" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
 			</div>
@@ -87,6 +87,12 @@ Polymer({
 	is: 'd2l-rubric-overall-level-editor',
 
 	properties: {
+		_overallLevelName: {
+			type: String
+		},
+		_rangeStart: {
+			type: Number
+		},
 		_canEditName: {
 			type: Boolean,
 			computed: '_canEditNameValue(entity)',
@@ -127,6 +133,10 @@ Polymer({
 			type: String,
 			value: null
 		},
+		_inputChanging: {
+			type: Boolean,
+			value: false
+		}
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -135,10 +145,15 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
-	// eslint-disable-next-line no-unused-vars
+
 	_onEntityChanged: function(entity) {
 		this._rangeStartInvalid = false;
 		this._nameInvalid = false;
+
+		if (entity && !this._inputChanging) {
+			this._overallLevelName = entity.properties.name;
+			this._rangeStart = entity.properties.rangeStart;
+		}
 	},
 	_hasRangeStartValue: function(entity) {
 		return entity && entity.hasProperty('rangeStart') && entity.properties.rangeStart !== null;
@@ -204,9 +219,11 @@ Polymer({
 		}
 	},
 	_saveNameOnInput: function(e) {
+		this._inputChanging = true;
 		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._inputChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
@@ -223,9 +240,11 @@ Polymer({
 		}.bind(this), 500);
 	},
 	_saveRangeStartOnInput: function(e) {
+		this._inputChanging = true;
 		var action = this.entity.getActionByName('update-range-start');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._inputChanging = false;
 			if (action) {
 				if (this._rangeStartRequired && !value.trim()) {
 					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');

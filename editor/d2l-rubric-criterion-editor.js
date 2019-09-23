@@ -255,7 +255,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName" on-input="_saveNameOnInput">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_criterionName}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName" on-input="_saveNameOnInput">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
@@ -268,7 +268,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					<div class="criterion-text">
 						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
 							<div class="cell">
-								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
+								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
 					</div>
@@ -277,7 +277,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 						<div class="criterion-feedback">
 							<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
 								<div class="cell">
-									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]">
+									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]">
 									</d2l-rubric-feedback-editor>
 								</div>
 							</template>
@@ -287,12 +287,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				<div text-only$="[[!_hasOutOf]]" class="cell col-last out-of" hidden$="[[isHolistic]]">
 					<span hidden="[[!_hasOutOf]]">
 						<template is="dom-if" if="[[!_outOfIsEditable]]">
-							<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]">
+							<div tabindex="0" aria-label$="[[localize('criterionOutOf', 'name', _criterionName, 'value', _outOf)]]">
 								/ [[_outOf]]
 							</div>
 						</template>
 						<template is="dom-if" if="[[_outOfIsEditable]]">
-							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" on-input="_saveOutOfOnInput" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
+							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" on-input="_saveOutOfOnInput" value="{{_outOf}}" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', _criterionName, 'value', _outOf)]]" prevent-submit="">
 							</d2l-input-text>
 							<template is="dom-if" if="[[_outOfInvalid]]">
 								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
@@ -304,7 +304,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				</div>
 
 				<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
-					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', entity.properties.name)]]" on-click="_handleDeleteCriterion" type="button"></d2l-button-icon>
+					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', _criterionName)]]" on-click="_handleDeleteCriterion" type="button"></d2l-button-icon>
 				</div>
 				</div>
 				<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
@@ -350,6 +350,9 @@ Polymer({
 			type: Boolean,
 			computed: '_canDeleteCriterion(entity)',
 		},
+		_criterionName: {
+			type: String
+		},
 		_nameRequired: {
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
@@ -394,8 +397,7 @@ Polymer({
 			computed: '_isOutOfEditable(entity)'
 		},
 		_outOf: {
-			type: Number,
-			computed: '_getOutOfValue(entity)',
+			type: Number
 		},
 		_outOfInvalid: {
 			type: Boolean,
@@ -413,7 +415,11 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		richTextEnabled: Boolean
+		richTextEnabled: Boolean,
+		_inputChanging: {
+			type: Boolean,
+			value: false
+		}
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -440,6 +446,12 @@ Polymer({
 		if (!entity) {
 			return;
 		}
+
+		if (!this._inputChanging) {
+			this._criterionName = entity.properties.name;
+			this._outOf = entity.properties.outOf;
+		}
+
 		if (!this.animating && !oldEntity) {
 			setTimeout(function() {
 				this.$$('#name').textarea.select();
@@ -479,9 +491,11 @@ Polymer({
 	},
 
 	_saveNameOnInput: function(e) {
+		this._inputChanging = true;
 		var action = this.entity.getActionByName('update');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._inputChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
@@ -518,9 +532,11 @@ Polymer({
 	},
 
 	_saveOutOfOnInput: function(e) {
+		this._inputChanging = true;
 		var action = this.entity.getActionByName('update-outof');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._inputChanging = false;
 			if (action) {
 				if (!value.trim()) {
 					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
@@ -576,7 +592,7 @@ Polymer({
 			positiveButtonText: this.localize('deleteConfirmationYes'),
 			negativeButtonText: this.localize('deleteConfirmationNo')
 		}).then(function() {
-			var name = this.entity.properties.name;
+			var name = this._criterionName;
 			this._transitionElement(this, 0);
 			this.fire('iron-announce', { text: this.localize('criterionDeleted', 'name', name) }, { bubbles: true });
 			this.performSirenAction(action).then(function() {
@@ -590,11 +606,6 @@ Polymer({
 		}.bind(this), function() {
 			deleteButton.removeAttribute('disabled');
 		});
-	},
-	_getOutOfValue: function(entity) {
-		if (entity && entity.properties && entity.properties.outOf) {
-			return entity.properties.outOf;
-		}
 	},
 
 	_isOutOfEditable: function(entity) {
