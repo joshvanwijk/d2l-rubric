@@ -112,7 +112,7 @@ Polymer({
 	],
 
 	_onEntityChanged: function(entity) {
-		if(entity && !this._inputChanging) {
+		if (entity && !this._inputChanging) {
 			this._feedbackText = this._getFeedback(entity);
 		}
 	},
