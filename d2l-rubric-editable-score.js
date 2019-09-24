@@ -100,7 +100,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 		<div id="editable-container">
 			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
 				<template is="dom-if" if="[[!totalScore]]">
-					<d2l-button-subtle class="clear-override-button-mobile" id="clear-button" text="[[localize('clearOverride')]]" on-tap="_clearCriterionOverride" hidden$="[[!scoreOverridden]]">
+					<d2l-button-subtle class="clear-override-button-mobile" id="clear-button" text="[[localize('clearOverride')]]" on-click="_clearCriterionOverride" hidden$="[[!scoreOverridden]]">
 					</d2l-button-subtle>
 					<div class="override-label" hidden$="[[scoreOverridden]]">[[localize('overrideLabel')]]</div>
 				</template>

@@ -129,7 +129,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 						</d2l-dropdown-menu>
 					</d2l-dropdown-button-subtle>
 
-					<d2l-button-subtle hidden$="[[!_present(_reverseLevels)]]" on-tap="_handleReverseLevels" icon="d2l-tier1:reverse-order" text="[[localize('reverseLevelOrder')]]" type="button">
+					<d2l-button-subtle hidden$="[[!_present(_reverseLevels)]]" on-click="_handleReverseLevels" icon="d2l-tier1:reverse-order" text="[[localize('reverseLevelOrder')]]" type="button">
 					</d2l-button-subtle>
 				</div>
 			</div>

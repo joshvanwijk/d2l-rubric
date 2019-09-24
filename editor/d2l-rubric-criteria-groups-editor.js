@@ -66,7 +66,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 		</template>
 
 		<div class="groups-footer">
-			<d2l-button class="footer-child" type="button" on-tap="_handleAddCriteriaGroup" hidden="[[!_canCreate]]" aria-label$="[[localize('addCriteriaGroup')]]">
+			<d2l-button class="footer-child" type="button" on-click="_handleAddCriteriaGroup" hidden="[[!_canCreate]]" aria-label$="[[localize('addCriteriaGroup')]]">
 				[[localize('addCriteriaGroup')]]
 			</d2l-button>
 
