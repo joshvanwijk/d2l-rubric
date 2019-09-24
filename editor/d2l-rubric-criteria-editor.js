@@ -150,11 +150,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 						<d2l-rubric-criterion-editor animating="[[animating]]" href="[[_getSelfLink(criterion)]]" token="[[token]]" is-holistic="[[isHolistic]]" display-name-placeholder="[[_isFirst(index, criterionCount)]]" rich-text-enabled="[[richTextEnabled]]" criterion-detail-width="[[criterionDetailWidth]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 							<div slot="gutter-left">
 								<div class="reorder-offscreen" on-focusin="_onReorderGroupFocusIn" on-focusout="_onReorderGroupFocusOut" on-keydown="_onReorderGroupKeydown">
-									<button id="up-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionUp', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isFirst(index, criterionCount)]]" data-index$="[[index]]" on-tap="_moveUp">
+									<button id="up-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionUp', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isFirst(index, criterionCount)]]" data-index$="[[index]]" on-click="_moveUp">
 										<d2l-icon icon="d2l-tier1:arrow-toggle-up"></d2l-icon>
 									</button>
 
-									<button id="down-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionDown', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isLast(index, criterionCount)]]" data-index$="[[index]]" on-tap="_moveDown">
+									<button id="down-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionDown', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isLast(index, criterionCount)]]" data-index$="[[index]]" on-click="_moveDown">
 										<d2l-icon icon="d2l-tier1:arrow-toggle-down"></d2l-icon>
 									</button>
 								</div>
@@ -169,7 +169,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 		<div class="footer" hidden$="[[isHolistic]]">
 			<div class="gutter-left"></div>
 			<div class="footer-buttons">
-				<d2l-button-subtle on-tap="_handleAddCriterion" icon="d2l-tier1:plus-default" text="[[localize('addCriterion')]]" disabled="[[!_canCreate]]" type="button">
+				<d2l-button-subtle on-click="_handleAddCriterion" icon="d2l-tier1:plus-default" text="[[localize('addCriterion')]]" disabled="[[!_canCreate]]" type="button">
 				</d2l-button-subtle>
 			</div>
 			<div class="gutter-right"></div>
