@@ -148,7 +148,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 		<div class="levels-container">
 			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore)]]">
 				<template is="dom-repeat" items="[[levelEntities]]">
-					<div id="level-tab[[index]]" class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]" on-tap="handleTap" data-index="[[index]]" role="tab" on-keydown="_onKeyDown" tabindex="0" aria-selected$="[[_isSelected(index, selected)]]" aria-controls$="level-description-panel[[index]]" aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]" data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
+					<div id="level-tab[[index]]" class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]" on-click="handleTap" data-index="[[index]]" role="tab" on-keydown="_onKeyDown" tabindex="0" aria-selected$="[[_isSelected(index, selected)]]" aria-controls$="level-description-panel[[index]]" aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]" data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
 						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]" class="check-icon" icon="d2l-tier1:check"></d2l-icon>
 						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
 							[[item.properties.name]]
@@ -157,7 +157,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				</template>
 			</div>
 			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]" tabindex="0" on-keypress="_handleOverrideScoreKeypress">
-				<d2l-rubric-editable-score id="score-inner" class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]" criterion-href="[[criterionHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" overridden-styling="{{overriddenStyling}}" on-tap="_handleOverrideScore">
+				<d2l-rubric-editable-score id="score-inner" class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]" criterion-href="[[criterionHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" overridden-styling="{{overriddenStyling}}" on-click="_handleOverrideScore">
 				</d2l-rubric-editable-score>
 			</div>
 		</div>

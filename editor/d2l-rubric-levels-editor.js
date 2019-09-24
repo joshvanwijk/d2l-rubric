@@ -107,7 +107,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-edito
 		<div class="gutter-left"></div>
 		<div class="cell col-first" is-holistic$="[[isHolistic]]">
 			<slot name="group-name-slot"></slot>
-			<d2l-button-icon on-tap="_handlePrependLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">
+			<d2l-button-icon on-click="_handlePrependLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">
 			</d2l-button-icon>
 		</div>
 		<div id="levels-section" style="display: inherit; flex: 1 1 auto;">
@@ -119,7 +119,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-edito
 			</template>
 		</div>
 		<div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]">
-			<d2l-button-icon on-tap="_handleAppendLevel" on-focus="_onAppendFocus" icon="d2l-tier2:add" text="[[localize('addLevelAppend', 'name', '')]]" disabled="[[!_canAppend]]" type="button">
+			<d2l-button-icon on-click="_handleAppendLevel" on-focus="_onAppendFocus" icon="d2l-tier2:add" text="[[localize('addLevelAppend', 'name', '')]]" disabled="[[!_canAppend]]" type="button">
 			</d2l-button-icon>
 		</div>
 		<div class="gutter-right"></div>
