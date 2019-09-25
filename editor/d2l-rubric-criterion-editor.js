@@ -357,6 +357,14 @@ Polymer({
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
 		},
+		_nameChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingNameSaves: {
+			type: Number,
+			value: 0
+		},
 		_hideBrowseOutcomesButton:{
 			type: Boolean,
 			computed: '_canHideBrowseOutcomesButton(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty, outcomesToolIntegrationEnabled)',
@@ -407,6 +415,14 @@ Polymer({
 			type: String,
 			value: null
 		},
+		_outOfChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingOutOfSaves: {
+			type: Number,
+			value: 0
+		},
 		outcomesToolIntegrationEnabled: Boolean,
 		displayNamePlaceholder: {
 			type: Boolean,
@@ -415,11 +431,7 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		richTextEnabled: Boolean,
-		_inputChanging: {
-			type: Boolean,
-			value: false
-		}
+		richTextEnabled: Boolean
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -447,8 +459,11 @@ Polymer({
 			return;
 		}
 
-		if (!this._inputChanging) {
+		var selfLinkChanged = this._getSelfLink(entity) !== this._getSelfLink(oldEntity);
+		if (selfLinkChanged || !this._nameChanging && !this._pendingNameSaves) {
 			this._criterionName = entity.properties.name;
+		}
+		if (selfLinkChanged || !this._outOfChanging && !this._pendingOutOfSaves) {
 			this._outOf = entity.properties.outOf;
 		}
 
@@ -491,11 +506,11 @@ Polymer({
 	},
 
 	_saveNameOnInput: function(e) {
-		this._inputChanging = true;
+		this._nameChanging = true;
 		var action = this.entity.getActionByName('update');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._inputChanging = false;
+			this._nameChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
@@ -504,10 +519,13 @@ Polymer({
 					this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
 				}
 				var fields = [{ 'name': 'name', 'value': value }];
+				this._pendingNameSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-criterion-saved');
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._pendingNameSaves--;
 				}.bind(this));
 			}
 		}.bind(this), 500);
@@ -532,11 +550,11 @@ Polymer({
 	},
 
 	_saveOutOfOnInput: function(e) {
-		this._inputChanging = true;
+		this._outOfChanging = true;
 		var action = this.entity.getActionByName('update-outof');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._inputChanging = false;
+			this._outOfChanging = false;
 			if (action) {
 				if (!value.trim()) {
 					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
@@ -545,10 +563,13 @@ Polymer({
 					this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
 				}
 				var fields = [{'name': 'outOf', 'value': value}];
+				this._pendingOutOfSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-criterion-saved');
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._pendingOutOfSaves--;
 				}.bind(this));
 			}
 		}.bind(this), 500);

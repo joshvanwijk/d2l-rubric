@@ -145,12 +145,16 @@ Polymer({
 		_groupName: {
 			type: String
 		},
-		richTextEnabled: Boolean,
-		outcomesToolIntegrationEnabled: Boolean,
-		_inputChanging: {
+		_groupNameChanging: {
 			type: Boolean,
 			value: false
-		}
+		},
+		_pendingGroupNameSaves: {
+			type: Number,
+			value: 0
+		},
+		richTextEnabled: Boolean,
+		outcomesToolIntegrationEnabled: Boolean,
 	},
 
 	behaviors: [
@@ -174,7 +178,7 @@ Polymer({
 		}.bind(this));
 	},
 
-	_onEntityChanged: function(entity) {
+	_onEntityChanged: function(entity, oldEntity) {
 		if (!entity) {
 			return;
 		}
@@ -182,7 +186,8 @@ Polymer({
 		this._criteriaCollectionHref = this._getCriteriaLink(entity);
 		this._showContent = true;
 
-		if (!this._inputChanging) {
+		var selfLinkChanged = this._getSelfLink(entity) !== this._getSelfLink(oldEntity);
+		if (selfLinkChanged || !this._groupNameChanging && !this._pendingGroupNameSaves) {
 			this._groupName = entity.properties.name;
 		}
 	},
@@ -240,21 +245,24 @@ Polymer({
 	},
 
 	_saveNameOnInput: function(e) {
-		this._inputChanging = true;
+		this._groupNameChanging = true;
 		var action = this.entity.getActionByName('update');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._inputChanging = false;
+			this._groupNameChanging = false;
 			if (action) {
 				if (!value.trim()) {
 					this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
 				} else {
 					this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
 					var fields = [{'name': 'name', 'value': value}];
+					this._pendingGroupNameSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-group-name-saved');
 					}.bind(this)).catch(function(err) {
 						this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
+					}.bind(this)).finally(function() {
+						this._pendingGroupNameSaves--;
 					}.bind(this));
 				}
 			}

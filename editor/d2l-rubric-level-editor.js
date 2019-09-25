@@ -103,15 +103,12 @@ Polymer({
 	properties: {
 		hasOutOf: Boolean,
 		percentageFormatAlternate: Boolean,
-		_levelName: {
-			type: String
-		},
-		_levelPoints: {
-			type: Number
-		},
 		_canDelete: {
 			type: Boolean,
 			computed: '_canDeleteLevel(entity)',
+		},
+		_levelName: {
+			type: String
 		},
 		_canEditName: {
 			type: Boolean,
@@ -128,6 +125,17 @@ Polymer({
 		_nameInvalidError: {
 			type: String,
 			value: null
+		},
+		_nameChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingNameSaves: {
+			type: Number,
+			value: 0
+		},
+		_levelPoints: {
+			type: Number
 		},
 		_canEditPoints: {
 			type: Boolean,
@@ -149,13 +157,17 @@ Polymer({
 			type: Boolean,
 			computed: '_computeShowPoints(hasOutOf, entity)'
 		},
+		_pointsChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingPointsSaves: {
+			type: Number,
+			value: 0
+		},
 		_usesPercentage: {
 			type: Boolean,
 			computed: '_computeUsesPercentage(entity)'
-		},
-		_inputChanging: {
-			type: Boolean,
-			value: false
 		}
 	},
 	behaviors: [
@@ -167,13 +179,18 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
-	_onEntityChanged: function(entity) {
+	_onEntityChanged: function(entity, oldEntity) {
 		this._nameInvalid = false;
 		this._pointsInvalid = false;
 
-		if (entity && !this._inputChanging) {
-			this._levelName = entity.properties.name;
-			this._levelPoints = entity.properties.points;
+		if (entity) {
+			var selfLinkChanged = this._getSelfLink(entity) !== this._getSelfLink(oldEntity);
+			if (selfLinkChanged || (!this._nameChanging && !this._pendingNameSaves)) {
+				this._levelName = entity.properties.name;
+			}
+			if (selfLinkChanged || (!this._pointsChanging && !this._pendingPointsSaves)) {
+				this._levelPoints = entity.properties.points;
+			}
 		}
 	},
 	_canEditLevelPoints: function(entity) {
@@ -263,32 +280,35 @@ Polymer({
 		}
 	},
 	_saveNameOnInput: function(e) {
-		this._inputChanging = true;
+		this._nameChanging = true;
 		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._inputChanging = false;
+			this._nameChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameIsRequired');
 				} else {
 					this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
 					var fields = [{'name': 'name', 'value': value}];
+					this._pendingNameSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-saved');
 					}.bind(this)).catch(function(err) {
 						this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this)).finally(function() {
+						this._pendingNameSaves--;
 					}.bind(this));
 				}
 			}
 		}.bind(this), 500);
 	},
 	_savePointsOnInput: function(e) {
-		this._inputChanging = true;
+		this._pointsChanging = true;
 		var action = this.entity.getActionByName('update-points');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._inputChanging = false;
+			this._pointsChanging = false;
 			if (action) {
 				if (this._pointsRequired && !value.trim()) {
 					if (this._usesPercentage) {
@@ -299,6 +319,7 @@ Polymer({
 				} else {
 					this.toggleBubble('_pointsInvalid', false, 'points-bubble');
 					var fields = [{'name': 'points', 'value': value}];
+					this._pendingPointsSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-points-saved');
 					}.bind(this)).catch(function(err) {
@@ -307,6 +328,8 @@ Polymer({
 						} else {
 							this.handleValidationError('points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
 						}
+					}.bind(this)).finally(function() {
+						this._pendingPointsSaves--;
 					}.bind(this));
 				}
 			}
