@@ -45,7 +45,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 			disabled="[[!_canEdit]]"
 			value="{{_feedbackText}}"
 			input-changing={{_feedbackChanging}}
-			on-change="_saveFeedback"
+			on-text-changed="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_feedbackInvalid]]">
@@ -79,7 +79,7 @@ Polymer({
 		},
 		_canEdit: {
 			type: Boolean,
-			computed: '_canEditFeedback(entity)',
+			computed: '_canEditFeedback(entity, updatingLevels)',
 		},
 		_feedbackInvalid: {
 			type: Boolean,
@@ -105,6 +105,9 @@ Polymer({
 			type: String,
 			computed: '_constructKey(keyLinkRels, entity)',
 		},
+		updatingLevels: {
+			type: Boolean
+		}
 	},
 
 	behaviors: [
@@ -143,9 +146,9 @@ Polymer({
 		return action;
 	},
 
-	_canEditFeedback: function(entity) {
+	_canEditFeedback: function(entity, updatingLevels) {
 		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
-		return feedback && feedback.hasActionByName('update-feedback');
+		return feedback && feedback.hasActionByName('update-feedback') && !updatingLevels;
 	},
 
 	_saveFeedback: function(e) {

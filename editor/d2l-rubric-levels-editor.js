@@ -113,7 +113,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-edito
 		<div id="levels-section" style="display: inherit; flex: 1 1 auto;">
 			<template is="dom-repeat" items="[[_levels]]" as="level">
 				<div class="cell" is-holistic$="[[isHolistic]]">
-					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]">
+					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}">
 					</d2l-rubric-level-editor>
 				</div>
 			</template>
@@ -151,6 +151,10 @@ Polymer({
 			type: Boolean,
 			computed: '_canAppendLevel(entity)',
 		},
+		updatingLevels: {
+			type: Boolean,
+			notify: true
+		}
 	},
 
 	behaviors: [
@@ -193,24 +197,30 @@ Polymer({
 	_handlePrependLevel: function() {
 		var action = this.entity.getActionByName('prepend');
 		if (action) {
+			this.updatingLevels = true;
 			var firstLevelName = this._getFirstLevelName();
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-added');
 				this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+			}.bind(this)).finally(function(){
+				this.updatingLevels = false;
 			}.bind(this));
 		}
 	},
 	_handleAppendLevel: function() {
 		var action = this.entity.getActionByName('append');
 		if (action) {
+			this.updatingLevels = true;
 			var lastLevelName = this._getLastLevelName();
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-added');
 				this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+			}.bind(this)).finally(function(){
+				this.updatingLevels = false;
 			}.bind(this));
 		}
 	},
