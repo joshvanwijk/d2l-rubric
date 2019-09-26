@@ -250,7 +250,7 @@ const $_documentContainer = html `
 				<label for="rubric-name">[[localize('name')]]*</label>
 				<d2l-input-text
 					id="rubric-name"
-					value="[[_rubricName]]"
+					value="{{_rubricName}}"
 					on-change="_saveName"
 					on-input="_saveNameOnInput"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
@@ -298,7 +298,7 @@ const $_documentContainer = html `
 						<template is="dom-if" if="[[!_isLocked]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="[[_rubricDescription]]" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
 								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
@@ -396,7 +396,6 @@ Polymer({
 		},
 		_rubricName: {
 			type: String,
-			computed: '_getRubricName(entity)',
 		},
 		_canEditName: {
 			type: Boolean,
@@ -414,6 +413,14 @@ Polymer({
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
 		},
+		_nameChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingNameSaves: {
+			type: Number,
+			value: 0
+		},
 		isSinglePageRubric: {
 			type: Boolean,
 			value: true,
@@ -425,7 +432,6 @@ Polymer({
 		},
 		_rubricDescription: {
 			type: String,
-			computed: '_getRubricDescription(_descriptionEntity)',
 		},
 		_canEditDescription: {
 			type: Boolean,
@@ -438,6 +444,14 @@ Polymer({
 		_descriptionInvalidError: {
 			type: String,
 			value: null,
+		},
+		_descriptionChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingDescriptionSaves: {
+			type: Number,
+			value: 0
 		},
 		_canHideScore: {
 			type: Boolean,
@@ -685,6 +699,11 @@ Polymer({
 			}
 			this._isLocked = entity.hasClass('locked');
 			this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
+
+			if (!this._nameChanging && !this._pendingNameSaves) {
+				this._rubricName = this._getRubricName(entity);
+			}
+			this._updateDescription(entity);
 		}
 
 	},
@@ -705,19 +724,24 @@ Polymer({
 		}
 	},
 	_saveNameOnInput: function(e) {
+		this._nameChanging = true;
 		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._nameChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
 				} else {
 					this.toggleBubble('_nameInvalid', false, 'name-bubble');
 					var fields = [{ 'name': 'name', 'value': value }];
+					this._pendingNameSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-name-saved');
 					}.bind(this)).catch(function(err) {
 						this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this)).finally(function() {
+						this._pendingNameSaves--;
 					}.bind(this));
 				}
 			}
@@ -731,11 +755,21 @@ Polymer({
 		if (action) {
 			this.toggleBubble('_descriptionInvalid', false, 'rubric-description-bubble');
 			var fields = [{ 'name': 'description', 'value': e.detail.value }];
+			this._pendingDescriptionSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-description-saved');
+
+				this._pendingDescriptionSaves--;
+				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
+				this._pendingDescriptionSaves--;
 				this.handleValidationError('rubric-description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
 			}.bind(this));
+		}
+	},
+	_updateDescription: function(entity) {
+		if (!this._descriptionChanging && !this._pendingDescriptionSaves) {
+			this._rubricDescription = this._getRubricDescription(entity);
 		}
 	},
 	_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {

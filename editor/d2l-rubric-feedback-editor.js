@@ -43,7 +43,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 			aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]"
 			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEdit]]"
-			value="[[_getFeedback(entity)]]"
+			value="{{_feedbackText}}"
+			input-changing={{_feedbackChanging}}
 			on-change="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
@@ -73,7 +74,9 @@ Polymer({
 			type: String,
 			value: ''
 		},
-
+		_feedbackText: {
+			type: String
+		},
 		_canEdit: {
 			type: Boolean,
 			computed: '_canEditFeedback(entity)',
@@ -85,6 +88,14 @@ Polymer({
 		_feedbackInvalidError: {
 			type: String,
 			value: null
+		},
+		_feedbackChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingFeedbackSaves: {
+			type: Number,
+			value: 0
 		},
 		keyLinkRels: {
 			type: Array,
@@ -103,6 +114,12 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
+
+	_onEntityChanged: function(entity) {
+		if (entity) {
+			this._updateFeedback(entity);
+		}
+	},
 
 	_getAriaLabel: function(langTerm, criterionName, properties) {
 		var levelName = properties && properties.levelName || properties && properties.name;
@@ -136,9 +153,14 @@ Polymer({
 		if (action) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			var fields = [{'name':'feedback', 'value':e.detail.value}];
+			this._pendingFeedbackSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-feedback-saved');
+
+				this._pendingFeedbackSaves--;
+				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
+				this._pendingFeedbackSaves--;
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
 			}.bind(this));
 		}
@@ -160,6 +182,12 @@ Polymer({
 	_richTextAndEditEnabled: function(entity, richTextEnabled, canEditFeedback) {
 		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
 		return richTextEnabled && canEditFeedback && feedback.hasClass(this.HypermediaClasses.text.richtext);
+	},
+
+	_updateFeedback: function(entity) {
+		if (!this._feedbackChanging && !this._pendingFeedbackSaves) {
+			this._feedbackText = this._getFeedback(entity);
+		}
 	}
 
 });

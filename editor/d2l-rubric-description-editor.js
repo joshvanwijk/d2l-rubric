@@ -95,7 +95,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 		<div class="points" hidden="[[!_showPoints]]">
 			<d2l-input-text
 				id="cell-points"
-				value="[[entity.properties.points]]"
+				value="{{_points}}"
 				on-change="_savePoints"
 				on-input="_savePointsOnInput"
 				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
@@ -113,7 +113,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
 			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEditDescription]]"
-			value="[[_getDescription(entity)]]"
+			value="{{_description}}"
+			input-changing="{{_descriptionChanging}}"
 			on-change="_saveDescription"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
@@ -154,7 +155,6 @@ Polymer({
 		},
 		_key: {
 			type: String,
-			computed: '_constructKey(keyLinkRels, entity)',
 		},
 		_canEditDescription: {
 			type: Boolean,
@@ -164,6 +164,9 @@ Polymer({
 			type: Boolean,
 			computed: '_computeCanEditPoints(entity)',
 		},
+		_description: {
+			type: String,
+		},
 		_descriptionInvalid: {
 			type: Boolean,
 			value: false
@@ -171,6 +174,17 @@ Polymer({
 		_descriptionInvalidError: {
 			type: String,
 			value: null
+		},
+		_descriptionChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingDescriptionSaves: {
+			type: Number,
+			value: 0
+		},
+		_points: {
+			type: Number,
 		},
 		_pointsRequired: {
 			type: Boolean,
@@ -188,6 +202,14 @@ Polymer({
 			type: Boolean,
 			computed: '_computeShowPoints(entity)'
 		},
+		_pointsChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingPointsSaves: {
+			type: Number,
+			value: 0
+		},
 		richTextEnabled: Boolean
 	},
 	behaviors: [
@@ -197,9 +219,18 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
-	_onEntityChanged: function() {
+	_onEntityChanged: function(entity) {
 		this._descriptionInvalid = false;
 		this._pointsInvalid = false;
+
+		if (entity) {
+			this._updateDescription(entity);
+			if (!this._pointsChanging && !this._pendingPointsSaves) {
+				this._points = entity.properties.points;
+			}
+			// key needs to be updated after description so that the html-editor uses the updated value when its observer runs
+			this._key = this._constructKey(this.keyLinkRels, entity);
+		}
 	},
 	_getAriaLabel: function(langTerm, criterionName, properties) {
 		var levelName = properties && properties.levelName || properties && properties.name;
@@ -234,9 +265,14 @@ Polymer({
 		if (action) {
 			this.toggleBubble('_descriptionInvalid', false, 'description-bubble');
 			var fields = [{'name':'description', 'value':e.detail.value}];
+			this._pendingDescriptionSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-description-saved');
+
+				this._pendingDescriptionSaves--;
+				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
+				this._pendingDescriptionSaves--;
 				this.handleValidationError('description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
 			}.bind(this));
 		}
@@ -284,9 +320,11 @@ Polymer({
 	},
 
 	_savePointsOnInput: function(e) {
+		this._pointsChanging = true;
 		var action = this.entity.getActionByName('update-points');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._pointsChanging = false;
 			if (action) {
 				if (this._pointsRequired && !value.trim()) {
 					this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
@@ -294,10 +332,13 @@ Polymer({
 				} else {
 					this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
 					var fields = [{'name': 'points', 'value': value}];
+					this._pendingPointsSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-cell-points-saved');
 					}.bind(this)).catch(function(err) {
 						this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+					}.bind(this)).finally(function() {
+						this._pendingPointsSaves--;
 					}.bind(this));
 				}
 			}
@@ -319,5 +360,11 @@ Polymer({
 
 	_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
 		return richTextEnabled && canEditDescription;
+	},
+
+	_updateDescription: function(entity) {
+		if (!this._descriptionChanging && !this._pendingDescriptionSaves) {
+			this._description = this._getDescription(entity);
+		}
 	}
 });

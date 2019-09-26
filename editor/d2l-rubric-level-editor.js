@@ -69,15 +69,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			}
 		</style>
 
-		<d2l-input-text id="level-name" value="[[entity.properties.name]]" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="level-name" value="{{_levelName}}" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('_levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" nopoints$="[[!_showPoints]]">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
-				<d2l-input-text id="level-points" value="[[entity.properties.points]]" on-change="_savePoints" on-input="_savePointsOnInput" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
+				<d2l-input-text id="level-points" value="{{_levelPoints}}" on-change="_savePoints" on-input="_savePointsOnInput" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('_levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
-			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', entity.properties.name)]]" on-click="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
+			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', _levelName)]]" on-click="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">
@@ -107,6 +107,9 @@ Polymer({
 			type: Boolean,
 			computed: '_canDeleteLevel(entity)',
 		},
+		_levelName: {
+			type: String
+		},
 		_canEditName: {
 			type: Boolean,
 			computed: '_canEditLevelName(entity)',
@@ -122,6 +125,17 @@ Polymer({
 		_nameInvalidError: {
 			type: String,
 			value: null
+		},
+		_nameChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingNameSaves: {
+			type: Number,
+			value: 0
+		},
+		_levelPoints: {
+			type: Number
 		},
 		_canEditPoints: {
 			type: Boolean,
@@ -143,6 +157,14 @@ Polymer({
 			type: Boolean,
 			computed: '_computeShowPoints(hasOutOf, entity)'
 		},
+		_pointsChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingPointsSaves: {
+			type: Number,
+			value: 0
+		},
 		_usesPercentage: {
 			type: Boolean,
 			computed: '_computeUsesPercentage(entity)'
@@ -156,10 +178,20 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
-	// eslint-disable-next-line no-unused-vars
-	_onEntityChanged: function(entity) {
+
+	_onEntityChanged: function(entity, oldEntity) {
 		this._nameInvalid = false;
 		this._pointsInvalid = false;
+
+		if (entity) {
+			var selfLinkChanged = this._getSelfLink(entity) !== this._getSelfLink(oldEntity);
+			if (selfLinkChanged || (!this._nameChanging && !this._pendingNameSaves)) {
+				this._levelName = entity.properties.name;
+			}
+			if (selfLinkChanged || (!this._pointsChanging && !this._pendingPointsSaves)) {
+				this._levelPoints = entity.properties.points;
+			}
+		}
 	},
 	_canEditLevelPoints: function(entity) {
 		return entity && entity.hasActionByName('update-points');
@@ -248,28 +280,35 @@ Polymer({
 		}
 	},
 	_saveNameOnInput: function(e) {
+		this._nameChanging = true;
 		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._nameChanging = false;
 			if (action) {
 				if (this._nameRequired && !value.trim()) {
 					this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameIsRequired');
 				} else {
 					this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
 					var fields = [{'name': 'name', 'value': value}];
+					this._pendingNameSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-saved');
 					}.bind(this)).catch(function(err) {
 						this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this)).finally(function() {
+						this._pendingNameSaves--;
 					}.bind(this));
 				}
 			}
 		}.bind(this), 500);
 	},
 	_savePointsOnInput: function(e) {
+		this._pointsChanging = true;
 		var action = this.entity.getActionByName('update-points');
 		var value = e.target.value;
 		this.debounce('input', function() {
+			this._pointsChanging = false;
 			if (action) {
 				if (this._pointsRequired && !value.trim()) {
 					if (this._usesPercentage) {
@@ -280,6 +319,7 @@ Polymer({
 				} else {
 					this.toggleBubble('_pointsInvalid', false, 'points-bubble');
 					var fields = [{'name': 'points', 'value': value}];
+					this._pendingPointsSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-points-saved');
 					}.bind(this)).catch(function(err) {
@@ -288,6 +328,8 @@ Polymer({
 						} else {
 							this.handleValidationError('points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
 						}
+					}.bind(this)).finally(function() {
+						this._pendingPointsSaves--;
 					}.bind(this));
 				}
 			}
@@ -307,7 +349,7 @@ Polymer({
 			positiveButtonText: this.localize('deleteConfirmationYes'),
 			negativeButtonText: this.localize('deleteConfirmationNo')
 		}).then(function() {
-			var name = this.entity.properties.name;
+			var name = this._levelName;
 			this.fire('iron-announce', { text: this.localize('levelDeleted', 'name', name) }, { bubbles: true });
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-deleted');
