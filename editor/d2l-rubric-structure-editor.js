@@ -136,10 +136,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
 		<div id="rubric-structure-editor-container" hidden="">
-			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{_updatingLevels}}">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
-				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]"></d2l-rubric-overall-levels-editor>
+				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="[[_updatingLevels]]"></d2l-rubric-overall-levels-editor>
 			</div>
 		</div>
 	</template>
@@ -187,6 +187,10 @@ Polymer({
 		_overallLevels: {
 			type: Object,
 			value: null
+		},
+		_updatingLevels: {
+			type: Boolean,
+			value: false
 		},
 		_reverseLevels: {
 			type: Object
@@ -339,11 +343,14 @@ Polymer({
 
 	_handleReverseLevels: function() {
 		if (this._reverseLevels) {
+			this._updatingLevels = true;
 			this.performSirenAction(this._reverseLevels).then(function() {
 				this.fire('d2l-rubric-levels-reversed');
 				this.fire('iron-announce', { text: this.localize('reverseLevelsSuccessful') }, { bubbles: true });
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+			}.bind(this)).finally(function() {
+				this._updatingLevels = false;
 			}.bind(this));
 		}
 	},
