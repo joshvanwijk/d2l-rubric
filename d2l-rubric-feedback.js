@@ -154,12 +154,6 @@ Polymer({
 			value: null
 		},
 		token: String,
-		_boundBlurHandler: {
-			type: Function,
-			value: function() {
-				return this._blurHandler.bind(this);
-			}
-		},
 		addingFeedback: {
 			type: Boolean,
 			value: false
@@ -190,7 +184,15 @@ Polymer({
 		if (!elem) {
 			return;
 		}
-		elem.addEventListener('blur', this._boundBlurHandler);
+
+		var isIOS = /iPad|iPhone/.test(navigator.userAgent) && !window.MSStream;
+		if (isIOS) {
+			// on ios mouseleave fires when the user taps on another clickable item, including those outside the current window
+			// but blur doesn't fire if the item is outside the current window
+			elem.addEventListener('mouseleave', this.saveFeedback.bind(this));
+		} else {
+			elem.addEventListener('blur', this.saveFeedback.bind(this));
+		}
 	},
 
 	detached: function() {
@@ -216,11 +218,6 @@ Polymer({
 		this._removeFocusStylingFromFeedbackWrapper();
 	},
 
-	_blurHandler: function(event) {
-		var feedback = event.target.$.textarea.value;
-		this.saveFeedback(feedback);
-	},
-
 	_addFocusStylingToFeedbackWrapper: function() {
 		if (this.readOnly || !this.assessmentHref || !this._largeScreen) {
 			return;
@@ -240,12 +237,13 @@ Polymer({
 		}.bind(this));
 	},
 
-	saveFeedback: function(feedback) {
+	saveFeedback: function(e) {
+		var feedback = e.target.$.textarea.value;
 		this.saveAssessmentFeedback(this.criterionHref, feedback);
 	},
 
 	_clearFeedback: function() {
-		this.saveFeedback('');
+		this.saveAssessmentFeedback(this.criterionHref, '');
 		this.fire('close-feedback');
 	},
 
