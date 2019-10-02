@@ -204,7 +204,7 @@ Polymer({
 				this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
-			}.bind(this)).finally(function(){
+			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 			}.bind(this));
 		}
@@ -219,7 +219,7 @@ Polymer({
 				this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
-			}.bind(this)).finally(function(){
+			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 			}.bind(this));
 		}
