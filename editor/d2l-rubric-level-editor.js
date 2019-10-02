@@ -373,7 +373,7 @@ Polymer({
 			}).catch(function(err) {
 				deleteButton.removeAttribute('disabled');
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
-			}.bind(this)).finally(function(){
+			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 			}.bind(this));
 		}.bind(this), function() {
