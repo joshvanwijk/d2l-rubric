@@ -77,7 +77,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
-			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', entity.properties.name)]]" on-tap="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
+			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', entity.properties.name)]]" on-click="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">

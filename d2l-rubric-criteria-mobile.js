@@ -42,7 +42,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion" index-as="criterionNum">
 			<d2l-rubric-criterion-mobile href="[[_getSelfLink(criterion)]]" levels-href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[isHolistic]]" is-numeric="[[isNumeric]]" read-only="[[readOnly]]">
 			</d2l-rubric-criterion-mobile>
-			<d2l-button-subtle class="add-feedback-button" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-tap="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+			<d2l-button-subtle class="add-feedback-button" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]">
 				<d2l-rubric-feedback id="feedback[[criterionNum]]" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]" on-close-feedback="_closeFeedback">
 				</d2l-rubric-feedback>
