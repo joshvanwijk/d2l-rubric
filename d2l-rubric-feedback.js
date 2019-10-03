@@ -159,7 +159,8 @@ Polymer({
 			value: false
 		},
 		_feedback: {
-			type: String
+			type: String,
+			value: null
 		},
 		_feedbackModified: {
 			type: Boolean,
@@ -221,7 +222,7 @@ Polymer({
 	},
 
 	_setInitialFeedback: function(criterionEntity, assessmentResult) {
-		if (criterionEntity && assessmentResult && this._feedback == null) {
+		if (criterionEntity && assessmentResult && this._feedback === null) {
 			this.updateAssessmentFeedbackText(criterionEntity, assessmentResult);
 		}
 	},

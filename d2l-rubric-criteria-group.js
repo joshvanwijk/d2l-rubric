@@ -366,7 +366,7 @@ Polymer({
 		if (!criteriaEntities || !assessmentResult) {
 			return;
 		}
-	
+
 		var feedbackDisplay = [];
 		for (var i = 0; i < criteriaEntities.length; i++) {
 			feedbackDisplay[i] = this._hasFeedback(criteriaEntities[i], assessmentResult);
