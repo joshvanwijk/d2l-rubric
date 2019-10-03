@@ -208,11 +208,13 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 				return;
 			}
 		);
+
+		return window.D2L.Rubric.Assessment.promise;
 	},
 
 	saveAssessmentFeedback: function(criterionHref, feedback) {
 		var saveAssessmentFeedbackPromise = this.saveAssessmentFeedbackPromise.bind(this, criterionHref, feedback);
-		this.addToQueue(saveAssessmentFeedbackPromise);
+		return this.addToQueue(saveAssessmentFeedbackPromise);
 	},
 
 	saveAssessmentFeedbackPromise: function(criterionHref, feedback) {

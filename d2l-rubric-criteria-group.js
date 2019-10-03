@@ -210,7 +210,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 										[[criterion.properties.name]]
 									</span>
 								</div>
-								<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+								<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
@@ -227,14 +227,14 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 								<d2l-rubric-editable-score id="score-inner[[criterionNum]]"  tabindex$="[[_handleTabIndex()]]" on-click="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
 									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
 									</d2l-offscreen>	
 							</d2l-td>
 						</template>
 					</d2l-tr>
-					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback)]]" restamp="true">
+					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[!_isStaticView()]]">
-							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" data-criterion$="[[criterionNum]]" on-close-feedback="_closeFeedback">
+							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" data-criterion$="[[criterionNum]]" on-save-feedback="_handleSaveFeedback" on-save-feedback-finished="_handleSaveFinished" on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -287,6 +287,12 @@ Polymer({
 		_addingFeedback: {
 			type: Number,
 			value: -1
+		},
+		_savingFeedback: {
+			type: Array,
+			value: function() {
+				return [];
+			}
 		},
 		editingScore: {
 			type: Number,
@@ -360,7 +366,7 @@ Polymer({
 		if (!criteriaEntities || !assessmentResult) {
 			return;
 		}
-
+	
 		var feedbackDisplay = [];
 		for (var i = 0; i < criteriaEntities.length; i++) {
 			feedbackDisplay[i] = this._hasFeedback(criteriaEntities[i], assessmentResult);
@@ -402,7 +408,7 @@ Polymer({
 		return !!this.getAssessmentFeedback(criterionEntity, assessmentResult);
 	},
 
-	_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback) {
+	_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback, savingFeedback) {
 		if (!entity || !assessmentResult) {
 			return false;
 		}
@@ -412,7 +418,7 @@ Polymer({
 		if (!this.canAddFeedback(entity)) {
 			return false;
 		}
-		if (criterionNum === addingFeedback) {
+		if (criterionNum === addingFeedback || savingFeedback.includes(criterionNum)) {
 			return false;
 		}
 		return !this._hasFeedback(entity, assessmentResult);
@@ -593,11 +599,11 @@ Polymer({
 		}
 	},
 
-	_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback) {
+	_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback, savingFeedback) {
 		if (!feedbackDisplay) {
 			return;
 		}
-		return feedbackDisplay[criterionNum] || criterionNum === addingFeedback;
+		return feedbackDisplay[criterionNum] || criterionNum === addingFeedback || savingFeedback.includes(criterionNum);
 	},
 
 	_handleAddFeedback: function(event) {
@@ -679,5 +685,16 @@ Polymer({
 			this._addingFeedback = -1;
 			this.editFeedback = -1;
 		}
+	},
+
+	_handleSaveFeedback: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		this.push('_savingFeedback', criterionNum);
+	},
+
+	_handleSaveFinished: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var index = this._savingFeedback.indexOf(criterionNum);
+		this.splice('_savingFeedback', index, 1);
 	}
 });
