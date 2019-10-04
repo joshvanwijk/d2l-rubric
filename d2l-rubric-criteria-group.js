@@ -67,11 +67,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				text-align: left;
 				background-color: var(--d2l-table-header-background-color);
 			}
-			.criteria {
+			d2l-table[type="default"] d2l-td.criteria {
 				@apply --d2l-body-compact-text;
 				text-align: left;
 				background-color: var(--d2l-table-header-background-color);
 				vertical-align: text-top;
+			}
+			.criteria-row-header-container {
+				display: flex;
+				flex-direction:column;
+				justify-content:space-between;
+				height: calc(100% - 0.5rem);
 			}
 			d2l-table[type="default"] d2l-td.criterion-cell {
 				@apply --d2l-body-compact-text;
@@ -137,7 +143,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			
 			d2l-button-subtle {
 				margin-left: -13px;
+				margin-bottom: -2px;
 				padding: 1px 1px 1px 1px;
+				align-self: flex-start;
 			}
 			
 			d2l-button-subtle:hover {
@@ -195,22 +203,26 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
 						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
 							<d2l-td class="criteria" role="rowheader">
-								<d2l-rubric-alignments-indicator 
-									href="[[_getActivityLink(criterion)]]" 
-									token="[[token]]"
-									outcomes-title-text="[[_getOutcomesTitleText()]]"
-								></d2l-rubric-alignments-indicator>
-								<template is="dom-if" if="[[_showCompetencies(assessmentEntity, criterion, readOnly)]]">
-									<d2l-rubric-competencies-icon
-										competency-names="[[_getCriterionCompetencies(assessmentEntity, criterion)]]"
-									></d2l-rubric-competencies-icon>
-								</template>
-								<div class="criterion-name">
-									<span>
-										[[criterion.properties.name]]
-									</span>
+								<div class="criteria-row-header-container">
+									<div>
+										<d2l-rubric-alignments-indicator 
+											href="[[_getActivityLink(criterion)]]" 
+											token="[[token]]"
+											outcomes-title-text="[[_getOutcomesTitleText()]]"
+										></d2l-rubric-alignments-indicator>
+										<template is="dom-if" if="[[_showCompetencies(assessmentEntity, criterion, readOnly)]]">
+											<d2l-rubric-competencies-icon
+												competency-names="[[_getCriterionCompetencies(assessmentEntity, criterion)]]"
+											></d2l-rubric-competencies-icon>
+										</template>
+										<div class="criterion-name">
+											<span>
+												[[criterion.properties.name]]
+											</span>
+										</div>
+									</div>
+									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 								</div>
-								<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
