@@ -67,7 +67,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				text-align: left;
 				background-color: var(--d2l-table-header-background-color);
 			}
-			.criteria {
+			d2l-table[type="default"] d2l-td.criteria {
 				@apply --d2l-body-compact-text;
 				text-align: left;
 				background-color: var(--d2l-table-header-background-color);
