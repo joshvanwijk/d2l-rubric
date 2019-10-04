@@ -58,7 +58,7 @@ suite('<d2l-rubric-description-editor>', function() {
 							expect(body.get && body.get('description') || 'Batman and Robin').to.equal('Batman and Robin');
 							done();
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('text-changed', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 
@@ -84,7 +84,7 @@ suite('<d2l-rubric-description-editor>', function() {
 								done();
 							});
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('text-changed', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 			});
@@ -139,7 +139,8 @@ suite('<d2l-rubric-description-editor>', function() {
 							expect(body.get && body.get('points') || '10').to.equal('10');
 							done();
 						});
-						pointsTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						pointsTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+						pointsTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 					});
 				});
 
@@ -165,7 +166,8 @@ suite('<d2l-rubric-description-editor>', function() {
 								done();
 							});
 						});
-						pointsTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						pointsTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+						pointsTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 					});
 				});
 			});
@@ -227,7 +229,7 @@ suite('<d2l-rubric-description-editor>', function() {
 							expect(body.get && body.get('description') || 'Batman and Robin').to.equal('Batman and Robin');
 							done();
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('text-changed', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 
@@ -253,7 +255,7 @@ suite('<d2l-rubric-description-editor>', function() {
 								done();
 							});
 						});
-						descriptionTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
+						descriptionTextArea.dispatchEvent(new CustomEvent('text-changed', { bubbles: true, cancelable: false, composed: true, detail: {value: descriptionTextArea.value} }));
 					});
 				});
 			});
