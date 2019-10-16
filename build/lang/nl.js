@@ -101,7 +101,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'points': '{number} {number, plural, one {punt} other {punten}}',
 		'pointsAbbreviation': 'punt',
 		'pointsAreRequired': 'Puntwaarde is vereist',
-		'pointsMinimum': '{number} {number, plural, one {punt} other {punten} minimum',
+		'pointsMinimum': '{number} {number, plural, one {punt} other {punten}} minimum',
 		'pointsSaveFailed': 'Opslaan van punten mislukt',
 		'preview': 'Voorbeeldweergave',
 		'rangeStartInvalid': 'De startwaarde van het bereik is ongeldig',
