@@ -345,7 +345,7 @@ const $_documentContainer = html `
 					</div>
 					<div id="make-rubric-available-container" hidden$="[[!_canShare]]">
 						<label>[[localize('makeRubricAvailableHeader')]]</label>
-						<d2l-organization-availability-set></d2l-organization-availability-set>
+						<d2l-organization-availability-set token="[[token]]" href="[[_orgUnitAvailabilitySetLink]]"></d2l-organization-availability-set>
 					</div>
 				</div>
 			</d2l-accordion-collapse>
@@ -461,6 +461,10 @@ Polymer({
 			type: Boolean,
 			computed: '_computeCanShare(entity)'
 		},
+		_orgUnitAvailabilitySetLink: {
+			type: String,
+			computed: '_getOrgUnitAvailabilitySetLink(entity)'
+		},
 		_scoreIsHidden: {
 			type: Boolean,
 			computed: '_computeScoreIsHidden(entity)'
@@ -545,9 +549,6 @@ Polymer({
 		'd2l-siren-entity-save-end': '_onEntitySave'
 	},
 
-	_computeCanShare: function(entity) {
-		return entity && entity.hasLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
-	},
 	ready: function() {
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
 
@@ -632,6 +633,15 @@ Polymer({
 			return false;
 		}
 		return field.hasClass('required');
+	},
+	_computeCanShare: function(entity) {
+		return entity && entity.hasLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
+	},
+	_getOrgUnitAvailabilitySetLink: function(entity) {
+		var linkEntity = entity && entity.getLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
+		if (linkEntity) {
+			return linkEntity.href;
+		}
 	},
 	_checkForStatisticsLink: function(entity) {
 		return entity && entity.hasLinkByClass('statistics');
