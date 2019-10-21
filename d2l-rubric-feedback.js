@@ -192,7 +192,7 @@ Polymer({
 	],
 
 	observers: [
-		'_setInitialFeedback(criterionEntity, assessmentResult)'
+		'_updateFeedback(criterionEntity, assessmentResult)'
 	],
 
 	attached: function() {
@@ -221,8 +221,8 @@ Polymer({
 		elem.focus();
 	},
 
-	_setInitialFeedback: function(criterionEntity, assessmentResult) {
-		if (criterionEntity && assessmentResult && this._feedback === null) {
+	_updateFeedback: function(criterionEntity, assessmentResult) {
+		if (criterionEntity && assessmentResult) {
 			this.updateAssessmentFeedbackText(criterionEntity, assessmentResult);
 		}
 	},
