@@ -251,7 +251,7 @@ const $_documentContainer = html `
 				<d2l-input-text
 					id="rubric-name"
 					value="{{_rubricName}}"
-					on-change="_saveName"
+					on-blur="_saveName"
 					on-input="_saveNameOnInput"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 					aria-label$="[[localize('name')]]"
@@ -298,7 +298,7 @@ const $_documentContainer = html `
 						<template is="dom-if" if="[[!_isLocked]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" on-text-changed="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
 								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
@@ -708,18 +708,21 @@ Polymer({
 
 	},
 	_saveName: function(e) {
-		var action = this.entity.getActionByName('update-name');
-		if (action) {
-			if (this._nameRequired && !e.target.value.trim()) {
-				this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
-			} else {
-				this.toggleBubble('_nameInvalid', false, 'name-bubble');
-				var fields = [{ 'name': 'name', 'value': e.target.value }];
-				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-name-saved');
-				}.bind(this)).catch(function(err) {
-					this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-				}.bind(this));
+		if (this._nameChanging) {
+			this._nameChanging = false;
+			var action = this.entity.getActionByName('update-name');
+			if (action) {
+				if (this._nameRequired && !e.target.value.trim()) {
+					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'name-bubble');
+					var fields = [{ 'name': 'name', 'value': e.target.value }];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-name-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this));
+				}
 			}
 		}
 	},
@@ -728,21 +731,23 @@ Polymer({
 		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._nameChanging = false;
-			if (action) {
-				if (this._nameRequired && !value.trim()) {
-					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
-				} else {
-					this.toggleBubble('_nameInvalid', false, 'name-bubble');
-					var fields = [{ 'name': 'name', 'value': value }];
-					this._pendingNameSaves++;
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-name-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-					}.bind(this)).finally(function() {
-						this._pendingNameSaves--;
-					}.bind(this));
+			if (this._nameChanging) {
+				this._nameChanging = false;
+				if (action) {
+					if (this._nameRequired && !value.trim()) {
+						this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
+					} else {
+						this.toggleBubble('_nameInvalid', false, 'name-bubble');
+						var fields = [{ 'name': 'name', 'value': value }];
+						this._pendingNameSaves++;
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-name-saved');
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+						}.bind(this)).finally(function() {
+							this._pendingNameSaves--;
+						}.bind(this));
+					}
 				}
 			}
 		}.bind(this), 500);

@@ -59,7 +59,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 							expect(body.get && body.get('feedback') || 'You are a grammar rockstar!').to.equal('You are a grammar rockstar!');
 							done();
 						});
-						feedbackTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: feedbackTextArea.value} }));
+						feedbackTextArea.dispatchEvent(new CustomEvent('text-changed', { bubbles: true, cancelable: false, composed: true, detail: {value: feedbackTextArea.value} }));
 					});
 				});
 
@@ -85,7 +85,7 @@ suite('<d2l-rubric-feedback-editor>', function() {
 								done();
 							});
 						});
-						feedbackTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true, detail: {value: feedbackTextArea.value} }));
+						feedbackTextArea.dispatchEvent(new CustomEvent('text-changed', { bubbles: true, cancelable: false, composed: true, detail: {value: feedbackTextArea.value} }));
 					});
 				});
 			});

@@ -96,7 +96,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			<d2l-input-text
 				id="cell-points"
 				value="{{_points}}"
-				on-change="_savePoints"
+				on-blur="_savePoints"
 				on-input="_savePointsOnInput"
 				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
 				aria-label$="[[localize('cellPoints')]]"
@@ -115,7 +115,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			disabled="[[!_canEditDescription]]"
 			value="{{_description}}"
 			input-changing="{{_descriptionChanging}}"
-			on-change="_saveDescription"
+			on-text-changed="_saveDescription"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
@@ -158,11 +158,12 @@ Polymer({
 		},
 		_canEditDescription: {
 			type: Boolean,
-			computed: '_computeCanEditDescription(entity)',
+			computed: '_computeCanEditDescription(entity, updatingLevels)',
+			observer: '_canEditDescriptionChanged'
 		},
 		_canEditPoints: {
 			type: Boolean,
-			computed: '_computeCanEditPoints(entity)',
+			computed: '_computeCanEditPoints(entity, updatingLevels)',
 		},
 		_description: {
 			type: String,
@@ -210,7 +211,11 @@ Polymer({
 			type: Number,
 			value: 0
 		},
-		richTextEnabled: Boolean
+		richTextEnabled: Boolean,
+		updatingLevels: {
+			type: Boolean,
+			value: false
+		}
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -253,9 +258,9 @@ Polymer({
 	},
 
 	_getDescription: function(entity) {
-		var action = this._getDescriptionAction(entity);
-		if (action) {
-			return action.getFieldByName('description').value;
+		var description = entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
+		if (description) {
+			return this._richTextAndEditEnabled(this.richTextEnabled, this._canEditDescription) ? description.properties.html : description.properties.text;
 		}
 		return '';
 	},
@@ -288,13 +293,19 @@ Polymer({
 		}
 		return field.hasClass('required');
 	},
-	_computeCanEditDescription: function(entity) {
+	_computeCanEditDescription: function(entity, updatingLevels) {
 		var description = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.description);
-		return description && (description.hasActionByName('update-description') || description.hasActionByName('update'));
+		return description && (description.hasActionByName('update-description') || description.hasActionByName('update')) && !updatingLevels;
 	},
 
-	_computeCanEditPoints: function(entity) {
-		return entity && entity.hasActionByName('update-points');
+	_canEditDescriptionChanged: function() {
+		if (this.entity && this.richTextEnabled) {
+			this._updateDescription(this.entity);
+		}
+	},
+
+	_computeCanEditPoints: function(entity, updatingLevels) {
+		return entity && entity.hasActionByName('update-points') && !updatingLevels;
 	},
 
 	_computeShowPoints: function(entity) {
@@ -302,19 +313,22 @@ Polymer({
 	},
 
 	_savePoints: function(e) {
-		var action = this.entity.getActionByName('update-points');
-		if (action) {
-			if (this._pointsRequired && !e.target.value.trim()) {
-				this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-				this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
-			} else {
-				this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
-				var fields = [{ 'name': 'points', 'value': e.target.value }];
-				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-criterion-cell-points-saved');
-				}.bind(this)).catch(function(err) {
-					this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
-				}.bind(this));
+		if (this._pointsChanging) {
+			this._pointsChanging = false;
+			var action = this.entity.getActionByName('update-points');
+			if (action) {
+				if (this._pointsRequired && !e.target.value.trim()) {
+					this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
+					this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
+				} else {
+					this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
+					var fields = [{ 'name': 'points', 'value': e.target.value }];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-criterion-cell-points-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+					}.bind(this));
+				}
 			}
 		}
 	},
@@ -324,22 +338,24 @@ Polymer({
 		var action = this.entity.getActionByName('update-points');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._pointsChanging = false;
-			if (action) {
-				if (this._pointsRequired && !value.trim()) {
-					this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-					this.fire('iron-announce', {text: this.localize('pointsAreRequired')}, {bubbles: true});
-				} else {
-					this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
-					var fields = [{'name': 'points', 'value': value}];
-					this._pendingPointsSaves++;
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-criterion-cell-points-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
-					}.bind(this)).finally(function() {
-						this._pendingPointsSaves--;
-					}.bind(this));
+			if (this._pointsChanging) {
+				this._pointsChanging = false;
+				if (action) {
+					if (this._pointsRequired && !value.trim()) {
+						this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
+						this.fire('iron-announce', {text: this.localize('pointsAreRequired')}, {bubbles: true});
+					} else {
+						this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
+						var fields = [{'name': 'points', 'value': value}];
+						this._pendingPointsSaves++;
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-criterion-cell-points-saved');
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+						}.bind(this)).finally(function() {
+							this._pendingPointsSaves--;
+						}.bind(this));
+					}
 				}
 			}
 		}.bind(this), 500);

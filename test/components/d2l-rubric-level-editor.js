@@ -59,7 +59,8 @@ suite('<d2l-rubric-level-editor>', function() {
 						expect(body.get && body.get('name') || 'Superman').to.equal('Superman');
 						done();
 					});
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -82,7 +83,8 @@ suite('<d2l-rubric-level-editor>', function() {
 						expect(body.get && body.get('points') || '12.6').to.equal('12.6');
 						done();
 					});
-					pointsInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					pointsInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					pointsInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -103,7 +105,8 @@ suite('<d2l-rubric-level-editor>', function() {
 				element.addEventListener('d2l-siren-entity-save-error', function() {
 					done();
 				});
-				pointsInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				pointsInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+				pointsInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 			});
 
 			test('sets aria-invalid if saving points fails', function(done) {
@@ -130,7 +133,8 @@ suite('<d2l-rubric-level-editor>', function() {
 							done();
 						});
 					});
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -158,7 +162,8 @@ suite('<d2l-rubric-level-editor>', function() {
 							done();
 						});
 					});
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -173,7 +178,8 @@ suite('<d2l-rubric-level-editor>', function() {
 						}
 						done();
 					});
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 		});

@@ -78,8 +78,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
 			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" on-d2l-siren-entity-changed="_notifyResize">
-					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-change="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
+				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" on-d2l-siren-entity-changed="_notifyResize" updating-levels="{{updatingLevels}}">
+					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<template is="dom-if" if="[[_nameInvalid]]">
@@ -95,7 +95,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				the size of the editor
 				-->
 				<div class="stretch-child">
-					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="[[updatingLevels]]">
 					</d2l-rubric-criteria-editor>
 				</div>
 			</div>
@@ -152,6 +152,10 @@ Polymer({
 		_pendingGroupNameSaves: {
 			type: Number,
 			value: 0
+		},
+		updatingLevels: {
+			type: Boolean,
+			notify: true
 		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
@@ -228,18 +232,21 @@ Polymer({
 	},
 
 	_saveName: function(e) {
-		var action = this.entity.getActionByName('update');
-		if (action) {
-			if (!e.target.value.trim()) {
-				this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
-			} else {
-				this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
-				var fields = [{'name': 'name', 'value':e.target.value}];
-				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-group-name-saved');
-				}.bind(this)).catch(function(err) {
-					this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
-				}.bind(this));
+		if (this._groupNameChanging) {
+			this._groupNameChanging = false;
+			var action = this.entity.getActionByName('update');
+			if (action) {
+				if (!e.target.value.trim()) {
+					this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
+					var fields = [{'name': 'name', 'value':e.target.value}];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-group-name-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
+					}.bind(this));
+				}
 			}
 		}
 	},
@@ -249,21 +256,23 @@ Polymer({
 		var action = this.entity.getActionByName('update');
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._groupNameChanging = false;
-			if (action) {
-				if (!value.trim()) {
-					this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
-				} else {
-					this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
-					var fields = [{'name': 'name', 'value': value}];
-					this._pendingGroupNameSaves++;
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-group-name-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
-					}.bind(this)).finally(function() {
-						this._pendingGroupNameSaves--;
-					}.bind(this));
+			if (this._groupNameChanging) {
+				this._groupNameChanging = false;
+				if (action) {
+					if (!value.trim()) {
+						this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
+					} else {
+						this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
+						var fields = [{'name': 'name', 'value': value}];
+						this._pendingGroupNameSaves++;
+						this.performSirenAction(action, fields).then(function() {
+							this.fire('d2l-rubric-group-name-saved');
+						}.bind(this)).catch(function(err) {
+							this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
+						}.bind(this)).finally(function() {
+							this._pendingGroupNameSaves--;
+						}.bind(this));
+					}
 				}
 			}
 		}.bind(this), 500);
