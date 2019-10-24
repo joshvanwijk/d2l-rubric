@@ -73,6 +73,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			d2l-table[type="default"] d2l-tbody d2l-tr {
 				height: 100%;
 			}
+			#loa-labels > d2l-td {
+				background-color: #F1F5FB;
+				font-size: 14px;
+				height: 30px;
+				padding-bottom: 0px;
+				padding-top: 0px;
+			}
+			#loa-labels > .loa-heading {
+				font-weight: bold;
+				text-align: center;
+			}
 			d2l-table[type="default"] d2l-td.criteria {
 				@apply --d2l-body-compact-text;
 				text-align: left;
@@ -183,6 +194,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></rubric-siren-entity>
 		<d2l-table aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult, rubricType)]]" aria-rowcount$="[[_getRowCount(_criteriaEntities)]]" hidden$="[[!_showContent]]">
 			<d2l-offscreen>
@@ -208,6 +220,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 						<d2l-th class="out-of"></d2l-th>
 					</template>
 				</d2l-tr>
+				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
+					<d2l-tr id="loa-labels">
+						<d2l-td>Achievement Levels</d2l-td>
+						<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
+							<d2l-td class="loa-heading" style$="[[_getHeaderStyle(loaLevel)]]">[[loaLevel.properties.name]]</d2l-td>
+						</template>
+						<template is="dom-if" if="[[_hasOutOf(entity)]]">
+							<d2l-td></d2l-td>
+						</template>
+					</d2l-tr>
+				</template>
 			</d2l-thead>
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
@@ -237,7 +260,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]" on-click="handleTap" data-href$="[[_getSelfLink(criterionCell)]]">
+							<d2l-td 
+								class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]"
+								style$="[[_getCriteriaStyle(criterionCell, criterionNum, _loaLevels)]]"
+								on-click="handleTap"
+								data-href$="[[_getSelfLink(criterionCell)]]"
+							>
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]">
 								</d2l-rubric-criterion-cell>
 								<d2l-offscreen>
@@ -265,8 +293,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			</d2l-tbody>
 		</d2l-table>
 	</template>
-
-	
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -280,6 +306,12 @@ Polymer({
 			value: null
 		},
 		_levels: Array,
+		_loaLevels: Array,
+		_loaMappingHref: String,
+		_loaLevelEntity: {
+			type: Object,
+			value: null
+		},
 		_criteriaCollectionHref: String,
 		_criteriaCollectionEntity: {
 			type: Object,
@@ -344,7 +376,9 @@ Polymer({
 
 	observers: [
 		'_onLevelsEntityChanged(_levelsEntity)',
-		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
+		'_onLoaLevelEntityChanged(_loaLevelEntity)',
+		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)',
+		'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 	],
 
 	_rowHeaderDomChange: function() {
@@ -375,7 +409,10 @@ Polymer({
 		if (!levelsEntity) {
 			return;
 		}
+
 		this._levels = levelsEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
+		this._loaMappingHref = this._getLoaMappingLink(levelsEntity);
+
 		// trigger a resize event so that the table resizes with the new levels
 		if (PolymerElement) {
 			beforeNextRender(this, function() {
@@ -386,6 +423,46 @@ Polymer({
 				this.notifyResize();
 			}.bind(this));
 		}
+	},
+
+	_onLoaLevelEntityChanged: function(loaLevelEntity) {
+		if (!loaLevelEntity) {
+			return;
+		}
+
+		this._loaLevels = loaLevelEntity.getSubEntitiesByClass('level-of-achievement');
+	},
+
+	_resolveRubricLevel: function(rubricLevelHref) {
+		if (!this._levels || !this._levels.length) {
+			return null;
+		}
+
+		for (let i = 0; i < this._levels.length; i++) {
+			const rubricLevel = this._levels[i];
+
+			if (this._getSelfLink(rubricLevel) === rubricLevelHref) {
+				return rubricLevel;
+			}
+		}
+
+		return null;
+	},
+
+	_resolveLoaLevel: function(loaLevelHref) {
+		if (!this._loaLevels || !this._loaLevels.length) {
+			return null;
+		}
+
+		for (let i = 0; i < this._loaLevels.length; i++) {
+			const loaLevel = this._loaLevels[i];
+
+			if (this._getSelfLink(loaLevel) === loaLevelHref) {
+				return loaLevel;
+			}
+		}
+
+		return null;
 	},
 
 	_onCriteriaCollectionEntityChanged: function(entity) {
@@ -406,6 +483,11 @@ Polymer({
 
 	},
 
+	_getSelfLink: function(entity) {
+		var link = entity && entity.getLinkByRel('self');
+		return link && link.href || '';
+	},
+
 	_getCriteriaLink: function(entity) {
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Rubrics.criteria);
 		return link && link.href || '';
@@ -424,6 +506,29 @@ Polymer({
 	_getCriterionCells: function(entity) {
 		var entities = entity && entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 		return entities || [];
+	},
+
+	_getLoaMappingLink: function(entity) {
+		var link = entity && entity.getLinkByRel('loa-levels');
+		return link && link.href || '';
+	},
+
+	_getRubricLevelLink: function(entity) {
+		var link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
+		return link && link.href || '';
+	},
+
+	_getLoaLevelLink: function(entity) {
+		var link = entity && entity.getLinkByRel('https://achievements.api.brightspace.com/rels/level');
+		return link && link.href || '';
+	},
+
+	_hasLoaScale: function(levelsEntity) {
+		return this._getLoaMappingLink(levelsEntity) !== '';
+	},
+
+	_getHeaderStyle: function(loaLevel) {
+		return `border-right-color: ${loaLevel.properties.color}; border-right-width: 2px;`;
 	},
 
 	_hasFeedback: function(criterionEntity, assessmentResult) {
@@ -557,7 +662,36 @@ Polymer({
 		if (isLastCell) {
 			className += ' is-last';
 		}
+
 		return className;
+	},
+
+	_getCriteriaStyle: function(criterionCell, criterionNum) {
+		const styles = [];
+
+		const rubricLevelHref = this._getRubricLevelLink(criterionCell);
+		const rubricLevelEntity = this._resolveRubricLevel(rubricLevelHref);
+	
+		if (rubricLevelEntity) {
+			const loaLevelHref = this._getLoaLevelLink(rubricLevelEntity);
+			const loaLevelEntity = this._resolveLoaLevel(loaLevelHref);
+
+			if (loaLevelEntity) {
+				const color = loaLevelEntity.properties.color;
+
+				if (criterionNum === 0) {
+					styles.push('border-top-width: 2px');
+					styles.push(`border-top-color: ${color}`);
+				}
+
+				if (this._getRubricLevelLink(loaLevelEntity) === rubricLevelHref) {
+					styles.push('border-right-width: 2px');
+					styles.push(`border-right-color: ${color}`);
+				}
+			}
+		}
+
+		return styles.join(';');
 	},
 
 	_getOutOfClassName: function(criterionEntity, assessmentResult) {
