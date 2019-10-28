@@ -233,7 +233,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[!_isStaticView()]]">
+						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
 							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" data-criterion$="[[criterionNum]]" on-save-feedback="_handleSaveFeedback" on-save-feedback-finished="_handleSaveFinished" on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
@@ -283,6 +283,12 @@ Polymer({
 		_feedbackDisplay: {
 			type: Array,
 			value: null
+		},
+		_feedbackInvalid: {
+			type: Array,
+			value: function() {
+				return [];
+			}
 		},
 		_addingFeedback: {
 			type: Number,
@@ -696,5 +702,18 @@ Polymer({
 		var criterionNum = event.model.get('criterionNum');
 		var index = this._savingFeedback.indexOf(criterionNum);
 		this.splice('_savingFeedback', index, 1);
+
+		var elem = dom(this.root).querySelector('#feedback' + criterionNum);
+		if (!event.detail.success) {
+			elem.removeAttribute('_feedback-in-focus');
+			this.set(['_feedbackInvalid', criterionNum], true);
+		} else {
+			this.set(['_feedbackInvalid', criterionNum], false);
+		}
+	},
+
+	_isFocusedStyling: function(changeRecord, criterionNum) {
+		var feedbackInvalid = changeRecord.base[criterionNum];
+		return !this._isStaticView() && !feedbackInvalid;
 	}
 });
