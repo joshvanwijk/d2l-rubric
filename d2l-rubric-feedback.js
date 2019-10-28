@@ -1,6 +1,7 @@
 import '@polymer/polymer/polymer-legacy.js';
 import './localize-behavior.js';
 import './assessment-result-behavior.js';
+import './editor/d2l-rubric-error-handling-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
@@ -20,6 +21,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 		<style>
 			:host {
 				display: block;
+			}
+			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{	
+				border: 1px solid var(--d2l-color-cinnabar);
+			}
+			:host([_feedback-invalid]) .feedback-arrow {
+				border-bottom-color: var(--d2l-color-cinnabar);
 			}
 			.feedback-arrow {
 				margin-top: calc(-0.5rem - 25px);
@@ -122,8 +129,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedback" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border$="[[_largeScreen]]" no-padding$="[[_largeScreen]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange">
+				<d2l-input-textarea no-border$="[[_largeScreen]]" no-padding$="[[_largeScreen]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]">
 				</d2l-input-textarea>
+				<template is="dom-if" if="[[_feedbackInvalid]]">
+					<d2l-tooltip id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
+						[[_feedbackInvalidError]]
+					</d2l-tooltip>
+				</template>
 				<d2l-offscreen>
 					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-click="_clearFeedback">
 				</d2l-offscreen>
@@ -166,6 +178,15 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
+		_feedbackInvalid: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
+		_feedbackInvalidError: {
+			type: String,
+			value: null
+		},
 		_pendingFeedbackSaves: {
 			type: Number,
 			value: 0
@@ -188,7 +209,8 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
 	observers: [
@@ -222,13 +244,13 @@ Polymer({
 	},
 
 	_updateFeedback: function(criterionEntity, assessmentResult) {
-		if (criterionEntity && assessmentResult) {
+		if (criterionEntity && assessmentResult && !this._feedbackInvalid) {
 			this.updateAssessmentFeedbackText(criterionEntity, assessmentResult);
 		}
 	},
 
 	_focusInHandler: function() {
-		if (this.readOnly || !this.assessmentHref) {
+		if (this.readOnly || !this.assessmentHref || this._feedbackInvalid) {
 			return;
 		}
 		this._feedbackInFocus = true;
@@ -241,7 +263,7 @@ Polymer({
 	},
 
 	_addFocusStylingToFeedbackWrapper: function() {
-		if (this.readOnly || !this.assessmentHref || !this._largeScreen) {
+		if (this.readOnly || !this.assessmentHref || !this._largeScreen || this._feedbackInvalid) {
 			return;
 		}
 		this._focusStyling = true;
@@ -264,25 +286,35 @@ Polymer({
 	},
 
 	saveFeedback: function(e) {
-		if (this._feedbackModified) {
+		if (this._feedbackModified || this._feedbackInvalid) {
 			this._feedbackModified = false;
 			this._pendingFeedbackSaves++;
 			var feedback = e.target.$.textarea.value;
+			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			this.fire('save-feedback');
 			this.saveAssessmentFeedback(this.criterionHref, feedback).then(function() {
 				this._pendingFeedbackSaves--;
 				this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
-			}.bind(this)).catch(function() {
+				this.fire('save-feedback-finished', {'success': true});
+			}.bind(this)).catch(function(err) {
 				this._pendingFeedbackSaves--;
-			}.bind(this)).finally(() => {
-				this.fire('save-feedback-finished');
-			});
+				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+				this.fire('save-feedback-finished', {'success': false});
+			}.bind(this));
 		}
 	},
 
 	_clearFeedback: function() {
-		this.saveAssessmentFeedback(this.criterionHref, '');
-		this.fire('close-feedback');
+		this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
+		this._pendingFeedbackSaves++;
+		this.saveAssessmentFeedback(this.criterionHref, '').then(function() {
+			this.fire('close-feedback');
+			this._pendingFeedbackSaves--;
+			this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
+		}.bind(this)).catch(function(err) {
+			this._pendingFeedbackSaves--;
+			this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+		}.bind(this));
 	},
 
 	_canEditFeedback: function(criterionEntity, assessmentEntity) {
@@ -302,6 +334,7 @@ Polymer({
 
 	updateAssessmentFeedbackText: function(criterionEntity, assessmentResult) {
 		if (!this._feedbackModified && !this._pendingFeedbackSaves) {
+			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			this._feedback = this.getAssessmentFeedback(criterionEntity, assessmentResult, false);
 		}
 	},
