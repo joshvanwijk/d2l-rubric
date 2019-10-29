@@ -522,11 +522,13 @@ Polymer({
 			this._pendingNameSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-criterion-saved');
-				this._pendingNameSaves--;
-				this._updateName(this.entity, false);
 			}.bind(this)).catch(function(err) {
-				this._pendingNameSaves--;
 				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingNameSaves--;
+				if (!this._nameInvalid) {
+					this._updateName(this.entity, false);
+				}
 			}.bind(this));
 		}
 	},
@@ -568,11 +570,13 @@ Polymer({
 			this._pendingOutOfSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-criterion-saved');
-				this._pendingOutOfSaves--;
-				this._updateOutOf(this.entity, false);
 			}.bind(this)).catch(function(err) {
-				this._pendingOutOfSaves--;
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingOutOfSaves--;
+				if (!this._outOfInvalid) {
+					this._updateOutOf(this.entity, false);
+				}
 			}.bind(this));
 		}
 	},

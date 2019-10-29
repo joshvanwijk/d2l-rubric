@@ -293,13 +293,15 @@ Polymer({
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			this.fire('save-feedback');
 			this.saveAssessmentFeedback(this.criterionHref, feedback).then(function() {
-				this._pendingFeedbackSaves--;
-				this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
 				this.fire('save-feedback-finished', {'success': true});
 			}.bind(this)).catch(function(err) {
-				this._pendingFeedbackSaves--;
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
 				this.fire('save-feedback-finished', {'success': false});
+			}.bind(this)).finally(function() {
+				this._pendingFeedbackSaves--;
+				if (!this._feedbackInvalid) {
+					this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
+				}
 			}.bind(this));
 		}
 	},
@@ -309,11 +311,13 @@ Polymer({
 		this._pendingFeedbackSaves++;
 		this.saveAssessmentFeedback(this.criterionHref, '').then(function() {
 			this.fire('close-feedback');
-			this._pendingFeedbackSaves--;
-			this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
 		}.bind(this)).catch(function(err) {
-			this._pendingFeedbackSaves--;
 			this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+		}.bind(this)).finally(function() {
+			this._pendingFeedbackSaves--;
+			if (!this._feedbackInvalid) {
+				this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
+			}
 		}.bind(this));
 	},
 

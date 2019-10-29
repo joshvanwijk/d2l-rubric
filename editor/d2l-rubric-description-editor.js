@@ -275,12 +275,13 @@ Polymer({
 			this._pendingDescriptionSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-description-saved');
-
-				this._pendingDescriptionSaves--;
-				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
-				this._pendingDescriptionSaves--;
 				this.handleValidationError('description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingDescriptionSaves--;
+				if (!this._descriptionInvalid) {
+					this._updateDescription(this.entity);
+				}
 			}.bind(this));
 		}
 	},
@@ -343,11 +344,13 @@ Polymer({
 				this._pendingPointsSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-criterion-cell-points-saved');
-					this._pendingPointsSaves--;
-					this._updatePoints(this.entity);
 				}.bind(this)).catch(function(err) {
-					this._pendingPointsSaves--;
 					this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._pendingPointsSaves--;
+					if (!this._pointsInvalid) {
+						this._updatePoints(this.entity);
+					}
 				}.bind(this));
 			}
 		}

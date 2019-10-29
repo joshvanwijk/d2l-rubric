@@ -163,12 +163,13 @@ Polymer({
 			this._pendingFeedbackSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-feedback-saved');
-
-				this._pendingFeedbackSaves--;
-				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
-				this._pendingFeedbackSaves--;
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingFeedbackSaves--;
+				if (!this._feedbackInvalid) {
+					this._updateFeedback(this.entity);
+				}
 			}.bind(this));
 		}
 	},
