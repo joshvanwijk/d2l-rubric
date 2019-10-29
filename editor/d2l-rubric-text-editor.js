@@ -36,7 +36,7 @@ Polymer({
 			type: String,
 		},
 		ariaInvalid: {
-			type: Boolean,
+			type: String,
 			value: false,
 		},
 		placeholder: {
@@ -64,6 +64,9 @@ Polymer({
 			type: Boolean,
 			value: false,
 			notify: true
+		},
+		pendingSaves :{
+			type: Number
 		}
 	},
 
@@ -81,15 +84,9 @@ Polymer({
 
 	_onInputBlur: function(e) {
 		e.stopPropagation();
-		if (this.inputChanging) {
-			var value;
-			if (this.richTextEnabled) {
-				value = e.target._getContent() ? e.target._getContent() : '';
-			} else {
-				value = (e.detail && e.detail.hasOwnProperty('content')) ?
-					e.detail.content : e.target.value || '';
-			}
+		if (this.inputChanging || !this.pendingSaves && this.ariaInvalid === 'true') {
 			this.inputChanging = false;
+			var value = this._getTextValue(e);
 			this.fire('text-changed', { value: value });
 		}
 	},
@@ -97,13 +94,9 @@ Polymer({
 	_duringInputChange: function(e) {
 		this.inputChanging = true;
 		e.stopPropagation();
-		var value;
+		var value = this._getTextValue(e);
 		if (this.richTextEnabled) {
-			value = e.target._getContent() ? e.target._getContent() : '';
 			this.value = value;
-		} else {
-			value = (e.detail && e.detail.hasOwnProperty('content')) ?
-				e.detail.content : e.target.value || '';
 		}
 		this.debounce('input', function() {
 			if (this.inputChanging) {
@@ -111,5 +104,14 @@ Polymer({
 				this.fire('text-changed', { value: value });
 			}
 		}.bind(this), 500);
+	},
+
+	_getTextValue: function(e) {
+		if (this.richTextEnabled) {
+			return e.target._getContent() ? e.target._getContent() : '';
+		} else {
+			return (e.detail && e.detail.hasOwnProperty('content')) ?
+				e.detail.content : e.target.value || '';
+		}
 	}
 });
