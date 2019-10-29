@@ -115,7 +115,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			disabled="[[!_canEditDescription]]"
 			value="{{_description}}"
 			input-changing="{{_descriptionChanging}}"
-			pending-saves="{{_pendingDescriptionSaves}}"
+			pending-saves="[[_pendingDescriptionSaves]]"
 			on-text-changed="_saveDescription"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
