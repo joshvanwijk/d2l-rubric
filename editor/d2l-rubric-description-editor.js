@@ -96,8 +96,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			<d2l-input-text
 				id="cell-points"
 				value="{{_points}}"
-				on-blur="_savePoints"
-				on-input="_savePointsOnInput"
+				on-blur="_pointsBlurHandler"
+				on-input="_pointsInputHandler"
 				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
 				aria-label$="[[localize('cellPoints')]]"
 				disabled="[[!_canEditPoints]]"
@@ -115,6 +115,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			disabled="[[!_canEditDescription]]"
 			value="{{_description}}"
 			input-changing="{{_descriptionChanging}}"
+			pending-saves="[[_pendingDescriptionSaves]]"
 			on-text-changed="_saveDescription"
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
@@ -224,14 +225,15 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
-	_onEntityChanged: function(entity) {
-		this._descriptionInvalid = false;
-		this._pointsInvalid = false;
-
+	_onEntityChanged: function(entity, oldEntity) {
 		if (entity) {
-			this._updateDescription(entity);
-			if (!this._pointsChanging && !this._pendingPointsSaves) {
-				this._points = entity.properties.points;
+			var descriptionChanged = oldEntity ? this._getDescription(entity) !== this._getDescription(oldEntity) : true;
+			if (descriptionChanged) {
+				this._updateDescription(entity);
+			}
+			var pointsChanged = oldEntity ? entity.properties.points !== oldEntity.properties.points : true;
+			if (pointsChanged) {
+				this._updatePoints(entity);
 			}
 			// key needs to be updated after description so that the html-editor uses the updated value when its observer runs
 			this._key = this._constructKey(this.keyLinkRels, entity);
@@ -273,12 +275,13 @@ Polymer({
 			this._pendingDescriptionSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-description-saved');
-
-				this._pendingDescriptionSaves--;
-				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
-				this._pendingDescriptionSaves--;
 				this.handleValidationError('description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingDescriptionSaves--;
+				if (!this._descriptionInvalid) {
+					this._updateDescription(this.entity);
+				}
 			}.bind(this));
 		}
 	},
@@ -312,53 +315,45 @@ Polymer({
 		return entity && entity.hasClass(this.HypermediaClasses.rubrics.overridden);
 	},
 
-	_savePoints: function(e) {
-		if (this._pointsChanging) {
-			this._pointsChanging = false;
-			var action = this.entity.getActionByName('update-points');
-			if (action) {
-				if (this._pointsRequired && !e.target.value.trim()) {
-					this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-					this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
-				} else {
-					this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
-					var fields = [{ 'name': 'points', 'value': e.target.value }];
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-criterion-cell-points-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
-					}.bind(this));
-				}
-			}
+	_pointsBlurHandler: function(e) {
+		if (this._pointsChanging || !this._pendingPointsSaves && this._pointsInvalid) {
+			this._savePoints(e.target.value);
 		}
 	},
 
-	_savePointsOnInput: function(e) {
+	_pointsInputHandler: function(e) {
 		this._pointsChanging = true;
-		var action = this.entity.getActionByName('update-points');
 		var value = e.target.value;
 		this.debounce('input', function() {
 			if (this._pointsChanging) {
-				this._pointsChanging = false;
-				if (action) {
-					if (this._pointsRequired && !value.trim()) {
-						this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-						this.fire('iron-announce', {text: this.localize('pointsAreRequired')}, {bubbles: true});
-					} else {
-						this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
-						var fields = [{'name': 'points', 'value': value}];
-						this._pendingPointsSaves++;
-						this.performSirenAction(action, fields).then(function() {
-							this.fire('d2l-rubric-criterion-cell-points-saved');
-						}.bind(this)).catch(function(err) {
-							this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
-						}.bind(this)).finally(function() {
-							this._pendingPointsSaves--;
-						}.bind(this));
-					}
-				}
+				this._savePoints(value);
 			}
 		}.bind(this), 500);
+	},
+
+	_savePoints: function(value) {
+		this._pointsChanging = false;
+		var action = this.entity.getActionByName('update-points');
+		if (action) {
+			if (this._pointsRequired && !value.trim()) {
+				this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
+				this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
+			} else {
+				this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
+				var fields = [{ 'name': 'points', 'value': value }];
+				this._pendingPointsSaves++;
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-criterion-cell-points-saved');
+				}.bind(this)).catch(function(err) {
+					this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._pendingPointsSaves--;
+					if (!this._pointsInvalid) {
+						this._updatePoints(this.entity);
+					}
+				}.bind(this));
+			}
+		}
 	},
 
 	_constructKey: function(keyLinkRels, entity) {
@@ -380,7 +375,15 @@ Polymer({
 
 	_updateDescription: function(entity) {
 		if (!this._descriptionChanging && !this._pendingDescriptionSaves) {
+			this.toggleBubble('_descriptionInvalid', false, 'description-bubble');
 			this._description = this._getDescription(entity);
+		}
+	},
+
+	_updatePoints: function(entity) {
+		if (!this._pointsChanging && !this._pendingPointsSaves) {
+			this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
+			this._points = entity.properties.points;
 		}
 	}
 });

@@ -202,14 +202,15 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 	},
 
 	addToQueue: function(promiseFactory) {
-		window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(promiseFactory).catch(
+		var promise = window.D2L.Rubric.Assessment.promise.then(promiseFactory);
+		window.D2L.Rubric.Assessment.promise = promise.catch(
 			function() {
 				// don't break the promise chain
 				return;
 			}
 		);
 
-		return window.D2L.Rubric.Assessment.promise;
+		return promise;
 	},
 
 	saveAssessmentFeedback: function(criterionHref, feedback) {
@@ -262,7 +263,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 
 	saveCriterionPoints: function(criterionHref, points) {
 		var saveCriterionPointsPromise = this.saveCriterionPointsPromise.bind(this, criterionHref, points);
-		this.addToQueue(saveCriterionPointsPromise);
+		return this.addToQueue(saveCriterionPointsPromise);
 	},
 
 	saveCriterionPointsPromise: function(criterionHref, points) {
@@ -281,7 +282,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 
 	saveTotalPoints: function(points) {
 		var saveTotalPointsPromise = this.saveTotalPointsPromise.bind(this, points);
-		this.addToQueue(saveTotalPointsPromise);
+		return this.addToQueue(saveTotalPointsPromise);
 	},
 
 	saveTotalPointsPromise: function(points) {
@@ -298,7 +299,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 
 	clearCriterionOverride: function(criterionHref) {
 		var clearCriterionOverridePromise = this.clearCriterionOverridePromise.bind(this, criterionHref);
-		this.addToQueue(clearCriterionOverridePromise);
+		return this.addToQueue(clearCriterionOverridePromise);
 	},
 
 	clearCriterionOverridePromise: function(criterionHref) {
@@ -318,7 +319,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 
 	clearTotalScoreOverride: function() {
 		var clearTotalScoreOverridePromise = this.clearTotalScoreOverridePromise.bind(this);
-		this.addToQueue(clearTotalScoreOverridePromise);
+		return this.addToQueue(clearTotalScoreOverridePromise);
 	},
 
 	clearTotalScoreOverridePromise: function() {
@@ -340,7 +341,7 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 
 	assessCriterionCell: function(criterionCellHref) {
 		var assessCriterionCellPromise = this.assessCriterionCellPromise.bind(this, criterionCellHref);
-		this.addToQueue(assessCriterionCellPromise);
+		return this.addToQueue(assessCriterionCellPromise);
 	},
 
 	assessCriterionCellPromise: function(criterionCellHref) {

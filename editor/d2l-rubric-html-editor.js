@@ -94,7 +94,8 @@ Polymer({
 			fullpage-enabled="0" 
 			toolbar="[[_toolbar]]" 
 			plugins="[[_plugins]]" 
-			object-resizing="[[objectResizing]]">
+			object-resizing="[[objectResizing]]"
+			on-blur="_blurHandler">
 
 			<div id$="toolbar-shortcut-[[_uniqueId]]" hidden=""></div>
 			<div class="d2l-richtext-editor-container" id="[[_uniqueId]]" role="textbox" placeholder$="[[placeholder]]" aria-label$="[[ariaLabel]]"></div>
@@ -207,4 +208,9 @@ Polymer({
 	_keyChanged: function() {
 		this.$$('#' + this._uniqueId).innerHTML = this.value;
 	},
+
+	_blurHandler: function(e) {
+		// prevent firing two blur events
+		e.stopPropagation();
+	}
 });
