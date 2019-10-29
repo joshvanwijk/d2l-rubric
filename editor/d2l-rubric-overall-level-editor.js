@@ -56,11 +56,11 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 		</style>
 
-		<d2l-input-text id="overall-level-name" value="{{_overallLevelName}}" on-blur="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text id="overall-level-name" value="{{_overallLevelName}}" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
 			<div class="points" hidden="[[!_hasRangeStart]]">
-				<d2l-input-text id="range-start" value="{{_rangeStart}}" on-blur="_saveRangeStart" on-input="_saveRangeStartOnInput" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
+				<d2l-input-text id="range-start" value="{{_rangeStart}}" on-blur="_rangeStartBlurHandler" on-input="_rangeStartInputHandler" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
 			</div>
@@ -164,11 +164,13 @@ Polymer({
 
 		if (entity) {
 			var selfLinkChanged = this._getSelfLink(entity) !== this._getSelfLink(oldEntity);
-			if (selfLinkChanged || !this._nameChanging && !this._pendingNameSaves) {
-				this._overallLevelName = entity.properties.name;
+			var nameChanged = oldEntity ? entity.properties.name !== oldEntity.properties.name : true;
+			if (selfLinkChanged || nameChanged) {
+				this._updateName(entity, selfLinkChanged);
 			}
-			if (selfLinkChanged || !this._rangeStartChanging && !this._pendingRangeStartSaves) {
-				this._rangeStart = entity.properties.rangeStart;
+			var rangeStartChanged = oldEntity ? entity.properties.rangeStart !== oldEntity.properties.rangeStart : true;
+			if (selfLinkChanged || rangeStartChanged) {
+				this._updateRangeStart(entity, selfLinkChanged);
 			}
 		}
 	},
@@ -203,95 +205,87 @@ Polymer({
 		}
 		return field.hasClass('required');
 	},
-	_saveName: function(e) {
-		if (this._nameChanging) {
-			this._nameChanging = false;
-			var action = this.entity.getActionByName('update-name');
-			if (action) {
-				if (this._nameRequired && !e.target.value.trim()) {
-					this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
-				} else {
-					this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
-					var fields = [{ 'name': 'name', 'value': e.target.value }];
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-overall-level-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-					}.bind(this));
-				}
-			}
+	_nameBlurHandler: function(e) {
+		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
+			this._saveName(e.target.value);
 		}
 	},
-	_saveRangeStart: function(e) {
-		if (this._rangeStartChanging) {
-			this._rangeStartChanging = false;
-			var action = this.entity.getActionByName('update-range-start');
-			if (action) {
-				if (this._rangeStartRequired && !e.target.value.trim()) {
-					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
-				} else {
-					this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
-					var fields = [{'name':'rangeStart', 'value':e.target.value}];
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-overall-level-range-start-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
-					}.bind(this));
-				}
-			}
-		}
-	},
-	_saveNameOnInput: function(e) {
+	_nameInputHandler: function(e) {
 		this._nameChanging = true;
-		var action = this.entity.getActionByName('update-name');
 		var value = e.target.value;
 		this.debounce('input', function() {
 			if (this._nameChanging) {
-				this._nameChanging = false;
-				if (action) {
-					if (this._nameRequired && !value.trim()) {
-						this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
-					} else {
-						this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
-						var fields = [{'name': 'name', 'value': value}];
-						this._pendingNameSaves++;
-						this.performSirenAction(action, fields).then(function() {
-							this.fire('d2l-rubric-overall-level-saved');
-						}.bind(this)).catch(function(err) {
-							this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-						}.bind(this)).finally(function() {
-							this._pendingNameSaves--;
-						}.bind(this));
-					}
-				}
+				this._saveName(value);
 			}
 		}.bind(this), 500);
 	},
-	_saveRangeStartOnInput: function(e) {
+	_saveName: function(value) {
+		this._nameChanging = false;
+		var action = this.entity.getActionByName('update-name');
+		if (action) {
+			if (this._nameRequired && !value.trim()) {
+				this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
+			} else {
+				this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
+				var fields = [{ 'name': 'name', 'value': value }];
+				this._pendingNameSaves++;
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-overall-level-saved');
+					this._pendingNameSaves--;
+					this._updateName(this.entity, false);
+				}.bind(this)).catch(function(err) {
+					this._pendingNameSaves--;
+					this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+				}.bind(this));
+			}
+		}
+	},
+	_updateName: function(entity, selfLinkChanged) {
+		if (selfLinkChanged || !this._nameChanging && !this._pendingNameSaves) {
+			this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
+			this._overallLevelName = entity.properties.name;
+		}
+	},
+	_rangeStartBlurHandler: function(e) {
+		if (this._rangeStartChanging || !this._pendingRangeStartSaves && this._rangeStartInvalid) {
+			this._saveRangeStart(e.target.value);
+		}
+	},
+	_rangeStartInputHandler: function(e) {
 		this._rangeStartChanging = true;
-		var action = this.entity.getActionByName('update-range-start');
 		var value = e.target.value;
 		this.debounce('input', function() {
 			if (this._rangeStartChanging) {
-				this._rangeStartChanging = false;
-				if (action) {
-					if (this._rangeStartRequired && !value.trim()) {
-						this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
-					} else {
-						this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
-						var fields = [{'name': 'rangeStart', 'value': value}];
-						this._pendingRangeStartSaves++;
-						this.performSirenAction(action, fields).then(function() {
-							this.fire('d2l-rubric-overall-level-range-start-saved');
-						}.bind(this)).catch(function(err) {
-							this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
-						}.bind(this)).finally(function() {
-							this._pendingRangeStartSaves--;
-						}.bind(this));
-					}
-				}
+				this._saveRangeStart(value);
 			}
 		}.bind(this), 500);
+	},
+	_saveRangeStart: function(value) {
+		this._rangeStartChanging = false;
+		var action = this.entity.getActionByName('update-range-start');
+		if (action) {
+			if (this._rangeStartRequired && !value.trim()) {
+				this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
+			} else {
+				this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
+				var fields = [{'name':'rangeStart', 'value': value}];
+				this._pendingRangeStartSaves++;
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-overall-level-range-start-saved');
+					this._pendingRangeStartSaves--;
+					this._updateRangeStart(this.entity, false);
+				}.bind(this)).catch(function(err) {
+					this._pendingRangeStartSaves--;
+					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
+				}.bind(this));
+			}
+		}
+	},
+	_updateRangeStart: function(entity, selfLinkChanged) {
+		if (selfLinkChanged || !this._rangeStartChanging && !this._pendingRangeStartSaves) {
+			this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
+			this._rangeStart = entity.properties.rangeStart;
+		}
 	},
 	_canDeleteLevel: function(entity) {
 		return entity && entity.hasActionByName('delete');
