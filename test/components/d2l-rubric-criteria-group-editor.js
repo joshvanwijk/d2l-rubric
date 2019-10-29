@@ -63,7 +63,8 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 					expect(nameTextInput.value).to.equal('New Group Name');
 					done();
 				});
-				nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+				nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 			});
 
 			test('generates error if saving fails', function(done) {
@@ -80,7 +81,8 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				element.addEventListener('d2l-siren-entity-save-error', function() {
 					done();
 				});
-				element.$$('#group-name').dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+				element.$$('#group-name').dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+				element.$$('#group-name').dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 			});
 		});
 

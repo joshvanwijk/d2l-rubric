@@ -63,7 +63,8 @@ suite('<d2l-rubric-criterion-editor>', function() {
 						expect(body.get && body.get('name') || 'Batman and Robin').to.equal('Batman and Robin');
 						done();
 					});
-					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -89,7 +90,8 @@ suite('<d2l-rubric-criterion-editor>', function() {
 							done();
 						});
 					});
-					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -104,7 +106,8 @@ suite('<d2l-rubric-criterion-editor>', function() {
 						}
 						done();
 					});
-					nameTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 		});
@@ -216,7 +219,8 @@ suite('<d2l-rubric-criterion-editor>', function() {
 								done();
 							});
 						});
-						outOfTextArea.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+						outOfTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+						outOfTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 					});
 				});
 			});

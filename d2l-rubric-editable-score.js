@@ -1,6 +1,7 @@
 import '@polymer/polymer/polymer-legacy.js';
 import './localize-behavior.js';
 import './assessment-result-behavior.js';
+import './editor/d2l-rubric-error-handling-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
@@ -98,26 +99,29 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></rubric-siren-entity>
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<div id="editable-container">
-			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
+			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore]]">
 				<template is="dom-if" if="[[!totalScore]]">
 					<d2l-button-subtle class="clear-override-button-mobile" id="clear-button" text="[[localize('clearOverride')]]" on-click="_clearCriterionOverride" hidden$="[[!scoreOverridden]]">
 					</d2l-button-subtle>
 					<div class="override-label" hidden$="[[scoreOverridden]]">[[localize('overrideLabel')]]</div>
 				</template>
 				<div class="editing-component">
-					<d2l-input-text id="text-area" value="[[getScore(entity, assessmentResult, totalScore)]]" type="number" step="any" min="0" max="100000" on-blur="_blurHandler" on-keypress="_handleKey" prevent-submit="">
+					<d2l-input-text id="text-area" value="{{_score}}" type="number" step="any" min="0" max="100000" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
 				</div>	
+				<template is="dom-if" if="[[scoreInvalid]]">
+					<d2l-tooltip id="score-bubble" for="text-area" class="is-error" position="bottom">[[scoreInvalidError]]</d2l-tooltip>
+				</template>
 			</div>
-			<template is="dom-if" if="[[!_isEditingScore(criterionNum, editingScore)]]">
+			<template is="dom-if" if="[[!_isEditingScore]]">
 				<div class$="[[_getOutOfClassName(scoreOverridden)]]" id="out-of-container">
-					[[_localizeOutOf(entity, assessmentResult, totalScore)]]
+					[[_localizeOutOf(entity, _score)]]
 					<div class="star" id="score-overridden-star">*</div>
 				</div>
 			</template>
 		</div>
-		<d2l-tooltip aria-hidden="true" id="override-tooltip" hidden="[[_handleTooltip(scoreOverridden,criterionNum, editingScore)]]" for="editable-container" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
+		<d2l-tooltip aria-hidden="true" id="override-tooltip" hidden="[[_handleTooltip(scoreOverridden, _isEditingScore)]]" for="editable-container" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -144,9 +148,35 @@ Polymer({
 			notify: true,
 			observer: '_editingScoreChanged'
 		},
+		_isEditingScore: {
+			type: Boolean,
+			value: false,
+			computed: '_computeIsEditingScore(criterionNum, editingScore, scoreInvalid)'
+		},
+		_score: {
+			type: Number
+		},
+		_scoreModified: {
+			type: Boolean,
+			value: false
+		},
+		_pendingScoreSaves: {
+			type: Number,
+			value: 0
+		},
 		scoreOverridden: {
 			type: Boolean,
 			value: false
+		},
+		scoreInvalid: {
+			type: Boolean,
+			value: false,
+			notify: true,
+			reflectToAttribute: true
+		},
+		scoreInvalidError: {
+			type: String,
+			value: null
 		},
 		overriddenStyling: {
 			type: Boolean,
@@ -179,13 +209,14 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
 	observers: [
 		'_onAssessmentResultChanged(entity, assessmentResult)',
 		'_totalScoreChanged(totalScore, entity)',
-		'_editingState(entity,criterionNum, editingScore)'
+		'_editingState(entity, _isEditingScore)'
 	],
 	ready: function() {
 		if (this._largeScreen && this.criterionHref) {
@@ -199,16 +230,19 @@ Polymer({
 		if (!entity || !assessmentResult) {
 			return;
 		}
+		if (!this.scoreInvalid) {
+			this._updateScore(entity, assessmentResult, this.totalScore);
+		}
 
 		if (this.totalScore) {
 			this.scoreOverridden = this.isTotalScoreOverridden();
-			if (!this._isStaticView()) {
+			if (!this._isStaticView() && !this._isEditingScore) {
 				this.overriddenStyling = this.scoreOverridden;
 			}
 			return;
 		}
 		this.scoreOverridden = this.isScoreOverridden(this.criterionHref);
-		if (!this._isStaticView()) {
+		if (!this._isStaticView() && !this._isEditingScore) {
 			this.overriddenStyling = this.scoreOverridden;
 		}
 	},
@@ -223,7 +257,7 @@ Polymer({
 	},
 
 	_editingScoreChanged: function(newValue) {
-		if (this._isEditingScore(this.criterionNum, newValue)) {
+		if (!this.scoreInvalid && this.criterionNum === newValue) {
 			afterNextRender(this, function() {
 				this.focus();
 			}.bind(this));
@@ -241,6 +275,10 @@ Polymer({
 		}
 	},
 
+	_inputHandler: function() {
+		this._scoreModified = true;
+	},
+
 	_blurHandler: function(event) {
 		if (event.relatedTarget && event.relatedTarget.id === 'clear-button') {
 			return;
@@ -250,39 +288,73 @@ Polymer({
 			return;
 		}
 		this.editingScore = -1;
-		var newScore = event.target.value;
-		if (newScore === '') {
-			this._clearOverride();
-			return;
+
+		if (this._scoreModified || this.scoreInvalid) {
+			this._scoreModified = false;
+			this.toggleBubble('scoreInvalid', false);
+			var action;
+			var newScore = event.target.value;
+			if (newScore === '') {
+				action = this._clearOverride();
+			} else {
+				var oldScore = this.getScore(this.entity, this.assessmentResult, this.totalScore);
+				if (parseFloat(newScore) === oldScore) {
+					// score didn't change so don't save it
+					return;
+				}
+				action = this._saveScore(newScore);
+			}
+			this._pendingScoreSaves++;
+			action.catch(function(err) {
+				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingScoreSaves--;
+				if (!this.scoreInvalid) {
+					this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+				}
+			}.bind(this));
 		}
-		var oldScore = this.getScore(this.entity, this.assessmentResult, this.totalScore);
-		if (newScore === oldScore) {
-			// score didn't change so don't save it
-			return;
+	},
+
+	_updateScore: function(entity, assessmentResult, totalScore) {
+		if (!this._scoreModified && !this._pendingScoreSaves) {
+			this.toggleBubble('scoreInvalid', false);
+			this._score = this.getScore(entity, assessmentResult, totalScore);
 		}
-		this._saveScore(newScore);
 	},
 
 	_saveScore: function(score) {
 		if (this.criterionHref) {
-			this.saveCriterionPoints(this.criterionHref, score);
+			return this.saveCriterionPoints(this.criterionHref, score);
 		} else {
-			this.saveTotalPoints(score);
+			return this.saveTotalPoints(score);
 		}
 	},
 
 	_clearOverride: function() {
 		if (this.criterionHref) {
-			this.clearCriterionOverride(this.criterionHref);
+			return this.clearCriterionOverride(this.criterionHref);
 		} else {
-			this.clearTotalScoreOverride();
+			return this.clearTotalScoreOverride();
 		}
 	},
 
 	_clearCriterionOverride: function(event) {
 		event.stopPropagation();
+
+		this.toggleBubble('scoreInvalid', false);
 		this.editingScore = -1;
-		this.clearCriterionOverride(this.criterionHref);
+		this._pendingScoreSaves++;
+		this.clearCriterionOverride(this.criterionHref).then(function() {
+			this._scoreModified = false;
+		}.bind(this)).catch(function(err) {
+			this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
+		}.bind(this)).finally(function() {
+			this._pendingScoreSaves--;
+			if (!this.scoreInvalid) {
+				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+			}
+		}.bind(this));
 	},
 
 	getScore: function(entity, assessmentResult, totalScore) {
@@ -295,17 +367,11 @@ Polymer({
 		return this.getAssessedScore(entity, assessmentResult);
 	},
 
-	_localizeOutOf: function(entity, assessmentResult, totalScore) {
+	_localizeOutOf: function(entity, score) {
 		if (!entity || !entity.properties || !entity.properties.outOf) {
 			return null;
 		}
 
-		var score = null;
-		if (totalScore) {
-			score = totalScore;
-		} else if (assessmentResult) {
-			score = this.getAssessedScore(entity, assessmentResult);
-		}
 		if (score || score === 0) {
 			return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', entity.properties.outOf.toString());
 		}
@@ -327,8 +393,8 @@ Polymer({
 		return 'criterion-score-container';
 	},
 
-	_isEditingScore: function(criterionNum, editingScore) {
-		return criterionNum === editingScore;
+	_computeIsEditingScore: function(criterionNum, editingScore, scoreInvalid) {
+		return criterionNum === editingScore || scoreInvalid;
 	},
 
 	_localizeStarLabel: function(totalScore) {
@@ -351,15 +417,14 @@ Polymer({
 		}
 	},
 
-	_editingState: function(entity, criterionNum, editingScore) {
+	_editingState: function(entity, isEditingScore) {
 		if (!entity) {
 			return;
 		}
-		if (this._isEditingScore(criterionNum, editingScore)) {
+		if (isEditingScore) {
 			this.editorStyling = true;
 			this.overriddenStyling = false;
-		}
-		if (!this._isEditingScore(criterionNum, editingScore)) {
+		} else {
 			this.editorStyling = false;
 			if (this.scoreOverridden && !this._isStaticView()) {
 				this.overriddenStyling = true;
@@ -367,8 +432,8 @@ Polymer({
 		}
 	},
 
-	_handleTooltip: function(scoreOverridden, criterionNum, editingScore) {
-		return !scoreOverridden || this._isEditingScore(criterionNum, editingScore);
+	_handleTooltip: function(scoreOverridden, isEditingScore) {
+		return !scoreOverridden || isEditingScore;
 	},
 
 	_isStaticView: function() {

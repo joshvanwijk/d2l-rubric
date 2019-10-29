@@ -44,8 +44,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 			aria-label$="[[_getAriaLabel(ariaLabelLangterm, criterionName, entity.properties)]]"
 			disabled="[[!_canEdit]]"
 			value="{{_feedbackText}}"
-			input-changing={{_feedbackChanging}}
-			on-change="_saveFeedback"
+			input-changing="{{_feedbackChanging}}"
+			pending-saves="[[_pendingFeedbackSaves]]"
+			on-text-changed="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_feedbackInvalid]]">
@@ -79,7 +80,7 @@ Polymer({
 		},
 		_canEdit: {
 			type: Boolean,
-			computed: '_canEditFeedback(entity)',
+			computed: '_canEditFeedback(entity, updatingLevels)',
 		},
 		_feedbackInvalid: {
 			type: Boolean,
@@ -105,6 +106,9 @@ Polymer({
 			type: String,
 			computed: '_constructKey(keyLinkRels, entity)',
 		},
+		updatingLevels: {
+			type: Boolean
+		}
 	},
 
 	behaviors: [
@@ -115,9 +119,12 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
-	_onEntityChanged: function(entity) {
+	_onEntityChanged: function(entity, oldEntity) {
 		if (entity) {
-			this._updateFeedback(entity);
+			var feedbackChanged = oldEntity ? this._getFeedback(entity) !== this._getFeedback(oldEntity) : true;
+			if (feedbackChanged) {
+				this._updateFeedback(entity);
+			}
 		}
 	},
 
@@ -143,9 +150,9 @@ Polymer({
 		return action;
 	},
 
-	_canEditFeedback: function(entity) {
+	_canEditFeedback: function(entity, updatingLevels) {
 		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
-		return feedback && feedback.hasActionByName('update-feedback');
+		return feedback && feedback.hasActionByName('update-feedback') && !updatingLevels;
 	},
 
 	_saveFeedback: function(e) {
@@ -156,12 +163,13 @@ Polymer({
 			this._pendingFeedbackSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-feedback-saved');
-
-				this._pendingFeedbackSaves--;
-				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
-				this._pendingFeedbackSaves--;
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingFeedbackSaves--;
+				if (!this._feedbackInvalid) {
+					this._updateFeedback(this.entity);
+				}
 			}.bind(this));
 		}
 	},
@@ -186,6 +194,7 @@ Polymer({
 
 	_updateFeedback: function(entity) {
 		if (!this._feedbackChanging && !this._pendingFeedbackSaves) {
+			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			this._feedbackText = this._getFeedback(entity);
 		}
 	}

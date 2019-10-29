@@ -60,7 +60,8 @@ suite('<d2l-rubric-editor>', function() {
 						done();
 					});
 					nameTextInput.value = 'Superman Rubric';
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -89,7 +90,8 @@ suite('<d2l-rubric-editor>', function() {
 						});
 					});
 					nameTextInput.value = 'Superman Rubric';
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
@@ -105,7 +107,8 @@ suite('<d2l-rubric-editor>', function() {
 						done();
 					});
 					nameTextInput.value = '';
-					nameTextInput.dispatchEvent(new CustomEvent('change', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 		});
@@ -146,7 +149,7 @@ suite('<d2l-rubric-editor>', function() {
 						done();
 					});
 					descriptionTextEditor.dispatchEvent(new CustomEvent(
-						'change',
+						'text-changed',
 						{
 							bubbles: true,
 							cancelable: false,
@@ -181,7 +184,7 @@ suite('<d2l-rubric-editor>', function() {
 						});
 					});
 					descriptionTextEditor.dispatchEvent(new CustomEvent(
-						'change',
+						'text-changed',
 						{
 							bubbles: true,
 							cancelable: false,

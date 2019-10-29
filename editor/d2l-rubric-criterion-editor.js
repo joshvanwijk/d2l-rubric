@@ -255,7 +255,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_criterionName}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName" on-input="_saveNameOnInput">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_criterionName}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
@@ -268,7 +268,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					<div class="criterion-text">
 						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
 							<div class="cell">
-								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
+								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
 					</div>
@@ -277,7 +277,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 						<div class="criterion-feedback">
 							<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
 								<div class="cell">
-									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]">
+									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}">
 									</d2l-rubric-feedback-editor>
 								</div>
 							</template>
@@ -292,7 +292,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 							</div>
 						</template>
 						<template is="dom-if" if="[[_outOfIsEditable]]">
-							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" on-input="_saveOutOfOnInput" value="{{_outOf}}" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', _criterionName, 'value', _outOf)]]" prevent-submit="">
+							/ <d2l-input-text id="out-of-textbox" on-blur="_outOfBlurHandler" on-input="_outOfInputHandler" value="{{_outOf}}" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', _criterionName, 'value', _outOf)]]" prevent-submit="">
 							</d2l-input-text>
 							<template is="dom-if" if="[[_outOfInvalid]]">
 								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
@@ -431,7 +431,10 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		richTextEnabled: Boolean
+		richTextEnabled: Boolean,
+		updatingLevels: {
+			type: Boolean
+		}
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -460,11 +463,13 @@ Polymer({
 		}
 
 		var selfLinkChanged = this._getSelfLink(entity) !== this._getSelfLink(oldEntity);
-		if (selfLinkChanged || !this._nameChanging && !this._pendingNameSaves) {
-			this._criterionName = entity.properties.name;
+		var nameChanged = oldEntity ? entity.properties.name !== oldEntity.properties.name : true;
+		if (selfLinkChanged || nameChanged) {
+			this._updateName(entity, selfLinkChanged);
 		}
-		if (selfLinkChanged || !this._outOfChanging && !this._pendingOutOfSaves) {
-			this._outOf = entity.properties.outOf;
+		var outOfChanged = oldEntity ? entity.properties.outOf !== oldEntity.properties.outOf : true;
+		if (selfLinkChanged || outOfChanged) {
+			this._updateOutOf(entity, selfLinkChanged);
 		}
 
 		if (!this.animating && !oldEntity) {
@@ -487,92 +492,100 @@ Polymer({
 		return entity && entity.properties && entity.properties.outOf;
 	},
 
-	_saveName: function(e) {
+	_nameBlurHandler: function(e) {
+		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
+			this._saveName(e.target.value);
+		}
+	},
+
+	_nameInputHandler: function(e) {
+		this._nameChanging = true;
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (this._nameChanging) {
+				this._saveName(value);
+			}
+		}.bind(this), 500);
+	},
+
+	_saveName: function(value) {
+		this._nameChanging = false;
 		var action = this.entity.getActionByName('update');
 		if (action) {
-			if (this._nameRequired && !e.target.value.trim()) {
+			if (this._nameRequired && !value.trim()) {
 				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
 				return;
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
 			}
-			var fields = [{ 'name': 'name', 'value': e.target.value }];
+			var fields = [{ 'name': 'name', 'value': value }];
+			this._pendingNameSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-criterion-saved');
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingNameSaves--;
+				if (!this._nameInvalid) {
+					this._updateName(this.entity, false);
+				}
 			}.bind(this));
 		}
 	},
 
-	_saveNameOnInput: function(e) {
-		this._nameChanging = true;
-		var action = this.entity.getActionByName('update');
+	_updateName: function(entity, selfLinkChanged) {
+		if (selfLinkChanged || !this._nameChanging && !this._pendingNameSaves) {
+			this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
+			this._criterionName = entity.properties.name;
+		}
+	},
+
+	_outOfBlurHandler: function(e) {
+		if (this._outOfChanging || !this._pendingOutOfSaves && this._outOfInvalid) {
+			this._saveOutOf(e.target.value);
+		}
+	},
+
+	_outOfInputHandler: function(e) {
+		this._outOfChanging = true;
 		var value = e.target.value;
 		this.debounce('input', function() {
-			this._nameChanging = false;
-			if (action) {
-				if (this._nameRequired && !value.trim()) {
-					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
-					return;
-				} else {
-					this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
-				}
-				var fields = [{ 'name': 'name', 'value': value }];
-				this._pendingNameSaves++;
-				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-criterion-saved');
-				}.bind(this)).catch(function(err) {
-					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingNameSaves--;
-				}.bind(this));
+			if (this._outOfChanging) {
+				this._saveOutOf(value);
 			}
 		}.bind(this), 500);
 	},
 
-	_saveOutOf: function(e) {
+	_saveOutOf: function(value) {
+		this._outOfChanging = false;
 		var action = this.entity.getActionByName('update-outof');
 		if (action) {
-			if (!e.target.value.trim()) {
+			if (!value.trim()) {
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
 				return;
 			} else {
 				this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
 			}
-			var fields = [{ 'name': 'outOf', 'value': e.target.value }];
+			var fields = [{ 'name': 'outOf', 'value': value }];
+			this._pendingOutOfSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-criterion-saved');
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingOutOfSaves--;
+				if (!this._outOfInvalid) {
+					this._updateOutOf(this.entity, false);
+				}
 			}.bind(this));
 		}
 	},
 
-	_saveOutOfOnInput: function(e) {
-		this._outOfChanging = true;
-		var action = this.entity.getActionByName('update-outof');
-		var value = e.target.value;
-		this.debounce('input', function() {
-			this._outOfChanging = false;
-			if (action) {
-				if (!value.trim()) {
-					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
-					return;
-				} else {
-					this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
-				}
-				var fields = [{'name': 'outOf', 'value': value}];
-				this._pendingOutOfSaves++;
-				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-criterion-saved');
-				}.bind(this)).catch(function(err) {
-					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingOutOfSaves--;
-				}.bind(this));
-			}
-		}.bind(this), 500);
+	_updateOutOf: function(entity, selfLinkChanged) {
+		if (selfLinkChanged || !this._outOfChanging && !this._pendingOutOfSaves) {
+			this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
+			this._outOf = entity.properties.outOf;
+		}
 	},
 
 	_canEditCriterion: function(entity) {

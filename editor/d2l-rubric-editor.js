@@ -251,8 +251,8 @@ const $_documentContainer = html `
 				<d2l-input-text
 					id="rubric-name"
 					value="{{_rubricName}}"
-					on-change="_saveName"
-					on-input="_saveNameOnInput"
+					on-blur="_nameBlurHandler"
+					on-input="_nameInputHandler"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 					aria-label$="[[localize('name')]]"
 					disabled="[[!_canEditName]]"
@@ -298,7 +298,7 @@ const $_documentContainer = html `
 						<template is="dom-if" if="[[!_isLocked]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" on-change="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" pending-saves="[[_pendingDescriptionSaves]]" on-text-changed="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
 								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
@@ -674,7 +674,6 @@ Polymer({
 		return entity && entity.getSubEntityByRel('help');
 	},
 	_onEntityChanged: function(entity, oldEntity) {
-		this._nameInvalid = false;
 		this._associationsInvalid = false;
 
 		if (entity) {
@@ -700,52 +699,59 @@ Polymer({
 			this._isLocked = entity.hasClass('locked');
 			this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
 
-			if (!this._nameChanging && !this._pendingNameSaves) {
-				this._rubricName = this._getRubricName(entity);
+			var nameChanged = oldEntity ? this._getRubricName(entity) !== this._getRubricName(oldEntity) : true;
+			if (nameChanged) {
+				this._updateName(entity);
 			}
-			this._updateDescription(entity);
+			var descriptionChanged = oldEntity ? this._getRubricDescription(entity) !== this._getRubricDescription(oldEntity) : true;
+			if (descriptionChanged) {
+				this._updateDescription(entity);
+			}
 		}
 
 	},
-	_saveName: function(e) {
+	_nameBlurHandler: function(e) {
+		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
+			this._saveName(e.target.value);
+		}
+	},
+	_nameInputHandler: function(e) {
+		this._nameChanging = true;
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (this._nameChanging) {
+				this._saveName(value);
+			}
+		}.bind(this), 500);
+	},
+	_saveName: function(value) {
+		this._nameChanging = false;
 		var action = this.entity.getActionByName('update-name');
 		if (action) {
-			if (this._nameRequired && !e.target.value.trim()) {
+			if (this._nameRequired && !value.trim()) {
 				this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'name-bubble');
-				var fields = [{ 'name': 'name', 'value': e.target.value }];
+				var fields = [{ 'name': 'name', 'value': value }];
+				this._pendingNameSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-name-saved');
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._pendingNameSaves--;
+					if (!this._nameInvalid) {
+						this._updateName(this.entity);
+					}
 				}.bind(this));
 			}
 		}
 	},
-	_saveNameOnInput: function(e) {
-		this._nameChanging = true;
-		var action = this.entity.getActionByName('update-name');
-		var value = e.target.value;
-		this.debounce('input', function() {
-			this._nameChanging = false;
-			if (action) {
-				if (this._nameRequired && !value.trim()) {
-					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
-				} else {
-					this.toggleBubble('_nameInvalid', false, 'name-bubble');
-					var fields = [{ 'name': 'name', 'value': value }];
-					this._pendingNameSaves++;
-					this.performSirenAction(action, fields).then(function() {
-						this.fire('d2l-rubric-name-saved');
-					}.bind(this)).catch(function(err) {
-						this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-					}.bind(this)).finally(function() {
-						this._pendingNameSaves--;
-					}.bind(this));
-				}
-			}
-		}.bind(this), 500);
+	_updateName: function(entity) {
+		if (!this._nameChanging && !this._pendingNameSaves) {
+			this.toggleBubble('_nameInvalid', false, 'name-bubble');
+			this._rubricName = this._getRubricName(entity);
+		}
 	},
 	_onEntitySave: function(e) {
 		this.$$('#rubric-header').onEntitySave(e);
@@ -758,17 +764,19 @@ Polymer({
 			this._pendingDescriptionSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-description-saved');
-
-				this._pendingDescriptionSaves--;
-				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
-				this._pendingDescriptionSaves--;
 				this.handleValidationError('rubric-description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingDescriptionSaves--;
+				if (!this._descriptionInvalid) {
+					this._updateDescription(this.entity);
+				}
 			}.bind(this));
 		}
 	},
 	_updateDescription: function(entity) {
 		if (!this._descriptionChanging && !this._pendingDescriptionSaves) {
+			this.toggleBubble('_descriptionInvalid', false, 'rubric-description-bubble');
 			this._rubricDescription = this._getRubricDescription(entity);
 		}
 	},

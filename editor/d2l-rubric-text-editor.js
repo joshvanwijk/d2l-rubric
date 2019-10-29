@@ -21,10 +21,10 @@ Polymer({
 
 		</style>
 		<template is="dom-if" if="[[!richTextEnabled]]">
-			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="{{value}}" on-change="_onInputChange" on-input="_duringInputChange"></d2l-input-textarea>
+			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="{{value}}" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[richTextEnabled]]">
-			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-change="_onInputChange" on-input="_duringInputChange"></d2l-rubric-html-editor>
+			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-rubric-html-editor>
 		</template>
 `,
 
@@ -36,7 +36,7 @@ Polymer({
 			type: String,
 		},
 		ariaInvalid: {
-			type: Boolean,
+			type: String,
 			value: false,
 		},
 		placeholder: {
@@ -64,6 +64,9 @@ Polymer({
 			type: Boolean,
 			value: false,
 			notify: true
+		},
+		pendingSaves :{
+			type: Number
 		}
 	},
 
@@ -79,26 +82,36 @@ Polymer({
 		return string && string === 'true';
 	},
 
-	_onInputChange: function(e) {
+	_onInputBlur: function(e) {
 		e.stopPropagation();
-		var value = (e.detail && e.detail.hasOwnProperty('content')) ?
-			e.detail.content : e.target.value || '';
-		this.fire('change', { value: value });
+		if (this.inputChanging || !this.pendingSaves && this.ariaInvalid === 'true') {
+			this.inputChanging = false;
+			var value = this._getTextValue(e);
+			this.fire('text-changed', { value: value });
+		}
 	},
 
 	_duringInputChange: function(e) {
 		this.inputChanging = true;
 		e.stopPropagation();
-		var value;
+		var value = this._getTextValue(e);
 		if (this.richTextEnabled) {
-			value = e.target._getContent() ? e.target._getContent() : '';
-		} else {
-			value = (e.detail && e.detail.hasOwnProperty('content')) ?
-				e.detail.content : e.target.value || '';
+			this.value = value;
 		}
 		this.debounce('input', function() {
-			this.inputChanging = false;
-			this.fire('change', { value: value });
+			if (this.inputChanging) {
+				this.inputChanging = false;
+				this.fire('text-changed', { value: value });
+			}
 		}.bind(this), 500);
+	},
+
+	_getTextValue: function(e) {
+		if (this.richTextEnabled) {
+			return e.target._getContent() ? e.target._getContent() : '';
+		} else {
+			return (e.detail && e.detail.hasOwnProperty('content')) ?
+				e.detail.content : e.target.value || '';
+		}
 	}
 });
