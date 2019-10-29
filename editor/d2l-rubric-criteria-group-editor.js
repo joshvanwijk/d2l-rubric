@@ -8,6 +8,7 @@ import '../d2l-rubric-entity-behavior.js';
 import '../d2l-rubric-loading.js';
 import '../localize-behavior.js';
 import './d2l-rubric-levels-editor.js';
+import './d2l-rubric-loa-overlay.js';
 import './d2l-rubric-criteria-editor.js';
 import './d2l-rubric-error-handling-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -82,6 +83,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
+				<d2l-rubric-loa-overlay href="[[_levelsHref]]" token="[[token]]"></d2l-rubric-loa-overlay>
 				<template is="dom-if" if="[[_nameInvalid]]">
 					<d2l-tooltip id="group-name-bubble" class="is-error" for="group-name" position="bottom">
 						[[_nameInvalidError]]

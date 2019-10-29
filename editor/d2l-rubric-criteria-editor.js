@@ -144,10 +144,24 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 		</style>
 		<div>
 			<d2l-dnd-sortable placeholder-class="dnd-placeholder" mirror-class="dnd-mirror" touch-mirror-class="dnd-touch-mirror" handle=".dnd-drag-handle" on-d2l-dnd-sorted="_handleDrag" disabled="[[!_canDrag]]">
-				<template id="criteria-repeater" is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" rendered-item-count="{{criterionCount}}">
+				<template id="criteria-repeater" is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionIndex" rendered-item-count="{{criterionCount}}">
 					<div class="fieldset">
 						<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
-						<d2l-rubric-criterion-editor animating="[[animating]]" href="[[_getSelfLink(criterion)]]" token="[[token]]" is-holistic="[[isHolistic]]" display-name-placeholder="[[_isFirst(index, criterionCount)]]" rich-text-enabled="[[richTextEnabled]]" criterion-detail-width="[[criterionDetailWidth]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{updatingLevels}}">
+						<d2l-rubric-criterion-editor
+							animating="[[animating]]"
+							href="[[_getSelfLink(criterion)]]"
+							token="[[token]]"
+							rubric-levels-href="[[_rubricLevelsHref]]"
+							first-row="[[_isFirstRow(criterionIndex)]]"
+							is-holistic="[[isHolistic]]"
+							display-name-placeholder="[[_isFirst(index, criterionCount)]]"
+							rich-text-enabled="[[richTextEnabled]]"
+							criterion-detail-width="[[criterionDetailWidth]]"
+							outcomes-title="[[outcomesTitle]]"
+							browse-outcomes-text="[[browseOutcomesText]]"
+							outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+							updating-levels="{{updatingLevels}}"
+						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen" on-focusin="_onReorderGroupFocusIn" on-focusout="_onReorderGroupFocusOut" on-keydown="_onReorderGroupKeydown">
 									<button id="up-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionUp', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isFirst(index, criterionCount)]]" data-index$="[[index]]" on-click="_moveUp">
@@ -226,7 +240,8 @@ Polymer({
 		},
 		updatingLevels: {
 			type: Boolean
-		}
+		},
+		_rubricLevelsHref: String
 	},
 
 	behaviors: [
@@ -274,6 +289,7 @@ Polymer({
 			return;
 		}
 		this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
+		this._rubricLevelsHref = this._getRubricLevelsLink(entity);
 		// EXPERIMENTAL animation/transition handling. If oldEntity is undefined, then
 		// this represents the initial render so indicate to child components that we
 		// are animating so that child components don't animate on initial render.
@@ -290,6 +306,11 @@ Polymer({
 				this.animating = false;
 			}.bind(this));
 		}
+	},
+
+	_getRubricLevelsLink(entity) {
+		var link = entity && entity.getLinkByRel('levels');
+		return link && link.href || '';
 	},
 
 	_getCriterionLegend: function(index, count) {
@@ -428,5 +449,8 @@ Polymer({
 	},
 	_countCriteria: function(criteriaArray) {
 		this.criterionCount = criteriaArray.length;
+	},
+	_isFirstRow(index) {
+		return index === 0;
 	}
 });
