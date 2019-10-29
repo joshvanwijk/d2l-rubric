@@ -45,7 +45,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 			disabled="[[!_canEdit]]"
 			value="{{_feedbackText}}"
 			input-changing="{{_feedbackChanging}}"
-			pending-saves="{{_pendingFeedbackSaves}}"
+			pending-saves="[[_pendingFeedbackSaves]]"
 			on-text-changed="_saveFeedback"
 			rich-text-enabled="[[_richTextAndEditEnabled(entity, richTextEnabled,_canEdit)]]">
 		</d2l-rubric-text-editor>

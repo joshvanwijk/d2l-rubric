@@ -291,7 +291,6 @@ Polymer({
 
 		if (this._scoreModified || this.scoreInvalid) {
 			this._scoreModified = false;
-			this._pendingScoreSaves++;
 			this.toggleBubble('scoreInvalid', false);
 			var action;
 			var newScore = event.target.value;
@@ -305,6 +304,7 @@ Polymer({
 				}
 				action = this._saveScore(newScore);
 			}
+			this._pendingScoreSaves++;
 			action.then(function() {
 				this._pendingScoreSaves--;
 				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
