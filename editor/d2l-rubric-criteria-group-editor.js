@@ -260,11 +260,13 @@ Polymer({
 				this._pendingGroupNameSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-group-name-saved');
-					this._pendingGroupNameSaves--;
-					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
-					this._pendingGroupNameSaves--;
 					this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._pendingGroupNameSaves--;
+					if (!this._nameInvalid) {
+						this._updateName(this.entity, false);
+					}
 				}.bind(this));
 			}
 		}

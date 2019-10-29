@@ -305,12 +305,13 @@ Polymer({
 				action = this._saveScore(newScore);
 			}
 			this._pendingScoreSaves++;
-			action.then(function() {
-				this._pendingScoreSaves--;
-				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
-			}.bind(this)).catch(function(err) {
-				this._pendingScoreSaves--;
+			action.catch(function(err) {
 				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingScoreSaves--;
+				if (!this.scoreInvalid) {
+					this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+				}
 			}.bind(this));
 		}
 	},
@@ -346,11 +347,13 @@ Polymer({
 		this._pendingScoreSaves++;
 		this.clearCriterionOverride(this.criterionHref).then(function() {
 			this._scoreModified = false;
-			this._pendingScoreSaves--;
-			this._updateScore(this.entity, this.assessmentResult, this.totalScore);
 		}.bind(this)).catch(function(err) {
-			this._pendingScoreSaves--;
 			this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
+		}.bind(this)).finally(function() {
+			this._pendingScoreSaves--;
+			if (!this.scoreInvalid) {
+				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+			}
 		}.bind(this));
 	},
 
