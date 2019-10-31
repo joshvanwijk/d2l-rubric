@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'deleteLevelConfirmationText': 'سيحذف هذا الإجراء بشكل نهائي المستوى ومحتوياته.',
 		'deleteLevelConfirmationTitle': 'هل تريد حذف هذا المستوى؟',
 		'description': 'الوصف',
-		'descriptionInfo': 'أضف وصفًا لمرجعك الشخصي. لن تتم مشاركته مع الطلاب',
+		'descriptionInfo': 'أضف وصفًا لمرجعك الشخصي. لن تتم مشاركته مع الطلاب.',
 		'descriptionReadOnlyMode': 'الوصف (غير مرئي للطلاب)',
 		'descriptionReadOnlyPlaceholder': 'ما من وصف',
 		'descriptionSaveFailed': 'فشل حفظ الوصف',

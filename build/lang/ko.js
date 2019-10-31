@@ -49,7 +49,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'deleteLevelConfirmationText': '그러면 수준과 해당 콘텐츠가 영구적으로 삭제됩니다.',
 		'deleteLevelConfirmationTitle': '이 수준을 삭제하시겠습니까?',
 		'description': '설명',
-		'descriptionInfo': '개인 참조에 대한 설명을 추가합니다. 학생과 공유되지 않음.',
+		'descriptionInfo': '개인 참조에 대한 설명을 추가합니다. 학생과 공유되지 않습니다.',
 		'descriptionReadOnlyMode': '설명(학생에게 표시되지 않음)',
 		'descriptionReadOnlyPlaceholder': '설명 없음',
 		'descriptionSaveFailed': '설명 저장 실패',
