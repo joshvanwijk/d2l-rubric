@@ -221,7 +221,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 											</span>
 										</div>
 									</div>
-									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback, _feedbackInvalid)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 								</div>
 							</d2l-td>
 						</template>
@@ -239,12 +239,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 								<d2l-rubric-editable-score id="score-inner[[criterionNum]]"  tabindex$="[[_handleTabIndex()]]" on-click="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
 									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback, _feedbackInvalid)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
 									</d2l-offscreen>	
 							</d2l-td>
 						</template>
 					</d2l-tr>
-					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback)]]" restamp="true">
+					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback, _feedbackInvalid)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
 							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" data-criterion$="[[criterionNum]]" on-save-feedback="_handleSaveFeedback" on-save-feedback-finished="_handleSaveFinished" on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
@@ -426,7 +426,7 @@ Polymer({
 		return !!this.getAssessmentFeedback(criterionEntity, assessmentResult);
 	},
 
-	_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback, savingFeedback) {
+	_addFeedback: function(entity, assessmentResult, criterionNum, addingFeedback, savingFeedback, feedbackInvalid) {
 		if (!entity || !assessmentResult) {
 			return false;
 		}
@@ -436,7 +436,7 @@ Polymer({
 		if (!this.canAddFeedback(entity)) {
 			return false;
 		}
-		if (criterionNum === addingFeedback || savingFeedback.includes(criterionNum)) {
+		if (criterionNum === addingFeedback || savingFeedback.includes(criterionNum) || feedbackInvalid[criterionNum]) {
 			return false;
 		}
 		return !this._hasFeedback(entity, assessmentResult);
@@ -617,11 +617,11 @@ Polymer({
 		}
 	},
 
-	_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback, savingFeedback) {
+	_displayFeedback: function(feedbackDisplay, criterionNum, addingFeedback, savingFeedback, feedbackInvalid) {
 		if (!feedbackDisplay) {
 			return;
 		}
-		return feedbackDisplay[criterionNum] || criterionNum === addingFeedback || savingFeedback.includes(criterionNum);
+		return feedbackDisplay[criterionNum] || criterionNum === addingFeedback || savingFeedback.includes(criterionNum) || feedbackInvalid[criterionNum];
 	},
 
 	_handleAddFeedback: function(event) {
