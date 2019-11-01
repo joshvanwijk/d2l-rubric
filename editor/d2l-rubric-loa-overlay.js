@@ -1,4 +1,5 @@
 import { PolymerElement, html } from '@polymer/polymer';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
@@ -12,6 +13,11 @@ class RubricLoaOverlay extends mixinBehaviors([
 ], PolymerElement) {
     static get properties() {
         return {
+            _currentSliderPosition: Number,
+            _headingsWidth: {
+                type: Number,
+                value: 1  
+            },
             _levels: Array,
             _loaLevels: Array,
             _loaMappingHref: String,
@@ -35,6 +41,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                 * {
                     box-sizing: border-box;
                 }
+
                 .cell {
                     background-color: #F1F5FB;
                     font-size: 14px;
@@ -83,6 +90,18 @@ class RubricLoaOverlay extends mixinBehaviors([
                     align-items: center;
                     justify-content: flex-start;
                 }
+
+                #row-data {
+                    position: relative;
+                }
+
+                .slider {
+                    border: 0px;
+                    border-radius: 15px;
+                    height: 30px;
+                    position: absolute;
+                    width: 30px;
+                }
             </style>
 
             <rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
@@ -92,10 +111,11 @@ class RubricLoaOverlay extends mixinBehaviors([
                     Achievement Levels
                 </div>
                 <div id="row-data" style="display: inherit; flex: 1 1 auto;">
-                    <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
+                        <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
                         <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel)]]" is-holistic$="[[isHolistic]]">
                             [[loaLevel.properties.name]]
                         </div>
+                            <div class="slider" style$="[[_getSliderStyle(loaLevel, loaIndex, _headingsWidth)]]"></div>
                     </template>
                 </div>
                 <div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]"></div>
@@ -103,6 +123,27 @@ class RubricLoaOverlay extends mixinBehaviors([
             </template>
         `;
     }
+
+    attached() {
+		afterNextRender(this, () => {
+			if (this.isAttached) {
+				this.checkSize();
+			}
+		});
+    }
+
+	checkSize() {
+        console.log('Check size');
+
+        this.async(() => {
+            const section = this.$$('#row-data');
+
+            if (section) {
+                this._headingsWidth = section.offsetWidth;
+            }
+			// if (section) this.fire('d2l-rubric-editor-levels-width-changed', { width: section.offsetWidth });
+		}, 1);
+	}
 
     _onEntityChanged(entity) {
         if (!entity) {
@@ -119,12 +160,50 @@ class RubricLoaOverlay extends mixinBehaviors([
         }
 
         this._loaLevels = entity.getSubEntitiesByClass('level-of-achievement');
+
+        // HACK
+        setTimeout(() => {
+            this.checkSize();
+        }, 0);
     }
 
     _getHeaderStyle(loaLevel) {
         const colSpan = this._getLoaLevelSpan(loaLevel);
+
+        if (colSpan === 0) {
+            return 'display: none;';
+        }
+
 		return [
             `flex-grow: ${colSpan}`
+        ].join(';');
+    }
+    
+    _getSliderStyle(loaLevel, index, totalWidth) {
+        console.log('positioning slider');
+
+        if (index === 0) {
+            this._currentSliderPosition = -16;
+        }
+
+        const nSections = this._levels.length;
+        const sectionWidth = totalWidth / nSections;
+        const colSpan = this._getLoaLevelSpan(loaLevel);
+
+        const zIndex = colSpan === 0 ? 1 : 2;
+
+        const color = loaLevel.properties.color;
+        this._currentSliderPosition += sectionWidth * colSpan;
+        let offset = this._currentSliderPosition;
+
+        if (colSpan === 0) {
+            offset += 12;
+        }
+
+        return [
+            `background-color: ${color}`,
+            `left: ${offset}px`,
+            `z-index: ${zIndex}`
         ].join(';');
     }
     

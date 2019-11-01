@@ -13,7 +13,7 @@
             "properties": {
                 "levelId": "level1",
                 "name": "Got It",
-                "color": "#00BB00",
+                "color": "#02a48f",
                 "upperBound": 1460
             },
             "actions": [
@@ -60,7 +60,7 @@
             "properties": {
                 "levelId": "level2",
                 "name": "Almost",
-                "color": "#AAAAAA",
+                "color": "#7c8695",
                 "upperBound": 1462
             },
             "actions": [
@@ -107,7 +107,7 @@
             "properties": {
                 "levelId": "level3",
                 "name": "Not Yet",
-                "color": "#DD0000",
+                "color": "#ff575a",
                 "upperBound": 1463
             },
             "actions": [
