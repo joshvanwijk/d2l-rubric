@@ -41,7 +41,7 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 	_getErrMsg: function(e, altMsg) {
 		if (e && !e.hasOwnProperty('stack')) {
 			var errObj = e.string ? e.string : e.json;
-			if (errObj.hasOwnProperty('properties')) {
+			if (errObj && errObj.hasOwnProperty('properties')) {
 				return errObj.properties.detail || errObj.properties.errors[0].message || this.localize(altMsg);
 			}
 		}
