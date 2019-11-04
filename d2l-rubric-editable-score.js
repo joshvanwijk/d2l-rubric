@@ -106,7 +106,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					<div class="override-label" hidden$="[[scoreOverridden]]">[[localize('overrideLabel')]]</div>
 				</template>
 				<div class="editing-component">
-					<d2l-input-text id="text-area" value="{{_score}}" type="number" step="any" min="0" max="100000" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
+					<d2l-input-text id="text-area" value="{{_score}}" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
 				</div>	
@@ -273,6 +273,11 @@ Polymer({
 			}
 			return;
 		}
+	},
+
+	// on firefox, when changing the score with the arrow keys/buttons, d2l-input-text only fires change event and not input event
+	_changeHandler: function() {
+		this._scoreModified = true;
 	},
 
 	_inputHandler: function() {
