@@ -24,7 +24,7 @@ Polymer({
 			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="{{value}}" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[richTextEnabled]]">
-			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-rubric-html-editor>
+			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-change="_duringInputChange"></d2l-rubric-html-editor>
 		</template>
 `,
 
@@ -92,26 +92,24 @@ Polymer({
 	},
 
 	_duringInputChange: function(e) {
-		this.inputChanging = true;
 		e.stopPropagation();
 		var value = this._getTextValue(e);
 		if (this.richTextEnabled) {
 			this.value = value;
+			this.fire('text-changed', { value: value });
+		} else {
+			this.inputChanging = true;
+			this.debounce('input', function() {
+				if (this.inputChanging) {
+					this.inputChanging = false;
+					this.fire('text-changed', { value: value });
+				}
+			}.bind(this), 500);
 		}
-		this.debounce('input', function() {
-			if (this.inputChanging) {
-				this.inputChanging = false;
-				this.fire('text-changed', { value: value });
-			}
-		}.bind(this), 500);
 	},
 
 	_getTextValue: function(e) {
-		if (this.richTextEnabled) {
-			return e.target._getContent() ? e.target._getContent() : '';
-		} else {
-			return (e.detail && e.detail.hasOwnProperty('content')) ?
-				e.detail.content : e.target.value || '';
-		}
+		return (e.detail && e.detail.hasOwnProperty('content')) ?
+			e.detail.content : e.target.value || '';
 	}
 });
