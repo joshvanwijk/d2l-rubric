@@ -96,6 +96,9 @@ Polymer({
 		var value = this._getTextValue(e);
 		if (this.richTextEnabled) {
 			this.value = value;
+			/* In the HTML Editor case, this function is called when the change
+			   event fires, which occurs only when pasting text or unfocusing
+			   the cell, so there is no reason to use debounce here. */
 			this.fire('text-changed', { value: value });
 		} else {
 			this.inputChanging = true;
