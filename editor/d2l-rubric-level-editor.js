@@ -69,11 +69,32 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			}
 		</style>
 
-		<d2l-input-text id="level-name" value="{{_levelName}}" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('_levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text
+			id="level-name"
+			value="{{_getDisplayedValue(_levelNameFocused,_enteredLevelName,_levelName)}}"
+			on-focus="_nameFocusHandler"
+			on-blur="_nameBlurHandler"
+			on-input="_nameInputHandler"
+			aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+			aria-label$="[[localize('_levelName')]]"
+			disabled="[[!_canEditName]]"
+			prevent-submit=""
+		>
 		</d2l-input-text>
 		<div class="operations" nopoints$="[[!_showPoints]]">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
-				<d2l-input-text id="level-points" value="{{_levelPoints}}" on-blur="_pointsBlurHandler" on-input="_pointsInputHandler" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('_levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
+				<d2l-input-text
+					id="level-points"
+					value="{{_getDisplayedValue(_levelPointsFocused,_enteredLevelPoints,_levelPoints)}}"
+					on-focus="_pointsFocusHandler"
+					on-blur="_pointsBlurHandler"
+					on-input="_pointsInputHandler"
+					aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
+					aria-label$="[[localize('_levelPoints')]]"
+					disabled="[[!_canEditPoints]]"
+					size="1"
+					prevent-submit=""
+				>
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
@@ -110,6 +131,13 @@ Polymer({
 		_levelName: {
 			type: String
 		},
+		_enteredLevelName: {
+			type: String
+		},
+		_levelNameFocused: {
+			type: Boolean,
+			vaue: false
+		},
 		_canEditName: {
 			type: Boolean,
 			computed: '_canEditLevelName(entity)',
@@ -136,6 +164,13 @@ Polymer({
 		},
 		_levelPoints: {
 			type: Number
+		},
+		_enteredLevelPoints: {
+			type: String
+		},
+		_levelPointsFocused: {
+			type: Boolean,
+			value: false
 		},
 		_canEditPoints: {
 			type: Boolean,
@@ -245,13 +280,19 @@ Polymer({
 	_showAltPercentFormat: function(percentageFormatAlternate, usesPercentage) {
 		return usesPercentage && percentageFormatAlternate;
 	},
+	_nameFocusHandler: function() {
+		this._enteredLevelName = this._levelName;
+		this._levelNameFocused = true;
+	},
 	_nameBlurHandler: function(e) {
+		this._levelNameFocused = false;
 		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
 			this._saveName(e.target.value);
 		}
 	},
 	_nameInputHandler: function(e) {
 		this._nameChanging = true;
+		this._enteredLevelName = e.target.value;
 		var value = e.target.value;
 		this.debounce('input', function() {
 			if (this._nameChanging) {
@@ -288,7 +329,12 @@ Polymer({
 			this._levelName = entity.properties.name;
 		}
 	},
+	_pointsFocusHandler: function() {
+		this._enteredLevelPoints = this._levelPoints;
+		this._levelPointsFocused = true;
+	},
 	_pointsBlurHandler: function(e) {
+		this._levelPointsFocused = false;
 		if (this._pointsChanging || !this._pendingPointsSaves && this._pointsInvalid) {
 			this._savePoints(e.target.value);
 		}
@@ -296,6 +342,7 @@ Polymer({
 	},
 	_pointsInputHandler: function(e) {
 		this._pointsChanging = true;
+		this._enteredLevelPoints = e.target.value;
 		var value = e.target.value;
 		this.debounce('input', function() {
 			if (this._pointsChanging) {
@@ -370,5 +417,8 @@ Polymer({
 		}.bind(this), function() {
 			deleteButton.removeAttribute('disabled');
 		});
+	},
+	_getDisplayedValue(hasFocus,enteredValue,actualValue) {
+		return hasFocus ? enteredValue : actualValue;
 	}
 });
