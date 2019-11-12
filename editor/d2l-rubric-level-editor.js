@@ -71,7 +71,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 
 		<d2l-input-text
 			id="level-name"
-			value="{{_getDisplayedValue(_levelNameFocused,_enteredLevelName,_levelName)}}"
+			value="{{_getDisplayedValue(_levelNameFocused,_nameInvalid,_enteredLevelName,_levelName)}}"
 			on-focus="_nameFocusHandler"
 			on-blur="_nameBlurHandler"
 			on-input="_nameInputHandler"
@@ -85,7 +85,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
 				<d2l-input-text
 					id="level-points"
-					value="{{_getDisplayedValue(_levelPointsFocused,_enteredLevelPoints,_levelPoints)}}"
+					value="{{_getDisplayedValue(_levelPointsFocused,_pointsInvalid,_enteredLevelPoints,_levelPoints)}}"
 					on-focus="_pointsFocusHandler"
 					on-blur="_pointsBlurHandler"
 					on-input="_pointsInputHandler"
@@ -285,10 +285,10 @@ Polymer({
 		this._levelNameFocused = true;
 	},
 	_nameBlurHandler: function(e) {
-		this._levelNameFocused = false;
 		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
 			this._saveName(e.target.value);
 		}
+		this._levelNameFocused = false;
 	},
 	_nameInputHandler: function(e) {
 		this._nameChanging = true;
@@ -334,11 +334,10 @@ Polymer({
 		this._levelPointsFocused = true;
 	},
 	_pointsBlurHandler: function(e) {
-		this._levelPointsFocused = false;
 		if (this._pointsChanging || !this._pendingPointsSaves && this._pointsInvalid) {
 			this._savePoints(e.target.value);
 		}
-
+		this._levelPointsFocused = false;
 	},
 	_pointsInputHandler: function(e) {
 		this._pointsChanging = true;
@@ -418,7 +417,7 @@ Polymer({
 			deleteButton.removeAttribute('disabled');
 		});
 	},
-	_getDisplayedValue: function(hasFocus, enteredValue, actualValue) {
-		return hasFocus ? enteredValue : actualValue;
+	_getDisplayedValue: function(hasFocus, isInvalid, enteredValue, actualValue) {
+		return (hasFocus || isInvalid) ? enteredValue : actualValue;
 	}
 });
