@@ -418,7 +418,7 @@ Polymer({
 			deleteButton.removeAttribute('disabled');
 		});
 	},
-	_getDisplayedValue(hasFocus,enteredValue,actualValue) {
+	_getDisplayedValue: function(hasFocus, enteredValue, actualValue) {
 		return hasFocus ? enteredValue : actualValue;
 	}
 });
