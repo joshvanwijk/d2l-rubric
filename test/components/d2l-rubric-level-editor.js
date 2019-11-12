@@ -51,7 +51,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				fetch.returns(promise);
 
 				var nameTextInput = element.$$('d2l-input-text');
-				nameTextInput.value = 'Superman';
+				nameTextInput.value = 'Level 1';
 				raf(function() {
 					element.addEventListener('d2l-rubric-level-saved', function() {
 						var body = fetch.args[0][1].body;
@@ -59,6 +59,8 @@ suite('<d2l-rubric-level-editor>', function() {
 						expect(body.get && body.get('name') || 'Superman').to.equal('Superman');
 						done();
 					});
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.value = 'Superman';
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -75,7 +77,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				fetch.returns(promise);
 
 				var pointsInput = element.$$('#level-points');
-				pointsInput.value = '12.6';
+				pointsInput.value = '8.0';
 				raf(function() {
 					element.addEventListener('d2l-rubric-level-points-saved', function() {
 						var body = fetch.args[0][1].body;
@@ -83,6 +85,8 @@ suite('<d2l-rubric-level-editor>', function() {
 						expect(body.get && body.get('points') || '12.6').to.equal('12.6');
 						done();
 					});
+					pointsInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+					pointsInput.value = '12.6';
 					pointsInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					pointsInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -101,10 +105,12 @@ suite('<d2l-rubric-level-editor>', function() {
 				fetch.returns(promise);
 
 				var pointsInput = element.$$('#level-points');
-				pointsInput.value = 'abc';
+				pointsInput.value = '8.0';
 				element.addEventListener('d2l-siren-entity-save-error', function() {
 					done();
 				});
+				pointsInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+				pointsInput.value = 'abc';
 				pointsInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 				pointsInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 			});
@@ -122,7 +128,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				fetch.returns(promise);
 
 				var nameTextInput = element.$$('#level-points');
-				nameTextInput.value = 'abc';
+				nameTextInput.value = '8.0';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
@@ -133,6 +139,8 @@ suite('<d2l-rubric-level-editor>', function() {
 							done();
 						});
 					});
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.value = 'abc';
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -151,7 +159,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				fetch.returns(promise);
 
 				var nameTextInput = element.$$('#level-name');
-				nameTextInput.value = 'Superman';
+				nameTextInput.value = 'Level 1';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
 						flush(function() {
@@ -162,6 +170,8 @@ suite('<d2l-rubric-level-editor>', function() {
 							done();
 						});
 					});
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.value = 'Superman';
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -169,7 +179,7 @@ suite('<d2l-rubric-level-editor>', function() {
 
 			test('sets aria-invalid if name is empty', function(done) {
 				var nameTextInput = element.$$('#level-name');
-				nameTextInput.value = '';
+				nameTextInput.value = 'Level 1';
 				raf(function() {
 					flush(function() {
 						// don't test in IE
@@ -178,6 +188,8 @@ suite('<d2l-rubric-level-editor>', function() {
 						}
 						done();
 					});
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+					nameTextInput.value = '';
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
