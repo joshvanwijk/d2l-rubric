@@ -7,6 +7,8 @@ import 'd2l-table/d2l-table-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
 import '../rubric-siren-entity.js';
 
+const SLIDER_CENTER_OFFSET = 16;
+
 class RubricLoaOverlay extends mixinBehaviors([
     window.D2L.Hypermedia.HMConstantsBehavior,
     D2L.PolymerBehaviors.Siren.EntityBehavior
@@ -14,6 +16,13 @@ class RubricLoaOverlay extends mixinBehaviors([
     static get properties() {
         return {
             _currentSliderPosition: Number,
+            _dragCaptureOverlay: Object,
+            _dragCursorOffset: Number,
+            _draggingSlider: Object,
+            _draggingSliderStyleBackup: {
+                type: Object,
+                value: {}
+            },
             _headingsWidth: {
                 type: Number,
                 value: 1  
@@ -25,14 +34,15 @@ class RubricLoaOverlay extends mixinBehaviors([
                 type: Object,
                 value: null,
                 observer: '_onLoaMappingEntityChanged'
-            }
+            },
+            _resizeElement: Object
         };
     }
 
     static get template() {
         return html`
             <style include="d2l-rubric-editor-cell-styles">
-                :host {
+                d2l-resize-aware {
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
@@ -92,6 +102,8 @@ class RubricLoaOverlay extends mixinBehaviors([
                 }
 
                 #row-data {
+                    display: flex;
+                    flex: 1 1 auto;
                     position: relative;
                 }
 
@@ -102,46 +114,76 @@ class RubricLoaOverlay extends mixinBehaviors([
                     position: absolute;
                     width: 30px;
                 }
+
+                .slider:hover {
+                    cursor: pointer;
+                }
+
+                #drag-capture-overlay {
+                    bottom: 0;
+                    left: 0;
+                    position: fixed;
+                    right: 0;
+                    top: 0;
+                    z-index: 2;
+                }
             </style>
 
             <rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
+            <d2l-resize-aware>
             <template is="dom-if" if="[[_hasLoaLevels(_loaMappingHref)]]">
                 <div class="gutter-left"></div>
                 <div class="cell col-first" is-holistic$="[[isHolistic]]">
                     Achievement Levels
                 </div>
-                <div id="row-data" style="display: inherit; flex: 1 1 auto;">
+                    <div id="row-data">
                         <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
                         <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel)]]" is-holistic$="[[isHolistic]]">
                             [[loaLevel.properties.name]]
                         </div>
-                            <div class="slider" style$="[[_getSliderStyle(loaLevel, loaIndex, _headingsWidth)]]"></div>
+                            <div
+                                class="slider"
+                                draggable="true"
+                                on-dragStart="_onDragSliderStart"
+                                style$="[[_getSliderStyle(loaLevel, loaIndex, _headingsWidth)]]"
+                            ></div>
                     </template>
                 </div>
                 <div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]"></div>
                 <div class="gutter-right"></div>
             </template>
+            </d2l-resize-aware>
         `;
     }
 
     attached() {
 		afterNextRender(this, () => {
-			if (this.isAttached) {
+            this._resizeElement = this.$$('d2l-resize-aware');
+            this._resizeElement.addEventListener('d2l-resize-aware-resized', this.checkSize.bind(this));
 				this.checkSize();
-			}
 		});
+
+        document.addEventListener('dragover', this._onDragOver.bind(this));
+        document.addEventListener('dragend', this._onDragEnd.bind(this));
     }
 
-	checkSize() {
-        console.log('Check size');
+	detached() {
+        if (this._resizeElement) {
+            this._resizeElement.removeEventListener('d2l-resize-aware-resized', this.checkSize.bind(this));
+        }
 
+        document.removeEventListener('dragover', this._onDrag.bind(this));
+        document.removeEventListener('dragend', this._onDragEnd.bind(this));
+    }
+    
+	checkSize() {
         this.async(() => {
             const section = this.$$('#row-data');
 
             if (section) {
                 this._headingsWidth = section.offsetWidth;
+                this.fire('d2l-rubric-loa-overlay-width-changed', { width: section.offsetWidth });
             }
-			// if (section) this.fire('d2l-rubric-editor-levels-width-changed', { width: section.offsetWidth });
 		}, 1);
 	}
 
@@ -160,11 +202,6 @@ class RubricLoaOverlay extends mixinBehaviors([
         }
 
         this._loaLevels = entity.getSubEntitiesByClass('level-of-achievement');
-
-        // HACK
-        setTimeout(() => {
-            this.checkSize();
-        }, 0);
     }
 
     _getHeaderStyle(loaLevel) {
@@ -180,10 +217,8 @@ class RubricLoaOverlay extends mixinBehaviors([
     }
     
     _getSliderStyle(loaLevel, index, totalWidth) {
-        console.log('positioning slider');
-
         if (index === 0) {
-            this._currentSliderPosition = -16;
+            this._currentSliderPosition = -SLIDER_CENTER_OFFSET;
         }
 
         const nSections = this._levels.length;
@@ -234,6 +269,49 @@ class RubricLoaOverlay extends mixinBehaviors([
     
     _hasLoaLevels(href) {
         return href !== '';
+    }
+
+    _onDragOver(e) {
+        e.dataTransfer.dropEffect = 'move';
+
+        const minBound = -SLIDER_CENTER_OFFSET;
+        const maxBound = this._draggingSlider.parentNode.offsetWidth - SLIDER_CENTER_OFFSET;
+        
+        let position = e.offsetX - this._draggingSlider.parentNode.offsetLeft - this._dragCursorOffset;
+        position = Math.min(Math.max(minBound, position), maxBound);
+
+        this._draggingSlider.style.left = `${position}px`;
+    }
+
+    _onDragEnd(e) {
+        this._draggingSlider.style.left = this._draggingSliderStyleBackup.left;
+        this._draggingSlider.style.zIndex = this._draggingSliderStyleBackup.zIndex;
+
+        this._draggingSlider = null;
+
+        this._dragCaptureOverlay.parentNode.removeChild(this._dragCaptureOverlay);
+        this._dragCaptureOverlay = null;
+    }
+
+    _onDragSliderStart(e) {
+        if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = 'all';
+            e.dataTransfer.setData("text/plain", null);
+            e.dataTransfer.setDragImage(new Image(), 0, 0);
+        }
+
+        this._draggingSlider = e.target;
+        this._dragCursorOffset = e.layerX;
+
+        this._draggingSliderStyleBackup.left = this._draggingSlider.style.left;
+        this._draggingSliderStyleBackup.zIndex = this._draggingSlider.style.zIndex;
+
+        this._draggingSlider.style.zIndex = 3;
+
+        this._dragCaptureOverlay = document.createElement('div');
+        this._dragCaptureOverlay.setAttribute('id', 'drag-capture-overlay');
+
+        this.root.appendChild(this._dragCaptureOverlay);
     }
 
     _resolveLoaLevel(loaLevelHref) {
