@@ -250,7 +250,8 @@ const $_documentContainer = html `
 				<label for="rubric-name">[[localize('name')]]*</label>
 				<d2l-input-text
 					id="rubric-name"
-					value="{{_rubricName}}"
+					value="{{_getShownRubricName(_rubricNameFocused,_enteredRubricName,_rubricName)}}"
+					on-focus="_nameFocusHandler"
 					on-blur="_nameBlurHandler"
 					on-input="_nameInputHandler"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
@@ -396,6 +397,13 @@ Polymer({
 		},
 		_rubricName: {
 			type: String,
+		},
+		_enteredRubricName: {
+			type: String,
+		},
+		_rubricNameFocused: {
+			type: Boolean,
+			value: false
 		},
 		_canEditName: {
 			type: Boolean,
@@ -720,14 +728,20 @@ Polymer({
 		}
 
 	},
+	_nameFocusHandler: function(e) {
+		this._enteredRubricName = this._rubricName;
+		this._rubricNameFocused = true;
+	},
 	_nameBlurHandler: function(e) {
 		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
 			this._saveName(e.target.value);
 		}
+		this._rubricNameFocused = false;
 	},
 	_nameInputHandler: function(e) {
 		this._nameChanging = true;
 		var value = e.target.value;
+		this._enteredRubricName = value;
 		this.debounce('input', function() {
 			if (this._nameChanging) {
 				this._saveName(value);
@@ -909,5 +923,8 @@ Polymer({
 		if (isLocked) {
 			import('../d2l-rubric.js');
 		}
+	},
+	_getShownRubricName: function(isFocused, enteredName, actualName) {
+		return isFocused ? enteredName : actualName;
 	}
 });
