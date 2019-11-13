@@ -15,14 +15,11 @@ class RubricLoaOverlay extends mixinBehaviors([
 ], PolymerElement) {
     static get properties() {
         return {
+            _activeSlider: Object,
             _currentSliderPosition: Number,
             _dragCaptureOverlay: Object,
             _dragCursorOffset: Number,
             _draggingSlider: Object,
-            _draggingSliderStyleBackup: {
-                type: Object,
-                value: {}
-            },
             _headingsWidth: {
                 type: Number,
                 value: 1  
@@ -108,15 +105,28 @@ class RubricLoaOverlay extends mixinBehaviors([
                 }
 
                 .slider {
-                    border: 0px;
+                    border: 0px dashed;
                     border-radius: 15px;
                     height: 30px;
                     position: absolute;
                     width: 30px;
                 }
 
+                .slider.active {
+                    background-color: transparent !important;
+                    border-width: 2px;
+                }
+
                 .slider:hover {
                     cursor: pointer;
+                }
+
+                #motion-slider {
+                    z-index: 3;
+                }
+
+                #motion-slider.hidden {
+                    display: none;
                 }
 
                 #drag-capture-overlay {
@@ -127,44 +137,49 @@ class RubricLoaOverlay extends mixinBehaviors([
                     top: 0;
                     z-index: 2;
                 }
+
+                #drag-capture-overlay:hover,
+                #motion-slider:hover {
+                    cursor: grab;
+                }
             </style>
 
             <rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
             <d2l-resize-aware>
-            <template is="dom-if" if="[[_hasLoaLevels(_loaMappingHref)]]">
-                <div class="gutter-left"></div>
-                <div class="cell col-first" is-holistic$="[[isHolistic]]">
-                    Achievement Levels
-                </div>
+                <template is="dom-if" if="[[_hasLoaLevels(_loaMappingHref)]]">
+                    <div class="gutter-left"></div>
+                    <div class="cell col-first" is-holistic$="[[isHolistic]]">
+                        Achievement Levels
+                    </div>
                     <div id="row-data">
+                        <div id="motion-slider" class="slider hidden"></div>
                         <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
-                        <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel)]]" is-holistic$="[[isHolistic]]">
-                            [[loaLevel.properties.name]]
-                        </div>
+                            <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel)]]" is-holistic$="[[isHolistic]]">
+                                [[loaLevel.properties.name]]
+                            </div>
                             <div
                                 class="slider"
-                                draggable="true"
-                                on-dragStart="_onDragSliderStart"
+                                on-mouseDown="_onDragSliderStart"
                                 style$="[[_getSliderStyle(loaLevel, loaIndex, _headingsWidth)]]"
                             ></div>
-                    </template>
-                </div>
-                <div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]"></div>
-                <div class="gutter-right"></div>
-            </template>
+                        </template>
+                    </div>
+                    <div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]"></div>
+                    <div class="gutter-right"></div>
+                </template>
             </d2l-resize-aware>
         `;
     }
-
+    
     attached() {
-		afterNextRender(this, () => {
+        afterNextRender(this, () => {
             this._resizeElement = this.$$('d2l-resize-aware');
             this._resizeElement.addEventListener('d2l-resize-aware-resized', this.checkSize.bind(this));
-				this.checkSize();
-		});
+            this.checkSize();
+        });
 
-        document.addEventListener('dragover', this._onDragOver.bind(this));
-        document.addEventListener('dragend', this._onDragEnd.bind(this));
+        document.addEventListener('mousemove', this._onMouseMove.bind(this));
+        document.addEventListener('mouseup', this._onMouseUp.bind(this));
     }
 
 	detached() {
@@ -172,8 +187,8 @@ class RubricLoaOverlay extends mixinBehaviors([
             this._resizeElement.removeEventListener('d2l-resize-aware-resized', this.checkSize.bind(this));
         }
 
-        document.removeEventListener('dragover', this._onDrag.bind(this));
-        document.removeEventListener('dragend', this._onDragEnd.bind(this));
+        document.removeEventListener('mousemove', this._onMouseMove.bind(this));
+        document.removeEventListener('mouseup', this._onMouseUp.bind(this));
     }
     
 	checkSize() {
@@ -215,7 +230,7 @@ class RubricLoaOverlay extends mixinBehaviors([
             `flex-grow: ${colSpan}`
         ].join(';');
     }
-    
+
     _getSliderStyle(loaLevel, index, totalWidth) {
         if (index === 0) {
             this._currentSliderPosition = -SLIDER_CENTER_OFFSET;
@@ -237,6 +252,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
         return [
             `background-color: ${color}`,
+            `border-color: ${color}`,
             `left: ${offset}px`,
             `z-index: ${zIndex}`
         ].join(';');
@@ -271,47 +287,47 @@ class RubricLoaOverlay extends mixinBehaviors([
         return href !== '';
     }
 
-    _onDragOver(e) {
-        e.dataTransfer.dropEffect = 'move';
-
-        const minBound = -SLIDER_CENTER_OFFSET;
-        const maxBound = this._draggingSlider.parentNode.offsetWidth - SLIDER_CENTER_OFFSET;
-        
-        let position = e.offsetX - this._draggingSlider.parentNode.offsetLeft - this._dragCursorOffset;
-        position = Math.min(Math.max(minBound, position), maxBound);
-
-        this._draggingSlider.style.left = `${position}px`;
-    }
-
-    _onDragEnd(e) {
-        this._draggingSlider.style.left = this._draggingSliderStyleBackup.left;
-        this._draggingSlider.style.zIndex = this._draggingSliderStyleBackup.zIndex;
-
-        this._draggingSlider = null;
-
-        this._dragCaptureOverlay.parentNode.removeChild(this._dragCaptureOverlay);
-        this._dragCaptureOverlay = null;
-    }
-
     _onDragSliderStart(e) {
-        if (e.dataTransfer) {
-            e.dataTransfer.effectAllowed = 'all';
-            e.dataTransfer.setData("text/plain", null);
-            e.dataTransfer.setDragImage(new Image(), 0, 0);
-        }
+        e.preventDefault();
 
-        this._draggingSlider = e.target;
+        this._activeSlider = e.target;
+        this._activeSlider.classList.add('active');
+        
+        this._draggingSlider = this.$$('#motion-slider');
         this._dragCursorOffset = e.layerX;
-
-        this._draggingSliderStyleBackup.left = this._draggingSlider.style.left;
-        this._draggingSliderStyleBackup.zIndex = this._draggingSlider.style.zIndex;
-
-        this._draggingSlider.style.zIndex = 3;
+        this._draggingSlider.style.backgroundColor = this._activeSlider.style.backgroundColor;
+        this._draggingSlider.style.left = this._activeSlider.style.left;
+        this._draggingSlider.classList.remove('hidden');
 
         this._dragCaptureOverlay = document.createElement('div');
         this._dragCaptureOverlay.setAttribute('id', 'drag-capture-overlay');
 
         this.root.appendChild(this._dragCaptureOverlay);
+    }
+
+    _onMouseMove(e) {
+        if (this._draggingSlider) {
+            const minBound = -SLIDER_CENTER_OFFSET;
+            const maxBound = this._draggingSlider.parentNode.offsetWidth - SLIDER_CENTER_OFFSET;
+            
+            let position = e.pageX - this._draggingSlider.parentNode.offsetLeft - this._draggingSlider.offsetWidth - this._dragCursorOffset;
+            position = Math.min(Math.max(minBound, position), maxBound);
+
+            this._draggingSlider.style.left = `${position}px`;
+        }
+    }
+
+    _onMouseUp(e) {
+        if (this._draggingSlider) {
+            this._activeSlider.classList.remove('active');
+            this._activeSlider = null;
+
+            this._draggingSlider.classList.add('hidden');
+            this._draggingSlider = null;
+
+            this._dragCaptureOverlay.parentNode.removeChild(this._dragCaptureOverlay);
+            this._dragCaptureOverlay = null;
+        }
     }
 
     _resolveLoaLevel(loaLevelHref) {
