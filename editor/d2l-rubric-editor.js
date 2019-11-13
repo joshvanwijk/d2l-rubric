@@ -252,6 +252,7 @@ const $_documentContainer = html `
 					id="rubric-name"
 					value="{{_rubricName}}"
 					on-blur="_nameBlurHandler"
+					on-input="_nameInputHandler"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 					aria-label$="[[localize('name')]]"
 					disabled="[[!_canEditName]]"
@@ -411,6 +412,14 @@ Polymer({
 		_nameRequired: {
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
+		},
+		_nameChanging: {
+			type: Boolean,
+			value: false
+		},
+		_pendingNameSaves: {
+			type: Number,
+			value: 0
 		},
 		isSinglePageRubric: {
 			type: Boolean,
@@ -712,7 +721,21 @@ Polymer({
 
 	},
 	_nameBlurHandler: function(e) {
+		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
+			this._saveName(e.target.value);
+		}
+	},
+	_nameInputHandler: function(e) {
+		this._nameChanging = true;
 		var value = e.target.value;
+		this.debounce('input', function() {
+			if (this._nameChanging) {
+				this._saveName(value);
+			}
+		}.bind(this), 500);
+	},
+	_saveName: function(value) {
+		this._nameChanging = false;
 		var action = this.entity.getActionByName('update-name');
 		if (action) {
 			if (this._nameRequired && !value.trim()) {
@@ -720,11 +743,13 @@ Polymer({
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'name-bubble');
 				var fields = [{ 'name': 'name', 'value': value }];
+				this._pendingNameSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-name-saved');
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
 				}.bind(this)).finally(function() {
+					this._pendingNameSaves--;
 					if (!this._nameInvalid) {
 						this._updateName(this.entity);
 					}
@@ -733,8 +758,10 @@ Polymer({
 		}
 	},
 	_updateName: function(entity) {
-		this.toggleBubble('_nameInvalid', false, 'name-bubble');
-		this._rubricName = this._getRubricName(entity);
+		if (!this._nameChanging && !this._pendingNameSaves) {
+			this.toggleBubble('_nameInvalid', false, 'name-bubble');
+			this._rubricName = this._getRubricName(entity);
+		}
 	},
 	_onEntitySave: function(e) {
 		this.$$('#rubric-header').onEntitySave(e);
