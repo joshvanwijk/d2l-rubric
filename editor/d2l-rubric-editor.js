@@ -250,7 +250,7 @@ const $_documentContainer = html `
 				<label for="rubric-name">[[localize('name')]]*</label>
 				<d2l-input-text
 					id="rubric-name"
-					value="{{_getShownRubricName(_rubricNameFocused,_pendingNameSaves,_enteredRubricName,_rubricName)}}"
+					value="{{_getShownRubricName(_rubricNameFocused,_nameInvalid,_pendingNameSaves,_enteredRubricName,_rubricName)}}"
 					on-focus="_nameFocusHandler"
 					on-blur="_nameBlurHandler"
 					on-input="_nameInputHandler"
@@ -924,7 +924,7 @@ Polymer({
 			import('../d2l-rubric.js');
 		}
 	},
-	_getShownRubricName: function(isFocused, pendingSaves, enteredName, actualName) {
-		return (isFocused || pendingSaves > 0) ? enteredName : actualName;
+	_getShownRubricName: function(isFocused, isInvalid, pendingSaves, enteredName, actualName) {
+		return (isFocused || isInvalid || pendingSaves > 0) ? enteredName : actualName;
 	}
 });
