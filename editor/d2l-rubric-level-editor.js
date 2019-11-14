@@ -280,8 +280,8 @@ Polymer({
 	_showAltPercentFormat: function(percentageFormatAlternate, usesPercentage) {
 		return usesPercentage && percentageFormatAlternate;
 	},
-	_nameFocusHandler: function() {
-		this._enteredLevelName = this._levelName;
+	_nameFocusHandler: function(e) {
+		this._enteredLevelName = e.target.value;
 		this._levelNameFocused = true;
 	},
 	_nameBlurHandler: function(e) {
@@ -329,8 +329,8 @@ Polymer({
 			this._levelName = entity.properties.name;
 		}
 	},
-	_pointsFocusHandler: function() {
-		this._enteredLevelPoints = this._levelPoints;
+	_pointsFocusHandler: function(e) {
+		this._enteredLevelPoints = e.target.value;
 		this._levelPointsFocused = true;
 	},
 	_pointsBlurHandler: function(e) {

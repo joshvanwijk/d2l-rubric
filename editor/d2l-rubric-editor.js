@@ -728,8 +728,8 @@ Polymer({
 		}
 
 	},
-	_nameFocusHandler: function() {
-		this._enteredRubricName = this._rubricName;
+	_nameFocusHandler: function(e) {
+		this._enteredRubricName = e.target.value;
 		this._rubricNameFocused = true;
 	},
 	_nameBlurHandler: function(e) {
