@@ -50,7 +50,7 @@ suite('<d2l-rubric-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('#rubric-name');
+				var nameTextInput = element.$$('#rubric-name').$.input;
 				nameTextInput.value = 'Superman Rubric';
 				raf(function() {
 					element.addEventListener('d2l-rubric-name-saved', function() {
@@ -60,6 +60,7 @@ suite('<d2l-rubric-editor>', function() {
 						done();
 					});
 					nameTextInput.value = 'Superman Rubric';
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -77,7 +78,7 @@ suite('<d2l-rubric-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('#rubric-name');
+				var nameTextInput = element.$$('#rubric-name').$.input;
 				nameTextInput.value = 'Superman Rubric';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -90,13 +91,14 @@ suite('<d2l-rubric-editor>', function() {
 						});
 					});
 					nameTextInput.value = 'Superman Rubric';
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
 			});
 
 			test('sets aria-invalid if name is empty', function(done) {
-				var nameTextInput = element.$$('#rubric-name');
+				var nameTextInput = element.$$('#rubric-name').$.input;
 				nameTextInput.value = '';
 				raf(function() {
 					flush(function() {
@@ -107,6 +109,7 @@ suite('<d2l-rubric-editor>', function() {
 						done();
 					});
 					nameTextInput.value = '';
+					nameTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -342,7 +345,7 @@ suite('<d2l-rubric-editor>', function() {
 			});
 
 			test('name is disabled', function() {
-				var nameTextInput = element.$$('#rubric-name');
+				var nameTextInput = element.$$('#rubric-name').$.input;
 				expect(nameTextInput.disabled).to.be.true;
 			});
 

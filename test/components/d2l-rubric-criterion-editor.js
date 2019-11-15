@@ -63,6 +63,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 						expect(body.get && body.get('name') || 'Batman and Robin').to.equal('Batman and Robin');
 						done();
 					});
+					nameTextArea.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 					nameTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -90,6 +91,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 							done();
 						});
 					});
+					nameTextArea.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 					nameTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -106,6 +108,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 						}
 						done();
 					});
+					nameTextArea.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 					nameTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 					nameTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 				});
@@ -207,7 +210,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				fetch.returns(promise);
 
 				element.async(function() {
-					var outOfTextArea = element.$$('#out-of-textbox');
+					var outOfTextArea = element.$$('#out-of-textbox').$.input;
 					outOfTextArea.value = 'five';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -219,6 +222,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 								done();
 							});
 						});
+						outOfTextArea.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
 						outOfTextArea.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 						outOfTextArea.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 					});

@@ -24,6 +24,7 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-link/d2l-link.js';
 import './d2l-rubric-visibility-editor.js';
+import './d2l-rubric-autosaving-input.js';
 import 's-html/s-html.js';
 import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
 
@@ -248,17 +249,16 @@ const $_documentContainer = html `
 		<div id="rubric-name-container">
 			<template is="dom-if" if="[[!_isLocked]]">
 				<label for="rubric-name">[[localize('name')]]*</label>
-				<d2l-input-text
+				<d2l-rubric-autosaving-input
 					id="rubric-name"
-					value="{{_getShownRubricName(_rubricNameFocused,_nameInvalid,_pendingNameSaves,_enteredRubricName,_rubricName)}}"
-					on-focus="_nameFocusHandler"
-					on-blur="_nameBlurHandler"
-					on-input="_nameInputHandler"
-					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
-					aria-label$="[[localize('name')]]"
-					disabled="[[!_canEditName]]"
-					prevent-submit="">
-				</d2l-input-text>
+					value="{{_rubricName}}"
+					on-save="_saveName"
+					invalid="[[_nameInvalid]]"
+					label="[[localize('name')]]"
+					enabled="[[_canEditName]]"
+					pending-saves="[[_pendingNameSaves]]"
+					editing="{{_nameChanging}}"
+				></d2l-rubric-autosaving-input>
 				<template is="dom-if" if="[[_nameInvalid]]">
 					<d2l-tooltip id="name-bubble" class="is-error" for="rubric-name" position="bottom">
 						[[_nameInvalidError]]
@@ -397,13 +397,6 @@ Polymer({
 		},
 		_rubricName: {
 			type: String,
-		},
-		_enteredRubricName: {
-			type: String,
-		},
-		_rubricNameFocused: {
-			type: Boolean,
-			value: false
 		},
 		_canEditName: {
 			type: Boolean,
@@ -728,35 +721,14 @@ Polymer({
 		}
 
 	},
-	_nameFocusHandler: function(e) {
-		this._enteredRubricName = e.target.value;
-		this._rubricNameFocused = true;
-	},
-	_nameBlurHandler: function(e) {
-		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
-			this._saveName(e.target.value);
-		}
-		this._rubricNameFocused = false;
-	},
-	_nameInputHandler: function(e) {
-		this._nameChanging = true;
-		var value = e.target.value;
-		this._enteredRubricName = value;
-		this.debounce('input', function() {
-			if (this._nameChanging) {
-				this._saveName(value);
-			}
-		}.bind(this), 500);
-	},
-	_saveName: function(value) {
-		this._nameChanging = false;
+	_saveName: function(saveEvent) {
 		var action = this.entity.getActionByName('update-name');
 		if (action) {
-			if (this._nameRequired && !value.trim()) {
+			if (this._nameRequired && !saveEvent.value.trim()) {
 				this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'name-bubble');
-				var fields = [{ 'name': 'name', 'value': value }];
+				var fields = [{ 'name': 'name', 'value': saveEvent.value }];
 				this._pendingNameSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-name-saved');
@@ -923,8 +895,5 @@ Polymer({
 		if (isLocked) {
 			import('../d2l-rubric.js');
 		}
-	},
-	_getShownRubricName: function(isFocused, isInvalid, pendingSaves, enteredName, actualName) {
-		return (isFocused || isInvalid || pendingSaves > 0) ? enteredName : actualName;
 	}
 });
