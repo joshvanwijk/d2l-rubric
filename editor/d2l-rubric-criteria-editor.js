@@ -288,6 +288,7 @@ Polymer({
 		if (!entity) {
 			return;
 		}
+
 		this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 		this._rubricLevelsHref = this._getRubricLevelsLink(entity);
 		// EXPERIMENTAL animation/transition handling. If oldEntity is undefined, then
@@ -309,7 +310,7 @@ Polymer({
 	},
 
 	_getRubricLevelsLink(entity) {
-		var link = entity && entity.getLinkByRel('levels');
+		var link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/levels');
 		return link && link.href || '';
 	},
 
