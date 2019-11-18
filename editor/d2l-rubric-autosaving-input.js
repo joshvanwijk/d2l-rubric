@@ -74,6 +74,9 @@ class AutosavingInput extends PolymerElement {
 
 	_onBlur(e) {
 		if (this.editing || !this.pendingSaves && this.invalid) {
+			if (this._debouncer) {
+				this._debouncer.cancel();
+			}
 			this._save(e.target.value);
 		}
 		this._isFocused = false;
