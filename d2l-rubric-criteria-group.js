@@ -73,16 +73,44 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			d2l-table[type="default"] d2l-tbody d2l-tr {
 				height: 100%;
 			}
-			#loa-labels > d2l-td {
+			#loa-container #float {
+				padding: 0px;
+			}
+			#loa-labels {
+				display: flex;
+				height: 100%;
+				margin: -1rem;
+				position: absolute;
+				width: 100%;
+			}
+			#loa-labels > div {
+				align-items: center;
 				background-color: #F1F5FB;
+				border: 1px solid var(--d2l-table-border-color);
+				border-width: 0px 1px 0px 0px;
+				box-sizing: border-box;
+				display: flex;
 				font-size: 14px;
-				height: 30px;
+				height: 100%;
+				justify-content: flex-start;
+				overflow: hidden;
 				padding-bottom: 0px;
 				padding-top: 0px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			#loa-labels > div:not(:first-child) {
+				justify-content: center;
 			}
 			#loa-labels > .loa-heading {
+				flex-basis: 0px;
 				font-weight: bold;
-				text-align: center;
+			}
+			#loa-labels .loa-label {
+				padding: 0px 1rem;
+			}
+			#loa-labels .loa-end {
+				border-width: 0px;
 			}
 			d2l-table[type="default"] d2l-td.criteria {
 				@apply --d2l-body-compact-text;
@@ -221,15 +249,19 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					</template>
 				</d2l-tr>
 				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
-					<d2l-tr id="loa-labels">
-						<d2l-td>Achievement Levels</d2l-td>
-						<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
-							<d2l-td class="loa-heading" style$="[[_getHeaderStyle(loaLevel)]]">[[loaLevel.properties.name]]</d2l-td>
-						</template>
-						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td></d2l-td>
-						</template>
-					</d2l-tr>
+					<d2l-tspan id="loa-container">
+						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_onLoaResize">
+							<div class="loa-label">Achievement Levels</div>
+							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
+								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel)]]">
+									[[loaLevel.properties.name]]
+								</div>
+							</template>
+							<template is="dom-if" if="[[_hasOutOf(entity)]]">
+								<div class="loa-end"></div>
+							</template>
+						</d2l-resize-aware>
+					</d2l-tspan>
 				</template>
 			</d2l-thead>
 			<d2l-tbody>
@@ -306,6 +338,7 @@ Polymer({
 			value: null
 		},
 		_levels: Array,
+		_sortedLevels: Array,
 		_loaLevels: Array,
 		_loaMappingHref: String,
 		_loaLevelEntity: {
@@ -411,6 +444,7 @@ Polymer({
 		}
 
 		this._levels = levelsEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
+		this._sortedLevels = this._sortRubricLevels(this._levels);
 		this._loaMappingHref = this._getLoaMappingLink(levelsEntity);
 
 		// trigger a resize event so that the table resizes with the new levels
@@ -502,11 +536,11 @@ Polymer({
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 		return link && link.href || '';
 	},
-
+	
 	_getCriterionCells: function(entity) {
 		var entities = entity && entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 		return entities || [];
-	},
+	},	
 
 	_getLoaMappingLink: function(entity) {
 		var link = entity && entity.getLinkByRel('loa-levels');
@@ -528,7 +562,17 @@ Polymer({
 	},
 
 	_getHeaderStyle: function(loaLevel) {
-		return `border-right-color: ${loaLevel.properties.color}; border-right-width: 2px;`;
+		const colSpan = this._getLoaLevelSpan(loaLevel);
+
+        if (colSpan === 0) {
+            return 'display: none;';
+        }
+
+		return [
+			`border-right-color: ${loaLevel.properties.color}`,
+			'border-right-width: 2px',
+			`flex-grow: ${colSpan}`
+        ].join(';');
 	},
 
 	_hasFeedback: function(criterionEntity, assessmentResult) {
@@ -860,5 +904,97 @@ Polymer({
 	_isFocusedStyling: function(changeRecord, criterionNum) {
 		var feedbackInvalid = changeRecord.base[criterionNum];
 		return !this._isStaticView() && !feedbackInvalid;
-	}
+	},
+
+	_onLoaResize: function(e) {
+		const firstRow = this.root.querySelectorAll('.d2l-table-row-first')[0];
+
+		const widthStart = Math.floor(firstRow.firstChild.getBoundingClientRect().width);
+		const startLabel = this.root.querySelectorAll('.loa-label')[0];
+		startLabel.style.width = `${widthStart - 1}px`;
+		
+		const endLabel = this.root.querySelectorAll('.loa-end')[0];
+		if (endLabel) {
+			const widthEnd = Math.floor(firstRow.querySelectorAll('d2l-th.out-of')[0].getBoundingClientRect().width);
+			endLabel.style.width = `${widthEnd - 1}px`;
+		}
+	},
+
+	_getLoaLevelSpan: function(loaLevel) {
+        const prevLoa = this._getPrevLoaLevel(loaLevel);
+
+        const currentRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevel));
+        const prevRubric = this._resolveRubricLevel(this._getRubricLevelLink(prevLoa));
+
+        const dist = this._getRubricLevelDist(prevRubric, currentRubric);
+        return dist;
+    },
+
+	_getRubricLevelDist: function(rubricLevelEntity1, rubricLevelEntity2) {
+        const l = this._getRubricLevelIndex(rubricLevelEntity1);
+        const r = this._getRubricLevelIndex(rubricLevelEntity2);
+
+        return r - l;
+    },
+
+    _getRubricLevelIndex: function(rubricLevelEntity) {
+        for (let i = 0; i < this._sortedLevels.length; i++) {
+            if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(this._sortedLevels[i])) {
+                return i;
+            }
+        }
+
+        return -1;
+    },
+
+    _sortRubricLevels: function(levelEntities) {
+        const sorted = [];
+
+        let first = null;
+        for (let i = 0; i < levelEntities.length; i++) {
+            if (this._getPrevLink(levelEntities[i]) === this._getPrevLink(null)) {
+                first = levelEntities[i];
+                break;
+            }
+        }
+
+        if (first === null) {
+            return [];
+        }
+
+        let current = first;
+        while (current !== null) {
+            sorted.push(current);
+            current = this._getNextRubricLevel(current);
+        }
+
+        return sorted;
+	},
+	
+	_getPrevLink: function(entity) {
+		var link = entity && entity.getLinkByRel('prev');
+		return link && link.href || '';
+	},
+
+	_getNextLink: function(entity) {
+		var link = entity && entity.getLinkByRel('next');
+		return link && link.href || '';
+    },
+	
+	_getNextRubricLevel: function(rubricLevelEntity) {
+        const nextHref = this._getNextLink(rubricLevelEntity);
+        return this._resolveRubricLevel(nextHref);
+	},
+	
+	_getPrevLoaLevel: function(loaLevelEntity) {
+        for (let i = 1; i < this._loaLevels.length; i++) {
+            const level = this._loaLevels[i];
+
+            if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
+                return this._loaLevels[i - 1];
+            }
+        }
+
+        return null;
+    }
 });
