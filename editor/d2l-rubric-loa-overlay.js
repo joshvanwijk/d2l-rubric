@@ -332,7 +332,7 @@ class RubricLoaOverlay extends mixinBehaviors([
         this._draggingLoaLevel = this._resolveLoaLevel(this._activeSlider.getAttribute('data-loa-level'));
         
         this._draggingSlider = this.$$('#motion-slider');
-        this._dragCursorOffset = e.layerX;
+        this._dragCursorOffset = e.offsetX;
         this._draggingSlider.style.backgroundColor = this._activeSlider.style.backgroundColor;
         this._draggingSlider.style.left = this._activeSlider.style.left;
         this._draggingSlider.classList.remove('hidden');
@@ -376,7 +376,9 @@ class RubricLoaOverlay extends mixinBehaviors([
         const minBound = -SLIDER_CENTER_OFFSET;
         const maxBound = this._draggingSlider.parentNode.offsetWidth - SLIDER_CENTER_OFFSET;
         
-        const position = mouseX - this._draggingSlider.parentNode.offsetLeft - this._draggingSlider.offsetWidth - this._dragCursorOffset;
+        const parentOffset = this._draggingSlider.parentNode.getBoundingClientRect().left;
+        const position = mouseX - parentOffset - this._dragCursorOffset;
+
         return Math.min(Math.max(minBound, position), maxBound);
     }
 
