@@ -167,6 +167,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			[hidden] {
 				display: none !important;
 			}
+
+			d2l-tspan {
+				position: relative;
+			}
 		</style>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
