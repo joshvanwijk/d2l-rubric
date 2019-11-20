@@ -50,7 +50,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('d2l-input-text');
+				var nameTextInput = element.$$('d2l-rubric-autosaving-input').$.input;
 				nameTextInput.value = 'Level 1';
 				raf(function() {
 					element.addEventListener('d2l-rubric-level-saved', function() {
@@ -76,7 +76,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var pointsInput = element.$$('#level-points');
+				var pointsInput = element.$$('#level-points').$.input;
 				pointsInput.value = '8.0';
 				raf(function() {
 					element.addEventListener('d2l-rubric-level-points-saved', function() {
@@ -104,7 +104,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var pointsInput = element.$$('#level-points');
+				var pointsInput = element.$$('#level-points').$.input;
 				pointsInput.value = '8.0';
 				element.addEventListener('d2l-siren-entity-save-error', function() {
 					done();
@@ -127,7 +127,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('#level-points');
+				var nameTextInput = element.$$('#level-points').$.input;
 				nameTextInput.value = '8.0';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -158,7 +158,7 @@ suite('<d2l-rubric-level-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				var nameTextInput = element.$$('#level-name');
+				var nameTextInput = element.$$('#level-name').$.input;
 				nameTextInput.value = 'Level 1';
 				raf(function() {
 					element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -178,7 +178,7 @@ suite('<d2l-rubric-level-editor>', function() {
 			});
 
 			test('sets aria-invalid if name is empty', function(done) {
-				var nameTextInput = element.$$('#level-name');
+				var nameTextInput = element.$$('#level-name').$.input;
 				nameTextInput.value = 'Level 1';
 				raf(function() {
 					flush(function() {
@@ -257,12 +257,12 @@ suite('<d2l-rubric-level-editor>', function() {
 			});
 
 			test('name is disabled', function() {
-				var nameTextInput = element.$$('#level-name');
+				var nameTextInput = element.$$('#level-name').$.input;
 				expect(nameTextInput.disabled).to.be.true;
 			});
 
 			test('points are disabled', function() {
-				var pointsInput = element.$$('#level-points');
+				var pointsInput = element.$$('#level-points').$.input;
 				expect(pointsInput.disabled).to.be.true;
 			});
 

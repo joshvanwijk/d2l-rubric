@@ -19,6 +19,7 @@ import './d2l-rubric-editor-cell-styles.js';
 import './d2l-rubric-dialog-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
 import './simple-overlay.js';
+import './d2l-rubric-autosaving-input.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -255,7 +256,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_criterionName}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
@@ -292,8 +293,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 							</div>
 						</template>
 						<template is="dom-if" if="[[_outOfIsEditable]]">
-							/ <d2l-input-text id="out-of-textbox" on-blur="_outOfBlurHandler" on-input="_outOfInputHandler" value="{{_outOf}}" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', _criterionName, 'value', _outOf)]]" prevent-submit="">
-							</d2l-input-text>
+							/ <d2l-rubric-autosaving-input
+								id="out-of-textbox"
+								value="{{_outOf}}"
+								on-save="_saveOutOf"
+								invalid="[[_outOfInvalid]]"
+								label="[[localize('criterionOutOf', 'name', _criterionName, 'value', _outOf)]]"
+								enabled="[[_canEdit]]"
+								pending-saves="[[_pendingOutOfSaves]]"
+								editing="{{_outOfChanging}}"
+							></d2l-rubric-autosaving-input>
 							<template is="dom-if" if="[[_outOfInvalid]]">
 								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
 									[[_outOfInvalidError]]
@@ -356,6 +365,13 @@ Polymer({
 		_nameRequired: {
 			type: Boolean,
 			computed: '_isNameRequired(entity)',
+		},
+		_enteredName: {
+			type: String
+		},
+		_nameFocused: {
+			type: Boolean,
+			value: false
 		},
 		_nameChanging: {
 			type: Boolean,
@@ -492,14 +508,21 @@ Polymer({
 		return entity && entity.properties && entity.properties.outOf;
 	},
 
+	_nameFocusHandler: function(e) {
+		this._enteredName = e.target.value;
+		this._nameFocused = true;
+	},
+
 	_nameBlurHandler: function(e) {
 		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
 			this._saveName(e.target.value);
 		}
+		this._nameFocused = false;
 	},
 
 	_nameInputHandler: function(e) {
 		this._nameChanging = true;
+		this._enteredName = e.target.value;
 		var value = e.target.value;
 		this.debounce('input', function() {
 			if (this._nameChanging) {
@@ -540,33 +563,16 @@ Polymer({
 		}
 	},
 
-	_outOfBlurHandler: function(e) {
-		if (this._outOfChanging || !this._pendingOutOfSaves && this._outOfInvalid) {
-			this._saveOutOf(e.target.value);
-		}
-	},
-
-	_outOfInputHandler: function(e) {
-		this._outOfChanging = true;
-		var value = e.target.value;
-		this.debounce('input', function() {
-			if (this._outOfChanging) {
-				this._saveOutOf(value);
-			}
-		}.bind(this), 500);
-	},
-
-	_saveOutOf: function(value) {
-		this._outOfChanging = false;
+	_saveOutOf: function(saveEvent) {
 		var action = this.entity.getActionByName('update-outof');
 		if (action) {
-			if (!value.trim()) {
+			if (!saveEvent.value.trim()) {
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
 				return;
 			} else {
 				this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
 			}
-			var fields = [{ 'name': 'outOf', 'value': value }];
+			var fields = [{ 'name': 'outOf', 'value': saveEvent.value }];
 			this._pendingOutOfSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-criterion-saved');
@@ -700,5 +706,8 @@ Polymer({
 	},
 	_isLastAndCorner: function(isHolistic, index, criterionCellCount) {
 		return isHolistic && index === criterionCellCount - 1;
+	},
+	_getDisplayedName: function(isFocused, isInvalid, pendingSaves, enteredValue, savedValue) {
+		return (isFocused || isInvalid || pendingSaves > 0) ? enteredValue : savedValue;
 	}
 });

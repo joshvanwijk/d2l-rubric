@@ -8,6 +8,7 @@ import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
 import './d2l-rubric-dialog-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
+import './d2l-rubric-autosaving-input.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -69,33 +70,29 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			}
 		</style>
 
-		<d2l-input-text
+		<d2l-rubric-autosaving-input
 			id="level-name"
-			value="{{_getDisplayedValue(_levelNameFocused,_nameInvalid,_enteredLevelName,_levelName)}}"
-			on-focus="_nameFocusHandler"
-			on-blur="_nameBlurHandler"
-			on-input="_nameInputHandler"
-			aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
-			aria-label$="[[localize('_levelName')]]"
-			disabled="[[!_canEditName]]"
-			prevent-submit=""
-		>
-		</d2l-input-text>
+			value="{{_levelName}}"
+			on-save="_saveName"
+			invalid="[[_nameInvalid]]"
+			label="[[localize('_levelName')]]"
+			enabled="[[_canEditName]]"
+			pending-saves="[[_pendingNameSaves]]"
+			editing="{{_nameChanging}}"
+		></d2l-rubric-autosaving-input>
 		<div class="operations" nopoints$="[[!_showPoints]]">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
-				<d2l-input-text
+				<d2l-rubric-autosaving-input
 					id="level-points"
-					value="{{_getDisplayedValue(_levelPointsFocused,_pointsInvalid,_enteredLevelPoints,_levelPoints)}}"
-					on-focus="_pointsFocusHandler"
-					on-blur="_pointsBlurHandler"
-					on-input="_pointsInputHandler"
-					aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
-					aria-label$="[[localize('_levelPoints')]]"
-					disabled="[[!_canEditPoints]]"
+					value="{{_levelPoints}}"
+					on-save="_savePoints"
+					invalid="[[_pointsInvalid]]"
+					label="[[localize('_levelPoints')]]"
+					enabled="[[_canEditPoints]]"
+					pending-saves="[[_pendingPointsSaves]]"
+					editing="{{_pointsChanging}}"
 					size="1"
-					prevent-submit=""
-				>
-				</d2l-input-text>
+				></d2l-rubric-autosaving-input>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
 			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', _levelName)]]" on-click="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
@@ -131,13 +128,6 @@ Polymer({
 		_levelName: {
 			type: String
 		},
-		_enteredLevelName: {
-			type: String
-		},
-		_levelNameFocused: {
-			type: Boolean,
-			vaue: false
-		},
 		_canEditName: {
 			type: Boolean,
 			computed: '_canEditLevelName(entity)',
@@ -164,13 +154,6 @@ Polymer({
 		},
 		_levelPoints: {
 			type: Number
-		},
-		_enteredLevelPoints: {
-			type: String
-		},
-		_levelPointsFocused: {
-			type: Boolean,
-			value: false
 		},
 		_canEditPoints: {
 			type: Boolean,
@@ -280,35 +263,14 @@ Polymer({
 	_showAltPercentFormat: function(percentageFormatAlternate, usesPercentage) {
 		return usesPercentage && percentageFormatAlternate;
 	},
-	_nameFocusHandler: function() {
-		this._enteredLevelName = this._levelName;
-		this._levelNameFocused = true;
-	},
-	_nameBlurHandler: function(e) {
-		if (this._nameChanging || !this._pendingNameSaves && this._nameInvalid) {
-			this._saveName(e.target.value);
-		}
-		this._levelNameFocused = false;
-	},
-	_nameInputHandler: function(e) {
-		this._nameChanging = true;
-		this._enteredLevelName = e.target.value;
-		var value = e.target.value;
-		this.debounce('input', function() {
-			if (this._nameChanging) {
-				this._saveName(value);
-			}
-		}.bind(this), 500);
-	},
-	_saveName: function(value) {
-		this._nameChanging = false;
+	_saveName: function(saveEvent) {
 		var action = this.entity.getActionByName('update-name');
 		if (action) {
-			if (this._nameRequired && !value.trim()) {
+			if (this._nameRequired && !saveEvent.value.trim()) {
 				this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameIsRequired');
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
-				var fields = [{'name':'name', 'value': value}];
+				var fields = [{'name':'name', 'value': saveEvent.value}];
 				this._pendingNameSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-level-saved');
@@ -329,31 +291,10 @@ Polymer({
 			this._levelName = entity.properties.name;
 		}
 	},
-	_pointsFocusHandler: function() {
-		this._enteredLevelPoints = this._levelPoints;
-		this._levelPointsFocused = true;
-	},
-	_pointsBlurHandler: function(e) {
-		if (this._pointsChanging || !this._pendingPointsSaves && this._pointsInvalid) {
-			this._savePoints(e.target.value);
-		}
-		this._levelPointsFocused = false;
-	},
-	_pointsInputHandler: function(e) {
-		this._pointsChanging = true;
-		this._enteredLevelPoints = e.target.value;
-		var value = e.target.value;
-		this.debounce('input', function() {
-			if (this._pointsChanging) {
-				this._savePoints(value);
-			}
-		}.bind(this), 500);
-	},
-	_savePoints: function(value) {
-		this._pointsChanging = false;
+	_savePoints: function(saveEvent) {
 		var action = this.entity.getActionByName('update-points');
 		if (action) {
-			if (this._pointsRequired && !value.trim()) {
+			if (this._pointsRequired && !saveEvent.value.trim()) {
 				if (this._usesPercentage) {
 					this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartRequired');
 				} else {
@@ -361,7 +302,7 @@ Polymer({
 				}
 			} else {
 				this.toggleBubble('_pointsInvalid', false, 'points-bubble');
-				var fields = [{'name':'points', 'value':value}];
+				var fields = [{'name':'points', 'value':saveEvent.value}];
 				this._pendingPointsSaves++;
 				this.performSirenAction(action, fields).then(function() {
 					this.fire('d2l-rubric-level-points-saved');
@@ -416,8 +357,5 @@ Polymer({
 		}.bind(this), function() {
 			deleteButton.removeAttribute('disabled');
 		});
-	},
-	_getDisplayedValue: function(hasFocus, isInvalid, enteredValue, actualValue) {
-		return (hasFocus || isInvalid) ? enteredValue : actualValue;
 	}
 });
