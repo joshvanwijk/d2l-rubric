@@ -562,10 +562,7 @@ Polymer({
 	listeners: {
 		'd2l-siren-entity-save-start': '_onEntitySave',
 		'd2l-siren-entity-save-error': '_onEntitySave',
-		'd2l-siren-entity-save-end': '_onEntitySave',
-		'd2l-organization-availability-set-start': '_onShareRubricSave',
-		'd2l-organization-availability-set-save': '_onShareRubricSave',
-		'd2l-organization-availability-set-save-error': '_onShareRubricSaveError'
+		'd2l-siren-entity-save-end': '_onEntitySave'
 	},
 
 	ready: function() {
@@ -592,6 +589,13 @@ Polymer({
 			elem.shadowRoot.querySelectorAll('*').forEach(el => {
 				el.style.margin = 0;
 			});
+		}
+
+		var makeRubricAvailableElem = dom(this.root).querySelector('#make-rubric-available-container');
+		if (makeRubricAvailableElem) {
+			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-start', this._onShareRubricSave.bind(this));
+			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-end', this._onShareRubricSave.bind(this));
+			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-error', this._onShareRubricSaveError.bind(this));
 		}
 	},
 	attached: function() {
