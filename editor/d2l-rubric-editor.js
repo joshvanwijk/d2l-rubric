@@ -797,7 +797,7 @@ Polymer({
 	_onShareRubricSave: function() {
 		this.toggleBubble('_shareRubricInvalid', false, 'share-rubric-bubble');
 	},
-	_onShareRubricSaveError: function(err) {
+	_onShareRubricSaveError: function() {
 		this.handleValidationError('share-rubric-bubble', '_shareRubricInvalid', 'shareRubricSaveFailed');
 	},
 	_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
