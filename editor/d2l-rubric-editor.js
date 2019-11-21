@@ -167,14 +167,16 @@ const $_documentContainer = html `
 				padding-inline-end: 0;
 				padding-bottom: 0.6rem;
 			}
-			.checkbox-fieldset > div[aria-invalid=true] {
+			.checkbox-fieldset > div[aria-invalid=true],
+			#make-rubric-available-container > [aria-invalid=true] {
 				border-style: solid;
 				border-width: 1px;
 				border-color: #cd2026;
 				border-radius: 0.3rem;
 				padding: 8px;
 			}
-			.checkbox-fieldset > div[aria-invalid=true]:hover {
+			.checkbox-fieldset > div[aria-invalid=true]:hover,
+			#make-rubric-available-container > [aria-invalid=true]:hover {
 				border-width: 2px;
 			}
 			.checkbox-fieldset d2l-input-checkbox {
@@ -346,7 +348,12 @@ const $_documentContainer = html `
 					</div>
 					<div id="make-rubric-available-container" hidden$="[[!_canShare]]">
 						<label>[[localize('makeRubricAvailableHeader')]]</label>
-						<d2l-organization-availability-set token="[[token]]" href="[[_orgUnitAvailabilitySetLink]]"></d2l-organization-availability-set>
+						<d2l-organization-availability-set token="[[token]]" href="[[_orgUnitAvailabilitySetLink]]" aria-invalid$="[[isAriaInvalid(_shareRubricInvalid)]]"></d2l-organization-availability-set>
+						<template is="dom-if" if="[[_shareRubricInvalid]]">
+							<d2l-tooltip id="share-rubric-bubble" class="is-error" for="make-rubric-available-container" position="bottom">
+								[[_shareRubricInvalidError]]
+							</d2l-tooltip>
+						</template>
 					</div>
 				</div>
 			</d2l-accordion-collapse>
@@ -534,6 +541,14 @@ Polymer({
 		_isHolistic: {
 			type: Boolean,
 			value: false
+		},
+		_shareRubricInvalid: {
+			type: Boolean,
+			value: false,
+		},
+		_shareRubricInvalidError: {
+			type: String,
+			value: null,
 		}
 	},
 	behaviors: [
@@ -547,7 +562,10 @@ Polymer({
 	listeners: {
 		'd2l-siren-entity-save-start': '_onEntitySave',
 		'd2l-siren-entity-save-error': '_onEntitySave',
-		'd2l-siren-entity-save-end': '_onEntitySave'
+		'd2l-siren-entity-save-end': '_onEntitySave',
+		'd2l-organization-availability-set-start': '_onShareRubricSave',
+		'd2l-organization-availability-set-save': '_onShareRubricSave',
+		'd2l-organization-availability-set-save-error': '_onShareRubricSaveError'
 	},
 
 	ready: function() {
@@ -775,6 +793,12 @@ Polymer({
 			this.toggleBubble('_descriptionInvalid', false, 'rubric-description-bubble');
 			this._rubricDescription = this._getRubricDescription(entity);
 		}
+	},
+	_onShareRubricSave: function() {
+		this.toggleBubble('_shareRubricInvalid', false, 'share-rubric-bubble');
+	},
+	_onShareRubricSaveError: function(err) {
+		this.handleValidationError('share-rubric-bubble', '_shareRubricInvalid', 'shareRubricSaveFailed');
 	},
 	_richTextAndEditEnabled: function(richTextEnabled, canEditDescription) {
 		return richTextEnabled && canEditDescription;

@@ -102,6 +102,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'setScoreVisibilityFailed': 'Setting score visibility failed.',
 		'scoresVisibilityHidden': 'Scores are hidden from students',
 		'scoresVisibilityVisible': 'Scores are visible to students',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistics',
 		'total': 'Total',
 		'totalScoreLabel': 'Rubric Total Score',
