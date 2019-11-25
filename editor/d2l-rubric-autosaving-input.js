@@ -94,7 +94,7 @@ class AutosavingInput extends PolymerElement {
 	}
 
 	_save(value) {
-		this.editing = false;
+		this._setEditing(false);
 		const saveEvent = new CustomEvent('save');
 		saveEvent.value = value;
 		this.dispatchEvent(saveEvent);
