@@ -83,7 +83,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
-				<d2l-rubric-loa-overlay href="[[_levelsHref]]" token="[[token]]"></d2l-rubric-loa-overlay>
+				<d2l-rubric-loa-overlay href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-loa-overlay>
 				<template is="dom-if" if="[[_nameInvalid]]">
 					<d2l-tooltip id="group-name-bubble" class="is-error" for="group-name" position="bottom">
 						[[_nameInvalidError]]

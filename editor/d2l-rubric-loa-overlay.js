@@ -23,6 +23,11 @@ class RubricLoaOverlay extends mixinBehaviors([
             _dragCursorOffset: Number,
             _draggingLoaLevel: Object,
             _draggingSlider: Object,
+            hasOutOf: {
+                type: Boolean,
+                value: false,
+                observer: '_onOutOfChanged'
+            },
             _headingsWidth: {
                 type: Number,
                 value: 1  
@@ -214,7 +219,11 @@ class RubricLoaOverlay extends mixinBehaviors([
                 this.fire('d2l-rubric-loa-overlay-width-changed', { width: section.offsetWidth });
             }
 		}, 1);
-	}
+    }
+    
+    _onOutOfChanged() {
+        this.checkSize();
+    }
 
     _onEntityChanged(entity) {
         if (!entity) {
@@ -455,8 +464,8 @@ class RubricLoaOverlay extends mixinBehaviors([
     _resolveRubricLevel(rubricLevelHref) {
 		if (!this._levels || !this._levels.length) {
 			return null;
-		}
-
+        }
+        
 		for (let i = 0; i < this._levels.length; i++) {
 			const rubricLevel = this._levels[i];
 
