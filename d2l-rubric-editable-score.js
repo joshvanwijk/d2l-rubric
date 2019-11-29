@@ -310,13 +310,12 @@ Polymer({
 				action = this._saveScore(newScore);
 			}
 			this._pendingScoreSaves++;
-			action.catch(function(err) {
-				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
-			}.bind(this)).finally(function() {
+			action.finally(function() {
 				this._pendingScoreSaves--;
-				if (!this.scoreInvalid) {
-					this._updateScore(this.entity, this.assessmentResult, this.totalScore);
-				}
+			}.bind(this)).then(function() {
+				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+			}.bind(this)).catch(function(err) {
+				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
 			}.bind(this));
 		}
 	},
@@ -350,15 +349,13 @@ Polymer({
 		this.toggleBubble('scoreInvalid', false);
 		this.editingScore = -1;
 		this._pendingScoreSaves++;
-		this.clearCriterionOverride(this.criterionHref).then(function() {
+		this.clearCriterionOverride(this.criterionHref).finally(function() {
+			this._pendingScoreSaves--;
+		}.bind(this)).then(function() {
 			this._scoreModified = false;
+			this._updateScore(this.entity, this.assessmentResult, this.totalScore);
 		}.bind(this)).catch(function(err) {
 			this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
-		}.bind(this)).finally(function() {
-			this._pendingScoreSaves--;
-			if (!this.scoreInvalid) {
-				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
-			}
 		}.bind(this));
 	},
 
