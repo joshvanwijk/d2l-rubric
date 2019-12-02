@@ -163,7 +163,7 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
@@ -257,16 +257,11 @@ Polymer({
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
 				var fields = [{'name': 'name', 'value': value}];
-				this._pendingGroupNameSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				this.performAutosaveAction(action, fields, '_pendingGroupNameSaves').then(function() {
 					this.fire('d2l-rubric-group-name-saved');
+					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingGroupNameSaves--;
-					if (!this._nameInvalid) {
-						this._updateName(this.entity, false);
-					}
 				}.bind(this));
 			}
 		}

@@ -2,7 +2,7 @@ import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import '../d2l-rubric-entity-behavior.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import './d2l-rubric-siren-autosave-action-behavior.js';
 import '../localize-behavior.js';
 import './d2l-rubric-text-editor.js';
 import './d2l-rubric-error-handling-behavior.js';
@@ -113,7 +113,7 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
@@ -160,16 +160,11 @@ Polymer({
 		if (action) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			var fields = [{'name':'feedback', 'value':e.detail.value}];
-			this._pendingFeedbackSaves++;
-			this.performSirenAction(action, fields).then(function() {
+			this.performAutosaveAction(action, fields, '_pendingFeedbackSaves').then(function() {
 				this.fire('d2l-rubric-feedback-saved');
+				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
-			}.bind(this)).finally(function() {
-				this._pendingFeedbackSaves--;
-				if (!this._feedbackInvalid) {
-					this._updateFeedback(this.entity);
-				}
 			}.bind(this));
 		}
 	},

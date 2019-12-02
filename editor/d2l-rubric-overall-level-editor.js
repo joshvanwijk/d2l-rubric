@@ -1,5 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import './d2l-rubric-siren-autosave-action-behavior.js';
 import '../localize-behavior.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip.js';
@@ -169,7 +169,7 @@ Polymer({
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
@@ -230,16 +230,11 @@ Polymer({
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
 				var fields = [{ 'name': 'name', 'value': saveEvent.value }];
-				this._pendingNameSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
 					this.fire('d2l-rubric-overall-level-saved');
+					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingNameSaves--;
-					if (!this._nameInvalid) {
-						this._updateName(this.entity, false);
-					}
 				}.bind(this));
 			}
 		}
@@ -258,16 +253,11 @@ Polymer({
 			} else {
 				this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
 				var fields = [{'name':'rangeStart', 'value': saveEvent.value}];
-				this._pendingRangeStartSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				this.performAutosaveAction(action, fields, '_pendingRangeStartSaves').then(function() {
 					this.fire('d2l-rubric-overall-level-range-start-saved');
+					this._updateRangeStart(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
-				}.bind(this)).finally(function() {
-					this._pendingRangeStartSaves--;
-					if (!this._rangeStartInvalid) {
-						this._updateRangeStart(this.entity, false);
-					}
 				}.bind(this));
 			}
 		}
