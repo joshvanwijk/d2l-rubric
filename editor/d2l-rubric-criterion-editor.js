@@ -591,7 +591,7 @@ Polymer({
 	},
 
 	_getLoaLevelLink: function(entity) {
-		var link = entity && entity.getLinkByRel('https://achievements.api.brightspace.com/rels/level');
+		var link = entity && entity.getLinkByRel && entity.getLinkByRel('https://achievements.api.brightspace.com/rels/level');
 		return link && link.href || '';
 	},
 

@@ -172,14 +172,14 @@ class RubricLoaOverlay extends mixinBehaviors([
                     <div id="row-data">
                         <div id="motion-slider" class="slider hidden"></div>
                         <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
-                            <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel, _rubricLevelOverrides)]]" is-holistic$="[[isHolistic]]">
+                            <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _rubricLevelOverrides)]]" is-holistic$="[[isHolistic]]">
                                 [[loaLevel.properties.name]]
                             </div>
                             <div
                                 class="slider"
                                 data-loa-level$="[[_getSelfLink(loaLevel)]]"
                                 on-mouseDown="_onMouseDown"
-                                style$="[[_getSliderStyle(loaLevel, loaIndex, _headingsWidth, _rubricLevelOverrides)]]"
+                                style$="[[_getSliderStyle(loaLevel, loaIndex, _sortedLevels, _headingsWidth, _rubricLevelOverrides)]]"
                             ></div>
                         </template>
                     </div>
@@ -230,9 +230,25 @@ class RubricLoaOverlay extends mixinBehaviors([
             return;
         }
 
-        this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
-        this._sortedLevels = this._sortRubricLevels(this._levels);
-        this._loaMappingHref = this._getLoaMappingLink(entity);
+        const levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level).filter(level => level && !level.href);
+        const mappingHref = this._getLoaMappingLink(entity);
+
+        if (levelEntities.length > 0) {
+            this._levels = levelEntities;
+            this._sortedLevels = this._sortRubricLevels(this._levels);
+            this._rubricLevelOverrides = {};
+        } else {
+            this._reloadHref(this.href);
+        }
+
+        if (mappingHref) {
+            this._reloadHref(mappingHref);
+        }
+        this._loaMappingHref = mappingHref;
+    }
+
+    _reloadHref(href) {
+        return D2L.Siren.EntityStore.fetch(href, this.token, true);
     }
 
     _onLoaMappingEntityChanged(entity) {
@@ -241,9 +257,10 @@ class RubricLoaOverlay extends mixinBehaviors([
         }
 
         this._loaLevels = entity.getSubEntitiesByClass('level-of-achievement');
+        this._rubricLevelOverrides = {};
     }
 
-    _getHeaderStyle(loaLevel, _rubricLevelOverrides) {
+    _getHeaderStyle(loaLevel, rubricLevels, _rubricLevelOverrides) {
         const colSpan = this._getLoaLevelSpan(loaLevel, _rubricLevelOverrides);
 
         if (colSpan === 0) {
@@ -255,12 +272,12 @@ class RubricLoaOverlay extends mixinBehaviors([
         ].join(';');
     }
 
-    _getSliderStyle(loaLevel, index, totalWidth, rubricLevelOverrides) {
+    _getSliderStyle(loaLevel, index, rubricLevels, totalWidth, rubricLevelOverrides) {
         if (index === 0) {
             this._currentSliderPosition = -SLIDER_CENTER_OFFSET;
         }
 
-        const nSections = this._levels.length;
+        const nSections = rubricLevels.length;
         const sectionWidth = totalWidth / nSections;
         const colSpan = this._getLoaLevelSpan(loaLevel, rubricLevelOverrides);
 
