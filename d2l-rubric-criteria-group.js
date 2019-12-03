@@ -350,7 +350,7 @@ Polymer({
 
 	_rowHeaderDomChange: function() {
 		// set styling to have the criteria-row-header-container be the same height as the table cell in firefox
-		if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+		if (/rv:.+Gecko\/.+Firefox\//.test(navigator.userAgent)) {
 			var criteria = dom(this.root).querySelectorAll('.criteria');
 			criteria.forEach(function(el) {
 				el.style.height = '100%';
