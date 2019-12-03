@@ -354,7 +354,7 @@ Polymer({
 			var criteria = dom(this.root).querySelectorAll('.criteria');
 			criteria.forEach(function(el) {
 				el.style.height = '100%';
-			})
+			});
 		}
 	},
 
