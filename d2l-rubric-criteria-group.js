@@ -67,6 +67,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				text-align: left;
 				background-color: var(--d2l-table-header-background-color);
 			}
+			d2l-table[type="default"] d2l-tbody d2l-tr {
+				height: 100%;
+			}
 			d2l-table[type="default"] d2l-td.criteria {
 				@apply --d2l-body-compact-text;
 				text-align: left;
@@ -205,7 +208,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
 					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
-						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
+						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]" on-dom-change="_rowHeaderDomChange">
 							<d2l-td class="criteria" role="rowheader">
 								<div class="criteria-row-header-container">
 									<div>
@@ -344,6 +347,16 @@ Polymer({
 		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)',
 		'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
 	],
+
+	_rowHeaderDomChange: function() {
+		// set styling to have the criteria-row-header-container be the same height as the table cell in firefox
+		if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+			var criteria = dom(this.root).querySelectorAll('.criteria');
+			criteria.forEach(function(el) {
+				el.style.height = '100%';
+			})
+		}
+	},
 
 	_onEntityChanged: function(entity) {
 		if (!entity) {
