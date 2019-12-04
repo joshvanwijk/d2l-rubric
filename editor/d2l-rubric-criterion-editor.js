@@ -272,8 +272,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				</div>
 				<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
 					<div class="criterion-text">
-						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
-							<div class="cell" style$="[[_getCellStyle(criterionCell, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
+						<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
+							<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
 								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
@@ -281,8 +281,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					<template is="dom-if" if="[[!isHolistic]]" restamp>
 						<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
 						<div class="criterion-feedback">
-							<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
-								<div class="cell" style$="[[_getCellStyle(criterionCell, _loaLevels, rubricLevelLoaMapping)]]">
+							<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]">
+								<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _loaLevels, rubricLevelLoaMapping)]]">
 									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}">
 									</d2l-rubric-feedback-editor>
 								</div>
@@ -595,7 +595,7 @@ Polymer({
 		return link && link.href || '';
 	},
 
-	_getCellStyle(cell, loaLevels, rubricLevelLoaMapping, topBorder) {
+	_getCellStyle(cell, cellIndex, loaLevels, rubricLevelLoaMapping, topBorder) {
 		const styles = [];
 
 		if (loaLevels && loaLevels.length) {
@@ -612,9 +612,17 @@ Polymer({
 				const isOverrideBound = rubricLevelLoaMapping[rubricLevelHref] && rubricLevelLoaMapping[rubricLevelHref].isBound;
 				const isStandardBound = !rubricLevelLoaMapping[rubricLevelHref] && this._getRubricLevelLink(loaLevelEntity) === rubricLevelHref;
 
+				const side = rubricLevelLoaMapping.reversed ? 'left' : 'right';
+				const hiddenSide = rubricLevelLoaMapping.reversed ? 'right' : 'left';
+
+				styles.push(`border-${side}: 1px solid var(--d2l-color-galena)`);	
+				if (!rubricLevelLoaMapping.reversed || cellIndex < this._getCriterionCells(this.entity).length - 1) {
+					styles.push(`border-${hiddenSide}-style: hidden`);
+				}
+
 				if (isStandardBound || isOverrideBound) {
-					styles.push(`border-right-color: ${c}`);
-					styles.push('border-right-width: 2px');
+					styles.push(`border-${side}-color: ${c}`);
+					styles.push(`border-${side}-width: 2px`);
 				}
 
 				if (topBorder) {
