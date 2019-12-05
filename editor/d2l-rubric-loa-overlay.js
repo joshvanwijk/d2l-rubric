@@ -8,6 +8,8 @@ import 'd2l-table/d2l-table-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
 import '../rubric-siren-entity.js';
 
+const MIN_HEADER_WIDTH = 8;
+const MIN_HEADER_WIDTH_UNIT = 'rem';
 const SLIDER_CENTER_OFFSET = 16;
 
 class RubricLoaOverlay extends mixinBehaviors([
@@ -61,7 +63,7 @@ class RubricLoaOverlay extends mixinBehaviors([
     static get template() {
         return html`
             <style include="d2l-rubric-editor-cell-styles">
-                d2l-resize-aware {
+                #row-container {
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
@@ -167,7 +169,7 @@ class RubricLoaOverlay extends mixinBehaviors([
             </style>
 
             <rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
-            <d2l-resize-aware>
+            <d2l-resize-aware id="row-container">
                 <template is="dom-if" if="[[_hasLoaLevels(_loaMappingHref)]]">
                     <div class="gutter-left"></div>
                     <div class="cell col-first" is-holistic$="[[isHolistic]]">
@@ -196,7 +198,7 @@ class RubricLoaOverlay extends mixinBehaviors([
     
     attached() {
         afterNextRender(this, () => {
-            this._resizeElement = this.$$('d2l-resize-aware');
+            this._resizeElement = this.$$('#row-container');
             this._resizeElement.addEventListener('d2l-resize-aware-resized', this.checkSize.bind(this));
             this.checkSize();
         });
@@ -220,7 +222,6 @@ class RubricLoaOverlay extends mixinBehaviors([
 
             if (section) {
                 this._headingsWidth = section.offsetWidth;
-                this.fire('d2l-rubric-loa-overlay-width-changed', { width: section.offsetWidth });
             }
 		}, 1);
     }
@@ -249,6 +250,7 @@ class RubricLoaOverlay extends mixinBehaviors([
             this._reloadHref(mappingHref);
         }
         this._loaMappingHref = mappingHref;
+        this.checkSize();
     }
 
     _reloadHref(href) {
@@ -274,6 +276,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
         this._loaLevels = loaLevelEntities;
         this._rubricLevelOverrides = {};
+        this.checkSize();
     }
 
     _getHeaderStyle(loaLevel, rubricLevels, _rubricLevelOverrides) {
@@ -284,7 +287,9 @@ class RubricLoaOverlay extends mixinBehaviors([
         }
 
 		return [
-            `flex-grow: ${colSpan}`
+            `flex-grow: ${colSpan}`,
+            `flex-basis: 0px`,
+            `min-width: ${MIN_HEADER_WIDTH * colSpan}${MIN_HEADER_WIDTH_UNIT}`
         ].join(';');
     }
 
