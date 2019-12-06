@@ -24,6 +24,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-edi
 					box-shadow: none;
 					border-radius: 0;
 					transition-property: none;
+					background-color: transparent;
 				};
 			}
 
