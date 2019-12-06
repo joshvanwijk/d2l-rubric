@@ -538,10 +538,15 @@ Polymer({
 
 		this._rubricLevels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 		this._loaMappingHref = this._getLoaMappingLink(entity);
+
+		if (!this._loaMappingHref) {
+			this._loaMappingEntity = null;
+		}
 	},
 
 	_onLoaMappingEntityChanged: function(entity) {
 		if (!entity) {
+			this._loaLevels = [];
 			return;
 		}
 

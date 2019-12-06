@@ -248,8 +248,11 @@ class RubricLoaOverlay extends mixinBehaviors([
 
         if (mappingHref) {
             this._reloadHref(mappingHref);
+        } else {
+            this._loaLevelEntity = null;
         }
         this._loaMappingHref = mappingHref;
+
         this.checkSize();
     }
 
