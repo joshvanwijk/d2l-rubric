@@ -136,6 +136,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'descriptionReadOnlyMode': 'Description (not visible to students)',
 		'descriptionReadOnlyPlaceholder': 'No description',
 		'groupNameSaveFailed': 'Saving criteria group name failed',
-		'makeRubricAvailableHeader': 'Make rubric available to'
+		'makeRubricAvailableHeader': 'Make rubric available to',
+		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft'
 	}
 };
