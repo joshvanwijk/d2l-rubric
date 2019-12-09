@@ -320,16 +320,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
 					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', _criterionName)]]" on-click="_handleDeleteCriterion" type="button"></d2l-button-icon>
 				</div>
-				</div>
-				<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
-					<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
-						<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
-					</div>
-					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
-					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]" token="[[token]]" browse-outcomes-text="[[browseOutcomesText]]">
-					</d2l-activity-alignment-tags>
-				</div>
 			</div>
+			<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
+				<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
+					<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
+				</div>
+				<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
+				<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]" token="[[token]]" browse-outcomes-text="[[browseOutcomesText]]">
+				</d2l-activity-alignment-tags>
+			</div>
+		</div>
 	</template>
 
 
