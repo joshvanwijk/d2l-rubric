@@ -40,7 +40,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			}
 			d2l-table[type="default"] d2l-td.out-of {
 				text-align: left;
-				vertical-align: text-top;
+				vertical-align: top;
 				min-width: 0;
 				pointer-events: none;
 			}
@@ -58,6 +58,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 			d2l-rubric-editable-score {
 				min-width: 70px;
 			}
+			d2l-rubric-criterion-cell {
+				padding-top: 0.5rem;
+			}
 			.level-name {
 				font-weight: 700;
 			}
@@ -74,17 +77,18 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				@apply --d2l-body-compact-text;
 				text-align: left;
 				background-color: var(--d2l-table-header-background-color);
-				vertical-align: text-top;
+				vertical-align: top;
 			}
 			.criteria-row-header-container {
 				display: flex;
 				flex-direction:column;
 				justify-content:space-between;
 				height: calc(100% - 0.5rem);
+				padding-top: 0.5rem;
 			}
 			d2l-table[type="default"] d2l-td.criterion-cell {
 				@apply --d2l-body-compact-text;
-				vertical-align: text-top;
+				vertical-align: top;
 				position: relative;
 			}
 			.feedback-wrapper {
