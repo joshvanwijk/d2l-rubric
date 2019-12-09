@@ -41,6 +41,11 @@ class RubricLoaOverlay extends mixinBehaviors([
                 value: null,
                 observer: '_onLoaMappingEntityChanged'
             },
+            outcomeAlignments: {
+                type: Object,
+                value: {},
+                observer: '_onAlignmentsChanged'
+            },
             _resizeElement: Object,
             _reversed: {
                 type: Boolean,
@@ -594,6 +599,10 @@ class RubricLoaOverlay extends mixinBehaviors([
     _onReversedChanged(reversed) {
         const loaMapping = this._getVisualLoaLevelMapping(this._rubricLevelOverrides, reversed);
         this.fire('d2l-rubric-loa-overlay-level-mapping-changed', loaMapping);
+    }
+
+    _onAlignmentsChanged() {
+        this._reloadHref(this.href);
     }
 
     _getNextLoaLevel(loaLevelEntity) {
