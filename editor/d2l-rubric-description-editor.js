@@ -28,6 +28,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 					box-shadow: none;
 					border-radius: 0 0 var(--input-border-bottom-right-radius, 0) var(--input-border-bottom-left-radius, 0);
 					transition-property: none;
+					background-color: transparent;
 				};
 			}
 
