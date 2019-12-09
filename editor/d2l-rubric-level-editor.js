@@ -4,7 +4,7 @@ import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-button/d2l-button-icon.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '../d2l-rubric-entity-behavior.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import './d2l-rubric-siren-autosave-action-behavior.js';
 import '../localize-behavior.js';
 import './d2l-rubric-dialog-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
@@ -194,7 +194,7 @@ Polymer({
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
@@ -271,16 +271,11 @@ Polymer({
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
 				var fields = [{'name':'name', 'value': saveEvent.value}];
-				this._pendingNameSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
 					this.fire('d2l-rubric-level-saved');
+					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingNameSaves--;
-					if (!this._nameInvalid) {
-						this._updateName(this.entity, false);
-					}
 				}.bind(this));
 			}
 		}
@@ -303,19 +298,14 @@ Polymer({
 			} else {
 				this.toggleBubble('_pointsInvalid', false, 'points-bubble');
 				var fields = [{'name':'points', 'value':saveEvent.value}];
-				this._pendingPointsSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
 					this.fire('d2l-rubric-level-points-saved');
+					this._updatePoints(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					if (this._usesPercentage) {
 						this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartInvalid', err);
 					} else {
 						this.handleValidationError('points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
-					}
-				}.bind(this)).finally(function() {
-					this._pendingPointsSaves--;
-					if (!this._pointsInvalid) {
-						this._updatePoints(this.entity, false);
 					}
 				}.bind(this));
 			}

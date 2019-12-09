@@ -68,6 +68,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		margin-bottom: 6px;
 		max-width: 360px;
 		line-height: 1.3em;
+		white-space: pre-wrap;
 	}
 
 	[hidden] {

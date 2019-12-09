@@ -3,10 +3,11 @@ import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-inputs/d2l-input-text.js';
 import '../d2l-rubric-entity-behavior.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
+import './d2l-rubric-siren-autosave-action-behavior.js';
 import './d2l-rubric-text-editor.js';
 import './d2l-rubric-error-handling-behavior.js';
+import './d2l-rubric-autosaving-input.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -93,17 +94,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 		</style>
 
 		<div class="points" hidden="[[!_showPoints]]">
-			<d2l-input-text
+			<d2l-rubric-autosaving-input
 				id="cell-points"
 				value="{{_points}}"
-				on-blur="_pointsBlurHandler"
-				on-input="_pointsInputHandler"
-				aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
-				aria-label$="[[localize('cellPoints')]]"
-				disabled="[[!_canEditPoints]]"
+				on-save="_savePoints"
+				invalid="[[_pointsInvalid]]"
+				label="[[localize('cellPoints')]]"
+				enabled="[[_canEditPoints]]"
+				pending-saves="[[_pendingPointsSaves]]"
+				editing="{{_pointsChanging}}"
 				size="1"
-				prevent-submit="">
-			</d2l-input-text>
+			></d2l-rubric-autosaving-input>
 			<div>[[localize('pointsAbbreviation')]]</div>
 		</div>
 		<d2l-rubric-text-editor
@@ -220,7 +221,7 @@ Polymer({
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
@@ -272,16 +273,11 @@ Polymer({
 		if (action) {
 			this.toggleBubble('_descriptionInvalid', false, 'description-bubble');
 			var fields = [{'name':'description', 'value':e.detail.value}];
-			this._pendingDescriptionSaves++;
-			this.performSirenAction(action, fields).then(function() {
+			this.performAutosaveAction(action, fields, '_pendingDescriptionSaves').then(function() {
 				this.fire('d2l-rubric-description-saved');
+				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
-			}.bind(this)).finally(function() {
-				this._pendingDescriptionSaves--;
-				if (!this._descriptionInvalid) {
-					this._updateDescription(this.entity);
-				}
 			}.bind(this));
 		}
 	},
@@ -315,42 +311,21 @@ Polymer({
 		return entity && entity.hasClass(this.HypermediaClasses.rubrics.overridden);
 	},
 
-	_pointsBlurHandler: function(e) {
-		if (this._pointsChanging || !this._pendingPointsSaves && this._pointsInvalid) {
-			this._savePoints(e.target.value);
-		}
-	},
-
-	_pointsInputHandler: function(e) {
-		this._pointsChanging = true;
-		var value = e.target.value;
-		this.debounce('input', function() {
-			if (this._pointsChanging) {
-				this._savePoints(value);
-			}
-		}.bind(this), 500);
-	},
-
-	_savePoints: function(value) {
+	_savePoints: function(saveEvent) {
 		this._pointsChanging = false;
 		var action = this.entity.getActionByName('update-points');
 		if (action) {
-			if (this._pointsRequired && !value.trim()) {
+			if (this._pointsRequired && !saveEvent.value.trim()) {
 				this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
 				this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
 			} else {
 				this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
-				var fields = [{ 'name': 'points', 'value': value }];
-				this._pendingPointsSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				var fields = [{ 'name': 'points', 'value': saveEvent.value }];
+				this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
 					this.fire('d2l-rubric-criterion-cell-points-saved');
+					this._updatePoints(this.entity);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingPointsSaves--;
-					if (!this._pointsInvalid) {
-						this._updatePoints(this.entity);
-					}
 				}.bind(this));
 			}
 		}

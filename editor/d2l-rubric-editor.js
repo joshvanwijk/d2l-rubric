@@ -561,7 +561,7 @@ Polymer({
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
@@ -768,16 +768,11 @@ Polymer({
 			} else {
 				this.toggleBubble('_nameInvalid', false, 'name-bubble');
 				var fields = [{ 'name': 'name', 'value': saveEvent.value }];
-				this._pendingNameSaves++;
-				this.performSirenAction(action, fields).then(function() {
+				this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
 					this.fire('d2l-rubric-name-saved');
+					this._updateName(this.entity);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-				}.bind(this)).finally(function() {
-					this._pendingNameSaves--;
-					if (!this._nameInvalid) {
-						this._updateName(this.entity);
-					}
 				}.bind(this));
 			}
 		}
@@ -796,16 +791,11 @@ Polymer({
 		if (action) {
 			this.toggleBubble('_descriptionInvalid', false, 'rubric-description-bubble');
 			var fields = [{ 'name': 'description', 'value': e.detail.value }];
-			this._pendingDescriptionSaves++;
-			this.performSirenAction(action, fields).then(function() {
+			this.performAutosaveAction(action, fields, '_pendingDescriptionSaves').then(function() {
 				this.fire('d2l-rubric-description-saved');
+				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('rubric-description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
-			}.bind(this)).finally(function() {
-				this._pendingDescriptionSaves--;
-				if (!this._descriptionInvalid) {
-					this._updateDescription(this.entity);
-				}
 			}.bind(this));
 		}
 	},

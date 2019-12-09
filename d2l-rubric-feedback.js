@@ -23,7 +23,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				display: block;
 			}
 			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{	
-				border: 1px solid var(--d2l-color-cinnabar);
+				border-color: var(--d2l-color-cinnabar);
 			}
 			:host([_feedback-invalid]) .feedback-arrow {
 				border-bottom-color: var(--d2l-color-cinnabar);
@@ -42,7 +42,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 			.feedback-arrow[data-mobile] {
 				display: none;
 			}
-			:host([_focus-styling]) .feedback-arrow {
+			:host([_focus-styling]:not([_feedback-invalid])) .feedback-arrow {
 				border-bottom-color: var(--d2l-color-celestine);
 			}
 			.feedback-arrow-inner {
@@ -56,7 +56,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				border-bottom: 12px solid white;
 				z-index: 1;
 			}
-			:host([_focus-styling]) .feedback-arrow-inner {
+			:host([_focus-styling]:not([_feedback-invalid])) .feedback-arrow-inner {
 				top: 3px;
 			}
 			.clear-feedback-button {
@@ -75,6 +75,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				padding: 0.5rem;
 				padding-left: 1rem;
 				padding-bottom: calc(0.5rem - 1px);
+				border: solid transparent 1px;
+				transition-property: border-color;
+				transition-timing-function: ease;
+				transition: border-color 0.5s;
 			}
 			.feedback-wrapper-editable:hover {
 				background: var(--d2l-color-sylvite);
@@ -84,7 +88,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 			.feedback-wrapper-editable:hover .feedback-arrow-inner {
 				border-bottom: 12px solid var(--d2l-color-sylvite);
 			}
-			:host([_focus-styling]) .feedback-wrapper {
+			:host([_focus-styling]:not([_feedback-invalid])) .feedback-wrapper {
 				cursor: text;
 				padding: calc(0.5rem - 1px);
 				padding-left: calc(1rem - 1px);
@@ -126,7 +130,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<div class="feedback-heading">
 						[[localize('criterionFeedback')]]
 					</div>
-					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedback" on-focusin="_handleVisibleFocusin"></d2l-icon>
+					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedbackHandler" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
 				<d2l-input-textarea no-border$="[[_largeScreen]]" no-padding$="[[_largeScreen]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]">
@@ -137,7 +141,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					</d2l-tooltip>
 				</template>
 				<d2l-offscreen>
-					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-click="_clearFeedback">
+					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-click="_clearFeedbackHandler">
 				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
@@ -227,9 +231,9 @@ Polymer({
 		if (isIOS) {
 			// on ios mouseleave fires when the user taps on another clickable item, including those outside the current window
 			// but blur doesn't fire if the item is outside the current window
-			elem.addEventListener('mouseleave', this.saveFeedback.bind(this));
+			elem.addEventListener('mouseleave', this._saveFeedbackHandler.bind(this));
 		} else {
-			elem.addEventListener('blur', this.saveFeedback.bind(this));
+			elem.addEventListener('blur', this._saveFeedbackHandler.bind(this));
 		}
 	},
 
@@ -285,39 +289,34 @@ Polymer({
 		}.bind(this));
 	},
 
-	saveFeedback: function(e) {
-		if (this._feedbackModified || this._feedbackInvalid) {
-			this._feedbackModified = false;
-			this._pendingFeedbackSaves++;
-			var feedback = e.target.$.textarea.value;
-			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
-			this.fire('save-feedback');
-			this.saveAssessmentFeedback(this.criterionHref, feedback).then(function() {
-				this.fire('save-feedback-finished', {'success': true});
-			}.bind(this)).catch(function(err) {
-				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
-				this.fire('save-feedback-finished', {'success': false});
-			}.bind(this)).finally(function() {
-				this._pendingFeedbackSaves--;
-				if (!this._feedbackInvalid) {
-					this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
-				}
-			}.bind(this));
+	_saveFeedbackHandler: function(e) {
+		if (this._feedbackModified || !this._pendingFeedbackSaves && this._feedbackInvalid) {
+			var value = e.target.$.textarea.value;
+			this._saveFeedback(value);
 		}
 	},
 
-	_clearFeedback: function() {
-		this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
+	_clearFeedbackHandler: function() {
+		this._saveFeedback('').finally(function() {
+			if (!this._feedbackInvalid) {
+				this.fire('close-feedback');
+			}
+		}.bind(this));
+	},
+
+	_saveFeedback: function(value) {
+		this._feedbackModified = false;
 		this._pendingFeedbackSaves++;
-		this.saveAssessmentFeedback(this.criterionHref, '').then(function() {
-			this.fire('close-feedback');
+		this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
+		this.fire('save-feedback-start', {'hasPendingSaves': true});
+		return this.saveAssessmentFeedback(this.criterionHref, value).finally(function() {
+			this._pendingFeedbackSaves--;
+		}.bind(this)).then(function() {
+			this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
 		}.bind(this)).catch(function(err) {
 			this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
 		}.bind(this)).finally(function() {
-			this._pendingFeedbackSaves--;
-			if (!this._feedbackInvalid) {
-				this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
-			}
+			this.fire('save-feedback-finished', {'success': !this._feedbackInvalid, 'hasPendingSaves': this._pendingFeedbackSaves > 0});
 		}.bind(this));
 	},
 

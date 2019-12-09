@@ -130,8 +130,8 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var pointsTextInput = element.$$('#cell-points');
-					pointsTextInput.value = '10';
+					var pointsTextInput = element.$$('#cell-points').$.input;
+					pointsTextInput.value = '5';
 					raf(function() {
 						element.addEventListener('d2l-rubric-criterion-cell-points-saved', function() {
 							var body = fetch.args[0][1].body;
@@ -139,6 +139,8 @@ suite('<d2l-rubric-description-editor>', function() {
 							expect(body.get && body.get('points') || '10').to.equal('10');
 							done();
 						});
+						pointsTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+						pointsTextInput.value = '10';
 						pointsTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 						pointsTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 					});
@@ -154,7 +156,7 @@ suite('<d2l-rubric-description-editor>', function() {
 					});
 					fetch.returns(promise);
 
-					var pointsTextInput = element.$$('d2l-input-text');
+					var pointsTextInput = element.$$('#cell-points').$.input;
 					pointsTextInput.value = '10';
 					raf(function() {
 						element.addEventListener('d2l-siren-entity-save-error', function() {
@@ -166,6 +168,8 @@ suite('<d2l-rubric-description-editor>', function() {
 								done();
 							});
 						});
+						pointsTextInput.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));
+						pointsTextInput.value = '4';
 						pointsTextInput.dispatchEvent(new CustomEvent('input', { bubbles: true, cancelable: false, composed: true }));
 						pointsTextInput.dispatchEvent(new CustomEvent('blur', { bubbles: true, cancelable: false, composed: true }));
 					});
@@ -182,7 +186,7 @@ suite('<d2l-rubric-description-editor>', function() {
 				});
 
 				test('points field is disabled', function() {
-					var pointsTextInput = element.$$('d2l-input-text');
+					var pointsTextInput = element.$$('#cell-points').$.input;
 					expect(pointsTextInput.disabled).to.be.true;
 				});
 

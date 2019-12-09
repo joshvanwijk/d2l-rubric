@@ -454,7 +454,7 @@ Polymer({
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
@@ -542,16 +542,11 @@ Polymer({
 				this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
 			}
 			var fields = [{ 'name': 'name', 'value': value }];
-			this._pendingNameSaves++;
-			this.performSirenAction(action, fields).then(function() {
+			this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
 				this.fire('d2l-rubric-criterion-saved');
+				this._updateName(this.entity, false);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-			}.bind(this)).finally(function() {
-				this._pendingNameSaves--;
-				if (!this._nameInvalid) {
-					this._updateName(this.entity, false);
-				}
 			}.bind(this));
 		}
 	},
@@ -573,16 +568,11 @@ Polymer({
 				this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
 			}
 			var fields = [{ 'name': 'outOf', 'value': saveEvent.value }];
-			this._pendingOutOfSaves++;
-			this.performSirenAction(action, fields).then(function() {
+			this.performAutosaveAction(action, fields, '_pendingOutOfSaves').then(function() {
 				this.fire('d2l-rubric-criterion-saved');
+				this._updateOutOf(this.entity, false);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
-			}.bind(this)).finally(function() {
-				this._pendingOutOfSaves--;
-				if (!this._outOfInvalid) {
-					this._updateOutOf(this.entity, false);
-				}
 			}.bind(this));
 		}
 	},
