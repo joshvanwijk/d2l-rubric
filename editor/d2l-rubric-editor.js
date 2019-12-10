@@ -768,9 +768,10 @@ Polymer({
 
 			const isLocked = entity.hasClass('locked');
 			const isShared = entity.hasClass('shared');
+			const isReadOnly = entity.hasClass('readOnly');
 			this._isLocked = isLocked;
 			this._isShared = isShared;
-			this._isReadOnly = isLocked || isShared;
+			this._isReadOnly = isReadOnly || isLocked || isShared;
 
 			this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
 
