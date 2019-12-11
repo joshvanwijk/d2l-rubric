@@ -250,9 +250,9 @@ Polymer({
 	focus: function() {
 		var elem = this.$['text-area'];
 		elem.focus();
-		var inputElem = elem.$$('input');
+		var inputElem = elem.shadowRoot.querySelector('input');
 		if (inputElem && this._largeScreen) {
-			elem.$$('input').select();
+			inputElem.select();
 		}
 	},
 
