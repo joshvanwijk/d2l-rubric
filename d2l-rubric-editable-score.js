@@ -66,17 +66,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			}
 			.clear-override-button-mobile {
 				display: none;
-			} 
+			}
 			.override-label {
 				display: none;
-			} 
+			}
 			@media screen and (max-width: 614px) {
 				.clear-override-button-mobile {
 					display: inline-flex;
 					padding: 6px 0;
 				}
 				.override-label {
-					margin-left: 12px;	
+					margin-left: 12px;
 					padding: 6px 0;
 					display: inline-flex;
 					font-size: 15px;
@@ -109,7 +109,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					<d2l-input-text id="text-area" value="{{_score}}" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
-				</div>	
+				</div>
 				<template is="dom-if" if="[[scoreInvalid]]">
 					<d2l-tooltip id="score-bubble" for="text-area" class="is-error" position="bottom">[[scoreInvalidError]]</d2l-tooltip>
 				</template>
@@ -288,7 +288,8 @@ Polymer({
 		if (event.relatedTarget && event.relatedTarget.id === 'clear-button') {
 			return;
 		}
-		var innerInput = event.target.$$('input');
+		var innerInput = event.target.shadowRoot.querySelector('input');
+
 		if (!innerInput || !innerInput.checkValidity()) {
 			return;
 		}
