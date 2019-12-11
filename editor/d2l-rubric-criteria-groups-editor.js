@@ -183,7 +183,7 @@ Polymer({
 	_refocus: function() {
 		var allGroups = dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
 		var lastGroup = allGroups[allGroups.length - 1];
-		lastGroup.$$('d2l-input-text').$$('input').select();
+		lastGroup.$$('d2l-input-text').shadowRoot.querySelector('input').select();
 	},
 	_totalScoreChanged: function(totalScore) {
 		this._hasTotalScore = typeof totalScore !== 'undefined';
