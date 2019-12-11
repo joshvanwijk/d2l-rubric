@@ -294,7 +294,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
 							<d2l-td 
 								class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]"
-								style$="[[_getCriteriaStyle(criterionCell, criterionNum, _loaLevels)]]"
+								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _loaLevels)]]"
 								on-click="handleTap"
 								data-href$="[[_getSelfLink(criterionCell)]]"
 							>
@@ -339,6 +339,10 @@ Polymer({
 		},
 		_levels: Array,
 		_sortedLevels: Array,
+		_levelsReversed: {
+			type: Boolean,
+			value: false
+		},
 		_loaLevels: Array,
 		_loaMappingHref: String,
 		_loaLevelEntity: {
@@ -464,7 +468,19 @@ Polymer({
 			return;
 		}
 
-		this._loaLevels = loaLevelEntity.getSubEntitiesByClass('level-of-achievement');
+		const loaLevelEntities = loaLevelEntity.getSubEntitiesByClass('level-of-achievement');
+
+		const lastRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
+		const lastRubricIndex = this._getRubricLevelIndex(lastRubric);
+		
+		if (lastRubricIndex === 0) {
+			loaLevelEntities.reverse();
+			this._levelsReversed = true;
+		} else {
+			this._levelsReversed = false;
+		}
+
+		this._loaLevels = loaLevelEntities;
 	},
 
 	_resolveRubricLevel: function(rubricLevelHref) {
@@ -559,20 +575,6 @@ Polymer({
 
 	_hasLoaScale: function(levelsEntity) {
 		return this._getLoaMappingLink(levelsEntity) !== '';
-	},
-
-	_getHeaderStyle: function(loaLevel) {
-		const colSpan = this._getLoaLevelSpan(loaLevel);
-
-        if (colSpan === 0) {
-            return 'display: none;';
-        }
-
-		return [
-			`border-right-color: ${loaLevel.properties.color}`,
-			'border-right-width: 2px',
-			`flex-grow: ${colSpan}`
-        ].join(';');
 	},
 
 	_hasFeedback: function(criterionEntity, assessmentResult) {
@@ -710,7 +712,25 @@ Polymer({
 		return className;
 	},
 
-	_getCriteriaStyle: function(criterionCell, criterionNum) {
+	_getHeaderStyle: function(loaLevel) {
+		const colSpan = this._getLoaLevelSpan(loaLevel);
+		const side = this._levelsReversed ? 'left' : 'right';
+		const hiddenSide = this._levelsReversed ? 'right' : 'left';
+
+        if (colSpan === 0) {
+            return 'display: none;';
+		}
+
+		return [
+			`border-${side}-color: ${loaLevel.properties.color}`,
+			`border-${side}-width: 2px`,
+			`border-${hiddenSide}-style: hidden`,
+			'flex-basis: 0px;',
+			`flex-grow: ${colSpan}`
+        ].join(';');
+	},
+
+	_getCriteriaStyle: function(criterionCell, rowIndex, cellIndex) {
 		const styles = [];
 
 		const rubricLevelHref = this._getRubricLevelLink(criterionCell);
@@ -723,14 +743,22 @@ Polymer({
 			if (loaLevelEntity) {
 				const color = loaLevelEntity.properties.color;
 
-				if (criterionNum === 0) {
+				if (rowIndex === 0) {
 					styles.push('border-top-width: 2px');
 					styles.push(`border-top-color: ${color}`);
 				}
 
+				const side = this._levelsReversed ? 'left' : 'right';
+				const hiddenSide = this._levelsReversed ? 'right' : 'left';
+
+				styles.push(`border-${side}: 1px solid var(--d2l-table-border-color)`);
+				if (!this._levelsReversed || cellIndex < this._getCriterionCells(this._criteriaEntities[rowIndex]).length - 1) {
+					styles.push(`border-${hiddenSide}-style: hidden`);
+				}
+
 				if (this._getRubricLevelLink(loaLevelEntity) === rubricLevelHref) {
-					styles.push('border-right-width: 2px');
-					styles.push(`border-right-color: ${color}`);
+					styles.push(`border-${side}-width: 2px`);
+					styles.push(`border-${side}-color: ${color}`);
 				}
 			}
 		}
@@ -921,12 +949,12 @@ Polymer({
 	},
 
 	_getLoaLevelSpan: function(loaLevel) {
-        const prevLoa = this._getPrevLoaLevel(loaLevel);
+		const adjLoa = this._levelsReversed ? this._getNextLoaLevel(loaLevel) : this._getPrevLoaLevel(loaLevel);
 
         const currentRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevel));
-        const prevRubric = this._resolveRubricLevel(this._getRubricLevelLink(prevLoa));
+        const adjRubric = this._resolveRubricLevel(this._getRubricLevelLink(adjLoa));
 
-        const dist = this._getRubricLevelDist(prevRubric, currentRubric);
+        const dist = this._getRubricLevelDist(adjRubric, currentRubric) * (this._levelsReversed ? -1 : 1);
         return dist;
     },
 
@@ -944,7 +972,7 @@ Polymer({
             }
         }
 
-        return -1;
+        return this._levelsReversed ? this._sortedLevels.length : -1;
     },
 
     _sortRubricLevels: function(levelEntities) {
@@ -992,6 +1020,18 @@ Polymer({
 
             if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
                 return this._loaLevels[i - 1];
+            }
+        }
+
+        return null;
+	},
+	
+	_getNextLoaLevel: function(loaLevelEntity) {
+        for (let i = 1; i < this._loaLevels.length; i++) {
+            const level = this._loaLevels[i - 1];
+
+            if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
+                return this._loaLevels[i];
             }
         }
 
