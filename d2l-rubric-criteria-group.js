@@ -414,8 +414,7 @@ Polymer({
 	observers: [
 		'_onLevelsEntityChanged(_levelsEntity)',
 		'_onLoaLevelEntityChanged(_loaLevelEntity)',
-		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)',
-		'_updateFeedbackDisplay(_criteriaEntities, assessmentResult)'
+		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
 	],
 
 	_rowHeaderDomChange: function() {
@@ -472,7 +471,7 @@ Polymer({
 
 		const lastRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
 		const lastRubricIndex = this._getRubricLevelIndex(lastRubric);
-		
+
 		if (lastRubricIndex === 0) {
 			loaLevelEntities.reverse();
 			this._levelsReversed = true;
@@ -552,11 +551,11 @@ Polymer({
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 		return link && link.href || '';
 	},
-	
+
 	_getCriterionCells: function(entity) {
 		var entities = entity && entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 		return entities || [];
-	},	
+	},
 
 	_getLoaMappingLink: function(entity) {
 		var link = entity && entity.getLinkByRel('loa-levels');
@@ -717,8 +716,8 @@ Polymer({
 		const side = this._levelsReversed ? 'left' : 'right';
 		const hiddenSide = this._levelsReversed ? 'right' : 'left';
 
-        if (colSpan === 0) {
-            return 'display: none;';
+		if (colSpan === 0) {
+			return 'display: none;';
 		}
 
 		return [
@@ -727,7 +726,7 @@ Polymer({
 			`border-${hiddenSide}-style: hidden`,
 			'flex-basis: 0px;',
 			`flex-grow: ${colSpan}`
-        ].join(';');
+		].join(';');
 	},
 
 	_getCriteriaStyle: function(criterionCell, rowIndex, cellIndex) {
@@ -735,7 +734,7 @@ Polymer({
 
 		const rubricLevelHref = this._getRubricLevelLink(criterionCell);
 		const rubricLevelEntity = this._resolveRubricLevel(rubricLevelHref);
-	
+
 		if (rubricLevelEntity) {
 			const loaLevelHref = this._getLoaLevelLink(rubricLevelEntity);
 			const loaLevelEntity = this._resolveLoaLevel(loaLevelHref);
@@ -934,13 +933,13 @@ Polymer({
 		return !this._isStaticView() && !feedbackInvalid;
 	},
 
-	_onLoaResize: function(e) {
+	_onLoaResize: function() {
 		const firstRow = this.root.querySelectorAll('.d2l-table-row-first')[0];
 
 		const widthStart = Math.floor(firstRow.firstChild.getBoundingClientRect().width);
 		const startLabel = this.root.querySelectorAll('.loa-label')[0];
 		startLabel.style.width = `${widthStart - 1}px`;
-		
+
 		const endLabel = this.root.querySelectorAll('.loa-end')[0];
 		if (endLabel) {
 			const widthEnd = Math.floor(firstRow.querySelectorAll('d2l-th.out-of')[0].getBoundingClientRect().width);
@@ -951,54 +950,54 @@ Polymer({
 	_getLoaLevelSpan: function(loaLevel) {
 		const adjLoa = this._levelsReversed ? this._getNextLoaLevel(loaLevel) : this._getPrevLoaLevel(loaLevel);
 
-        const currentRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevel));
-        const adjRubric = this._resolveRubricLevel(this._getRubricLevelLink(adjLoa));
+		const currentRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevel));
+		const adjRubric = this._resolveRubricLevel(this._getRubricLevelLink(adjLoa));
 
-        const dist = this._getRubricLevelDist(adjRubric, currentRubric) * (this._levelsReversed ? -1 : 1);
-        return dist;
-    },
+		const dist = this._getRubricLevelDist(adjRubric, currentRubric) * (this._levelsReversed ? -1 : 1);
+		return dist;
+	},
 
 	_getRubricLevelDist: function(rubricLevelEntity1, rubricLevelEntity2) {
-        const l = this._getRubricLevelIndex(rubricLevelEntity1);
-        const r = this._getRubricLevelIndex(rubricLevelEntity2);
+		const l = this._getRubricLevelIndex(rubricLevelEntity1);
+		const r = this._getRubricLevelIndex(rubricLevelEntity2);
 
-        return r - l;
-    },
-
-    _getRubricLevelIndex: function(rubricLevelEntity) {
-        for (let i = 0; i < this._sortedLevels.length; i++) {
-            if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(this._sortedLevels[i])) {
-                return i;
-            }
-        }
-
-        return this._levelsReversed ? this._sortedLevels.length : -1;
-    },
-
-    _sortRubricLevels: function(levelEntities) {
-        const sorted = [];
-
-        let first = null;
-        for (let i = 0; i < levelEntities.length; i++) {
-            if (this._getPrevLink(levelEntities[i]) === this._getPrevLink(null)) {
-                first = levelEntities[i];
-                break;
-            }
-        }
-
-        if (first === null) {
-            return [];
-        }
-
-        let current = first;
-        while (current !== null) {
-            sorted.push(current);
-            current = this._getNextRubricLevel(current);
-        }
-
-        return sorted;
+		return r - l;
 	},
-	
+
+	_getRubricLevelIndex: function(rubricLevelEntity) {
+		for (let i = 0; i < this._sortedLevels.length; i++) {
+			if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(this._sortedLevels[i])) {
+				return i;
+			}
+		}
+
+		return this._levelsReversed ? this._sortedLevels.length : -1;
+	},
+
+	_sortRubricLevels: function(levelEntities) {
+		const sorted = [];
+
+		let first = null;
+		for (let i = 0; i < levelEntities.length; i++) {
+			if (this._getPrevLink(levelEntities[i]) === this._getPrevLink(null)) {
+				first = levelEntities[i];
+				break;
+			}
+		}
+
+		if (first === null) {
+			return [];
+		}
+
+		let current = first;
+		while (current !== null) {
+			sorted.push(current);
+			current = this._getNextRubricLevel(current);
+		}
+
+		return sorted;
+	},
+
 	_getPrevLink: function(entity) {
 		var link = entity && entity.getLinkByRel('prev');
 		return link && link.href || '';
@@ -1007,34 +1006,34 @@ Polymer({
 	_getNextLink: function(entity) {
 		var link = entity && entity.getLinkByRel('next');
 		return link && link.href || '';
-    },
-	
+	},
+
 	_getNextRubricLevel: function(rubricLevelEntity) {
-        const nextHref = this._getNextLink(rubricLevelEntity);
-        return this._resolveRubricLevel(nextHref);
+		const nextHref = this._getNextLink(rubricLevelEntity);
+		return this._resolveRubricLevel(nextHref);
 	},
-	
+
 	_getPrevLoaLevel: function(loaLevelEntity) {
-        for (let i = 1; i < this._loaLevels.length; i++) {
-            const level = this._loaLevels[i];
+		for (let i = 1; i < this._loaLevels.length; i++) {
+			const level = this._loaLevels[i];
 
-            if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
-                return this._loaLevels[i - 1];
-            }
-        }
+			if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
+				return this._loaLevels[i - 1];
+			}
+		}
 
-        return null;
+		return null;
 	},
-	
+
 	_getNextLoaLevel: function(loaLevelEntity) {
-        for (let i = 1; i < this._loaLevels.length; i++) {
-            const level = this._loaLevels[i - 1];
+		for (let i = 1; i < this._loaLevels.length; i++) {
+			const level = this._loaLevels[i - 1];
 
-            if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
-                return this._loaLevels[i];
-            }
-        }
+			if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
+				return this._loaLevels[i];
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 });

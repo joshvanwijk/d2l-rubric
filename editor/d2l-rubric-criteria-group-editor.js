@@ -199,11 +199,11 @@ Polymer({
 			this.$$('d2l-rubric-criteria-editor').criterionDetailWidth = e.detail.width;
 		}.bind(this));
 
-		this.addEventListener('d2l-rubric-criterion-detail-width-changed', function() {
-			afterNextRender(this, function() {
+		this.addEventListener('d2l-rubric-criterion-detail-width-changed', (function() {
+			afterNextRender(this, (function() {
 				this.$$('d2l-scroll-wrapper').notifyResize();
-			});
-		});
+			}).bind(this));
+		}).bind(this));
 
 		this.addEventListener('d2l-rubric-loa-overlay-level-mapping-changed', (e) => {
 			this._rubricLevelLoaMapping = e.detail;

@@ -311,7 +311,7 @@ Polymer({
 		}
 	},
 
-	_getRubricLevelsLink(entity) {
+	_getRubricLevelsLink: function(entity) {
 		var link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/levels');
 		return link && link.href || '';
 	},
@@ -453,7 +453,7 @@ Polymer({
 	_countCriteria: function(criteriaArray) {
 		this.criterionCount = criteriaArray.length;
 	},
-	_isFirstRow(index) {
+	_isFirstRow: function(index) {
 		return index === 0;
 	}
 });

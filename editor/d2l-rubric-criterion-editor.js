@@ -600,7 +600,7 @@ Polymer({
 		return link && link.href || '';
 	},
 
-	_getCellStyle(cell, cellIndex, loaLevels, rubricLevelLoaMapping, topBorder) {
+	_getCellStyle: function(cell, cellIndex, loaLevels, rubricLevelLoaMapping, topBorder) {
 		const styles = [];
 
 		if (loaLevels && loaLevels.length) {
@@ -613,14 +613,14 @@ Polymer({
 
 			if (loaLevelEntity) {
 				const c = loaLevelEntity.properties.color;
-				
+
 				const isOverrideBound = rubricLevelLoaMapping[rubricLevelHref] && rubricLevelLoaMapping[rubricLevelHref].isBound;
 				const isStandardBound = !rubricLevelLoaMapping[rubricLevelHref] && this._getRubricLevelLink(loaLevelEntity) === rubricLevelHref;
 
 				const side = rubricLevelLoaMapping.reversed ? 'left' : 'right';
 				const hiddenSide = rubricLevelLoaMapping.reversed ? 'right' : 'left';
 
-				styles.push(`border-${side}: 1px solid var(--d2l-color-galena)`);	
+				styles.push(`border-${side}: 1px solid var(--d2l-color-galena)`);
 				if (!rubricLevelLoaMapping.reversed || cellIndex < this._getCriterionCells(this.entity).length - 1) {
 					styles.push(`border-${hiddenSide}-style: hidden`);
 				}
@@ -632,7 +632,7 @@ Polymer({
 
 				if (topBorder) {
 					styles.push(`border-top-color: ${c}`);
-					styles.push('border-top-width: 2px');	
+					styles.push('border-top-width: 2px');
 				}
 			}
 		}
