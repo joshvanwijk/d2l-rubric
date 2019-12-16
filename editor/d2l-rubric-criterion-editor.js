@@ -245,7 +245,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			</div>
 
 			<d2l-select-outcomes
-			  rel= "[[_getOutcomeRel(_isFlagOn, isHolistic, _isAlignmentTagListEmpty)]]"
+			  rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
               href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
 			  token="[[token]]"
 			  empty="{{_isOutcomeEmpty}}"
@@ -667,8 +667,8 @@ Polymer({
 		return _isFlagOn && !isHolistic && _isAlignmentTagListEmpty;
 	},
 
-	_getOutcomeRel: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty) {
-		if (this.HypermediaRels && this.HypermediaRels.Activities && this._canCheckOutcomes(_isFlagOn, isHolistic, _isAlignmentTagListEmpty)) {
+	_getOutcomeRel: function(_isFlagOn, isHolistic) {
+		if (this.HypermediaRels && this.HypermediaRels.Activities && _isFlagOn && !isHolistic) {
 			return this.HypermediaRels.Activities.activityUsage;
 		}
 	},
