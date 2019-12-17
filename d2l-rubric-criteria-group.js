@@ -251,7 +251,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
 					<d2l-tspan id="loa-container">
 						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_onLoaResize">
-							<div class="loa-label">Achievement Levels</div>
+							<div class="loa-label">[[_getLoaHeadingLangTerm()]]</div>
 							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
 								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]">
 									[[loaLevel.properties.name]]
@@ -1035,5 +1035,10 @@ Polymer({
 		}
 
 		return null;
+	},
+
+	_getLoaHeadingLangTerm: function() {
+		// TODO: Make Lang Term
+		return 'Achievement Levels';
 	}
 });

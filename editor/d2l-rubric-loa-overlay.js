@@ -178,7 +178,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                 <template is="dom-if" if="[[_hasLoaLevels(_loaMappingHref)]]">
                     <div class="gutter-left"></div>
                     <div class="cell col-first" is-holistic$="[[isHolistic]]">
-                        Achievement Levels
+                        [[_getLevelsLangTerm()]]
                     </div>
                     <div id="row-data">
                         <div id="motion-slider" class="slider hidden"></div>
@@ -394,11 +394,13 @@ class RubricLoaOverlay extends mixinBehaviors([
 	}
 
 	_getLoaMappingLink(entity) {
+		// TODO: Use constant
 		var link = entity && entity.getLinkByRel('loa-levels');
 		return link && link.href || '';
 	}
 
 	_getRubricLevelLink(entity) {
+		// TODO: Use constant
 		var link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
 		return link && link.href || '';
 	}
@@ -559,7 +561,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 			if (commit && this._rubricLevelOverrides[loaLink] !== undefined) {
 				// Send change to server
-				const action = loaLevelEntity.getActionByName('updateMapping');
+				const action = loaLevelEntity.getActionByName('updateMapping'); // TODO: Change to constant
 				if (action) {
 					this._sliderLock = true;
 
@@ -676,6 +678,11 @@ class RubricLoaOverlay extends mixinBehaviors([
 		}
 
 		return sorted;
+	}
+
+	_getLevelsLangTerm() {
+		// TODO: Make lang term
+		return 'Achievement Levels';
 	}
 }
 
