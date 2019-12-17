@@ -253,7 +253,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_onLoaResize">
 							<div class="loa-label">Achievement Levels</div>
 							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
-								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel)]]">
+								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]">
 									[[loaLevel.properties.name]]
 								</div>
 							</template>
@@ -294,7 +294,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
 							<d2l-td 
 								class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]"
-								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _loaLevels)]]"
+								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
 								on-click="handleTap"
 								data-href$="[[_getSelfLink(criterionCell)]]"
 							>
@@ -469,7 +469,7 @@ Polymer({
 
 		const loaLevelEntities = loaLevelEntity.getSubEntitiesByClass('level-of-achievement');
 
-		const lastRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
+		const lastRubric = this._resolveRubricLevel(this._levels, this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
 		const lastRubricIndex = this._getRubricLevelIndex(lastRubric);
 
 		if (lastRubricIndex === 0) {
@@ -482,13 +482,13 @@ Polymer({
 		this._loaLevels = loaLevelEntities;
 	},
 
-	_resolveRubricLevel: function(rubricLevelHref) {
-		if (!this._levels || !this._levels.length) {
+	_resolveRubricLevel: function(allLevels, rubricLevelHref) {
+		if (!allLevels || !allLevels.length) {
 			return null;
 		}
 
-		for (let i = 0; i < this._levels.length; i++) {
-			const rubricLevel = this._levels[i];
+		for (let i = 0; i < allLevels.length; i++) {
+			const rubricLevel = allLevels[i];
 
 			if (this._getSelfLink(rubricLevel) === rubricLevelHref) {
 				return rubricLevel;
@@ -498,13 +498,13 @@ Polymer({
 		return null;
 	},
 
-	_resolveLoaLevel: function(loaLevelHref) {
-		if (!this._loaLevels || !this._loaLevels.length) {
+	_resolveLoaLevel: function(loaLevels, loaLevelHref) {
+		if (!loaLevels || !loaLevels.length) {
 			return null;
 		}
 
-		for (let i = 0; i < this._loaLevels.length; i++) {
-			const loaLevel = this._loaLevels[i];
+		for (let i = 0; i < loaLevels.length; i++) {
+			const loaLevel = loaLevels[i];
 
 			if (this._getSelfLink(loaLevel) === loaLevelHref) {
 				return loaLevel;
@@ -711,10 +711,10 @@ Polymer({
 		return className;
 	},
 
-	_getHeaderStyle: function(loaLevel) {
-		const colSpan = this._getLoaLevelSpan(loaLevel);
-		const side = this._levelsReversed ? 'left' : 'right';
-		const hiddenSide = this._levelsReversed ? 'right' : 'left';
+	_getHeaderStyle: function(loaLevel, sortedRubricLevels, loaLevels, levelsReversed) {
+		const colSpan = this._getLoaLevelSpan(loaLevel, sortedRubricLevels, loaLevels, levelsReversed);
+		const side = levelsReversed ? 'left' : 'right';
+		const hiddenSide = levelsReversed ? 'right' : 'left';
 
 		if (colSpan === 0) {
 			return 'display: none;';
@@ -729,15 +729,15 @@ Polymer({
 		].join(';');
 	},
 
-	_getCriteriaStyle: function(criterionCell, rowIndex, cellIndex) {
+	_getCriteriaStyle: function(criterionCell, rowIndex, cellIndex, rubricLevels, loaLevels, reversed) {
 		const styles = [];
 
 		const rubricLevelHref = this._getRubricLevelLink(criterionCell);
-		const rubricLevelEntity = this._resolveRubricLevel(rubricLevelHref);
+		const rubricLevelEntity = this._resolveRubricLevel(rubricLevels, rubricLevelHref);
 
 		if (rubricLevelEntity) {
 			const loaLevelHref = this._getLoaLevelLink(rubricLevelEntity);
-			const loaLevelEntity = this._resolveLoaLevel(loaLevelHref);
+			const loaLevelEntity = this._resolveLoaLevel(loaLevels, loaLevelHref);
 
 			if (loaLevelEntity) {
 				const color = loaLevelEntity.properties.color;
@@ -747,11 +747,11 @@ Polymer({
 					styles.push(`border-top-color: ${color}`);
 				}
 
-				const side = this._levelsReversed ? 'left' : 'right';
-				const hiddenSide = this._levelsReversed ? 'right' : 'left';
+				const side = reversed ? 'left' : 'right';
+				const hiddenSide = reversed ? 'right' : 'left';
 
 				styles.push(`border-${side}: 1px solid var(--d2l-table-border-color)`);
-				if (!this._levelsReversed || cellIndex < this._getCriterionCells(this._criteriaEntities[rowIndex]).length - 1) {
+				if (!reversed || cellIndex < this._getCriterionCells(this._criteriaEntities[rowIndex]).length - 1) {
 					styles.push(`border-${hiddenSide}-style: hidden`);
 				}
 
@@ -947,31 +947,31 @@ Polymer({
 		}
 	},
 
-	_getLoaLevelSpan: function(loaLevel) {
-		const adjLoa = this._levelsReversed ? this._getNextLoaLevel(loaLevel) : this._getPrevLoaLevel(loaLevel);
+	_getLoaLevelSpan: function(loaLevel, sortedRubricLevels, loaLevels, reversed) {
+		const adjLoa = this._levelsReversed ? this._getNextLoaLevel(loaLevels, loaLevel) : this._getPrevLoaLevel(loaLevels, loaLevel);
 
-		const currentRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevel));
-		const adjRubric = this._resolveRubricLevel(this._getRubricLevelLink(adjLoa));
+		const currentRubric = this._resolveRubricLevel(sortedRubricLevels, this._getRubricLevelLink(loaLevel));
+		const adjRubric = this._resolveRubricLevel(sortedRubricLevels, this._getRubricLevelLink(adjLoa));
 
-		const dist = this._getRubricLevelDist(adjRubric, currentRubric) * (this._levelsReversed ? -1 : 1);
+		const dist = this._getRubricLevelDist(sortedRubricLevels, adjRubric, currentRubric, reversed) * (reversed ? -1 : 1);
 		return dist;
 	},
 
-	_getRubricLevelDist: function(rubricLevelEntity1, rubricLevelEntity2) {
-		const l = this._getRubricLevelIndex(rubricLevelEntity1);
-		const r = this._getRubricLevelIndex(rubricLevelEntity2);
+	_getRubricLevelDist: function(sortedRubricLevels, rubricLevelEntity1, rubricLevelEntity2, reversed) {
+		const l = this._getRubricLevelIndex(sortedRubricLevels, rubricLevelEntity1, reversed);
+		const r = this._getRubricLevelIndex(sortedRubricLevels, rubricLevelEntity2, reversed);
 
 		return r - l;
 	},
 
-	_getRubricLevelIndex: function(rubricLevelEntity) {
-		for (let i = 0; i < this._sortedLevels.length; i++) {
-			if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(this._sortedLevels[i])) {
+	_getRubricLevelIndex: function(sortedRubricLevels, rubricLevelEntity, reversed) {
+		for (let i = 0; i < sortedRubricLevels.length; i++) {
+			if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(sortedRubricLevels[i])) {
 				return i;
 			}
 		}
 
-		return this._levelsReversed ? this._sortedLevels.length : -1;
+		return reversed ? sortedRubricLevels.length : -1;
 	},
 
 	_sortRubricLevels: function(levelEntities) {
@@ -992,7 +992,7 @@ Polymer({
 		let current = first;
 		while (current !== null) {
 			sorted.push(current);
-			current = this._getNextRubricLevel(current);
+			current = this._getNextRubricLevel(levelEntities, current);
 		}
 
 		return sorted;
@@ -1008,29 +1008,29 @@ Polymer({
 		return link && link.href || '';
 	},
 
-	_getNextRubricLevel: function(rubricLevelEntity) {
+	_getNextRubricLevel: function(allRubricLevels, rubricLevelEntity) {
 		const nextHref = this._getNextLink(rubricLevelEntity);
-		return this._resolveRubricLevel(nextHref);
+		return this._resolveRubricLevel(allRubricLevels, nextHref);
 	},
 
-	_getPrevLoaLevel: function(loaLevelEntity) {
-		for (let i = 1; i < this._loaLevels.length; i++) {
-			const level = this._loaLevels[i];
+	_getPrevLoaLevel: function(loaLevels, loaLevelEntity) {
+		for (let i = 1; i < loaLevels.length; i++) {
+			const level = loaLevels[i];
 
 			if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
-				return this._loaLevels[i - 1];
+				return loaLevels[i - 1];
 			}
 		}
 
 		return null;
 	},
 
-	_getNextLoaLevel: function(loaLevelEntity) {
-		for (let i = 1; i < this._loaLevels.length; i++) {
-			const level = this._loaLevels[i - 1];
+	_getNextLoaLevel: function(loaLevels, loaLevelEntity) {
+		for (let i = 1; i < loaLevels.length; i++) {
+			const level = loaLevels[i - 1];
 
 			if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
-				return this._loaLevels[i];
+				return loaLevels[i];
 			}
 		}
 

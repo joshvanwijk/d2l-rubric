@@ -183,14 +183,14 @@ class RubricLoaOverlay extends mixinBehaviors([
                     <div id="row-data">
                         <div id="motion-slider" class="slider hidden"></div>
                         <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
-                            <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _rubricLevelOverrides)]]" is-holistic$="[[isHolistic]]">
+                            <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel, _loaLevels, _sortedLevels, _rubricLevelOverrides, _reversed)]]" is-holistic$="[[isHolistic]]">
                                 [[loaLevel.properties.name]]
                             </div>
                             <div
                                 class="slider"
                                 data-loa-level$="[[_getSelfLink(loaLevel)]]"
                                 on-mouseDown="_onMouseDown"
-                                style$="[[_getSliderStyle(loaLevel, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]"
+                                style$="[[_getSliderStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]"
                             ></div>
                         </template>
                     </div>
@@ -272,8 +272,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		const loaLevelEntities = entity.getSubEntitiesByClass('level-of-achievement');
 
-		const lastRubric = this._resolveRubricLevel(this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
-		const lastRubricIndex = this._getRubricLevelIndex(lastRubric);
+		const lastRubric = this._resolveRubricLevel(this._sortedLevels, this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
+		const lastRubricIndex = this._getRubricLevelIndex(this._sortedLevels, lastRubric, false);
 
 		if (lastRubricIndex === 0) {
 			loaLevelEntities.reverse();
@@ -287,8 +287,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 		this.checkSize();
 	}
 
-	_getHeaderStyle(loaLevel, rubricLevels, _rubricLevelOverrides) {
-		const colSpan = this._getLoaLevelSpan(loaLevel, _rubricLevelOverrides);
+	_getHeaderStyle(loaLevel, loaLevels, sortedRubricLevels, _rubricLevelOverrides, reversed) {
+		const colSpan = this._getLoaLevelSpan(loaLevel, loaLevels, sortedRubricLevels, _rubricLevelOverrides, reversed);
 
 		if (colSpan === 0) {
 			return 'display: none;';
@@ -301,16 +301,16 @@ class RubricLoaOverlay extends mixinBehaviors([
 		].join(';');
 	}
 
-	_getSliderStyle(loaLevel, rubricLevels, totalWidth, rubricLevelOverrides, reversed) {
+	_getSliderStyle(loaLevel, loaLevels, sortedRubricLevels, totalWidth, rubricLevelOverrides, reversed) {
 		const color = loaLevel.properties.color;
-		const effectiveRubricLevel = this._getVisualRubricLevel(loaLevel, rubricLevelOverrides);
+		const effectiveRubricLevel = this._getVisualRubricLevel(loaLevel, sortedRubricLevels, rubricLevelOverrides);
 
-		let offset = this._getRubricSliderPosition(effectiveRubricLevel, rubricLevels, totalWidth, reversed);
+		let offset = this._getRubricSliderPosition(effectiveRubricLevel, sortedRubricLevels, totalWidth, reversed);
 		let zIndex = 2;
 
 		// Check for stacked sliders
-		const prevLoa = this._getPrevLoaLevel(loaLevel);
-		const prevRubric = this._getVisualRubricLevel(prevLoa, rubricLevelOverrides);
+		const prevLoa = this._getPrevLoaLevel(loaLevels, loaLevel);
+		const prevRubric = this._getVisualRubricLevel(prevLoa, sortedRubricLevels, rubricLevelOverrides);
 
 		if (prevLoa !== null && this._getSelfLink(effectiveRubricLevel) === this._getSelfLink(prevRubric)) {
 			offset += 12;
@@ -325,26 +325,26 @@ class RubricLoaOverlay extends mixinBehaviors([
 		].join(';');
 	}
 
-	_getRubricSliderPosition(rubricLevel, rubricLevels, totalWidth, reversed) {
-		const nSections = rubricLevels.length;
+	_getRubricSliderPosition(rubricLevel, sortedRubricLevels, totalWidth, reversed) {
+		const nSections = sortedRubricLevels.length;
 		const sectionWidth = totalWidth / nSections;
 
-		const dist = this._getRubricLevelDist(this._sortedLevels[0], rubricLevel) + (reversed ? 0 : 1);
+		const dist = this._getRubricLevelDist(sortedRubricLevels, sortedRubricLevels[0], rubricLevel, reversed) + (reversed ? 0 : 1);
 		return dist * sectionWidth - SLIDER_CENTER_OFFSET;
 	}
 
-	_getLoaLevelSpan(loaLevel, rubricLevelOverrides) {
-		const adjLoa = this._reversed ? this._getNextLoaLevel(loaLevel) : this._getPrevLoaLevel(loaLevel);
+	_getLoaLevelSpan(loaLevel, loaLevels, sortedRubricLevels, rubricLevelOverrides, reversed) {
+		const adjLoa = this._reversed ? this._getNextLoaLevel(loaLevels, loaLevel) : this._getPrevLoaLevel(loaLevels, loaLevel);
 
-		const currentRubric = this._getVisualRubricLevel(loaLevel, rubricLevelOverrides);
-		const adjRubric = this._getVisualRubricLevel(adjLoa, rubricLevelOverrides);
+		const currentRubric = this._getVisualRubricLevel(loaLevel, sortedRubricLevels, rubricLevelOverrides);
+		const adjRubric = this._getVisualRubricLevel(adjLoa, sortedRubricLevels, rubricLevelOverrides);
 
-		const dist = this._getRubricLevelDist(adjRubric, currentRubric) * (this._reversed ? -1 : 1);
+		const dist = this._getRubricLevelDist(sortedRubricLevels, adjRubric, currentRubric, reversed) * (reversed ? -1 : 1);
 		return dist;
 	}
 
-	_getVisualLoaLevelMapping(rubricLevelOverrides, reversed) {
-		if (!this._loaLevels) {
+	_getVisualLoaLevelMapping(loaLevels, rubricLevels, rubricLevelOverrides, reversed) {
+		if (!loaLevels) {
 			return {};
 		}
 
@@ -352,8 +352,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		levelMap.reversed = reversed;
 
-		const startLoaLevel = this._getFixedLoaLevel();
-		const startRubricLevel = this._resolveRubricLevel(this._getRubricLevelLink(startLoaLevel));
+		const startLoaLevel = this._getFixedLoaLevel(loaLevels, reversed);
+		const startRubricLevel = this._resolveRubricLevel(rubricLevels, this._getRubricLevelLink(startLoaLevel));
 
 		let currentLoa = null;
 		let currentRubric = startRubricLevel;
@@ -365,32 +365,32 @@ class RubricLoaOverlay extends mixinBehaviors([
 			while (currentLoa === null || this._getSelfLink(currentRubric) === this._getSelfLink(nextRubric)) {
 				newLevel = true;
 				currentLoa = nextLoa;
-				nextLoa = this._reversed ? this._getNextLoaLevel(currentLoa) : this._getPrevLoaLevel(currentLoa);
+				nextLoa = reversed ? this._getNextLoaLevel(loaLevels, currentLoa) : this._getPrevLoaLevel(loaLevels, currentLoa);
 
 				const nextLoaLink = this._getSelfLink(nextLoa);
 				const nextRubricLink = rubricLevelOverrides[nextLoaLink] !== undefined
 					? rubricLevelOverrides[nextLoaLink]
 					: this._getRubricLevelLink(nextLoa);
 
-				nextRubric = this._resolveRubricLevel(nextRubricLink);
+				nextRubric = this._resolveRubricLevel(rubricLevels, nextRubricLink);
 			}
 
 			levelMap[this._getSelfLink(currentRubric)] = {
 				loaLevel: this._getSelfLink(currentLoa),
 				isBound: newLevel
 			};
-			currentRubric = this._reversed ? this._getNextRubricLevel(currentRubric) : this._getPreviousRubicLevel(currentRubric);
+			currentRubric = reversed ? this._getNextRubricLevel(rubricLevels, currentRubric) : this._getPreviousRubicLevel(rubricLevels, currentRubric);
 			newLevel = false;
 		}
 
 		return levelMap;
 	}
 
-	_getVisualRubricLevel(loaLevel, rubricLevelOverrides) {
+	_getVisualRubricLevel(loaLevel, rubricLevels, rubricLevelOverrides) {
 		const currentId = this._getSelfLink(loaLevel);
 		return rubricLevelOverrides[currentId] !== undefined
-			? this._resolveRubricLevel(rubricLevelOverrides[currentId])
-			: this._resolveRubricLevel(this._getRubricLevelLink(loaLevel));
+			? this._resolveRubricLevel(rubricLevels, rubricLevelOverrides[currentId])
+			: this._resolveRubricLevel(rubricLevels, this._getRubricLevelLink(loaLevel));
 	}
 
 	_getLoaMappingLink(entity) {
@@ -431,7 +431,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		this._activeSlider = e.target;
 		this._activeSlider.classList.add('active');
-		this._draggingLoaLevel = this._resolveLoaLevel(this._activeSlider.getAttribute('data-loa-level'));
+		this._draggingLoaLevel = this._resolveLoaLevel(this._loaLevels, this._activeSlider.getAttribute('data-loa-level'));
 
 		this._draggingSlider = this.$$('#motion-slider');
 		this._dragCursorOffset = e.offsetX;
@@ -489,13 +489,13 @@ class RubricLoaOverlay extends mixinBehaviors([
 		return (index < 0 || index >= this._sortedLevels.length) ? null : this._sortedLevels[index];
 	}
 
-	_resolveLoaLevel(loaLevelHref) {
-		if (!this._loaLevels || !this._loaLevels.length) {
+	_resolveLoaLevel(loaLevels, loaLevelHref) {
+		if (!loaLevels || !loaLevels.length) {
 			return null;
 		}
 
-		for (let i = 0; i < this._loaLevels.length; i++) {
-			const loaLevel = this._loaLevels[i];
+		for (let i = 0; i < loaLevels.length; i++) {
+			const loaLevel = loaLevels[i];
 
 			if (this._getSelfLink(loaLevel) === loaLevelHref) {
 				return loaLevel;
@@ -505,13 +505,13 @@ class RubricLoaOverlay extends mixinBehaviors([
 		return null;
 	}
 
-	_resolveRubricLevel(rubricLevelHref) {
-		if (!this._levels || !this._levels.length) {
+	_resolveRubricLevel(rubricLevels, rubricLevelHref) {
+		if (!rubricLevels || !rubricLevels.length) {
 			return null;
 		}
 
-		for (let i = 0; i < this._levels.length; i++) {
-			const rubricLevel = this._levels[i];
+		for (let i = 0; i < rubricLevels.length; i++) {
+			const rubricLevel = rubricLevels[i];
 
 			if (this._getSelfLink(rubricLevel) === rubricLevelHref) {
 				return rubricLevel;
@@ -521,14 +521,14 @@ class RubricLoaOverlay extends mixinBehaviors([
 		return null;
 	}
 
-	_getPreviousRubicLevel(rubricLevelEntity) {
+	_getPreviousRubicLevel(rubricLevels, rubricLevelEntity) {
 		const previousHref = this._getPrevLink(rubricLevelEntity);
-		return this._resolveRubricLevel(previousHref);
+		return this._resolveRubricLevel(rubricLevels, previousHref);
 	}
 
-	_getNextRubricLevel(rubricLevelEntity) {
+	_getNextRubricLevel(rubricLevels, rubricLevelEntity) {
 		const nextHref = this._getNextLink(rubricLevelEntity);
-		return this._resolveRubricLevel(nextHref);
+		return this._resolveRubricLevel(rubricLevels, nextHref);
 	}
 
 	_updateRubricLevel(loaLevelEntity, rubricLevelEntity, commit) {
@@ -540,15 +540,15 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		if (currentLevel !== newLevel) {
 			// Check if move is valid
-			const nextLoa = this._getNextLoaLevel(loaLevelEntity);
-			const prevLoa = this._getPrevLoaLevel(loaLevelEntity);
+			const nextLoa = this._getNextLoaLevel(this._loaLevels, loaLevelEntity);
+			const prevLoa = this._getPrevLoaLevel(this._loaLevels, loaLevelEntity);
 
-			const nextRubric = this._getVisualRubricLevel(nextLoa, this._rubricLevelOverrides);
-			const prevRubric = this._getVisualRubricLevel(prevLoa, this._rubricLevelOverrides);
+			const nextRubric = this._getVisualRubricLevel(nextLoa, this._sortedLevels, this._rubricLevelOverrides);
+			const prevRubric = this._getVisualRubricLevel(prevLoa, this._sortedLevels, this._rubricLevelOverrides);
 
-			const moveInvalid = (nextLoa && this._getRubricLevelDist(rubricLevelEntity, nextRubric) < 0)
-                || (prevLoa && this._getRubricLevelDist(rubricLevelEntity, prevRubric) > 0)
-                || (this._getSelfLink(loaLevelEntity) === this._getSelfLink(this._getFixedLoaLevel()));
+			const moveInvalid = (nextLoa && this._getRubricLevelDist(this._sortedLevels, rubricLevelEntity, nextRubric, this._reversed) < 0)
+                || (prevLoa && this._getRubricLevelDist(this._sortedLevels, rubricLevelEntity, prevRubric, this._reversed) > 0)
+                || (this._getSelfLink(loaLevelEntity) === this._getSelfLink(this._getFixedLoaLevel(this._loaLevels, this._reversed)));
 
 			if (!moveInvalid && this._rubricLevelOverrides[loaLink] !== newLevel) {
 				// Update front-end JS overrides
@@ -566,7 +566,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 					const fields = action.fields;
 					const upperBoundField = fields.find(f => f.name === 'newUpperBound');
 					if (upperBoundField) {
-						const resolvedEntity = this._resolveRubricLevel(this._rubricLevelOverrides[loaLink]);
+						const resolvedEntity = this._resolveRubricLevel(this._sortedLevels, this._rubricLevelOverrides[loaLink]);
 						upperBoundField.value = resolvedEntity ? resolvedEntity.properties.id : null;
 					}
 
@@ -592,12 +592,12 @@ class RubricLoaOverlay extends mixinBehaviors([
 	}
 
 	_onOverridesChanged(overrides) {
-		const loaMapping = this._getVisualLoaLevelMapping(overrides, this._reversed);
+		const loaMapping = this._getVisualLoaLevelMapping(this._loaLevels, this._sortedLevels, overrides, this._reversed);
 		this.fire('d2l-rubric-loa-overlay-level-mapping-changed', loaMapping);
 	}
 
 	_onReversedChanged(reversed) {
-		const loaMapping = this._getVisualLoaLevelMapping(this._rubricLevelOverrides, reversed);
+		const loaMapping = this._getVisualLoaLevelMapping(this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, reversed);
 		this.fire('d2l-rubric-loa-overlay-level-mapping-changed', loaMapping);
 	}
 
@@ -605,24 +605,24 @@ class RubricLoaOverlay extends mixinBehaviors([
 		this._reloadHref(this.href);
 	}
 
-	_getNextLoaLevel(loaLevelEntity) {
-		for (let i = 1; i < this._loaLevels.length; i++) {
-			const level = this._loaLevels[i - 1];
+	_getNextLoaLevel(loaLevels, loaLevelEntity) {
+		for (let i = 1; i < loaLevels.length; i++) {
+			const level = loaLevels[i - 1];
 
 			if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
-				return this._loaLevels[i];
+				return loaLevels[i];
 			}
 		}
 
 		return null;
 	}
 
-	_getPrevLoaLevel(loaLevelEntity) {
-		for (let i = 1; i < this._loaLevels.length; i++) {
-			const level = this._loaLevels[i];
+	_getPrevLoaLevel(loaLevels, loaLevelEntity) {
+		for (let i = 1; i < loaLevels.length; i++) {
+			const level = loaLevels[i];
 
 			if (this._getSelfLink(level) === this._getSelfLink(loaLevelEntity)) {
-				return this._loaLevels[i - 1];
+				return loaLevels[i - 1];
 			}
 		}
 
@@ -633,25 +633,25 @@ class RubricLoaOverlay extends mixinBehaviors([
      * Returns the entity for the loa level whose mapping is fixed
      * (lowest scoring LOA level)
      */
-	_getFixedLoaLevel() {
-		return this._loaLevels[this._reversed ? 0 : (this._loaLevels.length - 1)];
+	_getFixedLoaLevel(loaLevels, reversed) {
+		return loaLevels[reversed ? 0 : (loaLevels.length - 1)];
 	}
 
-	_getRubricLevelDist(rubricLevelEntity1, rubricLevelEntity2) {
-		const l = this._getRubricLevelIndex(rubricLevelEntity1);
-		const r = this._getRubricLevelIndex(rubricLevelEntity2);
+	_getRubricLevelDist(sortedRubricLevels, rubricLevelEntity1, rubricLevelEntity2, reversed) {
+		const l = this._getRubricLevelIndex(sortedRubricLevels, rubricLevelEntity1, reversed);
+		const r = this._getRubricLevelIndex(sortedRubricLevels, rubricLevelEntity2, reversed);
 
 		return r - l;
 	}
 
-	_getRubricLevelIndex(rubricLevelEntity) {
-		for (let i = 0; i < this._sortedLevels.length; i++) {
-			if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(this._sortedLevels[i])) {
+	_getRubricLevelIndex(sortedRubricLevels, rubricLevelEntity, reversed) {
+		for (let i = 0; i < sortedRubricLevels.length; i++) {
+			if (this._getSelfLink(rubricLevelEntity) === this._getSelfLink(sortedRubricLevels[i])) {
 				return i;
 			}
 		}
 
-		return this._reversed ? this._sortedLevels.length : -1;
+		return reversed ? sortedRubricLevels.length : -1;
 	}
 
 	_sortRubricLevels(levelEntities) {
@@ -672,7 +672,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 		let current = first;
 		while (current !== null) {
 			sorted.push(current);
-			current = this._getNextRubricLevel(current);
+			current = this._getNextRubricLevel(levelEntities, current);
 		}
 
 		return sorted;

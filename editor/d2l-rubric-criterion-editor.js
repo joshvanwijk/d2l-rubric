@@ -273,7 +273,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
 					<div class="criterion-text">
 						<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
-							<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
+							<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _rubricLevels, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
 								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
@@ -282,7 +282,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 						<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
 						<div class="criterion-feedback">
 							<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]">
-								<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _loaLevels, rubricLevelLoaMapping)]]">
+								<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _rubricLevels, _loaLevels, rubricLevelLoaMapping)]]">
 									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}">
 									</d2l-rubric-feedback-editor>
 								</div>
@@ -553,13 +553,13 @@ Polymer({
 		this._loaLevels = entity.getSubEntitiesByClass('level-of-achievement');
 	},
 
-	_resolveRubricLevel: function(rubricLevelHref) {
-		if (!rubricLevelHref || !this._rubricLevels || !this._rubricLevels.length) {
+	_resolveRubricLevel: function(rubricLevels, rubricLevelHref) {
+		if (!rubricLevelHref || !rubricLevels || !rubricLevels.length) {
 			return null;
 		}
 
-		for (let i = 0; i < this._rubricLevels.length; i++) {
-			const rubricLevel = this._rubricLevels[i];
+		for (let i = 0; i < rubricLevels.length; i++) {
+			const rubricLevel = rubricLevels[i];
 
 			if (this._getSelfLink(rubricLevel) === rubricLevelHref) {
 				return rubricLevel;
@@ -569,13 +569,13 @@ Polymer({
 		return null;
 	},
 
-	_resolveLoaLevel: function(loaLevelHref) {
-		if (!loaLevelHref || !this._loaLevels || !this._loaLevels.length) {
+	_resolveLoaLevel: function(loaLevels, loaLevelHref) {
+		if (!loaLevelHref || !loaLevels || !loaLevels.length) {
 			return null;
 		}
 
-		for (let i = 0; i < this._loaLevels.length; i++) {
-			const loaLevel = this._loaLevels[i];
+		for (let i = 0; i < loaLevels.length; i++) {
+			const loaLevel = loaLevels[i];
 
 			if (this._getSelfLink(loaLevel) === loaLevelHref) {
 				return loaLevel;
@@ -600,16 +600,16 @@ Polymer({
 		return link && link.href || '';
 	},
 
-	_getCellStyle: function(cell, cellIndex, loaLevels, rubricLevelLoaMapping, topBorder) {
+	_getCellStyle: function(cell, cellIndex, rubricLevels, loaLevels, rubricLevelLoaMapping, topBorder) {
 		const styles = [];
 
 		if (loaLevels && loaLevels.length) {
 			const rubricLevelHref = this._getRubricLevelLink(cell);
-			const rubricLevelEntity = this._resolveRubricLevel(rubricLevelHref);
+			const rubricLevelEntity = this._resolveRubricLevel(rubricLevels, rubricLevelHref);
 			const loaLink = rubricLevelLoaMapping[rubricLevelHref]
 				? rubricLevelLoaMapping[rubricLevelHref].loaLevel
 				: this._getLoaLevelLink(rubricLevelEntity);
-			const loaLevelEntity = this._resolveLoaLevel(loaLink);
+			const loaLevelEntity = this._resolveLoaLevel(loaLevels, loaLink);
 
 			if (loaLevelEntity) {
 				const c = loaLevelEntity.properties.color;
