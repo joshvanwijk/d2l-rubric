@@ -178,10 +178,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			.col-last d2l-input-text {
-				width: 2.5rem;
-			}
-
 			.gutter-left, .gutter-right {
 				margin-top: 1rem;
 			}
@@ -215,6 +211,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 
 			#out-of-textbox {
 				margin: 0 0.5rem;
+				display: inline-block;
+				width: 2.5rem;
 				min-width: calc(2.25rem + 1em);
 			}
 
