@@ -104,16 +104,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 				min-width: 10rem;
 			}
 
-			:dir(rtl) .col-center div:first-of-type {
-				border-right: 1px solid var(--d2l-color-galena);
-			}
-
-			.col-center div:last-of-type {
-				border-right: 1px solid var(--d2l-color-galena);
-			}
-
 			:dir(rtl) .col-center div:last-of-type {
-				border-right: 0;
+				border-left: 1px solid var(--d2l-color-galena);
+			}
+
+			.col-center div:first-of-type {
+				border-left: 1px solid var(--d2l-color-galena);
+			}
+
+			:dir(rtl) .col-center div:first-of-type {
+				border-left: 0;
 			}
 
 			#level-header .col-center {

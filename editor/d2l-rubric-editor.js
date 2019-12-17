@@ -27,6 +27,7 @@ import './d2l-rubric-visibility-editor.js';
 import './d2l-rubric-autosaving-input.js';
 import 's-html/s-html.js';
 import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
+import 'd2l-resize-aware/resize-observer-polyfill.js';
 
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';

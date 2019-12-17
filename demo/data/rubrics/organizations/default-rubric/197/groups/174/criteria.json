@@ -824,6 +824,12 @@
                 "up"
             ],
             "href": "data/rubrics/organizations/default-rubric/197/groups/174.json"
+        },
+        {
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/levels"
+            ],
+            "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels.json"
         }
     ]
 }

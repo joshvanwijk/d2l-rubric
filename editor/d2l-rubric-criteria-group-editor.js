@@ -8,6 +8,7 @@ import '../d2l-rubric-entity-behavior.js';
 import '../d2l-rubric-loading.js';
 import '../localize-behavior.js';
 import './d2l-rubric-levels-editor.js';
+import './d2l-rubric-loa-overlay.js';
 import './d2l-rubric-criteria-editor.js';
 import './d2l-rubric-error-handling-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -82,6 +83,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
+				<d2l-rubric-loa-overlay
+					href="[[_levelsHref]]"
+					token="[[token]]"
+					has-out-of="[[_hasOutOf(entity)]]"
+					outcome-alignments="[[_outcomeAlignments]]"
+				>
+				</d2l-rubric-loa-overlay>
 				<template is="dom-if" if="[[_nameInvalid]]">
 					<d2l-tooltip id="group-name-bubble" class="is-error" for="group-name" position="bottom">
 						[[_nameInvalidError]]
@@ -95,14 +103,22 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				the size of the editor
 				-->
 				<div class="stretch-child">
-					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="[[updatingLevels]]">
+					<d2l-rubric-criteria-editor
+						href="[[_criteriaCollectionHref]]"
+						token="[[token]]"
+						rich-text-enabled="[[richTextEnabled]]"
+						is-holistic="[[isHolistic]]"
+						outcomes-title="[[outcomesTitle]]"
+						browse-outcomes-text="[[browseOutcomesText]]"
+						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
+						updating-levels="[[updatingLevels]]"
+					>
 					</d2l-rubric-criteria-editor>
 				</div>
 			</div>
 		</d2l-scroll-wrapper>
 	</template>
-
-
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -159,6 +175,14 @@ Polymer({
 		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
+		_outcomeAlignments: {
+			type: Object,
+			value: {}
+		},
+		_rubricLevelLoaMapping: {
+			type: Object,
+			value: {}
+		}
 	},
 
 	behaviors: [
@@ -175,11 +199,19 @@ Polymer({
 			this.$$('d2l-rubric-criteria-editor').criterionDetailWidth = e.detail.width;
 		}.bind(this));
 
-		this.addEventListener('d2l-rubric-criterion-detail-width-changed', function() {
-			afterNextRender(this, function() {
+		this.addEventListener('d2l-rubric-criterion-detail-width-changed', (function() {
+			afterNextRender(this, (function() {
 				this.$$('d2l-scroll-wrapper').notifyResize();
-			}.bind(this));
-		}.bind(this));
+			}).bind(this));
+		}).bind(this));
+
+		this.addEventListener('d2l-rubric-loa-overlay-level-mapping-changed', (e) => {
+			this._rubricLevelLoaMapping = e.detail;
+		});
+
+		this.addEventListener('d2l-activity-alignment-outcomes-updated', (e) => {
+			this._outcomeAlignments = e.detail;
+		});
 	},
 
 	_onEntityChanged: function(entity, oldEntity) {

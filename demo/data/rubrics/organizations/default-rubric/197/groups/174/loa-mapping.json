@@ -1,0 +1,159 @@
+{
+    "class": [
+        "loa-rubric-levels"
+    ],
+    "entities": [
+        {
+            "class": [
+                "level-of-achievement"
+            ],
+            "rel": [
+                "individual-level"
+            ],
+            "properties": {
+                "levelId": "level1",
+                "name": "Got It",
+                "color": "#02a48f",
+                "upperBound": 1460
+            },
+            "actions": [
+                {
+                    "href": "INVALID",
+                    "name": "updateMapping",
+                    "method": "POST",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "loaLevelId",
+                            "value": "level1"
+                        },
+                        {
+                            "type": "text",
+                            "name": "newUpperBound"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/loa1/level1.json"
+                },
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/level",
+                        "upper-bound-rubric-level"
+                    ],
+                    "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1460.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level-of-achievement"
+            ],
+            "rel": [
+                "individual-level"
+            ],
+            "properties": {
+                "levelId": "level2",
+                "name": "Almost",
+                "color": "#7c8695",
+                "upperBound": 1462
+            },
+            "actions": [
+                {
+                    "href": "INVALID",
+                    "name": "updateMapping",
+                    "method": "POST",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "loaLevelId",
+                            "value": "level2"
+                        },
+                        {
+                            "type": "text",
+                            "name": "newUpperBound"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/loa1/level2.json"
+                },
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/level",
+                        "upper-bound-rubric-level"
+                    ],
+                    "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1462.json"
+                }
+            ]
+        },
+        {
+            "class": [
+                "level-of-achievement"
+            ],
+            "rel": [
+                "individual-level"
+            ],
+            "properties": {
+                "levelId": "level3",
+                "name": "Not Yet",
+                "color": "#ff575a",
+                "upperBound": 1463
+            },
+            "actions": [
+                {
+                    "href": "INVALID",
+                    "name": "updateMapping",
+                    "method": "POST",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "name": "loaLevelId",
+                            "value": "level3"
+                        },
+                        {
+                            "type": "text",
+                            "name": "newUpperBound"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/loa1/level3.json"
+                },
+                {
+                    "rel": [
+                        "https://rubrics.api.brightspace.com/rels/level",
+                        "upper-bound-rubric-level"
+                    ],
+                    "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1463.json"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": [
+                "self"
+            ],
+            "href": "data/rubrics/organizations/default-rubric/197/groups/174/loa-mapping.json"
+        }
+    ],
+    "rel": [
+        "collection"
+    ]
+}
