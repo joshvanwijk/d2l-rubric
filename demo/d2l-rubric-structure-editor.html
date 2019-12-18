@@ -16,6 +16,7 @@ import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
 import './fetch-siren-entity-whitelist.js';
 import '../editor/d2l-rubric-structure-editor.js';
 import '../d2l-rubric-title.js';
+
 window.d2lfetch = {
 	fetch: function(req) {
 		return window.fetch(req);
@@ -59,9 +60,6 @@ $_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 				font-size: 20px;
 				font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 			}
-			.rubric-title {
-				@apply --d2l-heading-3;
-			}
 		</style>
 
 	</custom-style>`;
@@ -77,6 +75,9 @@ $_documentContainer.innerHTML = `<style>
 		}
 		.d2l-richtext-editor-container.d2l-rubric-html-editor > p:last-of-type {
 			margin-bottom: 0;
+		}
+		.rubric-title {
+			@apply --d2l-heading-3;
 		}
 	</style>`;
 

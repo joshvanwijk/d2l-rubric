@@ -16,12 +16,12 @@ class RubricCompetenciesIcon extends PolymerElement {
 					white-space: pre;
 				}
 			</style>
-			
+
 			<img
 				id="icon"
 				src="[[_getIconData('competency')]]"
 				tabindex="0"
-			></img>
+			/>
 			<d2l-tooltip
 				for="icon"
 				position="[[tooltipPosition]]"

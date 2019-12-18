@@ -76,51 +76,85 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				flex-grow: 1;
 				flex-shrink: 1;
 			}
-			.criterion-prev-container,
-			.criterion-next-container {
-				position: relative;
-				width: 34px;
-				flex: 0 0 34px;
-				cursor: pointer;
+			:host([compact]) .criterion-middle {
+				margin-left: 40px;
+				margin-right: 40px;
 			}
-			.criterion-prev-container {
-				margin-left: -7px;
-				margin-right: 22px;
-			}
-			.criterion-next-container {
-				margin-left: 22px;
-				margin-right: -7px;
-			}
-			d2l-button-icon {
-				height: 100%;
-				position: absolute;
-				top: 50%;
-				transform: translate(-50%, -50%);
-				--d2l-button-icon-min-height: 100%;
-			}
-			#left-chevron {
-				left: 85%;
-			}
+
 			.level-name {
 				display: flex;
 			}
+			:host([compact]) .level-name {
+				justify-content: space-between;
+			}
+
 			.level-text {
 				font-weight: bold;
 			}
+
 			.level-bullet.assessed,
 			.level-name.assessed {
 				color: var(--d2l-color-celestine-minus-1);
 			}
+			:host([compact]) .level-bullet {
+				display: none;
+			}
+
 			[hidden] {
 				display: none !important;
 			}
+
 			d2l-rubric-competencies-icon {
 				margin-top: 3px;
 				float: right;
 			}
+
 			d2l-rubric-alignments-indicator {
 				margin-right: 5px;
 				float: right;
+			}
+
+			.levels-row {
+				display: flex;
+				align-items: center;
+			}
+
+			.level-iterator > d2l-icon {
+				flex-grow: 0;
+				flex-shrink: 0;
+				width: 32px;
+				margin: 8px;
+				user-select: none;
+			}
+
+			.level-iterator-container {
+				width: 40px;
+				height: 40px;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				outline: none;
+				user-select: none;
+			}
+
+			.level-iterator {
+				width: 24px;
+				height: 24px;
+				border: 1px solid var(--d2l-color-ferrite);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+			}
+			.level-iterator-container:hover .level-iterator,
+			.level-iterator-container:focus .level-iterator {
+				width: 32px;
+				height: 32px;
+				border: 2px solid var(--d2l-color-celestine);
+			}
+
+			d2l-rubric-levels-mobile {
+				flex-grow: 1;
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
@@ -133,8 +167,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				></d2l-rubric-competencies-icon>
 			</template>
 			<template is="dom-if" if="[[!isHolistic]]" restamp>
-				<d2l-rubric-alignments-indicator 
-					href="[[_getActivityLink(_entity)]]" 
+				<d2l-rubric-alignments-indicator
+					href="[[_getActivityLink(_entity)]]"
 					token="[[token]]"
 					outcomes-title-text="[[_getOutcomesTitleText()]]"
 					mobile
@@ -142,18 +176,55 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			</template>
 			<span>[[_name]]</span>
 		</div>
-		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
-		</d2l-rubric-levels-mobile>
+		<div class="levels-row">
+			<div
+				class="level-iterator-container"
+				role="button"
+				aria-label$="[[localize('selectNextLevel')]]"
+				on-click="_handleTapLeft"
+				on-keydown="_handleLeftIteratorKeyDown"
+				tabindex$="[[_getIteratorTabIndex('left', _selected, _total)]]">
+				<div class="level-iterator" hidden$="[[_hideIterator('left', _selected, _total)]]">
+					<d2l-icon icon="d2l-tier1:chevron-left"></d2l-icon>
+				</div>
+			</div>
+			<d2l-rubric-levels-mobile
+				href="[[levelsHref]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				selected="{{_selected}}"
+				level-entities="{{_levelEntities}}"
+				total="{{_total}}"
+				out-of="[[_outOf]]"
+				score="[[_score]]"
+				assessed-level-href="[[_assessedLevelHref]]"
+				read-only="[[readOnly]]"
+				criterion-cells="[[_criterionCells]]"
+				criterion-href="[[_getSelfLink(entity)]]">
+			</d2l-rubric-levels-mobile>
+			<div
+				class="level-iterator-container"
+				role="button"
+				aria-label$="[[localize('selectPreviousLevel')]]"
+				on-click="_handleTapRight"
+				on-keydown="_handleRightIteratorKeyDown"
+				tabindex$="[[_getIteratorTabIndex('right', _selected, _total)]]">
+				<div class="level-iterator" hidden$="[[_hideIterator('right', _selected, _total)]]">
+					<d2l-icon icon="d2l-tier1:chevron-right"></d2l-icon>
+				</div>
+			</div>
+		</div>
 
 		<div id="description" class="criterion-description-container">
-			<div class="criterion-prev-container" hidden="[[_hideLeftChevron(_selected)]]" on-click="_handleTapLeft">
-				<d2l-button-icon aria-label$="[[localize('selectNextLevel')]]" id="left-chevron" icon="d2l-tier1:chevron-left"></d2l-button-icon>
-			</div>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
 				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
 					<div class$="[[_getLevelNameClass(_levelEntities, _selected, _assessedLevelHref)]]">
 						<div class="level-text"> [[_getSelectedLevelText(_selected, _levelEntities)]] </div>
-						<d2l-icon hidden="[[!_showLevelBullet()]]" class$="[[_getLevelBulletClass(_levelEntities, _selected, _assessedLevelHref)]]" icon="d2l-tier1:bullet"></d2l-icon>
+						<d2l-icon
+							hidden="[[!_showLevelBullet()]]"
+							class$="[[_getLevelBulletClass(_levelEntities, _selected, _assessedLevelHref)]]"
+							icon="d2l-tier1:bullet">
+						</d2l-icon>
 						<div> [[_getSelectedNumberText(_selected, _levelEntities, criterionCell)]] </div>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
@@ -161,12 +232,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 					</div>
 				</div>
 			</template>
-			<div class="criterion-next-container" hidden="[[_hideRightChevron(_selected)]]" on-click="_handleTapRight">
-				<d2l-button-icon aria-label$="[[localize('selectPreviousLevel')]]" id="right-chevron" icon="d2l-tier1:chevron-right"></d2l-button-icon>
-			</div>
 		</div>
 	</template>
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -210,7 +278,13 @@ Polymer({
 
 		_score: String,
 
-		readOnly: Boolean
+		readOnly: Boolean,
+
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		}
 	},
 
 	behaviors: [
@@ -307,24 +381,28 @@ Polymer({
 		this._handledDescriptionAnimation(newValue > oldValue ? 'slide-from-right' : 'slide-from-left', newValue);
 	},
 
-	_handleTapLeft: function() {
+	_moveIteratorLeft: function() {
 		if (this._selected > 0) {
 			this._selected--;
-			this._assessSelected();
 		}
 	},
 
-	_handleTapRight: function() {
+	_moveIteratorRight: function() {
 		if (this._selected < this._total - 1) {
 			this._selected++;
-			this._assessSelected();
 		}
 	},
 
-	_assessSelected: function() {
-		if (!this.readOnly) {
-			this.assessCriterionCell(this._getSelfLink(this._criterionCells[this._selected]));
-		}
+	_handleTapLeft: function(e) {
+		e.stopPropagation();
+
+		this._moveIteratorLeft();
+	},
+
+	_handleTapRight: function(e) {
+		e.stopPropagation();
+
+		this._moveIteratorRight();
 	},
 
 	_handledDescriptionAnimation: function(animation, selected) {
@@ -377,7 +455,7 @@ Polymer({
 			return this.localize('numberAndPercentage', 'number', points.toString());
 		}
 		if (this.isNumeric) {
-			return this.localize('numberAndPoints', 'number', points.toString());
+			return this.localize('scoreOutOf', 'score', points.toString(), 'outOf', this._outOf.toString());
 		}
 	},
 
@@ -430,5 +508,27 @@ Polymer({
 	},
 	_showLevelBullet: function() {
 		return !!(this.isNumeric || this.isHolistic);
+	},
+	_hideIterator: function(which, selected, total) {
+		const shouldHide = which === 'left'
+			? selected === 0
+			: selected === (total - 1);
+
+		return shouldHide;
+	},
+	_getIteratorTabIndex: function(which, selected, total) {
+		const isHidden = this._hideIterator(which, selected, total);
+
+		return isHidden ?  undefined : '0';
+	},
+	_handleLeftIteratorKeyDown: function(e) {
+		if (e.keyCode === 13) {
+			this._moveIteratorLeft();
+		}
+	},
+	_handleRightIteratorKeyDown: function(e) {
+		if (e.keyCode === 13) {
+			this._moveIteratorRight();
+		}
 	}
 });

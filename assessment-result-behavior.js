@@ -39,11 +39,11 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 		},
 		_assessmentCriterionCellMap: {
 			type: Object,
-			value: {}
+			value: function() { return {}; }
 		},
 		_assessmentCriterionMap: {
 			type: Object,
-			value: {}
+			value: function() { return {}; }
 		}
 	},
 

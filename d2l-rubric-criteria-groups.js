@@ -9,7 +9,7 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-groups">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -22,22 +22,39 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
-		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-		<template is="dom-if" if="[[_largeScreen]]">
+		<template is="dom-if" if="[[!compact]]" restamp>
 			<template is="dom-repeat" items="[[_groups]]">
-				<d2l-rubric-criteria-group hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" read-only="[[readOnly]]" telemetry-data="[[telemetryData]]">
+				<d2l-rubric-criteria-group
+					href="[[_getSelfLink(item)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					rubric-type="[[rubricType]]"
+					read-only="[[readOnly]]"
+					hidden$="[[!_showContent]]"
+					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group>
 			</template>
+			<slot name="total-score"></slot>
+			<slot></slot>
 		</template>
-		<template is="dom-if" if="[[!_largeScreen]]">
+		<template is="dom-if" if="[[compact]]" restamp>
+			<slot name="total-score"></slot>
 			<template is="dom-repeat" items="[[_groups]]">
-				<d2l-rubric-criteria-group-mobile hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" telemetry-data="[[telemetryData]]">
+				<d2l-rubric-criteria-group-mobile
+					href="[[_getSelfLink(item)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					read-only="[[readOnly]]"
+					compact="[[compact]]"
+					hidden$="[[!_showContent]]"
+					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group-mobile>
+				<slot></slot>
 			</template>
 		</template>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -45,13 +62,15 @@ Polymer({
 	is: 'd2l-rubric-criteria-groups',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
 		_groups: {
 			type: Array,
 			value: function() { return []; }
 		},
-
-		_largeScreen: Boolean,
-
 		_showContent: {
 			type: Boolean,
 			value: false
