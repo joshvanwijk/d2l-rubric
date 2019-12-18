@@ -41,17 +41,41 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-visibility-editor">
 				display: block;
 				margin-bottom: 0.7rem;
 			}
+			#static-visibility-text {
+				padding-top: 0.5rem;
+			}
 		</style>
 		<label class="heading">[[localize('rubricVisibility')]]</label>
-		<label class="d2l-input-radio-label">
-			<input type="radio" id="AlwaysVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="AlwaysVisible" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityAlways')]]
-		</label>
-		<label class="d2l-input-radio-label">
-			<input type="radio" id="NeverVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="NeverVisible" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityNever')]]
-		</label>
-		<label class="d2l-input-radio-label">
-			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]
-		</label>
+		<div id="static-visibility-text" hidden$="[[canEdit]]">[[_staticVisibilityText]]</div>
+		<div hidden$="[[!_canEdit]]">
+			<label class="d2l-input-radio-label">
+				<input type="radio"
+					id="AlwaysVisible"
+					on-focus="_handleFocus"
+					on-blur="_handleBlur"
+					value="AlwaysVisible"
+					name="visibility"
+					on-change="_changeVisibility">[[localize('rubricVisibilityAlways')]]
+			</label>
+			<label class="d2l-input-radio-label">
+				<input type="radio"
+					id="NeverVisible"
+					on-focus="_handleFocus"
+					on-blur="_handleBlur"
+					value="NeverVisible"
+					name="visibility"
+					on-change="_changeVisibility">[[localize('rubricVisibilityNever')]]
+			</label>
+			<label class="d2l-input-radio-label">
+				<input type="radio"
+					id="VisibleOnceFeedbackPosted"
+					on-focus="_handleFocus"
+					on-blur="_handleBlur"
+					value="VisibleOnceFeedbackPosted"
+					name="visibility"
+					on-change="_changeVisibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]
+			</label>
+		</div>
 		<template is="dom-if" if="[[_visibilityInvalid]]">
 			<d2l-tooltip id="visibility-bubble" class="is-error" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
 		</template>
@@ -91,6 +115,13 @@ Polymer({
 			type: String,
 			value: null
 		},
+		_canEdit: {
+			type: Boolean,
+			computed: '_computeCanEdit(entity)',
+		},
+		_staticVisibilityText: {
+			type: String
+		},
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -111,6 +142,21 @@ Polymer({
 					if (field.value[i].selected) {
 						dom(this.root).querySelector('#' + field.value[i].value).checked = true;
 					}
+				}
+			}
+		} else {
+			const visibilitySelected = entity && entity.properties && entity.properties.visibility;
+			if (visibilitySelected) {
+				switch (visibilitySelected) {
+					case 'AlwaysVisible':
+						this._staticVisibilityText = this.localize('rubricVisibilityAlways');
+						break;
+					case 'VisibleOnceFeedbackPosted':
+						this._staticVisibilityText = this.localize('rubricVisibilityOnceFeedbackPosted');
+						break;
+					case 'NeverVisible':
+						this._staticVisibilityText = this.localize('rubricVisibilityNever');
+						break;
 				}
 			}
 		}
@@ -152,5 +198,8 @@ Polymer({
 				{bubbles: true, composed: true}
 			));
 		}
+	},
+	_computeCanEdit: function(entity) {
+		return entity && entity.hasActionByName('update-visibility');
 	}
 });

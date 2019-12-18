@@ -42,7 +42,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 		}
 
 		.cell {
-			border-left: 1px solid var(--d2l-color-galena);
+			border-right: 1px solid var(--d2l-color-galena);
 			border-top: 1px solid var(--d2l-color-galena);
 			flex: 1 1 0%;
 			/* Min width chosen so that 4 levels are visible in standard LMS tab layout.
@@ -51,8 +51,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 		}
 
 		:dir(rtl) .cell {
-			/* border-left: none;
-			border-right: var(--d2l-table-border); */
+			/* border-right: none;
+			border-left: var(--d2l-table-border); */
 		}
 
 		.gutter-left, .gutter-right {
@@ -67,20 +67,20 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 		}
 
 		.col-first {
+			border-left: 1px solid var(--d2l-color-galena);
 			flex: 0 0 auto;
 			width: 10.5rem;
 			min-width: auto;
 			padding: 0;
 		}
 
-		:dir(rtl) .col-first {
-			border-right: 1px solid var(--d2l-color-galena);
+		:dir(rtl) .col-last {
+			border-left: 1px solid var(--d2l-color-galena);
 		}
 
 		.col-last {
 			flex: 0 0 auto;
 			min-width: auto;
-			border-right: 1px solid var(--d2l-color-galena);
 			width: 6rem;
 		}
 
@@ -88,8 +88,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 			width: calc(1rem + 2.2rem); /* button width = 44px including border */
 		}
 
-		:dir(rtl) .col-last {
-			border-right: none;
+		:dir(rtl) .col-first {
+			border-left: none;
 		}
 
 	</style>

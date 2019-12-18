@@ -27,6 +27,7 @@ import './d2l-rubric-visibility-editor.js';
 import './d2l-rubric-autosaving-input.js';
 import 's-html/s-html.js';
 import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
+import 'd2l-resize-aware/resize-observer-polyfill.js';
 
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
@@ -125,7 +126,7 @@ const $_documentContainer = html `
 				margin-right: 0.5rem;
 			}
 
-			#locked-alert {
+			.rubric-editor-alert {
 				margin: 0;
 				margin-left: var(--d2l-rubric-editor-start-gutter-width);
 				margin-right: var(--d2l-rubric-editor-end-gutter-width);
@@ -133,13 +134,19 @@ const $_documentContainer = html `
 				width: unset;
 			}
 
-			:dir(rtl) #locked-alert {
+			:dir(rtl) .rubric-editor-alert {
 				margin-right: var(--d2l-rubric-editor-start-gutter-width);
 				margin-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
 
-			#locked-alert-icon {
+			.rubric-editor-alert d2l-icon {
 				vertical-align: text-top;
+				padding-right: 0.5rem;
+			}
+
+			:dir(rtl) .rubric-editor-alert d2l-icon {
+				padding-right: 0;
+				padding-left: 0.5rem;
 			}
 
 			d2l-alert {
@@ -217,6 +224,9 @@ const $_documentContainer = html `
 			#associations-options {
 				margin-top: 0.05rem;
 			}
+			d2l-organization-availability-set {
+				padding-top: 0.5rem;
+			}
 		</style>
 		<d2l-rubric-editor-header id="rubric-header">
 			<div slot="title">[[localize('editRubric')]]</div>
@@ -236,10 +246,17 @@ const $_documentContainer = html `
 					<d2l-menu id="status-menu" label="Status"></d2l-menu>
 				</d2l-dropdown-menu>
 			</d2l-dropdown-button-subtle>
+			<span slot="header-end-content" hidden$="[[_canChangeStatus]]">[[_rubricStatusText]]</span>
 		</d2l-rubric-editor-header>
-		<template is="dom-if" if="[[_isLocked]]">
-			<d2l-alert id ="locked-alert" type="default" >
-				<d2l-icon id = "locked-alert-icon" icon="d2l-tier1:lock-locked"></d2l-icon>
+		<template is="dom-if" if="[[_isShared]]">
+			<d2l-alert id="shared-alert" class="rubric-editor-alert" type="default">
+				<d2l-icon icon="d2l-tier1:share"></d2l-icon>
+				[[localize('sharedAlertText')]]
+			</d2l-alert>
+		</template>
+		<template is="dom-if" if="[[_showLockedAlert]]">
+			<d2l-alert id="locked-alert" class="rubric-editor-alert" type="default">
+				<d2l-icon icon="d2l-tier1:lock-locked"></d2l-icon>
 				[[localize('lockedAlertText')]]
 			</d2l-alert>
 		</template>
@@ -249,7 +266,7 @@ const $_documentContainer = html `
 			</d2l-alert>
 		</template>
 		<div id="rubric-name-container">
-			<template is="dom-if" if="[[!_isLocked]]">
+			<template is="dom-if" if="[[!_isReadOnly]]">
 				<label for="rubric-name">[[localize('name')]]*</label>
 				<d2l-rubric-autosaving-input
 					id="rubric-name"
@@ -267,21 +284,21 @@ const $_documentContainer = html `
 					</d2l-tooltip>
 				</template>
 			</template>
-			<template is="dom-if" if="[[_isLocked]]">
+			<template is="dom-if" if="[[_isReadOnly]]">
 				<h4>[[_rubricName]]</h4>
 			</template>
 		</div>
-		<template is="dom-if" if="[[!_isLocked]]">
+		<template is="dom-if" if="[[!_isReadOnly]]">
 			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-structure-editor>
 		</template>
-		<template is="dom-if" if="[[_isLocked]]">
+		<template is="dom-if" if="[[_isReadOnly]]">
 			<d2l-rubric token="[[token]]" href="[[href]]" overall-score-flag="" read-only="">
 			</d2l-rubric>
 		</template>
 
 		<div id="accordion-container">
-			<d2l-accordion-collapse title="[[localize('options')]]" flex="" opened$="[[_isLocked]]">
+			<d2l-accordion-collapse title="[[localize('options')]]" flex="" opened$="[[_isReadOnly]]">
 				<div id="options-container">
 					<div id="visibility-container">
 						<d2l-rubric-visibility-editor href="[[href]]" token="[[token]]"></d2l-rubric-visibility-editor>
@@ -298,7 +315,7 @@ const $_documentContainer = html `
 						</template>
 					</div>
 					<div id="rubric-description-container">
-						<template is="dom-if" if="[[!_isLocked]]">
+						<template is="dom-if" if="[[!_isReadOnly]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
 							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" pending-saves="[[_pendingDescriptionSaves]]" on-text-changed="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
@@ -309,7 +326,7 @@ const $_documentContainer = html `
 								</d2l-tooltip>
 							</template>
 						</template>
-						<template is="dom-if" if="[[_isLocked]]">
+						<template is="dom-if" if="[[_isReadOnly]]">
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
 							<template is="dom-if" if="[[richTextEnabled]]">
 								<div id="description-html-container">
@@ -535,6 +552,18 @@ Polymer({
 		},
 		_isLocked: {
 			type: Boolean,
+			value: false
+		},
+		_isShared: {
+			type: Boolean,
+			value: false
+		},
+		_showLockedAlert: {
+			type: Boolean,
+			computed: '_computeShowLockedAlert(_isLocked, _isShared)'
+		},
+		_isReadOnly: {
+			type: Boolean,
 			value: false,
 			observer: '_loadRubricPreviewComponents'
 		},
@@ -728,8 +757,23 @@ Polymer({
 					}
 				}
 				this._canChangeStatus = true;
+			} else {
+				if (entity.hasClass('published')) {
+					this._rubricStatusText = this.localize('rubricStatusPublished');
+				} else if (entity.hasClass('archived')) {
+					this._rubricStatusText = this.localize('rubricStatusArchived');
+				} else if (entity.hasClass('draft')) {
+					this._rubricStatusText = this.localize('rubricStatusDraft');
+				}
 			}
-			this._isLocked = entity.hasClass('locked');
+
+			const isLocked = entity.hasClass('locked');
+			const isShared = entity.hasClass('shared');
+			const isReadOnly = entity.hasClass('readOnly');
+			this._isLocked = isLocked;
+			this._isShared = isShared;
+			this._isReadOnly = isReadOnly || isLocked || isShared;
+
 			this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.holistic);
 
 			var nameChanged = oldEntity ? this._getRubricName(entity) !== this._getRubricName(oldEntity) : true;
@@ -909,9 +953,12 @@ Polymer({
 			this._helpAssociations.properties.descriptionLangTerm
 		);
 	},
-	_loadRubricPreviewComponents: function(isLocked) {
-		if (isLocked) {
+	_loadRubricPreviewComponents: function(isReadOnly) {
+		if (isReadOnly) {
 			import('../d2l-rubric.js');
 		}
+	},
+	_computeShowLockedAlert: function(isLocked, isShared) {
+		return isLocked && !isShared;
 	}
 });

@@ -47,6 +47,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					box-shadow: none;
 					border-radius: 0;
 					transition-property: none;
+					background-color: transparent;
 				};
 			}
 
@@ -177,10 +178,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			.col-last d2l-input-text {
-				width: 2.5rem;
-			}
-
 			.gutter-left, .gutter-right {
 				margin-top: 1rem;
 			}
@@ -214,6 +211,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 
 			#out-of-textbox {
 				margin: 0 0.5rem;
+				display: inline-block;
+				width: 2.5rem;
 				min-width: calc(2.25rem + 1em);
 			}
 
@@ -234,6 +233,10 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			}
 
 		</style>
+
+		<rubric-siren-entity href="[[rubricLevelsHref]]" token="[[token]]" entity="{{_rubricLevelsEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaMappingEntity}}"></rubric-siren-entity>
+
 		<div class="gutter-left" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
 			<slot name="gutter-left"></slot>
 		</div>
@@ -267,8 +270,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				</div>
 				<div class="criterion-detail" is-holistic$="[[isHolistic]]" style$="width: [[criterionDetailWidth]]px;">
 					<div class="criterion-text">
-						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
-							<div class="cell">
+						<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
+							<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _rubricLevels, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
 								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
@@ -276,8 +279,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 					<template is="dom-if" if="[[!isHolistic]]" restamp>
 						<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
 						<div class="criterion-feedback">
-							<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
-								<div class="cell">
+							<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]">
+								<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _rubricLevels, _loaLevels, rubricLevelLoaMapping)]]">
 									<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}">
 									</d2l-rubric-feedback-editor>
 								</div>
@@ -315,16 +318,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 				<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
 					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', _criterionName)]]" on-click="_handleDeleteCriterion" type="button"></d2l-button-icon>
 				</div>
-				</div>
-				<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
-					<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
-						<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
-					</div>
-					<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
-					<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]" token="[[token]]" browse-outcomes-text="[[browseOutcomesText]]">
-					</d2l-activity-alignment-tags>
-				</div>
 			</div>
+			<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
+				<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
+					<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
+				</div>
+				<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
+				<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]" token="[[token]]" browse-outcomes-text="[[browseOutcomesText]]">
+				</d2l-activity-alignment-tags>
+			</div>
+		</div>
 	</template>
 
 
@@ -350,6 +353,26 @@ Polymer({
 		},
 		browseOutcomesText: {
 			type: String
+		},
+		firstRow: {
+			reflectToAttribute: true,
+			type: Boolean,
+			value: false
+		},
+		rubricLevelsHref: {
+			reflectToAttribute: true,
+			type: String
+		},
+		_rubricLevels: Array,
+		_rubricLevelsEntity: {
+			type: Object,
+			value: null
+		},
+		_loaLevels: Array,
+		_loaMappingHref: String,
+		_loaMappingEntity: {
+			type: Object,
+			value: null
 		},
 		_canEdit: {
 			type: Boolean,
@@ -450,6 +473,9 @@ Polymer({
 		richTextEnabled: Boolean,
 		updatingLevels: {
 			type: Boolean
+		},
+		rubricLevelLoaMapping: {
+			type: Object
 		}
 	},
 	behaviors: [
@@ -460,7 +486,11 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
 	],
-	observers: ['_widthChange(criterionDetailWidth)'],
+	observers: [
+		'_onLoaMappingEntityChanged(_loaMappingEntity)',
+		'_onRubricLevelsEntityChanged(_rubricLevelsEntity)',
+		'_widthChange(criterionDetailWidth)'
+	],
 
 	ready: function() {
 		this.addEventListener('d2l-activity-alignment-tags-update', this._showBrowseOutcomes);
@@ -497,6 +527,115 @@ Polymer({
 		} else {
 			this.classList.add('show');
 		}
+	},
+
+	_onRubricLevelsEntityChanged: function(entity) {
+		if (!entity) {
+			return;
+		}
+
+		this._rubricLevels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
+		this._loaMappingHref = this._getLoaMappingLink(entity);
+
+		if (!this._loaMappingHref) {
+			this._loaMappingEntity = null;
+		}
+	},
+
+	_onLoaMappingEntityChanged: function(entity) {
+		if (!entity) {
+			this._loaLevels = [];
+			return;
+		}
+
+		this._loaLevels = entity.getSubEntitiesByClass('level-of-achievement');
+	},
+
+	_resolveRubricLevel: function(rubricLevels, rubricLevelHref) {
+		if (!rubricLevelHref || !rubricLevels || !rubricLevels.length) {
+			return null;
+		}
+
+		for (let i = 0; i < rubricLevels.length; i++) {
+			const rubricLevel = rubricLevels[i];
+
+			if (this._getSelfLink(rubricLevel) === rubricLevelHref) {
+				return rubricLevel;
+			}
+		}
+
+		return null;
+	},
+
+	_resolveLoaLevel: function(loaLevels, loaLevelHref) {
+		if (!loaLevelHref || !loaLevels || !loaLevels.length) {
+			return null;
+		}
+
+		for (let i = 0; i < loaLevels.length; i++) {
+			const loaLevel = loaLevels[i];
+
+			if (this._getSelfLink(loaLevel) === loaLevelHref) {
+				return loaLevel;
+			}
+		}
+
+		return null;
+	},
+
+	_getLoaMappingLink: function(entity) {
+		var link = entity && entity.getLinkByRel('loa-levels');
+		return link && link.href || '';
+	},
+
+	_getRubricLevelLink: function(entity) {
+		var link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
+		return link && link.href || '';
+	},
+
+	_getLoaLevelLink: function(entity) {
+		var link = entity && entity.getLinkByRel && entity.getLinkByRel('https://achievements.api.brightspace.com/rels/level');
+		return link && link.href || '';
+	},
+
+	_getCellStyle: function(cell, cellIndex, rubricLevels, loaLevels, rubricLevelLoaMapping, topBorder) {
+		const styles = [];
+
+		if (loaLevels && loaLevels.length) {
+			const rubricLevelHref = this._getRubricLevelLink(cell);
+			const rubricLevelEntity = this._resolveRubricLevel(rubricLevels, rubricLevelHref);
+			const loaLink = rubricLevelLoaMapping[rubricLevelHref]
+				? rubricLevelLoaMapping[rubricLevelHref].loaLevel
+				: this._getLoaLevelLink(rubricLevelEntity);
+			const loaLevelEntity = this._resolveLoaLevel(loaLevels, loaLink);
+
+			if (loaLevelEntity) {
+				const c = loaLevelEntity.properties.color;
+
+				const isOverrideBound = rubricLevelLoaMapping[rubricLevelHref] && rubricLevelLoaMapping[rubricLevelHref].isBound;
+				const isStandardBound = !rubricLevelLoaMapping[rubricLevelHref] && this._getRubricLevelLink(loaLevelEntity) === rubricLevelHref;
+
+				const side = rubricLevelLoaMapping.reversed ? 'left' : 'right';
+				const hiddenSide = rubricLevelLoaMapping.reversed ? 'right' : 'left';
+
+				styles.push(`border-${side}: 1px solid var(--d2l-color-galena)`);
+				if (!rubricLevelLoaMapping.reversed || cellIndex < this._getCriterionCells(this.entity).length - 1) {
+					styles.push(`border-${hiddenSide}-style: hidden`);
+				}
+
+				if (isStandardBound || isOverrideBound) {
+					styles.push(`border-${side}-color: ${c}`);
+					styles.push(`border-${side}-width: 2px`);
+				}
+
+				if (topBorder) {
+					styles.push(`border-top-color: ${c}`);
+					styles.push('border-top-width: 2px');
+				}
+			}
+		}
+
+		return styles.join(';');
 	},
 
 	_getCriterionCells: function(entity) {

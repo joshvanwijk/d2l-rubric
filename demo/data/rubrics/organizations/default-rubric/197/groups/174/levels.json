@@ -36,6 +36,12 @@
                         "next"
                     ],
                     "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1461.json"
+                },
+                {
+                    "rel": [
+                        "https://achievements.api.brightspace.com/rels/level"
+                    ],
+                    "href": "data/loa1/level1.json"
                 }
             ]
         },
@@ -74,6 +80,12 @@
                         "next"
                     ],
                     "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1462.json"
+                },
+                {
+                    "rel": [
+                        "https://achievements.api.brightspace.com/rels/level"
+                    ],
+                    "href": "data/loa1/level2.json"
                 }
             ]
         },
@@ -112,6 +124,12 @@
                         "next"
                     ],
                     "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1463.json"
+                },
+                {
+                    "rel": [
+                        "https://achievements.api.brightspace.com/rels/level"
+                    ],
+                    "href": "data/loa1/level2.json"
                 }
             ]
         },
@@ -144,6 +162,12 @@
                         "prev"
                     ],
                     "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1462.json"
+                },
+                {
+                    "rel": [
+                        "https://achievements.api.brightspace.com/rels/level"
+                    ],
+                    "href": "data/loa1/level3.json"
                 }
             ]
         }
@@ -160,6 +184,12 @@
                 "up"
             ],
             "href": "data/rubrics/organizations/default-rubric/197/groups/174.json"
+        },
+        {
+            "rel": [
+                "loa-levels"
+            ],
+            "href": "data/rubrics/organizations/default-rubric/197/groups/174/loa-mapping.json"
         }
     ]
 }
