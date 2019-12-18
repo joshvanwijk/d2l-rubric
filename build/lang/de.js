@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Stufenpunkte',
 		'levelPrepended': 'Eine neue Stufe wurde vor {name} hinzugefügt',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'Dieses Bewertungsschema kann nicht bearbeitet werden, da damit bereits auf Arbeit von Lernern bewertet wurde.',
 		'makeRubricAvailableHeader': 'Bewertungsschema verfügbar machen für',
 		'moveCriterionDown': 'Kriterium {position} nach unten verschieben',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'rubricSavingErrorAriaAlert': 'Beim Speichern Ihres Bewertungsschemas ist ein Problem aufgetreten.',
 		'rubricSavingErrorMessage': 'Etwas ist schiefgelaufen. Bitte überprüfen Sie Ihr Bewertungsschema.',
 		'rubricStatus': 'Status: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'In der ersten Spalte dieser Tabelle wird der Name der Kriterien und Kriteriengruppen aufgeführt. Die erste Zeile enthält die Namen der Niveaus sowie Punktzahlen, sofern für das Bewertungsschema eine numerische Bewertungsmethode verwendet wird.',
 		'rubricType': 'Typ: {rubricType}',
 		'rubricVisibility': 'Sichtbarkeit des Bewertungsschemas',
@@ -132,9 +136,11 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'selectNextLevel': 'Nächste Stufe wählen',
 		'selectPreviousLevel': 'Vorherige Stufe wählen',
 		'setScoreVisibilityFailed': 'Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
 		'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',
 		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema'
-	}
+}
 };

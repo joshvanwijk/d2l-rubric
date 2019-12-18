@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Pontos de nível',
 		'levelPrepended': 'Um novo nível foi adicionado antes de {name}',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'A rubrica não pode ser editada porque já foi usada para avaliar o trabalho do aluno',
 		'makeRubricAvailableHeader': 'Disponibilizar rubrica para',
 		'moveCriterionDown': 'Mover critério {position} para baixo',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'rubricSavingErrorAriaAlert': 'Ocorreu um problema ao salvar sua rubrica.',
 		'rubricSavingErrorMessage': 'Algo deu errado. Verifique sua rubrica.',
 		'rubricStatus': 'Status: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'A tabela lista critérios e nomes de grupos de critérios na primeira coluna. A primeira linha lista nomes de nível e inclui pontuações caso a rubrica use um método de pontuação numérica.',
 		'rubricType': 'Tipo: {rubricType}',
 		'rubricVisibility': 'Visibilidade da rubrica',
@@ -132,9 +136,11 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'selectNextLevel': 'Selecionar próximo nível',
 		'selectPreviousLevel': 'Selecionar nível anterior',
 		'setScoreVisibilityFailed': 'Falha na configuração da visibilidade da pontuação.',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Estatísticas',
 		'total': 'Total',
 		'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.',
 		'totalScoreLabel': 'Pontuação total da rubrica'
-	}
+}
 };

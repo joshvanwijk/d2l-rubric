@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Seviye puanları',
 		'levelPrepended': '{name} öncesine yeni bir seviye eklendi',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'Öğrenci çalışmalarını değerlendirmek için zaten kullanıldığından bu rubrik düzenlenemiyor',
 		'makeRubricAvailableHeader': 'Şunların rubriği kullanmasına izin ver:',
 		'moveCriterionDown': 'Kriteri {position} aşağı taşı',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'rubricSavingErrorAriaAlert': 'Rubrik kaydedilirken bir sorun oluştu.',
 		'rubricSavingErrorMessage': 'Bir sorun oluştu. Lütfen rubriği kontrol edin.',
 		'rubricStatus': 'Durum: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'Bu tablo, ilk sütundaki kriter ve kriter grubu adlarını listeler. İlk satır seviye adlarını listeler ve rubrik sayısal bir puanlama yöntemi kullanıyorsa puanları içerir.',
 		'rubricType': 'Tür: {rubricType}',
 		'rubricVisibility': 'Rubrik Görünürlüğü',
@@ -132,9 +136,11 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'selectNextLevel': 'Sonraki Seviyeyi Seçin',
 		'selectPreviousLevel': 'Önceki Seviyeyi Seçin',
 		'setScoreVisibilityFailed': 'Puan görünürlüğünü ayarlama işlemi başarısız oldu.',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
 		'totalScoreLabel': 'Rubrik Toplam Puan'
-	}
+}
 };

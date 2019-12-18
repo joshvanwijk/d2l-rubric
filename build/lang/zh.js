@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': '级别分数',
 		'levelPrepended': '新级别已添加到 {name} 之前',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': '此量规无法编辑，因为它已用于评估学员作业',
 		'makeRubricAvailableHeader': '让量规可用于',
 		'moveCriterionDown': '向下移动标准 {position}',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'rubricSavingErrorAriaAlert': '保存量规时出现问题。',
 		'rubricSavingErrorMessage': '出现错误。请检查您的量规。',
 		'rubricStatus': '状态：{status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': '此表第一列中列出了标准和标准组名称。第一行列出了级别名称；如果量规使用数字评分方法，则还包括分数。',
 		'rubricType': '类型：{rubricType}',
 		'rubricVisibility': '量规可见性',
@@ -132,9 +136,11 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'selectNextLevel': '选择下一级别',
 		'selectPreviousLevel': '选择上一级别',
 		'setScoreVisibilityFailed': '设置分数可见性失败。',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': '统计',
 		'total': '总计',
 		'totalScoreAriaLabel': '量规超出了总分数值 {value}。',
 		'totalScoreLabel': '量规总分'
-	}
+}
 };

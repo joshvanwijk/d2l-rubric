@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Pointage du niveau',
 		'levelPrepended': 'Un nouveau niveau a été ajouté devant {name}',
+		'loaOverlayHeading': 'Niveaux de réussite',
 		'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée parce qu’elle a déjà été utilisée pour évaluer le travail d’un élève',
 		'makeRubricAvailableHeader': 'Rendre la rubrique disponible à :',
 		'moveCriterionDown': 'Déplacer le critère {position} vers le bas',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'rubricSavingErrorAriaAlert': 'Un problème est survenu lors de l’enregistrement de votre grille d’évaluation.',
 		'rubricSavingErrorMessage': 'Un problème est survenu. Veuillez vérifier votre grille d’évaluation.',
 		'rubricStatus': 'État : {status}',
+		'rubricStatusArchived': 'Statut: Archivé',
+		'rubricStatusDraft': 'Statut: Brouillon',
+		'rubricStatusPublished': 'Statut: Publié',
 		'rubricSummaryA11y': 'Ce tableau comprend les critères et le nom du groupe de critères dans la première colonne. La première rangée contient les noms de niveau et comprend des pointages si la grille d’évaluation utilise une méthode de pointage numérique.',
 		'rubricType': 'Type : {rubricType}',
 		'rubricVisibility': 'Visibilité de la grille d’évaluation',
@@ -132,9 +136,11 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'selectNextLevel': 'Sélectionner le niveau suivant',
 		'selectPreviousLevel': 'Sélectionner le niveau précédent',
 		'setScoreVisibilityFailed': 'Le paramétrage de la visibilité des notes a échoué.',
+		'sharedAlertText': 'Cette rubrique ne peut être modifiée qu’à partir de l’entité organisationnelle qui l’a partagée.',
+		'shareRubricSaveFailed': 'Échec de la modification de la disponibilité de l’unité organisationnelle',
 		'statistics': 'Statistiques',
 		'total': 'Total',
 		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
 		'totalScoreLabel': 'Note finale de la grille d’évaluation'
-	}
+}
 };
