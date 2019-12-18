@@ -142,5 +142,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'total': 'Totaal',
 		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.',
 		'totalScoreLabel': 'Rubric-totaalscore'
-}
+	}
 };

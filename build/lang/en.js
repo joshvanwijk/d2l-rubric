@@ -143,5 +143,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'rubricStatusDraft': 'Status: Draft',
 		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
 		'loaOverlayHeading': 'Achievement Levels'
-}
+	}
 };

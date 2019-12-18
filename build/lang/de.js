@@ -142,5 +142,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'total': 'Gesamt',
 		'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',
 		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema'
-}
+	}
 };
