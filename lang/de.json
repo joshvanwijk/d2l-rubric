@@ -130,5 +130,6 @@
     "statistics": "Statistik",
     "total": "Gesamt",
     "totalScoreAriaLabel": "Das Bewertungsschema hat eine maximale Punktzahl von {value}.",
-    "totalScoreLabel": "Gesamtpunktzahl Bewertungsschema"
+    "totalScoreLabel": "Gesamtpunktzahl Bewertungsschema",
+    "totalMobile": "Total Score"
 }

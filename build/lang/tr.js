@@ -141,6 +141,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
-		'totalScoreLabel': 'Rubrik Toplam Puan'
+		'totalScoreLabel': 'Rubrik Toplam Puan',
+		'totalMobile': 'Total Score'
 	}
 };

@@ -141,6 +141,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'statistics': 'Estatísticas',
 		'total': 'Total',
 		'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.',
-		'totalScoreLabel': 'Pontuação total da rubrica'
+		'totalScoreLabel': 'Pontuação total da rubrica',
+		'totalMobile': 'Total Score'
 	}
 };

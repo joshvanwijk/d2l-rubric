@@ -141,6 +141,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'statistics': 'Statistik',
 		'total': 'Samlet',
 		'totalScoreAriaLabel': 'Rubrikken er ud fra en samlet score på {value} point.',
-		'totalScoreLabel': 'Rubric Total Score'
+		'totalScoreLabel': 'Rubric Total Score',
+		'totalMobile': 'Total Score'
 	}
 };

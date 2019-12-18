@@ -141,6 +141,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'statistics': 'Statistics',
 		'total': 'Total',
 		'totalScoreAriaLabel': 'The rubric is out of a total score of {value} points.',
-		'totalScoreLabel': 'Rubric Total Score'
+		'totalScoreLabel': 'Rubric Total Score',
+		'totalMobile': 'Total Score'
 	}
 };
