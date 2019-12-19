@@ -92,7 +92,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			}
 
 			#outcometag:not([hidden]){
-				border-right: 1px solid var(--d2l-color-galena);
+				border-left: 1px solid var(--d2l-color-galena);
 				margin-right: 50px;
 				display: inline-flex;
 			}
