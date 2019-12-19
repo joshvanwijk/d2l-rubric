@@ -432,19 +432,19 @@ Polymer({
 	],
 
 	ready: function() {
-		let table = this.root.querySelector('d2l-table');
-		let scrollWrappers = table && table.shadowRoot && table.shadowRoot.querySelector('d2l-scroll-wrapper');
+		const table = this.root.querySelector('d2l-table');
+		const scrollWrappers = table && table.shadowRoot && table.shadowRoot.querySelector('d2l-scroll-wrapper');
 		if (scrollWrappers) {
 			scrollWrappers.addEventListener('scrollbar-right-changed', () => this._setLoaCellsWidth());
 			scrollWrappers.addEventListener('scrollbar-left-changed', () => this._setLoaCellsWidth());
 
-			let wrapper = scrollWrappers.shadowRoot && scrollWrappers.shadowRoot.querySelector('#wrapper');
+			const wrapper = scrollWrappers.shadowRoot && scrollWrappers.shadowRoot.querySelector('#wrapper');
 			if (wrapper) {
 				wrapper.addEventListener('scroll', () => this._setLoaCellsWidth());
 			}
 		}
 	},
-	
+
 	attached: function() {
 		this.addEventListener('d2l-rubric-editable-score-commit', (e) => {
 			e.stopPropagation();
@@ -947,7 +947,7 @@ Polymer({
 		this.debounce('set-loa-cells-width', () => {
 			const table = this.root.querySelector('d2l-table');
 			const tableRect = table.getBoundingClientRect();
-	
+
 			const firstRow = this.root.querySelector('.d2l-table-row-first');
 			const firstHeaderRect = firstRow.firstChild.getBoundingClientRect();
 			const startLabel = this.root.querySelectorAll('.loa-label')[0];
@@ -959,7 +959,7 @@ Polymer({
 				startlabelTextDiv.style.marginLeft = `${startLabelWidth - firstHeaderRect.width}px`;
 			} else if (firstHeaderRect.right > tableRect.left) {
 				// achievement label is not clipped
-				startLabelWidth= firstHeaderRect.width - 1;
+				startLabelWidth = firstHeaderRect.width - 1;
 				startlabelTextDiv.style.marginLeft = '0';
 			}
 			startLabel.style.flexBasis = `${startLabelWidth}px`;
@@ -968,7 +968,7 @@ Polymer({
 			} else {
 				startLabel.style.borderRightWidth = '1px';
 			}
-	
+
 			const endLabel = this.root.querySelectorAll('.loa-end')[0];
 			if (endLabel) {
 				const outOfRect = firstRow.querySelectorAll('d2l-th.out-of')[0].getBoundingClientRect();
@@ -982,27 +982,27 @@ Polymer({
 			if (!this._loaLevels) {
 				return;
 			}
-	
+
 			const levelHeaders = firstRow.querySelectorAll('d2l-th');
 			let startLevelIndex = 0;
 			this._loaLevels.forEach((loaLevel, index) => {
-				let colSpan = this._getLoaLevelSpan(loaLevel, this._sortedLevels, this._loaLevels, this._levelsReversed);
+				const colSpan = this._getLoaLevelSpan(loaLevel, this._sortedLevels, this._loaLevels, this._levelsReversed);
 				let width = 0;
 				let labelMarginLeft = 0;
 				for (let i = startLevelIndex; i < startLevelIndex + colSpan; i++) {
-					let levelRect = levelHeaders[i].getBoundingClientRect();
-	
+					const levelRect = levelHeaders[i].getBoundingClientRect();
+
 					if (levelRect.right > tableRect.right) {
 						// right side of level is clipped by table scroll
-						labelMarginLeft += levelHeaders[i].offsetWidth
+						labelMarginLeft += levelHeaders[i].offsetWidth;
 						if (levelRect.left < tableRect.right) {
 							// level is still visible
 							width += tableRect.right - levelRect.left;
 							labelMarginLeft -= (tableRect.right - levelRect.left);
 						}
-					} else if (levelRect.left < tableRect.left){
+					} else if (levelRect.left < tableRect.left) {
 						// left side of level is clipped by table scroll
-						labelMarginLeft -= levelHeaders[i].offsetWidth
+						labelMarginLeft -= levelHeaders[i].offsetWidth;
 						if (levelRect.right > tableRect.left) {
 							// level is still visible
 							width += levelRect.right - tableRect.left;
@@ -1013,7 +1013,7 @@ Polymer({
 						width += levelHeaders[i].offsetWidth;
 					}
 				}
-				let loaHeading = this.root.querySelectorAll('.loa-heading')[index];
+				const loaHeading = this.root.querySelectorAll('.loa-heading')[index];
 				loaHeading.style.flexBasis = `${width}px`;
 
 				const borderSide = this._levelsReversed ? 'Left' : 'Right';
@@ -1022,10 +1022,10 @@ Polymer({
 				} else {
 					loaHeading.style[`border${borderSide}Width`] = '2px';
 				}
-	
-				let textDiv = loaHeading.querySelector('.loa-label-text');
+
+				const textDiv = loaHeading.querySelector('.loa-label-text');
 				textDiv.style.marginLeft = `${labelMarginLeft}px`;
-	
+
 				startLevelIndex += colSpan;
 			});
 		}, 50);
