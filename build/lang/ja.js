@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'レベルポイント',
 		'levelPrepended': '新規レベルが {name} の前に追加されました',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'この注釈はすでに受講者の作業を評価するために使用されているため、編集できません',
 		'makeRubricAvailableHeader': '次に対して注釈を使用可能にする',
 		'moveCriterionDown': '条件 {position} を下に移動',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'rubricSavingErrorAriaAlert': '注釈の保存中に問題が発生しました。',
 		'rubricSavingErrorMessage': '問題が発生しました。注釈を確認してください。',
 		'rubricStatus': 'ステータス: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'この表では 1 列目に条件と条件グループの名前が表示されます。注釈で数値によるスコアリング方法が使用されている場合、1 行目にレベル名が表示され、スコアが記載されます。',
 		'rubricType': 'タイプ: {rubricType}',
 		'rubricVisibility': '注釈の表示',
@@ -132,9 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'selectNextLevel': '次のレベルの選択',
 		'selectPreviousLevel': '前のレベルの選択',
 		'setScoreVisibilityFailed': 'スコアの表示を設定できませんでした。',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': '統計',
 		'total': '合計',
 		'totalScoreAriaLabel': '注釈は最大スコア合計 {value} ポイントです。',
-		'totalScoreLabel': '注釈の合計スコア'
+		'totalScoreLabel': '注釈の合計スコア',
+		'totalMobile': 'Total Score'
 	}
 };

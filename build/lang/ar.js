@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'نقاط المستوى',
 		'levelPrepended': 'تمت إضافة مستوى جديد قبل {name}',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'لا يمكن تحرير آلية التقييم هذه بسبب استخدامها مسبقًا لتقييم عمل المتعلّم',
 		'makeRubricAvailableHeader': 'توفير آلية التقييم لـ',
 		'moveCriterionDown': 'نقل المعيار {position} إلى الأسفل',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'rubricSavingErrorAriaAlert': 'حدثت مشكلة أثناء حفظ آلية التقييم.',
 		'rubricSavingErrorMessage': 'حدث خطأ ما. يُرجى التحقق من آلية التقييم.',
 		'rubricStatus': 'الحالة: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'يسرد هذا الجدول أسماء المعايير وأسماء مجموعات المعايير في العمود الأول. يسرد الصف الأول أسماء المستويات ويشمل مجموع الدرجات إذا كانت آلية التقييم تستخدم طريقة رقمية لتسجيل مجموع الدرجات.',
 		'rubricType': 'النوع: {rubricType}',
 		'rubricVisibility': 'إمكانية رؤية آلية التقييم',
@@ -132,9 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'selectNextLevel': 'تحديد المستوى التالي',
 		'selectPreviousLevel': 'تحديد المستوى السابق',
 		'setScoreVisibilityFailed': 'تعذّر إعداد إمكانية رؤية مجموع العلامات.',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'الإحصاءات',
 		'total': 'المجموع',
 		'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.',
-		'totalScoreLabel': 'مجموع درجات آلية التقييم'
+		'totalScoreLabel': 'مجموع درجات آلية التقييم',
+		'totalMobile': 'Total Score'
 	}
 };

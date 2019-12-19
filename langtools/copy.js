@@ -95,5 +95,11 @@ config.langNames.forEach(langName => {
 		});
 	}
 
+	// Sort lang terms by key
+	const outputSorted = {};
+	Object.keys(outputJson).sort((l, r) => l.localeCompare(r)).forEach(key => {
+		outputSorted[key] = outputJson[key];
+	});
+
 	fs.writeFileSync(destPath, JSON.stringify(outputJson, null, 4) + '\n');
 });

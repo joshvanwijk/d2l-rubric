@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Niveaupunten',
 		'levelPrepended': 'Een nieuw niveau is toegevoegd voor {name}',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'Deze rubric kan niet worden bewerkt omdat deze al is gebruikt om het werk van de cursist te beoordelen',
 		'makeRubricAvailableHeader': 'Rubric beschikbaar maken voor',
 		'moveCriterionDown': 'Criterium {position} omlaag verplaatsen',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'rubricSavingErrorAriaAlert': 'Er is een probleem met het opslaan van uw rubric.',
 		'rubricSavingErrorMessage': 'Er is iets fout gegaan. Controleer uw rubric.',
 		'rubricStatus': 'Status: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'In de eerste kolom van deze tabel staan de criteria en de criteriagroepnaam. In de eerste rij staan de niveaunamen en eventueel de scores als de rubric gebruikmaakt van een numerieke scoremethode.',
 		'rubricType': 'Type: {rubricType}',
 		'rubricVisibility': 'Rubriczichtbaarheid',
@@ -132,9 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'selectNextLevel': 'Volgend niveau selecteren',
 		'selectPreviousLevel': 'Vorig niveau selecteren',
 		'setScoreVisibilityFailed': 'Instellen van scorezichtbaarheid mislukt.',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistieken',
 		'total': 'Totaal',
 		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.',
-		'totalScoreLabel': 'Rubric-totaalscore'
+		'totalScoreLabel': 'Rubric-totaalscore',
+		'totalMobile': 'Total Score'
 	}
 };

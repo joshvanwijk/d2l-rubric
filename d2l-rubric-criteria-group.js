@@ -1035,7 +1035,6 @@ Polymer({
 	},
 
 	_getLoaHeadingLangTerm: function() {
-		// TODO: Make Lang Term
-		return 'Achievement Levels';
+		return this.localize('loaOverlayHeading');
 	}
 });
