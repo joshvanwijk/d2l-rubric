@@ -411,6 +411,14 @@ Polymer({
 		e.detail.opened
 			? this.setAttribute('compact-expanded', '')
 			: this.removeAttribute('compact-expanded');
+
+		this.dispatchEvent(new CustomEvent('d2l-rubric-compact-expanded-changed', {
+			detail: {
+				expanded: !!e.detail.opened,
+			},
+			composed: true,
+			bubbles: true,
+		}));
 	},
 
 	_getHref: function(link) {

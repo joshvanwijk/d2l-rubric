@@ -169,15 +169,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 					<div
 						id="level-tab[[index]]"
 						class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]"
-						on-click="handleTap"
-						data-index="[[index]]"
 						role="tab"
-						on-keydown="_onKeyDown"
 						tabindex="0"
+						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]"
+						data-index="[[index]]"
+						on-click="_handleClick"
+						on-keydown="_onKeyDown"
+						on-track="_handleTrack"
 						aria-selected$="[[_isSelected(index, selected)]]"
 						aria-controls$="level-description-panel[[index]]"
-						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]"
-						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
+						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]">
 						<div class="level-tab-focus">
 							<d2l-icon
 								hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"
@@ -344,7 +345,7 @@ Polymer({
 
 	_getLevelClassName: function(index, selected, level, assessedLevelHref) {
 		var className = 'level';
-		if (index === selected) {
+		if (this._isSelected(index, selected)) {
 			className += ' selected';
 		}
 		if (this._isAssessedLevel(level, assessedLevelHref)) {
@@ -390,12 +391,16 @@ Polymer({
 		return this.getSelfLink(criterionCells[index]);
 	},
 
-	handleTap: function(event) {
-		this._selectLevel(event);
+	_handleClick: function(evt) {
+		if (this._preventClick) {
+			return;
+		}
+
+		this._selectLevel(evt);
 		if (this.readOnly) {
 			return;
 		}
-		this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+		this.assessCriterionCell(evt.currentTarget.dataset.cellHref);
 	},
 
 	_canEditScore: function(criterionHref) {
@@ -428,5 +433,76 @@ Polymer({
 
 	_isEditingScore: function(editingScore, scoreInvalid) {
 		return editingScore && editingScore !== -1 || scoreInvalid;
+	},
+
+	_handleTrack(e) {
+		switch(e.detail.state) {
+			case 'start':
+				this._handleTrackStart(e);
+				break;
+			case 'track':
+				this._handleTrackMove(e);
+				break;
+			case 'end':
+				this._handleTrackEnd(e);
+				break;
+		}
+
+		// Prevent text from being unintentionally selected during tracking
+		e.preventDefault();
+	},
+
+	_handleTrackStart: function(e) {
+		if (this._currentDragContext) {
+			return;
+		}
+
+		const levelsContainer = this.shadowRoot.querySelector('.levels');
+		const levelElements = this.shadowRoot.querySelectorAll('.level');
+		const bounds = levelsContainer.getBoundingClientRect();
+		const stepWidth = bounds.width / levelElements.length;
+
+		this._currentDragContext = {
+			target: e.target,
+			origin: {
+				x: e.detail.x,
+				y: e.detail.y,
+			},
+			bounds: bounds,
+			stepWidth: stepWidth,
+			maxLevelIndex: levelElements.length - 1,
+		};
+
+		this._selectLevel(e);
+	},
+
+	_handleTrackMove: function(e) {
+		const fromEdge = (e.detail.x - this._currentDragContext.bounds.left);
+		const clampedLevel = Math.floor(fromEdge / this._currentDragContext.stepWidth);
+		const normalizedClampedLevel = getComputedStyle(this).direction === 'rtl'
+			? (this._currentDragContext.maxLevelIndex) - clampedLevel
+			: clampedLevel;
+		const nextSelected = Math.max(0, Math.min(normalizedClampedLevel, this._currentDragContext.maxLevelIndex));
+
+		if (nextSelected !== this.selected) {
+			this.selected = nextSelected;
+			this.shadowRoot.querySelector('.selected').focus();
+		}
+	},
+
+	_handleTrackEnd: function(e) {
+		this._currentDragContext = null;
+
+		/**
+		 * A `click` event will be fired on the level even after track events start
+		 * firing (`track` doesn't prevent pending `click`s), which doesn't seem preventable
+		 * via the track event. So, prevent clicks for a single microtask after track end,
+		 * so sliding away/back to a level doesn't (un)assess it, which may be unexpected.
+		 */
+		this._preventClick = true;
+
+		setTimeout(() => {
+			this._preventClick = false;
+		});
 	}
 });

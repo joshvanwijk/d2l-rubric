@@ -56,12 +56,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			.score-out-of.overridden .star {
 				display: inline-flex;
 			}
-			.right {
+
+			#out-of {
 				@apply --d2l-body-compact-text;
 				margin-left: 3px;
 				display: inline;
 				line-height: 2.2rem;
 			}
+			:dir(rtl) #out-of {
+				margin-left: 0px;
+				margin-right: 3px;
+			}
+
 			.clear-override-button-mobile {
 				display: none;
 			}
@@ -105,7 +111,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				<div class="editing-component">
 					<d2l-input-text id="text-area" value="{{_score}}" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
-					<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
+					<div id="out-of">[[_localizeOutOf(entity)]]</div>
 				</div>
 				<template is="dom-if" if="[[scoreInvalid]]">
 					<d2l-tooltip id="score-bubble" for="text-area" class="is-error" position="bottom">[[scoreInvalidError]]</d2l-tooltip>
