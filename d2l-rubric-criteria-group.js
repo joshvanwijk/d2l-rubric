@@ -940,6 +940,10 @@ Polymer({
 
 	_setLoaCellsWidth: function() {
 		this.debounce('set-loa-cells-width', () => {
+			if (!this._hasLoaScale(this._levelsEntity)) {
+				return;
+			}
+
 			const table = this.root.querySelector('d2l-table');
 			const tableRect = table.getBoundingClientRect();
 
