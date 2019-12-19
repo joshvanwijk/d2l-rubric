@@ -16,13 +16,22 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 			}
 			h3 {
 				@apply --d2l-heading-3;
+				margin-top: 0;
 				margin-bottom: 0.9rem;
 			}
 		</style>
 		<h3>
 			[[_name]]
 		</h3>
-		<d2l-rubric-criteria-mobile href="[[_criteriaHref]]" levels-href="[[_levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[_isHolistic]]" is-numeric="[[_isNumeric]]" read-only="[[readOnly]]">
+		<d2l-rubric-criteria-mobile
+			href="[[_criteriaHref]]"
+			levels-href="[[_levelsHref]]"
+			assessment-href="[[assessmentHref]]"
+			token="[[token]]"
+			is-holistic="[[_isHolistic]]"
+			is-numeric="[[_isNumeric]]"
+			read-only="[[readOnly]]"
+			compact="[[compact]]">
 		</d2l-rubric-criteria-mobile>
 	</template>
 
@@ -33,6 +42,11 @@ Polymer({
 	is: 'd2l-rubric-criteria-group-mobile',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
 		_name: String,
 		_criteriaHref: String,
 		_levelsHref: String,

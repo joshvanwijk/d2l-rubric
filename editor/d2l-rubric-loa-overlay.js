@@ -6,6 +6,7 @@ import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
+import '../localize-behavior.js';
 import '../rubric-siren-entity.js';
 
 const MIN_HEADER_WIDTH = 8;
@@ -14,6 +15,7 @@ const SLIDER_CENTER_OFFSET = 16;
 
 class RubricLoaOverlay extends mixinBehaviors([
 	window.D2L.Hypermedia.HMConstantsBehavior,
+	D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 	D2L.PolymerBehaviors.Siren.EntityBehavior,
 	D2L.PolymerBehaviors.Siren.SirenActionBehavior
 ], PolymerElement) {
@@ -681,8 +683,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 	}
 
 	_getLevelsLangTerm() {
-		// TODO: Make lang term
-		return 'Achievement Levels';
+		return this.localize('loaOverlayHeading');
 	}
 }
 

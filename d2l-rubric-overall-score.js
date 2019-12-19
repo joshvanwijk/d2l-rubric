@@ -6,7 +6,6 @@ import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './rubric-siren-entity.js';
 import 's-html/s-html.js';
-import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-offscreen/d2l-offscreen.js';
@@ -63,6 +62,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				display: block;
 			}
 
+			:host([compact]) .overall-level:not([data-achieved]) {
+				display: none;
+			}
+
 			.overall-level[data-clickable] {
 				cursor: pointer;
 			}
@@ -77,7 +80,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				margin-bottom: 0.6rem;
 				min-width: 0;
 			}
-
 			.overall-level:last-child {
 				margin-right: 0;
 			}
@@ -85,11 +87,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			.overall-level-text {
 				@apply --d2l-body-small-text;
 			}
+			:host(:not([compact])) .overall-level-text {
+				margin: 0;
+			}
 
-			h4 > d2l-icon {
+			h4 > d2l-icon[icon="d2l-tier1:check"] {
 				display: none;
-				float: right;
 				color: var(--d2l-color-celestine);
+				align-self: flex-start;
 			}
 
 			.clear-override-label {
@@ -100,8 +105,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				width: 100%;
 			}
 
-			.clear-override-label[hidden] {
-				display:none;
+			.content-container {
+				display: inline-flex;
+				width: 100%;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.info-container {
+				display: flex;
+				flex-direction: column;
+			}
+			:host([compact]) .info-container {
+				flex-direction: row;
 			}
 
 			d2l-scroll-wrapper {
@@ -122,12 +138,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
-			
+
 			d2l-rubric-competencies-icon {
 				margin-top: 1px;
 				margin-left: 10px;
 			}
-			
+
 			d2l-rubric-competencies-icon[mobile] {
 				float: right;
 				margin-left: 2px;
@@ -140,48 +156,61 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			}
 		</style>
 
-	<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
-	<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-	<h3>
-		<span>[[localize('overallScore')]]</span>
-		<template is="dom-if" if="[[_showCompetencies(_competencies,readOnly)]]">
-			<d2l-rubric-competencies-icon
-				competency-names="[[_competencies]]"
-				mobile="[[!_largeScreen]]"
-				tooltip-position="[[_competenciesIconTooltipPosition(_largeScreen)]]"
-			></d2l-rubric-competencies-icon>
-		</template>
-	</h3>
-	<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
-		<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
-		<div class="overall-levels" data-mobile$="[[!_largeScreen]]">
-			<template is="dom-repeat" items="[[_levels]]" as="level">
-				<div class="overall-level" data-achieved$="[[_isAchieved(level, _version)]]" data-clickable$="[[_isClickable(level, _version)]]" on-click="_levelClicked" on-keypress="_handleKeypress" tabindex$="[[_handleTabIndex()]]">
-					<h4>
-						<span>[[level.properties.name]]</span>
-						<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
-						<d2l-icon icon="d2l-tier1:check"></d2l-icon>
-					</h4>
-					<span class="overall-level-text">
-						<span>[[_localizePoints(level)]]</span>
-						<br hidden="[[!_scoreVisible(level)]]">
-						<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
-					</span>
-					<span class="clear-override-label">
-					<d2l-button-subtle
-					class="clear-override-label"
-					hidden="[[!_showClearOverrideButton(level, _version)]]"
-					icon="d2l-tier1:close-small"
-					text="[[localize('clearOverride')]]"
-					></d2l-button-subtle>
-					</span>
+		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
+		<template is="dom-if" if="[[_showOverallScore(compact, _overallLevel)]]">
+			<h3>
+				<span>[[localize('overallScore')]]</span>
+				<template is="dom-if" if="[[_showCompetencies(_competencies,readOnly)]]">
+					<d2l-rubric-competencies-icon
+						competency-names="[[_competencies]]"
+						mobile="[[compact]]"
+						tooltip-position="[[_competenciesIconTooltipPosition(compact)]]"
+					></d2l-rubric-competencies-icon>
+				</template>
+			</h3>
+			<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
+				<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
+				<div class="overall-levels" data-mobile$="[[compact]]">
+					<template is="dom-repeat" items="[[_levels]]" as="level">
+						<div
+							class="overall-level"
+							data-achieved$="[[_isAchieved(level, _version)]]"
+							data-clickable$="[[_isClickable(level, _version, compact)]]"
+							on-click="_levelClicked"
+							on-keypress="_handleKeypress"
+							tabindex$="[[_handleTabIndex()]]">
+							<h4 class="content-container">
+								<div class="info-container">
+									<span>[[level.properties.name]]</span>
+									<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
+									<span class="overall-level-text">
+										<span>[[_localizePoints(level)]]</span>
+										<template is="dom-if" if="[[!compact]]">
+											<br hidden="[[!_scoreVisible(level)]]">
+											<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
+										</template>
+										<template is="dom-if" if="[[compact]]">
+											<d2l-icon icon="tier1:bullet"></d2l-icon>
+											<span>[[_getDescriptionText(level)]]</span>
+										</template>
+									</span>
+								</div>
+								<d2l-icon icon="d2l-tier1:check"></d2l-icon>
+							</h4>
+							<span class="clear-override-label">
+								<d2l-button-subtle
+									class="clear-override-label"
+									hidden="[[!_showClearOverrideButton(level, _version)]]"
+									icon="d2l-tier1:close-small"
+									text="[[localize('clearOverride')]]"
+								></d2l-button-subtle>
+							</span>
+						</div>
+					</template>
 				</div>
-			</template>
-		</div>
-	</d2l-scroll-wrapper>
+			</d2l-scroll-wrapper>
+		</template>
 	</template>
-
-	
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -189,10 +218,14 @@ Polymer({
 	is: 'd2l-rubric-overall-score',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
 		readOnly: Boolean,
 		_levels: Array,
 		_competencies: Array,
-		_largeScreen: Boolean,
 		_assessmentEntity: {
 			type: Object,
 			value: null
@@ -279,12 +312,16 @@ Polymer({
 		return competencies && competencies.length && !readOnly;
 	},
 
-	_competenciesIconTooltipPosition: function(largeScreen) {
-		return largeScreen ? 'top' : 'left';
+	_competenciesIconTooltipPosition: function(compact) {
+		return compact ? 'left' : 'top';
 	},
 
 	_getDescriptionHtml: function(levelEntity) {
 		return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.html;
+	},
+
+	_getDescriptionText: function(levelEntity) {
+		return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.text;
 	},
 
 	_localizePoints: function(levelEntity) {
@@ -325,8 +362,8 @@ Polymer({
 		);
 	},
 
-	_isClickable: function(levelEntity) {
-		return !!this._getOnClickAction(levelEntity);
+	_isClickable: function(levelEntity, _version, compact) {
+		return !compact && !!this._getOnClickAction(levelEntity);
 	},
 
 	_levelClicked: function(event) {
@@ -356,7 +393,7 @@ Polymer({
 	},
 
 	_overallLevelChanged: function(levelName) {
-		this.fire('d2l-rubric-overall-level-changed', {name: levelName});
+		this.fire('d2l-rubric-overall-level-changed', { name: levelName });
 	},
 
 	_handleTabIndex: function() {
@@ -364,5 +401,9 @@ Polymer({
 			return undefined;
 		}
 		return 0;
+	},
+
+	_showOverallScore: function(compact, overallLevel) {
+		return !compact || !!overallLevel;
 	}
 });

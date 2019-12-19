@@ -73,6 +73,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Nivåpoäng',
 		'levelPrepended': 'En ny nivå har lagts till före {name}',
+		'loaOverlayHeading': 'Achievement Levels',
 		'lockedAlertText': 'Denna rubricering kan inte redigeras eftersom den redan har använts för utvärdering av elevarbete',
 		'makeRubricAvailableHeader': 'Gör rubricering tillgänglig för',
 		'moveCriterionDown': 'Flytta ned kriterium {position}',
@@ -118,6 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'rubricSavingErrorAriaAlert': 'Ett problem uppstod med att spara rubriceringen.',
 		'rubricSavingErrorMessage': 'Något gick fel. Kontrollera rubriceringen.',
 		'rubricStatus': 'Status: {status}',
+		'rubricStatusArchived': 'Status: Archived',
+		'rubricStatusDraft': 'Status: Draft',
+		'rubricStatusPublished': 'Status: Published',
 		'rubricSummaryA11y': 'Denna tabell innehåller kriterier och namn på kriteriegrupp i den första kolumnen. På den första raden listas nivånamn och betyg inkluderas om rubriceringen använder en numerisk betygsättningsmetod.',
 		'rubricType': 'Typ: {rubricType}',
 		'rubricVisibility': 'Rubriceringens synlighet',
@@ -132,9 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'selectNextLevel': 'Välj nästa nivå',
 		'selectPreviousLevel': 'Välj föregående nivå',
 		'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',
 		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.',
-		'totalScoreLabel': 'Totala rubriceringspoäng'
+		'totalScoreLabel': 'Totala rubriceringspoäng',
+		'totalMobile': 'Total Score'
 	}
 };

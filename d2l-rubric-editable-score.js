@@ -23,16 +23,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					border-radius: 0.3rem;
 					background-color: var(--d2l-color-celestine-plus-2);
 			}
-			@media screen and (min-width: 615px) {
-				:host(:not([editor-styling])) {
-					padding: 0.5rem 0.5rem 0.5rem 0.6rem;
-				}
-				:host(:focus:not([editor-styling])),
-				:host(:hover:not([editor-styling])) {
-					padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
-					border-radius: 0.3rem;
-					border: 1px solid var(--d2l-color-celestine);
-				}
+			:host(:not([compact]):not([editor-styling])) {
+				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+			}
+			:host(:not([compact]):focus:not([editor-styling])),
+			:host(:not([compact]):hover:not([editor-styling])) {
+				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
+				border-radius: 0.3rem;
+				border: 1px solid var(--d2l-color-celestine);
 			}
 			.total-score-container {
 				display: flex;
@@ -70,34 +68,33 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			.override-label {
 				display: none;
 			}
-			@media screen and (max-width: 614px) {
-				.clear-override-button-mobile {
-					display: inline-flex;
-					padding: 6px 0;
-				}
-				.override-label {
-					margin-left: 12px;
-					padding: 6px 0;
-					display: inline-flex;
-					font-size: 15px;
-					font-weight: bold;
-					color: var(--d2l-color-ferrite) !important;
-					align-items : center;
-				}
-				.editing-component {
-				 	margin-right: 0;
-					display: inline-flex;
-					padding: 6px 12px 6px 0;
-					align-items : center;
-				}
+
+			:host([compact]) .clear-override-button-mobile {
+				display: inline-flex;
+				padding: 6px 0;
 			}
+			:host([compact]) .override-label {
+				margin-left: 12px;
+				padding: 6px 0;
+				display: inline-flex;
+				font-size: 15px;
+				font-weight: bold;
+				color: var(--d2l-color-ferrite) !important;
+				align-items : center;
+			}
+			.editing-component {
+				margin-right: 0;
+				display: inline-flex;
+				padding: 6px 12px 6px 0;
+				align-items : center;
+			}
+
 			[hidden] {
 				display: none;
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></rubric-siren-entity>
-		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<div id="editable-container">
 			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore]]">
 				<template is="dom-if" if="[[!totalScore]]">
@@ -115,7 +112,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
-				<div class$="[[_getOutOfClassName(scoreOverridden)]]" id="out-of-container">
+				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" id="out-of-container">
 					[[_localizeOutOf(entity, _score)]]
 					<div class="star" id="score-overridden-star">*</div>
 				</div>
@@ -129,11 +126,15 @@ Polymer({
 	is: 'd2l-rubric-editable-score',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
 		criterionHref: String,
 
 		/* Entity could be a criterionEntity or a rubricEntity */
 		entity: Object,
-		_largeScreen: Boolean,
 		assessmentHref: {
 			type: String,
 			value: null
@@ -200,10 +201,6 @@ Polymer({
 		readOnly: {
 			type: Boolean,
 			value: true
-		},
-		parentCell: {
-			type: Object,
-			value: null
 		}
 	},
 
@@ -216,14 +213,39 @@ Polymer({
 	observers: [
 		'_onAssessmentResultChanged(entity, assessmentResult)',
 		'_totalScoreChanged(totalScore, entity)',
-		'_editingState(entity, _isEditingScore)'
+		'_editingState(entity, _isEditingScore)',
+		'_updateAssessable(readOnly, assessmentHref)'
 	],
 	ready: function() {
-		if (this._largeScreen && this.criterionHref) {
+		if (!this.compact && this.criterionHref) {
 			this.$['override-tooltip'].setAttribute(
 				'boundary',
 				'{left: 0, right: 200}');
 		}
+
+		['click', 'keydown'].forEach((eventType) => {
+			this.addEventListener(eventType, (e) => {
+				if (eventType === 'keydown' && e.keyCode !== 13) {
+					return;
+				}
+
+				if (!this.readOnly && this.editingScore === -1) {
+					this.editingScore = this.criterionNum;
+				}
+			});
+		});
+	},
+
+	_updateAssessable: function(readOnly, assessmentHref, editingScore) {
+		const isAssessable = !readOnly && assessmentHref;
+		const isEditing = editingScore !== -1;
+
+		this.classList.toggle('assessable', isAssessable);
+		this.classList.toggle('editing', isEditing);
+
+		isAssessable
+			? this.setAttribute('tabindex', '0')
+			: this.removeAttribute('tabindex');
 	},
 
 	_onAssessmentResultChanged: function(entity, assessmentResult) {
@@ -250,9 +272,9 @@ Polymer({
 	focus: function() {
 		var elem = this.$['text-area'];
 		elem.focus();
-		var inputElem = elem.shadowRoot.querySelector('input');
-		if (inputElem && this._largeScreen) {
-			inputElem.select();
+		var inputElem = elem.$$('input');
+		if (inputElem && !this.compact) {
+			elem.$$('input').select();
 		}
 	},
 
@@ -264,14 +286,15 @@ Polymer({
 		}
 	},
 
-	_handleKey: function(event) {
-		if (event.keyCode === 13) { // enter key
-			event.target.blur();
-			event.stopPropagation();
-			if (this.parentCell) {
-				setTimeout(function() { this.parentCell.focus(); }.bind(this), 0);
-			}
-			return;
+	_handleKey: function(e) {
+		if (e.key === 13) { // enter key
+			e.target.blur();
+			e.stopPropagation();
+
+			this.dispatchEvent(new CustomEvent('d2l-rubric-editable-score-commit', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 	},
 
@@ -288,8 +311,7 @@ Polymer({
 		if (event.relatedTarget && event.relatedTarget.id === 'clear-button') {
 			return;
 		}
-		var innerInput = event.target.shadowRoot.querySelector('input');
-
+		var innerInput = event.target.$$('input');
 		if (!innerInput || !innerInput.checkValidity()) {
 			return;
 		}
@@ -381,9 +403,9 @@ Polymer({
 		return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 	},
 
-	_getOutOfClassName: function(scoreOverridden) {
+	_getOutOfClassName: function(scoreOverridden, readOnly) {
 		var className = 'score-out-of';
-		if (scoreOverridden && !this.readOnly) {
+		if (scoreOverridden && !readOnly) {
 			className += ' overridden';
 		}
 		return className;
@@ -441,5 +463,5 @@ Polymer({
 
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
-	},
+	}
 });

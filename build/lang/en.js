@@ -105,6 +105,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistics',
 		'total': 'Total',
+		'totalMobile': 'Total Score',
 		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'The rubric is out of a total score of {value} points.',
 		'moveCriterionUp': 'Move criterion {position} up',
@@ -140,6 +141,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'rubricStatusPublished': 'Status: Published',
 		'rubricStatusArchived': 'Status: Archived',
 		'rubricStatusDraft': 'Status: Draft',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it'
+		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
+		'loaOverlayHeading': 'Achievement Levels'
 	}
 };

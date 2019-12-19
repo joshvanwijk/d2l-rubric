@@ -17,62 +17,73 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			:host{
 				display:block;
 			}
-			:host([overridden-styling]) .out-of {	
+			:host([overridden-styling]) .out-of {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.levels-container {
-				display: inline-flex;
+				display: flex;
 				width: 100%;
 			}
 			.levels {
 				display: inline-flex;
 				width: 100%;
 			}
+
 			.level {
-				border: solid 1px var(--d2l-color-mica);
-				border-right: none;
+				position: relative;
+				border: solid 1px var(--d2l-color-celestine);
 				display: flex;
 				overflow: hidden;
 				text-align: center;
 				color: var(--d2l-color-galena);
 				outline: none;
 				flex: 1;
-				height: 32px;
+				height: 18px;
+				align-self: center;
+			}
+			.level:not(.selected):not(:last-of-type),
+			:dir(rtl) .level.selected + .level:not(:first-of-type) {
+				border-right: none;
+			}
+			:dir(rtl) .level:not(.selected):not(:last-of-type),
+			.level.selected + .level {
+				border-left: none;
+			}
+			:dir(rtl) .level:not(.selected):not(:last-of-type) {
+				border-right: solid 1px var(--d2l-color-celestine);
+			}
+
+			.level.selected.assessed {
+				background-color: var(--d2l-color-celestine-plus-2);
+				border-color: var(--d2l-color-celestine);
+			}
+
+			.level:last-of-type {
+				border-radius: 0 6px 6px 0;
+				border-right: 1px solid var(--d2l-color-celestine);
+			}
+			.level:first-of-type,
+			:dir(rtl) .level:last-of-type {
+				border-radius: 6px 0 0 6px;
+				border-left: 1px solid var(--d2l-color-celestine);
+			}
+			:dir(rtl) .level:first-of-type {
+				border-radius: 0 6px 6px 0;
+				border-right: 1px solid var(--d2l-color-celestine);
+			}
+
+			.level.selected {
+				background-color: var(--d2l-color-gypsum);
+				border: 1px solid var(--d2l-color-galena);
+				border-radius: 6px !important;
+				height: 30px;
 			}
 			.level:hover {
 				cursor: pointer;
 				background-color: var(--d2l-color-gypsum);
 			}
-			.level.selected {
-				background-color: var(--d2l-color-gypsum);
-				border: solid 1px var(--d2l-color-galena);
-			}
-			.level.assessed {
-				background-color: var(--d2l-color-celestine-plus-2);
-			}
-			.level.selected.assessed {
-				background-color: var(--d2l-color-celestine-plus-2);
-				border: solid 1px var(--d2l-color-celestine);
-			}
-			.level.selected + .level:not(:focus) {
-				border-left: none;
-			}
-			.level:focus {
-				background-color: var(--d2l-color-gypsum);
-				box-shadow: 0 0 0 4px rgb(178, 211, 235);
-				z-index: 0;
-				border: solid 1px rgba(0, 111, 191, 0.4);
-			}
-			.level.selected:focus {
-				background-color: var(--d2l-color-gypsum);
-				box-shadow: 0 0 0 4px rgb(178, 211, 235);
-				z-index: 0;
-				border: solid 1px rgba(0, 111, 191, 0.4);
-			}
 			.level.selected.assessed:focus {
 				background-color: var(--d2l-color-celestine-plus-2);
-				box-shadow: 0 0 0 4px rgb(178, 211, 235);
-				z-index: 0;
 				border: solid 1px var(--d2l-color-celestine);
 			}
 			.level-name {
@@ -87,25 +98,34 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				font-weight: 700;
 				color: var(--d2l-color-ferrite);
 			}
-			.level.last {
-				border-top-right-radius: 6px;
-				border-bottom-right-radius: 6px;
-				border-right: solid 1px var(--d2l-color-mica);
+
+			.level-tab-focus {
+				display: inline-flex;
+				width: 100%;
+				height: 100%;
+				justify-content: space-around;
+				align-items: center;
 			}
-			.level.last:focus {
-				border: solid 1px rgba(0, 111, 191, 0.4);
+			.level:focus .level-tab-focus {
+				border: 1px solid var(--d2l-color-celestine-minus-1);
+				margin: 2px;
+				height: 12px;
 			}
-			.level.last.selected {
-				border: solid 1px var(--d2l-color-galena);
+			.level.selected:focus .level-tab-focus {
+				border-radius: 6px;
+				height: 24px;
 			}
-			.level.last.selected:focus {
-				border: solid 1px rgba(0, 111, 191, 0.4);
+			.level:not(.selected):focus:last-of-type .level-tab-focus,
+			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
+				border-radius: 0px 4px 4px 0px;
 			}
-			div.level:first-of-type {
-				border-top-left-radius: 6px;
-				border-bottom-left-radius: 6px;
+			.level:not(.selected):focus:first-of-type .level-tab-focus,
+			:dir(rtl) .level:not(.selected):focus:last-of-type .level-tab-focus {
+				border-radius: 4px 0px 0px 4px;
 			}
+
 			.out-of {
+				height: 100%;
 				border-radius: 6px;
 				border: solid 1px var(--d2l-color-mica);
 				min-width: 40px;
@@ -127,8 +147,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 			.check-icon {
 				color: var(--d2l-color-celestine-minus-1);
-				text-align: center;
-				margin: auto;
 			}
 			.score-wrapper {
 				pointer-events: none;
@@ -148,21 +166,31 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 		<div class="levels-container">
 			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]">
 				<template is="dom-repeat" items="[[levelEntities]]">
-					<div id="level-tab[[index]]" class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]" on-click="handleTap" data-index="[[index]]" role="tab" on-keydown="_onKeyDown" tabindex="0" aria-selected$="[[_isSelected(index, selected)]]" aria-controls$="level-description-panel[[index]]" aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]" data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
-						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]" class="check-icon" icon="d2l-tier1:check"></d2l-icon>
-						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
-							[[item.properties.name]]
+					<div
+						id="level-tab[[index]]"
+						class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]"
+						on-click="handleTap"
+						data-index="[[index]]"
+						role="tab"
+						on-keydown="_onKeyDown"
+						tabindex="0"
+						aria-selected$="[[_isSelected(index, selected)]]"
+						aria-controls$="level-description-panel[[index]]"
+						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]"
+						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
+						<div class="level-tab-focus">
+							<d2l-icon
+								hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"
+								class="check-icon"
+								icon="d2l-tier1:check">
+							</d2l-icon>
 						</div>
 					</div>
 				</template>
 			</div>
-			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore, scoreInvalid)]]" tabindex="0" on-keypress="_handleOverrideScoreKeypress">
-				<d2l-rubric-editable-score id="score-inner" class$="[[_getScoreWrapperClassName(criterionHref, editingScore, scoreInvalid)]]" criterion-href="[[criterionHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" score-invalid="{{scoreInvalid}}" overridden-styling="{{overriddenStyling}}" on-click="_handleOverrideScore">
-				</d2l-rubric-editable-score>
-			</div>
 		</div>
 	</template>
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -261,31 +289,49 @@ Polymer({
 		RIGHT: 39
 	},
 
-	_onKeyDown: function(event) {
-		switch (event.keyCode) {
+	_onKeyDown: function(e) {
+		switch (e.keyCode) {
 			case this._keyCodes.ENTER:
-				this.selected = event.currentTarget.dataIndex;
+				this.selected = e.currentTarget.dataIndex;
 				if (!this.readOnly) {
-					this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+					this.assessCriterionCell(e.currentTarget.dataset.cellHref);
 				}
 				break;
 			case this._keyCodes.LEFT:
-				if (event.currentTarget.dataIndex !== 0) {
-					event.currentTarget.previousSibling.focus();
-					event.preventDefault();
+				if (getComputedStyle(this).direction === 'rtl') {
+					this._focusNextLevel(e);
+				} else {
+					this._focusPrevLevel(e);
 				}
 				break;
 			case this._keyCodes.RIGHT:
-				if (event.currentTarget.dataIndex !== this.total - 1) {
-					event.currentTarget.nextSibling.focus();
-					event.preventDefault();
+				if (getComputedStyle(this).direction === 'rtl') {
+					this._focusPrevLevel(e);
+				} else {
+					this._focusNextLevel(e);
 				}
 				break;
 		}
 	},
 
+	_focusPrevLevel: function(e) {
+		if (e.currentTarget.dataIndex !== 0) {
+			e.currentTarget.previousSibling.focus();
+			e.preventDefault();
+		}
+	},
+
+	_focusNextLevel: function(e) {
+		if (e.currentTarget.dataIndex !== this.total - 1) {
+			e.currentTarget.nextSibling.focus();
+			e.preventDefault();
+		}
+	},
+
 	_isSelected: function(index, selected) {
-		return index === selected;
+		return selected >= 0
+			? index === selected
+			: index === 0;
 	},
 
 	_onEntityChanged: function(entity) {
@@ -304,9 +350,7 @@ Polymer({
 		if (this._isAssessedLevel(level, assessedLevelHref)) {
 			className += ' assessed';
 		}
-		if (index === this.total - 1) {
-			className += ' last';
-		}
+
 		return className;
 	},
 
@@ -319,10 +363,6 @@ Polymer({
 
 	_selectLevel: function(event) {
 		this.selected = event.currentTarget.dataIndex;
-	},
-
-	_hasOutOf: function(outOf) {
-		return !!outOf || outOf === 0;
 	},
 
 	_hasScore: function(score) {
@@ -362,14 +402,6 @@ Polymer({
 		return !this.readOnly && this.canOverrideScore(criterionHref);
 	},
 
-	_getOutOfClassName: function(editingScore, scoreInvalid) {
-		var className = 'level out-of';
-		if (editingScore && editingScore !== -1 || scoreInvalid) {
-			className += ' editing';
-		}
-		return className;
-	},
-
 	_getScoreWrapperClassName: function(criterionHref, editingScore, scoreInvalid) {
 		var className = 'score-wrapper';
 		if (this._canEditScore(criterionHref)) {
@@ -397,5 +429,4 @@ Polymer({
 	_isEditingScore: function(editingScore, scoreInvalid) {
 		return editingScore && editingScore !== -1 || scoreInvalid;
 	}
-
 });

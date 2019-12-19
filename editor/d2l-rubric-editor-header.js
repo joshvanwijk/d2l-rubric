@@ -1,13 +1,13 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import '../localize-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
 import 'd2l-save-status/d2l-save-status.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-header">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor-header">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			#rubric-editor-header {

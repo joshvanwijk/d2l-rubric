@@ -6,14 +6,15 @@ Polymer based web-component to display a rubric
 ## Usage
 Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-rubric.html`:
 
-##### Display a Rubric without it's title:
+##### Display a Rubric without its title:
 ```html
 <head>
 	<link rel="import" href="../d2l-rubric/d2l-rubric.html">
 	<d2l-rubric href="href for rubric" token="User token"/>
 </head>
 ```
-##### Display a Rubric with it's title:
+
+##### Display a Rubric with its title:
 ```html
 <head>
 	<link rel="import" href="../d2l-rubric/d2l-rubric.html">

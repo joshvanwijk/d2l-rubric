@@ -11,8 +11,10 @@ const args = yargs.usage('USAGE: $0 [options]\n\nCopies new lang terms from the 
 		alias: 'c',
 		describe: 'Config file path',
 		required: true,
-		requiresArg: true
-	}).option('all', {
+		requiresArg: true,
+		type: 'string'
+	})
+	.option('all', {
 		alias: [ 'a', 'copy-all' ],
 		describe: 'If this flag is set, the entirety of all lang term files will be overwritten with the contents of the source lang file; deleting any existing translations.',
 		boolean: true,
@@ -24,7 +26,7 @@ const copyAll = args.all;
 
 let config = null;
 try {
-	config = JSON.parse(fs.readFileSync(configFile));
+	config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
 } catch (e) {
 	let msg = null;
 	if (e instanceof SyntaxError) {
@@ -47,7 +49,7 @@ if (!fs.existsSync(sourcePath)) {
 
 let sourceJson = null;
 try {
-	const sourceContents = fs.readFileSync(sourcePath);
+	const sourceContents = fs.readFileSync(sourcePath, 'utf-8');
 	sourceJson = JSON.parse(sourceContents);
 } catch (e) {
 	let msg = null;
@@ -72,7 +74,7 @@ config.langNames.forEach(langName => {
 		Object.assign(outputJson, sourceJson);
 	} else {
 		try {
-			const destContents = fs.readFileSync(destPath);
+			const destContents = fs.readFileSync(destPath, 'utf-8');
 			outputJson = JSON.parse(destContents);
 		} catch (e) {
 			let msg = null;
@@ -92,6 +94,12 @@ config.langNames.forEach(langName => {
 			}
 		});
 	}
+
+	// Sort lang terms by key
+	const outputSorted = {};
+	Object.keys(outputJson).sort((l, r) => l.localeCompare(r)).forEach(key => {
+		outputSorted[key] = outputJson[key];
+	});
 
 	fs.writeFileSync(destPath, JSON.stringify(outputJson, null, 4) + '\n');
 });

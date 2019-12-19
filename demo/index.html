@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
@@ -8,20 +9,20 @@
 
 	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 	<script type="module">
-import '@polymer/promise-polyfill/promise-polyfill.js';
-import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-import '@polymer/iron-demo-helpers/demo-snippet.js';
-import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
-import './fetch-siren-entity-whitelist.js';
-import '../d2l-rubric.js';
-import '../d2l-rubric-title.js';
-import 'd2l-typography/d2l-typography.js';
-window.d2lfetch = {
-	fetch: function(req, opts) {
-		return window.fetch(req, opts);
-	}
-};
-</script>
+		import '@polymer/promise-polyfill/promise-polyfill.js';
+		import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+		import '@polymer/iron-demo-helpers/demo-snippet.js';
+		import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
+		import './fetch-siren-entity-whitelist.js';
+		import '../d2l-rubric.js';
+		import '../d2l-rubric-title.js';
+		import 'd2l-typography/d2l-typography.js';
+		window.d2lfetch = {
+			fetch: function(req, opts) {
+				return window.fetch(req, opts);
+			}
+		};
+	</script>
 
 	<script type="module" src="../../@polymer/promise-polyfill/promise-polyfill.js"></script>
 	<script src="../../whatwg-fetch/fetch.js"></script>
@@ -43,36 +44,34 @@ window.d2lfetch = {
 		See: https://github.com/Polymer/polymer-modulizer/issues/154
 		-->
 	<script type="module">
-const $_documentContainer = document.createElement('template');
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<style is="custom-style" include="demo-pages-shared-styles">
+		$_documentContainer.innerHTML = `<style is="custom-style" include="demo-pages-shared-styles">
 	</style>`;
 
-document.head.appendChild($_documentContainer.content);
-</script>
+		document.head.appendChild($_documentContainer.content);
+	</script>
 	<script type="module">
-const $_documentContainer = document.createElement('template');
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
+		$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 		<style is="custom-style" include="d2l-typography">
 			html {
 				font-size: 20px;
-			}
-			.rubric-title {
-				@apply --d2l-heading-3;
 			}
 		</style>
 
 	</custom-style>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
+		document.body.appendChild($_documentContainer.content);
+	</script>
 </head>
-<body class="d2l-typography">
-<script type="module">
-const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
+<body class="d2l-typography">
+	<script type="module">
+		const $_documentContainer = document.createElement('template');
+
+		$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
 	<h1>d2l-rubric demo</h1>
 	<h3>Rubric For Grading</h3>
 	<demo-snippet>
@@ -80,11 +79,11 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
 	</demo-snippet>
 	<h3>Rubric, text only</h3>
 	<demo-snippet>
-		<d2l-rubric 
-			href="data/rubrics/organizations/text-only/242.json" 
-			token="foozleberries" 
-			data-origin-tool="grades" 
-			data-rubric-mode="graded" 
+		<d2l-rubric
+			href="data/rubrics/organizations/text-only/242.json"
+			token="foozleberries"
+			data-origin-tool="grades"
+			data-rubric-mode="graded"
 			data-telemetry-endpoint="https://qa.telemetryservice.brightspace.com/api/events"
 			outcomes-title-text="Standards"
 		></d2l-rubric>
@@ -139,7 +138,8 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
 	</demo-snippet>
 </div>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
+		document.body.appendChild($_documentContainer.content);
+	</script>
 </body>
+
 </html>
