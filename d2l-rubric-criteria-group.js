@@ -434,14 +434,9 @@ Polymer({
 	ready: function() {
 		const table = this.root.querySelector('d2l-table');
 		const scrollWrappers = table && table.shadowRoot && table.shadowRoot.querySelector('d2l-scroll-wrapper');
-		if (scrollWrappers) {
-			scrollWrappers.addEventListener('scrollbar-right-changed', () => this._setLoaCellsWidth());
-			scrollWrappers.addEventListener('scrollbar-left-changed', () => this._setLoaCellsWidth());
-
-			const wrapper = scrollWrappers.shadowRoot && scrollWrappers.shadowRoot.querySelector('#wrapper');
-			if (wrapper) {
-				wrapper.addEventListener('scroll', () => this._setLoaCellsWidth());
-			}
+		const wrapper = scrollWrappers && scrollWrappers.shadowRoot && scrollWrappers.shadowRoot.querySelector('#wrapper');
+		if (wrapper) {
+			wrapper.addEventListener('scroll', () => this._setLoaCellsWidth());
 		}
 	},
 
@@ -1017,7 +1012,7 @@ Polymer({
 				loaHeading.style.flexBasis = `${width}px`;
 
 				const borderSide = this._levelsReversed ? 'Left' : 'Right';
-				if (!this._levelsReversed && labelMarginLeft > 0 || this._levelsReversed && labelMarginLeft < 0) {
+				if (width === 0 || !this._levelsReversed && labelMarginLeft > 0 || this._levelsReversed && labelMarginLeft < 0) {
 					loaHeading.style[`border${borderSide}Width`] = '0px';
 				} else {
 					loaHeading.style[`border${borderSide}Width`] = '2px';
