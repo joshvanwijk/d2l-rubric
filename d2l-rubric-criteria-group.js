@@ -103,10 +103,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				justify-content: center;
 			}
 			#loa-labels > .loa-heading {
-				flex-basis: 0px;
 				font-weight: bold;
 			}
-			#loa-labels .loa-label {
+			#loa-labels .loa-label .loa-label-text {
 				padding: 0px 1rem;
 			}
 			#loa-labels .loa-end {
@@ -250,11 +249,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				</d2l-tr>
 				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
 					<d2l-tspan id="loa-container">
-						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_onLoaResize">
-							<div class="loa-label">[[_getLoaHeadingLangTerm()]]</div>
-							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
+						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_setLoaCellsWidth">
+							<div class="loa-label">
+								<div class="loa-label-text">[[_getLoaHeadingLangTerm()]]</div>
+							</div>
+							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" on-dom-change="_setLoaCellsWidth">
 								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]">
-									[[loaLevel.properties.name]]
+									<div class="loa-label-text">[[loaLevel.properties.name]]</div>
 								</div>
 							</template>
 							<template is="dom-if" if="[[_hasOutOf(entity)]]">
@@ -430,6 +431,15 @@ Polymer({
 		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
 	],
 
+	ready: function() {
+		const table = this.root.querySelector('d2l-table');
+		const scrollWrappers = table && table.shadowRoot && table.shadowRoot.querySelector('d2l-scroll-wrapper');
+		const wrapper = scrollWrappers && scrollWrappers.shadowRoot && scrollWrappers.shadowRoot.querySelector('#wrapper');
+		if (wrapper) {
+			wrapper.addEventListener('scroll', () => this._setLoaCellsWidth());
+		}
+	},
+
 	attached: function() {
 		this.addEventListener('d2l-rubric-editable-score-commit', (e) => {
 			e.stopPropagation();
@@ -490,7 +500,7 @@ Polymer({
 		const loaLevelEntities = loaLevelEntity.getSubEntitiesByClass('level-of-achievement');
 
 		const lastRubric = this._resolveRubricLevel(this._levels, this._getRubricLevelLink(loaLevelEntities[loaLevelEntities.length - 1]));
-		const lastRubricIndex = this._getRubricLevelIndex(lastRubric);
+		const lastRubricIndex = this._getRubricLevelIndex(this._sortedLevels, lastRubric);
 
 		if (lastRubricIndex === 0) {
 			loaLevelEntities.reverse();
@@ -744,8 +754,6 @@ Polymer({
 			`border-${side}-color: ${loaLevel.properties.color}`,
 			`border-${side}-width: 2px`,
 			`border-${hiddenSide}-style: hidden`,
-			'flex-basis: 0px;',
-			`flex-grow: ${colSpan}`
 		].join(';');
 	},
 
@@ -930,22 +938,99 @@ Polymer({
 		return !this._isStaticView() && !feedbackInvalid;
 	},
 
-	_onLoaResize: function() {
-		const firstRow = this.root.querySelectorAll('.d2l-table-row-first')[0];
+	_setLoaCellsWidth: function() {
+		this.debounce('set-loa-cells-width', () => {
+			if (!this._hasLoaScale(this._levelsEntity)) {
+				return;
+			}
 
-		const widthStart = Math.floor(firstRow.firstChild.getBoundingClientRect().width);
-		const startLabel = this.root.querySelectorAll('.loa-label')[0];
-		startLabel.style.width = `${widthStart - 1}px`;
+			const table = this.root.querySelector('d2l-table');
+			const tableRect = table.getBoundingClientRect();
 
-		const endLabel = this.root.querySelectorAll('.loa-end')[0];
-		if (endLabel) {
-			const widthEnd = Math.floor(firstRow.querySelectorAll('d2l-th.out-of')[0].getBoundingClientRect().width);
-			endLabel.style.width = `${widthEnd - 1}px`;
-		}
+			const firstRow = this.root.querySelector('.d2l-table-row-first');
+			const firstHeaderRect = firstRow.firstChild.getBoundingClientRect();
+			const startLabel = this.root.querySelectorAll('.loa-label')[0];
+			const startlabelTextDiv = startLabel.querySelector('div');
+			let startLabelWidth = 0;
+			if (firstHeaderRect.left < tableRect.left && firstHeaderRect.right > tableRect.left) {
+				// achievement label is clipped but still visible
+				startLabelWidth = firstHeaderRect.right - tableRect.left;
+				startlabelTextDiv.style.marginLeft = `${startLabelWidth - firstHeaderRect.width}px`;
+			} else if (firstHeaderRect.right > tableRect.left) {
+				// achievement label is not clipped
+				startLabelWidth = firstHeaderRect.width - 1;
+				startlabelTextDiv.style.marginLeft = '0';
+			}
+			startLabel.style.flexBasis = `${startLabelWidth}px`;
+			if (startLabelWidth === 0) {
+				startLabel.style.borderRightWidth = '0';
+			} else {
+				startLabel.style.borderRightWidth = '1px';
+			}
+
+			const endLabel = this.root.querySelectorAll('.loa-end')[0];
+			if (endLabel) {
+				const outOfRect = firstRow.querySelectorAll('d2l-th.out-of')[0].getBoundingClientRect();
+				if (outOfRect.right > tableRect.right && outOfRect.left < tableRect.left) {
+					endLabel.style.flexBasis = `${tableRect.right - outOfRect.left}px`;
+				} else if (outOfRect.right < tableRect.right) {
+					endLabel.style.flexBasis = `${outOfRect.width - 1}px`;
+				}
+			}
+
+			if (!this._loaLevels) {
+				return;
+			}
+
+			const levelHeaders = firstRow.querySelectorAll('d2l-th');
+			let startLevelIndex = 0;
+			this._loaLevels.forEach((loaLevel, index) => {
+				const colSpan = this._getLoaLevelSpan(loaLevel, this._sortedLevels, this._loaLevels, this._levelsReversed);
+				let width = 0;
+				let labelMarginLeft = 0;
+				for (let i = startLevelIndex; i < startLevelIndex + colSpan; i++) {
+					const levelRect = levelHeaders[i].getBoundingClientRect();
+
+					if (levelRect.right > tableRect.right) {
+						// right side of level is clipped by table scroll
+						labelMarginLeft += levelHeaders[i].offsetWidth;
+						if (levelRect.left < tableRect.right) {
+							// level is still visible
+							width += tableRect.right - levelRect.left;
+							labelMarginLeft -= (tableRect.right - levelRect.left);
+						}
+					} else if (levelRect.left < tableRect.left) {
+						// left side of level is clipped by table scroll
+						labelMarginLeft -= levelHeaders[i].offsetWidth;
+						if (levelRect.right > tableRect.left) {
+							// level is still visible
+							width += levelRect.right - tableRect.left;
+							labelMarginLeft += (levelRect.right - tableRect.left);
+						}
+					} else if (levelRect.left >= tableRect.left && levelRect.right <= tableRect.right) {
+						// level is not clipped by table scroll
+						width += levelHeaders[i].offsetWidth;
+					}
+				}
+				const loaHeading = this.root.querySelectorAll('.loa-heading')[index];
+				loaHeading.style.flexBasis = `${width}px`;
+
+				const borderSide = this._levelsReversed ? 'Left' : 'Right';
+				if (width === 0 || !this._levelsReversed && labelMarginLeft > 0 || this._levelsReversed && labelMarginLeft < 0) {
+					loaHeading.style[`border${borderSide}Width`] = '0px';
+				} else {
+					loaHeading.style[`border${borderSide}Width`] = '2px';
+				}
+
+				const textDiv = loaHeading.querySelector('.loa-label-text');
+				textDiv.style.marginLeft = `${labelMarginLeft}px`;
+
+				startLevelIndex += colSpan;
+			});
+		}, 50);
 	},
-
 	_getLoaLevelSpan: function(loaLevel, sortedRubricLevels, loaLevels, reversed) {
-		const adjLoa = this._levelsReversed ? this._getNextLoaLevel(loaLevels, loaLevel) : this._getPrevLoaLevel(loaLevels, loaLevel);
+		const adjLoa = reversed ? this._getNextLoaLevel(loaLevels, loaLevel) : this._getPrevLoaLevel(loaLevels, loaLevel);
 
 		const currentRubric = this._resolveRubricLevel(sortedRubricLevels, this._getRubricLevelLink(loaLevel));
 		const adjRubric = this._resolveRubricLevel(sortedRubricLevels, this._getRubricLevelLink(adjLoa));
