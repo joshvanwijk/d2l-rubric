@@ -146,15 +146,15 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 			<d2l-dnd-sortable placeholder-class="dnd-placeholder" mirror-class="dnd-mirror" touch-mirror-class="dnd-touch-mirror" handle=".dnd-drag-handle" on-d2l-dnd-sorted="_handleDrag" disabled="[[!_canDrag]]">
 				<template id="criteria-repeater" is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionIndex" rendered-item-count="{{criterionCount}}">
 					<div class="fieldset">
-						<span style="display:none">[[_getCriterionLegend(index, criterionCount)]]</span>
+						<span style="display:none">[[_getCriterionLegend(criterionIndex, criterionCount)]]</span>
 						<d2l-rubric-criterion-editor
 							animating="[[animating]]"
 							href="[[_getSelfLink(criterion)]]"
 							token="[[token]]"
 							rubric-levels-href="[[_rubricLevelsHref]]"
-							first-row="[[_isFirstRow(criterionIndex)]]"
+							first-row="[[_isFirst(criterionIndex, criterionCount)]]"
 							is-holistic="[[isHolistic]]"
-							display-name-placeholder="[[_isFirst(index, criterionCount)]]"
+							display-name-placeholder="[[_isFirst(criterionIndex, criterionCount)]]"
 							rich-text-enabled="[[richTextEnabled]]"
 							criterion-detail-width="[[criterionDetailWidth]]"
 							outcomes-title="[[outcomesTitle]]"
@@ -165,16 +165,16 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen" on-focusin="_onReorderGroupFocusIn" on-focusout="_onReorderGroupFocusOut" on-keydown="_onReorderGroupKeydown">
-									<button id="up-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionUp', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isFirst(index, criterionCount)]]" data-index$="[[index]]" on-click="_moveUp">
+									<button id="up-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionUp', criterionIndex)]]" hidden$="[[!_canReorder]]" disabled$="[[_isFirst(criterionIndex, criterionCount)]]" data-index$="[[criterionIndex]]" on-click="_moveUp">
 										<d2l-icon icon="d2l-tier1:arrow-toggle-up"></d2l-icon>
 									</button>
 
-									<button id="down-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionDown', index)]]" hidden$="[[!_canReorder]]" disabled$="[[_isLast(index, criterionCount)]]" data-index$="[[index]]" on-click="_moveDown">
+									<button id="down-button" class="reorder-button" title="[[_getPositionLocalize('moveCriterionDown', criterionIndex)]]" hidden$="[[!_canReorder]]" disabled$="[[_isLast(criterionIndex, criterionCount)]]" data-index$="[[criterionIndex]]" on-click="_moveDown">
 										<d2l-icon icon="d2l-tier1:arrow-toggle-down"></d2l-icon>
 									</button>
 								</div>
 
-								<d2l-icon class="dnd-drag-handle" icon="d2l-tier1:dragger" hidden="[[_hideDragHandle(_canReorder, index, criterionCount)]]"></d2l-icon>
+								<d2l-icon class="dnd-drag-handle" icon="d2l-tier1:dragger" hidden="[[_hideDragHandle(_canReorder, criterionIndex, criterionCount)]]"></d2l-icon>
 							</div>
 						</d2l-rubric-criterion-editor>
 					</div>
@@ -452,8 +452,5 @@ Polymer({
 	},
 	_countCriteria: function(criteriaArray) {
 		this.criterionCount = criteriaArray.length;
-	},
-	_isFirstRow: function(index) {
-		return index === 0;
 	}
 });
