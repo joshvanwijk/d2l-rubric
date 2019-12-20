@@ -278,9 +278,9 @@ Polymer({
 	focus: function() {
 		var elem = this.$['text-area'];
 		elem.focus();
-		var inputElem = elem.$$('input');
+		var inputElem = elem.shadowRoot && elem.shadowRoot.querySelector('input');
 		if (inputElem && !this.compact) {
-			elem.$$('input').select();
+			inputElem.select();
 		}
 	},
 
@@ -317,7 +317,7 @@ Polymer({
 		if (event.relatedTarget && event.relatedTarget.id === 'clear-button') {
 			return;
 		}
-		var innerInput = event.target.$$('input');
+		var innerInput = event.target.shadowRoot && event.target.shadowRoot.querySelector('input');
 		if (!innerInput || !innerInput.checkValidity()) {
 			return;
 		}
