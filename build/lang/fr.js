@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'rubricSavingErrorAriaAlert': 'Un problème est survenu lors de l’enregistrement de votre grille d’évaluation.',
 		'rubricSavingErrorMessage': 'Un problème est survenu. Veuillez vérifier votre grille d’évaluation.',
 		'rubricStatus': 'État : {status}',
-		'rubricStatusArchived': 'Statut: Archivé',
-		'rubricStatusDraft': 'Statut: Brouillon',
-		'rubricStatusPublished': 'Statut: Publié',
+		'rubricStatusArchived': 'État : Archivé',
+		'rubricStatusDraft': 'État : Ébauche',
+		'rubricStatusPublished': 'État : Publié',
 		'rubricSummaryA11y': 'Ce tableau comprend les critères et le nom du groupe de critères dans la première colonne. La première rangée contient les noms de niveau et comprend des pointages si la grille d’évaluation utilise une méthode de pointage numérique.',
 		'rubricType': 'Type : {rubricType}',
 		'rubricVisibility': 'Visibilité de la grille d’évaluation',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'selectNextLevel': 'Sélectionner le niveau suivant',
 		'selectPreviousLevel': 'Sélectionner le niveau précédent',
 		'setScoreVisibilityFailed': 'Le paramétrage de la visibilité des notes a échoué.',
-		'sharedAlertText': 'Cette rubrique ne peut être modifiée qu’à partir de l’entité organisationnelle qui l’a partagée.',
 		'shareRubricSaveFailed': 'Échec de la modification de la disponibilité de l’unité organisationnelle',
+		'sharedAlertText': 'Cette rubrique ne peut être modifiée qu’à partir de l’unité org qui l’a partagée',
 		'statistics': 'Statistiques',
 		'total': 'Total',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
-		'totalScoreLabel': 'Note finale de la grille d’évaluation',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Note finale de la grille d’évaluation'
 	}
 };

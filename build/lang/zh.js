@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'rubricSavingErrorAriaAlert': '保存量规时出现问题。',
 		'rubricSavingErrorMessage': '出现错误。请检查您的量规。',
 		'rubricStatus': '状态：{status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': '状态：已存档',
+		'rubricStatusDraft': '状态：草稿',
+		'rubricStatusPublished': '状态：已发布',
 		'rubricSummaryA11y': '此表第一列中列出了标准和标准组名称。第一行列出了级别名称；如果量规使用数字评分方法，则还包括分数。',
 		'rubricType': '类型：{rubricType}',
 		'rubricVisibility': '量规可见性',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'selectNextLevel': '选择下一级别',
 		'selectPreviousLevel': '选择上一级别',
 		'setScoreVisibilityFailed': '设置分数可见性失败。',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': '更改组织单位可用性失败',
+		'sharedAlertText': '此量规只能从共享它的组织单位编辑',
 		'statistics': '统计',
 		'total': '总计',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': '量规超出了总分数值 {value}。',
-		'totalScoreLabel': '量规总分',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': '量规总分'
 	}
 };

@@ -104,7 +104,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'pointsAreRequired': 'Puan değeri gereklidir',
 		'pointsMinimum': '{number} {number, plural, one {puan} other {puan}} minimum',
 		'pointsSaveFailed': 'Puan kaydedilemedi',
-		'preview': 'Önizleme',
+		'preview': 'Önizle',
 		'rangeStartInvalid': 'Aralık Başlangıç değeri geçersiz',
 		'rangeStartOrMore': 'veya daha fazlası',
 		'rangeStartRequired': 'Aralık Başlangıç değeri gereklidir',
@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'rubricSavingErrorAriaAlert': 'Rubrik kaydedilirken bir sorun oluştu.',
 		'rubricSavingErrorMessage': 'Bir sorun oluştu. Lütfen rubriği kontrol edin.',
 		'rubricStatus': 'Durum: {status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': 'Durum: Arşivlenmiş',
+		'rubricStatusDraft': 'Durum: Taslak',
+		'rubricStatusPublished': 'Durum: Yayınlanmış',
 		'rubricSummaryA11y': 'Bu tablo, ilk sütundaki kriter ve kriter grubu adlarını listeler. İlk satır seviye adlarını listeler ve rubrik sayısal bir puanlama yöntemi kullanıyorsa puanları içerir.',
 		'rubricType': 'Tür: {rubricType}',
 		'rubricVisibility': 'Rubrik Görünürlüğü',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'selectNextLevel': 'Sonraki Seviyeyi Seçin',
 		'selectPreviousLevel': 'Önceki Seviyeyi Seçin',
 		'setScoreVisibilityFailed': 'Puan görünürlüğünü ayarlama işlemi başarısız oldu.',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': 'Organizasyon birimi kullanılabilirliği değiştirilemedi',
+		'sharedAlertText': 'Bu rubrik, yalnızca paylaşan organizasyon biriminden düzenlenebilir',
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
-		'totalScoreLabel': 'Rubrik Toplam Puan',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Rubrik Toplam Puan'
 	}
 };

@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'rubricSavingErrorAriaAlert': '儲存您的量規時發生問題。',
 		'rubricSavingErrorMessage': '發生錯誤。請檢查您的量規。',
 		'rubricStatus': '狀態：{status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': '狀態：已歸檔',
+		'rubricStatusDraft': '狀態：草稿',
+		'rubricStatusPublished': '狀態：已發佈',
 		'rubricSummaryA11y': '此表格會在第一欄列出標準和標準群組名稱。第一列會列出層級名稱並包含分數 (如果量規使用數字評分方法)。',
 		'rubricType': '類型：{rubricType}',
 		'rubricVisibility': '量規能見度',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'selectNextLevel': '選取下個層級',
 		'selectPreviousLevel': '選取上個層級',
 		'setScoreVisibilityFailed': '分數能見度設定失敗。',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': '變更組織單位可用情況失敗',
+		'sharedAlertText': '這個量規只能從其共用的組織單位進行編輯',
 		'statistics': '統計',
 		'total': '總計',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': '量規超出總分 ({value} 分)。',
-		'totalScoreLabel': '量規總分數',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': '量規總分數'
 	}
 };

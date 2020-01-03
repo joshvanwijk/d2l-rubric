@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'rubricSavingErrorAriaAlert': 'Ocorreu um problema ao salvar sua rubrica.',
 		'rubricSavingErrorMessage': 'Algo deu errado. Verifique sua rubrica.',
 		'rubricStatus': 'Status: {status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': 'Status: Arquivado',
+		'rubricStatusDraft': 'Status: Rascunho',
+		'rubricStatusPublished': 'Status: Publicado',
 		'rubricSummaryA11y': 'A tabela lista critérios e nomes de grupos de critérios na primeira coluna. A primeira linha lista nomes de nível e inclui pontuações caso a rubrica use um método de pontuação numérica.',
 		'rubricType': 'Tipo: {rubricType}',
 		'rubricVisibility': 'Visibilidade da rubrica',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'selectNextLevel': 'Selecionar próximo nível',
 		'selectPreviousLevel': 'Selecionar nível anterior',
 		'setScoreVisibilityFailed': 'Falha na configuração da visibilidade da pontuação.',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': 'Falha ao alterar a disponibilidade da unidade organizacional',
+		'sharedAlertText': 'Esta rubrica só pode ser editada na unidade organizacional que a compartilhou',
 		'statistics': 'Estatísticas',
 		'total': 'Total',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.',
-		'totalScoreLabel': 'Pontuação total da rubrica',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Pontuação total da rubrica'
 	}
 };

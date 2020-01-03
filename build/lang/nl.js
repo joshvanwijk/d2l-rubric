@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'rubricSavingErrorAriaAlert': 'Er is een probleem met het opslaan van uw rubric.',
 		'rubricSavingErrorMessage': 'Er is iets fout gegaan. Controleer uw rubric.',
 		'rubricStatus': 'Status: {status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': 'Status: gearchiveerd',
+		'rubricStatusDraft': 'Status: concept',
+		'rubricStatusPublished': 'Status: gepubliceerd',
 		'rubricSummaryA11y': 'In de eerste kolom van deze tabel staan de criteria en de criteriagroepnaam. In de eerste rij staan de niveaunamen en eventueel de scores als de rubric gebruikmaakt van een numerieke scoremethode.',
 		'rubricType': 'Type: {rubricType}',
 		'rubricVisibility': 'Rubriczichtbaarheid',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'selectNextLevel': 'Volgend niveau selecteren',
 		'selectPreviousLevel': 'Vorig niveau selecteren',
 		'setScoreVisibilityFailed': 'Instellen van scorezichtbaarheid mislukt.',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': 'Het wijzigen van de beschikbaarheid van de organisatie-eenheid is mislukt',
+		'sharedAlertText': 'Deze rubric kan alleen worden bewerkt vanuit de organisatie-eenheid die deze heeft gedeeld',
 		'statistics': 'Statistieken',
 		'total': 'Totaal',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.',
-		'totalScoreLabel': 'Rubric-totaalscore',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Rubric-totaalscore'
 	}
 };

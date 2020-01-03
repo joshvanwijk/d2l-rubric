@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'rubricSavingErrorAriaAlert': 'Ett problem uppstod med att spara rubriceringen.',
 		'rubricSavingErrorMessage': 'Något gick fel. Kontrollera rubriceringen.',
 		'rubricStatus': 'Status: {status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': 'Status: Arkiverad',
+		'rubricStatusDraft': 'Status: Utkast',
+		'rubricStatusPublished': 'Status: Publicerad',
 		'rubricSummaryA11y': 'Denna tabell innehåller kriterier och namn på kriteriegrupp i den första kolumnen. På den första raden listas nivånamn och betyg inkluderas om rubriceringen använder en numerisk betygsättningsmetod.',
 		'rubricType': 'Typ: {rubricType}',
 		'rubricVisibility': 'Rubriceringens synlighet',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'selectNextLevel': 'Välj nästa nivå',
 		'selectPreviousLevel': 'Välj föregående nivå',
 		'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': 'Det gick inte att ändra tillgängligheten för organisationsenheten',
+		'sharedAlertText': 'Den här rubriceringen kan bara redigeras från den organisationsenhet den delades från',
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.',
-		'totalScoreLabel': 'Totala rubriceringspoäng',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Totala rubriceringspoäng'
 	}
 };

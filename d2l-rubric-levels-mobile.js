@@ -435,8 +435,9 @@ Polymer({
 		return editingScore && editingScore !== -1 || scoreInvalid;
 	},
 
-	_handleTrack(e) {
-		switch(e.detail.state) {
+	// eslint-disable-next-line no-unused-vars
+	_handleTrack: function(e) {
+		switch (e.detail.state) {
 			case 'start':
 				this._handleTrackStart(e);
 				break;
@@ -490,6 +491,7 @@ Polymer({
 		}
 	},
 
+	// eslint-disable-next-line no-unused-vars
 	_handleTrackEnd: function(e) {
 		this._currentDragContext = null;
 

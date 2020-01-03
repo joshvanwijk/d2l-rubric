@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'rubricSavingErrorAriaAlert': '루브릭 저장 중 문제가 발생했습니다.',
 		'rubricSavingErrorMessage': '문제가 발생했습니다. 루브릭을 확인하십시오.',
 		'rubricStatus': '상태: {status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': '상태: 보관됨',
+		'rubricStatusDraft': '상태: 초안',
+		'rubricStatusPublished': '상태: 게시됨',
 		'rubricSummaryA11y': '이 표에는 첫 번째 열에 기준 및 기준 그룹 이름이 나열됩니다. 루브릭이 숫자 점수 산정법을 사용할 경우, 첫 번째 행에 수준 이름이 나열되고 점수가 포함됩니다.',
 		'rubricType': '유형: {rubricType}',
 		'rubricVisibility': '루브릭 표시 여부',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'selectNextLevel': '다음 수준 선택',
 		'selectPreviousLevel': '이전 수준 선택',
 		'setScoreVisibilityFailed': '점수 표시 여부 설정에 실패했습니다.',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': '구성 단위 가용성을 변경하지 못했습니다.',
+		'sharedAlertText': '이 루브릭은 이를 공유하는 구성 단위에서만 편집할 수 있습니다.',
 		'statistics': '통계',
 		'total': '총',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': '루브릭이 총 {value}점의 점수에서 벗어났습니다.',
-		'totalScoreLabel': '루브릭 총점',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': '루브릭 총점'
 	}
 };

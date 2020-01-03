@@ -119,9 +119,9 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'rubricSavingErrorAriaAlert': 'Beim Speichern Ihres Bewertungsschemas ist ein Problem aufgetreten.',
 		'rubricSavingErrorMessage': 'Etwas ist schiefgelaufen. Bitte überprüfen Sie Ihr Bewertungsschema.',
 		'rubricStatus': 'Status: {status}',
-		'rubricStatusArchived': 'Status: Archived',
-		'rubricStatusDraft': 'Status: Draft',
-		'rubricStatusPublished': 'Status: Published',
+		'rubricStatusArchived': 'Status: Archiviert',
+		'rubricStatusDraft': 'Status: Entwurf',
+		'rubricStatusPublished': 'Status: Veröffentlicht',
 		'rubricSummaryA11y': 'In der ersten Spalte dieser Tabelle wird der Name der Kriterien und Kriteriengruppen aufgeführt. Die erste Zeile enthält die Namen der Niveaus sowie Punktzahlen, sofern für das Bewertungsschema eine numerische Bewertungsmethode verwendet wird.',
 		'rubricType': 'Typ: {rubricType}',
 		'rubricVisibility': 'Sichtbarkeit des Bewertungsschemas',
@@ -136,12 +136,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'selectNextLevel': 'Nächste Stufe wählen',
 		'selectPreviousLevel': 'Vorherige Stufe wählen',
 		'setScoreVisibilityFailed': 'Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.',
-		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
-		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'shareRubricSaveFailed': 'Ändern der Verfügbarkeit der Organisationseinheit fehlgeschlagen',
+		'sharedAlertText': 'Dieses Bewertungsschema kann nur von der freigebenden Organisationseinheit bearbeitet werden',
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',
-		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Gesamtpunktzahl Bewertungsschema'
 	}
 };
