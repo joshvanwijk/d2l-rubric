@@ -150,10 +150,46 @@ class RubricLoaOverlay extends mixinBehaviors([
 
                 .slider:hover {
                     cursor: pointer;
-                }
+				}
+				
+				.fixed-slider:focus {
+					outline: none;
+					z-index: 10 !important;
+				}
+
+				.fixed-slider:focus + .slider-focus {
+					background: white;
+					border: 2px solid black;
+					border-radius: 19px;
+					height: 38px;
+					left: -4px;
+					position: absolute;
+					top: -4px;
+					width: 38px;
+					z-index: 9;
+				}
+
+				.slider-focus .arrow {
+					display: none;
+					position: relative;
+				}
+
+				.fixed-slider:focus + .slider-focus .arrow {
+					display: inline;
+				}
+
+				.slider-focus .arrow-right {
+					left: 24px;
+					top: 2px;
+				}
+
+				.slider-focus .arrow-left {
+					left: -7px;
+					top: 2px;
+				}
 
                 #motion-slider {
-                    z-index: 3;
+                    z-index: 20;
                 }
 
                 #motion-slider.hidden {
@@ -166,7 +202,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                     position: fixed;
                     right: 0;
                     top: 0;
-                    z-index: 2;
+                    z-index: 100;
                 }
 
                 #drag-capture-overlay:hover,
@@ -187,14 +223,22 @@ class RubricLoaOverlay extends mixinBehaviors([
                         <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
                             <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel, _loaLevels, _sortedLevels, _rubricLevelOverrides, _reversed)]]" is-holistic$="[[isHolistic]]">
                                 [[loaLevel.properties.name]]
-                            </div>
+							</div>
                             <div
+                                class="slider fixed-slider"
 								data-loa-level$="[[_getSelfLink(loaLevel)]]"
 								on-keyUp="_onSliderKeyUp"
                                 on-mouseDown="_onMouseDown"
 								style$="[[_getSliderStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]"
 								tabindex="0"
-							>
+							></div>
+							<div class="slider-focus" style$="[[_getSliderFocusStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]">
+								<svg class="arrow arrow-left" viewBox="0 0 6 9" xmlns="http://www.w3.org/2000/svg" width="6" style$="[[_getSliderFocusArrowStyle(loaLevel)]]">
+									<polygon points="6,0 0,4.5 6,9" />
+								</svg>
+								<svg class="arrow arrow-right" viewBox="0 0 6 9" xmlns="http://www.w3.org/2000/svg" width="6" style$="[[_getSliderFocusArrowStyle(loaLevel)]]">
+									<polygon points="0,0 6,4.5 0,9" />
+								</svg>
 							</div>
                         </template>
                     </div>
@@ -312,11 +356,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 		let offset = this._getRubricSliderPosition(effectiveRubricLevel, sortedRubricLevels, totalWidth, reversed);
 		let zIndex = 2;
 
-		// Check for stacked sliders
-		const prevLoa = this._getPrevLoaLevel(loaLevels, loaLevel);
-		const prevRubric = this._getVisualRubricLevel(prevLoa, sortedRubricLevels, rubricLevelOverrides);
-
-		if (prevLoa !== null && this._getSelfLink(effectiveRubricLevel) === this._getSelfLink(prevRubric)) {
+		if (this._isSliderStacked(loaLevel, loaLevels, sortedRubricLevels, rubricLevelOverrides)) {
 			offset += 12;
 			zIndex = 1;
 		}
@@ -329,12 +369,45 @@ class RubricLoaOverlay extends mixinBehaviors([
 		].join(';');
 	}
 
+	_getSliderFocusStyle(loaLevel, loaLevels, sortedRubricLevels, totalWidth, rubricLevelOverrides, reversed) {
+		const color = loaLevel.properties.color;
+		const effectiveRubricLevel = this._getVisualRubricLevel(loaLevel, sortedRubricLevels, rubricLevelOverrides);
+
+		let offset = this._getRubricSliderPosition(effectiveRubricLevel, sortedRubricLevels, totalWidth, reversed);
+		offset -= 4; // Accounts for size difference between slider and focus border
+
+		if (this._isSliderStacked(loaLevel, loaLevels, sortedRubricLevels, rubricLevelOverrides)) {
+			offset += 12;
+		}
+
+		return [
+			`border-color: ${color}`,
+			`left: ${offset}px`
+		].join(';');
+	}
+
+	_getSliderFocusArrowStyle(loaLevel) {
+		const color = loaLevel.properties.color;
+		return [
+			`fill: ${color}`
+		].join(';');
+	}
+
 	_getRubricSliderPosition(rubricLevel, sortedRubricLevels, totalWidth, reversed) {
 		const nSections = sortedRubricLevels.length;
 		const sectionWidth = totalWidth / nSections;
 
 		const dist = this._getRubricLevelDist(sortedRubricLevels, sortedRubricLevels[0], rubricLevel, reversed) + (reversed ? 0 : 1);
 		return dist * sectionWidth - SLIDER_CENTER_OFFSET;
+	}
+
+	_isSliderStacked(loaLevel, loaLevels, sortedRubricLevels, rubricLevelOverrides) {
+		const currentRubricLevel = this._getVisualRubricLevel(loaLevel, sortedRubricLevels, rubricLevelOverrides);
+
+		const prevLoa = this._getPrevLoaLevel(loaLevels, loaLevel);
+		const prevRubric = this._getVisualRubricLevel(prevLoa, sortedRubricLevels, rubricLevelOverrides);
+
+		return prevLoa !== null && this._getSelfLink(currentRubricLevel) === this._getSelfLink(prevRubric);
 	}
 
 	_getLoaLevelSpan(loaLevel, loaLevels, sortedRubricLevels, rubricLevelOverrides, reversed) {
@@ -436,6 +509,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 		e.preventDefault();
 
 		this._activeSlider = e.target;
+		this._activeSlider.blur(); // Get rid of keyboard-nav border in case slider is focused
+
 		this._activeSlider.classList.add('active');
 		this._draggingLoaLevel = this._resolveLoaLevel(this._loaLevels, this._activeSlider.getAttribute('data-loa-level'));
 
