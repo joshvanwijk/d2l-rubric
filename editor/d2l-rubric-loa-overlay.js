@@ -643,7 +643,23 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		if (currentLevel !== newLevel) {
 			// Check if move is valid
-			const moveInvalid = this._getSelfLink(loaLevelEntity) === this._getSelfLink(this._getFixedLoaLevel(this._loaLevels, this._reversed));
+			const nextLoa = this._getNextLoaLevel(this._loaLevels, loaLevelEntity);
+            const prevLoa = this._getPrevLoaLevel(this._loaLevels, loaLevelEntity);
+
+            const nextRubric = this._getVisualRubricLevel(nextLoa, this._sortedLevels, this._rubricLevelOverrides);
+			const prevRubric = this._getVisualRubricLevel(prevLoa, this._sortedLevels, this._rubricLevelOverrides);
+
+			let moveInvalid = (this._getSelfLink(loaLevelEntity) === this._getSelfLink(this._getFixedLoaLevel(this._loaLevels, this._reversed)));
+
+			// Disallow skipping over levels if dragging
+			if (this._draggingSlider) {
+				if (
+					(nextLoa && this._getRubricLevelDist(this._sortedLevels, rubricLevelEntity, nextRubric, this._reversed) < 0)
+					|| (prevLoa && this._getRubricLevelDist(this._sortedLevels, rubricLevelEntity, prevRubric, this._reversed) > 0)
+				) {
+					moveInvalid = true;
+				}
+			}
 
 			if (!moveInvalid && this._rubricLevelOverrides[loaLink] !== newLevel) {
 				// Update front-end JS overrides
