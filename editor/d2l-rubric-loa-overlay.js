@@ -644,9 +644,9 @@ class RubricLoaOverlay extends mixinBehaviors([
 		if (currentLevel !== newLevel) {
 			// Check if move is valid
 			const nextLoa = this._getNextLoaLevel(this._loaLevels, loaLevelEntity);
-            const prevLoa = this._getPrevLoaLevel(this._loaLevels, loaLevelEntity);
+			const prevLoa = this._getPrevLoaLevel(this._loaLevels, loaLevelEntity);
 
-            const nextRubric = this._getVisualRubricLevel(nextLoa, this._sortedLevels, this._rubricLevelOverrides);
+			const nextRubric = this._getVisualRubricLevel(nextLoa, this._sortedLevels, this._rubricLevelOverrides);
 			const prevRubric = this._getVisualRubricLevel(prevLoa, this._sortedLevels, this._rubricLevelOverrides);
 
 			let moveInvalid = (this._getSelfLink(loaLevelEntity) === this._getSelfLink(this._getFixedLoaLevel(this._loaLevels, this._reversed)));
