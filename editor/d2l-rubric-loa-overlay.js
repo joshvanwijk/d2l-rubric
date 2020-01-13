@@ -208,31 +208,52 @@ class RubricLoaOverlay extends mixinBehaviors([
                 #drag-capture-overlay:hover,
                 #motion-slider:hover {
                     cursor: grab;
-                }
+				}
+				
+				.screen-reader {
+					height: 1px;
+					left: -99999px;
+					overflow: hidden;
+					position: absolute;
+					width: 1px;
+				}
             </style>
 
-            <rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
+			<rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
             <d2l-resize-aware id="row-container">
                 <template is="dom-if" if="[[_hasLoaLevels(_loaMappingHref)]]">
                     <div class="gutter-left"></div>
-                    <div class="cell col-first" is-holistic$="[[isHolistic]]">
-                        [[_getLevelsLangTerm()]]
+                    <div class="cell col-first" is-holistic$="[[isHolistic]]" role="heading" aria-level="3">
+                        [[localize('loaOverlayHeading')]]
                     </div>
-                    <div id="row-data">
-                        <div id="motion-slider" class="slider hidden"></div>
-                        <template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
-                            <div class="cell loa-heading" style$="[[_getHeaderStyle(loaLevel, _loaLevels, _sortedLevels, _rubricLevelOverrides, _reversed)]]" is-holistic$="[[isHolistic]]">
-                                [[loaLevel.properties.name]]
+					<div id="row-data">
+						<div id="motion-slider" class="slider hidden"></div>
+						<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" index-as="loaIndex">
+							<div
+								class="cell loa-heading"
+								style$="[[_getHeaderStyle(loaLevel, _loaLevels, _sortedLevels, _rubricLevelOverrides, _reversed)]]"
+								is-holistic$="[[isHolistic]]"
+								aria-hidden="true"
+							>
+								[[loaLevel.properties.name]]
 							</div>
+							<template is="dom-if" if="[[!_reversed]]">
+								<div class="screen-reader">
+									[[_getLoaLevelScreenReaderText(loaLevel, _loaLevels, _sortedLevels, _rubricLevelOverrides, _reversed)]]
+								</div>
+							</template>
                             <div
                                 class="slider fixed-slider"
 								data-loa-level$="[[_getSelfLink(loaLevel)]]"
 								on-keyUp="_onSliderKeyUp"
-                                on-mouseDown="_onMouseDown"
+                                on-mouseDown$="[[_getSliderClickFunction(loaLevel, _loaLevels, _reversed)]]"
 								style$="[[_getSliderStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]"
-								tabindex="0"
+								tabindex$="[[_getSliderTabIndex(loaLevel, _loaLevels, _reversed)]]"
+								role="application"
+								aria-label$="[[_getLoaSliderScreenReaderText(loaLevel, _loaLevels, _reversed)]]"
+								aria-hidden$="[[_isSliderFixed(loaLevel, _loaLevels, _reversed)]]"
 							></div>
-							<div class="slider-focus" style$="[[_getSliderFocusStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]">
+							<div class="slider-focus" style$="[[_getSliderFocusStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]" aria-hidden="true">
 								<svg class="arrow arrow-left" viewBox="0 0 6 9" xmlns="http://www.w3.org/2000/svg" width="6" style$="[[_getSliderFocusArrowStyle(loaLevel)]]">
 									<polygon points="6,0 0,4.5 6,9" />
 								</svg>
@@ -240,6 +261,11 @@ class RubricLoaOverlay extends mixinBehaviors([
 									<polygon points="0,0 6,4.5 0,9" />
 								</svg>
 							</div>
+							<template is="dom-if" if="[[_reversed]]">
+								<div class="screen-reader">
+									[[_getLoaLevelScreenReaderText(loaLevel, _loaLevels, _sortedLevels, _rubricLevelOverrides, _reversed)]]
+								</div>
+							</template>
                         </template>
                     </div>
                     <div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]"></div>
@@ -560,19 +586,34 @@ class RubricLoaOverlay extends mixinBehaviors([
 			e.preventDefault();
 			e.stopPropagation();
 
+			if (this._sliderLock) {
+				return;
+			}
+
 			const loaLevel = this._resolveLoaLevel(this._loaLevels, e.target.getAttribute('data-loa-level'));
 			const currentRubric = this._getVisualRubricLevel(loaLevel, this._levels, this._rubricLevelOverrides);
 
-			if (e.key === 'ArrowLeft') {
-				const newRubricLevel = this._getPreviousSliderLevel(this._sortedLevels, currentRubric, this._reversed);
-				if (newRubricLevel !== false) {
-					this._updateRubricLevel(loaLevel, newRubricLevel, true);
-				}
-			} else {
-				const newRubricLevel = this._getNextSliderLevel(this._sortedLevels, currentRubric, this._reversed);
-				if (newRubricLevel !== false) {
-					this._updateRubricLevel(loaLevel, newRubricLevel, true);
-				}
+			const newRubricLevel = e.key === 'ArrowLeft'
+				? this._getPreviousSliderLevel(this._sortedLevels, currentRubric, this._reversed)
+				: this._getNextSliderLevel(this._sortedLevels, currentRubric, this._reversed);
+
+			if (newRubricLevel !== false) {
+				this._updateRubricLevel(loaLevel, newRubricLevel, true).then((() => {
+					// Give message of action to screen reader
+					let nextLevel;
+					if (this._reversed) {
+						nextLevel = this._getPrevLoaLevel(this._loaLevels, loaLevel);
+					} else {
+						nextLevel = this._getNextLoaLevel(this._loaLevels, loaLevel);
+					}
+					const announcement = [
+						this.localize('loaThresholdMovementNotif', 'direction', e.key === 'ArrowLeft' ? 'left' : 'right'),
+						this._getLoaLevelScreenReaderText(this._reversed ? nextLevel : loaLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed),
+						this._getLoaLevelScreenReaderText(this._reversed ? loaLevel : nextLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed)
+					].filter(str => str && str.length).join('. ') + '.';
+
+					this.fire('iron-announce', { text: announcement }, { bubbles: true });
+				}).bind(this));
 			}
 		}
 	}
@@ -681,7 +722,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 						upperBoundField.value = resolvedEntity ? resolvedEntity.properties.id : null;
 					}
 
-					this.performSirenAction(action, fields)
+					return this.performSirenAction(action, fields)
 						.catch(() => {
 							// Do nothing
 						}).finally((() => {
@@ -700,6 +741,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 				this._rubricLevelOverrides = overrides;
 			}
 		}
+
+		return Promise.resolve();
 	}
 
 	_onOverridesChanged(overrides) {
@@ -809,8 +852,63 @@ class RubricLoaOverlay extends mixinBehaviors([
 		return sorted;
 	}
 
-	_getLevelsLangTerm() {
-		return this.localize('loaOverlayHeading');
+	_getLoaLevelScreenReaderText(loaLevel, loaLevels, rubricLevels, rubricLevelOverrides, reversed) {
+		const levelMapping = this._getVisualLoaLevelMapping(loaLevels, rubricLevels, rubricLevelOverrides, reversed);
+
+		const associatedLevels = [];
+		const levelKeys = Object.keys(levelMapping);
+		if (!reversed) {
+			levelKeys.reverse();
+		}
+
+		levelKeys.forEach((rubricLevelLink => {
+			const mapping = levelMapping[rubricLevelLink];
+			if (mapping && mapping.loaLevel === this._getSelfLink(loaLevel)) {
+				associatedLevels.push(this._resolveRubricLevel(rubricLevels, rubricLevelLink).properties.name);
+			}
+		}).bind(this), []);
+
+		if (associatedLevels.length === 0) {
+			return '';
+		}
+
+		return this.localize(
+			'loaLevelLabel',
+			'loaLevelName', loaLevel.properties.name,
+			'rubricLevelCount', associatedLevels.length,
+			'rubricLevelNames', associatedLevels.join(', ')
+		);
+	}
+
+	_getLoaSliderScreenReaderText(loaLevel, loaLevels, reversed) {
+		let nextLevel;
+		if (reversed) {
+			nextLevel = this._getPrevLoaLevel(loaLevels, loaLevel);
+		} else {
+			nextLevel = this._getNextLoaLevel(loaLevels, loaLevel);
+		}
+
+		if (!nextLevel) {
+			return '';
+		}
+
+		return this.localize(
+			'loaSliderLabel',
+			'loaLevel1', (reversed ? nextLevel : loaLevel).properties.name,
+			'loaLevel2', (reversed ? loaLevel : nextLevel).properties.name
+		);
+	}
+
+	_getSliderClickFunction(loaLevel, loaLevels, reversed) {
+		return this._isSliderFixed(loaLevel, loaLevels, reversed) ? '' : '_onMouseDown';
+	}
+
+	_getSliderTabIndex(loaLevel, loaLevels, reversed) {
+		return this._isSliderFixed(loaLevel, loaLevels, reversed) ? -1 : 0;
+	}
+
+	_isSliderFixed(loaLevel, loaLevels, reversed) {
+		return this._getSelfLink(this._getFixedLoaLevel(loaLevels, reversed)) === this._getSelfLink(loaLevel);
 	}
 }
 
