@@ -31,6 +31,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'clearFeedback': 'Clear Feedback',
 		'clearOverride': 'Clear Override',
 		'closeDialog': 'Close',
+		'criteriaHeading': 'Criteria',
 		'criterionAdded': 'A new criterion has been added',
 		'criterionAriaLabel': 'Criterion {index, number} of {count, number}',
 		'criterionDeleted': '{name} criterion deleted',
@@ -73,7 +74,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'levelNameAndBulletPoint': '{levelName} \u2022',
 		'levelPoints': 'Level points',
 		'levelPrepended': 'A new level has been added before {name}',
+		'loaLevelLabel': 'Achievement level \'{loaLevelName}\' is mapped to rubric {rubricLevelCount, plural, one {level} other {levels}} {rubricLevelNames}',
 		'loaOverlayHeading': 'Achievement Levels',
+		'loaSliderLabel': 'Achievement threshold. Use left and right arrow keys to move the threshold between \'{loaLevel1}\' and \'{loaLevel2}\'',
+		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
 		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
 		'makeRubricAvailableHeader': 'Make rubric available to',
 		'moveCriterionDown': 'Move criterion {position} down',
@@ -114,6 +118,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'removeOverallLevel': 'Remove Overall Level {name}',
 		'reverseLevelOrder': 'Reverse Level Order',
 		'reverseLevelsSuccessful': 'The level order has been reversed',
+		'rubricLevelsHeading': 'Rubric Levels',
 		'rubricLoadingErrorAriaAlert': 'There was a problem loading your rubric. It cannot be displayed.',
 		'rubricLoadingErrorMessage': 'Sorry, we were unable to display the rubric.',
 		'rubricSavingErrorAriaAlert': 'There was a problem saving your rubric.',
@@ -140,8 +145,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistics',
 		'total': 'Total',
+		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'The rubric is out of a total score of {value} points.',
-		'totalScoreLabel': 'Rubric Total Score',
-		'totalMobile': 'Total Score'
+		'totalScoreLabel': 'Rubric Total Score'
 	}
 };
