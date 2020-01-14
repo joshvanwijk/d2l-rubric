@@ -101,5 +101,5 @@ config.langNames.forEach(langName => {
 		outputSorted[key] = outputJson[key];
 	});
 
-	fs.writeFileSync(destPath, JSON.stringify(outputJson, null, 4) + '\n');
+	fs.writeFileSync(destPath, JSON.stringify(outputSorted, null, 4) + '\n');
 });

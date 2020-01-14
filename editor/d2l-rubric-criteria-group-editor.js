@@ -66,6 +66,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				padding-right: var(--d2l-rubric-editor-start-gutter-width);
 				padding-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
+
+			.screen-reader {
+				height: 1px;
+				left: -99999px;
+				overflow: hidden;
+				position: absolute;
+				width: 1px;
+			}
 		</style>
 
 		<template is="dom-repeat" items="[[_alerts]]">
@@ -77,9 +85,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 		</template>
 
 		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
-			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
+			<h2 class="screen-reader">[[_getGroupHeadingText(_groupName, showGroupName)]]</h2>
+			<div class="criteria-group">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" on-d2l-siren-entity-changed="_notifyResize" updating-levels="{{updatingLevels}}">
+				<h3 class="screen-reader">[[localize('rubricLevelsHeading')]]</h3>
+				<d2l-rubric-levels-editor
+					href="[[_levelsHref]]"
+					token="[[token]]"
+					has-out-of="[[_hasOutOf(entity)]]"
+					is-holistic="[[isHolistic]]"
+					percentage-format-alternate="[[percentageFormatAlternate]]"
+					on-d2l-siren-entity-changed="_notifyResize"
+					updating-levels="{{updatingLevels}}"
+				>
 					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
@@ -102,6 +120,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				also stretches to utilize all the available space, particularly when we are shrinking
 				the size of the editor
 				-->
+				<h3 class="screen-reader">[[localize('criteriaHeading')]]</h3>
 				<div class="stretch-child">
 					<d2l-rubric-criteria-editor
 						href="[[_criteriaCollectionHref]]"
@@ -262,6 +281,10 @@ Polymer({
 
 	_canEditGroupName: function(entity) {
 		return entity && entity.hasActionByName('update');
+	},
+
+	_getGroupHeadingText: function(groupName, showGroupName) {
+		return this.localize('groupRegion', 'name', showGroupName ? groupName : '');
 	},
 
 	_nameBlurHandler: function(e) {

@@ -20,6 +20,7 @@
     "clearFeedback": "Ryd feedback",
     "clearOverride": "Ryd tilsidesættelse",
     "closeDialog": "Luk",
+    "criteriaHeading": "Criteria",
     "criterionAdded": "Et nyt kriterium blev tilføjet",
     "criterionAriaLabel": "Kriterium {index, number} af {count, number}",
     "criterionDeleted": "{name} kriterium slettet",
@@ -62,7 +63,10 @@
     "levelNameAndBulletPoint": "{levelName} •",
     "levelPoints": "Niveaupunkter",
     "levelPrepended": "Et nyt niveau blev tilføjet før {name}",
+    "loaLevelLabel": "Achievement level \"{loaLevelName}\" is mapped to rubric {rubricLevelCount, plural, one {level} other {levels}} {rubricLevelNames}",
     "loaOverlayHeading": "Achievement Levels",
+    "loaSliderLabel": "Achievement threshold. Use left and right arrow keys to move the threshold between \"{loaLevel1}\" and \"{loaLevel2}\"",
+    "loaThresholdMovementNotif": "Threshold moved {direction, select, left {left} right {right}}",
     "lockedAlertText": "Denne rubrik kan ikke redigeres, da den allerede er blevet brugt til at vurdere elevens arbejde",
     "makeRubricAvailableHeader": "Make rubric available to",
     "moveCriterionDown": "Flyt kriterium {position} ned",
@@ -103,6 +107,7 @@
     "removeOverallLevel": "Fjern overordnet niveau {name}",
     "reverseLevelOrder": "Omvendt niveaurækkefølge",
     "reverseLevelsSuccessful": "Niveaurækkefølgen blev vendt om",
+    "rubricLevelsHeading": "Rubric Levels",
     "rubricLoadingErrorAriaAlert": "Der opstod et problem med indlæsning af din rubrik. Den kan ikke vises.",
     "rubricLoadingErrorMessage": "Vi kunne desværre ikke vise rubrikken.",
     "rubricSavingErrorAriaAlert": "Der opstod et problem med at gemme din rubrik.",
@@ -129,7 +134,7 @@
     "shareRubricSaveFailed": "Changing org unit availability failed",
     "statistics": "Statistik",
     "total": "Samlet",
+    "totalMobile": "Total Score",
     "totalScoreAriaLabel": "Rubrikken er ud fra en samlet score på {value} point.",
-    "totalScoreLabel": "Rubric Total Score",
-    "totalMobile": "Total Score"
+    "totalScoreLabel": "Rubric Total Score"
 }
