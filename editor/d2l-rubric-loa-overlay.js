@@ -246,7 +246,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                                 class="slider fixed-slider"
 								data-loa-level$="[[_getSelfLink(loaLevel)]]"
 								on-keyUp="_onSliderKeyUp"
-                                on-mouseDown$="[[_getSliderClickFunction(loaLevel, _loaLevels, _reversed)]]"
+                                on-mouseDown="_onMouseDown"
 								style$="[[_getSliderStyle(loaLevel, _loaLevels, _sortedLevels, _headingsWidth, _rubricLevelOverrides, _reversed)]]"
 								tabindex$="[[_getSliderTabIndex(loaLevel, _loaLevels, _reversed)]]"
 								role="application"
@@ -897,10 +897,6 @@ class RubricLoaOverlay extends mixinBehaviors([
 			'loaLevel1', (reversed ? nextLevel : loaLevel).properties.name,
 			'loaLevel2', (reversed ? loaLevel : nextLevel).properties.name
 		);
-	}
-
-	_getSliderClickFunction(loaLevel, loaLevels, reversed) {
-		return this._isSliderFixed(loaLevel, loaLevels, reversed) ? '' : '_onMouseDown';
 	}
 
 	_getSliderTabIndex(loaLevel, loaLevels, reversed) {
