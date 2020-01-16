@@ -40,7 +40,7 @@ suite('<d2l-rubric-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
-			test('saves name', function(done) {
+			test.skip('saves name', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
@@ -132,7 +132,7 @@ suite('<d2l-rubric-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
-			test('saves description', function(done) {
+			test.skip('saves description', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
@@ -221,7 +221,7 @@ suite('<d2l-rubric-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
-			test('saves visibility change', function(done) {
+			test.skip('saves visibility change', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
@@ -286,7 +286,7 @@ suite('<d2l-rubric-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
-			test('saves association change', function(done) {
+			test.skip('saves association change', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: true,
