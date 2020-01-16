@@ -64,6 +64,7 @@
     "levelPoints": "Pointage du niveau",
     "levelPrepended": "Un nouveau niveau a été ajouté devant {name}",
     "loaLevelLabel": "Le niveau de réussite \"{loaLevelName}\" est mappé à la rubrique {rubricLevelCount, plural, one {niveau} other {niveaux}} {rubricLevelNames}",
+    "loaLevelUpdatedLabel": "Le niveau de réussite \"{loaLevelName}\" est désormais mappé à la rubrique {rubricLevelCount, plural, one {niveau} other {niveaux}} {rubricLevelNames}",
     "loaOverlayHeading": "Niveaux de réussite",
     "loaSliderLabel": "Seuil de réalisation. Utilisez les touches fléchées gauche et droite pour déplacer le seuil entre \"{loaLevel1}\" et \"{loaLevel2}\"",
     "loaThresholdMovementNotif": "Seuil déplacé vers la {direction, select, left {gauche} right {droite}}",

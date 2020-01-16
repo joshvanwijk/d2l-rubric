@@ -75,6 +75,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'levelPoints': 'Level points',
 		'levelPrepended': 'A new level has been added before {name}',
 		'loaLevelLabel': 'Achievement level \'{loaLevelName}\' is mapped to rubric {rubricLevelCount, plural, one {level} other {levels}} {rubricLevelNames}',
+		'loaLevelUpdatedLabel': 'Achievement level \'{loaLevelName}\' is now mapped to rubric {rubricLevelCount, plural, one {level} other {levels}} {rubricLevelNames}',
 		'loaOverlayHeading': 'Achievement Levels',
 		'loaSliderLabel': 'Achievement threshold. Use left and right arrow keys to move the threshold between \'{loaLevel1}\' and \'{loaLevel2}\'',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
