@@ -608,8 +608,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 					}
 					const announcement = [
 						this.localize('loaThresholdMovementNotif', 'direction', e.key === 'ArrowLeft' ? 'left' : 'right'),
-						this._getLoaLevelScreenReaderText(this._reversed ? nextLevel : loaLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed),
-						this._getLoaLevelScreenReaderText(this._reversed ? loaLevel : nextLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed)
+						this._getLoaLevelScreenReaderText(this._reversed ? nextLevel : loaLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed, true),
+						this._getLoaLevelScreenReaderText(this._reversed ? loaLevel : nextLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed, true)
 					].filter(str => str && str.length).join('. ') + '.';
 
 					this.fire('iron-announce', { text: announcement }, { bubbles: true });
@@ -852,7 +852,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 		return sorted;
 	}
 
-	_getLoaLevelScreenReaderText(loaLevel, loaLevels, rubricLevels, rubricLevelOverrides, reversed) {
+	_getLoaLevelScreenReaderText(loaLevel, loaLevels, rubricLevels, rubricLevelOverrides, reversed, updated) {
 		const levelMapping = this._getVisualLoaLevelMapping(loaLevels, rubricLevels, rubricLevelOverrides, reversed);
 
 		const associatedLevels = [];
@@ -873,7 +873,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 		}
 
 		return this.localize(
-			'loaLevelLabel',
+			updated ? 'loaLevelUpdatedLabel' : 'loaLevelLabel',
 			'loaLevelName', loaLevel.properties.name,
 			'rubricLevelCount', associatedLevels.length,
 			'rubricLevelNames', associatedLevels.join(', ')
