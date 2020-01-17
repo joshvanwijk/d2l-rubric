@@ -145,8 +145,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'loaOverlayHeading': 'Achievement Levels',
 		'rubricLevelsHeading': 'Rubric Levels',
 		'criteriaHeading': 'Criteria',
-		'loaLevelLabel': 'Achievement level \'{loaLevelName}\' is mapped to rubric {rubricLevelCount, plural, one {level} other {levels}} {rubricLevelNames}',
-		'loaLevelUpdatedLabel': 'Achievement level \'{loaLevelName}\' is now mapped to rubric {rubricLevelCount, plural, one {level} other {levels}} {rubricLevelNames}',
+		'loaLevelLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is mapped to rubric level {rubricLevelName}',
+		'loaLevelLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
+		'loaLevelUpdatedLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric level {rubricLevelName}',
+		'loaLevelUpdatedLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
 		'loaSliderLabel': 'Achievement threshold. Use left and right arrow keys to move the threshold between \'{loaLevel1}\' and \'{loaLevel2}\'',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}'
 	}
