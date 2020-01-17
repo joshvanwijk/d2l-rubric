@@ -872,11 +872,21 @@ class RubricLoaOverlay extends mixinBehaviors([
 			return '';
 		}
 
+		if (associatedLevels.length > 1) {
+			const lastRubricLevel = associatedLevels.pop();
+
+			return this.localize(
+				updated ? 'loaLevelUpdatedLabelMultiRubric' : 'loaLevelLabelMultiRubric',
+				'loaLevelName', loaLevel.properties.name,
+				'otherRubricLevelNames', associatedLevels.join(', '),
+				'lastRubricLevelName', lastRubricLevel
+			);
+		}
+
 		return this.localize(
-			updated ? 'loaLevelUpdatedLabel' : 'loaLevelLabel',
+			updated ? 'loaLevelUpdatedLabelSingleRubric' : 'loaLevelLabelSingleRubric',
 			'loaLevelName', loaLevel.properties.name,
-			'rubricLevelCount', associatedLevels.length,
-			'rubricLevelNames', associatedLevels.join(', ')
+			'rubricLevelName', associatedLevels[0]
 		);
 	}
 
