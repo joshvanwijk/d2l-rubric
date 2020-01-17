@@ -109,7 +109,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'points': '{number} {number, plural, one {ponto} other {pontos}}',
 		'pointsAbbreviation': 'pts',
 		'pointsAreRequired': 'O valor do ponto é obrigatório',
-		'pointsMinimum': '{number} {number, plural, one {{ponto} other {pontos}} mínimo',
+		'pointsMinimum': '{number} {number, plural, one {ponto} other {pontos}} mínimo',
 		'pointsSaveFailed': 'Falha ao salvar os pontos',
 		'preview': 'Visualizar',
 		'rangeStartInvalid': 'O valor do início do intervalo é inválido',
