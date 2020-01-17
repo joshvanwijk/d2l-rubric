@@ -15,13 +15,14 @@ import './d2l-rubric-overall-score.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './localize-behavior.js';
-import './assessment-result-behavior.js';
+import './assessment-behavior.js';
 import './d2l-rubric-entity-behavior.js';
 import 'd2l-alert/d2l-alert.js';
 import 's-html/s-html.js';
 import 'd2l-save-status/d2l-save-status.js';
 import 'd2l-button/d2l-button-subtle.js';
 import './rubric-siren-entity.js';
+import './d2l-rubric-assessment-cache-primer.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
@@ -194,12 +195,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 		</style>
 		<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+		<d2l-rubric-assessment-cache-primer href="[[assessmentHref]]" token="[[token]]" primed="{{_cachePrimed}}"></d2l-rubric-assessment-cache-primer>
 		<d2l-rubric-adapter
 			rubric-name="[[_getRubricName(entity)]]"
 			assessment-entity="[[assessmentEntity]]"
 			has-alerts="[[_hasAlerts]]"
 			compact="[[compact]]"
-			score-text="[[_localizeCompactScoreText(entity, _score)]]">
+			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]">
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 					[[item.alertMessage]]
@@ -214,7 +216,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
 				<d2l-rubric-criteria-groups
 					href="[[_getHref(_criteriaGroups)]]"
-					assessment-href="[[assessmentHref]]"
+					assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
 					read-only="[[readOnly]]"
@@ -235,8 +237,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										class="clear-override-button"
 										icon="d2l-tier1:close-small"
 										text="[[localize('clearOverride')]]"
-										on-click="clearTotalScoreOverride"
-										hidden$="[[!_showClearTotalScoreButton(assessmentEntity, readOnly, compact)]]">
+										on-click="_clearTotalScoreOverride"
+										hidden$="[[!_showClearTotalScoreButton(_canClearTotalScoreOverride, readOnly, compact)]]">
 									</d2l-button-subtle>
 									<d2l-rubric-editable-score
 										id="total-score-inner"
@@ -244,7 +246,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										token="[[token]]"
 										read-only="[[readOnly]]"
 										editing-score="{{editingScore}}"
-										total-score="[[_score]]"
+										total-score="[[_totalScore]]"
 										entity="[[entity]]">
 									</d2l-rubric-editable-score>
 								</div>
@@ -259,16 +261,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				<d2l-rubric-overall-score
 					read-only="[[readOnly]]"
 					href="[[_getOverallLevels(entity)]]"
-					assessment-href="[[assessmentHref]]"
+					overall-level-assessment-href="[[_getOverallLevelAssessmentHref(assessmentEntity,_cachePrimed)]]"
 					token="[[token]]"
 					has-out-of="[[_hasOutOf(entity)]]"
 					compact="[[compact]]">
 				</d2l-rubric-overall-score>
 			</template>
-			<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
+			<div hidden$="[[!_hasOverallFeedback(assessmentEntity)]]">
 				<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
 				<img class="quotation-mark-icon" src="[[_quoteImage]]" height="22" width="22">
-				<s-html class="overall-feedback-text" html$="[[_feedback]]"></s-html>
+				<s-html class="overall-feedback-text" html$="[[_getOverallFeedback(assessmentEntity)]]"></s-html>
 			</div>
 		</d2l-rubric-adapter>
 	</template>
@@ -305,17 +307,9 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		_score: {
-			type: String,
-			value: null
-		},
 		editingScore: {
 			type: Number,
 			value: -1
-		},
-		_feedback: {
-			type: String,
-			value: null
 		},
 		assessmentHref: {
 			type: String,
@@ -323,10 +317,6 @@ Polymer({
 		},
 		rubricType: {
 			type: String,
-			value: null
-		},
-		assessmentEntity: {
-			type: Object,
 			value: null
 		},
 		_telemetryData: {
@@ -342,6 +332,22 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
+		_canOverrideTotalScore: {
+			type: Boolean,
+			computed: '_getCanOverrideTotalScore(assessmentEntity)'
+		},
+		_canClearTotalScoreOverride: {
+			type: Boolean,
+			computed: '_getCanClearTotalScoreOverride(assessmentEntity)'
+		},
+		_totalScore: {
+			type: Number,
+			computed: '_getTotalScore(assessmentEntity)'
+		},
+		_cachePrimed: {
+			type: Boolean,
+			value: false
+		},
 		_isMobile: Boolean,
 		_quoteImage: {
 			type: String,
@@ -353,12 +359,11 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior
 	],
 
 	observers: [
-		'_onEntityChanged(entity)',
-		'_onAssessmentEntityChanged(assessmentEntity)'
+		'_onEntityChanged(entity)'
 	],
 
 	listeners: {
@@ -397,14 +402,6 @@ Polymer({
 			},
 			'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 		})[e.type]();
-	},
-
-	_onAssessmentEntityChanged: function(assessmentEntity) {
-		if (assessmentEntity) {
-			this._score = this._getScore(assessmentEntity);
-			var feedback = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallFeedback);
-			this._feedback = feedback && feedback.properties && feedback.properties.html || '';
-		}
 	},
 
 	_onAccordionCollapseExpand: function(e) {
@@ -489,12 +486,12 @@ Polymer({
 		return !showContent || hasAlerts;
 	},
 
-	_hasOverallFeedback: function(feedback) {
-		return feedback !== null && feedback !== '';
+	_hasOverallFeedback: function(entity) {
+		return !!this.AssessmentHelper.getFeedbackText(entity);
 	},
 
-	_canEditScore: function(assessmentEntity, readOnly, compact) {
-		return !readOnly && !compact && this.canOverrideTotal(assessmentEntity);
+	_getOverallFeedback: function(entity) {
+		return this.AssessmentHelper.getFeedbackHtml(entity);
 	},
 
 	_handleError: function(e) {
@@ -511,17 +508,8 @@ Polymer({
 		window.location.reload();
 	},
 
-	_showClearTotalScoreButton: function(assessmentEntity, readOnly, compact) {
-		if (readOnly) {
-			return false;
-		}
-		if (!assessmentEntity) {
-			return false;
-		}
-		if (!this._canEditScore(assessmentEntity, readOnly, compact)) {
-			return false;
-		}
-		return this.isTotalScoreOverridden();
+	_showClearTotalScoreButton: function(canClearOverride, readOnly) {
+		return !readOnly && canClearOverride;
 	},
 
 	_updateOutcomesTitleText: function() {
@@ -547,5 +535,35 @@ Polymer({
 
 	_computeCompact: function(forceCompact, _isMobile) {
 		return forceCompact || _isMobile;
+	},
+
+	_getCanOverrideTotalScore: function(entity) {
+		return this.AssessmentHelper.canOverrideTotalScore(entity);
+	},
+
+	_getCanClearTotalScoreOverride: function(entity) {
+		return this.AssessmentHelper.canClearTotalScoreOverride(entity);
+	},
+
+	_getTotalScore: function(entity) {
+		return this.AssessmentHelper.getTotalScore(entity);
+	},
+
+	_clearTotalScoreOverride: function() {
+		this.AssessmentHelper.clearTotalScoreOverrideAsync(() => this.assessmentEntity);
+	},
+
+	_getOverallLevelAssessmentHref: function(entity, cachePrimed) {
+		if (!entity || !cachePrimed) {
+			return null;
+		}
+		const overallLevelAssessmentLink = entity.getLinkByRel(
+			'https://assessments.api.brightspace.com/rels/assessment-overall-level'
+		);
+		return overallLevelAssessmentLink && overallLevelAssessmentLink.href;
+	},
+
+	_waitForCachePrimer: function(href, isPrimed) {
+		return isPrimed ? href : null;
 	}
 });

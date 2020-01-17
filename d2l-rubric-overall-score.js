@@ -10,6 +10,7 @@ import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import './assessment-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import './d2l-rubric-competencies-icon.js';
@@ -156,7 +157,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			}
 		</style>
 
-		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[overallLevelAssessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
 		<template is="dom-if" if="[[_showOverallScore(compact, _overallLevel)]]">
 			<h3>
 				<span>[[localize('overallScore')]]</span>
@@ -175,14 +176,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 						<div
 							class="overall-level"
 							data-achieved$="[[_isAchieved(level, _version)]]"
-							data-clickable$="[[_isClickable(level, _version, compact)]]"
+							data-clickable$="[[_isClickable(level, readOnly, _version)]]"
 							on-click="_levelClicked"
 							on-keypress="_handleKeypress"
 							tabindex$="[[_handleTabIndex()]]">
 							<h4 class="content-container">
 								<div class="info-container">
-									<span>[[level.properties.name]]</span>
-									<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
+									<span>[[_getLevelName(level, _version)]]</span>
 									<span class="overall-level-text">
 										<span>[[_localizePoints(level)]]</span>
 										<template is="dom-if" if="[[!compact]]">
@@ -226,6 +226,7 @@ Polymer({
 		readOnly: Boolean,
 		_levels: Array,
 		_competencies: Array,
+		overallLevelAssessmentHref: String,
 		_assessmentEntity: {
 			type: Object,
 			value: null
@@ -252,7 +253,8 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior
+		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior
 	],
 
 	observers: [
@@ -265,9 +267,12 @@ Polymer({
 		}
 		this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
 		this._version = (this._version || 0) + 1;
-		afterNextRender(this, function() {
-			this.$$('d2l-scroll-wrapper').checkScrollbar();
-		}.bind(this));
+		afterNextRender(this, () => {
+			const scrollWrapper = this.shadowRoot.querySelector('d2l-scroll-wrapper');
+			if (scrollWrapper) {
+				scrollWrapper.checkScrollbar();
+			}
+		});
 	},
 
 	_onAssessmentEntityChanged: function(assessmentEntity) {
@@ -278,24 +283,11 @@ Polymer({
 			return;
 		}
 
-		var selector = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallLevelSelector);
-		if (!selector) {
-			return;
-		}
-
-		if (selector.properties && selector.properties.competencies) {
-			this._competencies = selector.properties.competencies;
-		}
-
-		selector.entities.forEach(function(assessmentLevel) {
-			if (assessmentLevel.hasClass(this.HypermediaClasses.rubrics.selected)) {
-				this._overallLevel = assessmentLevel.properties.name;
-			}
-			var rubricLevelLink = assessmentLevel.getLinkByRel(this.HypermediaRels.Rubrics.overallLevel);
-			if (rubricLevelLink && rubricLevelLink.href) {
-				this._assessmentMap[rubricLevelLink.href] = assessmentLevel;
-			}
-		}.bind(this));
+		this._competencies = assessmentEntity.properties.competencies || [];
+		assessmentEntity.getSubEntitiesByClass('assessment-overall-level').forEach(level => {
+			const rubricOverallLevelLink = level.getLinkByRel(this.HypermediaRels.Rubrics.overallLevel);
+			this._assessmentMap[rubricOverallLevelLink.href] = level;
+		});
 		this._version = (this._version || 0) + 1;
 	},
 
@@ -304,8 +296,8 @@ Polymer({
 	},
 
 	_isAchieved: function(levelEntity) {
-		var assessmentLevel = this._getAssessmentLevel(levelEntity);
-		return assessmentLevel && assessmentLevel.hasClass(this.HypermediaClasses.rubrics.selected);
+		const assessmentLevel = this._getAssessmentLevel(levelEntity);
+		return this.OverallLevelAssessmentHelper.isSelected(assessmentLevel);
 	},
 
 	_showCompetencies: function(competencies, readOnly) {
@@ -329,7 +321,7 @@ Polymer({
 	},
 
 	_scoreVisible: function(levelEntity) {
-		if (this.readOnly && this.assessmentHref) {
+		if (this.readOnly && this.overallLevelAssessmentHref) {
 			// Minimum points is not shown in graded view
 			return false;
 		}
@@ -338,55 +330,26 @@ Polymer({
 	},
 
 	_showClearOverrideButton: function(levelEntity) {
-		// clear override button should not show up for text-only rubrics
-		if (!this.hasOutOf) {
-			return false;
-		}
-		var action = this._getOnClickAction(levelEntity);
-		return action && action.name === 'remove-overall-level-override';
+		const levelAssessment = this._getAssessmentLevel(levelEntity);
+		return this.OverallLevelAssessmentHelper.canClearOverride(levelAssessment);
 	},
 
-	_getOnClickAction: function(levelEntity) {
-		if (this.readOnly || !this._assessmentEntity) {
-			return null;
-		}
-
-		var assessmentLevelEntity = this._getAssessmentLevel(levelEntity);
-		if (!assessmentLevelEntity) {
-			return null;
-		}
-
-		return (
-			assessmentLevelEntity.getActionByName('select-overall-level') ||
-			assessmentLevelEntity.getActionByName('remove-overall-level-override')
-		);
-	},
-
-	_isClickable: function(levelEntity, _version, compact) {
-		return !compact && !!this._getOnClickAction(levelEntity);
+	_isClickable: function(levelEntity, readOnly) {
+		const levelAssessment = this._getAssessmentLevel(levelEntity);
+		return !readOnly && this.OverallLevelAssessmentHelper.canSelectOrClear(levelAssessment);
 	},
 
 	_levelClicked: function(event) {
-		var levelEntity = event.model.level;
-		if (!levelEntity) {
+		if (this.readOnly) {
 			return;
 		}
-
-		window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(
-			function() {
-				// Gets the most up-to-date version of the action
-				var action = this._getOnClickAction(levelEntity);
-				if (!action) {
-					return;
-				}
-
-				return this.performSirenAction(action);
-			}.bind(this)
-		).catch(console.error); // eslint-disable-line no-console
+		this.OverallLevelAssessmentHelper.selectOrClearAsync(
+			() => this._getAssessmentLevel(event.model.get('level'))
+		);
 	},
 
 	_handleKeypress: function(event) {
-		if (event.keyCode === 13) {
+		if (event.keyCode === 13 && !this.readOnly) {
 			event.preventDefault();
 			this._levelClicked(event);
 		}
@@ -397,7 +360,7 @@ Polymer({
 	},
 
 	_handleTabIndex: function() {
-		if (this.readOnly || !this.assessmentHref) {
+		if (this.readOnly || !this.overallLevelAssessmentHref) {
 			return undefined;
 		}
 		return 0;
@@ -405,5 +368,13 @@ Polymer({
 
 	_showOverallScore: function(compact, overallLevel) {
 		return !compact || !!overallLevel;
+	},
+
+	_getLevelName: function(level) {
+		let name = level.properties.name || '';
+		if (this._showClearOverrideButton(level)) {
+			name += ' *';
+		}
+		return name;
 	}
 });

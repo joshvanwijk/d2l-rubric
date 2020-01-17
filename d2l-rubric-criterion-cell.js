@@ -6,9 +6,8 @@ import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import './d2l-rubric-entity-behavior.js';
 import 's-html/s-html.js';
 import 'd2l-icons/d2l-icon.js';
-import './rubric-siren-entity.js';
-import './assessment-result-behavior.js';
 import 'd2l-colors/d2l-colors.js';
+import './assessment-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -59,13 +58,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-cell">
 				min-width: 80px;
 			}
 		</style>
-		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div class$="[[_getCellClassName(entity)]]" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden="[[!_hasCustomPoints(entity)]]">
 				[[_localizeCustomPoints(entity)]]
 			</div>
 			<s-html class="criterion-description-richtext" html="[[_getDescription(entity)]]"></s-html>
-			<div class$="[[_getCheckIconClass(entity, assessmentResult)]]" hidden="[[!_showSelectedIcon(entity, assessmentResult)]]">
+			<div class$="[[_getCheckIconClass(entity, cellAssessment)]]" hidden="[[!_showSelectedIcon(entity, cellAssessment)]]">
 				<d2l-icon class="tier1-check" icon="d2l-tier1:check"></d2l-icon>
 				<d2l-icon class="tier2-check" icon="d2l-tier2:check"></d2l-icon>
 			</div>
@@ -80,13 +78,14 @@ Polymer({
 	is: 'd2l-rubric-criterion-cell',
 
 	properties: {
-		assessmentHref: String
+		assessmentHref: String,
+		cellAssessment: Object
 	},
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior
 	],
 
@@ -125,18 +124,18 @@ Polymer({
 		}
 	},
 
-	_showSelectedIcon: function(entity, assessmentResult) {
-		return this.href && assessmentResult && assessmentResult[this.href];
+	_showSelectedIcon: function(entity, cellAssessment) {
+		return this.href && this.CriterionCellAssessmentHelper.isSelected(cellAssessment);
 	},
 
-	_getCheckIconClass: function(entity, assessmentResult) {
+	_getCheckIconClass: function(entity, cellAssessment) {
 		var className = 'check-icon';
-		if (!entity || !assessmentResult) {
+		if (!entity || !cellAssessment) {
 			return className;
 		}
 
 		var descriptionText = this._getDescription(entity);
-		var hasDescription = this.href && assessmentResult[this.href] && descriptionText !== '';
+		var hasDescription = this.href && this.CriterionCellAssessmentHelper.isSelected(cellAssessment) && descriptionText !== '';
 		var hasCustomPoints = this._hasCustomPoints(entity);
 
 		if (hasDescription || hasCustomPoints) {

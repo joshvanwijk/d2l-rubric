@@ -3,7 +3,7 @@ import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import './assessment-result-behavior.js';
+import './assessment-behavior.js';
 import './localize-behavior.js';
 import './d2l-rubric-entity-behavior.js';
 import 'd2l-icons/d2l-icon.js';
@@ -162,13 +162,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				display: none !important;
 			}
 		</style>
-		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[assessmentCriterionHref]]" token="[[token]]" entity="{{assessmentCriterionEntity}}"></rubric-siren-entity>
 		<div class="levels-container">
 			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]">
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 						id="level-tab[[index]]"
-						class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]"
+						class$="[[_getLevelClassName(index, selected, criterionCells, cellAssessmentMap)]]"
 						role="tab"
 						tabindex="0"
 						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]"
@@ -178,10 +178,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 						on-track="_handleTrack"
 						aria-selected$="[[_isSelected(index, selected)]]"
 						aria-controls$="level-description-panel[[index]]"
-						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]">
+						aria-label$="[[_getLevelLabelName(item, criterionCells, cellAssessmentMap)]]">
 						<div class="level-tab-focus">
 							<d2l-icon
-								hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"
+								hidden$="[[!_isAssessedLevel(index, criterionCells, cellAssessmentMap)]]"
 								class="check-icon"
 								icon="d2l-tier1:check">
 							</d2l-icon>
@@ -199,13 +199,6 @@ Polymer({
 	is: 'd2l-rubric-levels-mobile',
 
 	properties: {
-		/**
-		 * The total number of levels
-		 */
-		total: {
-			type: Number,
-			notify: true
-		},
 
 		/**
 		 * The selected level
@@ -232,15 +225,9 @@ Polymer({
 			value: null
 		},
 
-		assessmentHref: {
-			type: String,
-			value: null
-		},
-
-		assessedLevelHref:{
-			type: String,
-			value:null
-		},
+		assessmentCriterionHref: String,
+		assessmentCriterionEntity: Object,
+		cellAssessmentMap: Object,
 
 		readOnly: {
 			type: Boolean
@@ -277,7 +264,7 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior
 	],
 
 	observers: [
@@ -295,7 +282,9 @@ Polymer({
 			case this._keyCodes.ENTER:
 				this.selected = e.currentTarget.dataIndex;
 				if (!this.readOnly) {
-					this.assessCriterionCell(e.currentTarget.dataset.cellHref);
+					this.CriterionCellAssessmentHelper.selectAsync(
+						() => this.cellAssessmentMap[e.currentTarget.dataset.cellHref]
+					);
 				}
 				break;
 			case this._keyCodes.LEFT:
@@ -323,7 +312,7 @@ Polymer({
 	},
 
 	_focusNextLevel: function(e) {
-		if (e.currentTarget.dataIndex !== this.total - 1) {
+		if (this.levelEntities && event.currentTarget.dataIndex !== this.levelEntities.length - 1) {
 			e.currentTarget.nextSibling.focus();
 			e.preventDefault();
 		}
@@ -339,16 +328,15 @@ Polymer({
 		if (!entity) {
 			return;
 		}
-		this.total = entity.properties.total;
 		this.levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 	},
 
-	_getLevelClassName: function(index, selected, level, assessedLevelHref) {
+	_getLevelClassName: function(index, selected, criterionCells, cellAssessmentMap) {
 		var className = 'level';
 		if (this._isSelected(index, selected)) {
 			className += ' selected';
 		}
-		if (this._isAssessedLevel(level, assessedLevelHref)) {
+		if (criterionCells && this._isAssessedLevel(index, criterionCells[index], cellAssessmentMap)) {
 			className += ' assessed';
 		}
 
@@ -370,25 +358,33 @@ Polymer({
 		return !!score || score === 0;
 	},
 
-	_isAssessedLevel: function(levelEntity, assessedLevelHref) {
-		if (this.getSelfLink(levelEntity) === assessedLevelHref) {
-			return true;
+	_isAssessedLevel: function(index, criterionCells, cellAssessmentMap) {
+		if (!criterionCells || !criterionCells[index] || !cellAssessmentMap) {
+			return false;
 		}
-		return false;
+
+		const rubricCellHref = this._getCriterionCellHref(criterionCells, index);
+		if (!rubricCellHref) {
+			return false;
+		}
+		return this.CriterionCellAssessmentHelper.isSelected(cellAssessmentMap[rubricCellHref]);
 	},
 
 	getSelfLink: function(entity) {
 		return entity && (entity.getLinkByRel('self') || {}).href || '';
 	},
 
-	_getLevelLabelName: function(item, assessedLevelHref) {
-		if (this._isAssessedLevel(item, assessedLevelHref)) {
+	_getLevelLabelName: function(item, criterionCells, cellAssessmentMap) {
+		if (this._isAssessedLevel(item, criterionCells, cellAssessmentMap)) {
 			return item.properties.name;
 		}
 	},
 
 	_getCriterionCellHref: function(criterionCells, index) {
-		return this.getSelfLink(criterionCells[index]);
+		if (!criterionCells[index]) {
+			return null;
+		}
+		return this._getSelfLink(criterionCells[index]);
 	},
 
 	_handleClick: function(evt) {
@@ -400,16 +396,19 @@ Polymer({
 		if (this.readOnly) {
 			return;
 		}
-		this.assessCriterionCell(evt.currentTarget.dataset.cellHref);
+
+		this.CriterionCellAssessmentHelper.selectAsync(
+			() => this.cellAssessmentMap[evt.currentTarget.dataset.cellHref]
+		);
 	},
 
-	_canEditScore: function(criterionHref) {
-		return !this.readOnly && this.canOverrideScore(criterionHref);
+	_canEditScore: function(assessmentCriterionEntity) {
+		return !this.readOnly && this.CriterionAssessmentHelper.canUpdateAssessment(assessmentCriterionEntity);
 	},
 
-	_getScoreWrapperClassName: function(criterionHref, editingScore, scoreInvalid) {
+	_getScoreWrapperClassName: function(assessmentCriterionEntity, editingScore, scoreInvalid) {
 		var className = 'score-wrapper';
-		if (this._canEditScore(criterionHref)) {
+		if (this._canEditScore(assessmentCriterionEntity)) {
 			className += ' assessable';
 		}
 		if ((!editingScore || editingScore === -1) && !scoreInvalid) {

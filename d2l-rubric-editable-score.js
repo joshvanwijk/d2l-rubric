@@ -1,6 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import './localize-behavior.js';
-import './assessment-result-behavior.js';
+import './assessment-behavior.js';
 import './editor/d2l-rubric-error-handling-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -145,6 +145,7 @@ Polymer({
 			type: String,
 			value: null
 		},
+		assessmentEntity: Object,
 		token: String,
 
 		/* For desktop criteria, this will be the criterion number.
@@ -212,12 +213,12 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
 	observers: [
-		'_onAssessmentResultChanged(entity, assessmentResult)',
+		'_onAssessmentResultChanged(entity, assessmentEntity, criterionHref)',
 		'_totalScoreChanged(totalScore, entity)',
 		'_editingState(entity, _isEditingScore)',
 		'_updateAssessable(readOnly, assessmentHref)'
@@ -254,22 +255,22 @@ Polymer({
 			: this.removeAttribute('tabindex');
 	},
 
-	_onAssessmentResultChanged: function(entity, assessmentResult) {
-		if (!entity || !assessmentResult) {
+	_onAssessmentResultChanged: function(entity, assessmentEntity, criterionHref) {
+		if (!entity || !assessmentEntity) {
 			return;
 		}
 		if (!this.scoreInvalid) {
-			this._updateScore(entity, assessmentResult, this.totalScore);
+			this._updateScore(entity, assessmentEntity, this.totalScore, !!criterionHref);
 		}
 
-		if (this.totalScore) {
-			this.scoreOverridden = this.isTotalScoreOverridden();
+		if (this.criterionHref) {
+			this.scoreOverridden = assessmentEntity.hasClass('overridden');
 			if (!this._isStaticView() && !this._isEditingScore) {
 				this.overriddenStyling = this.scoreOverridden;
 			}
 			return;
 		}
-		this.scoreOverridden = this.isScoreOverridden(this.criterionHref);
+		this.scoreOverridden = assessmentEntity.hasAction('clear-total-score-override');
 		if (!this._isStaticView() && !this._isEditingScore) {
 			this.overriddenStyling = this.scoreOverridden;
 		}
@@ -293,10 +294,11 @@ Polymer({
 	},
 
 	_handleKey: function(e) {
-		if (e.key === 13) { // enter key
+		if (e.keyCode === 13) { // enter key
 			e.target.blur();
 			e.stopPropagation();
 
+			this._blurHandler(e);
 			this.dispatchEvent(new CustomEvent('d2l-rubric-editable-score-commit', {
 				bubbles: true,
 				composed: true
@@ -331,7 +333,7 @@ Polymer({
 			if (newScore === '') {
 				action = this._clearOverride();
 			} else {
-				var oldScore = this.getScore(this.entity, this.assessmentResult, this.totalScore);
+				var oldScore = this.getScore(this.entity, this.assessmentEntity, this.totalScore);
 				if (parseFloat(newScore) === oldScore) {
 					// score didn't change so don't save it
 					return;
@@ -342,25 +344,25 @@ Polymer({
 			action.finally(function() {
 				this._pendingScoreSaves--;
 			}.bind(this)).then(function() {
-				this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+				this._updateScore(this.entity, this.assessmentEntity, this.totalScore, !!this.criterionHref);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
 			}.bind(this));
 		}
 	},
 
-	_updateScore: function(entity, assessmentResult, totalScore) {
+	_updateScore: function(entity, assessmentEntity, totalScore, isCriterion) {
 		if (!this._scoreModified && !this._pendingScoreSaves) {
 			this.toggleBubble('scoreInvalid', false);
-			this._score = this.getScore(entity, assessmentResult, totalScore);
+			this._score = this.getScore(entity, assessmentEntity, totalScore, isCriterion);
 		}
 	},
 
 	_saveScore: function(score) {
 		if (this.criterionHref) {
-			return this.saveCriterionPoints(this.criterionHref, score);
+			return this.CriterionAssessmentHelper.overrideScoreAsync(() => this.assessmentEntity, score);
 		} else {
-			return this.saveTotalPoints(score);
+			return this.AssessmentHelper.overrideTotalScoreAsync(() => this.assessmentEntity, score);
 		}
 	},
 
@@ -382,20 +384,25 @@ Polymer({
 			this._pendingScoreSaves--;
 		}.bind(this)).then(function() {
 			this._scoreModified = false;
-			this._updateScore(this.entity, this.assessmentResult, this.totalScore);
+			this._updateScore(this.entity, this.assessmentEntity, this.totalScore, !!this.criterionHref);
 		}.bind(this)).catch(function(err) {
 			this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
 		}.bind(this));
 	},
 
-	getScore: function(entity, assessmentResult, totalScore) {
-		if (!entity || !assessmentResult) {
+	getScore: function(entity, assessmentEntity, totalScore, isCriterion) {
+		if (!entity || !assessmentEntity) {
 			return;
 		}
 		if (totalScore) {
 			return totalScore;
 		}
-		return this.getAssessedScore(entity, assessmentResult);
+
+		if (isCriterion) {
+			return this.CriterionAssessmentHelper.getScore(assessmentEntity);
+		} else {
+			return this.AssessmentHelper.getTotalScore(assessmentEntity);
+		}
 	},
 
 	_localizeOutOf: function(entity, score) {

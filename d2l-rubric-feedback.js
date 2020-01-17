@@ -1,6 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import './localize-behavior.js';
-import './assessment-result-behavior.js';
+import './assessment-behavior.js';
 import './editor/d2l-rubric-error-handling-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -121,13 +121,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			}
 
 		</style>
-		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[criterionAssessmentHref]]" token="[[token]]" entity="{{criterionAssessment}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></rubric-siren-entity>
 		<div class="feedback-wrapper" data-desktop$="[[!compact]]" on-mouseover="_addFocusStylingToFeedbackWrapper" on-mouseout="_removeFocusStylingFromFeedbackWrapper" on-focusin="_focusInHandler" on-focusout="_focusOutHandler" on-click="_handleTap">
 			<div class="feedback-arrow" data-mobile$="[[compact]]">
 				<div class="feedback-arrow-inner"></div>
 			</div>
-			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
+			<div hidden="[[!_canEditFeedback(criterionEntity, criterionAssessment)]]">
 				<div class="feedback-header-wrapper">
 					<div class="feedback-heading">
 						[[localize('criterionFeedback')]]
@@ -146,11 +146,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-click="_clearFeedbackHandler">
 				</d2l-offscreen>
 			</div>
-			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
+			<div hidden="[[_hasReadonlyFeedback(criterionEntity, criterionAssessment, addingFeedback)]]">
 				<div class="feedback-container" data-mobile$="[[compact]]">
 					<div class="feedback-heading">[[localize('criterionFeedback')]]</div>
 					<div class="feedback-text">
-						<s-html style="white-space: pre-line;" html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"></s-html>
+						<s-html style="white-space: pre-line;" html="[[getAssessmentFeedbackHtml(criterionAssessment, _pendingFeedbackSaves, _feedback)]]"></s-html>
 					</div>
 				</div>
 			</div>
@@ -165,10 +165,11 @@ Polymer({
 	properties: {
 		criterionHref: String,
 		criterionEntity: Object,
-		assessmentHref: {
+		criterionAssessmentHref: {
 			type: String,
 			value: null
 		},
+		criterionAssessment: Object,
 		token: String,
 		addingFeedback: {
 			type: Boolean,
@@ -216,12 +217,12 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
 	observers: [
-		'_updateFeedback(criterionEntity, assessmentResult)'
+		'_updateFeedback(criterionAssessment)'
 	],
 
 	attached: function() {
@@ -250,14 +251,14 @@ Polymer({
 		elem.focus();
 	},
 
-	_updateFeedback: function(criterionEntity, assessmentResult) {
-		if (criterionEntity && assessmentResult && !this._feedbackInvalid) {
-			this.updateAssessmentFeedbackText(criterionEntity, assessmentResult);
+	_updateFeedback: function(criterionAssessment) {
+		if (criterionAssessment && !this._feedbackInvalid) {
+			this.updateAssessmentFeedbackText(criterionAssessment);
 		}
 	},
 
 	_focusInHandler: function() {
-		if (this.readOnly || !this.assessmentHref || this._feedbackInvalid) {
+		if (this.readOnly || !this.criterionAssessmentHref || this._feedbackInvalid) {
 			return;
 		}
 		this._feedbackInFocus = true;
@@ -270,7 +271,7 @@ Polymer({
 	},
 
 	_addFocusStylingToFeedbackWrapper: function() {
-		if (this.readOnly || !this.assessmentHref || !!this.compact || this._feedbackInvalid) {
+		if (this.readOnly || !this.criterionAssessmentHref || !!this.compact || this._feedbackInvalid) {
 			return;
 		}
 		this._focusStyling = true;
@@ -312,10 +313,10 @@ Polymer({
 		this._pendingFeedbackSaves++;
 		this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 		this.fire('save-feedback-start', {'hasPendingSaves': true});
-		return this.saveAssessmentFeedback(this.criterionHref, value).finally(function() {
+		return this.CriterionAssessmentHelper.updateFeedbackAsync(() => this.criterionAssessment, value, false).finally(function() {
 			this._pendingFeedbackSaves--;
 		}.bind(this)).then(function() {
-			this.updateAssessmentFeedbackText(this.criterionEntity, this.assessmentResult);
+			this.updateAssessmentFeedbackText(this.criterionAssessment);
 		}.bind(this)).catch(function(err) {
 			this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
 		}.bind(this)).finally(function() {
@@ -323,25 +324,25 @@ Polymer({
 		}.bind(this));
 	},
 
-	_canEditFeedback: function(criterionEntity, assessmentEntity) {
-		if (this.readOnly || !criterionEntity || !assessmentEntity) {
+	_canEditFeedback: function(criterionEntity, criterionAssessment) {
+		if (this.readOnly || !criterionEntity || !criterionAssessment) {
 			return false;
 		}
-		return this.canAddFeedback(criterionEntity);
+		return this.CriterionAssessmentHelper.canUpdateAssessment(criterionAssessment);
 	},
 
-	_hasReadonlyFeedback: function(criterionEntity, assessmentEntity) {
-		return this._canEditFeedback(criterionEntity, assessmentEntity) || this.addingFeedback;
+	_hasReadonlyFeedback: function(criterionEntity, criterionAssessment, addingFeedback) {
+		return addingFeedback || this._canEditFeedback(criterionEntity, criterionAssessment);
 	},
 
-	getAssessmentFeedbackHtml: function(criterionEntity, assessmentResult) {
-		return this.getAssessmentFeedback(criterionEntity, assessmentResult, true);
+	getAssessmentFeedbackHtml: function(criterionAssessment, pendingSaves, tentativeFeedback) {
+		return pendingSaves > 0 ? tentativeFeedback : this.CriterionAssessmentHelper.getFeedbackHtml(criterionAssessment);
 	},
 
-	updateAssessmentFeedbackText: function(criterionEntity, assessmentResult) {
+	updateAssessmentFeedbackText: function(criterionAssessment) {
 		if (!this._feedbackModified && !this._pendingFeedbackSaves) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
-			this._feedback = this.getAssessmentFeedback(criterionEntity, assessmentResult, false);
+			this._feedback = this.CriterionAssessmentHelper.getFeedbackText(criterionAssessment);
 		}
 	},
 
