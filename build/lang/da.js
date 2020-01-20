@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'nameSaveFailed': 'Det lykkedes ikke at gemme navnet',
 		'newAssociationLabel': 'Tillad nye tilknytninger i',
 		'numberAndPercentage': '{number} %',
-		'numberAndPoints': '{number} {number, plural, one {point} other {point}}',
+		'numberAndPoints': '{number} {number, plural, =1 {point} other {point}}',
 		'options': 'Indstillinger',
 		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': 'Overordnet beskrivelse af niveau {levelName}',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'overriddenTotalScoreTip': 'Den samlede rubrikscore er blevet tilsidesat. Scoren opdateres ikke længere afhængigt af ændringer i rubrikken.',
 		'overrideLabel': 'Override',
 		'percentage': '{number} %',
-		'points': '{number} {number, plural, one {point} other {point}}',
+		'points': '{number} {number, plural, =1 {point} other {point}}',
 		'pointsAbbreviation': 'pt',
 		'pointsAreRequired': 'Pointværdi påkrævet',
-		'pointsMinimum': '{number} {number, plural, one {point} other {point}} minimum',
+		'pointsMinimum': '{number} {number, plural, =1 {point} other {point}} minimum',
 		'pointsSaveFailed': 'Det lykkedes ikke at gemme point',
 		'preview': 'Forhåndsvisning',
 		'rangeStartInvalid': 'Startområdeværdi er ugyldig',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'Rubrikken er ud fra en samlet score på {value} point.',
 		'totalScoreLabel': 'Rubric Total Score'
-	}
+}
 };

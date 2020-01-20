@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'nameSaveFailed': 'Saving name failed',
 		'newAssociationLabel': 'Allow new associations in',
 		'numberAndPercentage': '{number} %',
-		'numberAndPoints': '{number} {number, plural, one {point} other {points}}',
+		'numberAndPoints': '{number} {number, plural, =1 {point} other {points}}',
 		'options': 'Options',
 		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': 'Overall description for level {levelName}',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'overriddenTotalScoreTip': 'The overall rubric score has been overridden. The score will no longer update based on changes to the rubric.',
 		'overrideLabel': 'Override',
 		'percentage': '{number} %',
-		'points': '{number} {number, plural, one {point} other {points}}',
+		'points': '{number} {number, plural, =1 {point} other {points}}',
 		'pointsAbbreviation': 'pt',
 		'pointsAreRequired': 'Point value is required',
-		'pointsMinimum': '{number} {number, plural, one {point} other {points}} minimum',
+		'pointsMinimum': '{number} {number, plural, =1 {point} other {points}} minimum',
 		'pointsSaveFailed': 'Saving points failed',
 		'preview': 'Preview',
 		'rangeStartInvalid': 'Range Start value is invalid',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'The rubric is out of a total score of {value} points.',
 		'totalScoreLabel': 'Rubric Total Score'
-	}
+}
 };

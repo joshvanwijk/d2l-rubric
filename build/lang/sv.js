@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'nameSaveFailed': 'Namnet kunde inte sparas',
 		'newAssociationLabel': 'Tillåt nya associationer i',
 		'numberAndPercentage': '{number} %',
-		'numberAndPoints': '{number} {number, plural, one {poäng} other {poäng}}',
+		'numberAndPoints': '{number} {number, plural, =1 {poäng} other {poäng}}',
 		'options': 'Alternativ',
 		'outOf': '/{outOf}',
 		'overallDescriptionAriaLabel': 'Övergripande beskrivning för nivå {levelName}',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'overriddenTotalScoreTip': 'Det övergripande rubriceringsbetyget har åsidosatts. Betyget uppdateras inte längre baserat på ändringar av rubriceringen.',
 		'overrideLabel': 'Åsidosätt',
 		'percentage': '{number} %',
-		'points': '{number} {number, plural, one {poäng} other {poäng}}',
+		'points': '{number} {number, plural, =1 {poäng} other {poäng}}',
 		'pointsAbbreviation': 'pt',
 		'pointsAreRequired': 'Poängvärde krävs',
-		'pointsMinimum': 'Minst {number} {number, plural, one {poäng} other {poäng}}',
+		'pointsMinimum': 'Minst {number} {number, plural, =1 {poäng} other {poäng}}',
 		'pointsSaveFailed': 'Poängen kunde inte sparas',
 		'preview': 'Förhandsgranska',
 		'rangeStartInvalid': 'Startvärdet för intervall är ogiltigt',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'Rubriceringen är av totalt {value} poäng.',
 		'totalScoreLabel': 'Totala rubriceringspoäng'
-	}
+}
 };

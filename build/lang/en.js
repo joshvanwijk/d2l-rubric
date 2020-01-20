@@ -50,7 +50,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'levelDeleted': '{name} level deleted',
 		'levelName': 'Level name',
 		'levelNameAndBulletPoint': '{levelName} \u2022',
-		'numberAndPoints': '{number} {number, plural, one {point} other {points}}',
+		'numberAndPoints': '{number} {number, plural, =1 {point} other {points}}',
 		'numberAndPercentage': '{number} %',
 		'levelPoints': 'Level points',
 		'levelPrepended': 'A new level has been added before {name}',
@@ -71,10 +71,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'overrideLabel': 'Override',
 		'overriddenScoreTip': 'Criterion score has been overridden',
 		'overriddenTotalScoreTip': 'The overall rubric score has been overridden. The score will no longer update based on changes to the rubric.',
-		'points': '{number} {number, plural, one {point} other {points}}',
+		'points': '{number} {number, plural, =1 {point} other {points}}',
 		'pointsAbbreviation': 'pt',
 		'pointsAreRequired': 'Point value is required',
-		'pointsMinimum': '{number} {number, plural, one {point} other {points}} minimum',
+		'pointsMinimum': '{number} {number, plural, =1 {point} other {points}} minimum',
 		'pointsSaveFailed': 'Saving points failed',
 		'percentage': '{number} %',
 		'preview': 'Preview',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'loaLevelUpdatedLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
 		'loaSliderLabel': 'Achievement threshold. Use left and right arrow keys to move the threshold between \'{loaLevel1}\' and \'{loaLevel2}\'',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}'
-	}
+}
 };

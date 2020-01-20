@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'nameSaveFailed': 'Ad kaydedilemedi',
 		'newAssociationLabel': 'Şurada yeni ilişkilere izin ver',
 		'numberAndPercentage': '%{number}',
-		'numberAndPoints': '{number} {number, plural, one {puan} other {puan}}',
+		'numberAndPoints': '{number} {number, plural, =1 {puan} other {puan}}',
 		'options': 'Seçenekler',
 		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': '{levelName} seviyesi için genel açıklama',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'overriddenTotalScoreTip': 'Toplam rubrik puanı etkisizleştirildi. Puan, şu andan itibaren rubrik üzerinde yapılan değişikliklere bağlı olarak güncellenmeyecek.',
 		'overrideLabel': 'Etkisizleştir',
 		'percentage': '%{number}',
-		'points': '{number} {number, plural, one {puan} other {puan}}',
+		'points': '{number} {number, plural, =1 {puan} other {puan}}',
 		'pointsAbbreviation': 'puan',
 		'pointsAreRequired': 'Puan değeri gereklidir',
-		'pointsMinimum': '{number} {number, plural, one {puan} other {puan}} minimum',
+		'pointsMinimum': '{number} {number, plural, =1 {puan} other {puan}} minimum',
 		'pointsSaveFailed': 'Puan kaydedilemedi',
 		'preview': 'Önizle',
 		'rangeStartInvalid': 'Aralık Başlangıç değeri geçersiz',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',
 		'totalScoreLabel': 'Rubrik Toplam Puan'
-	}
+}
 };

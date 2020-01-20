@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'nameSaveFailed': '名前を保存できませんでした',
 		'newAssociationLabel': '以下で新しい関連付けを許可:',
 		'numberAndPercentage': '{number} %',
-		'numberAndPoints': '{number} {number, plural, one {ポイント} other {ポイント}}',
+		'numberAndPoints': '{number} {number, plural, =1 {ポイント} other {ポイント}}',
 		'options': 'オプション',
 		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': 'レベル {levelName} の全体の説明',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'overriddenTotalScoreTip': '全体の注釈スコアが上書きされました。注釈の変更に基づくスコアの更新が行われなくなります。',
 		'overrideLabel': '上書き',
 		'percentage': '{number} %',
-		'points': '{number} {number, plural, one {ポイント} other {ポイント}}',
+		'points': '{number} {number, plural, =1 {ポイント} other {ポイント}}',
 		'pointsAbbreviation': 'ポイント',
 		'pointsAreRequired': 'ポイントの値は必須です',
-		'pointsMinimum': '最低 {number} {number, plural, one {ポイント} other {ポイント}}',
+		'pointsMinimum': '最低 {number} {number, plural, =1 {ポイント} other {ポイント}}',
 		'pointsSaveFailed': 'ポイントを保存できませんでした',
 		'preview': 'プレビュー',
 		'rangeStartInvalid': '範囲の開始値が無効です',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': '注釈は最大スコア合計 {value} ポイントです。',
 		'totalScoreLabel': '注釈の合計スコア'
-	}
+}
 };

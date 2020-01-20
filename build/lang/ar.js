@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'nameSaveFailed': 'تعذّر حفظ الاسم',
 		'newAssociationLabel': 'السماح باقترانات جديدة في',
 		'numberAndPercentage': '{number} %',
-		'numberAndPoints': '{number} {number, plural, one {نقطة} other {من النقاط}}',
+		'numberAndPoints': '{number} {number, plural, =1 {نقطة} other {من النقاط}}',
 		'options': 'الخيارات',
 		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': 'وصف إجمالي للمستوى {levelName}',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'overriddenTotalScoreTip': 'تم استبدال مجموع درجات آلية التقييم الإجمالية. لن يتم بعد الآن تحديث مجموع الدرجات استنادًا إلى التغييرات في آلية التقييم.',
 		'overrideLabel': 'تجاوز',
 		'percentage': '{number} %',
-		'points': '{number} {number, plural, one {نقطة} other {من النقاط}}',
+		'points': '{number} {number, plural, =1 {نقطة} other {من النقاط}}',
 		'pointsAbbreviation': 'نقطة',
 		'pointsAreRequired': 'قيمة النقطة مطلوبة',
-		'pointsMinimum': '{number} {number, plural, one {نقطة} other {من النقاط}} كحد أدنى',
+		'pointsMinimum': '{number} {number, plural, =1 {نقطة} other {من النقاط}} كحد أدنى',
 		'pointsSaveFailed': 'فشل حفظ النقاط',
 		'preview': 'معاينة',
 		'rangeStartInvalid': 'قيمة بدء النطاق غير صالحة',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.',
 		'totalScoreLabel': 'مجموع درجات آلية التقييم'
-	}
+}
 };

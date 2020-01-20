@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'nameSaveFailed': 'Échec de l’enregistrement du nom',
 		'newAssociationLabel': 'Permettre de nouvelles associations dans',
 		'numberAndPercentage': '{number} %',
-		'numberAndPoints': '{number} {number, plural, one {point} other {points}}',
+		'numberAndPoints': '{number} {number, plural, =1 {point} other {points}}',
 		'options': 'Options',
 		'outOf': '/ {outOf}',
 		'overallDescriptionAriaLabel': 'Description générale du niveau {levelName}',
@@ -106,10 +106,10 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'overriddenTotalScoreTip': 'La note globale de la grille d’évaluation a été remplacée. La note ne s’actualisera plus en fonction des modifications apportées à la grille d’évaluation.',
 		'overrideLabel': 'Remplacer',
 		'percentage': '{number} %',
-		'points': '{number} {number, plural, one {point} other {points}}',
+		'points': '{number} {number, plural, =1 {point} other {points}}',
 		'pointsAbbreviation': 'pt',
 		'pointsAreRequired': 'Une valeur de point est requise',
-		'pointsMinimum': '{number} {number, plural, one {point} other {points}} minimum',
+		'pointsMinimum': '{number} {number, plural, =1 {point} other {points}} minimum',
 		'pointsSaveFailed': 'Échec de l’enregistrement des points',
 		'preview': 'Prévisualiser',
 		'rangeStartInvalid': 'La valeur de départ de la plage n’est pas valide',
@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
 		'totalScoreLabel': 'Note finale de la grille d’évaluation'
-	}
+}
 };
