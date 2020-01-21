@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.',
 		'totalScoreLabel': 'مجموع درجات آلية التقييم'
-}
+	}
 };

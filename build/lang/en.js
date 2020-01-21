@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'loaLevelUpdatedLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
 		'loaSliderLabel': 'Achievement threshold. Use left and right arrow keys to move the threshold between \'{loaLevel1}\' and \'{loaLevel2}\'',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}'
-}
+	}
 };

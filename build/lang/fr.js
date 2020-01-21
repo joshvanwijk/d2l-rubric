@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
 		'totalScoreLabel': 'Note finale de la grille d’évaluation'
-}
+	}
 };

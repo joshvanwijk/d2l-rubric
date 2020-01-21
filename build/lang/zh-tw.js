@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': '量規超出總分 ({value} 分)。',
 		'totalScoreLabel': '量規總分數'
-}
+	}
 };

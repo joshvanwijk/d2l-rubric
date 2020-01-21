@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': 'La rúbrica tiene una puntuación total de {value} puntos.',
 		'totalScoreLabel': 'Puntuación total según la rúbrica'
-}
+	}
 };

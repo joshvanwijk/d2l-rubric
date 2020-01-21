@@ -151,5 +151,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'totalMobile': 'Total Score',
 		'totalScoreAriaLabel': '루브릭이 총 {value}점의 점수에서 벗어났습니다.',
 		'totalScoreLabel': '루브릭 총점'
-}
+	}
 };
