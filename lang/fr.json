@@ -68,7 +68,7 @@
     "loaLevelUpdatedLabelMultiRubric": "Le niveau de réussite \"{loaLevelName}\" est désormais mappé à la rubrique niveaux {otherRubricLevelNames} et {lastRubricLevelName}",
     "loaLevelUpdatedLabelSingleRubric": "Le niveau de réussite \"{loaLevelName}\" est désormais mappé à la rubrique niveau {rubricLevelName}",
     "loaOverlayHeading": "Niveaux de réussite",
-    "loaSliderLabel": "Seuil de réalisation. Utilisez les touches fléchées gauche et droite pour déplacer le seuil entre \"{loaLevel1}\" et \"{loaLevel2}\"",
+    "loaSliderLabel": "Seuil de réalisation entre \"{loaLevel1}\" et \"{loaLevel2}\". Utilisez les touches fléchées gauche et droite pour déplacer le seuil.",
     "loaThresholdMovementNotif": "Seuil déplacé vers la {direction, select, left {gauche} right {droite}}",
     "lockedAlertText": "Cette grille d’évaluation ne peut pas être modifiée parce qu’elle a déjà été utilisée pour évaluer le travail d’un élève",
     "makeRubricAvailableHeader": "Rendre la rubrique disponible à :",

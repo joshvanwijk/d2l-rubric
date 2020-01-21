@@ -79,7 +79,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'loaLevelUpdatedLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
 		'loaLevelUpdatedLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric level {rubricLevelName}',
 		'loaOverlayHeading': 'Achievement Levels',
-		'loaSliderLabel': 'Achievement threshold. Use left and right arrow keys to move the threshold between \'{loaLevel1}\' and \'{loaLevel2}\'',
+		'loaSliderLabel': 'Achievement threshold between \'{loaLevel1}\' and \'{loaLevel2}\'. Use left and right arrow keys to move the threshold.',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
 		'lockedAlertText': 'A rubrica não pode ser editada porque já foi usada para avaliar o trabalho do aluno',
 		'makeRubricAvailableHeader': 'Disponibilizar rubrica para',
