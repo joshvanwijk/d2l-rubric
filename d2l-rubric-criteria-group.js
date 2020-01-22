@@ -931,21 +931,6 @@ Polymer({
 		elem.classList.remove('focused');
 	},
 
-	_handleUnselect: function(event) {
-		if (this.readOnly) {
-			return;
-		}
-		var criterionCell = event.model.get('criterionCell');
-		var assessmentResult = event.model.get('assessmentResult');
-		if (event.keyCode === 32 && this._isSelected(criterionCell, assessmentResult)) { // space bar
-			this.assessCriterionCell(event.currentTarget.parentNode.parentNode.dataset.href).then(() => {
-				this._refocusCriterionCell(event);
-			});
-			this._addingFeedback = -1;
-			this.editFeedback = -1;
-		}
-	},
-
 	_handleSaveStart: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		this.set(['_savingFeedback', criterionNum], event.detail.hasPendingSaves);
