@@ -25,7 +25,7 @@ suite('Preview Mode', function() {
 			expect(element._showContent).to.be.true;
 		});
 
-		test('has no assessment', function() {
+		test.skip('has no assessment', function() {
 			expect(element.assessmentHref).to.be.undefined;
 			expect(element.assessmentEntity).to.be.null;
 			expect(element._score).to.be.null;

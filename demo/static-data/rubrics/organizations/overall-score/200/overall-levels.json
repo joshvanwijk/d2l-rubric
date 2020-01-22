@@ -51,19 +51,19 @@
                     "rel": [
                         "self"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/1"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/1.json"
 				},
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels.json"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels.json"
                 },
                 {
                     "rel": [
                         "next"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/2"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/2.json"
                 }
             ]
         },
@@ -111,25 +111,25 @@
                     "rel": [
                         "self"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/2"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/2.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels.json"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels.json"
                 },
                 {
                     "rel": [
                         "prev"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/1"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/1.json"
                 },
                 {
                     "rel": [
                         "next"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/3"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/3.json"
                 }
             ]
         },
@@ -177,25 +177,25 @@
                     "rel": [
                         "self"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/3"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/3.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels.json"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels.json"
                 },
                 {
                     "rel": [
                         "prev"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/2"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/2.json"
                 },
                 {
                     "rel": [
                         "next"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/4"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/4.json"
                 }
             ]
         },
@@ -243,19 +243,19 @@
                     "rel": [
                         "self"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/4"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/4.json"
                 },
                 {
                     "rel": [
                         "up"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels.json"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels.json"
                 },
                 {
                     "rel": [
                         "prev"
                     ],
-                    "href": "static-data/rubrics/organizations/overall-score/200/overall-levels/3"
+                    "href": "static-data/rubrics/organizations/overall-score/200/overallLevels/3.json"
                 }
             ]
         }
@@ -265,7 +265,7 @@
             "rel": [
                 "self"
             ],
-            "href": "static-data/rubrics/organizations/overall-score/200/overall-levels.json"
+            "href": "static-data/rubrics/organizations/overall-score/200/overallLevels.json"
         },
         {
             "rel": [

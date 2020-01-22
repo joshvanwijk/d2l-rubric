@@ -26,7 +26,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 		<d2l-rubric-criteria-mobile
 			href="[[_criteriaHref]]"
 			levels-href="[[_levelsHref]]"
-			assessment-href="[[assessmentHref]]"
+			assessment-entity="[[assessmentEntity]]"
+			cell-assessment-map="[[cellAssessmentMap]]"
+			criterion-result-map="[[criterionResultMap]]"
 			token="[[token]]"
 			is-holistic="[[_isHolistic]]"
 			is-numeric="[[_isNumeric]]"
@@ -50,7 +52,9 @@ Polymer({
 		_name: String,
 		_criteriaHref: String,
 		_levelsHref: String,
-		assessmentHref: String,
+		assessmentEntity: Object,
+		criterionResultMap: Object,
+		cellAssessmentMap: Object,
 		_isHolistic: Boolean,
 		_isNumeric: Boolean,
 		_loaded: Boolean,

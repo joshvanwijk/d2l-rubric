@@ -6,8 +6,7 @@ import './d2l-rubric-levels-mobile.js';
 import './d2l-rubric-feedback.js';
 import 'd2l-colors/d2l-colors.js';
 import './d2l-rubric-entity-behavior.js';
-import './assessment-result-behavior.js';
-import './rubric-siren-entity.js';
+import './assessment-behavior.js';
 import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
@@ -41,12 +40,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				display: none !important;
 			}
 		</style>
-		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion" index-as="criterionNum">
 			<d2l-rubric-criterion-mobile
 				href="[[_getSelfLink(criterion)]]"
 				levels-href="[[levelsHref]]"
-				assessment-href="[[assessmentHref]]"
+				assessment-criterion-href="[[_getCriterionAssessmentHref(criterion, criterionResultMap)]]"
+				cell-assessment-map="[[cellAssessmentMap]]"
 				token="[[token]]"
 				is-holistic="[[isHolistic]]"
 				is-numeric="[[isNumeric]]"
@@ -55,16 +54,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 			</d2l-rubric-criterion-mobile>
 			<d2l-button-subtle
 				class="add-feedback-button"
-				hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+				hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, readOnly,  _savingFeedback.*, _feedbackInvalid.*)]]"
 				text="[[localize('addFeedback')]]"
 				on-click="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]">
 			</d2l-button-subtle>
-			<template is="dom-if" if="[[_displayFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">
+			<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">
 				<d2l-rubric-feedback
 					id="feedback[[criterionNum]]"
 					criterion-href="[[_getSelfLink(criterion)]]"
-					assessment-href="[[assessmentHref]]"
+					criterion-assessment-href="[[_getCriterionAssessmentHref(criterion, criterionResultMap)]]"
 					token="[[token]]"
 					adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]"
 					on-save-feedback="_handleSaveFeedback"
@@ -93,7 +92,9 @@ Polymer({
 		 * The href of the rubric criteria
 		 */
 		levelsHref: String,
-		assessmentHref: String,
+		assessmentEntity: Object,
+		criterionResultMap: Object,
+		cellAssessmentMap: Object,
 		isHolistic: Boolean,
 		isNumeric: Boolean,
 		readOnly: Boolean,
@@ -118,7 +119,7 @@ Polymer({
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 	],
 
@@ -137,34 +138,27 @@ Polymer({
 		return entity && (entity.getLinkByRel('self') || {}).href || '';
 	},
 
-	_hasFeedback: function(criterionEntity, assessmentResult) {
-		return !!this.getAssessmentFeedback(criterionEntity, assessmentResult);
+	_hasFeedback: function(criterionEntity, criterionResultMap) {
+		return !!this.CriterionAssessmentHelper.getFeedbackText(this._lookupMap(criterionEntity, criterionResultMap));
 	},
 
-	_getFeedback: function(entity, assessmentResult) {
-		if (entity && assessmentResult) {
-			return this.getAssessmentFeedback(entity, assessmentResult);
+	_showAddFeedback: function(entity, criterionResultMap, criterionNum, addingFeedback, readOnly) {
+		if (!entity || readOnly) {
+			return false;
 		}
-	},
 
-	_showAddFeedback: function(entity, assessmentResult, criterionNum, addingFeedback) {
-		if (!entity || !assessmentResult) {
-			return false;
-		}
-		if (this.readOnly) {
-			return false;
-		}
-		if (!this.canAddFeedback(entity)) {
+		const criterionResult = this._lookupMap(entity, criterionResultMap);
+		if (!criterionResult || !criterionResult.getActionByName('update-critierion-assessment')) {
 			return false;
 		}
 		if (criterionNum === addingFeedback || this._savingFeedback[criterionNum] || this._feedbackInvalid[criterionNum]) {
 			return false;
 		}
-		return !this._hasFeedback(entity, assessmentResult);
+		return !this.CriterionAssessmentHelper.getFeedbackText(criterionResult);
 	},
 
-	_displayFeedback: function(criterionEntity, assessmentResult, criterionNum, addingFeedback) {
-		return this._hasFeedback(criterionEntity, assessmentResult) || criterionNum === addingFeedback || this._savingFeedback[criterionNum] || this._feedbackInvalid[criterionNum];
+	_displayFeedback: function(criterionEntity, criterionResultMap, criterionNum, addingFeedback) {
+		return this._hasFeedback(criterionEntity, criterionResultMap) || criterionNum === addingFeedback || this._savingFeedback[criterionNum] || this._feedbackInvalid[criterionNum];
 	},
 
 	_cellAddingFeedback: function(addingFeedback, criterionNum) {
@@ -193,5 +187,30 @@ Polymer({
 
 	_closeFeedback: function() {
 		this._addingFeedback = -1;
+	},
+
+	_getCriterionAssessmentHref: function(rubricCriterionEntity, criterionResultMap) {
+		if (!rubricCriterionEntity || !criterionResultMap) {
+			return null;
+		}
+
+		const selfLink = rubricCriterionEntity.getLinkByRel('self');
+		if (!selfLink || !selfLink.href) {
+			return null;
+		}
+
+		const assessmentCriterion = criterionResultMap[selfLink.href];
+		if (!assessmentCriterion) {
+			return null;
+		}
+		return assessmentCriterion.getLinkByRel('self').href;
+	},
+
+	_lookupMap: function(entity, map) {
+		if (!entity || !map) {
+			return null;
+		}
+		const entityHref = this._getSelfLink(entity);
+		return entityHref && map[entityHref];
 	}
 });

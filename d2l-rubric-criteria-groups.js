@@ -6,6 +6,7 @@ import './d2l-rubric-criteria-group-mobile.js';
 import './d2l-rubric-loading.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '@polymer/iron-media-query/iron-media-query.js';
+import './d2l-rubric-assessment-criterion-entity-loader.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
@@ -21,18 +22,30 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 		</style>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
+		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+
+		<template is="dom-repeat" items="[[_getCriterionAssessmentHrefs(assessmentEntity)]]" as="criterionAssessmentHref">
+			<d2l-rubric-assessment-criterion-entity-loader
+				href="[[criterionAssessmentHref]]"
+				token="[[token]]"
+				criterion-assessment-map="{{_criterionResultMap}}"
+				cell-assessment-map="{{_cellAssessmentMap}}"
+			></d2l-rubric-assessment-criterion-entity-loader>
+		</template>
 
 		<template is="dom-if" if="[[!compact]]" restamp>
 			<template is="dom-repeat" items="[[_groups]]">
 				<d2l-rubric-criteria-group
 					href="[[_getSelfLink(item)]]"
-					assessment-href="[[assessmentHref]]"
+					assessment-entity="[[assessmentEntity]]"
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
 					read-only="[[readOnly]]"
 					hidden$="[[!_showContent]]"
-					telemetry-data="[[telemetryData]]">
-				</d2l-rubric-criteria-group>
+					telemetry-data="[[telemetryData]]"
+					criterion-result-map="[[_criterionResultMap]]"
+					cell-assessment-map="[[_cellAssessmentMap]]"
+				></d2l-rubric-criteria-group>
 			</template>
 			<slot name="total-score"></slot>
 			<slot></slot>
@@ -42,13 +55,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 			<template is="dom-repeat" items="[[_groups]]">
 				<d2l-rubric-criteria-group-mobile
 					href="[[_getSelfLink(item)]]"
-					assessment-href="[[assessmentHref]]"
+					assessment-entity="[[assessmentEntity]]"
 					token="[[token]]"
 					read-only="[[readOnly]]"
 					compact="[[compact]]"
 					hidden$="[[!_showContent]]"
-					telemetry-data="[[telemetryData]]">
-				</d2l-rubric-criteria-group-mobile>
+					telemetry-data="[[telemetryData]]"
+					criterion-result-map="[[_criterionResultMap]]"
+					cell-assessment-map="[[_cellAssessmentMap]]"
+				></d2l-rubric-criteria-group-mobile>
 				<slot></slot>
 			</template>
 		</template>
@@ -78,13 +93,16 @@ Polymer({
 		assessmentHref: {
 			type: String
 		},
+		assessmentEntity: Object,
 		rubricType: {
 			type: String
 		},
 		readOnly: Boolean,
 		telemetryData: {
 			type: Object
-		}
+		},
+		_criterionResultMap: Object,
+		_cellAssessmentMap: Object
 	},
 
 	behaviors: [
@@ -96,6 +114,11 @@ Polymer({
 		'_onEntityChanged(entity)'
 	],
 
+	created: function() {
+		this._criterionResultMap = {};
+		this._cellAssessmentMap = {};
+	},
+
 	_onEntityChanged: function(entity) {
 		if (!entity) {
 			return;
@@ -106,5 +129,20 @@ Polymer({
 
 	_getSelfLink: function(entity) {
 		return entity && (entity.getLinkByRel('self') || {}).href || '';
+	},
+
+	_getCriterionAssessmentHrefs: function(assessmentEntity) {
+		if (!assessmentEntity) {
+			return [];
+		}
+		const criterionLinks = assessmentEntity.getSubEntitiesByClass('criterion-assessment-links');
+		const criterionHrefs = [];
+		criterionLinks.forEach(criterionLinkEntity => {
+			const criterionAssessmentLink = criterionLinkEntity.getLinkByRel('https://assessments.api.brightspace.com/rels/assessment-criterion');
+			if (criterionAssessmentLink) {
+				criterionHrefs.push(criterionAssessmentLink.href);
+			}
+		});
+		return criterionHrefs;
 	}
 });

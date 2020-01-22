@@ -18,7 +18,7 @@ import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './d2l-rubric-criterion-cell.js';
 import './rubric-siren-entity.js';
-import './assessment-result-behavior.js';
+import './assessment-behavior.js';
 import 's-html/s-html.js';
 import 'd2l-button/d2l-button-subtle.js';
 import 'fastdom/fastdom.js';
@@ -156,7 +156,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
 			.criterion-cell.selected.has-bottom {
-				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
+				box-shadow: -2px 0 0 var(--d2l-color-celestine), -2px 2px 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
 			}
 			.criterion-cell.selected.has-bottom.focused {
@@ -220,11 +220,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 		</style>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></rubric-siren-entity>
-		<d2l-table aria-colcount$="[[_getColumnCount(_levels, entity, assessmentResult, rubricType)]]" aria-rowcount$="[[_getRowCount(_criteriaEntities)]]" hidden$="[[!_showContent]]">
+		<d2l-table aria-colcount$="[[_getColumnCount(_levels, entity, criterionResultMap, rubricType)]]" aria-rowcount$="[[_getRowCount(_criteriaEntities)]]" hidden$="[[!_showContent]]">
 			<d2l-offscreen>
 				[[localize('rubricSummaryA11y')]]
 			</d2l-offscreen>
@@ -268,7 +267,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			</d2l-thead>
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
-					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, assessmentResult, criterionNum)]]">
+					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]">
 						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]" on-dom-change="_rowHeaderDomChange">
 							<d2l-td class="criteria" role="rowheader">
 								<div class="criteria-row-header-container">
@@ -278,9 +277,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											token="[[token]]"
 											outcomes-title-text="[[_getOutcomesTitleText()]]"
 										></d2l-rubric-alignments-indicator>
-										<template is="dom-if" if="[[_showCompetencies(assessmentEntity, criterion, readOnly)]]">
+										<template is="dom-if" if="[[_showCompetencies(criterionResultMap, criterion, readOnly)]]">
 											<d2l-rubric-competencies-icon
-												competency-names="[[_getCriterionCompetencies(assessmentEntity, criterion)]]"
+												competency-names="[[_getCriterionCompetencies(criterionResultMap, criterion)]]"
 											></d2l-rubric-competencies-icon>
 										</template>
 										<div class="criterion-name">
@@ -289,53 +288,53 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											</span>
 										</div>
 									</div>
-									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 								</div>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
 							<d2l-td 
-								class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]"
+								class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
-								on-click="handleTap"
+								on-click="_handleTap"
 								data-href$="[[_getSelfLink(criterionCell)]]"
 								id="criterion-cell[[_getRowIndex(criterionNum)]]_[[cellNum]]"
 							>
-								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]">
+								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" cell-assessment="[[_lookupMap(criterionCell,cellAssessmentMap)]]">
 								</d2l-rubric-criterion-cell>
 								<d2l-offscreen>
-										<input hidden="[[_isStaticView()]]" on-keypress="_handleUnselect" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, assessmentResult)]]" on-focusin="_handleCriterionCellFocusin" on-focusout="_handleCriterionCellFocusout" id="criterion-cell-input[[_getRowIndex(criterionNum)]]_[[cellNum]]">
+									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, criterionResultMap)]]" on-focusin="_handleCriterionCellFocusin" on-focusout="_handleCriterionCellFocusout" id="criterion-cell-input[[_getRowIndex(criterionNum)]]_[[cellNum]]">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult, readOnly)]]">
+							<d2l-td class$="[[_getOutOfClassName(criterion, criterionResultMap, readOnly)]]">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
 									criterion-href="[[_getSelfLink(criterion)]]"
-									assessment-href="[[assessmentHref]]"
+									assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
 									token="[[token]]"
 									read-only="[[readOnly]]"
 									editing-score="{{editingScore}}"
 									criterion-num="[[criterionNum]]">
 								</d2l-rubric-editable-score>
 									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>
 					</d2l-tr>
-					<template is="dom-if" if="[[_displayFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
+					<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
 							<d2l-rubric-feedback
 								id="feedback-inner[[criterionNum]]"
 								class="feedback-wrapper"
 								criterion-href="[[_getSelfLink(criterion)]]"
-								assessment-href="[[assessmentHref]]"
+								criterion-assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
 								token="[[token]]"
 								read-only="[[readOnly]]"
 								data-criterion$="[[criterionNum]]"
-								on-save-feedback-start="_handleSaveFeedback"
+								on-save-feedback-start="_handleSaveStart"
 								on-save-feedback-finished="_handleSaveFinished"
 								on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
@@ -383,10 +382,7 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		assessmentHref: {
-			type: String,
-			value: null
-		},
+		assessmentEntity: Object,
 		rubricType: {
 			type: String,
 			value: null
@@ -415,7 +411,9 @@ Polymer({
 		telemetryData: {
 			type: Object,
 			value: null
-		}
+		},
+		criterionResultMap: Object,
+		cellAssessmentMap: Object
 	},
 
 	behaviors: [
@@ -423,7 +421,7 @@ Polymer({
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		IronResizableBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentResultBehavior,
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior,
 		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
@@ -445,7 +443,7 @@ Polymer({
 	attached: function() {
 		this.addEventListener('d2l-rubric-editable-score-commit', (e) => {
 			e.stopPropagation();
-			e.target.parentNode && e.target.parentNode.focus();
+			e.target.parentNode && e.target.parentNode.host && e.target.parentNode.host.focus();
 		});
 	},
 
@@ -608,24 +606,23 @@ Polymer({
 		return this._getLoaMappingLink(levelsEntity) !== '';
 	},
 
-	_hasFeedback: function(criterionEntity, assessmentResult) {
-		return !!this.getAssessmentFeedback(criterionEntity, assessmentResult);
+	_hasFeedback: function(criterionEntity, criterionResultMap) {
+		const criterionResult = this._lookupMap(criterionEntity, criterionResultMap);
+		return !!this.CriterionAssessmentHelper.getFeedbackText(criterionResult);
 	},
 
-	_showAddFeedback: function(entity, assessmentResult, criterionNum, addingFeedback) {
-		if (!entity || !assessmentResult) {
+	_showAddFeedback: function(entity, assessmentCriterionMap, criterionNum, addingFeedback) {
+		if (!entity || this.readOnly) {
 			return false;
 		}
-		if (this.readOnly) {
-			return false;
-		}
-		if (!this.canAddFeedback(entity)) {
+		const criterionResult = this._lookupMap(entity, assessmentCriterionMap);
+		if (!criterionResult || !criterionResult.getActionByName('update-critierion-assessment')) {
 			return false;
 		}
 		if (criterionNum === addingFeedback || this._savingFeedback[criterionNum] || this._feedbackInvalid[criterionNum]) {
 			return false;
 		}
-		return !this._hasFeedback(entity, assessmentResult);
+		return !this.CriterionAssessmentHelper.getFeedbackText(criterionResult);
 	},
 
 	_hasOutOf: function(entity) {
@@ -656,10 +653,12 @@ Polymer({
 		return this.localize(type, 'number', points.toString());
 	},
 
-	_localizeOutOf: function(criterion, assessmentResult) {
+	_localizeOutOf: function(criterion, criterionResultMap) {
+		const criterionResult = this._lookupMap(criterion, criterionResultMap);
+
 		var score = null;
-		if (assessmentResult) {
-			score = this.getAssessedScore(criterion, assessmentResult);
+		if (criterionResult) {
+			score = this.CriterionAssessmentHelper.getScore(criterionResult);
 		}
 		if (score || score === 0) {
 			return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', criterion.properties.outOf.toString());
@@ -674,14 +673,14 @@ Polymer({
 		return criteria.length + 1; // criteria + levels row
 	},
 
-	_getColumnCount: function(levels, entity, assessmentResult, rubricType) {
+	_getColumnCount: function(levels, entity, assessmentMap, rubricType) {
 		if (!levels) {
 			return 0;
 		}
 
 		var count = levels.length;
 
-		if (assessmentResult && this.anyFeedback) {
+		if (this._hasAnyFeedback(assessmentMap)) {
 			count += 1; // extra "column" for feedback
 		}
 		if (this._hasOutOf(entity)) {
@@ -698,42 +697,66 @@ Polymer({
 		return criterionIndex + 2; // index + levels row + 1
 	},
 
-	_getFeedbackID: function(criterion, assessmentResult, index) {
-		if (this._hasFeedback(criterion, assessmentResult)) {
+	_getFeedbackID: function(criterion, criterionResultMap, index) {
+		if (this._hasFeedback(criterion, criterionResultMap)) {
 			return 'feedback' + index;
 		}
 	},
 
-	_isSelected: function(criterionCell, assessmentResult) {
-		var selfLink = this._getSelfLink(criterionCell);
-		return selfLink && assessmentResult && assessmentResult[selfLink];
+	_isSelected: function(criterionCell, cellAssessmentMap) {
+		const cellResult = this._lookupMap(criterionCell, cellAssessmentMap);
+		return cellResult && this.CriterionCellAssessmentHelper.isSelected(cellResult);
 	},
 
-	_hasBottom: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteria, addingFeedback) {
-		var selfLink = this._getSelfLink(criterionCell);
+	_hasBottom: function(criterionCell, criterionResultMap, criterionNum, criteria, addingFeedback) {
+		if (criterionNum === addingFeedback || criterionNum >= criteria.length - 1) {
+			return true;
+		}
 
-		var noBottom = noBottomCells && noBottomCells[selfLink];
-		var hasFeedback = this._hasFeedback(criteria[criterionNum], assessmentResult) || criterionNum === addingFeedback;
+		if (!this.CriterionCellAssessmentHelper.isSelected(criterionCell)) {
+			return true;
+		}
 
-		// A cell already has a bottom border in the following cases:
-		// 1. The cell is on top of another selected cell and does not have feedback
-		var isBottomless = noBottom && !hasFeedback;
-		return !isBottomless;
+		const criterionEntity = criteria[criterionNum];
+		const criterionResult = this._lookupMap(criterionEntity, criterionResultMap);
+
+		if (this.CriterionAssessmentHelper.getFeedbackText(criterionResult)) {
+			return true;
+		}
+
+		const selectedCellIndex = this._getSelectedLevelIndex(criterionResult);
+		if (selectedCellIndex < 0) {
+			return true;
+		}
+
+		const criterionResultBelow = this._lookupMap(criteria[criterionNum + 1], criterionResultMap);
+		return selectedCellIndex !== this._getSelectedLevelIndex(criterionResultBelow);
 	},
 
-	_getCriteriaClassName: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities, cellNum, readOnly) {
+	_getSelectedLevelIndex: function(criterionResult) {
+		const cells = criterionResult.getSubEntitiesByClass('assessment-criterion-cell');
+		for (let i = 0; i < cells; i++) {
+			if (this.CriterionCellAssessmentHelper.isSelected(cells[i])) {
+				return i;
+			}
+		}
+		return -1;
+	},
+
+	_getCriteriaClassName: function(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, criteriaEntities, cellNum, readOnly, addingFeedback) {
 		var className = 'criterion-cell';
 		var isLastCell = criterionNum === criteriaEntities.length - 1;
 		if (cellNum === 0 && this.rubricType === 'holistic') {
 			className += ' first holistic';
 		}
-		if (this._isSelected(criterionCell, assessmentResult)) {
+		if (this._isSelected(criterionCell, cellAssessmentMap)) {
 			className += ' selected';
 		}
-		if (!readOnly && this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
+		const cellAssessment = this._lookupMap(criterionCell, cellAssessmentMap);
+		if (!readOnly && this.CriterionCellAssessmentHelper.canSelect(cellAssessment)) {
 			className += ' assessable';
 		}
-		if (this._hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities)) {
+		if (this._hasBottom(criterionCell, criterionResultMap, criterionNum, criteriaEntities, addingFeedback)) {
 			className += ' has-bottom';
 		}
 		if (isLastCell) {
@@ -794,73 +817,44 @@ Polymer({
 
 		return styles.join(';');
 	},
-	_getOutOfClassName: function(criterionEntity, assessmentResult, readOnly) {
+	_getOutOfClassName: function(criterionEntity, criterionResultMap, readOnly) {
 		var className = 'out-of';
-		if (!readOnly && assessmentResult && this._canEditScore(criterionEntity)) {
+		if (this._canEditScore(criterionEntity, criterionResultMap, readOnly)) {
 			className += ' assessable';
 		}
 		return className;
 	},
 
-	_showCompetencies: function(assessmentEntity, criterion, readOnly) {
-		return !readOnly && !!this._getCriterionCompetencies(assessmentEntity, criterion).length;
+	_showCompetencies: function(criterionResultMap, criterion, readOnly) {
+		return !readOnly && !!this._getCriterionCompetencies(criterionResultMap, criterion).length;
 	},
 
-	_getCriterionCompetencies: function(assessmentEntity, criterion) {
-		if (!assessmentEntity || !assessmentEntity.entities || !criterion) {
-			return [];
-		}
-
-		var criterionHref = criterion.getLinkByRel('self');
-		if (!criterionHref || !criterionHref.href) {
-			return [];
-		}
-		criterionHref = criterionHref.href;
-
-		for (var i = 0; i < assessmentEntity.entities.length; i++) {
-			var criterionEntity = assessmentEntity.entities[i];
-			if (!criterionEntity.hasClass(this.HypermediaClasses.rubrics.criterionCellSelector)) {
-				continue;
-			}
-			var criterionLink = criterionEntity.getLinkByRel(this.HypermediaRels.Rubrics.criterion);
-			if (criterionLink && criterionLink.href === criterionHref) {
-				if (criterionEntity.properties) {
-					return criterionEntity.properties.competencies || [];
-				} else {
-					return [];
-				}
-			}
-		}
-
-		return [];
+	_getCriterionCompetencies: function(criterionResultMap, criterion) {
+		const criterionResult = this._lookupMap(criterion, criterionResultMap);
+		return this.CriterionAssessmentHelper.getCompetencyNames(criterionResult);
 	},
 
-	handleTap: function(event) {
+	_handleTap: function(event) {
 		if (this.readOnly) {
 			return;
 		}
-		this.assessCriterionCell(event.currentTarget.dataset.href).then(() => {
+		this.CriterionCellAssessmentHelper.selectAsync(
+			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
+		).then(() => {
 			this._focusCriterionCell(event);
 		});
 		this._addingFeedback = -1;
 		this.editingScore = -1;
 	},
 
-	handleKey: function(event) {
-		if (this.readOnly) {
-			return;
-		}
-		if (event.keyCode === 13) { // enter key
-			this.assessCriterionCell(event.srcElement.dataset.href).then(() => {
-				this._focusCriterionCell(event);
-			});
-			this._addingFeedback = -1;
-			this.editFeedback = -1;
+	_handleKey: function(event) {
+		if (event.keyCode === 13 || event.keyCode === 32) { // enter or space key
+			this._handleTap(event);
 		}
 	},
 
-	_displayFeedback: function(criterionEntity, assessmentResult, criterionNum, addingFeedback) {
-		return this._hasFeedback(criterionEntity, assessmentResult) || criterionNum === addingFeedback || this._savingFeedback[criterionNum] || this._feedbackInvalid[criterionNum];
+	_displayFeedback: function(criterionEntity, criterionResultMap, criterionNum, addingFeedback) {
+		return this._hasFeedback(criterionEntity, criterionResultMap) || criterionNum === addingFeedback || this._savingFeedback[criterionNum] || this._feedbackInvalid[criterionNum];
 	},
 
 	_handleAddFeedback: function(event) {
@@ -871,8 +865,12 @@ Polymer({
 		}.bind(this));
 	},
 
-	_canEditScore: function(criterionEntity) {
-		return !this.readOnly && this.canOverrideScore(this._getSelfLink(criterionEntity));
+	_canEditScore: function(criterionEntity, criterionResultMap, readOnly) {
+		if (readOnly) {
+			return false;
+		}
+		const criterionResult = this._lookupMap(criterionEntity, criterionResultMap);
+		return this.CriterionAssessmentHelper.canUpdateAssessment(criterionResult);
 	},
 
 	_getOutcomesTitleText: function() {
@@ -886,7 +884,7 @@ Polymer({
 	},
 
 	_isStaticView: function() {
-		return this.readOnly || !this.assessmentHref;
+		return this.readOnly || !this.assessmentEntity;
 	},
 
 	_handleInvisibleFeedbackFocusin: function(event) {
@@ -1150,5 +1148,35 @@ Polymer({
 
 	_getLoaHeadingLangTerm: function() {
 		return this.localize('loaOverlayHeading');
+	},
+
+	_lookupMap: function(entity, map) {
+		if (!entity || !map) {
+			return null;
+		}
+
+		const selfLink = entity.getLinkByRel('self');
+		if (!selfLink || !selfLink.href) {
+			return null;
+		}
+
+		return map[selfLink.href];
+	},
+
+	_hasAnyFeedback: function(assessmentMap) {
+		for (const i in assessmentMap) {
+			if (this.CriterionAssessmentHelper.getFeedbackText(assessmentMap[i])) {
+				return true;
+			}
+		}
+		return false;
+	},
+
+	_getCriterionResultHref: function(rubricCriterionEntity, criterionResultMap) {
+		const criterionResult = this._lookupMap(rubricCriterionEntity, criterionResultMap);
+		if (!criterionResult) {
+			return null;
+		}
+		return this._getSelfLink(criterionResult);
 	}
 });

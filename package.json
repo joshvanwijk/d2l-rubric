@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/Brightspace/d2l-rubric",
   "name": "d2l-rubric",
-  "version": "3.4.4",
+  "version": "3.4.11",
   "directories": {
     "test": "test"
   },
@@ -36,6 +36,7 @@
     "@polymer/promise-polyfill": "^3.0.0-pre.18",
     "@webcomponents/webcomponentsjs": "^2.2.3",
     "babel-eslint": "^10.0.1",
+    "chalk": "^3.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-brightspace": "^0.4.0",
