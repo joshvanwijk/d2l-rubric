@@ -141,7 +141,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				border: 1px solid var(--d2l-color-celestine);
 			}
 			.criterion-cell.focused {
-				box-shadow: 0 0 0 4px inset rgba(0, 111, 191, 0.4);
+				box-shadow: 0 0 0 4px inset rgba(0, 111, 191, 0.4); /* celestine with 0.4 opacity */
 			}
 			.criterion-cell.selected {
 				position: relative;
@@ -841,7 +841,7 @@ Polymer({
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
 		).then(() => {
-			this._focusCriterionCell(event);
+			this._refocusCriterionCell(event);
 		});
 		this._addingFeedback = -1;
 		this.editingScore = -1;
@@ -907,22 +907,25 @@ Polymer({
 		}.bind(this));
 	},
 
-	_focusCriterionCell: function(event) {
+	_refocusCriterionCell: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		var elem = dom(this.root).querySelector('#criterion-cell-input' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
 		fastdom.mutate(function() {
+			// Refocus criterion cell input
 			elem.blur();
 			elem.focus();
 		}.bind(this));
 	},
 
 	_handleCriterionCellFocusin: function(event) {
+		// Add focused classname to radio button's corresponding table cell
 		var criterionNum = event.model.get('criterionNum');
 		var elem = dom(this.root).querySelector('#criterion-cell' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
 		elem.classList.add('focused');
 	},
 
 	_handleCriterionCellFocusout: function(event) {
+		// Remove focused classname ot radio button's corresponding table cell
 		var criterionNum = event.model.get('criterionNum');
 		var elem = dom(this.root).querySelector('#criterion-cell' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
 		elem.classList.remove('focused');
@@ -936,7 +939,7 @@ Polymer({
 		var assessmentResult = event.model.get('assessmentResult');
 		if (event.keyCode === 32 && this._isSelected(criterionCell, assessmentResult)) { // space bar
 			this.assessCriterionCell(event.currentTarget.parentNode.parentNode.dataset.href).then(() => {
-				this._focusCriterionCell(event);
+				this._refocusCriterionCell(event);
 			});
 			this._addingFeedback = -1;
 			this.editFeedback = -1;
