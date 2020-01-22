@@ -68,7 +68,7 @@
     "loaLevelUpdatedLabelMultiRubric": "Achievement level \"{loaLevelName}\" is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}",
     "loaLevelUpdatedLabelSingleRubric": "Achievement level \"{loaLevelName}\" is now mapped to rubric level {rubricLevelName}",
     "loaOverlayHeading": "Achievement Levels",
-    "loaSliderLabel": "Achievement threshold. Use left and right arrow keys to move the threshold between \"{loaLevel1}\" and \"{loaLevel2}\"",
+    "loaSliderLabel": "Achievement threshold between \"{loaLevel1}\" and \"{loaLevel2}\". Use left and right arrow keys to move the threshold.",
     "loaThresholdMovementNotif": "Threshold moved {direction, select, left {left} right {right}}",
     "lockedAlertText": "이 루브릭은 이미 학습자 수행 평가에 사용되었으므로 편집할 수 없음",
     "makeRubricAvailableHeader": "루브릭 제공 대상",
