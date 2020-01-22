@@ -140,6 +140,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);
 			}
+			.criterion-cell.focused {
+				box-shadow: 0 0 0 4px inset rgba(0, 111, 191, 0.4);
+			}
 			.criterion-cell.selected {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
@@ -149,10 +152,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
 				border-width: 2px;
 			}
-			.criterion-cell.selected.has-bottom,
-			.criterion-cell.assessable.has-bottom:focus {
+			.criterion-cell.selected.focused {
+				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
+			}
+			.criterion-cell.selected.has-bottom {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
+			}
+			.criterion-cell.selected.has-bottom.focused {
+				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
 			.criterion-cell.selected.is-last {
 				border-bottom-color: var(--d2l-color-celestine);
@@ -163,13 +171,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			}
 			.criterion-cell.assessable:hover {
 				background-color: var(--d2l-color-sylvite);
-			}
-			.criterion-cell.assessable:focus {
-				background-color: var(--d2l-color-sylvite);
-				border-color: var(--d2l-color-celestine);
-				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
-				border-width: 2px;
-				outline: none;
 			}
 			.criterion-cell.assessable.selected {
 				background-color: var(--d2l-color-celestine-plus-2);
@@ -298,11 +299,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
 								on-click="handleTap"
 								data-href$="[[_getSelfLink(criterionCell)]]"
+								id="criterion-cell[[_getRowIndex(criterionNum)]]_[[cellNum]]"
 							>
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]">
 								</d2l-rubric-criterion-cell>
 								<d2l-offscreen>
-									<input hidden="[[_isStaticView()]]" on-keypress="_handleUnselect" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, assessmentResult)]]">
+										<input hidden="[[_isStaticView()]]" on-keypress="_handleUnselect" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, assessmentResult)]]" on-focusin="_handleCriterionCellFocusin" on-focusout="_handleCriterionCellFocusout" id="criterion-cell-input[[_getRowIndex(criterionNum)]]_[[cellNum]]">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>
@@ -837,7 +839,9 @@ Polymer({
 		if (this.readOnly) {
 			return;
 		}
-		this.assessCriterionCell(event.currentTarget.dataset.href);
+		this.assessCriterionCell(event.currentTarget.dataset.href).then(() => {
+			this._focusCriterionCell(event);
+		});
 		this._addingFeedback = -1;
 		this.editingScore = -1;
 	},
@@ -847,7 +851,9 @@ Polymer({
 			return;
 		}
 		if (event.keyCode === 13) { // enter key
-			this.assessCriterionCell(event.srcElement.dataset.href);
+			this.assessCriterionCell(event.srcElement.dataset.href).then(() => {
+				this._focusCriterionCell(event);
+			});
 			this._addingFeedback = -1;
 			this.editFeedback = -1;
 		}
@@ -903,6 +909,27 @@ Polymer({
 		}.bind(this));
 	},
 
+	_focusCriterionCell: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var elem = dom(this.root).querySelector('#criterion-cell-input' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
+		fastdom.mutate(function() {
+			elem.blur();
+			elem.focus();
+		}.bind(this));
+	},
+
+	_handleCriterionCellFocusin: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var elem = dom(this.root).querySelector('#criterion-cell' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
+		elem.classList.add('focused');
+	},
+
+	_handleCriterionCellFocusout: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		var elem = dom(this.root).querySelector('#criterion-cell' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
+		elem.classList.remove('focused');
+	},
+
 	_handleUnselect: function(event) {
 		if (this.readOnly) {
 			return;
@@ -910,7 +937,9 @@ Polymer({
 		var criterionCell = event.model.get('criterionCell');
 		var assessmentResult = event.model.get('assessmentResult');
 		if (event.keyCode === 32 && this._isSelected(criterionCell, assessmentResult)) { // space bar
-			this.assessCriterionCell(event.currentTarget.parentNode.parentNode.dataset.href);
+			this.assessCriterionCell(event.currentTarget.parentNode.parentNode.dataset.href).then(() => {
+				this._focusCriterionCell(event);
+			});
 			this._addingFeedback = -1;
 			this.editFeedback = -1;
 		}
