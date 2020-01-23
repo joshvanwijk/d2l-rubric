@@ -848,7 +848,7 @@ Polymer({
 	},
 
 	_handleKey: function(event) {
-		var criterionCell = event.model.get("criterionCell");
+		var criterionCell = event.model.get('criterionCell');
 		if (event.keyCode === 13 || (this._isSelected(criterionCell, this.cellAssessmentMap) === true && event.keyCode === 32)) { // enter or space key
 			this._handleTap(event);
 		}
