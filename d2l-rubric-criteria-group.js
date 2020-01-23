@@ -298,12 +298,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
 								on-click="_handleTap"
 								data-href$="[[_getSelfLink(criterionCell)]]"
-								id="criterion-cell[[_getRowIndex(criterionNum)]]_[[cellNum]]"
+								id="criterion-cell[[criterionNum]]_[[cellNum]]"
 							>
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" cell-assessment="[[_lookupMap(criterionCell,cellAssessmentMap)]]">
 								</d2l-rubric-criterion-cell>
 								<d2l-offscreen>
-									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, criterionResultMap)]]" on-focusin="_handleCriterionCellFocusin" on-focusout="_handleCriterionCellFocusout" id="criterion-cell-input[[_getRowIndex(criterionNum)]]_[[cellNum]]">
+									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, cellAssessmentMap)]]" on-focusin="_handleCriterionCellFocusin" on-focusout="_handleCriterionCellFocusout" id="criterion-cell-input[[criterionNum]]_[[cellNum]]">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>
@@ -848,7 +848,8 @@ Polymer({
 	},
 
 	_handleKey: function(event) {
-		if (event.keyCode === 13 || event.keyCode === 32) { // enter or space key
+		var criterionCell = event.model.get("criterionCell");
+		if (event.keyCode === 13 || (this._isSelected(criterionCell, this.cellAssessmentMap) === true && event.keyCode === 32)) { // enter or space key
 			this._handleTap(event);
 		}
 	},
@@ -908,8 +909,7 @@ Polymer({
 	},
 
 	_refocusCriterionCell: function(event) {
-		var criterionNum = event.model.get('criterionNum');
-		var elem = dom(this.root).querySelector('#criterion-cell-input' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
+		var elem = dom(this.root).querySelector('#criterion-cell-input' + event.model.get('criterionNum') + '_' + event.model.get('cellNum'));
 		fastdom.mutate(function() {
 			// Refocus criterion cell input
 			elem.blur();
@@ -919,15 +919,13 @@ Polymer({
 
 	_handleCriterionCellFocusin: function(event) {
 		// Add focused classname to radio button's corresponding table cell
-		var criterionNum = event.model.get('criterionNum');
-		var elem = dom(this.root).querySelector('#criterion-cell' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
+		var elem = dom(this.root).querySelector('#criterion-cell' + event.model.get('criterionNum') + '_' + event.model.get('cellNum'));
 		elem.classList.add('focused');
 	},
 
 	_handleCriterionCellFocusout: function(event) {
 		// Remove focused classname ot radio button's corresponding table cell
-		var criterionNum = event.model.get('criterionNum');
-		var elem = dom(this.root).querySelector('#criterion-cell' + this._getRowIndex(criterionNum) + '_' + event.model.get('cellNum'));
+		var elem = dom(this.root).querySelector('#criterion-cell' + event.model.get('criterionNum') + '_' + event.model.get('cellNum'));
 		elem.classList.remove('focused');
 	},
 
