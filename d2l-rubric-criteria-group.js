@@ -140,6 +140,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);
 			}
+			.criterion-cell:focus-within {
+				box-shadow: 0 0 0 4px inset rgba(0, 111, 191, 0.4); /* celestine with 0.4 opacity */
+			}
 			.criterion-cell.selected {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
@@ -149,10 +152,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
 				border-width: 2px;
 			}
-			.criterion-cell.selected.has-bottom,
-			.criterion-cell.assessable.has-bottom:focus {
+			.criterion-cell.selected:focus-within {
+				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
+			}
+			.criterion-cell.selected.has-bottom {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), -2px 2px 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
+			}
+			.criterion-cell.selected.has-bottom:focus-within {
+				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
 			.criterion-cell.selected.is-last {
 				border-bottom-color: var(--d2l-color-celestine);
@@ -163,13 +171,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			}
 			.criterion-cell.assessable:hover {
 				background-color: var(--d2l-color-sylvite);
-			}
-			.criterion-cell.assessable:focus {
-				background-color: var(--d2l-color-sylvite);
-				border-color: var(--d2l-color-celestine);
-				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
-				border-width: 2px;
-				outline: none;
 			}
 			.criterion-cell.assessable.selected {
 				background-color: var(--d2l-color-celestine-plus-2);
@@ -301,7 +302,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" cell-assessment="[[_lookupMap(criterionCell,cellAssessmentMap)]]">
 								</d2l-rubric-criterion-cell>
 								<d2l-offscreen>
-									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, criterionResultMap)]]">
+									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, cellAssessmentMap)]]" id="criterion-cell-input[[criterionNum]]_[[cellNum]]">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>
@@ -838,13 +839,16 @@ Polymer({
 		}
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
-		);
+		).then(() => {
+			this._focusCriterionCell(event);
+		});
 		this._addingFeedback = -1;
 		this.editingScore = -1;
 	},
 
 	_handleKey: function(event) {
-		if (event.keyCode === 13 || event.keyCode === 32) { // enter or space key
+		var criterionCell = event.model.get('criterionCell');
+		if (event.keyCode === 13 || (this._isSelected(criterionCell, this.cellAssessmentMap) === true && event.keyCode === 32)) { // enter or space key
 			this._handleTap(event);
 		}
 	},
@@ -899,6 +903,14 @@ Polymer({
 		var criterionNum = event.model.get('criterionNum');
 		var elem = dom(this.root).querySelector('#invisible-addFeedback' + this._getRowIndex(criterionNum));
 		fastdom.mutate(function() {
+			elem.focus();
+		}.bind(this));
+	},
+
+	_focusCriterionCell: function(event) {
+		var elem = dom(this.root).querySelector('#criterion-cell-input' + event.model.get('criterionNum') + '_' + event.model.get('cellNum'));
+		fastdom.mutate(function() {
+			// Refocus criterion cell input
 			elem.focus();
 		}.bind(this));
 	},
