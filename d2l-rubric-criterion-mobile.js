@@ -487,7 +487,7 @@ Polymer({
 		}
 		return '';
 	},
-	_select: function(index, criterionCells, cellAssessmentMap) {
+	_select: function(index) {
 		if (index === this._selected) {
 			return;
 		}
@@ -495,36 +495,13 @@ Polymer({
 		const prevIndex = this._selected;
 		this._selected = index;
 
-		const element = this.$.description.querySelector('#' + 'level-description-panel' + index);
+		const element = this.$.description.querySelector('#level-description-panel' + index);
 		if (element) {
 			element.classList.remove('slide-from-right');
 			element.classList.remove('slide-from-left');
 			if (prevIndex >= 0 && index >= 0) {
 				element.classList.add(index > prevIndex ? 'slide-from-right' : 'slide-from-left');
 			}
-		}
-
-		if (this.readOnly || !criterionCells || !cellAssessmentMap) {
-			return;
-		}
-
-		const helper = this.CriterionCellAssessmentHelper;
-		if (index < 0) {
-			for (let i = 0; i < criterionCells.length; i++) {
-				const cellLink = this._getSelfLink(criterionCells[i]);
-				const cellAssessment = cellAssessmentMap[cellLink];
-				if (helper.isSelected(cellAssessment) && helper.canSelect(cellAssessment)) {
-					helper.selectAsync(() => this.cellAssessmentMap[cellLink]);
-					break;
-				}
-			}
-			return;
-		}
-
-		const cellLink = this._getSelfLink(criterionCells[index]);
-		const cellAssessment = cellAssessmentMap[cellLink];
-		if (cellAssessment && helper.canSelect(cellAssessment) && !helper.isSelected(cellAssessment)) {
-			helper.selectAsync(() => this.cellAssessmentMap[cellLink]);
 		}
 	}
 });
