@@ -9,26 +9,19 @@ window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
  * @polymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
+	eventType: 'TelemetryEvent',
+	sourceId: 'rubric',
 
-	_logEvent: function(id, eventType, eventBody, telemetryData) {
-		if (!telemetryData || !telemetryData.endpoint) {
-			return;
-		}
-
-		var client = new window.d2lTelemetryBrowserClient.Client({ endpoint: telemetryData.endpoint });
-
-		eventBody.setAction('Open')
+	logViewRubricEvent: function({ id, isMobile = false }, telemetryData) {
+		const eventBody = new window.d2lTelemetryBrowserClient.EventBody();
+		eventBody.addCustom('isMobile', isMobile)
+			.setAction('View')
 			.setObject(encodeURIComponent(id), 'Rubric', id)
-			.addCustom('rubricMode', telemetryData.rubricMode || 'unkown')
-			.addCustom('originTool', telemetryData.originTool || 'unkown');
+			.addCustom('rubricMode', telemetryData.rubricMode || 'unknown')
+			.addCustom('originTool', telemetryData.originTool || 'unknown');
 
-		var event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
-			.setDate(new Date())
-			.setType(eventType)
-			.setSourceId('rubric')
-			.setBody(eventBody);
-
-		client.logUserEvent(event);
+		this._logEvent(eventBody, telemetryData);
+		return eventBody;
 	},
 
 	perfMark: function(name) {
@@ -38,34 +31,92 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		window.performance.mark(name);
 	},
 
-	perfMeasure: function(name, startMark, endMark) {
-		if (!window.performance || !window.performance.measure) {
+	logCriterionCellTappedAction: function(startMark, endMark, telemetryData) {
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'RubricCriterionCell',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricCriterionCellTapped'
+		}, telemetryData);
+	},
+
+	logCriterionLevelAddedAction: function(startMark, endMark, telemetryData) {
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'RubricCriterionLevel',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricCriterionLevelAdded'
+		}, telemetryData);
+	},
+
+	logCriterionAddedAction: function(startMark, endMark, telemetryData) {
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'RubricCriterion',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricCriterionAdded'
+		}, telemetryData);
+	},
+
+	logRubricLoadedEvent: function(startMark, endMark, telemetryData) {
+		// Logs from reuqest sent -> render finished
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'Rubric',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricLoaded'
+		}, telemetryData);
+	},
+
+	logRubricRenderedEvent: function(startMark, endMark, telemetryData) {
+		// Logs from render started (after receiving response) -> render finished
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'Rubric',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricRendered'
+		}, telemetryData);
+	},
+
+	_logEvent: function(eventBody, { endpoint }) {
+		if (!eventBody || !endpoint) {
 			return;
 		}
-		/* contrary to spec, start & end marks are not optional in IE */
-		if (!startMark) {
-			startMark = 'navigationStart';
-		}
-		if (!endMark) {
-			this.perfMark(name);
-			endMark = name;
-		}
-		window.performance.measure(name, startMark, endMark);
+
+		const client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
+
+		const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
+			.setDate(new Date())
+			.setType(this.eventType)
+			.setSourceId(this.sourceId)
+			.setBody(eventBody);
+
+		client.logUserEvent(event);
+		return event;
 	},
 
-	// Should Performance events take in an isMobile flag?
-	logPerformanceEvent: function(id, telemetryData) {
-		var eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
-			.addUserTiming(window.performance.getEntriesByType('measure'));
+	_logAndDestroyPerformanceEvent: function({ viewName, startMark, endMark, actionName  }, telemetryData) {
+		if (!window.performance || !window.performance.measure || !this._markExists(startMark) || !this._markExists(endMark)) {
+			return;
+		}
 
-		this._logEvent(id, 'PerformanceEvent', eventBody, telemetryData);
+		window.performance.measure(viewName, startMark, endMark);
+
+		const eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+			.setAction(actionName)
+			.addCustom('rubricMode', telemetryData.rubricMode || 'unknown')
+			.addCustom('originTool', telemetryData.originTool || 'unknown')
+			.addUserTiming(window.performance.getEntriesByName(viewName));
+		this._logEvent(eventBody, telemetryData);
+
+		window.performance.clearMarks(startMark);
+		window.performance.clearMarks(endMark);
+		window.performance.clearMeasures(viewName);
+		return eventBody;
 	},
 
-	logTelemetryEvent: function(id, isMobile, telemetryData) {
-		var eventBody = new window.d2lTelemetryBrowserClient.EventBody()
-			.addCustom('isMobile', isMobile);
-
-		this._logEvent(id, 'TelemetryEvent', eventBody, telemetryData);
+	_markExists: function(markName) {
+		return window.performance.getEntriesByName(markName, 'mark').length > 0 ? true : false;
 	}
 };
 

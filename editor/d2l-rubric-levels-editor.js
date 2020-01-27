@@ -6,6 +6,7 @@ import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-res
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
+import '../telemetry-behavior.js';
 import './d2l-rubric-level-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -152,7 +153,8 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		}
+		},
+		telemetryData: Object
 	},
 
 	behaviors: [
@@ -160,6 +162,7 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior,
 		IronResizableBehavior
 	],
 	attached: function() {
@@ -196,6 +199,8 @@ Polymer({
 		var action = this.entity.getActionByName('prepend');
 		if (action) {
 			this.updatingLevels = true;
+			this.perfMark('criterionLevelAddedStart');
+
 			var firstLevelName = this._getFirstLevelName();
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-added');
@@ -204,6 +209,8 @@ Polymer({
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
+				this.perfMark('criterionLevelAddedEnd');
+				this.logCriterionLevelAddedAction('criterionLevelAddedStart', 'criterionLevelAddedEnd', this.telemetryData);
 			}.bind(this));
 		}
 	},
@@ -211,6 +218,8 @@ Polymer({
 		var action = this.entity.getActionByName('append');
 		if (action) {
 			this.updatingLevels = true;
+			this.perfMark('criterionLevelAddedStart');
+
 			var lastLevelName = this._getLastLevelName();
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-added');
@@ -219,6 +228,8 @@ Polymer({
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
+				this.perfMark('criterionLevelAddedEnd');
+				this.logCriterionLevelAddedAction('criterionLevelAddedStart', 'criterionLevelAddedEnd', this.telemetryData);
 			}.bind(this));
 		}
 	},

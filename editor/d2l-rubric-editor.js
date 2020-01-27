@@ -289,7 +289,7 @@ const $_documentContainer = html `
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isReadOnly]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" telemetry-data="[[telemetryData]]">
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
@@ -578,7 +578,10 @@ Polymer({
 		_shareRubricInvalidError: {
 			type: String,
 			value: null,
-		}
+		},
+		telemetryData: {
+			type: Object
+		},
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -626,6 +629,8 @@ Polymer({
 			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-end', this._onShareRubricSave.bind(this));
 			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-error', this._onShareRubricSaveError.bind(this));
 		}
+
+		this.telemetryData = { endpoint: this.dataset.telemetryEndpoint };
 	},
 	attached: function() {
 		IronA11yAnnouncer.requestAvailability();

@@ -79,7 +79,7 @@ Polymer({
 		// The first time that the entity loads, we send out an Open event
 		if (!this._loaded && this.telemetryData && this.telemetryData.endpoint) {
 			var entityId = this._getSelfLink(entity);
-			this.logTelemetryEvent(entityId, true, this.telemetryData);
+			this.logViewRubricEvent({ id: entityId, isMobile: true }, this.telemetryData);
 			this._loaded = true;
 		}
 		this._name = entity.properties.name;
