@@ -241,7 +241,7 @@ Polymer({
 		// Upon successful save, we attempt to save other levels that have previously had errors saving (ex. out of bounds errors)
 		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-level-editor'));
 		var saveIndex = levels.findIndex((level) => {
-			level.entity.properties.name === event.name;
+			return level.entity.properties.id === event.id;
 		});
 		for (let i = saveIndex + 1; i < levels.length; i++) {
 			levels[i].savePointsAfterError();

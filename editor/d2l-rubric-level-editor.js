@@ -307,8 +307,7 @@ Polymer({
 					this._updatePoints(this.entity, false);
 
 					const savePointsEvent = new CustomEvent('save-points');
-					savePointsEvent.points = saveEvent.value;
-					savePointsEvent.name = this._levelName;
+					savePointsEvent.id = this.entity.properties.id;
 					this.dispatchEvent(savePointsEvent);
 				}.bind(this)).catch(function(err) {
 					if (this._usesPercentage) {
