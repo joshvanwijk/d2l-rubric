@@ -155,6 +155,9 @@ Polymer({
 		_levelPoints: {
 			type: Number
 		},
+		_unsavedLevelPoints: {
+			type: String
+		},
 		_canEditPoints: {
 			type: Boolean,
 			computed: '_canEditLevelPoints(entity)',
@@ -298,9 +301,15 @@ Polymer({
 			} else {
 				this.toggleBubble('_pointsInvalid', false, 'points-bubble');
 				var fields = [{'name':'points', 'value':saveEvent.value}];
+				this._unsavedLevelPoints = saveEvent.value;
 				this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
 					this.fire('d2l-rubric-level-points-saved');
 					this._updatePoints(this.entity, false);
+
+					const savePointsEvent = new CustomEvent('save-points');
+					savePointsEvent.points = saveEvent.value;
+					savePointsEvent.name = this._levelName;
+					this.dispatchEvent(savePointsEvent);
 				}.bind(this)).catch(function(err) {
 					if (this._usesPercentage) {
 						this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartInvalid', err);
@@ -309,6 +318,23 @@ Polymer({
 					}
 				}.bind(this));
 			}
+		}
+	},
+
+	savePointsAfterError: function() {
+		var action = this.entity.getActionByName('update-points');
+		if (action && this._pointsInvalid) {
+			var fields = [{'name':'points', 'value':this._unsavedLevelPoints}];
+			this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
+				this.fire('d2l-rubric-level-points-saved');
+				this._updatePoints(this.entity, false);
+			}.bind(this)).catch(function(err) {
+				if (this._usesPercentage) {
+					this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartInvalid', err);
+				} else {
+					this.handleValidationError('points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);
+				}
+			}.bind(this));
 		}
 	},
 	_updatePoints: function(entity, selfLinkChanged) {
