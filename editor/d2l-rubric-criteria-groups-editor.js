@@ -73,7 +73,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				outcomes-title="[[outcomesTitle]]"
 				browse-outcomes-text="[[browseOutcomesText]]"
 				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
-				updating-levels="{{updatingLevels}}">
+				updating-levels="{{updatingLevels}}"
+				telemetry-data="[[telemetryData]]"
+			>
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -148,7 +150,10 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		}
+		},
+		telemetryData: {
+			type: Object
+		},
 	},
 
 	behaviors: [

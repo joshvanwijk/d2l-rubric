@@ -15,6 +15,7 @@ import './d2l-rubric-overall-score.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './localize-behavior.js';
+import './telemetry-behavior.js';
 import './assessment-behavior.js';
 import './d2l-rubric-entity-behavior.js';
 import 'd2l-alert/d2l-alert.js';
@@ -359,7 +360,8 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.AssessmentBehavior
+		D2L.PolymerBehaviors.Rubric.AssessmentBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
 	observers: [
@@ -377,14 +379,20 @@ Polymer({
 
 	ready: function() {
 		this._updateOutcomesTitleText();
+		this.perfMark('rubricLoadStart');
 	},
 
 	_onEntityChanged: function(entity) {
 		if (entity) {
-			this._telemetryData = {};
-			this._telemetryData.rubricMode = this.dataset.rubricMode;
-			this._telemetryData.originTool = this.dataset.originTool;
-			this._telemetryData.endpoint = this.dataset.telemetryEndpoint;
+			this._telemetryData = {
+				rubricMode: this.dataset.rubricMode,
+				originTool: this.dataset.originTool,
+				endpoint: this.dataset.telemetryEndpoint
+			};
+			if (this._showContent === false) {
+				this.perfMark('rubricRenderStart');
+			}
+
 			this.rubricType = this._findRubricType(entity);
 			this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 			this._showContent = true;

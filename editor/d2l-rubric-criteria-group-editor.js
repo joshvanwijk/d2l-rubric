@@ -97,6 +97,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 					percentage-format-alternate="[[percentageFormatAlternate]]"
 					on-d2l-siren-entity-changed="_notifyResize"
 					updating-levels="{{updatingLevels}}"
+					telemetry-data="[[telemetryData]]"
 				>
 					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
 					</d2l-input-text>
@@ -132,6 +133,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
 						updating-levels="[[updatingLevels]]"
+						telemetry-data="[[telemetryData]]"
 					>
 					</d2l-rubric-criteria-editor>
 				</div>
@@ -201,7 +203,10 @@ Polymer({
 		_rubricLevelLoaMapping: {
 			type: Object,
 			value: {}
-		}
+		},
+		telemetryData: {
+			type: Object
+		},
 	},
 
 	behaviors: [

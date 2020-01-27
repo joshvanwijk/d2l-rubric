@@ -292,8 +292,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								</div>
 							</d2l-td>
 						</template>
-						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
-							<d2l-td 
+						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum" on-dom-change="_onCriterionCellDomChanged">
+							<d2l-td
 								class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
 								on-click="_handleTap"
@@ -463,7 +463,7 @@ Polymer({
 		// The first time that the entity loads, we send out an Open event
 		if (!this._loaded && this.telemetryData && this.telemetryData.endpoint) {
 			var entityId = this._getSelfLink(entity);
-			this.logTelemetryEvent(entityId, false, this.telemetryData);
+			this.logViewRubricEvent({ id: entityId }, this.telemetryData);
 			this._loaded = true;
 		}
 		this._levelsHref = this._getLevelsLink(entity);
@@ -549,6 +549,16 @@ Polymer({
 		}
 		this._showContent = true;
 		this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
+	},
+
+	_onCriterionCellDomChanged: function() {
+		const self = this;
+		this.perfMark('rubricRenderEnd');
+		this.perfMark('rubricLoadEnd');
+		this.debounce('criterionCellDomChangedEvent', function() {
+			self.logRubricRenderedEvent('rubricRenderStart', 'rubricRenderEnd', self.telemetryData);
+			self.logRubricLoadedEvent('rubricLoadStart', 'rubricLoadEnd', self.telemetryData);
+		}, 100);
 	},
 
 	_closeFeedback: function(event) {
@@ -837,11 +847,17 @@ Polymer({
 		if (this.readOnly) {
 			return;
 		}
+
+		this.perfMark('criterionCellTappedStart');
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
 		).then(() => {
 			this._focusCriterionCell(event);
+
+			this.perfMark('criterionCellTappedEnd');
+			this.logCriterionCellTappedAction('criterionCellTappedStart', 'criterionCellTappedEnd', this.telemetryData);
 		});
+
 		this._addingFeedback = -1;
 		this.editingScore = -1;
 	},

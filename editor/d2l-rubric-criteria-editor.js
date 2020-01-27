@@ -8,6 +8,7 @@ import 'd2l-dnd-sortable/d2l-dnd-sortable.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
+import '../telemetry-behavior.js';
 import './d2l-rubric-criterion-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -243,14 +244,16 @@ Polymer({
 			type: Boolean
 		},
 		_rubricLevelsHref: String,
-		rubricLevelLoaMapping: Object
+		rubricLevelLoaMapping: Object,
+		telemetryData: Object
 	},
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
-		D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
 	observers: [
@@ -337,11 +340,16 @@ Polymer({
 	_handleAddCriterion: function() {
 		var action = this.entity.getActionByName('create');
 		if (action) {
+			this.perfMark('criterionAddedStart');
+
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-criterion-added');
 				setTimeout(function() {
 					this.fire('iron-announce', { text: this.localize('criterionAdded') }, { bubbles: true });
 				}.bind(this), 2000);
+
+				this.perfMark('criterionAddedEnd');
+				this.logCriterionAddedAction('criterionAddedStart', 'criterionAddedEnd', this.telemetryData);
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
 			}.bind(this));
