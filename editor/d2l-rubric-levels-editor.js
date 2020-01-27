@@ -132,7 +132,6 @@ Polymer({
 
 	properties: {
 		_levels: Array,
-		_levelPointsError: Array,
 		hasOutOf: {
 			type: Boolean,
 			value: false
