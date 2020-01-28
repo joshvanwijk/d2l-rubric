@@ -171,7 +171,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 				<div class="col-center" id="level-header-center-section">
 					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel">
 						<div class="cell">
-							<d2l-rubric-overall-level-editor href="[[_getSelfLink(overallLevel)]]" token="[[token]]"></d2l-rubric-overall-level-editor>
+							<d2l-rubric-overall-level-editor href="[[_getSelfLink(overallLevel)]]" token="[[token]]" on-save-range-start="_onSaveRangeStart"></d2l-rubric-overall-level-editor>
 						</div>
 					</template>
 				</div>
@@ -313,5 +313,20 @@ Polymer({
 	},
 	_isLastAndCorner: function(index, levelCount) {
 		return index === levelCount - 1;
+	},
+	_onSaveRangeStart: function(event) {
+		// Upon successful save, we attempt to save other levels that have previously had errors saving
+		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-overall-level-editor'));
+		var saveIndex = levels.findIndex((level) => {
+			return level.entity.properties.id === event.id;
+		});
+
+		// To prevent false out of bounds errors, we call savePointsAfterError in an order starting from the levels adjacent to the saved level
+		for (let i = saveIndex + 1; i < levels.length; i++) {
+			levels[i].savePointsAfterError();
+		}
+		for (let i = saveIndex - 1; i >= 0; i--) {
+			levels[i].savePointsAfterError();
+		}
 	}
 });

@@ -248,11 +248,13 @@ Polymer({
 		this.fire('iron-announce', { text: this.localize('addLevelAppend', 'name', this._getLastLevelName()) }, { bubbles: true });
 	},
 	_onSavePoints: function(event) {
-		// Upon successful save, we attempt to save other levels that have previously had errors saving (ex. out of bounds errors)
+		// Upon successful save, we attempt to save other levels that have previously had errors saving
 		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-level-editor'));
 		var saveIndex = levels.findIndex((level) => {
 			return level.entity.properties.id === event.id;
 		});
+
+		// To prevent false out of bounds errors, we call savePointsAfterError in an order starting from the levels adjacent to the saved level
 		for (let i = saveIndex + 1; i < levels.length; i++) {
 			levels[i].savePointsAfterError();
 		}
