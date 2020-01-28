@@ -142,6 +142,9 @@ Polymer({
 		_rangeStart: {
 			type: Number
 		},
+		_unsavedRangeStart: {
+			type: String
+		},
 		_hasRangeStart: {
 			type: Boolean,
 			computed: '_hasRangeStartValue(entity)'
@@ -253,13 +256,33 @@ Polymer({
 			} else {
 				this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
 				var fields = [{'name':'rangeStart', 'value': saveEvent.value}];
+				this._unsavedRangeStart = saveEvent.value;
 				this.performAutosaveAction(action, fields, '_pendingRangeStartSaves').then(function() {
 					this.fire('d2l-rubric-overall-level-range-start-saved');
 					this._updateRangeStart(this.entity, false);
+
+					var link = this.entity.getLinkByRel('self');
+					if (link) {
+						const saveRangeStartEvent = new CustomEvent('save-range-start');
+						saveRangeStartEvent.href = link.href;
+						this.dispatchEvent(saveRangeStartEvent);
+					}
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
 				}.bind(this));
 			}
+		}
+	},
+	saveRangeStartAfterError: function() {
+		var action = this.entity.getActionByName('update-range-start');
+		if (action && this._rangeStartInvalid) {
+			var fields = [{'name':'rangeStart', 'value': this._unsavedRangeStart}];
+			this.performAutosaveAction(action, fields, '_pendingRangeStartSaves').then(function() {
+				this.fire('d2l-rubric-overall-level-range-start-saved');
+				this._updateRangeStart(this.entity, false);
+			}.bind(this)).catch(function(err) {
+				this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
+			}.bind(this));
 		}
 	},
 	_updateRangeStart: function(entity, selfLinkChanged) {

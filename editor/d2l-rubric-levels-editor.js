@@ -114,7 +114,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 		<div id="levels-section" style="display: inherit; flex: 1 1 auto;">
 			<template is="dom-repeat" items="[[_levels]]" as="level">
 				<div class="cell" is-holistic$="[[isHolistic]]">
-					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}">
+					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}" on-save-points="_onSavePoints">
 					</d2l-rubric-level-editor>
 				</div>
 			</template>
@@ -246,5 +246,20 @@ Polymer({
 	},
 	_onAppendFocus: function() {
 		this.fire('iron-announce', { text: this.localize('addLevelAppend', 'name', this._getLastLevelName()) }, { bubbles: true });
+	},
+	_onSavePoints: function(event) {
+		// Upon successful save, we attempt to save other levels that have previously had errors saving
+		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-level-editor'));
+		var saveIndex = levels.findIndex((level) => {
+			return level.entity.properties.id === event.id;
+		});
+
+		// To prevent false out of bounds errors, we call savePointsAfterError in an order starting from the levels adjacent to the saved level
+		for (let i = saveIndex + 1; i < levels.length; i++) {
+			levels[i].savePointsAfterError();
+		}
+		for (let i = saveIndex - 1; i >= 0; i--) {
+			levels[i].savePointsAfterError();
+		}
 	}
 });
