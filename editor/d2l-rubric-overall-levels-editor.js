@@ -318,15 +318,16 @@ Polymer({
 		// Upon successful save, we attempt to save other levels that have previously had errors saving
 		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-overall-level-editor'));
 		var saveIndex = levels.findIndex((level) => {
-			return level.entity.properties.id === event.id;
+			var link = level.entity.getLinkByRel('self');
+			return link ? link.href === event.href : false;
 		});
 
 		// To prevent false out of bounds errors, we call savePointsAfterError in an order starting from the levels adjacent to the saved level
 		for (let i = saveIndex + 1; i < levels.length; i++) {
-			levels[i].savePointsAfterError();
+			levels[i].saveRangeStartAfterError();
 		}
 		for (let i = saveIndex - 1; i >= 0; i--) {
-			levels[i].savePointsAfterError();
+			levels[i].saveRangeStartAfterError();
 		}
 	}
 });

@@ -261,9 +261,12 @@ Polymer({
 					this.fire('d2l-rubric-overall-level-range-start-saved');
 					this._updateRangeStart(this.entity, false);
 
-					const saveRangeStartEvent = new CustomEvent('save-range-start');
-					saveRangeStartEvent.id = this.entity.properties.id;
-					this.dispatchEvent(saveRangeStartEvent);
+					var link = this.entity.getLinkByRel('self');
+					if (link) {
+						const saveRangeStartEvent = new CustomEvent('save-range-start');
+						saveRangeStartEvent.href = link.href;
+						this.dispatchEvent(saveRangeStartEvent);
+					}
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
 				}.bind(this));
