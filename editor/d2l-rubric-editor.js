@@ -293,7 +293,7 @@ const $_documentContainer = html `
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
-			<d2l-rubric token="[[token]]" href="[[href]]" overall-score-flag="" read-only="">
+			<d2l-rubric token="[[token]]" href="[[href]]" overall-score-flag="" read-only="" performance-telemetry-flag$="[[performanceTelemetryFlag]]">
 			</d2l-rubric>
 		</template>
 
@@ -582,6 +582,11 @@ Polymer({
 		telemetryData: {
 			type: Object
 		},
+		performanceTelemetryFlag: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		}
 	},
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
@@ -630,7 +635,10 @@ Polymer({
 			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-error', this._onShareRubricSaveError.bind(this));
 		}
 
-		this.telemetryData = { endpoint: this.dataset.telemetryEndpoint };
+		this.telemetryData = {
+			endpoint: this.dataset.telemetryEndpoint,
+			performanceTelemetryEnabled: this.performanceTelemetryFlag
+		};
 	},
 	attached: function() {
 		IronA11yAnnouncer.requestAvailability();

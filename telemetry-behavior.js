@@ -96,7 +96,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 	},
 
 	_logAndDestroyPerformanceEvent: function({ viewName, startMark, endMark, actionName  }, telemetryData) {
-		if (!window.performance || !window.performance.measure || !this._markExists(startMark) || !this._markExists(endMark)) {
+		if (!window.performance || !window.performance.measure || !this._markExists(startMark) || !this._markExists(endMark) || !telemetryData.performanceTelemetryEnabled) {
 			return;
 		}
 
