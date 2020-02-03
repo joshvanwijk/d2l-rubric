@@ -757,7 +757,7 @@ Polymer({
 		deleteButton.setAttribute('disabled', '');
 		this.openConfirm({
 			title: this.localize('deleteCriterionConfirmationTitle'),
-			secondaryMessage: this.localize('deleteCriterionConfirmationText'),
+			secondaryMessage: action.title || this.localize('deleteCriterionConfirmationText'),
 			positiveButtonText: this.localize('deleteConfirmationYes'),
 			negativeButtonText: this.localize('deleteConfirmationNo')
 		}).then(function() {
