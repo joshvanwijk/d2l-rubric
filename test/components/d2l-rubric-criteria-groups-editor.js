@@ -37,7 +37,7 @@ suite('<d2l-rubric-criteria-groups-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
-			test.skip('adds criteria group', function(done) {
+			test.skip('adds criteria group', function(done) { // Hangs even though done is called, no errors
 				expect(element._groups.length).to.equal(1);
 
 				fetch = sinon.stub(window.d2lfetch, 'fetch');

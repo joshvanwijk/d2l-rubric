@@ -69,7 +69,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 			});
 
-			test.skip('sets aria-invalid if saving name fails', function(done) {
+			test('sets aria-invalid if saving name fails', function(done) {
 				fetch = sinon.stub(window.d2lfetch, 'fetch');
 				var promise = Promise.resolve({
 					ok: false,
@@ -89,6 +89,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 								expect(nameTextArea.ariaInvalid).to.equal('true');
 							}
 							done();
+							done = () => {}; // Ignore subsequent invocations
 						});
 					});
 					nameTextArea.dispatchEvent(new CustomEvent('focus', { bubbles: true, cancelable: false, composed: true }));

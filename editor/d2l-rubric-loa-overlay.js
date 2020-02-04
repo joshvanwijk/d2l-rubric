@@ -321,7 +321,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 			this._levels = levelEntities;
 			this._sortedLevels = this._sortRubricLevels(this._levels);
 			this._rubricLevelOverrides = {};
-		} else {
+		} else if (this.href) {
 			this._reloadHref(this.href);
 		}
 
@@ -756,7 +756,9 @@ class RubricLoaOverlay extends mixinBehaviors([
 	}
 
 	_onAlignmentsChanged() {
-		this._reloadHref(this.href);
+		if (this.href) {
+			this._reloadHref(this.href);
+		}
 	}
 
 	_getNextLoaLevel(loaLevels, loaLevelEntity) {
