@@ -109,7 +109,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					<div class="override-label" hidden$="[[scoreOverridden]]">[[localize('overrideLabel')]]</div>
 				</template>
 				<div class="editing-component">
-					<d2l-input-text id="text-area" value="{{_score}}" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
+					<d2l-input-text id="text-area" value="[[_score]]" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of">[[_localizeOutOf(entity)]]</div>
 				</div>
@@ -341,12 +341,12 @@ Polymer({
 				action = this._saveScore(newScore);
 			}
 			this._pendingScoreSaves++;
-			action.finally(function() {
-				this._pendingScoreSaves--;
-			}.bind(this)).then(function() {
-				this._updateScore(this.entity, this.assessmentEntity, this.totalScore, !!this.criterionHref);
-			}.bind(this)).catch(function(err) {
+			this._score = newScore;
+			action.catch(function(err) {
 				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
+			}.bind(this)).finally(function() {
+				this._pendingScoreSaves--;
+				this._updateScore(this.entity, this.assessmentEntity, this.totalScore, !!this.criterionHref);
 			}.bind(this));
 		}
 	},

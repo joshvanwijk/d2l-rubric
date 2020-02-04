@@ -13,7 +13,7 @@ class AutosavingInput extends PolymerElement {
 		const template = html`
 			<d2l-input-text
 				id="input"
-				value="{{_getDisplayedValue(_isFocused,invalid,pendingSaves,_enteredValue,value)}}"
+				value="[[_getDisplayedValue(_isFocused,invalid,pendingSaves,_enteredValue,value)]]"
 				on-focus="_onFocus"
 				on-blur="_onBlur"
 				on-input="_onInput"

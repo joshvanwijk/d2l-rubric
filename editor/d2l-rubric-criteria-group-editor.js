@@ -99,8 +99,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 					updating-levels="{{updatingLevels}}"
 					telemetry-data="[[telemetryData]]"
 				>
-					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_nameBlurHandler" on-input="_nameInputHandler" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
-					</d2l-input-text>
+					<d2l-input-text
+						id="group-name"
+						slot="group-name-slot"
+						value="[[_groupName]]"
+						hidden="[[!showGroupName]]" 
+						disabled="[[!_canEditGroupName(entity)]]"
+						on-blur="_nameBlurHandler"
+						on-input="_nameInputHandler"
+						aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+						aria-label$="[[localize('groupName')]]"
+						prevent-submit=""
+					></d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<d2l-rubric-loa-overlay
 					href="[[_levelsHref]]"
@@ -310,6 +320,7 @@ Polymer({
 
 	_saveName: function(value) {
 		this._groupNameChanging = false;
+		this._groupName = value;
 		var action = this.entity.getActionByName('update');
 		if (action) {
 			if (!value.trim()) {
@@ -319,9 +330,10 @@ Polymer({
 				var fields = [{'name': 'name', 'value': value}];
 				this.performAutosaveAction(action, fields, '_pendingGroupNameSaves').then(function() {
 					this.fire('d2l-rubric-group-name-saved');
-					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
+				}.bind(this)).finally(function() {
+					this._updateName(this.entity, false);
 				}.bind(this));
 			}
 		}
