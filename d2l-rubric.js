@@ -392,7 +392,7 @@ Polymer({
 			this._telemetryData = {
 				rubricMode: this.dataset.rubricMode,
 				originTool: this.dataset.originTool,
-				endpoint: this.dataset.telemetryEndpoint,
+				endpoint: window.document.documentElement.dataset.telemetryEndpoint,
 				performanceTelemetryEnabled: this.performanceTelemetryFlag
 			};
 
