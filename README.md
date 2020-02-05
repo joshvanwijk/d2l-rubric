@@ -78,3 +78,28 @@ The data used for the demo and for running test can be updated from QA sites.
 $ npm run regenerate_data <qa site url> <daily pwd> (optional: copy_files)
 ```
 If the optional argument copy_files is specified, the generated files will be automatically copied to the demo and test folders, otherwise they will stay in the regen_api_data folder
+
+
+## Lang Term Update
+
+#### Adding an new lang term
+
+ 1. Add the new term to `/lang/en.json`
+ 2. Run `npm run lang:copy` (this will copy term to other files)
+ 3. Manually add french translations to `/lang/fr.json` (google translate. This is in case auto-translations don't run in time, if we don't have french, we can get fined)
+ 4. Run `npm run lang:build`
+ 5. Run `npm run lang:lint -- --fix`
+
+
+#### Modifying a lang term
+
+ 1. Modify the term in `/lang/en.json`
+ 2. Run `npm run lang:copy -- term1 term2...` (where `term1,term2` are the terms you'd like to modify).
+ 3. Manually modify french translations to `/lang/fr.json`
+ 4. Run `npm run lang:build`
+ 5. Run `npm run lang:lint -- --fix`
+
+
+
+
+
