@@ -130,7 +130,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 		window.performance.measure(viewName, startMark, endMark);
 
-		const eventBody = this._createEventBody(actionName, telemetryData)
+		const eventBody = this._createEventBody(actionName, telemetryData, null, true)
 			.addUserTiming(window.performance.getEntriesByName(viewName));
 		this._logEvent(eventBody, telemetryData, false);
 
@@ -144,7 +144,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		return window.performance.getEntriesByName(markName, 'mark').length > 0 ? true : false;
 	},
 
-	_createEventBody: function(action, telemetryData, customJson) {
+	_createEventBody: function(action, telemetryData, customJson, isPerformanceLog) {
 		const common = this._getCommonProperties();
 		if (!customJson) {
 			customJson = common;
@@ -154,7 +154,11 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 			}
 		}
 
-		return new window.d2lTelemetryBrowserClient.EventBody()
+		const eventBody = isPerformanceLog ?
+			new window.d2lTelemetryBrowserClient.PerformanceEventBody() :
+			new window.d2lTelemetryBrowserClient.EventBody();
+
+		return eventBody
 			.setAction(action)
 			.setTenantUrl(location.hostname)
 			.addCustom('rubricMode', (telemetryData || {}).rubricMode || 'unknown')

@@ -384,7 +384,8 @@ Polymer({
 		'd2l-siren-entity-save-end': '_onEntitySave',
 		'd2l-siren-entity-error': '_handleError',
 		'd2l-alert-button-pressed': '_pageReload',
-		'd2l-rubric-compact-view-accordion': '_onAccordionCollapseExpand'
+		'd2l-rubric-compact-view-accordion': '_onAccordionCollapseExpand',
+		'd2l-rubric-action-error': '_onSirenActionError'
 	},
 
 	ready: function() {
@@ -522,6 +523,15 @@ Polymer({
 	},
 
 	_handleError: function(e) {
+		if (e && e['target']) {
+			this.logApiError(
+				e.target.href,
+				'GET',
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				this._telemetryData
+			);
+		}
+
 		if (this._errored) {
 			return;
 		}
@@ -592,6 +602,16 @@ Polymer({
 
 	_waitForCachePrimer: function(href, isPrimed) {
 		return isPrimed ? href : null;
+	},
+
+	_onSirenActionError: function(event) {
+		this.logApiError(
+			event.detail.url,
+			event.detail.method,
+			(typeof event.detail.error === 'number') ? event.detail.error : null,
+			this._telemetryData
+		);
+		event.stopPropagation();
 	},
 
 	_attachErrorHandler: function(telemetryData) {
