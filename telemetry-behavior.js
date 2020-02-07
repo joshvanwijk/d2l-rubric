@@ -13,14 +13,11 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 	sourceId: 'rubric',
 
 	logViewRubricEvent: function({ id, isMobile = false }, telemetryData) {
-		const eventBody = new window.d2lTelemetryBrowserClient.EventBody();
-		eventBody.addCustom('isMobile', isMobile)
-			.setAction('View')
-			.setObject(encodeURIComponent(id), 'Rubric', id)
-			.addCustom('rubricMode', telemetryData.rubricMode || 'unknown')
-			.addCustom('originTool', telemetryData.originTool || 'unknown');
+		const eventBody = this._createEventBody('View', telemetryData)
+			.addCustom('isMobile', isMobile)
+			.setObject(encodeURIComponent(id), 'Rubric', id);
 
-		this._logEvent(eventBody, telemetryData);
+		this._logEvent(eventBody, telemetryData, false);
 		return eventBody;
 	},
 
@@ -78,7 +75,38 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		}, telemetryData);
 	},
 
-	_logEvent: function(eventBody, { endpoint }) {
+	logJavascriptError: function(message, error, telemetryData, source, line, column) {
+		const errorInfo = {
+			Name: (error instanceof Error) ? error.name : typeof error,
+			Message: message || '',
+			Source: source || null,
+			Line: typeof line === 'number' ? line : null,
+			Column: typeof column === 'number' ? column : null,
+			Details: (error && typeof error['toString'] === 'function') ? error.toString() : null
+		};
+
+		this._logEvent(
+			this._createEventBody('JavascriptError', telemetryData, { Error: errorInfo }),
+			telemetryData,
+			true
+		);
+	},
+
+	logApiError: function(url, method, statusCode, telemetryData) {
+		const errorInfo = {
+			RequestUrl: url,
+			RequestMethod: method,
+			ResponseStatus: statusCode
+		};
+
+		this._logEvent(
+			this._createEventBody('ApiError', telemetryData, { Error: errorInfo }),
+			telemetryData,
+			true
+		);
+	},
+
+	_logEvent: function(eventBody, { endpoint }, isError) {
 		if (!eventBody || !endpoint) {
 			return;
 		}
@@ -87,7 +115,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 		const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 			.setDate(new Date())
-			.setType(this.eventType)
+			.setType(isError ? 'ErrorEvent' : this.eventType)
 			.setSourceId(this.sourceId)
 			.setBody(eventBody);
 
@@ -102,12 +130,9 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 		window.performance.measure(viewName, startMark, endMark);
 
-		const eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
-			.setAction(actionName)
-			.addCustom('rubricMode', telemetryData.rubricMode || 'unknown')
-			.addCustom('originTool', telemetryData.originTool || 'unknown')
+		const eventBody = this._createEventBody(actionName, telemetryData)
 			.addUserTiming(window.performance.getEntriesByName(viewName));
-		this._logEvent(eventBody, telemetryData);
+		this._logEvent(eventBody, telemetryData, false);
 
 		window.performance.clearMarks(startMark);
 		window.performance.clearMarks(endMark);
@@ -117,7 +142,51 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 	_markExists: function(markName) {
 		return window.performance.getEntriesByName(markName, 'mark').length > 0 ? true : false;
+	},
+
+	_createEventBody: function(action, telemetryData, customJson) {
+		const common = this._getCommonProperties();
+		if (!customJson) {
+			customJson = common;
+		} else {
+			for (const key in common) {
+				customJson[key] = common[key];
+			}
+		}
+
+		return new window.d2lTelemetryBrowserClient.EventBody()
+			.setAction(action)
+			.setTenantUrl(location.hostname)
+			.addCustom('rubricMode', (telemetryData || {}).rubricMode || 'unknown')
+			.addCustom('originTool', (telemetryData || {}).originTool || 'unknown')
+			.setCustomJson(customJson);
+	},
+
+	_getCommonProperties: function() {
+		if (!this._commonProperties) {
+			this._commonProperties = Object.freeze({
+				PageUrl: location.href,
+				ReferrerUrl: window.document.referrer,
+				LmsVersion: window.document.documentElement.dataset.appVersion,
+				BsiVersion: this._getBsiVersion()
+			});
+		}
+		return this._commonProperties;
+	},
+
+	_getBsiVersion: function() {
+		const scripts = Array.from(window.document.head.childNodes).filter(e => e.tagName === 'SCRIPT');
+		const bsiRegex = /^https:\/\/s\.brightspace\.com\/lib\/bsi\/([^\/]+)\//;
+		for (let i = 0; i < scripts.length; i++) {
+			if (!scripts[i].src) continue;
+			const matches = scripts[i].src.match(bsiRegex);
+			if (matches && matches[1]) {
+				return matches[1];
+			}
+		}
+		return 'dev';
 	}
+
 };
 
 /** @polymerBehavior */
