@@ -390,22 +390,24 @@ Polymer({
 	ready: function() {
 		this._updateOutcomesTitleText();
 		this.perfMark('rubricLoadStart');
+
+		var telemetryEndpoint = null;
+		if (this.telemetryFlag) {
+			telemetryEndpoint = window.document.documentElement.dataset.telemetryEndpoint;
+		}
+
+		this._telemetryData = {
+			rubricMode: this.dataset.rubricMode,
+			originTool: this.dataset.originTool,
+			endpoint: telemetryEndpoint,
+			performanceTelemetryEnabled: this.performanceTelemetryFlag
+		};
+
+		this._attachErrorHandler(this._telemetryData);
 	},
 
 	_onEntityChanged: function(entity) {
 		if (entity) {
-			var telemetryEndpoint = null;
-			if (this.telemetryFlag) {
-				telemetryEndpoint = window.document.documentElement.dataset.telemetryEndpoint;
-			}
-
-			this._telemetryData = {
-				rubricMode: this.dataset.rubricMode,
-				originTool: this.dataset.originTool,
-				endpoint: telemetryEndpoint,
-				performanceTelemetryEnabled: this.performanceTelemetryFlag
-			};
-
 			if (this._showContent === false) {
 				this.perfMark('rubricRenderStart');
 			}
@@ -590,5 +592,32 @@ Polymer({
 
 	_waitForCachePrimer: function(href, isPrimed) {
 		return isPrimed ? href : null;
+	},
+
+	_attachErrorHandler: function(telemetryData) {
+		window.D2L = window.D2L || {};
+		window.D2L.Rubric = window.D2L.Rubric || {};
+		window.D2L.Rubric.Telemetry = window.D2L.Rubric.Telemetry || {};
+
+		if (!window.D2L.Rubric.Telemetry.errorHandlerAttached) {
+			window.addEventListener('error', errorEvent => {
+				if (
+					!errorEvent ||
+					(errorEvent.error && errorEvent.error['name'] === 'NetworkError') ||
+					// The ResizeObserver "error" isn't a true error. Ignore it
+					errorEvent.message === 'ResizeObserver loop completed with undelivered notifications.'
+				) return;
+
+				this.logJavascriptError(
+					errorEvent.message,
+					errorEvent.error,
+					telemetryData,
+					errorEvent.filename,
+					errorEvent.lineno,
+					errorEvent.colno
+				);
+			});
+			window.D2L.Rubric.Telemetry.errorHandlerAttached = true;
+		}
 	}
 });

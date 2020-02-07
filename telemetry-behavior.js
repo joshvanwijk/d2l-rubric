@@ -77,7 +77,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 	logJavascriptError: function(message, error, telemetryData, source, line, column) {
 		const errorInfo = {
-			Name: (error instanceof Error) ? error.name : typeof error,
+			Name: (error && typeof error['name'] === 'string') ? error.name : typeof error,
 			Message: message || '',
 			Source: source || null,
 			Line: typeof line === 'number' ? line : null,
