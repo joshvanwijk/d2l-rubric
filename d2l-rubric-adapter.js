@@ -1,7 +1,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-media-query/iron-media-query.js';
-import 'd2l-accordion/d2l-accordion.js';
-import 'd2l-accordion/d2l-accordion-collapse.js';
+import '@brightspace-ui-labs/accordion/accordion.js';
+import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 
@@ -47,7 +47,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 					font-size: 0.8rem;
 				}
 
-				d2l-accordion-collapse[opened] .rubric-header-out-of-text {
+				d2l-labs-accordion-collapse[opened] .rubric-header-out-of-text {
 					display: none;
 				}
 			</style>
@@ -59,8 +59,8 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 					id="compact-view-template"
 					if="[[compact]]"
 					restamp>
-					<d2l-accordion flex>
-						<d2l-accordion-collapse flex>
+					<d2l-labs-accordion flex>
+						<d2l-labs-accordion-collapse flex>
 							<div slot="header">
 								<d2l-icon
 									class="rubric-header-icon"
@@ -76,8 +76,8 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 								</span>
 							</div>
 							<slot></slot>
-						</d2l-accordion-collapse>
-					</d2l-accordion>
+						</d2l-labs-accordion-collapse>
+					</d2l-labs-accordion>
 				</template>
 				<template is="dom-if" if="[[!compact]]" restamp>
 					<slot></slot>
@@ -108,7 +108,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 		const domIf = this.$['compact-view-template'];
 
 		domIf.addEventListener('dom-change', () => {
-			const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
+			const accordion = this.shadowRoot.querySelector('d2l-labs-accordion-collapse');
 
 			if (accordion) {
 				if (this.___accordionMutationObserver) {

@@ -13,7 +13,7 @@ import './d2l-rubric-editor-header.js';
 import '../localize-behavior.js';
 import './d2l-rubric-dropdown-menu-behavior.js';
 import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
-import 'd2l-accordion/d2l-accordion-collapse.js';
+import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-tooltip/d2l-tooltip.js';
@@ -298,7 +298,7 @@ const $_documentContainer = html `
 		</template>
 
 		<div id="accordion-container">
-			<d2l-accordion-collapse title="[[localize('options')]]" flex="" opened$="[[_isReadOnly]]">
+			<d2l-labs-accordion-collapse title="[[localize('options')]]" flex="" opened$="[[_isReadOnly]]">
 				<div id="options-container">
 					<div id="visibility-container">
 						<d2l-rubric-visibility-editor href="[[href]]" token="[[token]]"></d2l-rubric-visibility-editor>
@@ -373,7 +373,7 @@ const $_documentContainer = html `
 						</template>
 					</div>
 				</div>
-			</d2l-accordion-collapse>
+			</d2l-labs-accordion-collapse>
 		</div>
 	</template>
 
