@@ -9,7 +9,7 @@ import 's-html/s-html.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-offscreen/d2l-offscreen.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import './d2l-rubric-action-behavior.js';
 import './assessment-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
@@ -253,7 +253,7 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+		D2L.PolymerBehaviors.Rubric.ActionBehavior,
 		D2L.PolymerBehaviors.Rubric.AssessmentBehavior
 	],
 

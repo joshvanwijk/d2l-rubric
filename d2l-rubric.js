@@ -384,28 +384,31 @@ Polymer({
 		'd2l-siren-entity-save-end': '_onEntitySave',
 		'd2l-siren-entity-error': '_handleError',
 		'd2l-alert-button-pressed': '_pageReload',
-		'd2l-rubric-compact-view-accordion': '_onAccordionCollapseExpand'
+		'd2l-rubric-compact-view-accordion': '_onAccordionCollapseExpand',
+		'd2l-rubric-action-error': '_onSirenActionError'
 	},
 
 	ready: function() {
 		this._updateOutcomesTitleText();
 		this.perfMark('rubricLoadStart');
+
+		var telemetryEndpoint = null;
+		if (this.telemetryFlag) {
+			telemetryEndpoint = window.document.documentElement.dataset.telemetryEndpoint;
+		}
+
+		this._telemetryData = {
+			rubricMode: this.dataset.rubricMode,
+			originTool: this.dataset.originTool,
+			endpoint: telemetryEndpoint,
+			performanceTelemetryEnabled: this.performanceTelemetryFlag
+		};
+
+		this._attachErrorHandler(this._telemetryData);
 	},
 
 	_onEntityChanged: function(entity) {
 		if (entity) {
-			var telemetryEndpoint = null;
-			if (this.telemetryFlag) {
-				telemetryEndpoint = window.document.documentElement.dataset.telemetryEndpoint;
-			}
-
-			this._telemetryData = {
-				rubricMode: this.dataset.rubricMode,
-				originTool: this.dataset.originTool,
-				endpoint: telemetryEndpoint,
-				performanceTelemetryEnabled: this.performanceTelemetryFlag
-			};
-
 			if (this._showContent === false) {
 				this.perfMark('rubricRenderStart');
 			}
@@ -520,6 +523,15 @@ Polymer({
 	},
 
 	_handleError: function(e) {
+		if (e && e['target']) {
+			this.logApiError(
+				e.target.href,
+				'GET',
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				this._telemetryData
+			);
+		}
+
 		if (this._errored) {
 			return;
 		}
@@ -590,5 +602,42 @@ Polymer({
 
 	_waitForCachePrimer: function(href, isPrimed) {
 		return isPrimed ? href : null;
+	},
+
+	_onSirenActionError: function(event) {
+		this.logApiError(
+			event.detail.url,
+			event.detail.method,
+			(typeof event.detail.error === 'number') ? event.detail.error : null,
+			this._telemetryData
+		);
+		event.stopPropagation();
+	},
+
+	_attachErrorHandler: function(telemetryData) {
+		window.D2L = window.D2L || {};
+		window.D2L.Rubric = window.D2L.Rubric || {};
+		window.D2L.Rubric.Telemetry = window.D2L.Rubric.Telemetry || {};
+
+		if (!window.D2L.Rubric.Telemetry.errorHandlerAttached) {
+			window.addEventListener('error', errorEvent => {
+				if (
+					!errorEvent ||
+					(errorEvent.error && errorEvent.error['name'] === 'NetworkError') ||
+					// The ResizeObserver "error" isn't a true error. Ignore it
+					errorEvent.message === 'ResizeObserver loop completed with undelivered notifications.'
+				) return;
+
+				this.logJavascriptError(
+					errorEvent.message,
+					errorEvent.error,
+					telemetryData,
+					errorEvent.filename,
+					errorEvent.lineno,
+					errorEvent.colno
+				);
+			});
+			window.D2L.Rubric.Telemetry.errorHandlerAttached = true;
+		}
 	}
 });

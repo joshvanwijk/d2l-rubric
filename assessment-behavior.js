@@ -2,7 +2,7 @@ import AssessmentHelper from './assessment-helpers/assessment.js';
 import CriterionAssessmentHelper from './assessment-helpers/criterion-assessment.js';
 import CriterionCellAssessmentHelper from './assessment-helpers/criterion-cell-assessment.js';
 import OverallLevelAssessmentHelper from './assessment-helpers/overall-level-assessment.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import './d2l-rubric-action-behavior.js';
 
 window.D2L = window.D2L || {};
 
@@ -58,5 +58,5 @@ D2L.PolymerBehaviors.Rubric.AssessmentBehaviorImpl = {
 /** @polymerBehavior */
 D2L.PolymerBehaviors.Rubric.AssessmentBehavior = [
 	D2L.PolymerBehaviors.Rubric.AssessmentBehaviorImpl,
-	D2L.PolymerBehaviors.Siren.SirenActionBehavior
+	D2L.PolymerBehaviors.Rubric.ActionBehavior
 ];
