@@ -55,6 +55,22 @@
               "selected": false
           }]
         }]
+      },
+      {
+        "href": "static-data/rubrics/organizations/text-only/199.json",
+        "name": "update-alignment",
+        "method": "PATCH",
+        "fields": [{
+          "type": "radio",
+          "name": "alignment",
+          "value": [{
+              "id": "AutomaticAlignment",
+              "selected": true
+            }, {
+              "id": "ManualAlignment",
+              "selected": false
+            }]
+        }]
       }
     ],
     "entities": [

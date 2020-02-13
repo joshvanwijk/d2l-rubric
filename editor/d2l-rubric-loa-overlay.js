@@ -284,6 +284,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		document.addEventListener('mousemove', this._onMouseMove.bind(this));
 		document.addEventListener('mouseup', this._onMouseUp.bind(this));
+		document.addEventListener('d2l-loa-overlay-refresh', this._reloadEntity.bind(this));
 	}
 
 	detached() {
@@ -293,6 +294,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 		document.removeEventListener('mousemove', this._onMouseMove.bind(this));
 		document.removeEventListener('mouseup', this._onMouseUp.bind(this));
+		document.removeEventListener('d2l-loa-overlay-refresh', this._reloadEntity.bind(this));
 	}
 
 	checkSize() {
@@ -917,6 +919,10 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 	_isSliderFixed(loaLevel, loaLevels, reversed) {
 		return this._getSelfLink(this._getFixedLoaLevel(loaLevels, reversed)) === this._getSelfLink(loaLevel);
+	}
+
+	_reloadEntity() {
+		D2L.Siren.EntityStore.fetch(this.href, this.token, true);
 	}
 }
 

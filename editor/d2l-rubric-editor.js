@@ -24,6 +24,7 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-link/d2l-link.js';
 import './d2l-rubric-visibility-editor.js';
+import './d2l-rubric-alignment-editor.js';
 import './d2l-rubric-autosaving-input.js';
 import 's-html/s-html.js';
 import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
@@ -69,6 +70,7 @@ const $_documentContainer = html `
 			}
 
 			#hide-score-container {
+				display: inline-block;
 				margin-top: 2.15rem;
 			}
 
@@ -95,10 +97,6 @@ const $_documentContainer = html `
 			.d2l-body-compact {
 				padding-top: 1px;
 				padding-bottom: 0.8rem;
-			}
-
-			#hide-score-container {
-				display: inline-block;
 			}
 
 			#hide-score-checkbox {
@@ -302,6 +300,9 @@ const $_documentContainer = html `
 				<div id="options-container">
 					<div id="visibility-container">
 						<d2l-rubric-visibility-editor href="[[href]]" token="[[token]]"></d2l-rubric-visibility-editor>
+					</div>
+					<div id="alignment-container">
+						<d2l-rubric-alignment-editor href="[[href]]" token="[[token]]"></d2l-rubric-alignment-editor>
 					</div>
 					<div id="hide-score-container">
 						<label id="hide-score-checkbox-label" for="hide-score-checkbox">[[localize('hideScoreHeader')]]</label>
