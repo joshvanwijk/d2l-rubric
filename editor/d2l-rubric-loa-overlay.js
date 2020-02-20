@@ -99,7 +99,8 @@ class RubricLoaOverlay extends mixinBehaviors([
                     justify-content: flex-start;
                     padding: var(--d2l-table-cell_-_padding);
                     padding-bottom: 0px;
-                    padding-top: 0px;
+					padding-top: 0px;
+					font-size: small;
                 }
                 .col-first[is-holistic], .col-last[is-holistic] {
                     padding-top: 3px;
@@ -151,7 +152,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                 .slider:hover {
                     cursor: pointer;
 				}
-				
+
 				.fixed-slider:focus {
 					outline: none;
 					z-index: 10 !important;
@@ -209,7 +210,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                 #motion-slider:hover {
                     cursor: grab;
 				}
-				
+
 				.screen-reader {
 					height: 1px;
 					left: -99999px;
