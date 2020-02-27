@@ -448,9 +448,9 @@ Polymer({
 		if (entity && entity.properties) {
 			outOf = entity.properties.outOf;
 		}
-		if (score && outOf) {
+		if (score != null && outOf != null) { //eslint-disable-line eqeqeq
 			this.fire('d2l-rubric-total-score-changed', {score:score, outOf: outOf.toString()});
-		} else if (score) {
+		} else if (score != null) { //eslint-disable-line eqeqeq
 			this.fire('d2l-rubric-total-score-changed', {score:score});
 		}
 	},
