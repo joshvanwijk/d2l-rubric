@@ -71,7 +71,7 @@
    "loaLevelUpdatedLabelMultiRubric" : "Scoreniveau \"{loaLevelName}\" is nu toegewezen aan rubricniveaus {otherRubricLevelNames} en {lastRubricLevelName}",
    "loaLevelUpdatedLabelSingleRubric" : "Scoreniveau \"{loaLevelName}\" is nu toegewezen aan rubricniveau {rubricLevelName}",
    "loaOverlayHeading" : "Scoreniveau",
-   "loaSliderLabel" : "Scoredrempel tussen '{loaLevel1}’ en '{loaLevel2}'. Gebruik de rechter- en linkerpijltoets om de drempel te verplaatsen.",
+   "loaSliderLabel" : "Scoredrempel tussen \"{loaLevel1}\" en \"{loaLevel2}\". Gebruik de rechter- en linkerpijltoets om de drempel te verplaatsen.",
    "loaThresholdMovementNotif" : "Drempel verplaatst {direction, select, left {links} right {rechts}}",
    "lockedAlertText" : "Deze rubric kan niet worden bewerkt omdat deze al is gebruikt om het werk van de cursist te beoordelen",
    "makeRubricAvailableHeader" : "Rubric beschikbaar maken voor",
