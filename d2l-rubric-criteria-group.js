@@ -288,7 +288,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											</span>
 										</div>
 									</div>
-									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" on-focusout="_handleVisibleFeedbackFocusout" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
 								</div>
 							</d2l-td>
 						</template>
@@ -317,12 +317,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 									editing-score="{{editingScore}}"
 									criterion-num="[[criterionNum]]">
 								</d2l-rubric-editable-score>
-									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
-								</d2l-offscreen>
 							</d2l-td>
 						</template>
 					</d2l-tr>
+					<d2l-offscreen>
+						<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+					</d2l-offscreen>
 					<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
 							<d2l-rubric-feedback
@@ -916,11 +916,11 @@ Polymer({
 	},
 
 	_handleVisibleFeedbackFocusin: function(event) {
-		var criterionNum = event.model.get('criterionNum');
-		var elem = dom(this.root).querySelector('#invisible-addFeedback' + this._getRowIndex(criterionNum));
-		fastdom.mutate(function() {
-			elem.focus();
-		}.bind(this));
+		event.target.classList.add('feedback-button-focused');
+	},
+
+	_handleVisibleFeedbackFocusout: function(event) {
+		event.target.classList.remove('feedback-button-focused');
 	},
 
 	_focusCriterionCell: function(event) {
