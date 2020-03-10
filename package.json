@@ -56,7 +56,7 @@
     "@polymer/iron-resizable-behavior": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
     "@brightspace-ui-labs/accordion": "^2.0.2",
-    "d2l-activity-alignments": "Brightspace/d2l-activity-alignments.git#semver:^1",
+    "d2l-activity-alignments": "Brightspace/d2l-activity-alignments.git#semver:^2",
     "d2l-alert": "BrightspaceUI/alert#semver:^4",
     "d2l-button": "BrightspaceUI/button#semver:^5",
     "d2l-colors": "BrightspaceUI/colors#semver:^4",
