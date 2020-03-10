@@ -12,6 +12,10 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 	eventType: 'TelemetryEvent',
 	sourceId: 'rubric',
 
+	getUUID: function() {
+		return Math.random().toString(36).substring(2) + Date.now().toString(36);
+	},
+
 	logViewRubricEvent: function({ id, isMobile = false }, telemetryData) {
 		const eventBody = this._createEventBody('View', telemetryData)
 			.addCustom('isMobile', isMobile)

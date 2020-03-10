@@ -848,14 +848,15 @@ Polymer({
 			return;
 		}
 
-		this.perfMark('criterionCellTappedStart');
+		const uuid = this.getUUID();
+		this.perfMark(`criterionCellTappedStart-${uuid}`);
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
 		).then(() => {
 			this._focusCriterionCell(event);
 
-			this.perfMark('criterionCellTappedEnd');
-			this.logCriterionCellTappedAction('criterionCellTappedStart', 'criterionCellTappedEnd', this.telemetryData);
+			this.perfMark(`criterionCellTappedEnd-${uuid}`);
+			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`, this.telemetryData);
 		});
 
 		this._addingFeedback = -1;

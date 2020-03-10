@@ -340,7 +340,8 @@ Polymer({
 	_handleAddCriterion: function() {
 		var action = this.entity.getActionByName('create');
 		if (action) {
-			this.perfMark('criterionAddedStart');
+			const uuid = this.getUUID();
+			this.perfMark(`criterionAddedStart-${uuid}`);
 
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-criterion-added');
@@ -348,8 +349,8 @@ Polymer({
 					this.fire('iron-announce', { text: this.localize('criterionAdded') }, { bubbles: true });
 				}.bind(this), 2000);
 
-				this.perfMark('criterionAddedEnd');
-				this.logCriterionAddedAction('criterionAddedStart', 'criterionAddedEnd', this.telemetryData);
+				this.perfMark(`criterionAddedEnd-${uuid}`);
+				this.logCriterionAddedAction(`criterionAddedStart-${uuid}`, `criterionAddedEnd-${uuid}`, this.telemetryData);
 			}.bind(this)).catch(function(err) {
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
 			}.bind(this));

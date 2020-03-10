@@ -199,9 +199,11 @@ Polymer({
 		var action = this.entity.getActionByName('prepend');
 		if (action) {
 			this.updatingLevels = true;
-			this.perfMark('criterionLevelAddedStart');
-
 			var firstLevelName = this._getFirstLevelName();
+
+			const uuid = this.getUUID();
+			this.perfMark(`criterionLevelAddedStart-${uuid}`);
+
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-added');
 				this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
@@ -209,8 +211,8 @@ Polymer({
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
-				this.perfMark('criterionLevelAddedEnd');
-				this.logCriterionLevelAddedAction('criterionLevelAddedStart', 'criterionLevelAddedEnd', this.telemetryData);
+				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
+				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`, this.telemetryData);
 			}.bind(this));
 		}
 	},
@@ -218,9 +220,11 @@ Polymer({
 		var action = this.entity.getActionByName('append');
 		if (action) {
 			this.updatingLevels = true;
-			this.perfMark('criterionLevelAddedStart');
-
 			var lastLevelName = this._getLastLevelName();
+
+			const uuid = this.getUUID();
+			this.perfMark(`criterionLevelAddedStart-${uuid}`);
+
 			this.performSirenAction(action).then(function() {
 				this.fire('d2l-rubric-level-added');
 				this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
@@ -228,8 +232,8 @@ Polymer({
 				this.fire('d2l-rubric-editor-save-error', { message: err.message });
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
-				this.perfMark('criterionLevelAddedEnd');
-				this.logCriterionLevelAddedAction('criterionLevelAddedStart', 'criterionLevelAddedEnd', this.telemetryData);
+				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
+				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`, this.telemetryData);
 			}.bind(this));
 		}
 	},
