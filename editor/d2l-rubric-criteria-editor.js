@@ -160,6 +160,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 							criterion-detail-width="[[criterionDetailWidth]]"
 							outcomes-title="[[outcomesTitle]]"
 							browse-outcomes-text="[[browseOutcomesText]]"
+							align-outcomes-text="[[alignOutcomesText]]"
 							outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 							updating-levels="{{updatingLevels}}"
 							rubric-level-loa-mapping="[[rubricLevelLoaMapping]]"
@@ -208,6 +209,9 @@ Polymer({
 			type: String
 		},
 		browseOutcomesText: {
+			type: String
+		},
+		alignOutcomesText: {
 			type: String
 		},
 		_criteriaEntities: Array,

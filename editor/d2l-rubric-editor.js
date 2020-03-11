@@ -287,7 +287,7 @@ const $_documentContainer = html `
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isReadOnly]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" telemetry-data="[[telemetryData]]">
+			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" telemetry-data="[[telemetryData]]">
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
@@ -418,6 +418,9 @@ Polymer({
 			type: String
 		},
 		browseOutcomesText: {
+			type: String
+		},
+		alignOutcomesText: {
 			type: String
 		},
 		_rubricName: {

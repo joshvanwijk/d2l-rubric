@@ -140,6 +140,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						is-holistic="[[isHolistic]]"
 						outcomes-title="[[outcomesTitle]]"
 						browse-outcomes-text="[[browseOutcomesText]]"
+						align-outcomes-text="[[alignOutcomesText]]"
 						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
 						updating-levels="[[updatingLevels]]"
@@ -173,6 +174,9 @@ Polymer({
 			type: String
 		},
 		browseOutcomesText: {
+			type: String
+		},
+		alignOutcomesText: {
 			type: String
 		},
 		_levelsHref: String,

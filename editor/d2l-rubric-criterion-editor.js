@@ -1,5 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
+import 'd2l-activity-alignments/d2l-select-outcomes-hierarchical.js';
 import 'd2l-activity-alignments/d2l-activity-alignment-tags.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
@@ -255,6 +256,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			>
 			</d2l-select-outcomes>
 		</simple-overlay>
+		<simple-overlay id="hierarchicaloverlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
+			<div>
+				<h2>[[browseOutcomesText]]</h2>
+				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-click= "_closeBrowseOutcomes"></d2l-button-icon>
+			</div>
+
+			<d2l-select-outcomes-hierarchical
+				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
+				href="[[_getOutcomesHierarchicalHref(entity, isHolistic)]]"
+				align-button-text="[[alignOutcomesText]]"
+				token="[[token]]"
+				empty="{{_isOutcomeEmpty}}">
+			</d2l-select-outcomes-hierarchical>
+		</simple-overlay>
 
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
@@ -354,6 +369,9 @@ Polymer({
 		browseOutcomesText: {
 			type: String
 		},
+		alignOutcomesText: {
+			type: String
+		},
 		firstRow: {
 			reflectToAttribute: true,
 			type: Boolean,
@@ -438,6 +456,10 @@ Polymer({
 		_isFlagOn: {
 			type: Boolean,
 			computed: '_computeIsFlagOn(entity)'
+		},
+		_isHierarchicalFlagOn: {
+			type: Boolean,
+			computed: '_computeIsHierarchicalFlagOn(entity, _isFlagOn)'
 		},
 		_outOfIsEditable: {
 			type: Boolean,
@@ -802,6 +824,11 @@ Polymer({
 			entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 	},
 
+	_computeIsHierarchicalFlagOn: function(entity, isFlagOn) {
+		return isFlagOn && entity &&
+			entity.getLinkByRel("https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical");
+	},
+
 	_canCheckOutcomes: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty) {
 		return _isFlagOn && !isHolistic && _isAlignmentTagListEmpty;
 	},
@@ -818,16 +845,22 @@ Polymer({
 		}
 	},
 
+	_getOutcomesHierarchicalHref: function(entity, isHolistic) {
+		if (entity && this.HypermediaRels.Activities && entity.getLinkByRel("https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical") && !isHolistic) {
+			return entity.getLinkByRel("https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical").href;
+		}
+	},
+
 	_showBrowseOutcomes: function() {
-		this.$.overlay.open();
+		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.open() : this.$.overlay.open();
 	},
 
 	_closeBrowseOutcomes: function() {
-		this.$.overlay.close();
+		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.close() : this.$.overlay.close();
 	},
 
 	_resizeOverlay: function() {
-		this.$.overlay.refit();
+		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.refit() : this.$.overlay.refit();
 	},
 	// eslint-disable-next-line no-unused-vars
 	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {

@@ -72,6 +72,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				rich-text-enabled="[[richTextEnabled]]"
 				outcomes-title="[[outcomesTitle]]"
 				browse-outcomes-text="[[browseOutcomesText]]"
+				align-outcomes-text="[[alignOutcomesText]]"
 				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 				updating-levels="{{updatingLevels}}"
 				telemetry-data="[[telemetryData]]"
@@ -145,6 +146,9 @@ Polymer({
 			type: String
 		},
 		browseOutcomesText: {
+			type: String
+		},
+		alignOutcomesText: {
 			type: String
 		},
 		updatingLevels: {
