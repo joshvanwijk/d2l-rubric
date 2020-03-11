@@ -826,7 +826,7 @@ Polymer({
 
 	_computeIsHierarchicalFlagOn: function(entity, isFlagOn) {
 		return isFlagOn && entity &&
-			entity.getLinkByRel("https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical");
+			entity.getLinkByRel('https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical');
 	},
 
 	_canCheckOutcomes: function(_isFlagOn, isHolistic, _isAlignmentTagListEmpty) {
@@ -846,8 +846,8 @@ Polymer({
 	},
 
 	_getOutcomesHierarchicalHref: function(entity, isHolistic) {
-		if (entity && this.HypermediaRels.Activities && entity.getLinkByRel("https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical") && !isHolistic) {
-			return entity.getLinkByRel("https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical").href;
+		if (entity && this.HypermediaRels.Activities && entity.getLinkByRel('https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical') && !isHolistic) {
+			return entity.getLinkByRel('https://alignments.api.brightspace.com/rels/activity-alignments-hierarchical').href;
 		}
 	},
 
