@@ -87,7 +87,13 @@ Polymer({
 		if (this.inputChanging || !this.pendingSaves && this.ariaInvalid === 'true') {
 			this.inputChanging = false;
 			var value = this._getTextValue(e);
-			this.fire('text-changed', { value: value });
+			this.dispatchEvent(new CustomEvent('text-changed', {
+				detail: {
+					value: value,
+				},
+				bubbles: true,
+				composed: true,
+			}));
 		}
 	},
 
@@ -99,13 +105,25 @@ Polymer({
 			/* In the HTML Editor case, this function is called when the change
 			   event fires, which occurs only when pasting text or unfocusing
 			   the cell, so there is no reason to use debounce here. */
-			this.fire('text-changed', { value: value });
+			this.dispatchEvent(new CustomEvent('text-changed', {
+				detail: {
+					value: value,
+				},
+				bubbles: true,
+				composed: true,
+			}));
 		} else {
 			this.inputChanging = true;
 			this.debounce('input', function() {
 				if (this.inputChanging) {
 					this.inputChanging = false;
-					this.fire('text-changed', { value: value });
+					this.dispatchEvent(new CustomEvent('text-changed', {
+						detail: {
+							value: value,
+						},
+						bubbles: true,
+						composed: true,
+					}));
 				}
 			}.bind(this), 500);
 		}

@@ -6,7 +6,7 @@ Creates and edits a rubric structue
 
 */
 import '@polymer/polymer/polymer-legacy.js';
-
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -18,7 +18,6 @@ import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import './d2l-rubric-editor-header.js';
 import './d2l-rubric-criteria-groups-editor.js';
 import './d2l-rubric-overall-levels-editor.js';
-import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
 import 'd2l-menu/d2l-menu-item-radio.js';
 import './d2l-rubric-dialog-behavior.js';
 import 'd2l-dropdown/d2l-dropdown-button-subtle.js';
@@ -259,10 +258,6 @@ Polymer({
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
 	},
 
-	attached: function() {
-		IronA11yAnnouncer.requestAvailability();
-	},
-
 	_onEntitySave: function(e) {
 		var rubricHeader = this.$$('#rubric-header');
 		if (!this.isSinglePageRubric && rubricHeader) {
@@ -351,10 +346,20 @@ Polymer({
 		if (this._reverseLevels) {
 			this._updatingLevels = true;
 			this.performSirenAction(this._reverseLevels).then(function() {
-				this.fire('d2l-rubric-levels-reversed');
-				this.fire('iron-announce', { text: this.localize('reverseLevelsSuccessful') }, { bubbles: true });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-levels-reversed', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				announce(this.localize('reverseLevelsSuccessful'));
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.messagem
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).finally(function() {
 				this._updatingLevels = false;
 			}.bind(this));
@@ -364,12 +369,15 @@ Polymer({
 	_handleSaveError: function(e) {
 		this._clearAlerts();
 		e.stopPropagation();
-		this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+
+		announce(this.localize('rubricSavingErrorAriaAlert'));
+
 		this._addAlert('error', e.message, this.localize('rubricSavingErrorMessage'));
 	},
 
 	_handleError: function(e) {
-		this.fire('iron-announce', { text: this.localize('rubricLoadingErrorAriaAlert') }, { bubbles: true });
+		announce(this.localize('rubricLoadingErrorAriaAlert'));
+
 		this._addAlert('error', e.message, this.localize('rubricLoadingErrorMessage'));
 		this._displayEditor(false);
 	},
@@ -397,15 +405,25 @@ Polymer({
 			this.performSirenAction(action, fields).then(function() {
 				this._rubricTypeText = this.localize('rubricType', 'rubricType', menuItem.text);
 				this._rubricTypeValue = menuItem.value;
-				this.fire('d2l-rubric-type-changed');
-				this.fire('iron-announce', { text: this.localize('changeRubricTypeSuccessful', 'rubricType', menuItem.text) }, { bubbles: true });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-type-changed', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				announce(this.localize('changeRubricTypeSuccessful', 'rubricType', menuItem.text));
 			}.bind(this)).then(function() {
 				this.enableMenu(menuButton);
 				menuButton.focus();
 			}.bind(this)).catch(function(err) {
 				this.resetSelectedMenuItem(menuButton, this._rubricTypeValue);
 				this.enableMenu(menuButton);
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 				menuButton.focus();
 			}.bind(this));
 		}.bind(this);
@@ -438,14 +456,24 @@ Polymer({
 		this.performSirenAction(action, fields).then(function() {
 			this._scoringText = this.localize('scoring', 'method', menuItem.text);
 			this._scoringMethod = menuItem.value;
-			this.fire('d2l-rubric-scoring-changed');
-			this.fire('iron-announce', { text: this.localize('changeScoringSuccessful', 'method', menuItem.text) }, { bubbles: true });
+			this.dispatchEvent(new CustomEvent('d2l-rubric-scoring-changed', {
+				bubbles: true,
+				composed: true,
+			}));
+
+			announce(this.localize('changeScoringSuccessful', 'method', menuItem.text));
 		}.bind(this)).then(function() {
 			this.enableMenu(menuButton);
 		}.bind(this)).catch(function(err) {
 			this.resetSelectedMenuItem(menuButton, this._scoringMethod);
 			this.enableMenu(menuButton);
-			this.fire('d2l-rubric-editor-save-error', { message: err.message });
+			this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+				detail: {
+					message: err.message,
+				},
+				bubbles: true,
+				composed: true,
+			}));
 		}.bind(this));
 
 		dom(dropdownMenu).removeAttribute('opened');

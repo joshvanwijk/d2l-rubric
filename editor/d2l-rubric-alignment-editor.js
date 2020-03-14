@@ -1,7 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-inputs/d2l-input-shared-styles.js';
@@ -131,8 +130,12 @@ Polymer({
 				this.toggleBubble('_alignmentInvalid', false, 'alignment-bubble');
 				var fields = [{ 'name': 'alignment', 'value': this._debounceSelected }];
 				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-alignment-saved');
-					this.fire('d2l-loa-overlay-refresh');
+					['d2l-rubric-alignment-saved', 'd2l-loa-overlay-refresh'].forEach(evt => {
+						this.dispatchEvent(new CustomEvent(evt, {
+							bubbles: true,
+							composed: true,
+						}));
+					});
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('alignment-bubble', '_alignmentInvalid', 'rubricAlignmentSaveFailed', err);
 				}.bind(this));

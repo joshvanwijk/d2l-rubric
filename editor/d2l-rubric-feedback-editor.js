@@ -162,7 +162,10 @@ Polymer({
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			var fields = [{'name':'feedback', 'value':e.detail.value}];
 			this.performAutosaveAction(action, fields, '_pendingFeedbackSaves').then(function() {
-				this.fire('d2l-rubric-feedback-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-feedback-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);

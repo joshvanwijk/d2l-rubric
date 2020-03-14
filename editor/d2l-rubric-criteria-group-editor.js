@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
@@ -103,7 +104,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						id="group-name"
 						slot="group-name-slot"
 						value="[[_groupName]]"
-						hidden="[[!showGroupName]]" 
+						hidden="[[!showGroupName]]"
 						disabled="[[!_canEditGroupName(entity)]]"
 						on-blur="_nameBlurHandler"
 						on-input="_nameInputHandler"
@@ -294,7 +295,9 @@ Polymer({
 				return;
 			}
 		}
-		this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+
+		announce(this.localize('rubricSavingErrorAriaAlert'));
+
 		this._addAlert('error', e.message, this.localize('rubricSavingErrorMessage'));
 	},
 
@@ -333,7 +336,10 @@ Polymer({
 				this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
 				var fields = [{'name': 'name', 'value': value}];
 				this.performAutosaveAction(action, fields, '_pendingGroupNameSaves').then(function() {
-					this.fire('d2l-rubric-group-name-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-group-name-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('group-name-bubble', '_nameInvalid', 'groupNameSaveFailed', err);
 				}.bind(this)).finally(function() {

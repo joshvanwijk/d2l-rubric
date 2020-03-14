@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-offscreen/d2l-offscreen.js';
@@ -348,15 +349,24 @@ Polymer({
 			this.perfMark(`criterionAddedStart-${uuid}`);
 
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-criterion-added');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-added', {
+					bubbles: true,
+					composed: true,
+				}));
 				setTimeout(function() {
-					this.fire('iron-announce', { text: this.localize('criterionAdded') }, { bubbles: true });
+					announce(this.localize('criterionAdded'));
 				}.bind(this), 2000);
 
 				this.perfMark(`criterionAddedEnd-${uuid}`);
 				this.logCriterionAddedAction(`criterionAddedStart-${uuid}`, `criterionAddedEnd-${uuid}`, this.telemetryData);
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}
 	},
@@ -434,11 +444,15 @@ Polymer({
 				{'name': 'newIndex', 'value': newIndex}
 			];
 			return this.performSirenAction(action, fields).then(function() {
-				this.fire('iron-announce',
-					{ text: this.localize('criterionMoved', 'name', criterionName, 'position', newPosition) },
-					{ bubbles: true });
+				announce(this.localize('criterionMoved', 'name', criterionName, 'position', newPosition));
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}
 		return Promise.resolve();

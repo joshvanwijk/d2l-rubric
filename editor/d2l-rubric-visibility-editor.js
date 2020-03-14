@@ -1,7 +1,6 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-inputs/d2l-input-shared-styles.js';
@@ -169,7 +168,10 @@ Polymer({
 				this.toggleBubble('_visibilityInvalid', false, 'visibility-bubble');
 				var fields = [{ 'name': 'visibility', 'value': this._debounceSelected }];
 				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-visibility-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-visibility-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('visibility-bubble', '_visibilityInvalid', 'rubricVisibilitySaveFailed', err);
 				}.bind(this));

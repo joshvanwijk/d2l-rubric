@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
@@ -179,13 +180,22 @@ Polymer({
 		if (action) {
 			this._waitingForGroups = true;
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-criteria-group-added');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-criteria-group-added', {
+					bubbles: true,
+					composed: true,
+				}));
 				setTimeout(function() {
-					this.fire('iron-announce', { text: this.localize('groupAdded') }, { bubbles: true });
+					announce(this.localize('groupAdded'));
 				}.bind(this), 2000);
 			}.bind(this)).catch(function(err) {
 				this._waitingForGroups = false;
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}
 	},

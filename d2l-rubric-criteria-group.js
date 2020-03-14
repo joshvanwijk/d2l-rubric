@@ -565,7 +565,7 @@ Polymer({
 		this._addingFeedback = -1;
 		const criterionNum = +event.currentTarget.dataset.criterion;
 		var elem = dom(this.root).querySelector('#invisible-addFeedback' + this._getRowIndex(criterionNum));
-		this.async(function() {
+		setTimeout(function() {
 			elem.focus();
 		}.bind(this), 500); //adding a 0.5sec delay to handle moving focus between shadow roots
 

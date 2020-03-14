@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-button/d2l-button-icon.js';
@@ -275,7 +276,10 @@ Polymer({
 				this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
 				var fields = [{'name':'name', 'value': saveEvent.value}];
 				this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
-					this.fire('d2l-rubric-level-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-level-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
@@ -303,12 +307,17 @@ Polymer({
 				var fields = [{'name':'points', 'value':saveEvent.value}];
 				this._unsavedLevelPoints = saveEvent.value;
 				this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
-					this.fire('d2l-rubric-level-points-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-level-points-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 					this._updatePoints(this.entity, false);
 
-					const savePointsEvent = new CustomEvent('save-points');
-					savePointsEvent.id = this.entity.properties.id;
-					this.dispatchEvent(savePointsEvent);
+					this.dispatchEvent(new CustomEvent('save-points', {
+						detail: {
+							id: this.entity.properties.id,
+						},
+					}));
 				}.bind(this)).catch(function(err) {
 					if (this._usesPercentage) {
 						this.handleValidationError('points-bubble', '_pointsInvalid', 'rangeStartInvalid', err);
@@ -325,7 +334,10 @@ Polymer({
 		if (action && this._pointsInvalid) {
 			var fields = [{'name':'points', 'value':this._unsavedLevelPoints}];
 			this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
-				this.fire('d2l-rubric-level-points-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-level-points-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updatePoints(this.entity, false);
 			}.bind(this)).catch(function(err) {
 				if (this._usesPercentage) {
@@ -357,15 +369,26 @@ Polymer({
 			negativeButtonText: this.localize('deleteConfirmationNo')
 		}).then(function() {
 			var name = this._levelName;
-			this.fire('iron-announce', { text: this.localize('levelDeleted', 'name', name) }, { bubbles: true });
+
+			announce(this.localize('levelDeleted', 'name', name));
+
 			this.updatingLevels = true;
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-level-deleted');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-level-deleted', {
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).then(function() {
 				deleteButton.removeAttribute('disabled');
 			}).catch(function(err) {
 				deleteButton.removeAttribute('disabled');
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 			}.bind(this));

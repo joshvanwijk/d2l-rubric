@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-button/d2l-button-icon.js';
@@ -178,10 +179,18 @@ Polymer({
 		this.unlisten(this, 'iron-resize', 'checkSize');
 	},
 	checkSize: function() {
-		this.async(function() {
+		requestAnimationFrame(function() {
 			var section = this.$['levels-section'];
-			if (section) this.fire('d2l-rubric-editor-levels-width-changed', { width: section.offsetWidth });
-		}.bind(this), 1);
+			if (section) {
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-levels-width-changed', {
+					detail: {
+						width: section.offsetWidth,
+					},
+					bubbles: true,
+					composed: true,
+				}));
+			}
+		}.bind(this));
 	},
 	_onEntityChanged: function(entity) {
 		if (!entity) {
@@ -205,10 +214,20 @@ Polymer({
 			this.perfMark(`criterionLevelAddedStart-${uuid}`);
 
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-level-added');
-				this.fire('iron-announce', { text: this.localize('levelPrepended', 'name', firstLevelName) }, { bubbles: true });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-level-added', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				announce(this.localize('levelPrepended', 'name', firstLevelName));
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
@@ -226,10 +245,20 @@ Polymer({
 			this.perfMark(`criterionLevelAddedStart-${uuid}`);
 
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-level-added');
-				this.fire('iron-announce', { text: this.localize('levelAppended', 'name', lastLevelName) }, { bubbles: true });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-level-added', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				announce(this.localize('levelAppended', 'name', lastLevelName));
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
@@ -246,16 +275,16 @@ Polymer({
 		return levels.length ? levels[levels.length - 1].entity.properties.name : '';
 	},
 	_onPrependFocus: function() {
-		this.fire('iron-announce', { text: this.localize('addLevelPrepend', 'name', this._getFirstLevelName()) }, { bubbles: true });
+		announce(this.localize('addLevelPrepend', 'name', this._getFirstLevelName()));
 	},
 	_onAppendFocus: function() {
-		this.fire('iron-announce', { text: this.localize('addLevelAppend', 'name', this._getLastLevelName()) }, { bubbles: true });
+		announce(this.localize('addLevelAppend', 'name', this._getLastLevelName()));
 	},
-	_onSavePoints: function(event) {
+	_onSavePoints: function(e) {
 		// Upon successful save, we attempt to save other levels that have previously had errors saving
 		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-level-editor'));
 		var saveIndex = levels.findIndex((level) => {
-			return level.entity.properties.id === event.id;
+			return level.entity.properties.id === e.detail.id;
 		});
 
 		// To prevent false out of bounds errors, we call savePointsAfterError in an order starting from the levels adjacent to the saved level

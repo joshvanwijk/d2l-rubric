@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-table/d2l-table-shared-styles.js';
@@ -237,7 +238,7 @@ Polymer({
 		this.unlisten(this, 'iron-resize', 'syncMiddleSectionSize');
 	},
 	syncMiddleSectionSize: function() {
-		this.async(function() {
+		requestAnimationFrame(function() {
 			var fromSection = this.$['level-header-center-section'];
 			var toSection = this.$['description-center-section'];
 			if (fromSection) {
@@ -249,7 +250,7 @@ Polymer({
 			// So leaving here as a reminder for now, not to add it back. But if we see resize issues we
 			// may have to come up with an alternate solution.
 			// this._notifyResize();
-		}.bind(this), 1);
+		}.bind(this));
 	},
 	_onEntityChanged: function(entity) {
 		if (!entity) {
@@ -273,20 +274,30 @@ Polymer({
 		return entity && entity.hasActionByName('append');
 	},
 	_onPrependFocus: function() {
-		this.fire('iron-announce', { text: this.localize('addOverallLevelPrepend', 'name', this._getFirstLevelName()) }, { bubbles: true });
+		announce(this.localize('addOverallLevelPrepend', 'name', this._getFirstLevelName()));
 	},
 	_onAppendFocus: function() {
-		this.fire('iron-announce', { text: this.localize('addOverallLevelAppend', 'name', this._getLastLevelName()) }, { bubbles: true });
+		announce(this.localize('addOverallLevelAppend', 'name', this._getLastLevelName()));
 	},
 	_handlePrependOverallLevel: function() {
 		var action = this.entity.getActionByName('prepend');
 		if (action) {
 			var firstLevelName = this._getFirstLevelName();
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-overall-level-added');
-				this.fire('iron-announce', { text: this.localize('addOverallLevelPrepend', 'name', firstLevelName) }, { bubbles: true });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-added', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				announce(this.localize('addOverallLevelPrepend', 'name', firstLevelName));
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}
 	},
@@ -295,10 +306,20 @@ Polymer({
 		if (action) {
 			var lastLevelName = this._getLastLevelName();
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-overall-level-added');
-				this.fire('iron-announce', { text: this.localize('addOverallLevelAppend', 'name', lastLevelName) }, { bubbles: true });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-added', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				announce(this.localize('addOverallLevelAppend', 'name', lastLevelName));
 			}.bind(this)).catch(function(err) {
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}
 	},
@@ -314,12 +335,12 @@ Polymer({
 	_isLastAndCorner: function(index, levelCount) {
 		return index === levelCount - 1;
 	},
-	_onSaveRangeStart: function(event) {
+	_onSaveRangeStart: function(e) {
 		// Upon successful save, we attempt to save other levels that have previously had errors saving
 		var levels = Array.from(dom(this.root).querySelectorAll('d2l-rubric-overall-level-editor'));
 		var saveIndex = levels.findIndex((level) => {
 			var link = level.entity.getLinkByRel('self');
-			return link ? link.href === event.href : false;
+			return link ? link.href === e.detail.href : false;
 		});
 
 		// To prevent false out of bounds errors, we call savePointsAfterError in an order starting from the levels adjacent to the saved level

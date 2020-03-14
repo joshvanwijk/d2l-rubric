@@ -1,4 +1,3 @@
-import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
@@ -12,9 +11,7 @@ window.D2L.Rubric = window.D2L.Rubric || {};
  */
 D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior = {
 	behaviors: [],
-	attached: function() {
-		IronA11yAnnouncer.requestAvailability();
-	},
+
 	disableMenu: function(menuButton) {
 		dom(menuButton).setAttribute('disabled', '');
 	},

@@ -6,6 +6,7 @@ Polymer Web-Component to display rubrics
 */
 import { Polymer } from '@polymer/polymer/polymer-legacy.js';
 import '@polymer/iron-media-query/iron-media-query.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 
 import 'd2l-fetch/d2l-fetch.js';
 import './d2l-rubric-adapter.js';
@@ -537,7 +538,9 @@ Polymer({
 		}
 		this._errored = true;
 		this._clearAlerts();
-		this.fire('iron-announce', { text: this.localize('rubricLoadingErrorAriaAlert') }, { bubbles: true });
+
+		announce(this.localize('rubricLoadingErrorAriaAlert'));
+
 		this._addAlert('error', e.detail.error.message, this.localize('errorText'));
 	},
 

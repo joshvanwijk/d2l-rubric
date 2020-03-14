@@ -5,6 +5,7 @@ Creates and edits a rubric
 @demo demo/d2l-rubric-editor.html
 */
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 
 import './d2l-rubric-structure-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
@@ -12,7 +13,6 @@ import './d2l-rubric-error-handling-behavior.js';
 import './d2l-rubric-editor-header.js';
 import '../localize-behavior.js';
 import './d2l-rubric-dropdown-menu-behavior.js';
-import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -644,9 +644,6 @@ Polymer({
 			performanceTelemetryEnabled: this.performanceTelemetryFlag
 		};
 	},
-	attached: function() {
-		IronA11yAnnouncer.requestAvailability();
-	},
 	_getReadOnlyDescription: function(value, isHtml) {
 		if (isHtml) {
 			return value || '<p>' + this.localize('descriptionReadOnlyPlaceholder') + '</p>';
@@ -658,7 +655,9 @@ Polymer({
 	},
 	_handleSaveError: function(e) {
 		this._clearAlerts();
-		this.fire('iron-announce', { text: this.localize('rubricSavingErrorAriaAlert') }, { bubbles: true });
+
+		announce(this.localize('rubricSavingErrorAriaAlert'));
+
 		this._addAlert('error', e.message, this.localize('rubricSavingErrorMessage'));
 	},
 	_handleAssociations: function(e) {
@@ -670,7 +669,10 @@ Polymer({
 
 		var fields = [{ 'name': 'allowed', 'value': e.currentTarget.checked }];
 		this.performSirenAction(action, fields).then(function() {
-			this.fire('d2l-rubric-associations-saved');
+			this.dispatchEvent(new CustomEvent('d2l-rubric-associations-saved', {
+				bubbles: true,
+				composed: true,
+			}));
 		}.bind(this)).catch(function(err) {
 			this.handleValidationError('associations-bubble', '_associationsInvalid', 'associationsSaveFailed', err);
 		}.bind(this));
@@ -813,7 +815,10 @@ Polymer({
 				this.toggleBubble('_nameInvalid', false, 'name-bubble');
 				var fields = [{ 'name': 'name', 'value': saveEvent.value }];
 				this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
-					this.fire('d2l-rubric-name-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-name-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 					this._updateName(this.entity);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
@@ -836,7 +841,10 @@ Polymer({
 			this.toggleBubble('_descriptionInvalid', false, 'rubric-description-bubble');
 			var fields = [{ 'name': 'description', 'value': e.detail.value }];
 			this.performAutosaveAction(action, fields, '_pendingDescriptionSaves').then(function() {
-				this.fire('d2l-rubric-description-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-description-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('rubric-description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
@@ -873,12 +881,14 @@ Polymer({
 			this.toggleBubble('_setScoreVisibilityFailed', false, 'hide-score-bubble');
 			var fields = [{ 'name': 'scoreVisible', 'value': !checkbox.checked }];
 			this.performSirenAction(action, fields).then(function() {
-				this.fire('d2l-rubric-score-visibility-set');
-				if (checkbox.checked) {
-					this.fire('iron-announce', { text: this.localize('scoresVisibilityHidden') }, { bubbles: true });
-				} else {
-					this.fire('iron-announce', { text: this.localize('scoresVisibilityVisible') }, { bubbles: true });
-				}
+				this.dispatchEvent(new CustomEvent('d2l-rubric-score-visibility-set', {
+					bubbles: true,
+					composed: true,
+				}));
+
+				const scoreVisibilityLangTerm = checkbox.checked ? 'scoresVisibilityHidden' : 'scoresVisibilityVisible';
+
+				announce(this.localize(scoreVisibilityLangTerm));
 			}.bind(this)).then(function() {
 				checkbox.disabled = false;
 			}.bind(this)).catch(function(err) {
@@ -916,14 +926,24 @@ Polymer({
 		this.performSirenAction(action, fields).then(function() {
 			this._rubricStatusText = this.localize('rubricStatus', 'status', menuItem.text);
 			this._rubricStatus = menuItem.value;
-			this.fire('d2l-rubric-status-changed');
-			this.fire('iron-announce', { text: this.localize('changeRubricStatusSuccessful', 'status', menuItem.text) }, { bubbles: true });
+			this.dispatchEvent(new CustomEvent('d2l-rubric-status-changed', {
+				bubbles: true,
+				composed: true,
+			}));
+
+			announce(this.localize('changeRubricStatusSuccessful', 'status', menuItem.text));
 		}.bind(this)).then(function() {
 			this.enableMenu(menuButton);
 		}.bind(this)).catch(function(err) {
 			this.resetSelectedMenuItem(menuButton, this._rubricStatus);
 			this.enableMenu(menuButton);
-			this.fire('d2l-rubric-editor-save-error', { message: err.message });
+			this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+				detail: {
+					message: err.message,
+				},
+				bubbles: true,
+				composed: true,
+			}));
 		}.bind(this));
 	},
 	_handleSelectStatistics: function() {

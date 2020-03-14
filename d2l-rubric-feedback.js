@@ -303,7 +303,10 @@ Polymer({
 	_clearFeedbackHandler: function() {
 		this._saveFeedback('').finally(function() {
 			if (!this._feedbackInvalid) {
-				this.fire('close-feedback');
+				this.dispatchEvent(new CustomEvent('close-feedback', {
+					bubbles: true,
+					composed: true,
+				}));
 			}
 		}.bind(this));
 	},
@@ -312,7 +315,13 @@ Polymer({
 		this._feedbackModified = false;
 		this._pendingFeedbackSaves++;
 		this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
-		this.fire('save-feedback-start', {'hasPendingSaves': true});
+		this.dispatchEvent(new CustomEvent('save-feedback-start', {
+			detail: {
+				hasPendingSaves: true,
+			},
+			bubbles: true,
+			composed: true,
+		}));
 		return this.CriterionAssessmentHelper.updateFeedbackAsync(() => this.criterionAssessment, value, false).finally(function() {
 			this._pendingFeedbackSaves--;
 		}.bind(this)).then(function() {
@@ -320,7 +329,14 @@ Polymer({
 		}.bind(this)).catch(function(err) {
 			this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
 		}.bind(this)).finally(function() {
-			this.fire('save-feedback-finished', {'success': !this._feedbackInvalid, 'hasPendingSaves': this._pendingFeedbackSaves > 0});
+			this.dispatchEvent(new CustomEvent('save-feedback-finished', {
+				detail: {
+					success: !this._feedbackInvalid,
+					hasPendingSaves: this._pendingFeedbackSaves > 0
+				},
+				bubbles: true,
+				composed: true,
+			}));
 		}.bind(this));
 	},
 

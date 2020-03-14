@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import './d2l-rubric-siren-autosave-action-behavior.js';
 import '../localize-behavior.js';
 import 'd2l-inputs/d2l-input-text.js';
@@ -234,7 +235,10 @@ Polymer({
 				this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
 				var fields = [{ 'name': 'name', 'value': saveEvent.value }];
 				this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
-					this.fire('d2l-rubric-overall-level-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 					this._updateName(this.entity, false);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
@@ -258,13 +262,20 @@ Polymer({
 				var fields = [{'name':'rangeStart', 'value': saveEvent.value}];
 				this._unsavedRangeStart = saveEvent.value;
 				this.performAutosaveAction(action, fields, '_pendingRangeStartSaves').then(function() {
-					this.fire('d2l-rubric-overall-level-range-start-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-range-start-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 					this._updateRangeStart(this.entity, false);
 
 					var link = this.entity.getLinkByRel('self');
 					if (link) {
-						const saveRangeStartEvent = new CustomEvent('save-range-start');
-						saveRangeStartEvent.href = link.href;
+						const saveRangeStartEvent = new CustomEvent('save-range-start', {
+							detail: {
+								href: link.href
+							},
+						});
+
 						this.dispatchEvent(saveRangeStartEvent);
 					}
 				}.bind(this)).catch(function(err) {
@@ -278,7 +289,10 @@ Polymer({
 		if (action && this._rangeStartInvalid) {
 			var fields = [{'name':'rangeStart', 'value': this._unsavedRangeStart}];
 			this.performAutosaveAction(action, fields, '_pendingRangeStartSaves').then(function() {
-				this.fire('d2l-rubric-overall-level-range-start-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-range-start-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updateRangeStart(this.entity, false);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartInvalid', err);
@@ -307,14 +321,25 @@ Polymer({
 			negativeButtonText: this.localize('deleteConfirmationNo')
 		}).then(function() {
 			var name = this.entity.properties.name;
-			this.fire('iron-announce', { text: this.localize('overallLevelDeleted', 'name', name) }, { bubbles: true });
+
+			announce(this.localize('overallLevelDeleted', 'name', name));
+
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-overall-level-deleted');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-deleted', {
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).then(function() {
 				deleteButton.removeAttribute('disabled');
 			}).catch(function(err) {
 				deleteButton.removeAttribute('disabled');
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}.bind(this), function() {
 			deleteButton.removeAttribute('disabled');

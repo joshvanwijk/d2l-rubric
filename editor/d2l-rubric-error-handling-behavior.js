@@ -1,6 +1,7 @@
-import '../localize-behavior.js';
-import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
+
+import '../localize-behavior.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
@@ -23,9 +24,6 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 	listeners: {
 		'd2l-tooltip-show': '_onBubbleShow'
 	},
-	attached: function() {
-		IronA11yAnnouncer.requestAvailability();
-	},
 	detached: function() {
 		var cache = this.constructor.prototype.__rubricEditorBubbleCache;
 		if (cache.host === this) {
@@ -36,7 +34,8 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 	handleValidationError: function(bubbleId, property, langterm, error) {
 		var msgText = this._getErrMsg(error, langterm);
 		this.toggleBubble(property, true, bubbleId, msgText);
-		this.fire('iron-announce', { text: msgText }, { bubbles: true });
+
+		announce(msgText);
 	},
 	_getErrMsg: function(e, altMsg) {
 		if (e && !e.hasOwnProperty('stack')) {

@@ -356,7 +356,13 @@ Polymer({
 	},
 
 	_overallLevelChanged: function(levelName) {
-		this.fire('d2l-rubric-overall-level-changed', { name: levelName });
+		this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-changed', {
+			detail: {
+				name: levelName,
+			},
+			bubbles: true,
+			composed: true,
+		}));
 	},
 
 	_handleTabIndex: function() {

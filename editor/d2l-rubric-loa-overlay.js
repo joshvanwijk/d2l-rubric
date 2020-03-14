@@ -1,6 +1,7 @@
 import { PolymerElement, html } from '@polymer/polymer';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
@@ -299,13 +300,13 @@ class RubricLoaOverlay extends mixinBehaviors([
 	}
 
 	checkSize() {
-		this.async(() => {
+		requestAnimationFrame(() => {
 			const section = this.$$('#row-data');
 
 			if (section) {
 				this._headingsWidth = section.offsetWidth;
 			}
-		}, 1);
+		});
 	}
 
 	_onOutOfChanged() {
@@ -615,7 +616,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 						this._getLoaLevelScreenReaderText(this._reversed ? loaLevel : nextLevel, this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, this._reversed, true)
 					].filter(str => str && str.length).join('. ') + '.';
 
-					this.fire('iron-announce', { text: announcement }, { bubbles: true });
+					announce(announcement);
 				}).bind(this));
 			}
 		}
@@ -750,12 +751,20 @@ class RubricLoaOverlay extends mixinBehaviors([
 
 	_onOverridesChanged(overrides) {
 		const loaMapping = this._getVisualLoaLevelMapping(this._loaLevels, this._sortedLevels, overrides, this._reversed);
-		this.fire('d2l-rubric-loa-overlay-level-mapping-changed', loaMapping);
+		this.dispatchEvent(new CustomEvent('d2l-rubric-loa-overlay-level-mapping-changed', {
+			detail: loaMapping,
+			bubbles: true,
+			composed: true,
+		}));
 	}
 
 	_onReversedChanged(reversed) {
 		const loaMapping = this._getVisualLoaLevelMapping(this._loaLevels, this._sortedLevels, this._rubricLevelOverrides, reversed);
-		this.fire('d2l-rubric-loa-overlay-level-mapping-changed', loaMapping);
+		this.dispatchEvent(new CustomEvent('d2l-rubric-loa-overlay-level-mapping-changed', {
+			detail: loaMapping,
+			bubbles: true,
+			composed: true,
+		}));
 	}
 
 	_onAlignmentsChanged() {

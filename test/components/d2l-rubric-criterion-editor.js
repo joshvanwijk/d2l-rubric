@@ -194,7 +194,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 			});
 
 			test('out-of value is editable', function() {
-				element.async(function() {
+				setTimeout(function() {
 					var outOfTextBox = element.$$('#out-of-textbox');
 					expect(isVisible(outOfTextBox)).to.be.true;
 				});
@@ -210,7 +210,7 @@ suite('<d2l-rubric-criterion-editor>', function() {
 				});
 				fetch.returns(promise);
 
-				element.async(function() {
+				setTimeout(function() {
 					var outOfTextArea = element.$$('#out-of-textbox').$.input;
 					outOfTextArea.value = 'five';
 					raf(function() {

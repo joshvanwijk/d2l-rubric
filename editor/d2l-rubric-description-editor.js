@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-inputs/d2l-input-text.js';
@@ -275,7 +276,10 @@ Polymer({
 			this.toggleBubble('_descriptionInvalid', false, 'description-bubble');
 			var fields = [{'name':'description', 'value':e.detail.value}];
 			this.performAutosaveAction(action, fields, '_pendingDescriptionSaves').then(function() {
-				this.fire('d2l-rubric-description-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-description-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updateDescription(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('description-bubble', '_descriptionInvalid', 'descriptionSaveFailed', err);
@@ -318,12 +322,16 @@ Polymer({
 		if (action) {
 			if (this._pointsRequired && !saveEvent.value.trim()) {
 				this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-				this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
+
+				announce(this.localize('pointsAreRequired'));
 			} else {
 				this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
 				var fields = [{ 'name': 'points', 'value': saveEvent.value }];
 				this.performAutosaveAction(action, fields, '_pendingPointsSaves').then(function() {
-					this.fire('d2l-rubric-criterion-cell-points-saved');
+					this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-cell-points-saved', {
+						bubbles: true,
+						composed: true,
+					}));
 					this._updatePoints(this.entity);
 				}.bind(this)).catch(function(err) {
 					this.handleValidationError('cell-points-bubble', '_pointsInvalid', 'pointsSaveFailed', err);

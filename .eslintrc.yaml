@@ -1,8 +1,9 @@
 extends:
   brightspace/wct-polymer-3-config
 rules:
-  object-shorthand: [2, "never"]
+  eqeqeq: [2, "always", {"null": "ignore"}]
   no-useless-escape: 0
+  object-shorthand: [2, "never"]
 globals:
   fastdom: false
 env:

@@ -1,4 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
 import 'd2l-activity-alignments/d2l-select-outcomes-hierarchical.js';
 import 'd2l-activity-alignments/d2l-activity-alignment-tags.js';
@@ -523,7 +524,10 @@ Polymer({
 	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
-		this.fire('d2l-rubric-criterion-detail-width-changed', {});
+		this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-detail-width-changed', {
+			bubbles: true,
+			composed: true,
+		}));
 	},
 	_onEntityChanged: function(entity, oldEntity) {
 		if (!entity) {
@@ -704,7 +708,10 @@ Polymer({
 			}
 			var fields = [{ 'name': 'name', 'value': value }];
 			this.performAutosaveAction(action, fields, '_pendingNameSaves').then(function() {
-				this.fire('d2l-rubric-criterion-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updateName(this.entity, false);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
@@ -730,7 +737,10 @@ Polymer({
 			}
 			var fields = [{ 'name': 'outOf', 'value': saveEvent.value }];
 			this.performAutosaveAction(action, fields, '_pendingOutOfSaves').then(function() {
-				this.fire('d2l-rubric-criterion-saved');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-saved', {
+					bubbles: true,
+					composed: true,
+				}));
 				this._updateOutOf(this.entity, false);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
@@ -785,14 +795,25 @@ Polymer({
 		}).then(function() {
 			var name = this._criterionName;
 			this._transitionElement(this, 0);
-			this.fire('iron-announce', { text: this.localize('criterionDeleted', 'name', name) }, { bubbles: true });
+
+			announce(this.localize('criterionDeleted', 'name', name));
+
 			this.performSirenAction(action).then(function() {
-				this.fire('d2l-rubric-criterion-deleted');
+				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-deleted', {
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this)).then(function() {
 				deleteButton.removeAttribute('disabled');
 			}).catch(function(err) {
 				deleteButton.removeAttribute('disabled');
-				this.fire('d2l-rubric-editor-save-error', { message: err.message });
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
 			}.bind(this));
 		}.bind(this), function() {
 			deleteButton.removeAttribute('disabled');

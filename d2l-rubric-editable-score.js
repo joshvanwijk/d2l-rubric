@@ -445,13 +445,24 @@ Polymer({
 
 	_totalScoreChanged: function(score, entity) {
 		var outOf;
+
 		if (entity && entity.properties) {
 			outOf = entity.properties.outOf;
 		}
-		if (score != null && outOf != null) { //eslint-disable-line eqeqeq
-			this.fire('d2l-rubric-total-score-changed', {score:score, outOf: outOf.toString()});
-		} else if (score != null) { //eslint-disable-line eqeqeq
-			this.fire('d2l-rubric-total-score-changed', {score:score});
+		if (score != null) {
+			const detail = {
+				score: score,
+			};
+
+			if (outOf != null) {
+				detail.outOf = outOf.toString();
+			}
+
+			this.dispatchEvent(new CustomEvent('d2l-rubric-total-score-changed', {
+				detail: detail,
+				bubbles: true,
+				composed: true,
+			}));
 		}
 	},
 
