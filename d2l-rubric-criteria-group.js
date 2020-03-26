@@ -844,7 +844,7 @@ Polymer({
 	},
 
 	_handleTap: function(event) {
-		if (this.readOnly) {
+		if (this._isStaticView()) {
 			return;
 		}
 
