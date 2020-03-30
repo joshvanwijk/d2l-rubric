@@ -257,7 +257,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			>
 			</d2l-select-outcomes>
 		</simple-overlay>
-		<simple-overlay id="hierarchicaloverlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
+		<simple-overlay id="hierarchicaloverlay" tabindex="-1" class="with-margin scrollable"  with-backdrop>
 			<div>
 				<h2>[[browseOutcomesText]]</h2>
 				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-click= "_closeBrowseOutcomes"></d2l-button-icon>
@@ -268,7 +268,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				href="[[_getOutcomesHierarchicalHref(entity, isHolistic)]]"
 				align-button-text="[[alignOutcomesText]]"
 				token="[[token]]"
-				empty="{{_isOutcomeEmpty}}">
+				empty="{{_isOutcomeEmpty}}"
+				max-height="[[_hierarchicalHeight]]"
+			>
 			</d2l-select-outcomes-hierarchical>
 		</simple-overlay>
 
@@ -499,6 +501,9 @@ Polymer({
 		},
 		rubricLevelLoaMapping: {
 			type: Object
+		},
+		_hierarchicalHeight: {
+			type: Number
 		}
 	},
 	behaviors: [
@@ -872,16 +877,27 @@ Polymer({
 		}
 	},
 
+	_updateHierarchicalHeight: function() {
+		const maxHeight = this.$.hierarchicaloverlay && this.$.hierarchicaloverlay.style['max-height'];
+		if (!maxHeight) return;
+
+		const height = Math.round(parseInt(maxHeight, 10) * 0.55);
+		this._hierarchicalHeight = `${height}px`;
+	},
+
 	_showBrowseOutcomes: function() {
 		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.open() : this.$.overlay.open();
+		this._updateHierarchicalHeight();
 	},
 
 	_closeBrowseOutcomes: function() {
 		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.close() : this.$.overlay.close();
+		this._updateHierarchicalHeight();
 	},
 
 	_resizeOverlay: function() {
 		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.refit() : this.$.overlay.refit();
+		this._updateHierarchicalHeight();
 	},
 	// eslint-disable-next-line no-unused-vars
 	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {
