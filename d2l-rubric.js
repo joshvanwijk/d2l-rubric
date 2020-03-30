@@ -258,7 +258,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					</div>
 				</d2l-rubric-criteria-groups>
 			</div>
-			<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
+			<template is="dom-if" if="[[_hasOverallScore(entity)]]">
 				<hr class="compact-divider" hidden$="[[!compact]]">
 				<d2l-rubric-overall-score
 					read-only="[[readOnly]]"
@@ -324,11 +324,6 @@ Polymer({
 		_telemetryData: {
 			type: Object,
 			value: null
-		},
-		overallScoreFlag: {
-			type: Boolean,
-			value: false,
-			reflectToAttribute: true
 		},
 		_errored: {
 			type: Boolean,
@@ -473,9 +468,8 @@ Polymer({
 		return !!outOf || outOf === 0;
 	},
 
-	_hasOverallScore: function(entity, overallScoreFlag) {
+	_hasOverallScore: function(entity) {
 		return (
-			overallScoreFlag &&
 			entity &&
 			entity.hasLink(this.HypermediaRels.Rubrics.overallLevels) &&
 			!entity.hasClass(this.HypermediaClasses.rubrics.holistic)
