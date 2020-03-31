@@ -291,7 +291,7 @@ const $_documentContainer = html `
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
-			<d2l-rubric token="[[token]]" href="[[href]]" overall-score-flag="" read-only="" performance-telemetry-flag$="[[performanceTelemetryFlag]]">
+			<d2l-rubric token="[[token]]" href="[[href]]" read-only="" performance-telemetry-flag$="[[performanceTelemetryFlag]]">
 			</d2l-rubric>
 		</template>
 

@@ -18,16 +18,16 @@
 	<body>
 		<test-fixture id="default-rubric">
 			<template>
-				<d2l-rubric href='' token='foozleberries' overall-score-flag=""></d2l-rubric>
+				<d2l-rubric href='' token='foozleberries'></d2l-rubric>
 			</template>
 		</test-fixture>
-		<test-fixture id="no-overall-score">
+		<test-fixture id="holistic-rubric">
 			<template>
-				<d2l-rubric href='' token='foozleberries'></d2l-rubric>
+				<d2l-rubric href='data/rubrics/organizations/holistic/226.json' token='foozleberries'></d2l-rubric>
 			</template>
 		</test-fixture>
 		<script type="module" src="./default-rubric.js"></script>
 		<script type="module" src="./d2l-rubric-text-only.js"></script>
-
+		<script type="module" src="./d2l-rubric-holistic.js"></script>
 	</body>
 </html>
