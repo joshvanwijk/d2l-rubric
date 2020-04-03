@@ -206,6 +206,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				flex-direction: column;
 			}
 
+			.select-outcomes-hierarchical {
+				overflow-y: auto;
+			}
+
 			:dir(rtl) .criterion-remove {
 				right: auto;
 				left: -2.5rem;
@@ -264,6 +268,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			</div>
 
 			<d2l-select-outcomes-hierarchical
+				class="select-outcomes-hierarchical"
 				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
 				href="[[_getOutcomesHierarchicalHref(entity, isHolistic)]]"
 				align-button-text="[[alignOutcomesText]]"
@@ -526,6 +531,7 @@ Polymer({
 		this.addEventListener('d2l-alignment-list-cancelled', this._closeBrowseOutcomes);
 		this.addEventListener('d2l-select-outcomes-closed', this._closeBrowseOutcomes);
 		this.addEventListener('siren-entity-loading-fetched', this._resizeOverlay);
+		window.addEventListener('resize', this._resizeOverlay.bind(this));
 	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
