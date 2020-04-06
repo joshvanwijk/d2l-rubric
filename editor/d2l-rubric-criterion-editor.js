@@ -93,6 +93,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				flex-direction: row;
 			}
 
+			#hierarchicaloverlay {
+				width: 50%;
+			}
+
 			#outcometag:not([hidden]){
 				border-left: 1px solid var(--d2l-color-galena);
 				margin-right: 50px;
