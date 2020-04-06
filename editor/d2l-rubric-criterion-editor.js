@@ -94,7 +94,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			}
 
 			#hierarchicaloverlay {
-				width: 50%;
+				width: 800px;
 			}
 
 			#outcometag:not([hidden]){
