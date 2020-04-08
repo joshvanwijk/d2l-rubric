@@ -38,7 +38,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'descriptionInfo': 'Add a description for your personal reference. It will not be shared with students.',
 		'descriptionSaveFailed': 'Saving description failed',
 		'editFeedback': 'Edit Feedback',
-		'errorText': 'Oops! We\'re having trouble connecting you. You might want to refresh the page, or try again later.',
+		'errorText': 'Oops! We"re having trouble connecting you. You might want to refresh the page, or try again later.',
 		'feedback': 'Feedback',
 		'feedbackSaveFailed': 'Saving feedback failed',
 		'groupAdded': 'A new criteria group has been added',
@@ -149,11 +149,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'loaOverlayHeading': 'Achievement Levels',
 		'rubricLevelsHeading': 'Rubric Levels',
 		'criteriaHeading': 'Criteria',
-		'loaLevelLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is mapped to rubric level {rubricLevelName}',
-		'loaLevelLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
-		'loaLevelUpdatedLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric level {rubricLevelName}',
-		'loaLevelUpdatedLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
-		'loaSliderLabel': 'Achievement threshold between \'{loaLevel1}\' and \'{loaLevel2}\'. Use left and right arrow keys to move the threshold.',
-		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}'
+		'loaLevelLabelSingleRubric': 'Achievement level "{loaLevelName}" is mapped to rubric level {rubricLevelName}',
+		'loaLevelLabelMultiRubric': 'Achievement level "{loaLevelName}" is mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
+		'loaLevelUpdatedLabelSingleRubric': 'Achievement level "{loaLevelName}" is now mapped to rubric level {rubricLevelName}',
+		'loaLevelUpdatedLabelMultiRubric': 'Achievement level "{loaLevelName}" is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
+		'loaSliderLabel': 'Achievement threshold between "{loaLevel1}" and "{loaLevel2}". Use left and right arrow keys to move the threshold.',
+		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
+		'rubricFeedbackCopyOption': 'Include rubric feedback in overall feedback'
 	}
 };

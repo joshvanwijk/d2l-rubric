@@ -14,7 +14,7 @@ import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { useShadow } from '@polymer/polymer/lib/utils/settings.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-visibility-editor">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-visibility-editor">
 	<template strip-whitespace="">
 		<style include="d2l-input-radio-styles d2l-input-styles">
 			:host {
@@ -65,6 +65,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-visibility-editor">
 					name="visibility"
 					on-change="_changeVisibility">[[localize('rubricVisibilityNever')]]
 			</label>
+			<d2l-input-checkbox
+				id="enable-feedback-copy"
+				style="margin-left: 32px;"
+				on-change="_toggleFeedbackCopy"
+			>
+				[[localize('rubricFeedbackCopyOption')]]
+			</d2l-input-checkbox>
 			<label class="d2l-input-radio-label">
 				<input type="radio"
 					id="VisibleOnceFeedbackPosted"
@@ -101,6 +108,9 @@ Polymer({
 		_debounceSelected: {
 			type: String,
 		},
+		_debounceFeedbackCopyChecked: {
+			type: Boolean,
+		},
 		ariaInvalid: {
 			type: String,
 			reflectToAttribute: true,
@@ -122,6 +132,7 @@ Polymer({
 			type: String
 		},
 	},
+
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
@@ -129,6 +140,7 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
 	],
+
 	_onEntityChanged: function(entity) {
 		if (this.isDebouncerActive('change')) {
 			return;
@@ -142,6 +154,15 @@ Polymer({
 						dom(this.root).querySelector('#' + field.value[i].value).checked = true;
 					}
 				}
+			}
+
+			const feedbackCopyAction = entity && entity.getActionByName('enable-feedback-copy');
+			const copyOption = dom(this.root).querySelector('#enable-feedback-copy');
+			copyOption.hidden = feedbackCopyAction ? false : true;
+			if (feedbackCopyAction) {
+				const field = feedbackCopyAction.getFieldByName('feedbackCopy');
+				copyOption.disabled = field && field.value && field.value.disabled || false;
+				copyOption.checked = field && field.value && field.value.selected || false;
 			}
 		} else {
 			const visibilitySelected = entity && entity.properties && entity.properties.visibility;
@@ -160,6 +181,7 @@ Polymer({
 			}
 		}
 	},
+
 	_changeVisibility: function(e) {
 		this._debounceSelected = e.target.value;
 		this.debounce('change', function() {
@@ -178,9 +200,30 @@ Polymer({
 			}
 		}.bind(this), 200);
 	},
+
+	_toggleFeedbackCopy: function(e) {
+		this._debounceFeedbackCopyChecked = e.target.checked;
+		this.debounce('toggleFeedbackCopy', function() {
+			var action = this.entity.getActionByName('enable-feedback-copy');
+			if (action) {
+				this.toggleBubble('_visibilityInvalid', false, 'visibility-bubble');
+				var fields = [{ 'name': 'feedbackCopy', 'value': this._debounceFeedbackCopyChecked }];
+				this.performSirenAction(action, fields).then(function() {
+					this.dispatchEvent(new CustomEvent('d2l-rubric-visibility-saved', {
+						bubbles: true,
+						composed: true,
+					}));
+				}.bind(this)).catch(function(err) {
+					this.handleValidationError('visibility-bubble', '_visibilityInvalid', 'rubricVisibilitySaveFailed', err);
+				}.bind(this));
+			}
+		}.bind(this), 200);
+	},
+
 	_computeAriaInvalid: function(_visibilityInvalid) {
 		return _visibilityInvalid ? 'true' : 'false';
 	},
+
 	_handleFocus: function() {
 		// in shady DOM the input's "focus" event does not bubble,
 		// so  need to fire it
@@ -191,6 +234,7 @@ Polymer({
 			));
 		}
 	},
+
 	_handleBlur: function() {
 		// in shady DOM the input's "blur" event does not bubble,
 		// so need to fire it
@@ -201,6 +245,7 @@ Polymer({
 			));
 		}
 	},
+
 	_computeCanEdit: function(entity) {
 		return entity && entity.hasActionByName('update-visibility');
 	}

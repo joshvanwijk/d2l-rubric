@@ -143,5 +143,6 @@
 	"loaLevelUpdatedLabelSingleRubric": "Achievement level \"{loaLevelName}\" is now mapped to rubric level {rubricLevelName}",
 	"loaLevelUpdatedLabelMultiRubric": "Achievement level \"{loaLevelName}\" is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}",
 	"loaSliderLabel": "Achievement threshold between \"{loaLevel1}\" and \"{loaLevel2}\". Use left and right arrow keys to move the threshold.",
-	"loaThresholdMovementNotif": "Threshold moved {direction, select, left {left} right {right}}"
+	"loaThresholdMovementNotif": "Threshold moved {direction, select, left {left} right {right}}",
+	"rubricFeedbackCopyOption": "Include rubric feedback in overall feedback"
 }

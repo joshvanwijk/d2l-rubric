@@ -114,6 +114,7 @@
     "reverseLevelOrder": "Reverse Level Order",
     "reverseLevelsSuccessful": "The level order has been reversed",
     "rubricAlignmentSaveFailed": "Changing rubric alignment failed.",
+    "rubricFeedbackCopyOption": "Include rubric feedback in overall feedback",
     "rubricLevelsHeading": "Rubric Levels",
     "rubricLoadingErrorAriaAlert": "There was a problem loading your rubric. It cannot be displayed.",
     "rubricLoadingErrorMessage": "Sorry, we were unable to display the rubric.",
