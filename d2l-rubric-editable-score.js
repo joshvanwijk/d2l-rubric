@@ -124,7 +124,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</div>
 			</template>
 		</div>
-		<d2l-tooltip aria-hidden="true" id="override-tooltip" hidden="[[_handleTooltip(scoreOverridden, _isEditingScore)]]" for="editable-container" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
+		<d2l-tooltip aria-hidden="true" align="start" hidden="[[_handleTooltip(scoreOverridden, _isEditingScore)]]" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -224,12 +224,6 @@ Polymer({
 		'_updateAssessable(readOnly, assessmentHref)'
 	],
 	ready: function() {
-		if (!this.compact && this.criterionHref) {
-			this.$['override-tooltip'].setAttribute(
-				'boundary',
-				'{left: 0, right: 200}');
-		}
-
 		['click', 'keydown'].forEach((eventType) => {
 			this.addEventListener(eventType, (e) => {
 				if (eventType === 'keydown' && e.keyCode !== 13) {
