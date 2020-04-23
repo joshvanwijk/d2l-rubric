@@ -10,17 +10,6 @@ var json_contents = {
 				'chrome': ['headless', 'disable-gpu', 'no-sandbox']
 			}
 		},
-		'istanbul': {
-			'dir': './coverage',
-			'reporters': ['text-summary', 'lcov'],
-			'include': [
-				'**/*.js'
-			],
-			'exclude': [
-				'/polymer/polymer.js',
-				'/platform/platform.js'
-			]
-		},
 		'sauce': {
 		}
 	}

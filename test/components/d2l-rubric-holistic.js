@@ -3,7 +3,7 @@
 'use strict';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 
-suite('<d2l-rubric-holistic>', function() {
+suite.skip('<d2l-rubric-holistic>', function() {
 
 	var element, sandbox;
 
@@ -11,7 +11,7 @@ suite('<d2l-rubric-holistic>', function() {
 		sandbox = sinon.sandbox.create();
 		element = fixture('holistic-rubric');
 		/* global getLoadedElement */
-		element = getLoadedElement(element, 'data/rubrics/organizations/holistic/226.json', done);
+		element = getLoadedElement(element, 'data/rubrics/organizations/holistic-percent/226.json', done);
 	});
 
 	suiteTeardown(function() {
