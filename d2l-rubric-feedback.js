@@ -12,11 +12,12 @@ import 'd2l-icons/d2l-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-button/d2l-button-subtle.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
+$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -102,6 +103,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				color: var(--d2l-color-galena);
 				padding-top: 5px;
 				padding-bottom: 5px;
+				display: inherit;
+			}
+			.feedback-heading-extra {
+				@apply --d2l-label-text;
+				margin-left: 6px;
+				color: var(--d2l-color-tungsten);
+				font-weight: normal;
 			}
 			.feedback-text {
 				@apply --d2l-body-compact-text;
@@ -131,11 +139,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 				<div class="feedback-header-wrapper">
 					<div class="feedback-heading">
 						[[localize('criterionFeedback')]]
+						<div class="feedback-heading-extra">
+							[[_feedbackHeadingExtra]]
+						</div>
 					</div>
 					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedbackHandler" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]">
+				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
 				</d2l-input-textarea>
 				<template is="dom-if" if="[[_feedbackInvalid]]">
 					<d2l-tooltip id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
@@ -212,7 +223,18 @@ Polymer({
 		compact: {
 			type: Boolean,
 			value: false
-		}
+		},
+		enableFeedbackCopy: {
+			type: Boolean,
+			value: false,
+		},
+		_feedbackHeadingExtra: {
+			type: String
+		},
+		_ariaLabelForTextArea: {
+			type: String,
+			computed: '_computeAriaLabelForTextArea(criterionEntity)'
+		},
 	},
 
 	behaviors: [
@@ -239,6 +261,8 @@ Polymer({
 		} else {
 			elem.addEventListener('blur', this._saveFeedbackHandler.bind(this));
 		}
+
+		this._feedbackHeadingExtra = this._getFeedbackHeadingExtra(this.enableFeedbackCopy);
 	},
 
 	detached: function() {
@@ -263,6 +287,12 @@ Polymer({
 		}
 		this._feedbackInFocus = true;
 		this._addFocusStylingToFeedbackWrapper();
+	},
+
+	_onFocusInTextArea: function() {
+		const title = this.localize('criterionFeedback');
+		const extra = this._feedbackHeadingExtra;
+		announce(`${title}${extra}`);
 	},
 
 	_focusOutHandler: function() {
@@ -383,5 +413,16 @@ Polymer({
 
 	_handleTooltip: function(_clearFeedbackInFocus) {
 		return _clearFeedbackInFocus;
+	},
+
+	_getFeedbackHeadingExtra: function(enableFeedbackCopy) {
+		const text = this.localize('criterionFeedbackWithCopy');
+		return enableFeedbackCopy ? `- ${text}` : '';
+	},
+
+	_computeAriaLabelForTextArea: function(criterionEntity) {
+		if (!criterionEntity) return;
+		const name = criterionEntity.properties && criterionEntity.properties.name || '';
+		return this.localize('feedbackOn', 'criterionName', name);
 	}
 });

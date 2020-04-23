@@ -221,6 +221,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
+					enable-feedback-copy="[[enableFeedbackCopy]]"
 					read-only="[[readOnly]]"
 					telemetry-data="[[_telemetryData]]"
 					compact="[[compact]]">
@@ -321,6 +322,10 @@ Polymer({
 			type: String,
 			value: null
 		},
+		enableFeedbackCopy: {
+			type: Boolean,
+			value: null,
+		},
 		_telemetryData: {
 			type: Object,
 			value: null
@@ -402,6 +407,8 @@ Polymer({
 			}
 
 			this.rubricType = this._findRubricType(entity);
+			this.enableFeedbackCopy = this._getEnableFeedbackCopy(entity);
+
 			this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 			this._showContent = true;
 		}
@@ -453,6 +460,14 @@ Polymer({
 		} else {
 			return null;
 		}
+	},
+
+	_getEnableFeedbackCopy: function(entity) {
+		const actions = entity && entity.getActionByName('enable-feedback-copy');
+		if (!actions) return false;
+
+		const field = actions.getFieldByName('feedbackCopy');
+		return field && field.value && field.value.selected;
 	},
 
 	_hasOutOf: function(entity) {

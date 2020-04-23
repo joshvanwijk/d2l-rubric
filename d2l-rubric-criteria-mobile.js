@@ -70,6 +70,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 					on-save-feedback-finished="_handleSaveFinished"
 					on-close-feedback="_closeFeedback"
 					read-only=[[readOnly]]
+					enable-feedback-copy="[[enableFeedbackCopy]]"
 					compact="">
 				</d2l-rubric-feedback>
 			</template>
@@ -98,6 +99,7 @@ Polymer({
 		isHolistic: Boolean,
 		isNumeric: Boolean,
 		readOnly: Boolean,
+		enableFeedbackCopy: Boolean,
 		_addingFeedback: {
 			type: Number,
 			value: -1

@@ -29,6 +29,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'criterionDeleted': '{name} criterion deleted',
 		'criterionDescriptionAriaLabel': 'Description for criterion {criterionName}, level {levelName}',
 		'criterionFeedback': 'Criterion Feedback',
+		'criterionFeedbackWithCopy': 'will be included in the overall feedback and visible to students',
 		'criterionFeedbackAriaLabel': 'Feedback for criterion {criterionName}, level {levelName}',
 		'criterionNameAriaLabel': 'Criterion name',
 		'criterionOutOf': 'Criterion {name} is out of {value} points',
@@ -155,6 +156,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'loaLevelUpdatedLabelMultiRubric': 'Achievement level "{loaLevelName}" is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
 		'loaSliderLabel': 'Achievement threshold between "{loaLevel1}" and "{loaLevel2}". Use left and right arrow keys to move the threshold.',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
-		'rubricFeedbackCopyOption': 'Include rubric feedback in overall feedback'
+		'rubricFeedbackCopyOption': 'Include rubric feedback in overall feedback',
+		'feedbackOn': 'Feedback on {criterionName}'
 	}
 };

@@ -332,6 +332,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								criterion-assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
 								token="[[token]]"
 								read-only="[[readOnly]]"
+								enable-feedback-copy="[[enableFeedbackCopy]]"
 								data-criterion$="[[criterionNum]]"
 								on-save-feedback-start="_handleSaveStart"
 								on-save-feedback-finished="_handleSaveFinished"
@@ -410,6 +411,9 @@ Polymer({
 		telemetryData: {
 			type: Object,
 			value: null
+		},
+		enableFeedbackCopy: {
+			type: Boolean,
 		},
 		criterionResultMap: Object,
 		cellAssessmentMap: Object

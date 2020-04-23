@@ -40,6 +40,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					assessment-entity="[[assessmentEntity]]"
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
+					enable-feedback-copy="[[enableFeedbackCopy]]"
 					read-only="[[readOnly]]"
 					hidden$="[[!_showContent]]"
 					telemetry-data="[[telemetryData]]"
@@ -63,6 +64,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					telemetry-data="[[telemetryData]]"
 					criterion-result-map="[[_criterionResultMap]]"
 					cell-assessment-map="[[_cellAssessmentMap]]"
+					enable-feedback-copy="[[enableFeedbackCopy]]"
 				></d2l-rubric-criteria-group-mobile>
 				<slot></slot>
 			</template>
@@ -100,6 +102,9 @@ Polymer({
 		readOnly: Boolean,
 		telemetryData: {
 			type: Object
+		},
+		enableFeedbackCopy: {
+			type: Boolean,
 		},
 		_criterionResultMap: Object,
 		_cellAssessmentMap: Object

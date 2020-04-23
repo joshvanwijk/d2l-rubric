@@ -33,6 +33,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 			is-holistic="[[_isHolistic]]"
 			is-numeric="[[_isNumeric]]"
 			read-only="[[readOnly]]"
+			enable-feedback-copy="[[enableFeedbackCopy]]"
 			compact="[[compact]]">
 		</d2l-rubric-criteria-mobile>
 	</template>
@@ -59,6 +60,7 @@ Polymer({
 		_isNumeric: Boolean,
 		_loaded: Boolean,
 		readOnly: Boolean,
+		enableFeedbackCopy: Boolean,
 		telemetryData: Object
 	},
 
