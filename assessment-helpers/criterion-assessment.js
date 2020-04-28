@@ -98,12 +98,16 @@ class CriterionAssessmentHelper {
 			return Promise.resolve();
 		}
 
+		const defaultScoreField = currentAction.getFieldByName('defaultScore');
+		const newScore = defaultScoreField && typeof defaultScoreField.value !== 'undefined'
+			? defaultScoreField.value
+			: null; // Clear override when no level selected
+
 		return this._exec(() => {
 			const updatedEntity = entityGetter();
 			return updatedEntity && updatedEntity.getActionByName('update-critierion-assessment');
-		}, { score: currentAction.defaultScore });
+		}, { score: newScore });
 	}
-
 }
 
 export default CriterionAssessmentHelper;

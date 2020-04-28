@@ -17,18 +17,34 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 	<template strip-whitespace="">
 		<style>
 			:host {
+				display: inline-flex;
+				align-items: center;
+			}
+			#editable-container {
 				display: block;
+				outline: none;
 			}
-			:host([overridden-styling]) {
-					border-radius: 0.3rem;
-					background-color: var(--d2l-color-celestine-plus-2);
+			:host([overridden-styling]) #editable-container {
+				border-radius: 0.3rem;
+				background-color: var(--d2l-color-celestine-plus-2);
 			}
-			:host(:not([compact]):not([editor-styling])) {
+			:host([compact]:not([editor-styling])) #editable-container {
+				padding: 0.25rem;
+				margin: -0.25rem;
+			}
+			:host(:not([compact]):not([editor-styling])) #editable-container {
 				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
 			}
-			:host(:not([compact]):focus:not([editor-styling])),
-			:host(:not([compact]):hover:not([editor-styling])) {
+			:host(:not([compact]):not([editor-styling])) #editable-container:focus,
+			:host(:not([compact]):not([editor-styling])) #editable-container:hover {
 				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
+			}
+			:host(.assessable[compact]:not([editor-styling])) #editable-container:focus,
+			:host(.assessable[compact]:not([editor-styling])) #editable-container:hover {
+				padding: calc(0.25rem - 1px);
+			}
+			:host(.assessable:not([editor-styling])) #editable-container:focus,
+			:host(.assessable:not([editor-styling])) #editable-container:hover {
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);
 			}
@@ -68,26 +84,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				margin-right: 3px;
 			}
 
-			.clear-override-button-mobile {
-				display: none;
-			}
-			.override-label {
-				display: none;
-			}
-
-			:host([compact]) .clear-override-button-mobile {
-				display: inline-flex;
-				padding: 6px 0;
-			}
-			:host([compact]) .override-label {
-				margin-left: 12px;
-				padding: 6px 0;
-				display: inline-flex;
-				font-size: 15px;
-				font-weight: bold;
-				color: var(--d2l-color-ferrite) !important;
-				align-items : center;
-			}
 			.editing-component {
 				margin-right: 0;
 				display: inline-flex;
@@ -95,18 +91,27 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				align-items : center;
 			}
 
+			#clear-button {
+				margin: auto 10px;
+			}
+
 			[hidden] {
-				display: none;
+				display: none !important;
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></rubric-siren-entity>
 		<div id="editable-container">
 			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore]]">
-				<template is="dom-if" if="[[!totalScore]]">
-					<d2l-button-subtle class="clear-override-button-mobile" id="clear-button" text="[[localize('clearOverride')]]" on-click="_clearCriterionOverride" hidden$="[[!scoreOverridden]]">
-					</d2l-button-subtle>
-					<div class="override-label" hidden$="[[scoreOverridden]]">[[localize('overrideLabel')]]</div>
+				<template is="dom-if" if="[[_showClearCriterionOverrideButton(assessmentEntity, 'compact', compact, totalScore)]]">
+					<d2l-button-icon
+						id="clear-button"
+						icon="tier1:close-small"
+						class="clear-override-button"
+						text="[[localize('clearOverride')]]"
+						on-click="_clearCriterionOverride"
+						hidden$="[[!scoreOverridden]]">
+					</d2l-button-icon>
 				</template>
 				<div class="editing-component">
 					<d2l-input-text id="text-area" value="[[_score]]" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
@@ -124,6 +129,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</div>
 			</template>
 		</div>
+		<template is="dom-if" if="[[_showClearCriterionOverrideButton(assessmentEntity, 'full', compact, totalScore)]]">
+			<d2l-button-icon
+				id="clear-button"
+				icon="tier1:close-small"
+				class="clear-override-button"
+				text="[[localize('clearOverride')]]"
+				on-click="_clearCriterionOverride"
+				hidden$="[[!scoreOverridden]]">
+			</d2l-button-icon>
+		</template>
 		<d2l-tooltip aria-hidden="true" align="start" hidden="[[_handleTooltip(scoreOverridden, _isEditingScore)]]" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
 </dom-module>`;
 
@@ -244,9 +259,11 @@ Polymer({
 		this.classList.toggle('assessable', isAssessable);
 		this.classList.toggle('editing', isEditing);
 
+		const editableContainer = this.shadowRoot.querySelector('#editable-container');
+
 		isAssessable
-			? this.setAttribute('tabindex', '0')
-			: this.removeAttribute('tabindex');
+			? editableContainer.setAttribute('tabindex', '0')
+			: editableContainer.removeAttribute('tabindex');
 	},
 
 	_onAssessmentResultChanged: function(entity, assessmentEntity, criterionHref) {
@@ -374,14 +391,17 @@ Polymer({
 		this.toggleBubble('scoreInvalid', false);
 		this.editingScore = -1;
 		this._pendingScoreSaves++;
-		this.clearCriterionOverride(this.criterionHref).finally(function() {
-			this._pendingScoreSaves--;
-		}.bind(this)).then(function() {
-			this._scoreModified = false;
-			this._updateScore(this.entity, this.assessmentEntity, this.totalScore, !!this.criterionHref);
-		}.bind(this)).catch(function(err) {
-			this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
-		}.bind(this));
+		this.CriterionAssessmentHelper.clearScoreOverride(() => this.assessmentEntity)
+			.finally(() => {
+				this._pendingScoreSaves--;
+			})
+			.then(() => {
+				this._scoreModified = false;
+				this._updateScore(this.entity, this.assessmentEntity, this.totalScore, !!this.criterionHref);
+			})
+			.catch((err) => {
+				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
+			});
 	},
 
 	getScore: function(entity, assessmentEntity, totalScore, isCriterion) {
@@ -481,5 +501,18 @@ Polymer({
 
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
+	},
+
+	_showClearCriterionOverrideButton: function(entity, targetView, compact, totalScore) {
+		if (totalScore) {
+			return false;
+		}
+
+		if (!this.CriterionAssessmentHelper.canUpdateAssessment(entity)) {
+			return false;
+		}
+
+		const forCompact = targetView === 'compact';
+		return forCompact === compact;
 	}
 });
