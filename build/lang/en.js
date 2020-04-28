@@ -39,7 +39,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'descriptionInfo': 'Add a description for your personal reference. It will not be shared with students.',
 		'descriptionSaveFailed': 'Saving description failed',
 		'editFeedback': 'Edit Feedback',
-		'errorText': 'Oops! We"re having trouble connecting you. You might want to refresh the page, or try again later.',
+		'errorText': 'Oops! We\'re having trouble connecting you. You might want to refresh the page, or try again later.',
 		'feedback': 'Feedback',
 		'feedbackSaveFailed': 'Saving feedback failed',
 		'groupAdded': 'A new criteria group has been added',
