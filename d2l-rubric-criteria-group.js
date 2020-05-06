@@ -748,7 +748,7 @@ Polymer({
 
 	_getSelectedLevelIndex: function(criterionResult) {
 		const cells = criterionResult.getSubEntitiesByClass('assessment-criterion-cell');
-		for (let i = 0; i < cells; i++) {
+		for (let i = 0; i < cells.length; i++) {
 			if (this.CriterionCellAssessmentHelper.isSelected(cells[i])) {
 				return i;
 			}
