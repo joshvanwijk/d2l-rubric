@@ -24,6 +24,7 @@ addons:
   chrome: stable
   apt:
     packages:
+    - dpkg
     - gdebi
     - oracle-java9-installer
     - oracle-java9-set-default
