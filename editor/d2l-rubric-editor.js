@@ -228,17 +228,19 @@ const $_documentContainer = html `
 		</style>
 		<d2l-rubric-editor-header id="rubric-header">
 			<div slot="title">[[localize('editRubric')]]</div>
-			<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu">
-				<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down"></d2l-button-icon>
-				<d2l-dropdown-menu>
-					<d2l-menu id="title-menu">
-						<d2l-menu-item text="[[localize('statistics')]]" disabled="[[!_hasStatisticsLink]]" on-d2l-menu-item-select="_handleSelectStatistics">
-						</d2l-menu-item>
-						<d2l-menu-item text="[[localize('preview')]]" disabled="[[!_hasPreviewLink]]" on-d2l-menu-item-select="_openPreviewDialog">
-						</d2l-menu-item>
-					</d2l-menu>
-				</d2l-dropdown-menu>
-			</d2l-dropdown>
+			<template is="dom-if" if="{{!titleDropdownHidden}}">
+				<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu" >
+					<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down"></d2l-button-icon>
+					<d2l-dropdown-menu>
+						<d2l-menu id="title-menu">
+							<d2l-menu-item text="[[localize('statistics')]]" disabled="[[!_hasStatisticsLink]]" on-d2l-menu-item-select="_handleSelectStatistics">
+							</d2l-menu-item>
+							<d2l-menu-item text="[[localize('preview')]]" disabled="[[!_hasPreviewLink]]" on-d2l-menu-item-select="_openPreviewDialog">
+							</d2l-menu-item>
+						</d2l-menu>
+					</d2l-dropdown-menu>
+				</d2l-dropdown>
+			</template>
 			<d2l-dropdown-button-subtle id="status-dropdown" slot="header-end-content" text="[[_rubricStatusText]]" hidden$="[[!_canChangeStatus]]" on-d2l-menu-item-change="_handleStatusChange">
 				<d2l-dropdown-menu>
 					<d2l-menu id="status-menu" label="Status"></d2l-menu>
@@ -422,6 +424,10 @@ Polymer({
 		},
 		alignOutcomesText: {
 			type: String
+		},
+		titleDropdownHidden: {
+			type: Boolean,
+			value: false
 		},
 		_rubricName: {
 			type: String,
