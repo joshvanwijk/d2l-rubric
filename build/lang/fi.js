@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 	fi: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': 'Add Criteria Group',
 		'addCriterion': 'Add Criterion',
 		'addFeedback': 'Add Feedback',
@@ -79,12 +80,12 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'levelNameAndBulletPoint': '{levelName} •',
 		'levelPoints': 'Level points',
 		'levelPrepended': 'A new level has been added before {name}',
-		'loaLevelLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
-		'loaLevelLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is mapped to rubric level {rubricLevelName}',
-		'loaLevelUpdatedLabelMultiRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
-		'loaLevelUpdatedLabelSingleRubric': 'Achievement level \'{loaLevelName}\' is now mapped to rubric level {rubricLevelName}',
+		'loaLevelLabelMultiRubric': 'Achievement level "{loaLevelName}" is mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
+		'loaLevelLabelSingleRubric': 'Achievement level "{loaLevelName}" is mapped to rubric level {rubricLevelName}',
+		'loaLevelUpdatedLabelMultiRubric': 'Achievement level "{loaLevelName}" is now mapped to rubric levels {otherRubricLevelNames} and {lastRubricLevelName}',
+		'loaLevelUpdatedLabelSingleRubric': 'Achievement level "{loaLevelName}" is now mapped to rubric level {rubricLevelName}',
 		'loaOverlayHeading': 'Achievement Levels',
-		'loaSliderLabel': 'Achievement threshold between \'{loaLevel1}\' and \'{loaLevel2}\'. Use left and right arrow keys to move the threshold.',
+		'loaSliderLabel': 'Achievement threshold between "{loaLevel1}" and "{loaLevel2}". Use left and right arrow keys to move the threshold.',
 		'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
 		'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
 		'makeRubricAvailableHeader': 'Make rubric available to',

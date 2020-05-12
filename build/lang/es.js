@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 	es: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': 'Agregar grupo de criterios',
 		'addCriterion': 'Agregar criterio',
 		'addFeedback': 'Agregar comentarios',
@@ -84,7 +85,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'loaLevelUpdatedLabelMultiRubric': 'El nivel de logro “{loaLevelName}” ahora está asignado a los niveles de rúbrica {otherRubricLevelNames} y {lastRubricLevelName}',
 		'loaLevelUpdatedLabelSingleRubric': 'El nivel de logro “{loaLevelName}” ahora está asignado al nivel de rúbrica {rubricLevelName}',
 		'loaOverlayHeading': 'Niveles de logro',
-		'loaSliderLabel': 'Umbral de rendimiento entre \'{loaLevel1}\' y \'{loaLevel2}\'. Utilice las teclas de flecha izquierda y derecha para mover el umbral.',
+		'loaSliderLabel': 'Umbral de rendimiento entre "{loaLevel1}" y "{loaLevel2}". Utilice las teclas de flecha izquierda y derecha para mover el umbral.',
 		'loaThresholdMovementNotif': 'El umbral se movió a la {direction, select, left {izquierda} right {derecha}}',
 		'lockedAlertText': 'Esta rúbrica no se puede editar porque ya se utilizó para evaluar el trabajo del estudiante',
 		'makeRubricAvailableHeader': 'Rúbrica disponible para',
@@ -151,8 +152,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'selectNextLevel': 'Seleccionar el nivel siguiente',
 		'selectPreviousLevel': 'Seleccionar el nivel anterior',
 		'setScoreVisibilityFailed': 'Se produjo un error al establecer la visibilidad de la puntuación.',
-		'shareRubricSaveFailed': 'No se pudo cambiar la disponibilidad de la unidad de organización',
 		'sharedAlertText': 'Esta rúbrica solo se puede editar desde la unidad de organización que la compartió',
+		'shareRubricSaveFailed': 'No se pudo cambiar la disponibilidad de la unidad de organización',
 		'statistics': 'Estadísticas',
 		'total': 'Total',
 		'totalMobile': 'Puntuación total',
