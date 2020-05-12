@@ -408,10 +408,6 @@ Polymer({
 			type: Number,
 			value: -1
 		},
-		telemetryData: {
-			type: Object,
-			value: null
-		},
 		enableFeedbackCopy: {
 			type: Boolean,
 		},
@@ -465,9 +461,9 @@ Polymer({
 			return;
 		}
 		// The first time that the entity loads, we send out an Open event
-		if (!this._loaded && this.telemetryData && this.telemetryData.endpoint) {
+		if (!this._loaded) {
 			var entityId = this._getSelfLink(entity);
-			this.logViewRubricEvent({ id: entityId }, this.telemetryData);
+			this.logViewRubricEvent({ id: entityId });
 			this._loaded = true;
 		}
 		this._levelsHref = this._getLevelsLink(entity);
@@ -558,11 +554,10 @@ Polymer({
 	_onCriterionCellDomChanged: function() {
 		const self = this;
 		this.perfMark('rubricRenderEnd');
-		this.perfMark('rubricLoadEnd');
 		this.debounce('criterionCellDomChangedEvent', function() {
-			self.logRubricRenderedEvent('rubricRenderStart', 'rubricRenderEnd', self.telemetryData);
-			self.logRubricLoadedEvent('rubricLoadStart', 'rubricLoadEnd', self.telemetryData);
+			self.logRubricRenderedEvent('rubricRenderStart', 'rubricRenderEnd');
 		}, 100);
+		this.markRubricLoadedEventEnd('rubric');
 	},
 
 	_closeFeedback: function(event) {
@@ -860,7 +855,7 @@ Polymer({
 			this._focusCriterionCell(event);
 
 			this.perfMark(`criterionCellTappedEnd-${uuid}`);
-			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`, this.telemetryData);
+			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`);
 		});
 
 		this._addingFeedback = -1;

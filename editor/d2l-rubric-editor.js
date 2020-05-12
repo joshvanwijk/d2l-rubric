@@ -12,6 +12,7 @@ import './d2l-rubric-editor-cell-styles.js';
 import './d2l-rubric-error-handling-behavior.js';
 import './d2l-rubric-editor-header.js';
 import '../localize-behavior.js';
+import '../telemetry-behavior.js';
 import './d2l-rubric-dropdown-menu-behavior.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-colors/d2l-colors.js';
@@ -289,7 +290,7 @@ const $_documentContainer = html `
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isReadOnly]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" telemetry-data="[[telemetryData]]">
+			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
@@ -589,9 +590,6 @@ Polymer({
 			type: String,
 			value: null,
 		},
-		telemetryData: {
-			type: Object
-		},
 		performanceTelemetryFlag: {
 			type: Boolean,
 			value: false,
@@ -604,7 +602,8 @@ Polymer({
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
-		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior
+		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 	listeners: {
 		'd2l-siren-entity-save-start': '_onEntitySave',
@@ -645,10 +644,11 @@ Polymer({
 			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-error', this._onShareRubricSaveError.bind(this));
 		}
 
-		this.telemetryData = {
+		const telemetryData = {
 			endpoint: this.dataset.telemetryEndpoint,
 			performanceTelemetryEnabled: this.performanceTelemetryFlag
 		};
+		this.setTelemetryData(telemetryData);
 	},
 	_getReadOnlyDescription: function(value, isHtml) {
 		if (isHtml) {

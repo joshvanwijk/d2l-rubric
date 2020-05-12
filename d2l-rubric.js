@@ -223,7 +223,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					rubric-type="[[rubricType]]"
 					enable-feedback-copy="[[enableFeedbackCopy]]"
 					read-only="[[readOnly]]"
-					telemetry-data="[[_telemetryData]]"
 					compact="[[compact]]">
 					<div slot="total-score">
 						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
@@ -326,10 +325,6 @@ Polymer({
 			type: Boolean,
 			value: null,
 		},
-		_telemetryData: {
-			type: Object,
-			value: null
-		},
 		_errored: {
 			type: Boolean,
 			value: false
@@ -386,18 +381,17 @@ Polymer({
 
 	ready: function() {
 		this._updateOutcomesTitleText();
-		this.perfMark('rubricLoadStart');
 
-		var telemetryEndpoint = window.document.documentElement.dataset.telemetryEndpoint;
-
-		this._telemetryData = {
+		const telemetryData = {
 			rubricMode: this.dataset.rubricMode,
 			originTool: this.dataset.originTool,
-			endpoint: telemetryEndpoint,
-			performanceTelemetryEnabled: this.performanceTelemetryFlag
+			endpoint: window.document.documentElement.dataset.telemetryEndpoint,
+			performanceTelemetryEnabled: this.performanceTelemetryFlag,
+			hasAssessment: this.assessmentHref && this.assessmentHref !== ''
 		};
-
-		this._attachErrorHandler(this._telemetryData);
+		this.setTelemetryData(telemetryData);
+		this._attachErrorHandler();
+		this.markRubricLoadedEventStart();
 	},
 
 	_onEntityChanged: function(entity) {
@@ -529,8 +523,7 @@ Polymer({
 			this.logApiError(
 				e.target.href,
 				'GET',
-				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
-				this._telemetryData
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null
 			);
 		}
 
@@ -612,13 +605,12 @@ Polymer({
 		this.logApiError(
 			event.detail.url,
 			event.detail.method,
-			(typeof event.detail.error === 'number') ? event.detail.error : null,
-			this._telemetryData
+			(typeof event.detail.error === 'number') ? event.detail.error : null
 		);
 		event.stopPropagation();
 	},
 
-	_attachErrorHandler: function(telemetryData) {
+	_attachErrorHandler: function() {
 		window.D2L = window.D2L || {};
 		window.D2L.Rubric = window.D2L.Rubric || {};
 		window.D2L.Rubric.Telemetry = window.D2L.Rubric.Telemetry || {};
@@ -635,7 +627,6 @@ Polymer({
 				this.logJavascriptError(
 					errorEvent.message,
 					errorEvent.error,
-					telemetryData,
 					errorEvent.filename,
 					errorEvent.lineno,
 					errorEvent.colno

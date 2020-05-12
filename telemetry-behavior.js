@@ -11,17 +11,29 @@ window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
 D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 	eventType: 'TelemetryEvent',
 	sourceId: 'rubric',
+	telemetryData: {},
+	_loadedEntity: new Set(),
+	_data: {
+		sessionId: null
+	},
+
+	setTelemetryData: function(telemetryData) {
+		if (!telemetryData || !telemetryData.endpoint) return;
+
+		Object.assign(this.telemetryData, telemetryData);
+		this._data.sessionId = this.getUUID();
+	},
 
 	getUUID: function() {
 		return Math.random().toString(36).substring(2) + Date.now().toString(36);
 	},
 
-	logViewRubricEvent: function({ id, isMobile = false }, telemetryData) {
-		const eventBody = this._createEventBody('View', telemetryData)
+	logViewRubricEvent: function({ id, isMobile = false }) {
+		const eventBody = this._createEventBody('View', this.telemetryData)
 			.addCustom('isMobile', isMobile)
 			.setObject(encodeURIComponent(id), 'Rubric', id);
 
-		this._logEvent(eventBody, telemetryData, false);
+		this._logEvent(eventBody, this.telemetryData, false);
 		return eventBody;
 	},
 
@@ -32,54 +44,71 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		window.performance.mark(name);
 	},
 
-	logCriterionCellTappedAction: function(startMark, endMark, telemetryData) {
+	logCriterionCellTappedAction: function(startMark, endMark) {
 		return this._logAndDestroyPerformanceEvent({
 			viewName: 'RubricCriterionCell',
 			startMark: startMark,
 			endMark: endMark,
 			actionName: 'RubricCriterionCellTapped'
-		}, telemetryData);
+		}, this.telemetryData);
 	},
 
-	logCriterionLevelAddedAction: function(startMark, endMark, telemetryData) {
+	logCriterionLevelAddedAction: function(startMark, endMark) {
 		return this._logAndDestroyPerformanceEvent({
 			viewName: 'RubricCriterionLevel',
 			startMark: startMark,
 			endMark: endMark,
 			actionName: 'RubricCriterionLevelAdded'
-		}, telemetryData);
+		}, this.telemetryData);
 	},
 
-	logCriterionAddedAction: function(startMark, endMark, telemetryData) {
+	logCriterionAddedAction: function(startMark, endMark) {
 		return this._logAndDestroyPerformanceEvent({
 			viewName: 'RubricCriterion',
 			startMark: startMark,
 			endMark: endMark,
 			actionName: 'RubricCriterionAdded'
-		}, telemetryData);
+		}, this.telemetryData);
 	},
 
-	logRubricLoadedEvent: function(startMark, endMark, telemetryData) {
-		// Logs from reuqest sent -> render finished
+	// Functions to track component loading status
+	markRubricLoadedEventStart: function() {
+		this.perfMark('rubricLoadStart');
+	},
+
+	markRubricLoadedEventEnd: function(source) {
+		// If the component has assessment attached, we want both rubric/assessment entity to be loaded before logging the event
+		this._loadedEntity.add(source);
+		if (this.telemetryData.hasAssessment && this._loadedEntity.size !== 2) return;
+
+		const self = this;
+		this.debounce('markRubricLoadedEvent', function() {
+			self.perfMark('rubricLoadEnd');
+			self.logRubricLoadedEvent('rubricLoadStart', 'rubricLoadEnd');
+		}, 100);
+	},
+
+	logRubricLoadedEvent: function(startMark, endMark) {
+		// Logs from component inited -> render finished
 		return this._logAndDestroyPerformanceEvent({
 			viewName: 'Rubric',
 			startMark: startMark,
 			endMark: endMark,
 			actionName: 'RubricLoaded'
-		}, telemetryData);
+		}, this.telemetryData);
 	},
 
-	logRubricRenderedEvent: function(startMark, endMark, telemetryData) {
+	logRubricRenderedEvent: function(startMark, endMark) {
 		// Logs from render started (after receiving response) -> render finished
 		return this._logAndDestroyPerformanceEvent({
 			viewName: 'Rubric',
 			startMark: startMark,
 			endMark: endMark,
 			actionName: 'RubricRendered'
-		}, telemetryData);
+		}, this.telemetryData);
 	},
 
-	logJavascriptError: function(message, error, telemetryData, source, line, column) {
+	logJavascriptError: function(message, error, source, line, column) {
 		const errorInfo = {
 			Name: (error && typeof error['name'] === 'string') ? error.name : typeof error,
 			Message: message || '',
@@ -90,13 +119,13 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		};
 
 		this._logEvent(
-			this._createEventBody('JavascriptError', telemetryData, { Error: errorInfo }),
-			telemetryData,
+			this._createEventBody('JavascriptError', this.telemetryData, { Error: errorInfo }),
+			this.telemetryData,
 			true
 		);
 	},
 
-	logApiError: function(url, method, statusCode, telemetryData) {
+	logApiError: function(url, method, statusCode) {
 		const errorInfo = {
 			RequestUrl: url,
 			RequestMethod: method,
@@ -104,8 +133,8 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		};
 
 		this._logEvent(
-			this._createEventBody('ApiError', telemetryData, { Error: errorInfo }),
-			telemetryData,
+			this._createEventBody('ApiError', this.telemetryData, { Error: errorInfo }),
+			this.telemetryData,
 			true
 		);
 	},
@@ -167,6 +196,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 			.setTenantUrl(location.hostname)
 			.addCustom('rubricMode', (telemetryData || {}).rubricMode || 'unknown')
 			.addCustom('originTool', (telemetryData || {}).originTool || 'unknown')
+			.addCustom('sessionId', this._data.sessionId || '')
 			.setCustomJson(customJson);
 	},
 

@@ -250,7 +250,6 @@ Polymer({
 		},
 		_rubricLevelsHref: String,
 		rubricLevelLoaMapping: Object,
-		telemetryData: Object
 	},
 
 	behaviors: [
@@ -358,7 +357,7 @@ Polymer({
 				}.bind(this), 2000);
 
 				this.perfMark(`criterionAddedEnd-${uuid}`);
-				this.logCriterionAddedAction(`criterionAddedStart-${uuid}`, `criterionAddedEnd-${uuid}`, this.telemetryData);
+				this.logCriterionAddedAction(`criterionAddedStart-${uuid}`, `criterionAddedEnd-${uuid}`);
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {

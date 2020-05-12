@@ -154,8 +154,7 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		},
-		telemetryData: Object
+		}
 	},
 
 	behaviors: [
@@ -231,7 +230,7 @@ Polymer({
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
-				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`, this.telemetryData);
+				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`);
 			}.bind(this));
 		}
 	},
@@ -262,7 +261,7 @@ Polymer({
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
-				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`, this.telemetryData);
+				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`);
 			}.bind(this));
 		}
 	},
