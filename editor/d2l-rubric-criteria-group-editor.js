@@ -131,7 +131,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				also stretches to utilize all the available space, particularly when we are shrinking
 				the size of the editor
 				-->
-				<h3 class="screen-reader">[[localize('criteriaHeading')]]</h3>
+				<h4 class="screen-reader">[[localize('criteriaHeading')]]</h4>
 				<div class="stretch-child">
 					<d2l-rubric-criteria-editor
 						href="[[_criteriaCollectionHref]]"

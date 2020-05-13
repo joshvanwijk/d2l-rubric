@@ -159,7 +159,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 		</style>
 
 		<div class="header">
-			<div class="title">[[localize('overallScoreHeader')]]</div>
+			<h2 class="title">[[localize('overallScoreHeader')]]</h2>
 			<div class="sub-title">[[localize('overallScoreDescription')]]</div>
 		</div>
 
