@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 	ja: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': '条件グループの追加',
 		'addCriterion': '条件の追加',
 		'addFeedback': 'フィードバックの追加',
@@ -151,8 +152,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'selectNextLevel': '次のレベルの選択',
 		'selectPreviousLevel': '前のレベルの選択',
 		'setScoreVisibilityFailed': 'スコアの表示を設定できませんでした。',
-		'shareRubricSaveFailed': '組織単位の使用可能期間の変更に失敗しました',
 		'sharedAlertText': 'この注釈は、これを共有している組織単位からのみ編集できます',
+		'shareRubricSaveFailed': '組織単位の使用可能期間の変更に失敗しました',
 		'statistics': '統計',
 		'total': '合計',
 		'totalMobile': '合計スコア',

@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 	de: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': 'Kriteriengruppe hinzufügen',
 		'addCriterion': 'Kriterium hinzufügen',
 		'addFeedback': 'Feedback hinzufügen',
@@ -151,8 +152,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'selectNextLevel': 'Nächste Stufe wählen',
 		'selectPreviousLevel': 'Vorherige Stufe wählen',
 		'setScoreVisibilityFailed': 'Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.',
-		'shareRubricSaveFailed': 'Ändern der Verfügbarkeit der Organisationseinheit fehlgeschlagen',
 		'sharedAlertText': 'Dieses Bewertungsschema kann nur von der freigebenden Organisationseinheit bearbeitet werden',
+		'shareRubricSaveFailed': 'Ändern der Verfügbarkeit der Organisationseinheit fehlgeschlagen',
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
 		'totalMobile': 'Gesamtpunktzahl',

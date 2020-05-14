@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 	zhTw: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': '新增標準群組',
 		'addCriterion': '新增標準',
 		'addFeedback': '新增意見反應',
@@ -151,8 +152,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'selectNextLevel': '選取下個層級',
 		'selectPreviousLevel': '選取上個層級',
 		'setScoreVisibilityFailed': '分數能見度設定失敗。',
-		'shareRubricSaveFailed': '變更組織單位可用情況失敗',
 		'sharedAlertText': '這個量規只能從其共用的組織單位進行編輯',
+		'shareRubricSaveFailed': '變更組織單位可用情況失敗',
 		'statistics': '統計',
 		'total': '總計',
 		'totalMobile': '總分數',
