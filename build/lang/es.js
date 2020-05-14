@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 	es: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': 'Agregar grupo de criterios',
 		'addCriterion': 'Agregar criterio',
 		'addFeedback': 'Agregar comentarios',

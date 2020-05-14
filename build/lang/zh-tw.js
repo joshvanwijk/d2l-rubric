@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 	zhTw: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': '新增標準群組',
 		'addCriterion': '新增標準',
 		'addFeedback': '新增意見反應',

@@ -230,8 +230,8 @@ const $_documentContainer = html `
 		<d2l-rubric-editor-header id="rubric-header">
 			<div slot="title">[[localize('editRubric')]]</div>
 			<template is="dom-if" if="{{!titleDropdownHidden}}">
-				<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu" >
-					<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down"></d2l-button-icon>
+				<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu">
+					<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down" text="[[localize('actionsforEditRubric')]]"></d2l-button-icon>
 					<d2l-dropdown-menu>
 						<d2l-menu id="title-menu">
 							<d2l-menu-item text="[[localize('statistics')]]" disabled="[[!_hasStatisticsLink]]" on-d2l-menu-item-select="_handleSelectStatistics">

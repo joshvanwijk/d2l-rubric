@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 	ko: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': '기준 그룹 추가',
 		'addCriterion': '기준 추가',
 		'addFeedback': '피드백 추가',

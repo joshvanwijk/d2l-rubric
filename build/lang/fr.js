@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 	fr: {
+		'actionsforEditRubric': 'Actions pour modifier la rubrique',
 		'addCriteriaGroup': 'Ajouter un groupe de critères',
 		'addCriterion': 'Ajouter un critère',
 		'addFeedback': 'Ajouter une rétroaction',
@@ -45,7 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'criterionNameAriaLabel': 'Nom du critère',
 		'criterionOutOf': 'Le critère {name} compte pour {value} points',
 		'criterionPlaceholder': 'Cliquez pour modifier le critère',
-		'criterionScore': 'Score de Critère',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'Annuler',
 		'deleteConfirmationYes': 'Supprimer',

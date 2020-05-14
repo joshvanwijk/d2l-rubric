@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 	sv: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': 'Lägg till kriteriegrupp',
 		'addCriterion': 'Lägg till kriterium',
 		'addFeedback': 'Lägg till feedback',

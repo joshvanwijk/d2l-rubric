@@ -10,6 +10,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 	ja: {
+		'actionsforEditRubric': 'Actions for Edit Rubric',
 		'addCriteriaGroup': '条件グループの追加',
 		'addCriterion': '条件の追加',
 		'addFeedback': 'フィードバックの追加',
