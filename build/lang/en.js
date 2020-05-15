@@ -35,6 +35,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'criterionNameAriaLabel': 'Criterion name',
 		'criterionOutOf': 'Criterion {name} is out of {value} points',
 		'criterionPlaceholder': 'Click to edit criterion',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'description': 'Description',
 		'descriptionInfo': 'Add a description for your personal reference. It will not be shared with students.',

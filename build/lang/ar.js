@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'criterionNameAriaLabel': 'اسم المعيار',
 		'criterionOutOf': 'يتيح المعيار {name} الحصول على {value} من النقاط كحدٍّ أقصى',
 		'criterionPlaceholder': 'انقر لتحرير المعيار',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'إلغاء',
 		'deleteConfirmationYes': 'حذف',

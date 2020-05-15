@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'criterionNameAriaLabel': 'Kriter adı',
 		'criterionOutOf': '{name} kriteri, {value} puan üzerindendir',
 		'criterionPlaceholder': 'Kriteri düzenlemek için tıklayın',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'İptal',
 		'deleteConfirmationYes': 'Sil',

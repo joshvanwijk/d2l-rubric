@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'criterionNameAriaLabel': 'Kriterienavn',
 		'criterionOutOf': 'Kriterium {name} er ud af {value} point',
 		'criterionPlaceholder': 'Klik for at redigere kriterium',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'Annuller',
 		'deleteConfirmationYes': 'Slet',

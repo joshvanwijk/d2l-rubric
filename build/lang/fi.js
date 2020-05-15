@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'criterionNameAriaLabel': 'Criterion name',
 		'criterionOutOf': 'Criterion {name} is out of {value} points',
 		'criterionPlaceholder': 'Click to edit criterion',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'Cancel',
 		'deleteConfirmationYes': 'Delete',

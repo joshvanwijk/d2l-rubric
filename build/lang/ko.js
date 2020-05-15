@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'criterionNameAriaLabel': '기준 이름',
 		'criterionOutOf': '기준 {name}이(가) {value}점에서 벗어남',
 		'criterionPlaceholder': '클릭하여 기준 편집',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '—/{outOf}',
 		'deleteConfirmationNo': '취소',
 		'deleteConfirmationYes': '삭제',

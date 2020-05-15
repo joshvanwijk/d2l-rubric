@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'criterionNameAriaLabel': '条件名',
 		'criterionOutOf': '条件 {name} が {value} ポイントの範囲外です',
 		'criterionPlaceholder': 'クリックして条件を編集します',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'キャンセル',
 		'deleteConfirmationYes': '削除',

@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'criterionNameAriaLabel': '標準名稱',
 		'criterionOutOf': '標準 {name} 的總分是 {value} 分',
 		'criterionPlaceholder': '按一下以編輯標準',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '—/{outOf}',
 		'deleteConfirmationNo': '取消',
 		'deleteConfirmationYes': '刪除',

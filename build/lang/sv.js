@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'criterionNameAriaLabel': 'Namn på kriterium',
 		'criterionOutOf': 'Kriteriet {name} är av {value} poäng',
 		'criterionPlaceholder': 'Klicka för att redigera kriteriet',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '–/{outOf}',
 		'deleteConfirmationNo': 'Avbryt',
 		'deleteConfirmationYes': 'Ta bort',

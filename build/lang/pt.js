@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'criterionNameAriaLabel': 'Nome do critério',
 		'criterionOutOf': 'O critério {name} tem pontuação máxima de {value} pontos',
 		'criterionPlaceholder': 'Clique para editar o critério',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'Cancelar',
 		'deleteConfirmationYes': 'Excluir',

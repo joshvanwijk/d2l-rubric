@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior = {
 		'criterionNameAriaLabel': 'Nombre del criterio',
 		'criterionOutOf': 'El criterio {name} tiene {value} puntos',
 		'criterionPlaceholder': 'Haga clic para editar el criterio',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '—/{outOf}',
 		'deleteConfirmationNo': 'Cancelar',
 		'deleteConfirmationYes': 'Eliminar',

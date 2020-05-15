@@ -46,6 +46,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'criterionNameAriaLabel': 'Criteriumnaam',
 		'criterionOutOf': 'Criterium {name} is gebaseerd op {value} punten',
 		'criterionPlaceholder': 'Klik om het criterium te bewerken',
+		'criterionScore': 'Criterion Score',
 		'dashOutOf': '— / {outOf}',
 		'deleteConfirmationNo': 'Annuleren',
 		'deleteConfirmationYes': 'Verwijderen',

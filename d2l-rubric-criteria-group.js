@@ -244,7 +244,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</d2l-th>
 					</template>
 					<template is="dom-if" if="[[_hasOutOf(entity)]]">
-						<d2l-th class="out-of"></d2l-th>
+						<d2l-th class="out-of">
+							<div class="level-name">[[localize('criterionScore')]]</div>
+						</d2l-th>
 					</template>
 				</d2l-tr>
 				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
