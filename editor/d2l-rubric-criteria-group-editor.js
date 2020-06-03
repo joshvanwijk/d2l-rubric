@@ -206,7 +206,6 @@ Polymer({
 		},
 		_levelsHref: String,
 		_criteriaCollectionHref: String,
-		
 		_canCreate: {
 			type: Boolean,
 			computed: '_canCreateCriterion(_criteriaEntity)',
