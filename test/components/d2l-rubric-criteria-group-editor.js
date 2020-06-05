@@ -86,57 +86,6 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 			});
 		});
 
-		suite('add criterion', function() {
-
-			var fetch;
-			var element;
-
-			setup(function(done) {
-				element = fixture('basic');
-				/* global getLoadedElement */
-				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json', done);
-			});
-
-			teardown(function() {
-				fetch && fetch.restore();
-				window.D2L.Siren.EntityStore.clear();
-			});
-
-			test('adds criterion', function(done) {
-				fetch = sinon.stub(window.d2lfetch, 'fetch');
-				var promise = Promise.resolve({
-					ok: true,
-					json: function() {
-						return Promise.resolve(JSON.stringify(window.testFixtures.criterion_added));
-					}
-				});
-				fetch.returns(promise);
-
-				element.addEventListener('d2l-rubric-criterion-added', function() {
-					expect(element.criterionCount).to.equal(4);
-					done();
-				});
-
-				element.$$('d2l-button-subtle').click();
-			});
-
-			test('generates event if adding fails', function(done) {
-				fetch = sinon.stub(window.d2lfetch, 'fetch');
-				var promise = Promise.resolve({
-					ok: false,
-					json: function() {
-						return Promise.resolve(JSON.stringify({}));
-					}
-				});
-				fetch.returns(promise);
-
-				element.addEventListener('d2l-siren-entity-save-error', function() {
-					done();
-				});
-				element.$$('d2l-button-subtle').click();
-			});
-		});
-
 		suite('readonly', function() {
 			var element;
 
@@ -147,11 +96,6 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 			test('group name is disabled', function() {
 				expect(element.$$('#group-name').disabled).to.be.true;
-			});
-
-			test('add is disabled', function() {
-				var addButton = element.$$('d2l-button-subtle');
-				expect(addButton.disabled).to.be.true;
 			});
 		});
 
@@ -166,11 +110,6 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 			test('group name is hidden', function() {
 				var groupName = element.$$('#group-name');
 				expect(isVisible(groupName)).to.be.false;
-			});
-
-			test('add footer is hidden', function() {
-				var addFooter = element.$$('.footer');
-				expect(isVisible(addFooter)).to.be.false;
 			});
 		});
 	});

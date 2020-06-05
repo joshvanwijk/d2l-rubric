@@ -25,7 +25,57 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			expect(element.is).to.equal('d2l-rubric-criteria-editor');
 		});
 
-		
+		suite('add criterion', function() {
+
+			var fetch;
+			var element;
+
+			setup(function(done) {
+				element = fixture('basic');
+				/* global getLoadedElement */
+				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176/criteria.json', done);
+			});
+
+			teardown(function() {
+				fetch && fetch.restore();
+				window.D2L.Siren.EntityStore.clear();
+			});
+
+			test('adds criterion', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: true,
+					json: function() {
+						return Promise.resolve(JSON.stringify(window.testFixtures.criterion_added));
+					}
+				});
+				fetch.returns(promise);
+
+				element.addEventListener('d2l-rubric-criterion-added', function() {
+					expect(element.criterionCount).to.equal(4);
+					done();
+				});
+
+				element.$$('d2l-button-subtle').click();
+			});
+
+			test('generates event if adding fails', function(done) {
+				fetch = sinon.stub(window.d2lfetch, 'fetch');
+				var promise = Promise.resolve({
+					ok: false,
+					json: function() {
+						return Promise.resolve(JSON.stringify({}));
+					}
+				});
+				fetch.returns(promise);
+
+				element.addEventListener('d2l-siren-entity-save-error', function() {
+					done();
+				});
+				element.$$('d2l-button-subtle').click();
+			});
+		});
+
 		suite('reorder criterion', function() {
 
 			var fetch;
@@ -63,6 +113,11 @@ suite('<d2l-rubric-criteria-editor>', function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
 
+			test('add is disabled', function() {
+				var addButton = element.$$('d2l-button-subtle');
+				expect(addButton.disabled).to.be.true;
+			});
+
 			test('drag drop is disabled', function() {
 				var dragHandle = element.$$('d2l-dnd-sortable');
 				expect(dragHandle.disabled).to.be.true;
@@ -81,7 +136,12 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			teardown(function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
-
+			
+			test('add footer is hidden', function() {
+				var addFooter = element.$$('.footer');
+				expect(isVisible(addFooter)).to.be.false;
+			});
+			
 			test('drag drop is disabled', function() {
 				var dragHandle = element.$$('d2l-dnd-sortable');
 				expect(dragHandle.disabled).to.be.true;
