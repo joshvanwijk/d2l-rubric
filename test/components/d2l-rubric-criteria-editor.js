@@ -136,12 +136,12 @@ suite('<d2l-rubric-criteria-editor>', function() {
 			teardown(function() {
 				window.D2L.Siren.EntityStore.clear();
 			});
-			
+
 			test('add footer is hidden', function() {
 				var addFooter = element.$$('.footer');
 				expect(isVisible(addFooter)).to.be.false;
 			});
-			
+
 			test('drag drop is disabled', function() {
 				var dragHandle = element.$$('d2l-dnd-sortable');
 				expect(dragHandle.disabled).to.be.true;
