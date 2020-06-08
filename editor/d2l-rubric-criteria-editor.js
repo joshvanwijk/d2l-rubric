@@ -4,7 +4,6 @@ import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-icons/d2l-icon.js';
-import 'd2l-button/d2l-button-subtle.js';
 import 'd2l-dnd-sortable/d2l-dnd-sortable.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
@@ -184,14 +183,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 				</template>
 			</d2l-dnd-sortable>
 		</div>
-		<div class="footer" hidden$="[[isHolistic]]">
-			<div class="gutter-left"></div>
-			<div class="footer-buttons">
-				<d2l-button-subtle on-click="_handleAddCriterion" icon="d2l-tier1:plus-default" text="[[localize('addCriterion')]]" disabled="[[!_canCreate]]" type="button">
-				</d2l-button-subtle>
-			</div>
-			<div class="gutter-right"></div>
-		</div>
 	</template>
 </dom-module>`;
 
@@ -219,10 +210,6 @@ Polymer({
 		animating: {
 			type: Boolean,
 			value: false
-		},
-		_canCreate: {
-			type: Boolean,
-			computed: '_canCreateCriterion(entity)',
 		},
 		_dragEnabled: {
 			type: Boolean,
@@ -338,38 +325,6 @@ Polymer({
 	_isLast: function(index, criterionCount) {
 		return index === this._criteriaEntities.length - 1;
 	},
-	_canCreateCriterion: function(entity) {
-		return entity && entity.hasActionByName('create');
-	},
-	_handleAddCriterion: function() {
-		var action = this.entity.getActionByName('create');
-		if (action) {
-			const uuid = this.getUUID();
-			this.perfMark(`criterionAddedStart-${uuid}`);
-
-			this.performSirenAction(action).then(function() {
-				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-added', {
-					bubbles: true,
-					composed: true,
-				}));
-				setTimeout(function() {
-					announce(this.localize('criterionAdded'));
-				}.bind(this), 2000);
-
-				this.perfMark(`criterionAddedEnd-${uuid}`);
-				this.logCriterionAddedAction(`criterionAddedStart-${uuid}`, `criterionAddedEnd-${uuid}`);
-			}.bind(this)).catch(function(err) {
-				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
-					detail: {
-						message: err.message,
-					},
-					bubbles: true,
-					composed: true,
-				}));
-			}.bind(this));
-		}
-	},
-
 	_canReorderCriterion: function(entity) {
 		return entity && entity.hasActionByName('reorder');
 	},

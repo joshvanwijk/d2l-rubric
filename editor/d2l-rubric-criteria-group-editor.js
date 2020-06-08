@@ -4,10 +4,13 @@ import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-alert/d2l-alert.js';
+import 'd2l-button/d2l-button-subtle.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import '../d2l-rubric-entity-behavior.js';
 import '../d2l-rubric-loading.js';
 import '../localize-behavior.js';
+import '../rubric-siren-entity.js';
+import '../telemetry-behavior.js';
 import './d2l-rubric-levels-editor.js';
 import './d2l-rubric-loa-overlay.js';
 import './d2l-rubric-criteria-editor.js';
@@ -66,6 +69,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 			:dir(rtl) .d2l-alert-container {
 				padding-right: var(--d2l-rubric-editor-start-gutter-width);
 				padding-left: var(--d2l-rubric-editor-end-gutter-width);
+			}
+
+			.footer {
+				display: flex;
+			}
+
+			.footer-buttons {
+				text-align: center;
+				padding: 0.45rem;
+				flex: 1 1 auto;
+				border: 1px solid var(--d2l-color-galena);
+				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+				background-color: var(--d2l-table-header-background-color);
 			}
 
 			.screen-reader {
@@ -149,6 +166,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				</div>
 			</div>
 		</d2l-scroll-wrapper>
+		<rubric-siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaEntity}}"></rubric-siren-entity>
+		<div class="footer" hidden$="[[isHolistic]]">
+			<div class="gutter-left"></div>
+			<div class="footer-buttons">
+				<d2l-button-subtle on-click="_handleAddCriterion" icon="d2l-tier1:plus-default" text="[[localize('addCriterion')]]" disabled="[[!_canCreate]]" type="button">
+				</d2l-button-subtle>
+			</div>
+			<div class="gutter-right"></div>
+		</div>
 	</template>
 </dom-module>`;
 
@@ -180,6 +206,16 @@ Polymer({
 		},
 		_levelsHref: String,
 		_criteriaCollectionHref: String,
+		_canCreate: {
+			type: Boolean,
+			computed: '_canCreateCriterion(_criteriaEntity)',
+		},
+
+		_criteriaEntity: {
+			type: Object,
+			value: null
+		},
+
 		_showContent: {
 			type: Boolean,
 			value: false
@@ -224,7 +260,8 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
+		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
 	ready: function() {
@@ -263,6 +300,10 @@ Polymer({
 		}
 	},
 
+	_canCreateCriterion: function(entity) {
+		return entity && entity.hasActionByName('create');
+	},
+
 	_getCriteriaLink: function(entity) {
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Rubrics.criteria);
 		return link && link.href || '';
@@ -278,6 +319,35 @@ Polymer({
 			entity.hasClass(this.HypermediaClasses.rubrics.numeric) ||
 			entity.hasClass(this.HypermediaClasses.rubrics.percentage)
 		);
+	},
+
+	_handleAddCriterion: function() {
+		var action = this._criteriaEntity.getActionByName('create');
+		if (action) {
+			const uuid = this.getUUID();
+			this.perfMark(`criterionAddedStart-${uuid}`);
+
+			this.performSirenAction(action).then(function() {
+				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-added', {
+					bubbles: true,
+					composed: true,
+				}));
+				setTimeout(function() {
+					announce(this.localize('criterionAdded'));
+				}.bind(this), 2000);
+
+				this.perfMark(`criterionAddedEnd-${uuid}`);
+				this.logCriterionAddedAction(`criterionAddedStart-${uuid}`, `criterionAddedEnd-${uuid}`);
+			}.bind(this)).catch(function(err) {
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true,
+				}));
+			}.bind(this));
+		}
 	},
 
 	_handleSaveError: function(e) {
