@@ -212,6 +212,7 @@ Polymer({
 			const uuid = this.getUUID();
 			this.perfMark(`criterionLevelAddedStart-${uuid}`);
 
+			announce(this.localize('levelLoading', 'name', 'rubricLevel'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-level-added', {
 					bubbles: true,
@@ -243,6 +244,7 @@ Polymer({
 			const uuid = this.getUUID();
 			this.perfMark(`criterionLevelAddedStart-${uuid}`);
 
+			announce(this.localize('levelLoading', 'name', 'rubricLevel'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-level-added', {
 					bubbles: true,
