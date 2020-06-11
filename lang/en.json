@@ -8,6 +8,8 @@
 	"addLevelAppend": "Add new level after {name}",
 	"addOverallLevelAppend": "Add new overall level after {name}",
 	"addOverallLevelPrepend": "Add new overall level before {name}",
+	"addedOverallLevelAppend": "A new overall score level has been added after {name}",
+	"addedOverallLevelPrepend": "A new overall score level has been added before {name}",
 	"alignmentOptionAutomatic": "Automatically map achievement levels to percentage scores",
 	"alignmentOptionManual": "Manually map achievement levels to rubric levels",
 	"cellPoints": "Criterion cell points",
