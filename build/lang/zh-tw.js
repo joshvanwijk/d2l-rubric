@@ -13,6 +13,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'actionsforEditRubric': '編輯量規動作',
 		'addCriteriaGroup': '新增標準群組',
 		'addCriterion': '新增標準',
+		'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
+		'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 		'addFeedback': '新增意見反應',
 		'addLevel': '新增層級',
 		'addLevelAppend': '在 {name} 後新增層級',

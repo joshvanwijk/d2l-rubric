@@ -13,6 +13,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'actionsforEditRubric': 'Åtgärder för Redigera rubricering',
 		'addCriteriaGroup': 'Lägg till kriteriegrupp',
 		'addCriterion': 'Lägg till kriterium',
+		'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
+		'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 		'addFeedback': 'Lägg till feedback',
 		'addLevel': 'Lägg till nivå',
 		'addLevelAppend': 'Lägg till ny nivå efter {name}',

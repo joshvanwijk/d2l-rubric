@@ -2,6 +2,8 @@
     "actionsforEditRubric": "Handlinger for Rediger rubrik",
     "addCriteriaGroup": "Tilføj kriteriegruppe",
     "addCriterion": "Tilføj kriterium",
+    "addedOverallLevelAppend": "A new overall score level has been added after {name}",
+    "addedOverallLevelPrepend": "A new overall score level has been added before {name}",
     "addFeedback": "Tilføj feedback",
     "addLevel": "Tilføj niveau",
     "addLevelAppend": "Tilføj nyt niveau efter {name}",

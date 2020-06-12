@@ -2,6 +2,8 @@
     "actionsforEditRubric": "编辑量规的操作",
     "addCriteriaGroup": "添加标准组",
     "addCriterion": "添加标准",
+    "addedOverallLevelAppend": "A new overall score level has been added after {name}",
+    "addedOverallLevelPrepend": "A new overall score level has been added before {name}",
     "addFeedback": "添加反馈",
     "addLevel": "添加级别",
     "addLevelAppend": "在 {name} 之后添加新级别",

@@ -13,6 +13,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'actionsforEditRubric': 'Rubriği Düzenleme Eylemleri',
 		'addCriteriaGroup': 'Kriter Grubu Ekle',
 		'addCriterion': 'Kriter Ekle',
+		'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
+		'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 		'addFeedback': 'Geri Bildirim Ekle',
 		'addLevel': 'Seviye Ekle',
 		'addLevelAppend': '{name} sonrasına yeni bir seviye ekle',

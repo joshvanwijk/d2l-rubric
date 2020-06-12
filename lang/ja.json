@@ -2,6 +2,8 @@
     "actionsforEditRubric": "注釈の編集のアクション",
     "addCriteriaGroup": "条件グループの追加",
     "addCriterion": "条件の追加",
+    "addedOverallLevelAppend": "A new overall score level has been added after {name}",
+    "addedOverallLevelPrepend": "A new overall score level has been added before {name}",
     "addFeedback": "フィードバックの追加",
     "addLevel": "レベルの追加",
     "addLevelAppend": "{name} の後ろに新しいレベルを追加",

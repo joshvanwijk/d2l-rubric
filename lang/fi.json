@@ -2,6 +2,8 @@
     "actionsforEditRubric": "Actions for Edit Rubric",
     "addCriteriaGroup": "Add Criteria Group",
     "addCriterion": "Add Criterion",
+    "addedOverallLevelAppend": "A new overall score level has been added after {name}",
+    "addedOverallLevelPrepend": "A new overall score level has been added before {name}",
     "addFeedback": "Add Feedback",
     "addLevel": "Add Level",
     "addLevelAppend": "Add new level after {name}",

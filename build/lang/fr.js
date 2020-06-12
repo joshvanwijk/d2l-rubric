@@ -13,6 +13,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'actionsforEditRubric': 'Actions pour modifier la grille d\'évaluation',
 		'addCriteriaGroup': 'Ajouter un groupe de critères',
 		'addCriterion': 'Ajouter un critère',
+		'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
+		'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 		'addFeedback': 'Ajouter une rétroaction',
 		'addLevel': 'Ajouter un niveau',
 		'addLevelAppend': 'Ajouter un nouveau niveau après {name}',

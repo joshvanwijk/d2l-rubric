@@ -291,7 +291,7 @@ Polymer({
 					composed: true,
 				}));
 
-				announce(this.localize('addOverallLevelPrepend', 'name', firstLevelName));
+				announce(this.localize('addedOverallLevelPrepend', 'name', firstLevelName));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {
@@ -314,7 +314,7 @@ Polymer({
 					composed: true,
 				}));
 
-				announce(this.localize('addOverallLevelAppend', 'name', lastLevelName));
+				announce(this.localize('addedOverallLevelAppend', 'name', lastLevelName));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {

@@ -13,6 +13,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'actionsforEditRubric': '루브릭 편집에 대한 작업',
 		'addCriteriaGroup': '기준 그룹 추가',
 		'addCriterion': '기준 추가',
+		'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
+		'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 		'addFeedback': '피드백 추가',
 		'addLevel': '수준 추가',
 		'addLevelAppend': '{name} 뒤에 새 수준 추가',

@@ -13,6 +13,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'actionsforEditRubric': 'إجراءات لتحرير آلية التقييم',
 		'addCriteriaGroup': 'إضافة مجموعة معايير',
 		'addCriterion': 'إضافة معيار',
+		'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
+		'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 		'addFeedback': 'إضافة ملاحظات',
 		'addLevel': 'إضافة مستوى',
 		'addLevelAppend': 'إضافة مستوى جديد بعد {name}',
