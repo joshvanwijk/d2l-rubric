@@ -283,6 +283,8 @@ Polymer({
 		var action = this.entity.getActionByName('prepend');
 		if (action) {
 			var firstLevelName = this._getFirstLevelName();
+
+			announce(this.localize('levelLoading', 'name', 'overallScoreLevel'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-added', {
 					bubbles: true,
@@ -304,6 +306,7 @@ Polymer({
 	_handleAppendOverallLevel: function() {
 		var action = this.entity.getActionByName('append');
 		if (action) {
+			announce(this.localize('levelLoading', 'name', 'overallScoreLevel'));
 			var lastLevelName = this._getLastLevelName();
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-added', {

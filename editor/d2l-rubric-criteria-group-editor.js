@@ -326,7 +326,8 @@ Polymer({
 		if (action) {
 			const uuid = this.getUUID();
 			this.perfMark(`criterionAddedStart-${uuid}`);
-
+			// a new criterion is created before this sentence is finished
+			announce(this.localize('levelLoading', 'name', 'criterion'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-added', {
 					bubbles: true,

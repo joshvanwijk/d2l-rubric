@@ -175,6 +175,8 @@ Polymer({
 		var action = this.entity.getActionByName('create');
 		if (action) {
 			this._waitingForGroups = true;
+			
+			announce(this.localize('levelLoading', 'name', 'criteriaGroup'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-criteria-group-added', {
 					bubbles: true,
