@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
@@ -199,17 +200,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				margin-top: 0;
 			}
 
-			.with-margin {
-				margin: 24px 40px;
-			}
-
-			.scrollable {
-				border: 1px solid lightgray;
-				padding: 24px;
-				display: flex;
-				flex-direction: column;
-			}
-
 			.select-outcomes-hierarchical {
 				overflow-y: auto;
 			}
@@ -251,12 +241,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			<slot name="gutter-left"></slot>
 		</div>
 
-		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
-			<div>
-				<h2>[[browseOutcomesText]]</h2>
-				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-click= "_closeBrowseOutcomes"></d2l-button-icon>
-			</div>
-
+		<d2l-dialog title-text="[[browseOutcomesText]]" id="overlay">	
 			<d2l-select-outcomes
 			  rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
               href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
@@ -264,13 +249,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			  empty="{{_isOutcomeEmpty}}"
 			>
 			</d2l-select-outcomes>
-		</simple-overlay>
-		<simple-overlay id="hierarchicaloverlay" tabindex="-1" class="with-margin scrollable"  with-backdrop>
-			<div>
-				<h2>[[browseOutcomesText]]</h2>
-				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-click= "_closeBrowseOutcomes"></d2l-button-icon>
-			</div>
+		</d2l-dialog>
 
+		<d2l-dialog title-text="[[browseOutcomesText]]" id="hierarchicaloverlay">
 			<d2l-select-outcomes-hierarchical
 				class="select-outcomes-hierarchical"
 				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
@@ -281,7 +262,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				max-height="[[_hierarchicalHeight]]"
 			>
 			</d2l-select-outcomes-hierarchical>
-		</simple-overlay>
+		</d2l-dialog>
 
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
@@ -533,9 +514,6 @@ Polymer({
 		this.addEventListener('d2l-activity-alignment-tags-update', this._showBrowseOutcomes);
 		this.addEventListener('d2l-alignment-list-added', this._closeBrowseOutcomes);
 		this.addEventListener('d2l-alignment-list-cancelled', this._closeBrowseOutcomes);
-		this.addEventListener('d2l-select-outcomes-closed', this._closeBrowseOutcomes);
-		this.addEventListener('siren-entity-loading-fetched', this._resizeOverlay);
-		window.addEventListener('resize', this._resizeOverlay.bind(this));
 	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
@@ -901,14 +879,10 @@ Polymer({
 	},
 
 	_closeBrowseOutcomes: function() {
-		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.close() : this.$.overlay.close();
+		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.opened = false : this.$.overlay.opened = false;
 		this._updateHierarchicalHeight();
 	},
 
-	_resizeOverlay: function() {
-		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.refit() : this.$.overlay.refit();
-		this._updateHierarchicalHeight();
-	},
 	// eslint-disable-next-line no-unused-vars
 	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {
 		return isHolistic && index === 0;
