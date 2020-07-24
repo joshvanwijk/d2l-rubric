@@ -34,6 +34,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 
 			#levels-section > div:first-of-type[is-holistic] { /* first col-inner */
 				border-top-left-radius: var(--d2l-table-border-radius);
+				border-left: 1px solid var(--d2l-color-galena);
 			}
 			:dir(rtl) #levels-section > div:first-of-type[is-holistic] {
 				border-top-left-radius: 0;
