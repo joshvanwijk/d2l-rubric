@@ -190,7 +190,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
 				border-left: 1px solid var(--d2l-color-galena);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
-				border-bottom-left-radius: var(--d2l-table-border-radius);			}
+			}
 
 			.gutter-left, .gutter-right {
 				margin-top: 1rem;
