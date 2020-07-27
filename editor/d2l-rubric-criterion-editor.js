@@ -167,21 +167,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			}
 
 			.criterion-detail[is-holistic] {
-				border-right: 1px solid var(--d2l-color-galena);
 				border-bottom: 1px solid var(--d2l-color-galena);
 				border-bottom-right-radius: var(--d2l-table-border-radius);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			.criterion-detail[is-holistic] .criterion-text div:first-of-type {
+			:dir(ltr) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
+				border-left: 1px solid var(--d2l-color-galena);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
+			:dir(ltr) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
+				border-right: 1px solid var(--d2l-color-galena);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+			}
+
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
-				border-bottom-left-radius: 0;
+				border-right: 1px solid var(--d2l-color-galena);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
 			}
 
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
+				border-left: 1px solid var(--d2l-color-galena);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
