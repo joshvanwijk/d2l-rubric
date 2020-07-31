@@ -65,7 +65,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'descriptionSaveFailed': 'Saving description failed',
 		'editFeedback': 'Edit Feedback',
 		'editRubric': 'Edit Rubric',
-		'errorText': 'Oops! We\'re having trouble connecting you. You might want to refresh the page, or try again later.',
+		'errorText': 'Oops! We're having trouble connecting you. You might want to refresh the page, or try again later.',
 		'feedback': 'Feedback',
 		'feedbackOn': 'Feedback on {criterionName}',
 		'feedbackSaveFailed': 'Saving feedback failed',
