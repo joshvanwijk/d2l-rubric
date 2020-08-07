@@ -114,7 +114,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					</d2l-button-icon>
 				</template>
 				<div class="editing-component">
-					<d2l-input-text id="text-area" value="[[_score]]" type="number" step="any" min="0" max="100000" on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
+					<d2l-input-text id="text-area" value="[[_score]]" type="number" step="any" min="0" max="100000" novalidate on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of">[[_localizeOutOf(entity)]]</div>
 				</div>

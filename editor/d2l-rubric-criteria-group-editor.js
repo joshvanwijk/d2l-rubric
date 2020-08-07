@@ -126,7 +126,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						on-input="_nameInputHandler"
 						aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 						aria-label$="[[localize('groupName')]]"
-						prevent-submit=""
+						prevent-submit
+						novalidate
 					></d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<d2l-rubric-loa-overlay
