@@ -354,6 +354,10 @@ Polymer({
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
+		},
+		errorLoggingEndpoint: {
+			type: String,
+			value: null
 		}
 	},
 
@@ -386,11 +390,11 @@ Polymer({
 			rubricMode: this.dataset.rubricMode,
 			originTool: this.dataset.originTool,
 			endpoint: window.document.documentElement.dataset.telemetryEndpoint,
+			errorEndpoint: this.errorLoggingEndpoint,
 			performanceTelemetryEnabled: this.performanceTelemetryFlag,
 			hasAssessment: this.assessmentHref && this.assessmentHref !== ''
 		};
 		this.setTelemetryData(telemetryData);
-		this._attachErrorHandler();
 		this.markRubricLoadedEventStart();
 	},
 
@@ -608,31 +612,6 @@ Polymer({
 			(typeof event.detail.error === 'number') ? event.detail.error : null
 		);
 		event.stopPropagation();
-	},
-
-	_attachErrorHandler: function() {
-		window.D2L = window.D2L || {};
-		window.D2L.Rubric = window.D2L.Rubric || {};
-		window.D2L.Rubric.Telemetry = window.D2L.Rubric.Telemetry || {};
-
-		if (!window.D2L.Rubric.Telemetry.errorHandlerAttached) {
-			window.addEventListener('error', errorEvent => {
-				if (
-					!errorEvent ||
-					(errorEvent.error && errorEvent.error['name'] === 'NetworkError') ||
-					// The ResizeObserver "error" isn't a true error. Ignore it
-					errorEvent.message === 'ResizeObserver loop completed with undelivered notifications.'
-				) return;
-
-				this.logJavascriptError(
-					errorEvent.message,
-					errorEvent.error,
-					errorEvent.filename,
-					errorEvent.lineno,
-					errorEvent.colno
-				);
-			});
-			window.D2L.Rubric.Telemetry.errorHandlerAttached = true;
-		}
 	}
+
 });

@@ -22,6 +22,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 		Object.assign(this.telemetryData, telemetryData);
 		this._data.sessionId = this.getUUID();
+		this._attachErrorHandler();
 	},
 
 	getUUID: function() {
@@ -118,11 +119,13 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 			Details: (error && typeof error['toString'] === 'function') ? error.toString() : null
 		};
 
-		this._logEvent(
-			this._createEventBody('JavascriptError', this.telemetryData, { Error: errorInfo }),
-			this.telemetryData,
-			true
-		);
+		this._logError({
+			Type: 'JavascriptError',
+			SessionId: this._data.sessionId,
+			Location: window.location.pathname,
+			Referrer: document.referrer || null,
+			Error: errorInfo
+		});
 	},
 
 	logApiError: function(url, method, statusCode) {
@@ -132,11 +135,13 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 			ResponseStatus: statusCode
 		};
 
-		this._logEvent(
-			this._createEventBody('ApiError', this.telemetryData, { Error: errorInfo }),
-			this.telemetryData,
-			true
-		);
+		this._logError({
+			Type: 'ApiError',
+			SessionId: this._data.sessionId,
+			Location: window.location.pathname,
+			Referrer: document.referrer || null,
+			Error: errorInfo
+		});
 	},
 
 	_logEvent: function(eventBody, { endpoint }, isError) {
@@ -154,6 +159,33 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 
 		client.logUserEvent(event);
 		return event;
+	},
+
+	_logError: function(errObject) {
+		if (!this.telemetryData || !errObject) {
+			return;
+		}
+
+		if (!this.telemetryData.errorEndpoint) {
+			// Fallback to old logging endpoint
+			this._logEvent(
+				this._createEventBody('Error', this.telemetryData, errObject),
+				this.telemetryData,
+				true
+			);
+			return;
+		}
+
+		window.fetch(
+			this.telemetryData.errorEndpoint, {
+				method: 'POST',
+				mode: 'no-cors',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify([errObject])
+			}
+		);
 	},
 
 	_logAndDestroyPerformanceEvent: function({ viewName, startMark, endMark, actionName  }, telemetryData) {
@@ -223,6 +255,32 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 			}
 		}
 		return 'dev';
+	},
+
+	_attachErrorHandler: function() {
+		window.D2L = window.D2L || {};
+		window.D2L.Rubric = window.D2L.Rubric || {};
+		window.D2L.Rubric.Telemetry = window.D2L.Rubric.Telemetry || {};
+
+		if (!window.D2L.Rubric.Telemetry.errorHandlerAttached) {
+			window.addEventListener('error', errorEvent => {
+				if (
+					!errorEvent ||
+					(errorEvent.error && errorEvent.error['name'] === 'NetworkError') ||
+					// The ResizeObserver "error" isn't a true error. Ignore it
+					errorEvent.message === 'ResizeObserver loop completed with undelivered notifications.'
+				) return;
+
+				this.logJavascriptError(
+					errorEvent.message,
+					errorEvent.error,
+					errorEvent.filename,
+					errorEvent.lineno,
+					errorEvent.colno
+				);
+			});
+			window.D2L.Rubric.Telemetry.errorHandlerAttached = true;
+		}
 	}
 
 };
