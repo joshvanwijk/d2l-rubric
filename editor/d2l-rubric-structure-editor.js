@@ -241,7 +241,8 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
-		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior
+		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
 	listeners: {
@@ -253,6 +254,12 @@ Polymer({
 	ready: function() {
 		this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
+		if (this.dataset.telemetryEndpoint && this.errorLoggingEndpoint) {
+			this.setTelemetryData({
+				endpoint: this.dataset.telemetryEndpoint,
+				errorEndpoint: this.errorLoggingEndpoint
+			});
+		}
 	},
 
 	_onEntitySave: function(e) {

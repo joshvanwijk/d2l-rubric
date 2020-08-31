@@ -594,6 +594,10 @@ Polymer({
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
+		},
+		errorLoggingEndpoint: {
+			type: String,
+			value: null
 		}
 	},
 	behaviors: [
@@ -646,7 +650,8 @@ Polymer({
 
 		const telemetryData = {
 			endpoint: this.dataset.telemetryEndpoint,
-			performanceTelemetryEnabled: this.performanceTelemetryFlag
+			performanceTelemetryEnabled: this.performanceTelemetryFlag,
+			errorEndpoint: this.errorLoggingEndpoint,
 		};
 		this.setTelemetryData(telemetryData);
 	},
