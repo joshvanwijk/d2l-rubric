@@ -64,6 +64,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					criterion-result-map="[[_criterionResultMap]]"
 					cell-assessment-map="[[_cellAssessmentMap]]"
 					enable-feedback-copy="[[enableFeedbackCopy]]"
+					is-holistic="[[_isHolistic(rubricType)]]"
 				></d2l-rubric-criteria-group-mobile>
 				<slot></slot>
 			</template>
@@ -152,5 +153,9 @@ Polymer({
 			}
 		});
 		return criterionHrefs;
+	},
+
+	_isHolistic: function(rubricType) {
+		return rubricType === 'holistic';
 	}
 });

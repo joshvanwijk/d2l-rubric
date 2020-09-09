@@ -86,7 +86,6 @@ Polymer({
 		this._name = entity.properties.name;
 		this._levelsHref = this._getLevelsLink(entity);
 		this._criteriaHref = this._getCriteriaLink(entity);
-		this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.percentage);
 		this._isNumeric = entity.hasClass(this.HypermediaClasses.rubrics.numeric);
 	},
 
