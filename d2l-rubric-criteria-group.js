@@ -338,7 +338,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								data-criterion$="[[criterionNum]]"
 								on-save-feedback-start="_handleSaveStart"
 								on-save-feedback-finished="_handleSaveFinished"
-								on-close-feedback="_closeFeedback">
+								on-close-feedback="_closeFeedback"
+								on-focus="_handleFeedbackTextFocus">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -854,7 +855,9 @@ Polymer({
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
 		).then(() => {
-			this._focusCriterionCell(event);
+			if (this._addingFeedback === -1) {
+				this._focusCriterionCell(event);
+			}
 
 			this.perfMark(`criterionCellTappedEnd-${uuid}`);
 			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`);
@@ -923,6 +926,11 @@ Polymer({
 
 	_handleVisibleFeedbackFocusout: function(event) {
 		event.target.classList.remove('feedback-button-focused');
+	},
+
+	_handleFeedbackTextFocus: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		this._addingFeedback = criterionNum;
 	},
 
 	_focusCriterionCell: function(event) {
