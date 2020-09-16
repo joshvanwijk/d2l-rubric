@@ -149,7 +149,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
 				</d2l-input-textarea>
 				<template is="dom-if" if="[[_feedbackInvalid]]">
-					<d2l-tooltip id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
+					<d2l-tooltip announced id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
 						[[_feedbackInvalidError]]
 					</d2l-tooltip>
 				</template>

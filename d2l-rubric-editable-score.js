@@ -119,7 +119,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					<div id="out-of">[[_localizeOutOf(entity)]]</div>
 				</div>
 				<template is="dom-if" if="[[scoreInvalid]]">
-					<d2l-tooltip id="score-bubble" for="text-area" class="is-error" position="bottom">[[scoreInvalidError]]</d2l-tooltip>
+					<d2l-tooltip announced id="score-bubble" for="text-area" class="is-error" position="bottom">[[scoreInvalidError]]</d2l-tooltip>
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">

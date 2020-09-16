@@ -278,7 +278,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
-						<d2l-tooltip id="criterion-name-bubble" class="is-error" for="name" position="bottom">
+						<d2l-tooltip announced id="criterion-name-bubble" class="is-error" for="name" position="bottom">
 							[[_nameInvalidError]]
 						</d2l-tooltip>
 					</template>
@@ -322,7 +322,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 								editing="{{_outOfChanging}}"
 							></d2l-rubric-autosaving-input>
 							<template is="dom-if" if="[[_outOfInvalid]]">
-								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
+								<d2l-tooltip announced id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
 									[[_outOfInvalidError]]
 								</d2l-tooltip>
 							</template>

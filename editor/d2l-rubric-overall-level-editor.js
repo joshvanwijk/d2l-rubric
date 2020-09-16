@@ -86,12 +86,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">
-			<d2l-tooltip id="overall-level-name-bubble" class="is-error" for="overall-level-name" position="bottom">
+			<d2l-tooltip announced id="overall-level-name-bubble" class="is-error" for="overall-level-name" position="bottom">
 				[[_nameInvalidError]]
 			</d2l-tooltip>
 		</template>
 		<template is="dom-if" if="[[_rangeStartInvalid]]">
-			<d2l-tooltip id="range-start-bubble" for="range-start" position="bottom">
+			<d2l-tooltip announced id="range-start-bubble" for="range-start" position="bottom">
 				[[_rangeStartInvalidError]]
 			</d2l-tooltip>
 		</template>
