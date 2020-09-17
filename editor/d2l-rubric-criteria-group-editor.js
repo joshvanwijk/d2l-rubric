@@ -138,7 +138,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				>
 				</d2l-rubric-loa-overlay>
 				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip id="group-name-bubble" class="is-error" for="group-name" position="bottom">
+					<d2l-tooltip announced id="group-name-bubble" class="is-error" for="group-name" position="bottom">
 						[[_nameInvalidError]]
 					</d2l-tooltip>
 				</template>

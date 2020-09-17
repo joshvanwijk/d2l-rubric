@@ -280,7 +280,7 @@ const $_documentContainer = html `
 					editing="{{_nameChanging}}"
 				></d2l-rubric-autosaving-input>
 				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip id="name-bubble" class="is-error" for="rubric-name" position="bottom">
+					<d2l-tooltip announced id="name-bubble" class="is-error" for="rubric-name" position="bottom">
 						[[_nameInvalidError]]
 					</d2l-tooltip>
 				</template>
@@ -313,7 +313,7 @@ const $_documentContainer = html `
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
 						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
-							<d2l-tooltip id="hide-score-bubble" class="is-error" for="hide-score-checkbox" position="bottom">
+							<d2l-tooltip announced id="hide-score-bubble" class="is-error" for="hide-score-checkbox" position="bottom">
 								[[_setScoreVisibilityFailedError]]
 							</d2l-tooltip>
 						</template>
@@ -325,7 +325,7 @@ const $_documentContainer = html `
 							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" pending-saves="[[_pendingDescriptionSaves]]" on-text-changed="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
-								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
+								<d2l-tooltip announced id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
 									[[_descriptionInvalidError]]
 								</d2l-tooltip>
 							</template>
@@ -357,7 +357,7 @@ const $_documentContainer = html `
 								</template>
 							</div>
 							<template is="dom-if" if="[[_associationsInvalid]]">
-								<d2l-tooltip id="associations-bubble" class="is-error" for="associations" position="bottom">
+								<d2l-tooltip announced id="associations-bubble" class="is-error" for="associations" position="bottom">
 									[[_associationsInvalidError]]
 								</d2l-tooltip>
 							</template>
@@ -371,7 +371,7 @@ const $_documentContainer = html `
 						<label>[[localize('makeRubricAvailableHeader')]]</label>
 						<d2l-organization-availability-set token="[[token]]" href="[[_orgUnitAvailabilitySetLink]]" aria-invalid$="[[isAriaInvalid(_shareRubricInvalid)]]"></d2l-organization-availability-set>
 						<template is="dom-if" if="[[_shareRubricInvalid]]">
-							<d2l-tooltip id="share-rubric-bubble" class="is-error" for="make-rubric-available-container" position="bottom">
+							<d2l-tooltip announced id="share-rubric-bubble" class="is-error" for="make-rubric-available-container" position="bottom">
 								[[_shareRubricInvalidError]]
 							</d2l-tooltip>
 						</template>

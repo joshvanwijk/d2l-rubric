@@ -65,7 +65,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-alignment-editor">
 				</label>
 			</div>
 			<template is="dom-if" if="[[_alignmentInvalid]]">
-				<d2l-tooltip id="alignment-bubble" class="is-error" position="bottom">[[_alignmentInvalidError]]</d2l-tooltip>
+				<d2l-tooltip announced id="alignment-bubble" class="is-error" position="bottom">[[_alignmentInvalidError]]</d2l-tooltip>
 			</template>
 		</div>
 	</template>
