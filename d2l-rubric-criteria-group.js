@@ -555,11 +555,6 @@ Polymer({
 	},
 
 	_onCriterionCellDomChanged: function() {
-		const self = this;
-		this.perfMark('rubricRenderEnd');
-		this.debounce('criterionCellDomChangedEvent', function() {
-			self.logRubricRenderedEvent('rubricRenderStart', 'rubricRenderEnd');
-		}, 100);
 		this.markRubricLoadedEventEnd('rubric');
 	},
 

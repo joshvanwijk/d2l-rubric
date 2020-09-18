@@ -99,16 +99,6 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		}, this.telemetryData);
 	},
 
-	logRubricRenderedEvent: function(startMark, endMark) {
-		// Logs from render started (after receiving response) -> render finished
-		return this._logAndDestroyPerformanceEvent({
-			viewName: 'Rubric',
-			startMark: startMark,
-			endMark: endMark,
-			actionName: 'RubricRendered'
-		}, this.telemetryData);
-	},
-
 	logJavascriptError: function(message, error, source, line, column) {
 		const errorInfo = {
 			Name: (error && typeof error['name'] === 'string') ? error.name : typeof error,
