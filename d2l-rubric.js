@@ -400,10 +400,6 @@ Polymer({
 
 	_onEntityChanged: function(entity) {
 		if (entity) {
-			if (this._showContent === false) {
-				this.perfMark('rubricRenderStart');
-			}
-
 			this.rubricType = this._findRubricType(entity);
 			this.enableFeedbackCopy = this._getEnableFeedbackCopy(entity);
 
