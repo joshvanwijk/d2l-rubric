@@ -258,7 +258,8 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 					!errorEvent ||
 					(errorEvent.error && errorEvent.error['name'] === 'NetworkError') ||
 					// The ResizeObserver "error" isn't a true error. Ignore it
-					errorEvent.message === 'ResizeObserver loop completed with undelivered notifications.'
+					errorEvent.message === 'ResizeObserver loop completed with undelivered notifications.' ||
+					errorEvent.message === 'ResizeObserver loop limit exceeded'
 				) return;
 
 				this.logJavascriptError(
