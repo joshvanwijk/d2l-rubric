@@ -14,7 +14,7 @@ D2L.PolymerBehaviors.Rubric.ActionBehaviorImpl = {
 		return base.performSirenAction.call(this, action, fields, immediate).catch(err => {
 			this.dispatchEvent(new CustomEvent('d2l-rubric-action-error', {
 				detail: {
-					url: base.getEntityUrl.call(this, action, fields),
+					url: (base.getEntityUrl.call(this, action, fields) || '').toString(),
 					method: action.method,
 					error: err
 				},
