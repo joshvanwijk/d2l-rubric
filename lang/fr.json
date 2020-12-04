@@ -1,5 +1,5 @@
 {
-   "actionsforEditRubric" : "Actions pour modifier la grille d'évaluation",
+   "actionsforEditRubric" : "Actions pour modifier la grille d’évaluation",
    "addCriteriaGroup" : "Ajouter un groupe de critères",
    "addCriterion" : "Ajouter un critère",
    "addFeedback" : "Ajouter une rétroaction",
@@ -8,8 +8,8 @@
    "addLevelPrepend" : "Ajouter un nouveau niveau devant {name}",
    "addOverallLevelAppend" : "Ajouter un nouveau niveau global après {name}",
    "addOverallLevelPrepend" : "Ajouter un nouveau niveau global devant {name}",
-   "addedOverallLevelAppend" : "A new overall score level has been added after {name}",
-   "addedOverallLevelPrepend" : "A new overall score level has been added before {name}",
+   "addedOverallLevelAppend" : "Un nouveau niveau de note globale a été ajouté après {name}",
+   "addedOverallLevelPrepend" : "Un nouveau niveau de note globale niveau a été ajouté avant {name}",
    "advancedAvailabilityHeader" : "Disponibilité avancée",
    "alignmentOptionAutomatic" : "Fait automatiquement correspondre les niveaux d’accomplissement à des notes en pourcentage",
    "alignmentOptionManual" : "Fait correspondre manuellement des niveaux d’accomplissement à des niveaux de rubrique",
