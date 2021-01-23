@@ -1,5 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
-import 'd2l-inputs/d2l-input-textarea.js';
+import '@brightspace-ui/core/components/inputs/input-textarea.js';
 import './d2l-rubric-html-editor.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
@@ -15,13 +15,19 @@ Polymer({
 				display: none;
 			}
 
+			d2l-input-textarea {
+				width: 100%;
+				--d2l-input-border-radius: 0;
+				--d2l-input-border-color: transparent;
+			}
+
 			* {
 				box-sizing: border-box;
 			}
 
 		</style>
 		<template is="dom-if" if="[[!richTextEnabled]]">
-			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="{{value}}" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-input-textarea>
+			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" max-rows="-1" value="{{value}}" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[richTextEnabled]]">
 			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-change="_duringInputChange"></d2l-rubric-html-editor>

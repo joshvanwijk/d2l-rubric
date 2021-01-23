@@ -7,7 +7,7 @@ import 'd2l-activity-alignments/d2l-activity-alignment-tags.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-inputs/d2l-input-textarea.js';
+import '@brightspace-ui/core/components/inputs/input-textarea.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-button/d2l-button-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
@@ -67,6 +67,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				display: block;
 				flex-grow: 1;
 				width: 100%;
+				z-index: 0;
+				--d2l-input-border-radius: 0;
+				--d2l-input-border-color: transparent;
 			}
 
 			.criterion-feedback-header {
@@ -248,12 +251,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			<slot name="gutter-left"></slot>
 		</div>
 
-		<d2l-dialog title-text="[[browseOutcomesText]]" id="overlay">	
+		<d2l-dialog title-text="[[browseOutcomesText]]" id="overlay">
 			<d2l-select-outcomes
-			  rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
-              href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
-			  token="[[token]]"
-			  empty="{{_isOutcomeEmpty}}"
+				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
+				href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
+				token="[[token]]"
+				empty="{{_isOutcomeEmpty}}"
 			>
 			</d2l-select-outcomes>
 		</d2l-dialog>
@@ -274,7 +277,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
@@ -546,7 +549,7 @@ Polymer({
 
 		if (!this.animating && !oldEntity) {
 			setTimeout(function() {
-				this.$$('#name').textarea.select();
+				this.$$('#name').select();
 				this._transitionElement(this, 10);
 				this.scrollIntoView();
 			}.bind(this));
