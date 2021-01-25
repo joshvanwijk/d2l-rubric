@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@brightspace-ui-labs/accordion": "^2.0.2",
-    "@brightspace-ui/core": "^1.113.4",
+    "@brightspace-ui/core": "^1.113.5",
     "@polymer/iron-media-query": "^3.0.0",
     "@polymer/iron-overlay-behavior": "^3.0.2",
     "@polymer/iron-resizable-behavior": "^3.0.0",
