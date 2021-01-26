@@ -5,7 +5,7 @@ import './editor/d2l-rubric-error-handling-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
-import 'd2l-inputs/d2l-input-textarea.js';
+import '@brightspace-ui/core/components/inputs/input-textarea.js';
 import './rubric-siren-entity.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-icons/d2l-icon.js';
@@ -127,7 +127,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				display: flex;
 				padding: 18px
 			}
-
+			d2l-input-textarea {
+				margin-bottom: 8px;
+			}
 		</style>
 		<rubric-siren-entity href="[[criterionAssessmentHref]]" token="[[token]]" entity="{{criterionAssessment}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></rubric-siren-entity>
@@ -146,7 +148,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedbackHandler" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
+				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" rows="1" max-rows="-1" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
 				</d2l-input-textarea>
 				<template is="dom-if" if="[[_feedbackInvalid]]">
 					<d2l-tooltip announced id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
@@ -325,7 +327,7 @@ Polymer({
 
 	_saveFeedbackHandler: function(e) {
 		if (this._feedbackModified || !this._pendingFeedbackSaves && this._feedbackInvalid) {
-			var value = e.target.$.textarea.value;
+			var value = e.target.value;
 			this._saveFeedback(value);
 		}
 	},
