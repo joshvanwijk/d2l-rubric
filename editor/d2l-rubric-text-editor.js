@@ -27,7 +27,7 @@ Polymer({
 
 		</style>
 		<template is="dom-if" if="[[!richTextEnabled]]">
-			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" max-rows="-1" value="{{value}}" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-input-textarea>
+			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" rows="1" max-rows="-1" value="{{value}}" on-blur="_onInputBlur" on-input="_duringInputChange"></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[richTextEnabled]]">
 			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-change="_duringInputChange"></d2l-rubric-html-editor>
