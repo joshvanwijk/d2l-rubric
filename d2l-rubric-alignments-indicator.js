@@ -20,6 +20,9 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 			outcomesTitleText: {
 				type: String
 			},
+			criterionName:{
+				type: String
+			},
 			mobile: {
 				type: Boolean,
 				value: false
@@ -77,7 +80,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 </style>
 
 <template is="dom-if" if="[[_hasOutcomes(_outcomeMap)]]">
-	<d2l-icon id="alignments-icon" tabindex="0" icon="d2l-tier1:bullseye"></d2l-icon>
+	<d2l-icon aria-label="[[_getCriterionText(criterionName)]]" id="alignments-icon" tabindex="0" icon="d2l-tier1:bullseye"></d2l-icon>
 	<d2l-tooltip for="alignments-icon" position="[[_getTooltipPosition(mobile)]]" force-show="[[_hasFocus]]">
 		<div><b>[[outcomesTitleText]]</b></div>
 		<template is="dom-repeat" items="[[_getTooltipOutcomes(_outcomeMap)]]">
@@ -104,6 +107,13 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		super.ready();
 		this.addEventListener('blur', () => this._hasFocus = false);
 		this.addEventListener('focus', () => this._hasFocus = true);
+	}
+
+	_getCriterionText(criterionName){
+		if(criterionName && criterionName.length > 0){
+			return "Standards aligned to " + criterionName;
+		}
+		return "";
 	}
 
 	_getAlignmentsLink(entity) {
