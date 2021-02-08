@@ -162,6 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'setScoreVisibilityFailed': 'Setting score visibility failed.',
 		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it',
 		'shareRubricSaveFailed': 'Changing org unit availability failed',
+		'standardsAligned': 'Standards aligned to {name}',
 		'statistics': 'Statistics',
 		'total': 'Total',
 		'totalMobile': 'Total Score',

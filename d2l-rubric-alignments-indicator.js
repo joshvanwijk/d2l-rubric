@@ -8,12 +8,14 @@ import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-icons/d2l-icon.js';
 import './d2l-siren-entity-resolver.js';
+import './localize-behavior.js';
 
 const _trim = str => str ? str.trim() : str;
 
 class RubricAlignmentsIndicator extends mixinBehaviors([
 	D2L.Hypermedia.HMConstantsBehavior,
-	D2L.PolymerBehaviors.Siren.EntityBehavior
+	D2L.PolymerBehaviors.Siren.EntityBehavior,
+	D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 ], PolymerElement) {
 	static get properties() {
 		return {
@@ -111,7 +113,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 
 	_getCriterionText(criterionName) {
 		if (criterionName && criterionName.length > 0) {
-			return 'Standards aligned to ' + criterionName;
+			return this.localize('standardsAligned', 'name', criterionName);
 		}
 		return '';
 	}

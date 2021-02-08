@@ -117,6 +117,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'scoresVisibilityVisible': 'Scores are visible to students',
 		'shareRubricSaveFailed': 'Changing org unit availability failed',
 		'statistics': 'Statistics',
+		'standardsAligned': 'Standards aligned to {name}',
 		'total': 'Total',
 		'totalMobile': 'Total Score',
 		'totalScoreLabel': 'Rubric Total Score',
