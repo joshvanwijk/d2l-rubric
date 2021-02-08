@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
 		'sharedAlertText': 'Den här rubriceringen kan bara redigeras från den organisationsenhet den delades från',
 		'shareRubricSaveFailed': 'Det gick inte att ändra tillgängligheten för organisationsenheten',
-		'standardsAligned': 'Standards aligned to {name}',
+		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
 		'statistics': 'Statistik',
 		'total': 'Totalt antal',
 		'totalMobile': 'Totala poäng',

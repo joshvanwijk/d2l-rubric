@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'setScoreVisibilityFailed': 'Instellen van scorezichtbaarheid mislukt.',
 		'sharedAlertText': 'Deze rubric kan alleen worden bewerkt vanuit de organisatie-eenheid die deze heeft gedeeld',
 		'shareRubricSaveFailed': 'Het wijzigen van de beschikbaarheid van de organisatie-eenheid is mislukt',
-		'standardsAligned': 'Standards aligned to {name}',
+		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
 		'statistics': 'Statistieken',
 		'total': 'Totaal',
 		'totalMobile': 'Totale score',

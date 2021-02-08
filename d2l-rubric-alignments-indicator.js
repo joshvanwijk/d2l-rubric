@@ -113,7 +113,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 
 	_getCriterionText(criterionName) {
 		if (criterionName && criterionName.length > 0) {
-			return this.localize('standardsAligned', 'name', criterionName);
+			return this.localize('standardsAligned', 'outcome', this.outcomesTitleText, 'name', criterionName);
 		}
 		return '';
 	}

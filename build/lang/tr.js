@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'setScoreVisibilityFailed': 'Puan görünürlüğünü ayarlama işlemi başarısız oldu.',
 		'sharedAlertText': 'Bu rubrik, yalnızca paylaşan organizasyon biriminden düzenlenebilir',
 		'shareRubricSaveFailed': 'Organizasyon birimi kullanılabilirliği değiştirilemedi',
-		'standardsAligned': 'Standards aligned to {name}',
+		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
 		'statistics': 'İstatistikler',
 		'total': 'Toplam',
 		'totalMobile': 'Toplam Puan',

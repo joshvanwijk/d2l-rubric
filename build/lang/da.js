@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'setScoreVisibilityFailed': 'Det lykkedes ikke at indstille scorens synlighed.',
 		'sharedAlertText': 'Denne rubrik kan kun redigeres fra den organisationsenhed, der delte den',
 		'shareRubricSaveFailed': 'Ændring af tilgængelighed for organisationsenhed mislykkedes',
-		'standardsAligned': 'Standards aligned to {name}',
+		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
 		'statistics': 'Statistik',
 		'total': 'Samlet',
 		'totalMobile': 'Samlet score',

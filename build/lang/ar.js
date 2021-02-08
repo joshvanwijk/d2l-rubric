@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'setScoreVisibilityFailed': 'تعذّر إعداد إمكانية رؤية مجموع العلامات.',
 		'sharedAlertText': 'يمكن تحرير آلية التقييم هذه فقط من الوحدة التنظيمية التي شاركتها',
 		'shareRubricSaveFailed': 'فشل تغيير توفر الوحدة التنظيمية',
-		'standardsAligned': 'Standards aligned to {name}',
+		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
 		'statistics': 'الإحصاءات',
 		'total': 'المجموع',
 		'totalMobile': 'مجموع الدرجات',

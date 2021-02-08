@@ -151,7 +151,7 @@
     "setScoreVisibilityFailed": "Falha na configuração da visibilidade da pontuação.",
     "sharedAlertText": "Esta rubrica só pode ser editada na unidade organizacional que a compartilhou",
     "shareRubricSaveFailed": "Falha ao alterar a disponibilidade da unidade organizacional",
-    "standardsAligned": "Standards aligned to {name}",
+    "standardsAligned": "{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}",
     "statistics": "Estatísticas",
     "total": "Total",
     "totalMobile": "Pontuação Total",
