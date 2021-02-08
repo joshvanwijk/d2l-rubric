@@ -111,9 +111,9 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 
 	_getCriterionText(criterionName) {
 		if (criterionName && criterionName.length > 0) {
-			return `Standards aligned to ` + criterionName;
+			return 'Standards aligned to ' + criterionName;
 		}
-		return ``;
+		return '';
 	}
 
 	_getAlignmentsLink(entity) {
