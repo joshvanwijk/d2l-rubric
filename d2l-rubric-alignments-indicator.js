@@ -20,7 +20,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 			outcomesTitleText: {
 				type: String
 			},
-			criterionName:{
+			criterionName: {
 				type: String
 			},
 			mobile: {
@@ -109,11 +109,11 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		this.addEventListener('focus', () => this._hasFocus = true);
 	}
 
-	_getCriterionText(criterionName){
-		if(criterionName && criterionName.length > 0){
-			return "Standards aligned to " + criterionName;
+	_getCriterionText(criterionName) {
+		if (criterionName && criterionName.length > 0) {
+			return `Standards aligned to ` + criterionName;
 		}
-		return "";
+		return ``;
 	}
 
 	_getAlignmentsLink(entity) {
