@@ -317,7 +317,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 									token="[[token]]"
 									read-only="[[readOnly]]"
 									editing-score="{{editingScore}}"
-									criterion-num="[[criterionNum]]">
+									criterion-num="[[criterionNum]]"
+									criterion-name="[[criterion.properties.name]]">
 								</d2l-rubric-editable-score>
 							</d2l-td>
 						</template>
