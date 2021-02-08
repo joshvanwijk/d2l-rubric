@@ -10,7 +10,7 @@
             "rel": [
                 "https://rubrics.api.brightspace.com/rels/criteria"
             ],
-            "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria.json"
+            "href": "static-data/rubrics/organizations/text-only/199/groups/176/criteria-readonly.json"
         },
         {
             "rel": [
