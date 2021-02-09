@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'setScoreVisibilityFailed': 'Le paramétrage de la visibilité des notes a échoué.',
 		'sharedAlertText': 'Cette rubrique ne peut être modifiée qu’à partir de l’unité org qui l’a partagée',
 		'shareRubricSaveFailed': 'Échec de la modification de la disponibilité de l’unité organisationnelle',
-		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligné a {name}',
+		'standardsAligned': '{standardsName} aligné a {name}',
 		'statistics': 'Statistiques',
 		'total': 'Total',
 		'totalMobile': 'Résultat total',

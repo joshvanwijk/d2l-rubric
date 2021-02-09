@@ -151,7 +151,7 @@
     "setScoreVisibilityFailed": "Se produjo un error al establecer la visibilidad de la puntuación.",
     "sharedAlertText": "Esta rúbrica solo se puede editar desde la unidad de organización que la compartió",
     "shareRubricSaveFailed": "No se pudo cambiar la disponibilidad de la unidad de organización",
-    "standardsAligned": "{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}",
+    "standardsAligned": "{standardsName} aligned to {name}",
     "statistics": "Estadísticas",
     "total": "Total",
     "totalMobile": "Puntuación total",

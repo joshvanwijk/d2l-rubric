@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhBehavior = {
 		'setScoreVisibilityFailed': '设置分数可见性失败。',
 		'sharedAlertText': '此量规只能从共享它的组织单位编辑',
 		'shareRubricSaveFailed': '更改组织单位可用性失败',
-		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
+		'standardsAligned': '{standardsName} aligned to {name}',
 		'statistics': '统计',
 		'total': '总计',
 		'totalMobile': '总分数',

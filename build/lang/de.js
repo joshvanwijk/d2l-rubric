@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'setScoreVisibilityFailed': 'Einstellung der Sichtbarkeit der Punktzahl fehlgeschlagen.',
 		'sharedAlertText': 'Dieses Bewertungsschema kann nur von der freigebenden Organisationseinheit bearbeitet werden',
 		'shareRubricSaveFailed': 'Ändern der Verfügbarkeit der Organisationseinheit fehlgeschlagen',
-		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
+		'standardsAligned': '{standardsName} aligned to {name}',
 		'statistics': 'Statistik',
 		'total': 'Gesamt',
 		'totalMobile': 'Gesamtpunktzahl',

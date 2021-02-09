@@ -151,7 +151,7 @@
     "setScoreVisibilityFailed": "スコアの表示を設定できませんでした。",
     "sharedAlertText": "この注釈は、これを共有している組織単位からのみ編集できます",
     "shareRubricSaveFailed": "組織単位の使用可能期間の変更に失敗しました",
-    "standardsAligned": "{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}",
+    "standardsAligned": "{standardsName} aligned to {name}",
     "statistics": "統計",
     "total": "合計",
     "totalMobile": "合計スコア",

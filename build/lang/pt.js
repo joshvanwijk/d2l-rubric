@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'setScoreVisibilityFailed': 'Falha na configuração da visibilidade da pontuação.',
 		'sharedAlertText': 'Esta rubrica só pode ser editada na unidade organizacional que a compartilhou',
 		'shareRubricSaveFailed': 'Falha ao alterar a disponibilidade da unidade organizacional',
-		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
+		'standardsAligned': '{standardsName} aligned to {name}',
 		'statistics': 'Estatísticas',
 		'total': 'Total',
 		'totalMobile': 'Pontuação Total',

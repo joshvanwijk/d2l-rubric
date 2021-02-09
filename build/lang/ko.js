@@ -162,7 +162,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior = {
 		'setScoreVisibilityFailed': '점수 표시 여부 설정에 실패했습니다.',
 		'sharedAlertText': '이 루브릭은 이를 공유하는 구성 단위에서만 편집할 수 있습니다.',
 		'shareRubricSaveFailed': '구성 단위 가용성을 변경하지 못했습니다.',
-		'standardsAligned': '{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}',
+		'standardsAligned': '{standardsName} aligned to {name}',
 		'statistics': '통계',
 		'total': '총',
 		'totalMobile': '총 점수',

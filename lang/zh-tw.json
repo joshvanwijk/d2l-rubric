@@ -151,7 +151,7 @@
     "setScoreVisibilityFailed": "分數能見度設定失敗。",
     "sharedAlertText": "這個量規只能從其共用的組織單位進行編輯",
     "shareRubricSaveFailed": "變更組織單位可用情況失敗",
-    "standardsAligned": "{outcome, select, competencies {competencies} expectations {expectations} objectives {objectives} outcomes {outcomes} standards {standards} other {standards}} aligned to {name}",
+    "standardsAligned": "{standardsName} aligned to {name}",
     "statistics": "統計",
     "total": "總計",
     "totalMobile": "總分數",
