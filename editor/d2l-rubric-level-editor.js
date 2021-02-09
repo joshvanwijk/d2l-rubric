@@ -100,12 +100,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">
-			<d2l-tooltip id="level-name-bubble" class="is-error" for="level-name" position="bottom">
+			<d2l-tooltip announced id="level-name-bubble" class="is-error" for="level-name" position="bottom">
 				[[_nameInvalidError]]
 			</d2l-tooltip>
 		</template>
 		<template is="dom-if" if="[[_pointsInvalid]]">
-			<d2l-tooltip id="points-bubble" for="level-points" position="bottom">
+			<d2l-tooltip announced id="points-bubble" for="level-points" position="bottom">
 				[[_pointsInvalidError]]
 			</d2l-tooltip>
 		</template>

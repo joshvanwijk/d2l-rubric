@@ -1,5 +1,4 @@
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
 
 import '../localize-behavior.js';
 
@@ -34,8 +33,6 @@ D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior = {
 	handleValidationError: function(bubbleId, property, langterm, error) {
 		var msgText = this._getErrMsg(error, langterm);
 		this.toggleBubble(property, true, bubbleId, msgText);
-
-		announce(msgText);
 	},
 	_getErrMsg: function(e, altMsg) {
 		if (e && !e.hasOwnProperty('stack')) {

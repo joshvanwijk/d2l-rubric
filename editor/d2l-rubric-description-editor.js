@@ -1,5 +1,4 @@
 import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-inputs/d2l-input-text.js';
@@ -123,12 +122,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 		</d2l-rubric-text-editor>
 		<template is="dom-if" if="[[_descriptionInvalid]]">
-			<d2l-tooltip id="description-bubble" class="is-error" for="description" position="bottom">
+			<d2l-tooltip announced id="description-bubble" class="is-error" for="description" position="bottom">
 				[[_descriptionInvalidError]]
 			</d2l-tooltip>
 		</template>
 		<template is="dom-if" if="[[_pointsInvalid]]">
-			<d2l-tooltip id="cell-points-bubble" for="cell-points" position="bottom">
+			<d2l-tooltip announced id="cell-points-bubble" for="cell-points" position="bottom">
 				[[_pointsInvalidError]]
 			</d2l-tooltip>
 		</template>
@@ -322,8 +321,6 @@ Polymer({
 		if (action) {
 			if (this._pointsRequired && !saveEvent.value.trim()) {
 				this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-
-				announce(this.localize('pointsAreRequired'));
 			} else {
 				this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
 				var fields = [{ 'name': 'points', 'value': saveEvent.value }];

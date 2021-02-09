@@ -4,6 +4,7 @@ import 'd2l-fetch/d2l-fetch.js';
 import './d2l-rubric-criteria-group.js';
 import './d2l-rubric-criteria-group-mobile.js';
 import './d2l-rubric-loading.js';
+import './telemetry-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import './d2l-rubric-assessment-criterion-entity-loader.js';
@@ -24,7 +25,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 
-		<template is="dom-repeat" items="[[_getCriterionAssessmentHrefs(assessmentEntity)]]" as="criterionAssessmentHref">
+		<template is="dom-repeat" items="[[_getCriterionAssessmentHrefs(assessmentEntity)]]" as="criterionAssessmentHref" on-dom-change="_onAssessmentDomChanged">
 			<d2l-rubric-assessment-criterion-entity-loader
 				href="[[criterionAssessmentHref]]"
 				token="[[token]]"
@@ -43,7 +44,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					enable-feedback-copy="[[enableFeedbackCopy]]"
 					read-only="[[readOnly]]"
 					hidden$="[[!_showContent]]"
-					telemetry-data="[[telemetryData]]"
 					criterion-result-map="[[_criterionResultMap]]"
 					cell-assessment-map="[[_cellAssessmentMap]]"
 				></d2l-rubric-criteria-group>
@@ -61,10 +61,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					read-only="[[readOnly]]"
 					compact="[[compact]]"
 					hidden$="[[!_showContent]]"
-					telemetry-data="[[telemetryData]]"
 					criterion-result-map="[[_criterionResultMap]]"
 					cell-assessment-map="[[_cellAssessmentMap]]"
 					enable-feedback-copy="[[enableFeedbackCopy]]"
+					is-holistic="[[_isHolistic(rubricType)]]"
 				></d2l-rubric-criteria-group-mobile>
 				<slot></slot>
 			</template>
@@ -100,9 +100,6 @@ Polymer({
 			type: String
 		},
 		readOnly: Boolean,
-		telemetryData: {
-			type: Object
-		},
 		enableFeedbackCopy: {
 			type: Boolean,
 		},
@@ -112,7 +109,8 @@ Polymer({
 
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
-		window.D2L.Hypermedia.HMConstantsBehavior
+		window.D2L.Hypermedia.HMConstantsBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
 	observers: [
@@ -122,6 +120,12 @@ Polymer({
 	created: function() {
 		this._criterionResultMap = {};
 		this._cellAssessmentMap = {};
+	},
+
+	_onAssessmentDomChanged: function() {
+		if (this.telemetryData.hasAssessment && this.assessmentEntity) {
+			this.markRubricLoadedEventEnd('assessment');
+		}
 	},
 
 	_onEntityChanged: function(entity) {
@@ -149,5 +153,9 @@ Polymer({
 			}
 		});
 		return criterionHrefs;
+	},
+
+	_isHolistic: function(rubricType) {
+		return rubricType === 'holistic';
 	}
 });

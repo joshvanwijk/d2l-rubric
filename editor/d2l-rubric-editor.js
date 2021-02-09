@@ -12,6 +12,7 @@ import './d2l-rubric-editor-cell-styles.js';
 import './d2l-rubric-error-handling-behavior.js';
 import './d2l-rubric-editor-header.js';
 import '../localize-behavior.js';
+import '../telemetry-behavior.js';
 import './d2l-rubric-dropdown-menu-behavior.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-colors/d2l-colors.js';
@@ -228,17 +229,19 @@ const $_documentContainer = html `
 		</style>
 		<d2l-rubric-editor-header id="rubric-header">
 			<div slot="title">[[localize('editRubric')]]</div>
-			<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu">
-				<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down"></d2l-button-icon>
-				<d2l-dropdown-menu>
-					<d2l-menu id="title-menu">
-						<d2l-menu-item text="[[localize('statistics')]]" disabled="[[!_hasStatisticsLink]]" on-d2l-menu-item-select="_handleSelectStatistics">
-						</d2l-menu-item>
-						<d2l-menu-item text="[[localize('preview')]]" disabled="[[!_hasPreviewLink]]" on-d2l-menu-item-select="_openPreviewDialog">
-						</d2l-menu-item>
-					</d2l-menu>
-				</d2l-dropdown-menu>
-			</d2l-dropdown>
+			<template is="dom-if" if="{{!titleDropdownHidden}}">
+				<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu">
+					<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down" text="[[localize('actionsforEditRubric')]]"></d2l-button-icon>
+					<d2l-dropdown-menu>
+						<d2l-menu id="title-menu">
+							<d2l-menu-item text="[[localize('statistics')]]" disabled="[[!_hasStatisticsLink]]" on-d2l-menu-item-select="_handleSelectStatistics">
+							</d2l-menu-item>
+							<d2l-menu-item text="[[localize('preview')]]" disabled="[[!_hasPreviewLink]]" on-d2l-menu-item-select="_openPreviewDialog">
+							</d2l-menu-item>
+						</d2l-menu>
+					</d2l-dropdown-menu>
+				</d2l-dropdown>
+			</template>
 			<d2l-dropdown-button-subtle id="status-dropdown" slot="header-end-content" text="[[_rubricStatusText]]" hidden$="[[!_canChangeStatus]]" on-d2l-menu-item-change="_handleStatusChange">
 				<d2l-dropdown-menu>
 					<d2l-menu id="status-menu" label="Status"></d2l-menu>
@@ -277,7 +280,7 @@ const $_documentContainer = html `
 					editing="{{_nameChanging}}"
 				></d2l-rubric-autosaving-input>
 				<template is="dom-if" if="[[_nameInvalid]]">
-					<d2l-tooltip id="name-bubble" class="is-error" for="rubric-name" position="bottom">
+					<d2l-tooltip announced id="name-bubble" class="is-error" for="rubric-name" position="bottom">
 						[[_nameInvalidError]]
 					</d2l-tooltip>
 				</template>
@@ -287,7 +290,7 @@ const $_documentContainer = html `
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isReadOnly]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" telemetry-data="[[telemetryData]]">
+			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
@@ -310,7 +313,7 @@ const $_documentContainer = html `
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
 						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
-							<d2l-tooltip id="hide-score-bubble" class="is-error" for="hide-score-checkbox" position="bottom">
+							<d2l-tooltip announced id="hide-score-bubble" class="is-error" for="hide-score-checkbox" position="bottom">
 								[[_setScoreVisibilityFailedError]]
 							</d2l-tooltip>
 						</template>
@@ -322,7 +325,7 @@ const $_documentContainer = html `
 							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" pending-saves="[[_pendingDescriptionSaves]]" on-text-changed="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
-								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
+								<d2l-tooltip announced id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
 									[[_descriptionInvalidError]]
 								</d2l-tooltip>
 							</template>
@@ -354,7 +357,7 @@ const $_documentContainer = html `
 								</template>
 							</div>
 							<template is="dom-if" if="[[_associationsInvalid]]">
-								<d2l-tooltip id="associations-bubble" class="is-error" for="associations" position="bottom">
+								<d2l-tooltip announced id="associations-bubble" class="is-error" for="associations" position="bottom">
 									[[_associationsInvalidError]]
 								</d2l-tooltip>
 							</template>
@@ -368,7 +371,7 @@ const $_documentContainer = html `
 						<label>[[localize('makeRubricAvailableHeader')]]</label>
 						<d2l-organization-availability-set token="[[token]]" href="[[_orgUnitAvailabilitySetLink]]" aria-invalid$="[[isAriaInvalid(_shareRubricInvalid)]]"></d2l-organization-availability-set>
 						<template is="dom-if" if="[[_shareRubricInvalid]]">
-							<d2l-tooltip id="share-rubric-bubble" class="is-error" for="make-rubric-available-container" position="bottom">
+							<d2l-tooltip announced id="share-rubric-bubble" class="is-error" for="make-rubric-available-container" position="bottom">
 								[[_shareRubricInvalidError]]
 							</d2l-tooltip>
 						</template>
@@ -422,6 +425,10 @@ Polymer({
 		},
 		alignOutcomesText: {
 			type: String
+		},
+		titleDropdownHidden: {
+			type: Boolean,
+			value: false
 		},
 		_rubricName: {
 			type: String,
@@ -583,13 +590,14 @@ Polymer({
 			type: String,
 			value: null,
 		},
-		telemetryData: {
-			type: Object
-		},
 		performanceTelemetryFlag: {
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
+		},
+		errorLoggingEndpoint: {
+			type: String,
+			value: null
 		}
 	},
 	behaviors: [
@@ -598,7 +606,8 @@ Polymer({
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior,
-		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior
+		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 	listeners: {
 		'd2l-siren-entity-save-start': '_onEntitySave',
@@ -639,10 +648,12 @@ Polymer({
 			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-error', this._onShareRubricSaveError.bind(this));
 		}
 
-		this.telemetryData = {
+		const telemetryData = {
 			endpoint: this.dataset.telemetryEndpoint,
-			performanceTelemetryEnabled: this.performanceTelemetryFlag
+			performanceTelemetryEnabled: this.performanceTelemetryFlag,
+			errorEndpoint: this.errorLoggingEndpoint,
 		};
+		this.setTelemetryData(telemetryData);
 	},
 	_getReadOnlyDescription: function(value, isHtml) {
 		if (isHtml) {

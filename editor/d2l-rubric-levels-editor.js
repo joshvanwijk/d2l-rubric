@@ -32,22 +32,24 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 				background-color: var(--d2l-table-header-background-color);
 			}
 
-			#levels-section > div:first-of-type[is-holistic] { /* first col-inner */
+			:dir(ltr) #levels-section > div:first-of-type[is-holistic] { /* first col-inner */
 				border-top-left-radius: var(--d2l-table-border-radius);
+				border-left: 1px solid var(--d2l-color-galena);
 			}
+
+			:dir(ltr) #levels-section > div:last-of-type[is-holistic] { /* last col-inner */
+				border-right: 1px solid var(--d2l-color-galena);
+				border-top-right-radius: var(--d2l-table-border-radius);
+			}
+
 			:dir(rtl) #levels-section > div:first-of-type[is-holistic] {
-				border-top-left-radius: 0;
 				border-right: 1px solid var(--d2l-color-galena);
 				border-top-right-radius: var(--d2l-table-border-radius);
 			}
-			#levels-section > div:last-of-type[is-holistic] { /* last col-inner */
-				border-right: 1px solid var(--d2l-color-galena);
-				border-top-right-radius: var(--d2l-table-border-radius);
-			}
+
 			:dir(rtl) #levels-section > div:last-of-type[is-holistic] {
-				border-right: none;
-				border-top-right-radius: 0;
 				border-top-left-radius: var(--d2l-table-border-radius);
+				border-left: 1px solid var(--d2l-color-galena);
 			}
 
 			d2l-button-icon {
@@ -154,8 +156,7 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		},
-		telemetryData: Object
+		}
 	},
 
 	behaviors: [
@@ -213,6 +214,7 @@ Polymer({
 			const uuid = this.getUUID();
 			this.perfMark(`criterionLevelAddedStart-${uuid}`);
 
+			announce(this.localize('levelLoading', 'name', 'rubricLevel'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-level-added', {
 					bubbles: true,
@@ -231,7 +233,7 @@ Polymer({
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
-				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`, this.telemetryData);
+				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`);
 			}.bind(this));
 		}
 	},
@@ -244,6 +246,7 @@ Polymer({
 			const uuid = this.getUUID();
 			this.perfMark(`criterionLevelAddedStart-${uuid}`);
 
+			announce(this.localize('levelLoading', 'name', 'rubricLevel'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-level-added', {
 					bubbles: true,
@@ -262,7 +265,7 @@ Polymer({
 			}.bind(this)).finally(function() {
 				this.updatingLevels = false;
 				this.perfMark(`criterionLevelAddedEnd-${uuid}`);
-				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`, this.telemetryData);
+				this.logCriterionLevelAddedAction(`criterionLevelAddedStart-${uuid}`, `criterionLevelAddedEnd-${uuid}`);
 			}.bind(this));
 		}
 	},

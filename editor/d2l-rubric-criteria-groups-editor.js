@@ -76,7 +76,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				align-outcomes-text="[[alignOutcomesText]]"
 				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 				updating-levels="{{updatingLevels}}"
-				telemetry-data="[[telemetryData]]"
 			>
 			</d2l-rubric-criteria-group-editor>
 		</template>
@@ -156,9 +155,6 @@ Polymer({
 			type: Boolean,
 			notify: true
 		},
-		telemetryData: {
-			type: Object
-		},
 	},
 
 	behaviors: [
@@ -179,6 +175,7 @@ Polymer({
 		var action = this.entity.getActionByName('create');
 		if (action) {
 			this._waitingForGroups = true;
+			announce(this.localize('levelLoading', 'name', 'criteriaGroup'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-criteria-group-added', {
 					bubbles: true,

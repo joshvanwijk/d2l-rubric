@@ -135,7 +135,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
 		<div id="rubric-structure-editor-container" hidden="">
-			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{_updatingLevels}}" telemetry-data="[[telemetryData]]">
+			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{_updatingLevels}}">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
 				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="[[_updatingLevels]]"></d2l-rubric-overall-levels-editor>
@@ -233,9 +233,6 @@ Polymer({
 			type: String,
 			value: null
 		},
-		telemetryData: {
-			type: Object
-		},
 	},
 
 	behaviors: [
@@ -244,7 +241,8 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Rubric.DialogBehavior,
-		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior
+		D2L.PolymerBehaviors.Rubric.DropdownMenuBehavior,
+		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior
 	],
 
 	listeners: {
@@ -256,6 +254,12 @@ Polymer({
 	ready: function() {
 		this.addEventListener('d2l-siren-entity-error', this._handleError.bind(this));
 		this.addEventListener('d2l-rubric-editor-save-error', this._handleSaveError.bind(this));
+		if (this.dataset.telemetryEndpoint && this.errorLoggingEndpoint) {
+			this.setTelemetryData({
+				endpoint: this.dataset.telemetryEndpoint,
+				errorEndpoint: this.errorLoggingEndpoint
+			});
+		}
 	},
 
 	_onEntitySave: function(e) {

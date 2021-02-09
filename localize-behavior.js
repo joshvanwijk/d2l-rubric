@@ -4,7 +4,6 @@ import './build/lang/da.js';
 import './build/lang/de.js';
 import './build/lang/en.js';
 import './build/lang/es.js';
-import './build/lang/fi.js';
 import './build/lang/fr.js';
 import './build/lang/ja.js';
 import './build/lang/ko.js';
@@ -29,7 +28,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehaviorImpl = {
 					'de': this.de,
 					'en': this.en,
 					'es': this.es,
-					'fi': this.fi,
 					'fr': this.fr,
 					'ja': this.ja,
 					'ko': this.ko,
@@ -54,7 +52,6 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior = [
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior,
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior,
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEsBehavior,
-	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior,
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior,
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior,
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangKoBehavior,

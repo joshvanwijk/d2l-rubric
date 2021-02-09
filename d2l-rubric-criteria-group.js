@@ -244,7 +244,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</d2l-th>
 					</template>
 					<template is="dom-if" if="[[_hasOutOf(entity)]]">
-						<d2l-th class="out-of"></d2l-th>
+						<d2l-th class="out-of">
+							<div class="level-name">[[localize('criterionScore')]]</div>
+						</d2l-th>
 					</template>
 				</d2l-tr>
 				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
@@ -276,6 +278,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											href="[[_getActivityLink(criterion)]]"
 											token="[[token]]"
 											outcomes-title-text="[[_getOutcomesTitleText()]]"
+											criterion-name="[[criterion.properties.name]]"
 										></d2l-rubric-alignments-indicator>
 										<template is="dom-if" if="[[_showCompetencies(criterionResultMap, criterion, readOnly)]]">
 											<d2l-rubric-competencies-icon
@@ -336,7 +339,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 								data-criterion$="[[criterionNum]]"
 								on-save-feedback-start="_handleSaveStart"
 								on-save-feedback-finished="_handleSaveFinished"
-								on-close-feedback="_closeFeedback">
+								on-close-feedback="_closeFeedback"
+								on-focus="_handleFeedbackTextFocus">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -408,10 +412,6 @@ Polymer({
 			type: Number,
 			value: -1
 		},
-		telemetryData: {
-			type: Object,
-			value: null
-		},
 		enableFeedbackCopy: {
 			type: Boolean,
 		},
@@ -465,9 +465,9 @@ Polymer({
 			return;
 		}
 		// The first time that the entity loads, we send out an Open event
-		if (!this._loaded && this.telemetryData && this.telemetryData.endpoint) {
+		if (!this._loaded) {
 			var entityId = this._getSelfLink(entity);
-			this.logViewRubricEvent({ id: entityId }, this.telemetryData);
+			this.logViewRubricEvent({ id: entityId });
 			this._loaded = true;
 		}
 		this._levelsHref = this._getLevelsLink(entity);
@@ -556,13 +556,7 @@ Polymer({
 	},
 
 	_onCriterionCellDomChanged: function() {
-		const self = this;
-		this.perfMark('rubricRenderEnd');
-		this.perfMark('rubricLoadEnd');
-		this.debounce('criterionCellDomChangedEvent', function() {
-			self.logRubricRenderedEvent('rubricRenderStart', 'rubricRenderEnd', self.telemetryData);
-			self.logRubricLoadedEvent('rubricLoadStart', 'rubricLoadEnd', self.telemetryData);
-		}, 100);
+		this.markRubricLoadedEventEnd('rubric');
 	},
 
 	_closeFeedback: function(event) {
@@ -857,10 +851,12 @@ Polymer({
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
 		).then(() => {
-			this._focusCriterionCell(event);
+			if (this._addingFeedback === -1) {
+				this._focusCriterionCell(event);
+			}
 
 			this.perfMark(`criterionCellTappedEnd-${uuid}`);
-			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`, this.telemetryData);
+			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`);
 		});
 
 		this._addingFeedback = -1;
@@ -926,6 +922,11 @@ Polymer({
 
 	_handleVisibleFeedbackFocusout: function(event) {
 		event.target.classList.remove('feedback-button-focused');
+	},
+
+	_handleFeedbackTextFocus: function(event) {
+		var criterionNum = event.model.get('criterionNum');
+		this._addingFeedback = criterionNum;
 	},
 
 	_focusCriterionCell: function(event) {

@@ -61,7 +61,6 @@ Polymer({
 		_loaded: Boolean,
 		readOnly: Boolean,
 		enableFeedbackCopy: Boolean,
-		telemetryData: Object
 	},
 
 	observers: [
@@ -79,15 +78,14 @@ Polymer({
 			return;
 		}
 		// The first time that the entity loads, we send out an Open event
-		if (!this._loaded && this.telemetryData && this.telemetryData.endpoint) {
+		if (!this._loaded) {
 			var entityId = this._getSelfLink(entity);
-			this.logViewRubricEvent({ id: entityId, isMobile: true }, this.telemetryData);
+			this.logViewRubricEvent({ id: entityId, isMobile: true });
 			this._loaded = true;
 		}
 		this._name = entity.properties.name;
 		this._levelsHref = this._getLevelsLink(entity);
 		this._criteriaHref = this._getCriteriaLink(entity);
-		this._isHolistic = entity.hasClass(this.HypermediaClasses.rubrics.percentage);
 		this._isNumeric = entity.hasClass(this.HypermediaClasses.rubrics.numeric);
 	},
 

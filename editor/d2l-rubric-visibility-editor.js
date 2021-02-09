@@ -83,7 +83,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-visibility-e
 			</label>
 		</div>
 		<template is="dom-if" if="[[_visibilityInvalid]]">
-			<d2l-tooltip id="visibility-bubble" class="is-error" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
+			<d2l-tooltip announced id="visibility-bubble" class="is-error" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>
 		</template>
 	</template>
 </dom-module>`;

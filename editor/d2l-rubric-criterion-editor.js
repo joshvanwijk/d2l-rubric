@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
@@ -6,7 +7,7 @@ import 'd2l-activity-alignments/d2l-activity-alignment-tags.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-inputs/d2l-input-textarea.js';
+import '@brightspace-ui/core/components/inputs/input-textarea.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-button/d2l-button-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
@@ -66,6 +67,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				display: block;
 				flex-grow: 1;
 				width: 100%;
+				z-index: 0;
+				--d2l-input-border-radius: 0;
+				--d2l-input-border-color: transparent;
 			}
 
 			.criterion-feedback-header {
@@ -166,21 +170,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			}
 
 			.criterion-detail[is-holistic] {
-				border-right: 1px solid var(--d2l-color-galena);
 				border-bottom: 1px solid var(--d2l-color-galena);
 				border-bottom-right-radius: var(--d2l-table-border-radius);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
-			.criterion-detail[is-holistic] .criterion-text div:first-of-type {
+			:dir(ltr) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
+				border-left: 1px solid var(--d2l-color-galena);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
+			:dir(ltr) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
+				border-right: 1px solid var(--d2l-color-galena);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
+			}
+
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
-				border-bottom-left-radius: 0;
+				border-right: 1px solid var(--d2l-color-galena);
+				border-bottom-right-radius: var(--d2l-table-border-radius);
 			}
 
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
+				border-left: 1px solid var(--d2l-color-galena);
 				border-bottom-left-radius: var(--d2l-table-border-radius);
 			}
 
@@ -197,17 +208,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 
 			.gutter-left[text-only], .gutter-right[text-only] {
 				margin-top: 0;
-			}
-
-			.with-margin {
-				margin: 24px 40px;
-			}
-
-			.scrollable {
-				border: 1px solid lightgray;
-				padding: 24px;
-				display: flex;
-				flex-direction: column;
 			}
 
 			.select-outcomes-hierarchical {
@@ -251,26 +251,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			<slot name="gutter-left"></slot>
 		</div>
 
-		<simple-overlay id="overlay" tabindex="-1" scroll-action="lock" class="with-margin scrollable"  with-backdrop>
-			<div>
-				<h2>[[browseOutcomesText]]</h2>
-				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-click= "_closeBrowseOutcomes"></d2l-button-icon>
-			</div>
-
+		<d2l-dialog title-text="[[browseOutcomesText]]" id="overlay">
 			<d2l-select-outcomes
-			  rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
-              href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
-			  token="[[token]]"
-			  empty="{{_isOutcomeEmpty}}"
+				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
+				href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
+				token="[[token]]"
+				empty="{{_isOutcomeEmpty}}"
 			>
 			</d2l-select-outcomes>
-		</simple-overlay>
-		<simple-overlay id="hierarchicaloverlay" tabindex="-1" class="with-margin scrollable"  with-backdrop>
-			<div>
-				<h2>[[browseOutcomesText]]</h2>
-				<d2l-button-icon autofocus aria-label$="[[localize('closeDialog')]]" icon="d2l-tier1:close-large" id="closeButton" on-click= "_closeBrowseOutcomes"></d2l-button-icon>
-			</div>
+		</d2l-dialog>
 
+		<d2l-dialog title-text="[[browseOutcomesText]]" id="hierarchicaloverlay">
 			<d2l-select-outcomes-hierarchical
 				class="select-outcomes-hierarchical"
 				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
@@ -281,16 +272,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				max-height="[[_hierarchicalHeight]]"
 			>
 			</d2l-select-outcomes-hierarchical>
-		</simple-overlay>
+		</d2l-dialog>
 
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
-						<d2l-tooltip id="criterion-name-bubble" class="is-error" for="name" position="bottom">
+						<d2l-tooltip announced id="criterion-name-bubble" class="is-error" for="name" position="bottom">
 							[[_nameInvalidError]]
 						</d2l-tooltip>
 					</template>
@@ -334,7 +325,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 								editing="{{_outOfChanging}}"
 							></d2l-rubric-autosaving-input>
 							<template is="dom-if" if="[[_outOfInvalid]]">
-								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
+								<d2l-tooltip announced id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
 									[[_outOfInvalidError]]
 								</d2l-tooltip>
 							</template>
@@ -533,9 +524,6 @@ Polymer({
 		this.addEventListener('d2l-activity-alignment-tags-update', this._showBrowseOutcomes);
 		this.addEventListener('d2l-alignment-list-added', this._closeBrowseOutcomes);
 		this.addEventListener('d2l-alignment-list-cancelled', this._closeBrowseOutcomes);
-		this.addEventListener('d2l-select-outcomes-closed', this._closeBrowseOutcomes);
-		this.addEventListener('siren-entity-loading-fetched', this._resizeOverlay);
-		window.addEventListener('resize', this._resizeOverlay.bind(this));
 	},
 	// eslint-disable-next-line no-unused-vars
 	_widthChange: function(criterionDetailWidth) {
@@ -561,7 +549,7 @@ Polymer({
 
 		if (!this.animating && !oldEntity) {
 			setTimeout(function() {
-				this.$$('#name').textarea.select();
+				this.$$('#name').select();
 				this._transitionElement(this, 10);
 				this.scrollIntoView();
 			}.bind(this));
@@ -901,14 +889,10 @@ Polymer({
 	},
 
 	_closeBrowseOutcomes: function() {
-		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.close() : this.$.overlay.close();
+		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.opened = false : this.$.overlay.opened = false;
 		this._updateHierarchicalHeight();
 	},
 
-	_resizeOverlay: function() {
-		this._isHierarchicalFlagOn ? this.$.hierarchicaloverlay.refit() : this.$.overlay.refit();
-		this._updateHierarchicalHeight();
-	},
 	// eslint-disable-next-line no-unused-vars
 	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {
 		return isHolistic && index === 0;

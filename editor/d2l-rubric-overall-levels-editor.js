@@ -159,7 +159,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 		</style>
 
 		<div class="header">
-			<div class="title">[[localize('overallScoreHeader')]]</div>
+			<h2 class="title">[[localize('overallScoreHeader')]]</h2>
 			<div class="sub-title">[[localize('overallScoreDescription')]]</div>
 		</div>
 
@@ -283,13 +283,15 @@ Polymer({
 		var action = this.entity.getActionByName('prepend');
 		if (action) {
 			var firstLevelName = this._getFirstLevelName();
+
+			announce(this.localize('levelLoading', 'name', 'overallScoreLevel'));
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-added', {
 					bubbles: true,
 					composed: true,
 				}));
 
-				announce(this.localize('addOverallLevelPrepend', 'name', firstLevelName));
+				announce(this.localize('addedOverallLevelPrepend', 'name', firstLevelName));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {
@@ -304,6 +306,7 @@ Polymer({
 	_handleAppendOverallLevel: function() {
 		var action = this.entity.getActionByName('append');
 		if (action) {
+			announce(this.localize('levelLoading', 'name', 'overallScoreLevel'));
 			var lastLevelName = this._getLastLevelName();
 			this.performSirenAction(action).then(function() {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-overall-level-added', {
@@ -311,7 +314,7 @@ Polymer({
 					composed: true,
 				}));
 
-				announce(this.localize('addOverallLevelAppend', 'name', lastLevelName));
+				announce(this.localize('addedOverallLevelAppend', 'name', lastLevelName));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {

@@ -22,6 +22,7 @@ class AutosavingInput extends PolymerElement {
 				disabled="[[!enabled]]"
 				prevent-submit=""
 				size="[[size]]"
+				novalidate
 			></d2l-input-text>
 		`;
 		template.setAttribute('strip-whitespace', true);
