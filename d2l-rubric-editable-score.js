@@ -521,9 +521,9 @@ Polymer({
 		return forCompact === compact;
 	},
 
-	_getCriterionContext: function(criterion) {
+	_getCriterionContext: function (criterion) {
 		if (criterion && criterion.length > 0) {
-			if(this._isStaticView()){
+			if (this._isStaticView()) {
 				return this.localize('scoreOf', 'criterion', criterion);
 			} else {
 				return this.localize('scoreOfEditable', 'criterion', criterion);
