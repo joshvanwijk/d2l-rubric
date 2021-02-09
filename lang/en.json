@@ -106,6 +106,7 @@
 	"scoresVisibilityVisible": "Scores are visible to students",
 	"shareRubricSaveFailed": "Changing org unit availability failed",
 	"statistics": "Statistics",
+	"standardsAligned": "{standardsName} aligned to {name}",
 	"total": "Total",
 	"totalMobile": "Total Score",
 	"totalScoreLabel": "Rubric Total Score",
