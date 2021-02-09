@@ -20,7 +20,7 @@ import './d2l-rubric-criterion-cell.js';
 import './rubric-siren-entity.js';
 import './assessment-behavior.js';
 import 's-html/s-html.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import 'fastdom/fastdom.js';
 import './d2l-rubric-editable-score.js';
 import './d2l-rubric-alignments-indicator';

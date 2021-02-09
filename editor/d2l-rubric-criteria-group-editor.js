@@ -4,7 +4,7 @@ import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-alert/d2l-alert.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import '../d2l-rubric-entity-behavior.js';
 import '../d2l-rubric-loading.js';

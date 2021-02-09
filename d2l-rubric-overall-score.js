@@ -14,6 +14,7 @@ import './assessment-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import './d2l-rubric-competencies-icon.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 
 const $_documentContainer = document.createElement('template');
 

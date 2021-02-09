@@ -12,6 +12,8 @@ import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-res
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-levels-editor">

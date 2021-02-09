@@ -25,6 +25,8 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import './d2l-rubric-dropdown-menu-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-editor">
