@@ -1,7 +1,23 @@
 # d2l-rubric
+
 [![Build Status](https://travis-ci.org/Brightspace/d2l-rubric.svg?branch=master)](https://travis-ci.org/Brightspace/d2l-rubric)
 
 Polymer based web-component to display a rubric
+
+## Prerequisites
+
+- NPM (Installs with [NodeJS](https://nodejs.org))
+
+## Setup
+
+Run `npm i` in project root directory
+
+## Version Bump
+
+Run `npm version --no-git-tag-version [major | minor | patch]` in project
+root directory, selecting the appropriate version increase type. This will bump
+the version in both `package.json` and `package-lock.json` and leave it in your
+working changes.
 
 ## Usage
 Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-rubric.html`:
