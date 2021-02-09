@@ -22,7 +22,7 @@ import './d2l-rubric-entity-behavior.js';
 import 'd2l-alert/d2l-alert.js';
 import 's-html/s-html.js';
 import 'd2l-save-status/d2l-save-status.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import './rubric-siren-entity.js';
 import './d2l-rubric-assessment-cache-primer.js';
 const $_documentContainer = document.createElement('template');

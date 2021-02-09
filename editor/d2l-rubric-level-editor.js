@@ -2,7 +2,7 @@ import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-button/d2l-button-icon.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '../d2l-rubric-entity-behavior.js';
 import './d2l-rubric-siren-autosave-action-behavior.js';

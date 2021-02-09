@@ -57,7 +57,6 @@
     "@polymer/polymer": "^3.0.0",
     "d2l-activity-alignments": "github:Brightspace/d2l-activity-alignments#semver:^2",
     "d2l-alert": "github:BrightspaceUI/alert#semver:^4",
-    "d2l-button": "github:BrightspaceUI/button#semver:^5",
     "d2l-colors": "github:BrightspaceUI/colors#semver:^4",
     "d2l-dnd-sortable": "github:Brightspace/dnd-sortable#semver:^3",
     "d2l-dropdown": "github:BrightspaceUI/dropdown#semver:^7",

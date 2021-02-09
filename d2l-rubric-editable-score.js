@@ -11,6 +11,8 @@ import 'd2l-tooltip/d2l-tooltip.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
