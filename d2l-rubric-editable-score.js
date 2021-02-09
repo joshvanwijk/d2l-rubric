@@ -521,7 +521,7 @@ Polymer({
 		return forCompact === compact;
 	},
 
-	_getCriterionContext: function (criterion) {
+	_getCriterionContext: function(criterion) {
 		if (criterion && criterion.length > 0) {
 			if (this._isStaticView()) {
 				return this.localize('scoreOf', 'criterion', criterion);
