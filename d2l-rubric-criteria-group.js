@@ -278,6 +278,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											href="[[_getActivityLink(criterion)]]"
 											token="[[token]]"
 											outcomes-title-text="[[_getOutcomesTitleText()]]"
+											criterion-name="[[criterion.properties.name]]"
 										></d2l-rubric-alignments-indicator>
 										<template is="dom-if" if="[[_showCompetencies(criterionResultMap, criterion, readOnly)]]">
 											<d2l-rubric-competencies-icon

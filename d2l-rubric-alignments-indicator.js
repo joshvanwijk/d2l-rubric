@@ -8,16 +8,21 @@ import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-icons/d2l-icon.js';
 import './d2l-siren-entity-resolver.js';
+import './localize-behavior.js';
 
 const _trim = str => str ? str.trim() : str;
 
 class RubricAlignmentsIndicator extends mixinBehaviors([
 	D2L.Hypermedia.HMConstantsBehavior,
-	D2L.PolymerBehaviors.Siren.EntityBehavior
+	D2L.PolymerBehaviors.Siren.EntityBehavior,
+	D2L.PolymerBehaviors.Rubric.LocalizeBehavior
 ], PolymerElement) {
 	static get properties() {
 		return {
 			outcomesTitleText: {
+				type: String
+			},
+			criterionName: {
 				type: String
 			},
 			mobile: {
@@ -77,7 +82,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 </style>
 
 <template is="dom-if" if="[[_hasOutcomes(_outcomeMap)]]">
-	<d2l-icon id="alignments-icon" tabindex="0" icon="d2l-tier1:bullseye"></d2l-icon>
+	<d2l-icon aria-label="[[_getCriterionText(criterionName)]]" id="alignments-icon" tabindex="0" icon="d2l-tier1:bullseye"></d2l-icon>
 	<d2l-tooltip for="alignments-icon" position="[[_getTooltipPosition(mobile)]]" force-show="[[_hasFocus]]">
 		<div><b>[[outcomesTitleText]]</b></div>
 		<template is="dom-repeat" items="[[_getTooltipOutcomes(_outcomeMap)]]">
@@ -104,6 +109,13 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 		super.ready();
 		this.addEventListener('blur', () => this._hasFocus = false);
 		this.addEventListener('focus', () => this._hasFocus = true);
+	}
+
+	_getCriterionText(criterionName) {
+		if (criterionName && criterionName.length > 0) {
+			return this.localize('standardsAligned', 'standardsName', this.outcomesTitleText, 'name', criterionName);
+		}
+		return '';
 	}
 
 	_getAlignmentsLink(entity) {
