@@ -92,7 +92,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'loaLevelUpdatedLabelSingleRubric': 'O nível de desempenho "{loaLevelName}" agora está associado ao nível de rubrica {rubricLevelName}',
 		'loaOverlayHeading': 'Níveis de Desempenho',
 		'loaSliderLabel': 'Limite de desempenho entre "{loaLevel1}" e "{loaLevel2}". Use as teclas de seta para a esquerda e para a direita a fim de mover o limite.',
-		'loaThresholdMovementNotif': 'Limite movido {direção, selecionar, esquerda {left} direita {right}}',
+		'loaThresholdMovementNotif': 'Limite movido {direction, select, left {esquerda} right {direita}}',
 		'lockedAlertText': 'A rubrica não pode ser editada porque já foi usada para avaliar o trabalho do aluno',
 		'makeRubricAvailableHeader': 'Disponibilizar rubrica para',
 		'moveCriterionDown': 'Mover critério {position} para baixo',
