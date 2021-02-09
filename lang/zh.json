@@ -142,6 +142,8 @@
     "rubricVisibilityNever": "量规已向学生隐藏",
     "rubricVisibilityOnceFeedbackPosted": "发布反馈前，量规对学生隐藏",
     "rubricVisibilitySaveFailed": "更改量规可见性失败。",
+    "scoreOf": "Score of {criterion},",
+    "scoreOfEditable": "Score of {criterion}. You can press enter to adjust the score with a spin button.",
     "scoreOutOf": "{score}/{outOf}",
     "scoresVisibilityHidden": "分数已向学生隐藏",
     "scoresVisibilityVisible": "分数对学生可见",

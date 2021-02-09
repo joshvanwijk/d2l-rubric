@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangJaBehavior = {
 		'rubricVisibilityNever': '注釈は受講者に表示されません',
 		'rubricVisibilityOnceFeedbackPosted': '注釈は、フィードバックの発行まで受講者に表示されません',
 		'rubricVisibilitySaveFailed': '注釈の表示を変更できませんでした。',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'スコアは受講生に表示されません',
 		'scoresVisibilityVisible': 'スコアは受講生に表示されます',

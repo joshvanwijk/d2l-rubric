@@ -524,9 +524,9 @@ Polymer({
 	_getCriterionContext: function(criterion) {
 		if (criterion && criterion.length > 0) {
 			if(this._isStaticView()){
-				return "Score of " + criterion + ',';
+				return this.localize('scoreOf', 'criterion', criterion);
 			} else {
-				return "Score of " + criterion + ". You can press enter to adjust the score with a spin button."
+				return this.localize('scoreOfEditable', 'criterion', criterion);
 			}
 		}
 		return '';

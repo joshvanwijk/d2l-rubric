@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangSvBehavior = {
 		'rubricVisibilityNever': 'Rubriceringen är dold för elever',
 		'rubricVisibilityOnceFeedbackPosted': 'Rubriceringen är dold för elever tills feedback har publicerats',
 		'rubricVisibilitySaveFailed': 'Det gick inte att ändra synlighet för rubricering.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score}/{outof}',
 		'scoresVisibilityHidden': 'Betygen är dolda för elever',
 		'scoresVisibilityVisible': 'Betygen är synliga för elever',

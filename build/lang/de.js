@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDeBehavior = {
 		'rubricVisibilityNever': 'Bewertungsschema wird für Kursteilnehmer ausgeblendet',
 		'rubricVisibilityOnceFeedbackPosted': 'Bewertungsschema ist für Kursteilnehmer ausgeblendet, bis Feedback veröffentlicht wird',
 		'rubricVisibilitySaveFailed': 'Ändern der Sichtbarkeit des Bewertungsschemas fehlgeschlagen.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score}/{outOf}',
 		'scoresVisibilityHidden': 'Punktzahlen für Kursteilnehmer ausgeblendet',
 		'scoresVisibilityVisible': 'Punktzahlen für Kursteilnehmer sichtbar',

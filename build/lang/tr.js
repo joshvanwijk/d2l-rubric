@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangTrBehavior = {
 		'rubricVisibilityNever': 'Rubrik, öğrencilerden gizlendi',
 		'rubricVisibilityOnceFeedbackPosted': 'Rubrik, geri bildirim yayımlanana kadar öğrencilerden gizlendi',
 		'rubricVisibilitySaveFailed': 'Rubrik görünürlüğünü değiştirme işlemi başarısız oldu.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'Puanlar öğrencilerden gizlendi',
 		'scoresVisibilityVisible': 'Puanlar öğrenciler tarafından görülebilir',

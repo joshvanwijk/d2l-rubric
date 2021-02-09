@@ -110,6 +110,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'rubricVisibilitySaveFailed': 'Changing rubric visibility failed.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoring': 'Scoring: {method}',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'selectNextLevel': 'Select Next Level',
 		'selectPreviousLevel': 'Select Previous Level',
 		'setScoreVisibilityFailed': 'Setting score visibility failed.',

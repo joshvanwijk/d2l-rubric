@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangNlBehavior = {
 		'rubricVisibilityNever': 'Rubric wordt verborgen voor cursisten',
 		'rubricVisibilityOnceFeedbackPosted': 'Rubric wordt verborgen voor cursisten totdat feedback is gepubliceerd',
 		'rubricVisibilitySaveFailed': 'Wijzigen van rubriczichtbaarheid mislukt.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'Scores zijn verborgen voor cursisten',
 		'scoresVisibilityVisible': 'Scores zijn zichtbaar voor cursisten',
