@@ -88,7 +88,7 @@ window.D2L.Rubric.Language.FrFr = {
 	'loaLevelUpdatedLabelSingleRubric': 'Le niveau de réussite « {loaLevelName} » est maintenant mappé au niveau de grille d’évaluation {rubricLevelName}',
 	'loaOverlayHeading': 'Niveaux de réussite',
 	'loaSliderLabel': 'Seuil de réussite entre « {loaLevel1} » et « {loaLevel2} ». Utiliser les touches gauche et droite pour déplacer le seuil de réussite.',
-	'loaThresholdMovementNotif': 'Seuil de réussite déplacé {direction, sélection, gauche {left} droite {right}}',
+	'loaThresholdMovementNotif': 'Seuil de réussite déplacé {direction, select, left {gauche} right {droite}}',
 	'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée, car elle a déjà été utilisée pour évaluer le travail de l’apprenant.',
 	'makeRubricAvailableHeader': 'Rendre la rubrique disponible à',
 	'moveCriterionDown': 'Déplacer le critère {position} vers le bas',
