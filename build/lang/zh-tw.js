@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangZhTwBehavior = {
 		'rubricVisibilityNever': '學生看不到量規',
 		'rubricVisibilityOnceFeedbackPosted': '直到意見反應發佈之後，學生才能看到量規',
 		'rubricVisibilitySaveFailed': '量規能見度變更失敗。',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score}/{outOf}',
 		'scoresVisibilityHidden': '學生看不到分數',
 		'scoresVisibilityVisible': '學生可看到分數',

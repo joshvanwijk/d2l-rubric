@@ -142,6 +142,8 @@
     "rubricVisibilityNever": "루브릭을 학생에게 표시하지 않음",
     "rubricVisibilityOnceFeedbackPosted": "피드백을 발행할 때까지 루브릭을 학생에게 표시하지 않음",
     "rubricVisibilitySaveFailed": "루브릭 표시 여부 변경 실패",
+    "scoreOf": "Score of {criterion},",
+    "scoreOfEditable": "Score of {criterion}. You can press enter to adjust the score with a spin button.",
     "scoreOutOf": "{score}/{outOf}점",
     "scoresVisibilityHidden": "점수를 학생에게 표시하지 않음",
     "scoresVisibilityVisible": "점수를 학생에게 표시",

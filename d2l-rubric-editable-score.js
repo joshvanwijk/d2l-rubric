@@ -125,7 +125,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
-				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" id="out-of-container">
+				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" aria-labelledby="score-label">
+					<d2l-offscreen id="score-label">[[_getCriterionContext(criterionName)]]</d2l-offscreen>
 					[[_localizeOutOf(entity, _score)]]
 					<div class="star" id="score-overridden-star">*</div>
 				</div>
@@ -221,6 +222,10 @@ Polymer({
 		criterionNum: {
 			type: Number,
 			value: 1
+		},
+		criterionName: {
+			type: String,
+			value: null
 		},
 		readOnly: {
 			type: Boolean,
@@ -516,5 +521,16 @@ Polymer({
 
 		const forCompact = targetView === 'compact';
 		return forCompact === compact;
+	},
+
+	_getCriterionContext: function(criterion) {
+		if (criterion && criterion.length > 0) {
+			if (this._isStaticView()) {
+				return this.localize('scoreOf', 'criterion', criterion);
+			} else {
+				return this.localize('scoreOfEditable', 'criterion', criterion);
+			}
+		}
+		return '';
 	}
 });

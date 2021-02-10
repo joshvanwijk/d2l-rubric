@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'rubricVisibilityNever': 'Rubric is hidden from students',
 		'rubricVisibilityOnceFeedbackPosted': 'Rubric is hidden from students until feedback is published',
 		'rubricVisibilitySaveFailed': 'Changing rubric visibility failed.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'Scores are hidden from students',
 		'scoresVisibilityVisible': 'Scores are visible to students',

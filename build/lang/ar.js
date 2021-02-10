@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangArBehavior = {
 		'rubricVisibilityNever': 'إن آلية التقييم مخفية عن الطلاب',
 		'rubricVisibilityOnceFeedbackPosted': 'آلية التقييم مخفية عن الطلاب إلى حين نشر الملاحظات',
 		'rubricVisibilitySaveFailed': 'تعذّر تغيير إمكانية عرض آلية التقييم.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} ‏/ {outOf}',
 		'scoresVisibilityHidden': 'إن مجموع الدرجات مخفي عن الطلاب',
 		'scoresVisibilityVisible': 'إن مجموع الدرجات مرئي للطلاب',

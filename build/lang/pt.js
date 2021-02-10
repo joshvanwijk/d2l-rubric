@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangPtBehavior = {
 		'rubricVisibilityNever': 'A rubrica está oculta para os alunos',
 		'rubricVisibilityOnceFeedbackPosted': 'A rubrica fica oculta para os alunos até que os comentários sejam publicados',
 		'rubricVisibilitySaveFailed': 'Falha ao alterar a visibilidade da rubrica.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'As pontuações estão ocultas para os alunos',
 		'scoresVisibilityVisible': 'As pontuações estão visíveis para os alunos',

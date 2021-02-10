@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
 		'rubricVisibilityNever': 'La grille d’évaluation est cachée pour les élèves',
 		'rubricVisibilityOnceFeedbackPosted': 'La grille d’évaluation est cachée jusqu’à ce que la rétroaction soit publiée',
 		'rubricVisibilitySaveFailed': 'La modification de la visibilité de la grille d’évaluation a échoué.',
+		'scoreOf': 'Score de {criterion},',
+		'scoreOfEditable': 'Score de {criterion}. Vous pouvez appuyer sur Entrée pour ajuster le score avec un bouton rotatif.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'Les notes ne sont pas visibles par les élèves',
 		'scoresVisibilityVisible': 'Les notes sont visibles par les élèves',

@@ -153,6 +153,8 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangDaBehavior = {
 		'rubricVisibilityNever': 'Rubrikken er skjult for elever',
 		'rubricVisibilityOnceFeedbackPosted': 'Rubrikken er skjult for elever indtil feedback er offentliggjort',
 		'rubricVisibilitySaveFailed': 'Det lykkedes ikke af ændre rubrikkens synlighed.',
+		'scoreOf': 'Score of {criterion},',
+		'scoreOfEditable': 'Score of {criterion}. You can press enter to adjust the score with a spin button.',
 		'scoreOutOf': '{score} / {outOf}',
 		'scoresVisibilityHidden': 'Scorer er skjult for elever',
 		'scoresVisibilityVisible': 'Scorer er synlig for elever',
