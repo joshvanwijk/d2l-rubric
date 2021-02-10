@@ -1,6 +1,6 @@
 # d2l-rubric
 
-[![Build Status](https://travis-ci.org/Brightspace/d2l-rubric.svg?branch=master)](https://travis-ci.org/Brightspace/d2l-rubric)
+[![Build Status][Build Badge]][Build Runs]
 
 Polymer based web-component to display a rubric
 
@@ -18,6 +18,11 @@ Run `npm version --no-git-tag-version [major | minor | patch]` in project
 root directory, selecting the appropriate version increase type. This will bump
 the version in both `package.json` and `package-lock.json` and leave it in your
 working changes.
+
+## Component Demos
+
+To view component demos, run `npm start`. A page should be launched with links
+to specific component demos.
 
 ## Usage
 Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-rubric.html`:
@@ -71,17 +76,6 @@ Normally user permissions are used to determine which actions are available on a
 </head>
 ```
 
-## Viewing Your Element
-
-```
-$ polymer serve
-```
-
-The demo can be viewed at http://127.0.0.1:8081/components/d2l-rubric/demo/index.html
-
-The d2l-rubric-editor demo can be viewed at http://127.0.0.1:8081/components/d2l-rubric/demo/d2l-rubric-editor.html
-To test outcome inside editor, change the URL and Token point to local LMS inside d2l-rubric-editor.html(inside demo file)
-
 ## Running Tests
 
 ```
@@ -119,3 +113,8 @@ If the optional argument copy_files is specified, the generated files will be au
 
 
 
+
+<!-- link -->
+
+[Build Badge]: https://travis-ci.org/Brightspace/d2l-rubric.svg?branch=master
+[Build Runs]: https://travis-ci.org/Brightspace/d2l-rubric
