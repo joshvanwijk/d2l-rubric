@@ -81,7 +81,7 @@
     "loaLevelUpdatedLabelSingleRubric": "Mae lefel cyrhaeddiad \"{loaLevelName}\" bellach wedi’i mapio i lefel cyfeireb {rubricLevelName}",
     "loaOverlayHeading": "Lefelau Cyrhaeddiad",
     "loaSliderLabel": "Trothwy cyflawniad rhwng \"{loaLevel1}\" a \"{loaLevel2}\". Defnyddiwch y bysellau saeth chwith a dde i symud y trothwy.",
-    "loaThresholdMovementNotif": "Trothwy wedi’i symud {direction, select, left {left} i’r chwith {right}}",
+    "loaThresholdMovementNotif": "Trothwy wedi’i symud {direction, select, left {i’r chwith} right {i'r dde}}",
     "lockedAlertText": "Does dim modd golygu’r gyfeireb hon gan ei bod eisoes wedi cael ei defnyddio i asesu gwaith dysgwyr",
     "makeRubricAvailableHeader": "Gwneud y gyfeireb ar gael i",
     "moveCriterionDown": "Symud y maen prawf i lawr {position}",
