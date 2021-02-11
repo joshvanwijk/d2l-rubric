@@ -172,17 +172,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			</h3>
 			<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
 				<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
-				<div class="overall-levels" data-mobile$="[[compact]]">
-					<template is="dom-repeat" items="[[_levels]]" as="level">
+				<div class="overall-levels" data-mobile$="[[compact]]" role$="[[_ifAssessible(readOnly, 'radiogroup')]]">
+					<template is="dom-repeat" items="[[_levels]]" as="level" index-as="i">
 						<div
 							class="overall-level"
+							role$="[[_ifAssessible(readOnly, 'radio')]]"
+							aria-labelledby$="level-content-[[i]]"
+							aria-checked$="[[_ariaChecked(readOnly, level, _version)]]"
 							data-achieved$="[[_isAchieved(level, _version)]]"
 							data-clickable$="[[_isClickable(level, readOnly, _version)]]"
 							on-click="_levelClicked"
 							on-keypress="_handleKeypress"
-							tabindex$="[[_handleTabIndex()]]">
+							tabindex$="[[_handleTabIndex(readOnly, overallLevelAssessmentHref)]]">
 							<h4 class="content-container">
-								<div class="info-container">
+								<div class="info-container" id="level-content-[[i]]">
 									<span>[[_getLevelName(level, _version)]]</span>
 									<span class="overall-level-text">
 										<span>[[_localizePoints(level)]]</span>
@@ -366,8 +369,8 @@ Polymer({
 		}));
 	},
 
-	_handleTabIndex: function() {
-		if (this.readOnly || !this.overallLevelAssessmentHref) {
+	_handleTabIndex: function(readOnly, overallLevelAssessmentHref) {
+		if (readOnly || !overallLevelAssessmentHref) {
 			return undefined;
 		}
 		return 0;
@@ -383,5 +386,13 @@ Polymer({
 			name += ' *';
 		}
 		return name;
+	},
+
+	_ifAssessible: function(readOnly, value) {
+		return readOnly ? undefined : value;
+	},
+
+	_ariaChecked: function(readOnly, levelEntity) {
+		return (!readOnly && this._isAchieved(levelEntity)) ? 'true' : 'false';
 	}
 });
