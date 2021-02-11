@@ -679,19 +679,6 @@ Polymer({
 		return this.localize(type, 'number', points.toString());
 	},
 
-	_localizeOutOf: function(criterion, criterionResultMap) {
-		const criterionResult = this._lookupMap(criterion, criterionResultMap);
-
-		var score = null;
-		if (criterionResult) {
-			score = this.CriterionAssessmentHelper.getScore(criterionResult);
-		}
-		if (score || score === 0) {
-			return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', criterion.properties.outOf.toString());
-		}
-		return this.localize('outOf', 'outOf', criterion.properties.outOf.toString());
-	},
-
 	_getRowCount: function(criteria) {
 		if (!criteria) {
 			return 0;
