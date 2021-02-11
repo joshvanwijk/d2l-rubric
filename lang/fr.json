@@ -5,7 +5,7 @@
     "addedOverallLevelAppend": "Un nouveau niveau de note globale a été ajouté après {name}",
     "addedOverallLevelPrepend": "Un nouveau niveau de note globale niveau a été ajouté avant {name}",
     "addFeedback": "Ajouter une rétroaction",
-    "addFeedbackFor": "Add feedback for criterion {criterionName}",
+    "addFeedbackFor": "Ajouter des commentaires pour le critère {criterionName}",
     "addLevel": "Ajouter un niveau",
     "addLevelAppend": "Ajouter un nouveau niveau après {name}",
     "addLevelPrepend": "Ajouter un nouveau niveau devant {name}",
