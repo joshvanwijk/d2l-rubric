@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.ZhTw = {
 	'addedOverallLevelAppend': '已在 {name} 後新增整體分數層級',
 	'addedOverallLevelPrepend': '已在 {name} 前新增整體分數層級',
 	'addFeedback': '新增意見反應',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': '新增層級',
 	'addLevelAppend': '在 {name} 後新增層級',
 	'addLevelPrepend': '在 {name} 前新增層級',

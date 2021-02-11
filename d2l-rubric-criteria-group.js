@@ -291,7 +291,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											</span>
 										</div>
 									</div>
-									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" on-focusout="_handleVisibleFeedbackFocusout" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+									<d2l-button-subtle
+										aria-hidden="true"
+										tabindex="-1"
+										id="addFeedback[[_getRowIndex(criterionNum)]]"
+										on-click="_handleAddFeedback
+										on-focusin="_handleVisibleFeedbackFocusin"
+										on-focusout="_handleVisibleFeedbackFocusout"
+										hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+										text="[[localize('addFeedback')]]"
+										data-criterion$="[[criterionNum]]"
+									></d2l-button-subtle>
 								</div>
 							</d2l-td>
 						</template>
@@ -325,7 +335,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</template>
 					</d2l-tr>
 					<d2l-offscreen>
-						<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+						<d2l-button-subtle
+							id="invisible-addFeedback[[_getRowIndex(criterionNum)]]"
+							on-click="_handleAddFeedback"
+							on-focusin="_handleInvisibleFeedbackFocusin"
+							on-focusout="_handleInvisibleFeedbackFocusout"
+							description="[[_localizeAddFeedbackButtonDescription(criterion)]]"
+							hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+							data-criterion$="[[criterionNum]]"
+						></d2l-button-subtle>
 					</d2l-offscreen>
 					<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
@@ -1173,5 +1191,13 @@ Polymer({
 			return null;
 		}
 		return this._getSelfLink(criterionResult);
+	},
+
+	_localizeAddFeedbackButtonDescription: function(criterion) {
+		if (!criterion || !criterion.properties || !criterion.properties.name) {
+			return null;
+		}
+
+		return this.localize('addFeedbackFor', 'criterionName', criterion.properties.name);
 	}
 });

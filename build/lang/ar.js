@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.Ar = {
 	'addedOverallLevelAppend': 'تمت إضافة مستوى جديد من مجموع الدرجات الإجمالية بعد {name}',
 	'addedOverallLevelPrepend': 'تمت إضافة مستوى جديد من مجموع الدرجات الإجمالية قبل {name}',
 	'addFeedback': 'إضافة ملاحظات',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'إضافة مستوى',
 	'addLevelAppend': 'إضافة مستوى جديد بعد {name}',
 	'addLevelPrepend': 'إضافة مستوى جديد قبل {name}',

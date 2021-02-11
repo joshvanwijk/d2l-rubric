@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.Da = {
 	'addedOverallLevelAppend': 'Et nyt overordnet scoreniveau blev tilføjet efter {name}',
 	'addedOverallLevelPrepend': 'Et nyt overordnet scoreniveau blev tilføjet før {name}',
 	'addFeedback': 'Tilføj feedback',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'Tilføj niveau',
 	'addLevelAppend': 'Tilføj nyt niveau efter {name}',
 	'addLevelPrepend': 'Tilføj nyt niveau før {name}',

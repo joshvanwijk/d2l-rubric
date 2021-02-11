@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.Sv = {
 	'addedOverallLevelAppend': 'En ny allmän poängnivå har lagts till efter {name}',
 	'addedOverallLevelPrepend': 'En ny allmän poängnivå har lagts till före {name}',
 	'addFeedback': 'Lägg till feedback',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'Lägg till nivå',
 	'addLevelAppend': 'Lägg till ny nivå efter {name}',
 	'addLevelPrepend': 'Lägg till ny nivå före {name}',

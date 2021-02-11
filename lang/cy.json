@@ -5,6 +5,7 @@
     "addedOverallLevelAppend": "Mae lefel sgôr cyffredinol newydd wedi cael ei hychwanegu ar ôl {name}",
     "addedOverallLevelPrepend": "Mae lefel sgôr cyffredinol newydd wedi cael ei hychwanegu cyn {name}",
     "addFeedback": "Ychwanegu Adborth",
+    "addFeedbackFor": "Add feedback for criterion {criterionName}",
     "addLevel": "Ychwanegu Lefel",
     "addLevelAppend": "Ychwanegu lefel newydd ar ôl {name}",
     "addLevelPrepend": "Ychwanegu lefel newydd cyn {name}",

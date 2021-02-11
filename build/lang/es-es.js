@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.EsEs = {
 	'addedOverallLevelAppend': 'Se ha añadido un nivel de puntuación general después de {name}',
 	'addedOverallLevelPrepend': 'Se ha añadido un nivel de puntuación general antes de {name}',
 	'addFeedback': 'Agregar comentarios',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'Agregar nivel',
 	'addLevelAppend': 'Agregar nuevo nivel después de {name}',
 	'addLevelPrepend': 'Agregar nuevo nivel antes de {name}',
