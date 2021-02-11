@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.FrFr = {
 	'addedOverallLevelAppend': 'Un niveau de score global a été ajouté après {name}',
 	'addedOverallLevelPrepend': 'Un niveau de score global a été ajouté avant {name}',
 	'addFeedback': 'Ajouter une réaction',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'Ajouter un niveau',
 	'addLevelAppend': 'Ajouter un niveau après {name}',
 	'addLevelPrepend': 'Ajouter un niveau avant {name}',

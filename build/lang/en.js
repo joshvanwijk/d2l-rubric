@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.En = {
 	'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
 	'addedOverallLevelPrepend': 'A new overall score level has been added before {name}',
 	'addFeedback': 'Add Feedback',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'Add Level',
 	'addLevelAppend': 'Add new level after {name}',
 	'addLevelPrepend': 'Add new level before {name}',

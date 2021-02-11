@@ -5,6 +5,7 @@
     "addedOverallLevelAppend": "{name} 뒤에 새 전체 점수 수준이 추가되었음",
     "addedOverallLevelPrepend": "{name} 앞에 새 전체 점수 수준이 추가되었음",
     "addFeedback": "피드백 추가",
+    "addFeedbackFor": "Add feedback for criterion {criterionName}",
     "addLevel": "수준 추가",
     "addLevelAppend": "{name} 뒤에 새 수준 추가",
     "addLevelPrepend": "{name} 앞에 새 수준 추가",

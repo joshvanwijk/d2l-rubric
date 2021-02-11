@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.Tr = {
 	'addedOverallLevelAppend': '{name} sonrasına yeni bir genel puan eklendi',
 	'addedOverallLevelPrepend': '{name} öncesine yeni bir genel puan eklendi',
 	'addFeedback': 'Geri Bildirim Ekle',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'Seviye Ekle',
 	'addLevelAppend': '{name} sonrasına yeni bir seviye ekle',
 	'addLevelPrepend': '{name} öncesine yeni bir seviye ekle',

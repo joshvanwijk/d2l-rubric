@@ -5,6 +5,7 @@
     "addedOverallLevelAppend": "Een nieuw niveau voor de algehele score is toegevoegd na {name}",
     "addedOverallLevelPrepend": "Een nieuw niveau voor de algehele score is toegevoegd voor {name}",
     "addFeedback": "Feedback toevoegen",
+    "addFeedbackFor": "Add feedback for criterion {criterionName}",
     "addLevel": "Niveau toevoegen",
     "addLevelAppend": "Nieuw niveau toevoegen na {name}",
     "addLevelPrepend": "Nieuw niveau toevoegen voor {name}",

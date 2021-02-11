@@ -12,6 +12,7 @@ window.D2L.Rubric.Language.Ja = {
 	'addedOverallLevelAppend': '新規の全体スコアレベルが {name} の後ろに追加されました',
 	'addedOverallLevelPrepend': '新規の全体スコアレベルが {name} の前に追加されました',
 	'addFeedback': 'フィードバックの追加',
+	'addFeedbackFor': 'Add feedback for criterion {criterionName}',
 	'addLevel': 'レベルの追加',
 	'addLevelAppend': '{name} の後ろに新しいレベルを追加',
 	'addLevelPrepend': '{name} の前に新しいレベルを追加',

@@ -5,6 +5,7 @@
     "addedOverallLevelAppend": "新的总分数级别已添加到 {name} 之后",
     "addedOverallLevelPrepend": "新的总分数级别已添加到 {name} 之前",
     "addFeedback": "添加反馈",
+    "addFeedbackFor": "Add feedback for criterion {criterionName}",
     "addLevel": "添加级别",
     "addLevelAppend": "在 {name} 之后添加新级别",
     "addLevelPrepend": "在 {name} 之前添加新级别",
