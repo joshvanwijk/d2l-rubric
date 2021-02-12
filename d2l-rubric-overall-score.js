@@ -393,6 +393,9 @@ Polymer({
 	},
 
 	_ariaChecked: function(readOnly, levelEntity) {
-		return (!readOnly && this._isAchieved(levelEntity)) ? 'true' : 'false';
+		if (readOnly) {
+			return undefined;
+		}
+		return this._isAchieved(levelEntity) ? 'true' : 'false';
 	}
 });
