@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Cy = {
 	'changeRubricTypeWarnTitle': 'Newid math y gyfeireb?',
 	'changeScoringSuccessful': 'Mae’r dull sgorio wedi newid i {method}',
 	'clearFeedback': 'Clirio’r Adborth',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Clirio’r Gwrth-wneud',
 	'closeDialog': 'Cau',
 	'criteriaGroup': 'Grŵp Meini Prawf',

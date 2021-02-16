@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Ko = {
 	'changeRubricTypeWarnTitle': '루브릭 유형을 변경하시겠습니까?',
 	'changeScoringSuccessful': '{method}(으)로 점수 산정법 변경됨',
 	'clearFeedback': '피드백 지우기',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': '재설정 지우기',
 	'closeDialog': '닫기',
 	'criteriaGroup': '기준 그룹',

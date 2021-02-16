@@ -56,6 +56,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				class="add-feedback-button"
 				hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, readOnly,  _savingFeedback.*, _feedbackInvalid.*)]]"
 				text="[[localize('addFeedback')]]"
+				description="[[_localizeAddFeedbackButtonDescription(criterion)]]"
 				on-click="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]">
 			</d2l-button-subtle>
@@ -214,5 +215,13 @@ Polymer({
 		}
 		const entityHref = this._getSelfLink(entity);
 		return entityHref && map[entityHref];
+	},
+
+	_localizeAddFeedbackButtonDescription: function(criterion) {
+		if (!criterion || !criterion.properties || !criterion.properties.name) {
+			return null;
+		}
+
+		return this.localize('addFeedbackFor', 'criterionName', criterion.properties.name);
 	}
 });
