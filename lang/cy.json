@@ -136,6 +136,7 @@
     "rubricStatusArchived": "Statws: Wedi Archifo",
     "rubricStatusDraft": "Statws: Drafft",
     "rubricStatusPublished": "Statws: Wedi Cyhoeddi",
+    "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
     "rubricSummaryA11y": "Mae’r tabl hwn yn rhestru enwau meini prawf a grwpiau meini prawf yn y golofn gyntaf. Mae’r rhes gyntaf yn rhestru enwau lefelau ac yn cynnwys sgorau os yw’r gyfeireb yn defnyddio dull sgorio rhifol.",
     "rubricType": "Math: {rubricType}",
     "rubricVisibility": "Gwelededd y Gyfeireb",

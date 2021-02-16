@@ -143,6 +143,7 @@ window.D2L.Rubric.Language.Sv = {
 	'rubricStatusArchived': 'Status: Arkiverad',
 	'rubricStatusDraft': 'Status: Utkast',
 	'rubricStatusPublished': 'Status: Publicerad',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': 'Denna tabell innehåller kriterier och namn på kriteriegrupp i den första kolumnen. På den första raden listas nivånamn och betyg inkluderas om rubriceringen använder en numerisk betygsättningsmetod.',
 	'rubricType': 'Typ: {rubricType}',
 	'rubricVisibility': 'Rubriceringens synlighet',

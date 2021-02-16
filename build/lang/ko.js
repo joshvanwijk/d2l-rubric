@@ -143,6 +143,7 @@ window.D2L.Rubric.Language.Ko = {
 	'rubricStatusArchived': '상태: 보관됨',
 	'rubricStatusDraft': '상태: 초안',
 	'rubricStatusPublished': '상태: 게시됨',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': '이 표에는 첫 번째 열에 기준 및 기준 그룹 이름이 나열됩니다. 루브릭이 숫자 점수 산정법을 사용할 경우, 첫 번째 행에 수준 이름이 나열되고 점수가 포함됩니다.',
 	'rubricType': '유형: {rubricType}',
 	'rubricVisibility': '루브릭 표시 여부',

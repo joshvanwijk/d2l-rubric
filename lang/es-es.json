@@ -136,6 +136,7 @@
     "rubricStatusArchived": "Estado: Archivado",
     "rubricStatusDraft": "Estado: Borrador",
     "rubricStatusPublished": "Estado: Publicado",
+    "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
     "rubricSummaryA11y": "Esta tabla enumera los criterios y el nombre del grupo de criterios en la primera columna. La primera fila enumera los nombres de nivel e incluye puntuaciones si la rúbrica utiliza un método de puntuación numérico.",
     "rubricType": "Tipo: {rubricType}",
     "rubricVisibility": "Visibilidad de la rúbrica",

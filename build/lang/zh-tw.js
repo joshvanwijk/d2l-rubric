@@ -143,6 +143,7 @@ window.D2L.Rubric.Language.ZhTw = {
 	'rubricStatusArchived': '狀態：已歸檔',
 	'rubricStatusDraft': '狀態：草稿',
 	'rubricStatusPublished': '狀態：已發佈',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': '此表格會在第一欄列出標準和標準群組名稱。第一列會列出層級名稱並包含分數 (如果量規使用數字評分方法)。',
 	'rubricType': '類型：{rubricType}',
 	'rubricVisibility': '量規能見度',

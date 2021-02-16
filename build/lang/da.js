@@ -143,6 +143,7 @@ window.D2L.Rubric.Language.Da = {
 	'rubricStatusArchived': 'Status: arkiveret',
 	'rubricStatusDraft': 'Status: kladde',
 	'rubricStatusPublished': 'Status: offentliggjort',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': 'Denne tabel viser kriterier og kriteriegruppenavne i den første kolonne. Den første række viser niveaunavne og omfatter scorer, hvis rubrikken anvender en numerisk scoremetode.',
 	'rubricType': 'Type: {rubricType}',
 	'rubricVisibility': 'Rubriksynlighed',

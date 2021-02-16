@@ -136,6 +136,7 @@
     "rubricStatusArchived": "ステータス: アーカイブ済み",
     "rubricStatusDraft": "ステータス: 下書き",
     "rubricStatusPublished": "ステータス: 公開済み",
+    "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
     "rubricSummaryA11y": "この表では 1 列目に条件と条件グループの名前が表示されます。注釈で数値によるスコアリング方法が使用されている場合、1 行目にレベル名が表示され、スコアが記載されます。",
     "rubricType": "タイプ: {rubricType}",
     "rubricVisibility": "注釈の表示",
