@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Pt = {
 	'changeRubricTypeWarnTitle': 'Alterar o tipo de rubrica?',
 	'changeScoringSuccessful': 'Método de pontuação alterado para {method}',
 	'clearFeedback': 'Limpar Comentário',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Limpar Substituir',
 	'closeDialog': 'Fechar',
 	'criteriaGroup': 'Grupo de critérios',

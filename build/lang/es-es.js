@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.EsEs = {
 	'changeRubricTypeWarnTitle': '¿Desea cambiar el tipo de rúbrica?',
 	'changeScoringSuccessful': 'Se ha cambiado el método de puntuación a {method}',
 	'clearFeedback': 'Borrar comentarios',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Borrar anulación',
 	'closeDialog': 'Cerrar',
 	'criteriaGroup': 'Grupo de criterios',

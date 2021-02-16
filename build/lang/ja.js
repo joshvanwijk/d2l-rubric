@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Ja = {
 	'changeRubricTypeWarnTitle': '注釈タイプを変更しますか？',
 	'changeScoringSuccessful': 'スコアリング方法が {method} に変更されました',
 	'clearFeedback': 'フィードバックのクリア',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': '上書きのクリア',
 	'closeDialog': '閉じる',
 	'criteriaGroup': '条件グループ',

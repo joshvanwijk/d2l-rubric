@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Da = {
 	'changeRubricTypeWarnTitle': 'Skal rubriktypen ændres?',
 	'changeScoringSuccessful': 'Scoremetode ændret til {method}',
 	'clearFeedback': 'Ryd feedback',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Ryd tilsidesættelse',
 	'closeDialog': 'Luk',
 	'criteriaGroup': 'Kriteriegruppe',

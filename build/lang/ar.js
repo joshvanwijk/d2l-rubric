@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Ar = {
 	'changeRubricTypeWarnTitle': 'هل تريد تغيير نوع آلية التقييم؟',
 	'changeScoringSuccessful': 'تم تغيير طريقة وضع الدرجات إلى {method}',
 	'clearFeedback': 'مسح الملاحظات',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'مسح التجاوز',
 	'closeDialog': 'إغلاق',
 	'criteriaGroup': 'مجموعة المعايير',
