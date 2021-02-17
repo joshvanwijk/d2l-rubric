@@ -191,11 +191,11 @@ Polymer({
 	properties: {
 		_levelCount: {
 			type: Number,
-			value: 0,
+			value: 0
 		},
 		_criterionCount: {
 			type: Number,
-			value: 0,
+			value: 0
 		},
 		showGroupName: {
 			type: Boolean,
