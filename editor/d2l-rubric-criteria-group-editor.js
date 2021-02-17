@@ -105,7 +105,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 
 		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
 			<h2 class="screen-reader">[[_getGroupHeadingText(_groupName, showGroupName)]]</h2>
-			<d2l-offscreen>[[_getRubricStructureLabel(levelCount, criterionCount)]]</d2l-offscreen>
+			<d2l-offscreen>[[_getRubricStructureLabel(_levelCount, _criterionCount)]]</d2l-offscreen>
 			<div class="criteria-group">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 				<h3 class="screen-reader">[[localize('rubricLevelsHeading')]]</h3>
@@ -117,7 +117,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 					percentage-format-alternate="[[percentageFormatAlternate]]"
 					on-d2l-siren-entity-changed="_notifyResize"
 					updating-levels="{{updatingLevels}}"
-					level-Count="{{levelCount}}"
+					level-count="{{_levelCount}}"
 				>
 					<d2l-input-text
 						id="group-name"
@@ -128,7 +128,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						on-blur="_nameBlurHandler"
 						on-input="_nameInputHandler"
 						aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
-						aria-label$="[[localize('groupName')]]. [[_getRubricStructureLabel(levelCount, criterionCount)]]"
+						aria-label$="[[localize('groupName')]]. [[_getRubricStructureLabel(_levelCount, _criterionCount)]]"
 						prevent-submit
 						novalidate
 					></d2l-input-text>
@@ -166,7 +166,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
 						updating-levels="[[updatingLevels]]"
-						criterion-count="{{criterionCount}}"
+						criterion-count="{{_criterionCount}}"
 					>
 					</d2l-rubric-criteria-editor>
 				</div>
@@ -189,15 +189,13 @@ Polymer({
 	is: 'd2l-rubric-criteria-group-editor',
 
 	properties: {
-		levelCount: {
+		_levelCount: {
 			type: Number,
 			value: 0,
-			notify: true
 		},
-		criterionCount: {
+		_criterionCount: {
 			type: Number,
 			value: 0,
-			notify: true
 		},
 		showGroupName: {
 			type: Boolean,
