@@ -24,6 +24,7 @@
     "changeRubricTypeWarnTitle": "變更量規類型？",
     "changeScoringSuccessful": "評分方法已變更為「{method}」",
     "clearFeedback": "清除意見反應",
+    "clearFeedbackFor": "Clear feedback for criterion {criterionName}",
     "clearOverride": "清除覆寫",
     "closeDialog": "關閉",
     "criteriaGroup": "標準群組",

@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Zh = {
 	'changeRubricTypeWarnTitle': '更改量规类别？',
 	'changeScoringSuccessful': '评分方法更改为 {method}',
 	'clearFeedback': '清除反馈',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': '清除改写',
 	'closeDialog': '关闭',
 	'criteriaGroup': '标准组',

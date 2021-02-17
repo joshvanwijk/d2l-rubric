@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Sv = {
 	'changeRubricTypeWarnTitle': 'Ändra rubriceringstyp?',
 	'changeScoringSuccessful': 'Betygsättningsmetod ändrad till {method}',
 	'clearFeedback': 'Rensa feedback',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Rensa åsidosättning',
 	'closeDialog': 'Stäng',
 	'criteriaGroup': 'Kriteriegrupp',

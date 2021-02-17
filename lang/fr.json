@@ -24,6 +24,7 @@
     "changeRubricTypeWarnTitle": "Changer le type de grille d’évaluation?",
     "changeScoringSuccessful": "La méthode d’attribution du pointage a été changée à {method}",
     "clearFeedback": "Effacer la rétroaction",
+    "clearFeedbackFor": "Rétroaction claire pour le critère {criterionName}",
     "clearOverride": "Effacer les remplacements",
     "closeDialog": "Fermer",
     "criteriaGroup": "Groupe de critères",

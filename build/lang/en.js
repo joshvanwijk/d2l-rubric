@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.En = {
 	'changeRubricTypeWarnTitle': 'Change rubric type?',
 	'changeScoringSuccessful': 'Scoring method changed to {method}',
 	'clearFeedback': 'Clear Feedback',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Clear Override',
 	'closeDialog': 'Close',
 	'criteriaGroup': 'Criteria Group',

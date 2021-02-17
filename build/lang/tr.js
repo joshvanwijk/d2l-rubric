@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.Tr = {
 	'changeRubricTypeWarnTitle': 'Rubrik türü değiştirilsin mi?',
 	'changeScoringSuccessful': 'Puanlama yöntemi {method} olarak değiştirildi',
 	'clearFeedback': 'Geri Bildirimi Temizle',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Etkisizleştirmeyi Temizle',
 	'closeDialog': 'Kapat',
 	'criteriaGroup': 'Ölçüt Grubu',

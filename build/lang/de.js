@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.De = {
 	'changeRubricTypeWarnTitle': 'Bewertungsschema-Typ ändern?',
 	'changeScoringSuccessful': 'Bewertungsmethode zu {method} geändert',
 	'clearFeedback': 'Feedback löschen',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Außerkraftsetzung aufheben',
 	'closeDialog': 'Schließen',
 	'criteriaGroup': 'Kriteriengruppe',

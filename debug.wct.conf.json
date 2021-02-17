@@ -1,9 +1,0 @@
-{
-	"plugins": {
-	  "local": {
-			"browsers": [{
-				"browserName": "chrome"
-			}]
-		}
-	}
-}

@@ -31,6 +31,7 @@ window.D2L.Rubric.Language.FrFr = {
 	'changeRubricTypeWarnTitle': 'Modifier le type de grille d’évaluation ?',
 	'changeScoringSuccessful': 'Méthode d’attribution de note remplacée par {method}',
 	'clearFeedback': 'Effacer la réaction',
+	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Effacer le remplacement',
 	'closeDialog': 'Fermer',
 	'criteriaGroup': 'Groupe de critères',

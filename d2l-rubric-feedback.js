@@ -147,7 +147,15 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 							[[_feedbackHeadingExtra]]
 						</div>
 					</div>
-					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedbackHandler" on-focusin="_handleVisibleFocusin"></d2l-icon>
+					<d2l-icon
+						aria-hidden="true"
+						id="clear-feedback"
+						class="clear-feedback-button"
+						tabindex="-1"
+						icon="d2l-tier1:close-small"
+						on-click="_clearFeedbackHandler"
+						on-focusin="_handleVisibleFocusin"
+					></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
 				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" rows="1" max-rows="-1" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
@@ -158,7 +166,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					</d2l-tooltip>
 				</template>
 				<d2l-offscreen>
-					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-click="_clearFeedbackHandler">
+					<d2l-button-subtle
+						description="[[_localizeClearFeedbackButtonDescription(criterionEntity)]]"
+						id="clear-feedback-invisible"
+						on-focusin="_handleInvisibleFocusin"
+						on-focusout="_handleInvisibleFocusout"
+						on-click="_clearFeedbackHandler">
+					</d2l-button-subtle>
 				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, criterionAssessment, addingFeedback)]]">
@@ -428,5 +442,13 @@ Polymer({
 		if (!criterionEntity) return;
 		const name = criterionEntity.properties && criterionEntity.properties.name || '';
 		return this.localize('feedbackOn', 'criterionName', name);
+	},
+
+	_localizeClearFeedbackButtonDescription: function(criterionEntity) {
+		if (!criterionEntity || !criterionEntity.properties || !criterionEntity.properties.name) {
+			return null;
+		}
+
+		return this.localize('clearFeedbackFor', 'criterionName', criterionEntity.properties.name);
 	}
 });
