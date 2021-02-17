@@ -156,7 +156,12 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		}
+		},
+		levelCount: {
+			type: Number,
+			value: 0,
+			notify: true
+		},
 	},
 
 	behaviors: [
@@ -167,6 +172,11 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior,
 		IronResizableBehavior
 	],
+
+	observers: [
+		'_countLevels(_levels)'
+	],
+
 	attached: function() {
 		// Defer the offsetWidth/scrollWidth calculations until after the page has rendered
 		afterNextRender(this, function() {
@@ -297,5 +307,8 @@ Polymer({
 		for (let i = saveIndex - 1; i >= 0; i--) {
 			levels[i].savePointsAfterError();
 		}
+	},
+	_countLevels: function(levelArray) {
+		this.levelCount = levelArray.length;
 	}
 });

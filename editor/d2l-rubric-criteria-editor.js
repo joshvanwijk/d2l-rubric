@@ -225,6 +225,7 @@ Polymer({
 		},
 		criterionCount: {
 			type: Number,
+			notify:true,
 		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
