@@ -158,8 +158,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" rows="1" max-rows="-1" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
-				</d2l-input-textarea>
+				<d2l-input-textarea
+					no-border$="[[!compact]]"
+					no-padding$="[[!compact]]"
+					rows="1" max-rows="-1"
+					id="text-area"
+					value="{{_feedback}}"
+					on-input="_handleInputChange"
+					aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]"
+					on-focusin="_onFocusInTextArea"
+					description="[[_ariaLabelForTextArea]]"
+				></d2l-input-textarea>
 				<template is="dom-if" if="[[_feedbackInvalid]]">
 					<d2l-tooltip announced id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
 						[[_feedbackInvalidError]]
