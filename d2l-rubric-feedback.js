@@ -161,7 +161,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				<d2l-input-textarea
 					no-border$="[[!compact]]"
 					no-padding$="[[!compact]]"
-					rows="1" max-rows="-1"
+					rows="1"
+					max-rows="-1"
 					id="text-area"
 					value="{{_feedback}}"
 					on-input="_handleInputChange"
