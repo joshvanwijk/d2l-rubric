@@ -144,6 +144,7 @@ window.D2L.Rubric.Language.Ar = {
 	'rubricStatusArchived': 'الحالة: تمت الأرشفة',
 	'rubricStatusDraft': 'الحالة: مسودة',
 	'rubricStatusPublished': 'الحالة: تم النشر',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': 'يسرد هذا الجدول أسماء المعايير وأسماء مجموعات المعايير في العمود الأول. يسرد الصف الأول أسماء المستويات ويشمل مجموع الدرجات إذا كانت آلية التقييم تستخدم طريقة رقمية لتسجيل مجموع الدرجات.',
 	'rubricType': 'النوع: {rubricType}',
 	'rubricVisibility': 'إمكانية رؤية آلية التقييم',

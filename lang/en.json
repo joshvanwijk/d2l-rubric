@@ -137,6 +137,7 @@
   "rubricStatusArchived": "Status: Archived",
   "rubricStatusDraft": "Status: Draft",
   "rubricStatusPublished": "Status: Published",
+  "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
   "rubricSummaryA11y": "This table lists criteria and criteria group name in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method.",
   "rubricType": "Type: {rubricType}",
   "rubricVisibility": "Rubric Visibility",

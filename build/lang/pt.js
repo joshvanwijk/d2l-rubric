@@ -144,6 +144,7 @@ window.D2L.Rubric.Language.Pt = {
 	'rubricStatusArchived': 'Status: Arquivado',
 	'rubricStatusDraft': 'Status: Rascunho',
 	'rubricStatusPublished': 'Status: Publicado',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': 'A tabela lista critérios e nomes de grupos de critérios na primeira coluna. A primeira linha lista nomes de nível e inclui pontuações caso a rubrica use um método de pontuação numérica.',
 	'rubricType': 'Tipo: {rubricType}',
 	'rubricVisibility': 'Visibilidade da rubrica',

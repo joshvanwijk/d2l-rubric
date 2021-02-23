@@ -137,6 +137,7 @@
     "rubricStatusArchived": "État : archivé",
     "rubricStatusDraft": "État : brouillon",
     "rubricStatusPublished": "État : publié",
+    "rubricStructure": "Ce groupe de critères comprend {levelCount} niveaux et {criteriaCount} critères",
     "rubricSummaryA11y": "Ce tableau répertorie les critères et le nom du groupe de critères dans la première colonne. La première ligne répertorie les noms de niveau et contient des notes si la grille d’évaluation utilise une méthode d’attribution de note numérique.",
     "rubricType": "Type : {rubricType}",
     "rubricVisibility": "Visibilité de la grille d’évaluation",

@@ -144,6 +144,7 @@ window.D2L.Rubric.Language.Tr = {
 	'rubricStatusArchived': 'Durum: Arşivlenmiş',
 	'rubricStatusDraft': 'Durum: Taslak',
 	'rubricStatusPublished': 'Durum: Yayınlanmış',
+	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
 	'rubricSummaryA11y': 'Bu tablo, ilk sütundaki kriter ve kriter grubu adlarını listeler. İlk satır seviye adlarını listeler ve rubrik sayısal bir puanlama yöntemi kullanıyorsa puanları içerir.',
 	'rubricType': 'Tür: {rubricType}',
 	'rubricVisibility': 'Rubrik Görünürlüğü',

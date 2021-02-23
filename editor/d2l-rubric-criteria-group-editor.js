@@ -4,6 +4,7 @@ import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-alert/d2l-alert.js';
+import 'd2l-offscreen/d2l-offscreen.js';
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import '../d2l-rubric-entity-behavior.js';
@@ -104,6 +105,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 
 		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
 			<h2 class="screen-reader">[[_getGroupHeadingText(_groupName, showGroupName)]]</h2>
+			<d2l-offscreen>[[_getRubricStructureLabel(_levelCount, _criterionCount)]]</d2l-offscreen>
 			<div class="criteria-group">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 				<h3 class="screen-reader">[[localize('rubricLevelsHeading')]]</h3>
@@ -115,6 +117,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 					percentage-format-alternate="[[percentageFormatAlternate]]"
 					on-d2l-siren-entity-changed="_notifyResize"
 					updating-levels="{{updatingLevels}}"
+					level-count="{{_levelCount}}"
 				>
 					<d2l-input-text
 						id="group-name"
@@ -125,10 +128,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						on-blur="_nameBlurHandler"
 						on-input="_nameInputHandler"
 						aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
-						aria-label$="[[localize('groupName')]]"
+						aria-label$="[[localize('groupName')]]. [[_getRubricStructureLabel(_levelCount, _criterionCount)]]"
 						prevent-submit
 						novalidate
 					></d2l-input-text>
+						
 				</d2l-rubric-levels-editor>
 				<d2l-rubric-loa-overlay
 					href="[[_levelsHref]]"
@@ -162,6 +166,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
 						updating-levels="[[updatingLevels]]"
+						criterion-count="{{_criterionCount}}"
 					>
 					</d2l-rubric-criteria-editor>
 				</div>
@@ -184,6 +189,14 @@ Polymer({
 	is: 'd2l-rubric-criteria-group-editor',
 
 	properties: {
+		_levelCount: {
+			type: Number,
+			value: 0
+		},
+		_criterionCount: {
+			type: Number,
+			value: 0
+		},
 		showGroupName: {
 			type: Boolean,
 			value: false
@@ -313,6 +326,10 @@ Polymer({
 	_getLevelsLink: function(entity) {
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Rubrics.levels);
 		return link && link.href || '';
+	},
+
+	_getRubricStructureLabel: function(levelCounts, criterionCounts) {
+		return this.localize('rubricStructure', 'levelCount', levelCounts, 'criteriaCount', criterionCounts);
 	},
 
 	_hasOutOf: function(entity) {

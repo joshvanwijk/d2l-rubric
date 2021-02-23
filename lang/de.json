@@ -137,6 +137,7 @@
     "rubricStatusArchived": "Status: Archiviert",
     "rubricStatusDraft": "Status: Entwurf",
     "rubricStatusPublished": "Status: Veröffentlicht",
+    "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
     "rubricSummaryA11y": "In der ersten Spalte dieser Tabelle wird der Name der Kriterien und Kriteriengruppen aufgeführt. Die erste Zeile enthält die Namen der Niveaus sowie Punktzahlen, sofern für das Bewertungsschema eine numerische Bewertungsmethode verwendet wird.",
     "rubricType": "Typ: {rubricType}",
     "rubricVisibility": "Sichtbarkeit des Bewertungsschemas",
