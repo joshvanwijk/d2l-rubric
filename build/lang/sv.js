@@ -163,7 +163,7 @@ window.D2L.Rubric.Language.Sv = {
 	'setScoreVisibilityFailed': 'Det gick inte att ställa in synlighet för betyg.',
 	'sharedAlertText': 'Den här rubriceringen kan bara redigeras från den organisationsenhet den delades från',
 	'shareRubricSaveFailed': 'Det gick inte att ändra tillgängligheten för organisationsenheten',
-	'standardsAligned': '{standardName} justerad efter {name}',
+	'standardsAligned': '{standardsName} justerad efter {name}',
 	'statistics': 'Statistik',
 	'total': 'Totalt antal',
 	'totalMobile': 'Totala poäng',
