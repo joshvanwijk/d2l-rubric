@@ -138,7 +138,7 @@
     "rubricStatusDraft": "상태: 초안",
     "rubricStatusPublished": "상태: 게시됨",
     "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
-    "rubricSummaryA11y": "이 표에는 첫 번째 열에 기준 및 기준 그룹 이름이 나열됩니다. 루브릭이 숫자 점수 산정법을 사용할 경우, 첫 번째 행에 수준 이름이 나열되고 점수가 포함됩니다.",
+    "rubricSummaryA11y": "This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.",
     "rubricType": "유형: {rubricType}",
     "rubricVisibility": "루브릭 표시 여부",
     "rubricVisibilityAlways": "루브릭을 학생에게 표시",

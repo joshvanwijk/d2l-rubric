@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Cy = {
 	'rubricStatusDraft': 'Statws: Drafft',
 	'rubricStatusPublished': 'Statws: Wedi Cyhoeddi',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'Mae’r tabl hwn yn rhestru enwau meini prawf a grwpiau meini prawf yn y golofn gyntaf. Mae’r rhes gyntaf yn rhestru enwau lefelau ac yn cynnwys sgorau os yw’r gyfeireb yn defnyddio dull sgorio rhifol.',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'Math: {rubricType}',
 	'rubricVisibility': 'Gwelededd y Gyfeireb',
 	'rubricVisibilityAlways': 'Gall myfyrwyr weld y gyfeireb',

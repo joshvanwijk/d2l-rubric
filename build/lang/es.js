@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Es = {
 	'rubricStatusDraft': 'Estado: borrador',
 	'rubricStatusPublished': 'Estado: publicado',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'En la primera columna de esta tabla, se muestran el nombre de los criterios y el de los grupos de criterios. En la primera fila, se muestran los nombres de los niveles y se incluyen puntuaciones si se utiliza un método de puntuación numérico en la rúbrica.',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'Tipo: {rubricType}',
 	'rubricVisibility': 'Visibilidad de la rúbrica',
 	'rubricVisibilityAlways': 'La rúbrica es visible para los estudiantes',

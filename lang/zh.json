@@ -138,7 +138,7 @@
     "rubricStatusDraft": "状态：草稿",
     "rubricStatusPublished": "状态：已发布",
     "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
-    "rubricSummaryA11y": "此表第一列中列出了标准和标准组名称。第一行列出了级别名称；如果量规使用数字评分方法，则还包括分数。",
+    "rubricSummaryA11y": "This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.",
     "rubricType": "类型：{rubricType}",
     "rubricVisibility": "量规可见性",
     "rubricVisibilityAlways": "量规对学生可见",

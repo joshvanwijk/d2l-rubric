@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Nl = {
 	'rubricStatusDraft': 'Status: concept',
 	'rubricStatusPublished': 'Status: gepubliceerd',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'In de eerste kolom van deze tabel staan de criteria en de criteriagroepnaam. In de eerste rij staan de niveaunamen en eventueel de scores als de rubric gebruikmaakt van een numerieke scoremethode.',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'Type: {rubricType}',
 	'rubricVisibility': 'Rubriczichtbaarheid',
 	'rubricVisibilityAlways': 'Rubric is zichtbaar voor cursisten',

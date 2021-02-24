@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Sv = {
 	'rubricStatusDraft': 'Status: Utkast',
 	'rubricStatusPublished': 'Status: Publicerad',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'Denna tabell innehåller kriterier och namn på kriteriegrupp i den första kolumnen. På den första raden listas nivånamn och betyg inkluderas om rubriceringen använder en numerisk betygsättningsmetod.',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'Typ: {rubricType}',
 	'rubricVisibility': 'Rubriceringens synlighet',
 	'rubricVisibilityAlways': 'Rubriceringen är synlig för elever',

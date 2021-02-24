@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Da = {
 	'rubricStatusDraft': 'Status: kladde',
 	'rubricStatusPublished': 'Status: offentliggjort',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'Denne tabel viser kriterier og kriteriegruppenavne i den første kolonne. Den første række viser niveaunavne og omfatter scorer, hvis rubrikken anvender en numerisk scoremetode.',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'Type: {rubricType}',
 	'rubricVisibility': 'Rubriksynlighed',
 	'rubricVisibilityAlways': 'Rubrikken er synlig for elever',
