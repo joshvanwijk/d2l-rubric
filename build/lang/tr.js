@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Tr = {
 	'rubricStatusDraft': 'Durum: Taslak',
 	'rubricStatusPublished': 'Durum: Yayınlanmış',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'Bu tablo, ilk sütundaki kriter ve kriter grubu adlarını listeler. İlk satır seviye adlarını listeler ve rubrik sayısal bir puanlama yöntemi kullanıyorsa puanları içerir.',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'Tür: {rubricType}',
 	'rubricVisibility': 'Rubrik Görünürlüğü',
 	'rubricVisibilityAlways': 'Rubrik, öğrenciler tarafından görülebilir',

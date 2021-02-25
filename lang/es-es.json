@@ -138,7 +138,7 @@
     "rubricStatusDraft": "Estado: Borrador",
     "rubricStatusPublished": "Estado: Publicado",
     "rubricStructure": "This criteria group has {levelCount} levels and {criteriaCount} criteria.",
-    "rubricSummaryA11y": "Esta tabla enumera los criterios y el nombre del grupo de criterios en la primera columna. La primera fila enumera los nombres de nivel e incluye puntuaciones si la rúbrica utiliza un método de puntuación numérico.",
+    "rubricSummaryA11y": "This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.",
     "rubricType": "Tipo: {rubricType}",
     "rubricVisibility": "Visibilidad de la rúbrica",
     "rubricVisibilityAlways": "La rúbrica es visible para los estudiantes",

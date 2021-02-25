@@ -145,7 +145,7 @@ window.D2L.Rubric.Language.Ja = {
 	'rubricStatusDraft': 'ステータス: 下書き',
 	'rubricStatusPublished': 'ステータス: 公開済み',
 	'rubricStructure': 'This criteria group has {levelCount} levels and {criteriaCount} criteria.',
-	'rubricSummaryA11y': 'この表では 1 列目に条件と条件グループの名前が表示されます。注釈で数値によるスコアリング方法が使用されている場合、1 行目にレベル名が表示され、スコアが記載されます。',
+	'rubricSummaryA11y': 'This table lists criteria and criteria group names in the first column. The first row lists level names and includes scores if the rubric uses a numeric scoring method. You can give feedback on each criterion by tabbing to the add feedback buttons in the table.',
 	'rubricType': 'タイプ: {rubricType}',
 	'rubricVisibility': '注釈の表示',
 	'rubricVisibilityAlways': '注釈は受講者に表示されます',
