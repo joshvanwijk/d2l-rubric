@@ -239,6 +239,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										class="clear-override-button"
 										icon="d2l-tier1:close-small"
 										text="[[localize('clearOverride')]]"
+										description="[[localize('clearOverrideTotal')]]"
 										on-click="_clearTotalScoreOverride"
 										hidden$="[[!_showClearTotalScoreButton(_canClearTotalScoreOverride, readOnly, compact)]]">
 									</d2l-button-subtle>

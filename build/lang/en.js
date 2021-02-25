@@ -33,6 +33,8 @@ window.D2L.Rubric.Language.En = {
 	'clearFeedback': 'Clear Feedback',
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Clear Override',
+	'clearOverrideFor': 'Clear override for criterion {criterionName}',
+	'clearOverrideTotal': 'Clear override for rubric total score',
 	'closeDialog': 'Close',
 	'criteriaGroup': 'Criteria Group',
 	'criteriaHeading': 'Criteria',
