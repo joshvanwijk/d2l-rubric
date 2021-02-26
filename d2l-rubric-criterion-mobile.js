@@ -229,7 +229,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 							assessment-href="[[assessmentCriterionHref]]"
 							token="[[token]]"
 							read-only="[[readOnly]]"
-							compact>
+						>
 						</d2l-rubric-editable-score>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
