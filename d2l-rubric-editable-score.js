@@ -556,7 +556,7 @@ Polymer({
 	},
 
 	_getCriterionName: function(entity) {
-		if (entity && entity.properties && entity.properties) {
+		if (entity && entity.properties) {
 			return entity.properties.name || '';
 		}
 		return '';
