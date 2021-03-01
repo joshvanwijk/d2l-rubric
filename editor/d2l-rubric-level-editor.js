@@ -277,12 +277,10 @@ Polymer({
 		}
 		return '';
 	},
-	_levelNameChanged(newName) {
-		console.log("test");
+	_levelNameChanged: function(newName) {
 		this._editLevelPointsLabel = this.localize('editLevelPointsDescription', 'levelName', newName);
 	},
-	_levelPositionChanged(newPosition) {
-		console.log("test2");
+	_levelPositionChanged: function(newPosition) {
 		this._editLevelNameLabel = this.localize('editLevelNameDescription', 'positionNumber', newPosition);
 	},
 	_showAltPercentFormat: function(percentageFormatAlternate, usesPercentage) {
