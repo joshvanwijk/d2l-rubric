@@ -289,7 +289,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					<div class="input-action">
 						<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 						</d2l-input-textarea>
-						<d2l-dropdown-more hidden$="[[_rubricsCriterionAction]]" text="[[localize('actionsforCriterion', 'criterionName', _criterionName)]]">
+						<d2l-dropdown-more hidden$="[[!rubricsCriterionAction]]" text="[[localize('actionsforCriterion', 'criterionName', _criterionName)]]">
 							<d2l-dropdown-menu>
 								<d2l-menu>
 									<d2l-menu-item text="[[localize('copyRow')]]" aria-label="[[localize('copyCriterion', 'criterionName', _criterionName)]]" hidden$="[[!_canCopy]]" on-d2l-menu-item-select="_handleCopyCriterion"></d2l-menu-item>
@@ -353,7 +353,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				</div>
 
 				<div class="gutter-right" text-only$="[[!_hasOutOf]]" is-holistic$="[[isHolistic]]">
-					<d2l-button-icon id="remove" hidden$="[[!_canDelete]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', _criterionName)]]" on-click="_handleDeleteCriterion" type="button"></d2l-button-icon>
+					<d2l-button-icon id="remove" hidden$="[[_canHideDeleteIcon(_canDelete, rubricsCriterionAction)]]" icon="d2l-tier1:delete" text="[[localize('removeCriterion', 'name', _criterionName)]]" on-click="_handleDeleteCriterion" type="button"></d2l-button-icon>
 				</div>
 			</div>
 			<div class="cell" id="outcometag" hidden$="[[_hideOutcomes]]">
@@ -528,11 +528,16 @@ Polymer({
 		_hierarchicalHeight: {
 			type: Number
 		},
-		_rubricsCriterionAction: {
+		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
+		shouldFocus: {
 			type: Boolean,
 			value: false
 		}
 	},
+
 	behaviors: [
 		D2L.PolymerBehaviors.Rubric.EntityBehavior,
 		D2L.PolymerBehaviors.Rubric.SirenAutosaveActionBehavior,
@@ -576,7 +581,7 @@ Polymer({
 			this._updateOutOf(entity, selfLinkChanged);
 		}
 
-		if (!this.animating && !oldEntity) {
+		if (!this.animating && this.shouldFocus) {
 			setTimeout(function() {
 				this.$$('#name').select();
 				this._transitionElement(this, 10);
@@ -819,7 +824,6 @@ Polymer({
 	},
 
 	_handleCopyCriterion: function(e) {
-		// console.log(this.entity)
 		var action = this.entity.getActionByName('copy');
 		if (!action) return;
 		var copyButton = e.currentTarget;
@@ -827,15 +831,15 @@ Polymer({
 
 		const uuid = this.getUUID();
 		this.perfMark(`criterionCopiedStarted-${uuid}`);
-		announce('some locales');
+		announce(this.localize('copiedCriterionLoading', 'name', this._criterionName));
 		this.performSirenAction(action).then(function() {
 			this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-copied', {
 				bubbles: true,
 				composed: true,
 			}));
-			// setTimeout(function() {
-			// 	announce('criterion copied');
-			// }.bind(this), 2000);
+			setTimeout(function() {
+				announce('criterionCopied');
+			}.bind(this), 2000);
 
 			this.perfMark(`criterionAddedEnd=${uuid}`);
 			this.logCriterionCopiedAction(`criterionCopiedSatrted-${uuid}`, `criterionCopiedEnd=${uuid}`);
@@ -970,5 +974,8 @@ Polymer({
 	},
 	_getDisplayedName: function(isFocused, isInvalid, pendingSaves, enteredValue, savedValue) {
 		return (isFocused || isInvalid || pendingSaves > 0) ? enteredValue : savedValue;
+	},
+	_canHideDeleteIcon: function(canDelete, actionMenuTurnedOn) {
+		return !canDelete || actionMenuTurnedOn;
 	}
 });
