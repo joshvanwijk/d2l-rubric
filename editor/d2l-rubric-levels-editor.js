@@ -115,9 +115,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 			</d2l-button-icon>
 		</div>
 		<div id="levels-section" style="display: inherit; flex: 1 1 auto;">
-			<template is="dom-repeat" items="[[_levels]]" as="level">
+			<template is="dom-repeat" items="[[_levels]]" as="level" index-as="positionIndex">
 				<div class="cell" is-holistic$="[[isHolistic]]">
-					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}" on-save-points="_onSavePoints">
+					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" position-number="[[_getPositionNumber(positionIndex)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}" on-save-points="_onSavePoints">
 					</d2l-rubric-level-editor>
 				</div>
 			</template>
@@ -286,6 +286,10 @@ Polymer({
 	_getLastLevelName: function() {
 		var levels = dom(this.root).querySelectorAll('d2l-rubric-level-editor');
 		return levels.length ? levels[levels.length - 1].entity.properties.name : '';
+	},
+	_getPositionNumber: function(positionIndex) {
+		//Convert 0-indexed value to a user-friendly 1-indexed position number
+		return positionIndex + 1;
 	},
 	_onPrependFocus: function() {
 		announce(this.localize('addLevelPrepend', 'name', this._getFirstLevelName()));
