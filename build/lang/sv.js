@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Sv = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'Åtgärder för Redigera rubricering',
 	'addCriteriaGroup': 'Lägg till kriteriegrupp',
 	'addCriterion': 'Lägg till kriterium',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Sv = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Rensa åsidosättning',
 	'closeDialog': 'Stäng',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': 'Kriteriegrupp',
 	'criteriaHeading': 'Kriterier',
 	'criterion': 'Kriterium',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Sv = {
 	'dashOutOf': '– / {outOf}',
 	'deleteConfirmationNo': 'Avbryt',
 	'deleteConfirmationYes': 'Ta bort',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': 'Det här tar bort kriteriet och dess innehåll permanent.',
 	'deleteCriterionConfirmationTitle': 'Vill du ta bort kriteriet?',
 	'deleteLevelConfirmationText': 'Det här tar bort nivån och dess innehåll permanent.',
 	'deleteLevelConfirmationTitle': 'Vill du ta bort nivån?',
+	'deleteRow': 'Delete Row',
 	'description': 'Beskrivning',
 	'descriptionInfo': 'Lägg till en beskrivning för ditt personliga bruk. Den kommer inte att delas med eleverna.',
 	'descriptionReadOnlyMode': 'Beskrivning (inte synlig för elever)',

@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Ja = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': '注釈の編集のアクション',
 	'addCriteriaGroup': '条件グループの追加',
 	'addCriterion': '条件の追加',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Ja = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': '上書きのクリア',
 	'closeDialog': '閉じる',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': '条件グループ',
 	'criteriaHeading': '条件',
 	'criterion': '条件',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Ja = {
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'キャンセル',
 	'deleteConfirmationYes': '削除:',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': '実行すると、この条件とその内容が完全に削除されます。',
 	'deleteCriterionConfirmationTitle': 'この条件を削除しますか？',
 	'deleteLevelConfirmationText': '実行すると、このレベルとその内容が完全に削除されます。',
 	'deleteLevelConfirmationTitle': 'このレベルを削除しますか？',
+	'deleteRow': 'Delete Row',
 	'description': '説明',
 	'descriptionInfo': '個人用参照の説明を追加します。これは受講者と共有されません。',
 	'descriptionReadOnlyMode': '説明（受講者には表示されません）',

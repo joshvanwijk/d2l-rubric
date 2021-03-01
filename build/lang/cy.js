@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Cy = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'Camau Gweithredu ar gyfer Golygu Cyfeireb',
 	'addCriteriaGroup': 'Ychwanegu Grŵp Meini Prawf',
 	'addCriterion': 'Ychwanegu Maen Prawf',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Cy = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Clirio’r Gwrth-wneud',
 	'closeDialog': 'Cau',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': 'Grŵp Meini Prawf',
 	'criteriaHeading': 'Meini Prawf',
 	'criterion': 'Maen prawf',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Cy = {
 	'dashOutOf': '—/{outOf}',
 	'deleteConfirmationNo': 'Canslo',
 	'deleteConfirmationYes': 'Dileu',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': 'Bydd hyn yn dileu’r maen prawf a’i gynnwys yn barhaol.',
 	'deleteCriterionConfirmationTitle': 'Dileu’r maen prawf hwn?',
 	'deleteLevelConfirmationText': 'Bydd hyn yn dileu’r lefel a’i chynnwys yn barhaol.',
 	'deleteLevelConfirmationTitle': 'Dileu’r lefel hon?',
+	'deleteRow': 'Delete Row',
 	'description': 'Disgrifiad',
 	'descriptionInfo': 'Ychwanegwch ddisgrifiad er gwybodaeth i chi’n bersonol. Ni fydd yn cael ei rannu gyda myfyrwyr.',
 	'descriptionReadOnlyMode': 'Disgrifiad (ni all myfyrwyr ei weld)',

@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Da = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'Handlinger for Rediger rubrik',
 	'addCriteriaGroup': 'Tilføj kriteriegruppe',
 	'addCriterion': 'Tilføj kriterium',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Da = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Ryd tilsidesættelse',
 	'closeDialog': 'Luk',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': 'Kriteriegruppe',
 	'criteriaHeading': 'Kriterier',
 	'criterion': 'Kriterium',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Da = {
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Annuller',
 	'deleteConfirmationYes': 'Slet',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': 'Denne handling sletter dette kriterium og dets indhold permanent.',
 	'deleteCriterionConfirmationTitle': 'Skal dette kriterium slettes?',
 	'deleteLevelConfirmationText': 'Denne handling sletter niveauet og dens indhold permanent.',
 	'deleteLevelConfirmationTitle': 'Skal dette niveau slettes?',
+	'deleteRow': 'Delete Row',
 	'description': 'Beskrivelse',
 	'descriptionInfo': 'Tilføj en beskrivelse til egen reference. Den vil ikke blive delt med elever.',
 	'descriptionReadOnlyMode': 'Beskrivelse (ikke synlig for elever)',

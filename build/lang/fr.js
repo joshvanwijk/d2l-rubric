@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Fr = {
+	'actionsforCriterion': 'Actions pour le critère {criterionName}',
 	'actionsforEditRubric': 'Actions pour modifier la grille d’évaluation',
 	'addCriteriaGroup': 'Ajouter un groupe de critères',
 	'addCriterion': 'Ajouter un critère',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Fr = {
 	'clearFeedbackFor': 'Rétroaction claire pour le critère {criterionName}',
 	'clearOverride': 'Effacer les remplacements',
 	'closeDialog': 'Fermer',
+	'copyCriterion': 'Copier {criterionName}',
+	'copyRow': 'Copier la ligne',
 	'criteriaGroup': 'Groupe de critères',
 	'criteriaHeading': 'Critère',
 	'criterion': 'Critère',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Fr = {
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Annuler',
 	'deleteConfirmationYes': 'Supprimer',
+	'deleteCriterion': 'Supprimer {criterionName}',
 	'deleteCriterionConfirmationText': 'Cette action supprimera le critère et son contenu de façon permanente.',
 	'deleteCriterionConfirmationTitle': 'Supprimer ce critère?',
 	'deleteLevelConfirmationText': 'Cette action supprimera le niveau et son contenu de façon permanente.',
 	'deleteLevelConfirmationTitle': 'Supprimer ce niveau?',
+	'deleteRow': 'Supprimer la ligne',
 	'description': 'Description',
 	'descriptionInfo': 'Ajouter une description pour votre référence personnelle. Cela ne sera pas partagé avec les élèves.',
 	'descriptionReadOnlyMode': 'Description (non visible pour les élèves)',

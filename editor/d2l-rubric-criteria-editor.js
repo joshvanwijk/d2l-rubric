@@ -157,6 +157,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 							is-holistic="[[isHolistic]]"
 							display-name-placeholder="[[_isFirst(criterionIndex, criterionCount)]]"
 							rich-text-enabled="[[richTextEnabled]]"
+							rubrics-criterion-action="[[rubricsCriterionAction]]"
 							criterion-detail-width="[[criterionDetailWidth]]"
 							outcomes-title="[[outcomesTitle]]"
 							browse-outcomes-text="[[browseOutcomesText]]"
@@ -227,6 +228,7 @@ Polymer({
 			type: Number,
 			notify:true,
 		},
+		rubricsCriterionAction: Boolean,
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {

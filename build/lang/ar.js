@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Ar = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'إجراءات لتحرير آلية التقييم',
 	'addCriteriaGroup': 'إضافة مجموعة معايير',
 	'addCriterion': 'إضافة معيار',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Ar = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'مسح التجاوز',
 	'closeDialog': 'إغلاق',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': 'مجموعة المعايير',
 	'criteriaHeading': 'المعايير',
 	'criterion': 'المعيار',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Ar = {
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'إلغاء',
 	'deleteConfirmationYes': 'حذف',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': 'سيحذف هذا الإجراء بشكل نهائي المعيار ومحتوياته.',
 	'deleteCriterionConfirmationTitle': 'هل تريد حذف هذا المعيار؟',
 	'deleteLevelConfirmationText': 'سيحذف هذا الإجراء بشكل نهائي المستوى ومحتوياته.',
 	'deleteLevelConfirmationTitle': 'هل تريد حذف هذا المستوى؟',
+	'deleteRow': 'Delete Row',
 	'description': 'وصف',
 	'descriptionInfo': 'أضف وصفًا لمرجعك الشخصي. لن تتم مشاركته مع الطلاب.',
 	'descriptionReadOnlyMode': 'الوصف (غير مرئي للطلاب)',

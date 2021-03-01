@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Ko = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': '루브릭 편집에 대한 작업',
 	'addCriteriaGroup': '기준 그룹 추가',
 	'addCriterion': '기준 추가',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Ko = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': '재설정 지우기',
 	'closeDialog': '닫기',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': '기준 그룹',
 	'criteriaHeading': '기준',
 	'criterion': '기준',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Ko = {
 	'dashOutOf': '—/{outOf}',
 	'deleteConfirmationNo': '취소',
 	'deleteConfirmationYes': '삭제',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': '그러면 기준과 해당 콘텐츠가 영구적으로 삭제됩니다.',
 	'deleteCriterionConfirmationTitle': '이 기준을 삭제하시겠습니까?',
 	'deleteLevelConfirmationText': '그러면 수준과 해당 콘텐츠가 영구적으로 삭제됩니다.',
 	'deleteLevelConfirmationTitle': '이 수준을 삭제하시겠습니까?',
+	'deleteRow': 'Delete Row',
 	'description': '설명',
 	'descriptionInfo': '개인 참조에 대한 설명을 추가합니다. 학생과 공유되지 않습니다.',
 	'descriptionReadOnlyMode': '설명(학생에게 표시되지 않음)',

@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Tr = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'Rubriği Düzenleme Eylemleri',
 	'addCriteriaGroup': 'Kriter Grubu Ekle',
 	'addCriterion': 'Kriter Ekle',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Tr = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Etkisizleştirmeyi Temizle',
 	'closeDialog': 'Kapat',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': 'Ölçüt Grubu',
 	'criteriaHeading': 'Kriterler',
 	'criterion': 'Ölçüt',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Tr = {
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'İptal',
 	'deleteConfirmationYes': 'Sil:',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': 'Bu eylem, bu kriteri ve içeriğini kalıcı olarak silecek.',
 	'deleteCriterionConfirmationTitle': 'Bu kriter silinsin mi?',
 	'deleteLevelConfirmationText': 'Bu eylem, bu seviyeyi ve içeriğini kalıcı olarak silecek.',
 	'deleteLevelConfirmationTitle': 'Bu seviye silinsin mi?',
+	'deleteRow': 'Delete Row',
 	'description': 'Açıklama',
 	'descriptionInfo': 'Kişisel referansınız için bir açıklama ekleyin. Öğrencilerle paylaşılmayacaktır.',
 	'descriptionReadOnlyMode': 'Açıklama (Öğrencilere görünmez)',

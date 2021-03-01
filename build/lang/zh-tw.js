@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.ZhTw = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': '編輯量規動作',
 	'addCriteriaGroup': '新增標準群組',
 	'addCriterion': '新增標準',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.ZhTw = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': '清除覆寫',
 	'closeDialog': '關閉',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': '標準群組',
 	'criteriaHeading': '標準',
 	'criterion': '標準',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.ZhTw = {
 	'dashOutOf': '—/{outOf}',
 	'deleteConfirmationNo': '取消',
 	'deleteConfirmationYes': '刪除',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': '這將永久刪除標準與其內容。',
 	'deleteCriterionConfirmationTitle': '刪除此標準？',
 	'deleteLevelConfirmationText': '這將永久刪除層級與其內容。',
 	'deleteLevelConfirmationTitle': '刪除此層級？',
+	'deleteRow': 'Delete Row',
 	'description': '說明',
 	'descriptionInfo': '新增個人參考的說明。這將不會與學生分享。',
 	'descriptionReadOnlyMode': '說明 (學生不會看到)',

@@ -6,6 +6,7 @@ window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehavior
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Nl = {
+	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'Acties voor rubric bewerken',
 	'addCriteriaGroup': 'Criteriagroep toevoegen',
 	'addCriterion': 'Criterium toevoegen',
@@ -34,6 +35,8 @@ window.D2L.Rubric.Language.Nl = {
 	'clearFeedbackFor': 'Clear feedback for criterion {criterionName}',
 	'clearOverride': 'Overschrijven wissen',
 	'closeDialog': 'Sluiten',
+	'copyCriterion': 'Copy {criterionName}',
+	'copyRow': 'Copy Row',
 	'criteriaGroup': 'Criteriagroep',
 	'criteriaHeading': 'Criteria',
 	'criterion': 'Criterium',
@@ -52,10 +55,12 @@ window.D2L.Rubric.Language.Nl = {
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Annuleren',
 	'deleteConfirmationYes': 'Verwijderen',
+	'deleteCriterion': 'Delete {criterionName}',
 	'deleteCriterionConfirmationText': 'Hierdoor wordt het criterium en de inhoud permanent verwijderd.',
 	'deleteCriterionConfirmationTitle': 'Dit criterium verwijderen?',
 	'deleteLevelConfirmationText': 'Hierdoor wordt het niveau en de inhoud permanent gewist.',
 	'deleteLevelConfirmationTitle': 'Dit niveau verwijderen?',
+	'deleteRow': 'Delete Row',
 	'description': 'Beschrijving',
 	'descriptionInfo': 'Voeg een beschrijving toe voor uw persoonlijke referentie. Deze wordt niet met cursisten gedeeld.',
 	'descriptionReadOnlyMode': 'Beschrijving (niet zichtbaar voor cursisten)',

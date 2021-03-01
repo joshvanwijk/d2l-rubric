@@ -159,6 +159,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						href="[[_criteriaCollectionHref]]"
 						token="[[token]]"
 						rich-text-enabled="[[richTextEnabled]]"
+						rubrics-criterion-action="[[rubricsCriterionAction]]"
 						is-holistic="[[isHolistic]]"
 						outcomes-title="[[outcomesTitle]]"
 						browse-outcomes-text="[[browseOutcomesText]]"
@@ -257,6 +258,7 @@ Polymer({
 			type: Boolean,
 			notify: true
 		},
+		rubricsCriterionAction: Boolean,
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
 		_outcomeAlignments: {
