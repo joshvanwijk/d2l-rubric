@@ -289,7 +289,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					<div class="input-action">
 						<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 						</d2l-input-textarea>
-						<d2l-dropdown-more hidden$="[[!rubricsCriterionAction]]" text="[[localize('actionsforCriterion', 'criterionName', _criterionName)]]">
+						<d2l-dropdown-more hidden$="[[_hideActionMenu(rubricsCriterionAction, _canCopy, _canDelete)]]" text="[[localize('actionsforCriterion', 'criterionName', _criterionName)]]">
 							<d2l-dropdown-menu>
 								<d2l-menu>
 									<d2l-menu-item text="[[localize('copyRow')]]" aria-label="[[localize('copyCriterion', 'criterionName', _criterionName)]]" hidden$="[[!_canCopy]]" on-d2l-menu-item-select="_handleCopyCriterion"></d2l-menu-item>
@@ -977,5 +977,8 @@ Polymer({
 	},
 	_canHideDeleteIcon: function(canDelete, actionMenuTurnedOn) {
 		return !canDelete || actionMenuTurnedOn;
+	},
+	_hideActionMenu: function(actionMenuFlag, canCopy, canDelete) {
+		return !actionMenuFlag || (!canCopy && !canDelete);
 	}
 });
