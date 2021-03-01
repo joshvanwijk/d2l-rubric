@@ -404,7 +404,7 @@ Polymer({
 				{'name': 'newIndex', 'value': newIndex}
 			];
 			return this.performSirenAction(action, fields).then(function() {
-				announce(this.localize('criterionMoved', 'name', criterionName, 'position', newPosition));
+				announce(this.localize('criterionMoved', 'name', criterionName, 'positionNumber', newPosition));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {
