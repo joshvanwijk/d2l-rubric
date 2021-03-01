@@ -58,7 +58,7 @@
     "descriptionSaveFailed": "說明儲存失敗",
     "editFeedback": "編輯意見反應",
     "editLevelNameDescription": "Name of the level in position {positionNumber}.",
-    "editLevelPointsDescription": "Minimum points to achieve {levelName}.",
+    "editLevelPointsDescription": "Points earned for achieving {levelName}.",
     "editRubric": "編輯量規",
     "errorText": "糟糕！連線時發生問題。您可以重新整理頁面或稍後再試。",
     "feedback": "意見反應",

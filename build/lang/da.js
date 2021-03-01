@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Da = {
 	'descriptionSaveFailed': 'Det lykkedes ikke at gemme beskrivelsen',
 	'editFeedback': 'Rediger feedback',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Rediger rubrik',
 	'errorText': 'Hovsa! Vi har problemer med at oprette forbindelse. Du kan prøve at opdatere siden eller prøve igen senere.',
 	'feedback': 'Feedback',

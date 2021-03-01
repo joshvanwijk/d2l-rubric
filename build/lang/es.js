@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Es = {
 	'descriptionSaveFailed': 'No se pudo guardar la descripción',
 	'editFeedback': 'Editar comentario',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Editar rúbrica',
 	'errorText': 'Lo sentimos. No podemos establecer su conexión. Se recomienda actualizar la página o volver a intentarlo más tarde.',
 	'feedback': 'Comentarios',

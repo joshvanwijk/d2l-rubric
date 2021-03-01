@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Pt = {
 	'descriptionSaveFailed': 'Falha ao salvar descrição',
 	'editFeedback': 'Editar Comentários',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Editar Rubrica',
 	'errorText': 'Opa! Estamos com problemas para conectar você. Atualize a página ou tente novamente mais tarde.',
 	'feedback': 'Comentários',

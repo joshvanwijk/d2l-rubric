@@ -58,7 +58,7 @@
     "descriptionSaveFailed": "Opslaan van beschrijving mislukt",
     "editFeedback": "Feedback bewerken",
     "editLevelNameDescription": "Name of the level in position {positionNumber}.",
-    "editLevelPointsDescription": "Minimum points to achieve {levelName}.",
+    "editLevelPointsDescription": "Points earned for achieving {levelName}.",
     "editRubric": "Rubric bewerken",
     "errorText": "Oeps! Er zijn problemen met het tot stand brengen van een verbinding. U kunt de pagina vernieuwen of het later opnieuw proberen.",
     "feedback": "Feedback",

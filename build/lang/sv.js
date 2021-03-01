@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Sv = {
 	'descriptionSaveFailed': 'Beskrivningen kunde inte sparas',
 	'editFeedback': 'Redigera feedback',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Redigera rubricering',
 	'errorText': 'Hoppsan! Vi kan inte ansluta dig. Pröva att uppdatera sidan eller försök igen senare.',
 	'feedback': 'Feedback',

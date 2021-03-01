@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Zh = {
 	'descriptionSaveFailed': '保存描述失败',
 	'editFeedback': '编辑反馈',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': '编辑量规',
 	'errorText': '糟糕！我们无法与您建立连接。您可能需要刷新页面或稍后重试。',
 	'feedback': '反馈',

@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Fr = {
 	'descriptionSaveFailed': 'Échec de l’enregistrement de la description',
 	'editFeedback': 'Modifier la rétroaction',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Modifier la grille d’évaluation',
 	'errorText': 'Oups! Nous éprouvons des problèmes de connexion. Veuillez actualiser la page ou réessayer plus tard.',
 	'feedback': 'Rétroaction',

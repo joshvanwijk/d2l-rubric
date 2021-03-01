@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Tr = {
 	'descriptionSaveFailed': 'Açıklama kaydedilemedi',
 	'editFeedback': 'Geri Bildirimi Düzenle',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Rubriği Düzenle',
 	'errorText': 'Üzgünüz! Bağlantı kurulurken bir sorunla karşılaşıldı. Sayfayı yenileyin veya daha sonra tekrar deneyin.',
 	'feedback': 'Geri Bildirim',

@@ -58,7 +58,7 @@
     "descriptionSaveFailed": "Methwyd â chadw’r disgrifiad",
     "editFeedback": "Golygu’r Adborth",
     "editLevelNameDescription": "Name of the level in position {positionNumber}.",
-    "editLevelPointsDescription": "Minimum points to achieve {levelName}.",
+    "editLevelPointsDescription": "Points earned for achieving {levelName}.",
     "editRubric": "Golygu’r Gyfeireb",
     "errorText": "O na! Rydym yn cael trafferth eich cysylltu chi. Beth am ail-lwytho’r dudalen, neu roi cynnig arall arni’n new ymlaen?",
     "feedback": "Adborth",

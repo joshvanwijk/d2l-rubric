@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Ja = {
 	'descriptionSaveFailed': '説明を保存できませんでした',
 	'editFeedback': 'フィードバックの編集',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': '注釈の編集',
 	'errorText': '申し訳ありません。接続で問題が発生しています。ページをリフレッシュするか、後でもう一度お試しください。',
 	'feedback': 'フィードバック',

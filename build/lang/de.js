@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.De = {
 	'descriptionSaveFailed': 'Speichern der Beschreibung fehlgeschlagen',
 	'editFeedback': 'Feedback bearbeiten',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Bewertungsschema bearbeiten',
 	'errorText': 'Hoppla! Beim Verbindungsaufbau gibt es Probleme. Aktualisieren Sie die Seite, oder versuchen Sie es später erneut.',
 	'feedback': 'Feedback',

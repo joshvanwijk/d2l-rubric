@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.Ar = {
 	'descriptionSaveFailed': 'فشل حفظ الوصف',
 	'editFeedback': 'تحرير الملاحظات',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'تحرير آلية التقييم',
 	'errorText': 'عذرًا! نواجه مشكلة في توصيلك. ننصحك بتحديث الصفحة أو المحاولة مجددًا في وقت لاحق.',
 	'feedback': 'الملاحظات',

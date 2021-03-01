@@ -65,7 +65,7 @@ window.D2L.Rubric.Language.En = {
 	'descriptionSaveFailed': 'Saving description failed',
 	'editFeedback': 'Edit Feedback',
 	'editLevelNameDescription': 'Name of the level in position {positionNumber}.',
-	'editLevelPointsDescription': 'Minimum points to achieve {levelName}.',
+	'editLevelPointsDescription': 'Points earned for achieving {levelName}.',
 	'editRubric': 'Edit Rubric',
 	'errorText': 'Oops! We\'re having trouble connecting you. You might want to refresh the page, or try again later.',
 	'feedback': 'Feedback',
