@@ -842,7 +842,7 @@ Polymer({
 			}.bind(this), 2000);
 
 			this.perfMark(`criterionAddedEnd=${uuid}`);
-			this.logCriterionCopiedAction(`criterionCopiedSatrted-${uuid}`, `criterionCopiedEnd=${uuid}`);
+			this.logCriterionCopiedAction(`criterionCopiedStarted-${uuid}`, `criterionCopiedEnd=${uuid}`);
 		}.bind(this)).then(function() {
 			copyButton.removeAttribute('disabled');
 		}).catch(function(err) {
