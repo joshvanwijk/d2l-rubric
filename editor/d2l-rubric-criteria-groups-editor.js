@@ -131,7 +131,10 @@ Polymer({
 			observer: '_totalScoreChanged'
 		},
 
-		rubricsCriterionAction: Boolean,
+		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {
