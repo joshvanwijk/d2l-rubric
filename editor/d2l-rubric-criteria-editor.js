@@ -154,6 +154,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 							token="[[token]]"
 							rubric-levels-href="[[_rubricLevelsHref]]"
 							first-row="[[_isFirst(criterionIndex, criterionCount)]]"
+							position-number="[[_getCriterionPositionNumber(criterionIndex)]]"
 							is-holistic="[[isHolistic]]"
 							display-name-placeholder="[[_isFirst(criterionIndex, criterionCount)]]"
 							rich-text-enabled="[[richTextEnabled]]"
@@ -314,6 +315,10 @@ Polymer({
 	_getCriterionLegend: function(index, count) {
 		return this.localize('criterionAriaLabel', 'index', index + 1, 'count', count);
 	},
+	_getCriterionPositionNumber: function(criterionIndex) {
+		//Convert 0-indexed value to a user-friendly 1-indexed position number
+		return criterionIndex + 1;
+	},
 	// note: don't remove criterionCount otherwise, DD handle won't refresh when add and delete critierons
 	_hideDragHandle: function(canReorder, index, criterionCount) {
 		return !canReorder || (this._isFirst(index, criterionCount) && this._isLast(index, criterionCount));
@@ -399,7 +404,7 @@ Polymer({
 				{'name': 'newIndex', 'value': newIndex}
 			];
 			return this.performSirenAction(action, fields).then(function() {
-				announce(this.localize('criterionMoved', 'name', criterionName, 'position', newPosition));
+				announce(this.localize('criterionMoved', 'name', criterionName, 'positionNumber', newPosition));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {
