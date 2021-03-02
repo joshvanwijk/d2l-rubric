@@ -286,6 +286,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
+<<<<<<< HEAD
 					<div class="input-action">
 						<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 						</d2l-input-textarea>
@@ -298,6 +299,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 							</d2l-dropdown-menu>
 						</d2l-dropdown-more>
 					</div>
+=======
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[_criterionNameAriaLabel]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder, positionNumber)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
+					</d2l-input-textarea>
+>>>>>>> master
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-click= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
 						<d2l-tooltip announced id="criterion-name-bubble" class="is-error" for="name" position="bottom">
@@ -381,6 +386,13 @@ Polymer({
 		},
 		criterionCellCount: {
 			type: Number
+		},
+		positionNumber: {
+			type: String,
+			observer: '_getCriterionNameAriaLabel'
+		},
+		_criterionNameAriaLabel: {
+			type: String
 		},
 		/**
 		* Outcomes langterm set in config variables
@@ -816,11 +828,15 @@ Polymer({
 		return field.hasClass('required');
 	},
 
-	_getNamePlaceholder: function(localize, displayNamePlaceholder) {
+	_getNamePlaceholder: function(localize, displayNamePlaceholder, positionNumber) {
 		if (displayNamePlaceholder) {
-			return localize('criterionPlaceholder');
+			return localize('criterionPlaceholder', 'positionNumber', positionNumber);
 		}
 		return '';
+	},
+
+	_getCriterionNameAriaLabel: function(positionNumber) {
+		this._criterionNameAriaLabel = this.localize('criterionNameAriaLabel', 'positionNumber', positionNumber);
 	},
 
 	_handleCopyCriterion: function(e) {

@@ -295,7 +295,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 										aria-hidden="true"
 										tabindex="-1"
 										id="addFeedback[[_getRowIndex(criterionNum)]]"
-										on-click="_handleAddFeedback
+										on-click="_handleAddFeedback"
 										on-focusin="_handleVisibleFeedbackFocusin"
 										on-focusout="_handleVisibleFeedbackFocusout"
 										hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"

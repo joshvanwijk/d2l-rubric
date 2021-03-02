@@ -331,6 +331,9 @@ Polymer({
 	},
 
 	_getRubricStructureLabel: function(levelCounts, criterionCounts) {
+		if (levelCounts === 0 && criterionCounts === 0) {
+			return;
+		}
 		return this.localize('rubricStructure', 'levelCount', levelCounts, 'criteriaCount', criterionCounts);
 	},
 
