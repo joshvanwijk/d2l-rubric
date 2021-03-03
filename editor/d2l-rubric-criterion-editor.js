@@ -844,10 +844,6 @@ Polymer({
 		this.perfMark(`criterionCopiedStarted-${uuid}`);
 		announce(this.localize('copiedCriterionLoading', 'name', this._criterionName));
 		this.performSirenAction(action).then(function() {
-			this.dispatchEvent(new CustomEvent('d2l-rubric-criterion-copied', {
-				bubbles: true,
-				composed: true,
-			}));
 			setTimeout(function() {
 				announce('criterionCopied');
 			}.bind(this), 2000);
