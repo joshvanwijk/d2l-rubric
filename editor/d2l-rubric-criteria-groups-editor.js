@@ -71,6 +71,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				is-holistic="[[isHolistic]]"
 				percentage-format-alternate="[[percentageFormatAlternate]]"
 				rich-text-enabled="[[richTextEnabled]]"
+				rubrics-criterion-action="[[rubricsCriterionAction]]"
 				outcomes-title="[[outcomesTitle]]"
 				browse-outcomes-text="[[browseOutcomesText]]"
 				align-outcomes-text="[[alignOutcomesText]]"
@@ -130,6 +131,10 @@ Polymer({
 			observer: '_totalScoreChanged'
 		},
 
+		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {

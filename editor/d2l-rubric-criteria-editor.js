@@ -158,6 +158,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 							is-holistic="[[isHolistic]]"
 							display-name-placeholder="[[_isFirst(criterionIndex, criterionCount)]]"
 							rich-text-enabled="[[richTextEnabled]]"
+							rubrics-criterion-action="[[rubricsCriterionAction]]"
 							criterion-detail-width="[[criterionDetailWidth]]"
 							outcomes-title="[[outcomesTitle]]"
 							browse-outcomes-text="[[browseOutcomesText]]"
@@ -165,6 +166,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 							outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 							updating-levels="{{updatingLevels}}"
 							rubric-level-loa-mapping="[[rubricLevelLoaMapping]]"
+							should-focus="[[_isNewCriterion(criterion, _newCriterionHref)]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen" on-focusin="_onReorderGroupFocusIn" on-focusout="_onReorderGroupFocusOut" on-keydown="_onReorderGroupKeydown">
@@ -228,6 +230,7 @@ Polymer({
 			type: Number,
 			notify:true,
 		},
+		rubricsCriterionAction: Boolean,
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {
@@ -236,6 +239,10 @@ Polymer({
 		},
 		updatingLevels: {
 			type: Boolean
+		},
+		_newCriterionHref: {
+			type: String,
+			value: null
 		},
 		_rubricLevelsHref: String,
 		rubricLevelLoaMapping: Object,
@@ -287,6 +294,7 @@ Polymer({
 			return;
 		}
 
+		this._newCriterionHref = null;
 		this._criteriaEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
 		this._rubricLevelsHref = this._getRubricLevelsLink(entity);
 		// EXPERIMENTAL animation/transition handling. If oldEntity is undefined, then
@@ -304,7 +312,28 @@ Polymer({
 			afterNextRender(this, function() {
 				this.animating = false;
 			}.bind(this));
+		} else {
+			const oldCriteriaEntities = oldEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterion);
+			if (this._criteriaEntities.length > oldCriteriaEntities.length) {
+				const oldIds = {};
+				oldCriteriaEntities.forEach(entity => {
+					oldIds[entity.href || entity.getLinkByRel('self').href] = true;
+				});
+
+				for (const e of this._criteriaEntities) {
+					const href = e.href || e.getLinkByRel('self').href;
+					if (!oldIds[href]) {
+						this._newCriterionHref = href;
+						break;
+					}
+				}
+			}
 		}
+	},
+
+	_isNewCriterion: function(criterion, newCriterionHref) {
+		const href = criterion.href || criterion.getLinkByRel('self').href;
+		return href === newCriterionHref;
 	},
 
 	_getRubricLevelsLink: function(entity) {

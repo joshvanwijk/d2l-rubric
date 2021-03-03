@@ -72,6 +72,15 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		}, this.telemetryData);
 	},
 
+	logCriterionCopiedAction: function(startMark, endMark) {
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'RubricCriterion',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricCriterionCopied'
+		}, this.telemetryData);
+	},
+
 	// Functions to track component loading status
 	markRubricLoadedEventStart: function() {
 		this.perfMark('rubricLoadStart');
