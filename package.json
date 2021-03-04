@@ -25,7 +25,7 @@
     "lint:polymer": "polymer lint",
     "test": "npm run lint && npm run test:local",
     "test:local": "polymer test --skip-plugin sauce",
-    "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --watch --open"
+    "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --watch --open --preserve-symlinks"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
