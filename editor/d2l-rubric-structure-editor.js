@@ -169,6 +169,10 @@ Polymer({
 			type: Boolean,
 			value: false,
 		},
+		errorLoggingEndpoint: {
+			type: String,
+			value: null
+		},
 		/**
 		* Outcomes langterm set in config variables
 		*/
@@ -382,9 +386,28 @@ Polymer({
 	},
 
 	_handleError: function(e) {
+		if (e && e['target']) {
+			this.logApiError(
+				e.target.href,
+				'GET',
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				(e.detail && e.detail.error && e.detail.error.message) || null
+			);
+		}
+
+		if (this._errored) {
+			return;
+		}
+		this._errored = true;
+		this._clearAlerts();
+
 		announce(this.localize('rubricLoadingErrorAriaAlert'));
 
-		this._addAlert('error', e.message, this.localize('rubricLoadingErrorMessage'));
+		this._addAlert(
+			'error',
+			e.message || (e.detail && e.detail.error && e.detail.error.message) || null,
+			this.localize('rubricLoadingErrorMessage')
+		);
 		this._displayEditor(false);
 	},
 
