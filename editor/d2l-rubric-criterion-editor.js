@@ -29,6 +29,7 @@ import './d2l-rubric-autosaving-input.js';
 import '../telemetry-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
+import 'fastdom/fastdom.js';
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 	<template strip-whitespace="">
@@ -597,6 +598,11 @@ Polymer({
 			setTimeout(function() {
 				this.$$('#name').select();
 				this._transitionElement(this, 10);
+
+				fastdom.mutate(function() {
+					this.style.maxHeight = null;
+				}.bind(this));
+
 				this.scrollIntoView();
 			}.bind(this));
 		} else {
