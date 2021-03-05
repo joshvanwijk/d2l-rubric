@@ -310,7 +310,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					<div class="criterion-text">
 						<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
 							<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _rubricLevels, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
-								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
+								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
 					</div>
@@ -980,7 +980,7 @@ Polymer({
 	},
 
 	// eslint-disable-next-line no-unused-vars
-	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {
+	_isFirstAndCorner: function(isHolistic, index) {
 		return isHolistic && index === 0;
 	},
 	_isLastAndCorner: function(isHolistic, index, criterionCellCount) {
