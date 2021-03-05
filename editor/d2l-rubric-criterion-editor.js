@@ -76,6 +76,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				--d2l-input-border-color: transparent;
 			}
 
+			d2l-dropdown-more {
+				margin: 6px 6px 0px 0px;
+			}
+
 			.criterion-feedback-header {
 				background-color: var(--d2l-table-header-background-color);
 			}
