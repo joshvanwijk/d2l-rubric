@@ -29,6 +29,7 @@ import './d2l-rubric-autosaving-input.js';
 import '../telemetry-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
+import 'fastdom/fastdom.js';
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 	<template strip-whitespace="">
@@ -76,6 +77,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				--d2l-input-border-color: transparent;
 			}
 
+			d2l-dropdown-more {
+				margin: 6px 6px 0px 0px;
+			}
+
 			.criterion-feedback-header {
 				background-color: var(--d2l-table-header-background-color);
 			}
@@ -99,10 +104,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			.criterion-text, .criterion-feedback {
 				display: flex;
 				flex-direction: row;
-			}
-
-			#hierarchicaloverlay {
-				width: 800px;
 			}
 
 			#outcometag:not([hidden]){
@@ -270,7 +271,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			</d2l-select-outcomes>
 		</d2l-dialog>
 
-		<d2l-dialog title-text="[[browseOutcomesText]]" id="hierarchicaloverlay">
+		<d2l-dialog title-text="[[browseOutcomesText]]" width="800" id="hierarchicaloverlay">
 			<d2l-select-outcomes-hierarchical
 				class="select-outcomes-hierarchical"
 				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
@@ -309,7 +310,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					<div class="criterion-text">
 						<template is="dom-repeat" as="criterionCell" index-as="cellIndex" items="[[_getCriterionCells(entity)]]" rendered-item-count="{{criterionCellCount}}">
 							<div class="cell" style$="[[_getCellStyle(criterionCell, cellIndex, _rubricLevels, _loaLevels, rubricLevelLoaMapping, firstRow)]]">
-								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index, criterionCellCount)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
+								<d2l-rubric-description-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionDescriptionAriaLabel" criterion-name="[[_criterionName]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="{{updatingLevels}}" first-and-corner$="[[_isFirstAndCorner(isHolistic, index)]]" last-and-corner$="[[_isLastAndCorner(isHolistic, index, criterionCellCount)]]"></d2l-rubric-description-editor>
 							</div>
 						</template>
 					</div>
@@ -589,9 +590,15 @@ Polymer({
 		}
 
 		if (!this.animating && this.shouldFocus) {
+			this.shouldFocus = false;
 			setTimeout(function() {
 				this.$$('#name').select();
 				this._transitionElement(this, 10);
+
+				fastdom.mutate(function() {
+					this.style.maxHeight = null;
+				}.bind(this));
+
 				this.scrollIntoView();
 			}.bind(this));
 		} else {
@@ -973,7 +980,7 @@ Polymer({
 	},
 
 	// eslint-disable-next-line no-unused-vars
-	_isFirstAndCorner: function(isHolistic, index, criterionCellCount) {
+	_isFirstAndCorner: function(isHolistic, index) {
 		return isHolistic && index === 0;
 	},
 	_isLastAndCorner: function(isHolistic, index, criterionCellCount) {
