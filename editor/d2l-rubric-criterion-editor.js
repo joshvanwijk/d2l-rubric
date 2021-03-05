@@ -76,6 +76,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				--d2l-input-border-color: transparent;
 			}
 
+			d2l-dropdown-more {
+				margin: 6px 6px 0px 0px;
+			}
+
 			.criterion-feedback-header {
 				background-color: var(--d2l-table-header-background-color);
 			}
@@ -289,7 +293,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					<div class="input-action">
 						<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[_criterionNameAriaLabel]]" disabled="[[!_canEdit]]" max-rows="-1" value="{{_getDisplayedName(_nameFocused,_nameInvalid,_pendingNameSaves,_enteredName,_criterionName)}}" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder, positionNumber)]]" on-blur="_nameBlurHandler" on-focus="_nameFocusHandler" on-input="_nameInputHandler">
 						</d2l-input-textarea>
-						<d2l-dropdown-more style="margin:6px 6px 0px 0px" hidden$="[[_hideActionMenu(rubricsCriterionAction, _canCopy, _canDelete)]]" text="[[localize('actionsforCriterion', 'criterionName', _criterionName)]]">
+						<d2l-dropdown-more hidden$="[[_hideActionMenu(rubricsCriterionAction, _canCopy, _canDelete)]]" text="[[localize('actionsforCriterion', 'criterionName', _criterionName)]]">
 							<d2l-dropdown-menu>
 								<d2l-menu>
 									<d2l-menu-item text="[[localize('copyRow')]]" aria-label="[[localize('copyCriterion', 'criterionName', _criterionName)]]" hidden$="[[!_canCopy]]" on-d2l-menu-item-select="_handleCopyCriterion"></d2l-menu-item>
