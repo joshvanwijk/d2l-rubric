@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Fr = {
 	'criteriaHeading': 'Critère',
 	'criterion': 'Critère',
 	'criterionAdded': 'Un nouveau critère a été ajouté',
+	'criterionAlignmentListTitle': '{standardsName} pour le critère {criterionName}',
 	'criterionAriaLabel': 'Critère {index, number} de {count, number}',
 	'criterionCopied': 'Le critère a été copié',
 	'criterionDeleted': 'Critère {name} supprimé',

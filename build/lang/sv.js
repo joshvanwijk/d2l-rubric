@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Sv = {
 	'criteriaHeading': 'Kriterier',
 	'criterion': 'Kriterium',
 	'criterionAdded': 'Ett nytt kriterium har lagts till',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': 'Kriterium {index, number} av {count, number}',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': 'Kriteriet {name} borttaget',

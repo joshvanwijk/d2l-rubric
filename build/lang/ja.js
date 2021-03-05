@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Ja = {
 	'criteriaHeading': '条件',
 	'criterion': '条件',
 	'criterionAdded': '新規条件が追加されました',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': '条件 {index, number}、{count, number} 個',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': '{name} 条件が削除されました',

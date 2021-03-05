@@ -37,6 +37,7 @@
     "criteriaHeading": "标准",
     "criterion": "标准",
     "criterionAdded": "已添加新标准",
+    "criterionAlignmentListTitle": "{standardsName} for Criterion {criterionName}",
     "criterionAriaLabel": "标准 {index, number}/{count, number}",
     "criterionCopied": "The criterion has been copied",
     "criterionDeleted": "{name} 标准已删除",

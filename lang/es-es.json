@@ -37,6 +37,7 @@
     "criteriaHeading": "Criterios",
     "criterion": "Criterio",
     "criterionAdded": "Se ha agregado un nuevo criterio",
+    "criterionAlignmentListTitle": "{standardsName} for Criterion {criterionName}",
     "criterionAriaLabel": "Criterio {index, number} de {count, number}",
     "criterionCopied": "The criterion has been copied",
     "criterionDeleted": "Criterio {name} eliminado",

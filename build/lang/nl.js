@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Nl = {
 	'criteriaHeading': 'Criteria',
 	'criterion': 'Criterium',
 	'criterionAdded': 'Er is een nieuw criterium toegevoegd',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': 'Criterium {index, number} van {count, number}',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': 'Criterium {name} is verwijderd',

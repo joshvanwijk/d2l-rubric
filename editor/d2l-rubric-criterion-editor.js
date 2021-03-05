@@ -57,6 +57,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 					transition-property: none;
 					background-color: transparent;
 				};
+
+				--d2l-rubric-editor-browse-outcomes-button-margin: 5px;
+				--d2l-rubric-editor-outcomes-list-label-margin: calc(0.6rem + var(--d2l-rubric-editor-browse-outcomes-button-margin))
 			}
 
 			:host(.show) {
@@ -118,10 +121,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				margin-bottom: 6px;
 			}
 
-			#outcomeText{
-				margin-left: 16px;
-				margin-top: 13px;
-				margin-bottom: 3px;
+			.outcome-text{
+				margin-left: var(--d2l-rubric-editor-outcomes-list-label-margin);
+				@apply --d2l-label-text;
+			}
+
+			.outcomes-wrapper {
+				display:flex;
+				justify-content: center;
+				align-items: center;
 			}
 
 			.feedback-arrow {
@@ -232,15 +240,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			}
 
 			#browseOutcomesButton{
-				margin-bottom: 5px;
-				margin-left: 5px;
-			}
-
-			#closeButton{
-				right: 0;
-				margin-top: -60px;
-				position: absolute;
-				margin-right: 5px;
+				margin-bottom: var(--d2l-rubric-editor-browse-outcomes-button-margin);
+				margin-left: var(--d2l-rubric-editor-browse-outcomes-button-margin);
 			}
 
 			[hidden] {
@@ -361,9 +362,21 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]" hidden$="[[_hideOutcomes]]">
 					<div class="feedback-arrow-inner" hidden$="[[_hideOutcomes]]"></div>
 				</div>
-				<h5 id="outcomeText" hidden$="[[_hideOutcomes]]">[[outcomesTitle]]</h4>
-				<d2l-activity-alignment-tags  hidden$="[[_hideOutcomes]]" empty="{{_isAlignmentTagListEmpty}}" id="tag" href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]" token="[[token]]" browse-outcomes-text="[[browseOutcomesText]]">
-				</d2l-activity-alignment-tags>
+				<div class="outcomes-wrapper">
+					<div class="outcome-text" hidden$="[[_hideOutcomes]]">
+						[[outcomesTitle]]
+					</div>
+					<d2l-activity-alignment-tags
+						id="tag"
+						hidden$="[[_hideOutcomes]]"
+						empty="{{_isAlignmentTagListEmpty}}"
+						href="[[_getOutcomeHref(entity, _isFlagOn, isHolistic)]]"
+						token="[[token]]"
+						title="[[_getTagsTitle(outcomesTitle, _criterionName)]]"
+						type-name="[[outcomesTitle]]"
+						browse-outcomes-text="[[browseOutcomesText]]">
+					</d2l-activity-alignment-tags>
+				</div>
 			</div>
 		</div>
 	</template>
@@ -994,5 +1007,13 @@ Polymer({
 	},
 	_hideActionMenu: function(actionMenuFlag, canCopy, canDelete) {
 		return !actionMenuFlag || (!canCopy && !canDelete);
+	},
+
+	_getTagsTitle: function(outcomesTitle, criterionName) {
+		if (!outcomesTitle) {
+			return criterionName;
+		}
+
+		return this.localize('criterionAlignmentListTitle', 'standardsName', outcomesTitle, 'criterionName', criterionName);
 	}
 });

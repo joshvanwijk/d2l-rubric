@@ -53,6 +53,7 @@ window.D2L.Rubric.Language.En = {
 	'criterionFeedbackWithCopy': 'will be included in the overall feedback and visible to students',
 	'criterionMoved': '{name} moved to position {positionNumber}.',
 	'criterionNameAriaLabel': 'Name of the criterion in position {positionNumber}.',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionOutOf': 'Criterion {name} is out of {value} points',
 	'criterionPlaceholder': 'Click to edit criterion',
 	'criterionScore': 'Criterion Score',

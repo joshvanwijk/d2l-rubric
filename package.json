@@ -23,6 +23,8 @@
     "lint": "npm run lint:eslint && npm run lint:polymer",
     "lint:eslint": "eslint . --ext .js,.html",
     "lint:polymer": "polymer lint",
+    "format": "npm run format:eslint",
+    "format:eslint": "npm run lint:eslint -- --fix",
     "test": "npm run lint && npm run test:local",
     "test:local": "polymer test --skip-plugin sauce",
     "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --watch --open --preserve-symlinks"
