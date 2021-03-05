@@ -106,10 +106,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 				flex-direction: row;
 			}
 
-			#hierarchicaloverlay {
-				width: 800px;
-			}
-
 			#outcometag:not([hidden]){
 				border-left: 1px solid var(--d2l-color-galena);
 				margin-right: 50px;
@@ -275,7 +271,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			</d2l-select-outcomes>
 		</d2l-dialog>
 
-		<d2l-dialog title-text="[[browseOutcomesText]]" id="hierarchicaloverlay">
+		<d2l-dialog title-text="[[browseOutcomesText]]" width="800" id="hierarchicaloverlay">
 			<d2l-select-outcomes-hierarchical
 				class="select-outcomes-hierarchical"
 				rel= "[[_getOutcomeRel(_isFlagOn, isHolistic)]]"
