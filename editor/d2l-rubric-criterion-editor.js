@@ -593,6 +593,7 @@ Polymer({
 		}
 
 		if (!this.animating && this.shouldFocus) {
+			this.shouldFocus = false;
 			setTimeout(function() {
 				this.$$('#name').select();
 				this._transitionElement(this, 10);
