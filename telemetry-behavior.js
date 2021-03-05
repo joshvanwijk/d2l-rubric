@@ -18,7 +18,10 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 	},
 
 	setTelemetryData: function(telemetryData) {
-		if (!telemetryData || !telemetryData.endpoint) return;
+		if (
+			!telemetryData
+			|| (!telemetryData.endpoint && !telemetryData.errorEndpoint)
+		) return;
 
 		Object.assign(this.telemetryData, telemetryData);
 		this._data.sessionId = this.getUUID();
@@ -127,11 +130,12 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		});
 	},
 
-	logApiError: function(url, method, statusCode) {
+	logApiError: function(url, method, statusCode, message) {
 		const errorInfo = {
 			RequestUrl: url,
 			RequestMethod: method,
-			ResponseStatus: statusCode
+			ResponseStatus: statusCode,
+			Message: message
 		};
 
 		this._logError({
