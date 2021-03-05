@@ -389,7 +389,7 @@ Polymer({
 		const telemetryData = {
 			rubricMode: this.dataset.rubricMode,
 			originTool: this.dataset.originTool,
-			endpoint: window.document.documentElement.dataset.telemetryEndpoint,
+			endpoint: this.dataset.telemetryEndpoint || window.document.documentElement.dataset.telemetryEndpoint,
 			errorEndpoint: this.errorLoggingEndpoint,
 			performanceTelemetryEnabled: this.performanceTelemetryFlag,
 			hasAssessment: this.assessmentHref && this.assessmentHref !== ''
@@ -523,7 +523,8 @@ Polymer({
 			this.logApiError(
 				e.target.href,
 				'GET',
-				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				(e.detail && e.detail.error && e.detail.error.message) || null
 			);
 		}
 
@@ -605,7 +606,8 @@ Polymer({
 		this.logApiError(
 			event.detail.url,
 			event.detail.method,
-			(typeof event.detail.error === 'number') ? event.detail.error : null
+			(typeof event.detail.error === 'number') ? event.detail.error : null,
+			(event.detail && event.detail.error && event.detail.error.message) || null
 		);
 		event.stopPropagation();
 	}
