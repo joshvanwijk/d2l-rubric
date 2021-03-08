@@ -16,10 +16,10 @@
     "test": "test"
   },
   "scripts": {
+    "regenerate_data": "cd test/regen_api_data && node regenerate_api_data.js",
     "lang:build": "lang-build -es \"\t\" -c langtools/config.json",
     "lang:copy": "lang-copy -svc langtools/config.json",
-    "lang:lint": "eslint build/lang",
-    "regenerate_data": "cd test/regen_api_data && node regenerate_api_data.js",
+    "license-check": "d2l-license-checker",
     "lint": "npm run lint:eslint && npm run lint:polymer",
     "lint:eslint": "eslint . --ext .js,.html",
     "lint:polymer": "polymer lint",
@@ -72,6 +72,7 @@
     "@webcomponents/webcomponentsjs": "^2.2.3",
     "babel-eslint": "^10.0.1",
     "cross-env": "^5.2.0",
+    "d2l-license-checker": "^3.2.0",
     "d2l-polymer-langtools": "^1.4.0",
     "es-dev-server": "^2.1.0",
     "eslint": "^4.19.1",
