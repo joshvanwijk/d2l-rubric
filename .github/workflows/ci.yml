@@ -75,9 +75,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Check licenses
-        run: |
-          npm install d2l-license-checker --no-save
-          npx license-checker-ci
+        run: npm run license-check
   verify-languages:
     name: Verify Languages
     timeout-minutes: 5
