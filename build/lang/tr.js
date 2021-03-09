@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Tr = {
 	'criteriaHeading': 'Kriterler',
 	'criterion': 'Ölçüt',
 	'criterionAdded': 'Yeni bir kriter eklendi',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': 'Kriter {index, number} / {count, number}',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': '{name} kriteri silindi',

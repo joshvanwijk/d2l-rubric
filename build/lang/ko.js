@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Ko = {
 	'criteriaHeading': '기준',
 	'criterion': '기준',
 	'criterionAdded': '새 기준이 추가되었습니다.',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': '기준 {index, number}/{count, number}개',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': '{name} 기준 삭제됨',

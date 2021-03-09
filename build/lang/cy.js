@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Cy = {
 	'criteriaHeading': 'Meini Prawf',
 	'criterion': 'Maen prawf',
 	'criterionAdded': 'Mae maen prawf newydd wedi cael ei ychwanegu',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': 'Maen prawf {index, number} o {count, number}',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': 'Mae maen prawf {name} wedi cael ei ddileu',

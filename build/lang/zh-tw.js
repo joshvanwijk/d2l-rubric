@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.ZhTw = {
 	'criteriaHeading': '標準',
 	'criterion': '標準',
 	'criterionAdded': '已新增標準',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': '標準 {index, number}/{count, number}',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': '標準 {name} 已刪除',

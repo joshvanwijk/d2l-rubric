@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.Ar = {
 	'criteriaHeading': 'المعايير',
 	'criterion': 'المعيار',
 	'criterionAdded': 'تمت إضافة معيار جديد',
+	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',
 	'criterionAriaLabel': 'المعيار {index, number} من أصل {count, number}',
 	'criterionCopied': 'The criterion has been copied',
 	'criterionDeleted': 'تم حذف المعيار {name}',
