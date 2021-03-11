@@ -20,7 +20,7 @@ import './d2l-rubric-criterion-cell.js';
 import './rubric-siren-entity.js';
 import './assessment-behavior.js';
 import 's-html/s-html.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import 'fastdom/fastdom.js';
 import './d2l-rubric-editable-score.js';
 import './d2l-rubric-alignments-indicator';
@@ -278,6 +278,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											href="[[_getActivityLink(criterion)]]"
 											token="[[token]]"
 											outcomes-title-text="[[_getOutcomesTitleText()]]"
+											criterion-name="[[criterion.properties.name]]"
 										></d2l-rubric-alignments-indicator>
 										<template is="dom-if" if="[[_showCompetencies(criterionResultMap, criterion, readOnly)]]">
 											<d2l-rubric-competencies-icon
@@ -290,7 +291,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											</span>
 										</div>
 									</div>
-									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" on-focusout="_handleVisibleFeedbackFocusout" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+									<d2l-button-subtle
+										aria-hidden="true"
+										tabindex="-1"
+										id="addFeedback[[_getRowIndex(criterionNum)]]"
+										on-click="_handleAddFeedback"
+										on-focusin="_handleVisibleFeedbackFocusin"
+										on-focusout="_handleVisibleFeedbackFocusout"
+										hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+										text="[[localize('addFeedback')]]"
+										data-criterion$="[[criterionNum]]"
+									></d2l-button-subtle>
 								</div>
 							</d2l-td>
 						</template>
@@ -317,13 +328,22 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 									token="[[token]]"
 									read-only="[[readOnly]]"
 									editing-score="{{editingScore}}"
-									criterion-num="[[criterionNum]]">
+									criterion-num="[[criterionNum]]"
+									criterion-name="[[criterion.properties.name]]">
 								</d2l-rubric-editable-score>
 							</d2l-td>
 						</template>
 					</d2l-tr>
 					<d2l-offscreen>
-						<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+						<d2l-button-subtle
+							id="invisible-addFeedback[[_getRowIndex(criterionNum)]]"
+							on-click="_handleAddFeedback"
+							on-focusin="_handleInvisibleFeedbackFocusin"
+							on-focusout="_handleInvisibleFeedbackFocusout"
+							description="[[_localizeAddFeedbackButtonDescription(criterion)]]"
+							hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+							data-criterion$="[[criterionNum]]"
+						></d2l-button-subtle>
 					</d2l-offscreen>
 					<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
@@ -659,19 +679,6 @@ Polymer({
 		return this.localize(type, 'number', points.toString());
 	},
 
-	_localizeOutOf: function(criterion, criterionResultMap) {
-		const criterionResult = this._lookupMap(criterion, criterionResultMap);
-
-		var score = null;
-		if (criterionResult) {
-			score = this.CriterionAssessmentHelper.getScore(criterionResult);
-		}
-		if (score || score === 0) {
-			return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', criterion.properties.outOf.toString());
-		}
-		return this.localize('outOf', 'outOf', criterion.properties.outOf.toString());
-	},
-
 	_getRowCount: function(criteria) {
 		if (!criteria) {
 			return 0;
@@ -741,7 +748,7 @@ Polymer({
 
 	_getSelectedLevelIndex: function(criterionResult) {
 		const cells = criterionResult.getSubEntitiesByClass('assessment-criterion-cell');
-		for (let i = 0; i < cells; i++) {
+		for (let i = 0; i < cells.length; i++) {
 			if (this.CriterionCellAssessmentHelper.isSelected(cells[i])) {
 				return i;
 			}
@@ -1171,5 +1178,13 @@ Polymer({
 			return null;
 		}
 		return this._getSelfLink(criterionResult);
+	},
+
+	_localizeAddFeedbackButtonDescription: function(criterion) {
+		if (!criterion || !criterion.properties || !criterion.properties.name) {
+			return null;
+		}
+
+		return this.localize('addFeedbackFor', 'criterionName', criterion.properties.name);
 	}
 });

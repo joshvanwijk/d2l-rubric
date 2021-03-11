@@ -11,13 +11,16 @@ import 'd2l-tooltip/d2l-tooltip.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 	<template strip-whitespace="">
 		<style>
 			:host {
-				display: inline-flex;
+				display: inline;
 				align-items: center;
 			}
 			#editable-container {
@@ -93,6 +96,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 
 			#clear-button {
 				margin: auto 10px;
+				float: left;
+			}
+
+			#clear-button:dir(rtl) {
+				float: right;
+			}
+
+			#editable-container {
+				float: right;
+			}
+
+			#editable-container:dir(rtl) {
+				float: left;
 			}
 
 			[hidden] {
@@ -116,28 +132,35 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				<div class="editing-component">
 					<d2l-input-text id="text-area" value="[[_score]]" type="number" step="any" min="0" max="100000" novalidate on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
-					<div id="out-of">[[_localizeOutOf(entity)]]</div>
+					<div id="out-of">
+						[[_localizeOutOf(entity)]]
+					</div>
 				</div>
 				<template is="dom-if" if="[[scoreInvalid]]">
 					<d2l-tooltip announced id="score-bubble" for="text-area" class="is-error" position="bottom">[[scoreInvalidError]]</d2l-tooltip>
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
-				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" id="out-of-container">
+				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" aria-labelledby="score-label">
+					<d2l-offscreen id="score-label">[[_getCriterionContext(criterionName)]]</d2l-offscreen>
 					[[_localizeOutOf(entity, _score)]]
-					<div class="star" id="score-overridden-star">*</div>
+					<div class="star" id="score-overridden-star" aria-hidden="true">*</div>
+					<template is="dom-if" if="[[scoreOverridden]]">
+						<d2l-offscreen>[[_localizeStarLabel(totalScore)]]</d2l-offscreen>
+					</template>
 				</div>
 			</template>
 		</div>
 		<template is="dom-if" if="[[_showClearCriterionOverrideButton(assessmentEntity, 'full', compact, totalScore)]]">
-			<d2l-button-icon
+			<d2l-button-subtle
 				id="clear-button"
-				icon="tier1:close-small"
 				class="clear-override-button"
+				icon="d2l-tier1:close-small"
 				text="[[localize('clearOverride')]]"
+				description="[[localize('clearOverrideFor', 'criterionName', criterionName)]]"
 				on-click="_clearCriterionOverride"
 				hidden$="[[!scoreOverridden]]">
-			</d2l-button-icon>
+			</d2l-button-subtle>
 		</template>
 		<d2l-tooltip aria-hidden="true" align="start" hidden="[[_handleTooltip(scoreOverridden, _isEditingScore)]]" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
 </dom-module>`;
@@ -219,6 +242,11 @@ Polymer({
 		criterionNum: {
 			type: Number,
 			value: 1
+		},
+		criterionName: {
+			type: String,
+			value: null,
+			computed: '_getCriterionName(entity)'
 		},
 		readOnly: {
 			type: Boolean,
@@ -514,5 +542,23 @@ Polymer({
 
 		const forCompact = targetView === 'compact';
 		return forCompact === compact;
+	},
+
+	_getCriterionContext: function(criterion) {
+		if (criterion && criterion.length > 0) {
+			if (this._isStaticView()) {
+				return this.localize('scoreOf', 'criterion', criterion);
+			} else {
+				return this.localize('scoreOfEditable', 'criterion', criterion);
+			}
+		}
+		return '';
+	},
+
+	_getCriterionName: function(entity) {
+		if (entity && entity.properties) {
+			return entity.properties.name || '';
+		}
+		return '';
 	}
 });

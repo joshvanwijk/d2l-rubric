@@ -11,7 +11,7 @@ import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
 import 'fastdom/fastdom.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
@@ -56,6 +56,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				class="add-feedback-button"
 				hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, readOnly,  _savingFeedback.*, _feedbackInvalid.*)]]"
 				text="[[localize('addFeedback')]]"
+				description="[[_localizeAddFeedbackButtonDescription(criterion)]]"
 				on-click="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]">
 			</d2l-button-subtle>
@@ -214,5 +215,13 @@ Polymer({
 		}
 		const entityHref = this._getSelfLink(entity);
 		return entityHref && map[entityHref];
+	},
+
+	_localizeAddFeedbackButtonDescription: function(criterion) {
+		if (!criterion || !criterion.properties || !criterion.properties.name) {
+			return null;
+		}
+
+		return this.localize('addFeedbackFor', 'criterionName', criterion.properties.name);
 	}
 });

@@ -22,7 +22,7 @@ import './d2l-rubric-entity-behavior.js';
 import 'd2l-alert/d2l-alert.js';
 import 's-html/s-html.js';
 import 'd2l-save-status/d2l-save-status.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import './rubric-siren-entity.js';
 import './d2l-rubric-assessment-cache-primer.js';
 const $_documentContainer = document.createElement('template');
@@ -239,6 +239,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										class="clear-override-button"
 										icon="d2l-tier1:close-small"
 										text="[[localize('clearOverride')]]"
+										description="[[localize('clearOverrideTotal')]]"
 										on-click="_clearTotalScoreOverride"
 										hidden$="[[!_showClearTotalScoreButton(_canClearTotalScoreOverride, readOnly, compact)]]">
 									</d2l-button-subtle>
@@ -389,7 +390,7 @@ Polymer({
 		const telemetryData = {
 			rubricMode: this.dataset.rubricMode,
 			originTool: this.dataset.originTool,
-			endpoint: window.document.documentElement.dataset.telemetryEndpoint,
+			endpoint: this.dataset.telemetryEndpoint || window.document.documentElement.dataset.telemetryEndpoint,
 			errorEndpoint: this.errorLoggingEndpoint,
 			performanceTelemetryEnabled: this.performanceTelemetryFlag,
 			hasAssessment: this.assessmentHref && this.assessmentHref !== ''
@@ -523,7 +524,8 @@ Polymer({
 			this.logApiError(
 				e.target.href,
 				'GET',
-				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				(e.detail && e.detail.error && e.detail.error.message) || null
 			);
 		}
 
@@ -605,7 +607,8 @@ Polymer({
 		this.logApiError(
 			event.detail.url,
 			event.detail.method,
-			(typeof event.detail.error === 'number') ? event.detail.error : null
+			(typeof event.detail.error === 'number') ? event.detail.error : null,
+			(event.detail && event.detail.error && event.detail.error.message) || null
 		);
 		event.stopPropagation();
 	}

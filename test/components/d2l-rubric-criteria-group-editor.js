@@ -1,4 +1,4 @@
-/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon */
+/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, sinon, getLoadedElement */
 
 'use strict';
 
@@ -22,7 +22,6 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 
 		test('can be instantiated', function(done) {
 			var element = fixture('basic');
-			/* global getLoadedElement */
 			element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176.json', done);
 			expect(element.is).to.equal('d2l-rubric-criteria-group-editor');
 		});
@@ -94,6 +93,11 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176-readonly.json', done);
 			});
 
+			test('add is disabled', function() {
+				var addButton = element.$$('d2l-button-subtle');
+				expect(addButton.disabled).to.be.true;
+			});
+
 			test('group name is disabled', function() {
 				expect(element.$$('#group-name').disabled).to.be.true;
 			});
@@ -105,6 +109,11 @@ suite('<d2l-rubric-criteria-group-editor>', function() {
 			setup(function(done) {
 				element = fixture('holistic');
 				element = getLoadedElement(element, 'static-data/rubrics/organizations/text-only/199/groups/176.json', done);
+			});
+
+			test('add footer is hidden', function() {
+				var addFooter = element.$$('.footer');
+				expect(isVisible(addFooter)).to.be.false;
 			});
 
 			test('group name is hidden', function() {

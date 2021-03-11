@@ -6,7 +6,7 @@ import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
 import '../d2l-rubric-loading.js';
 import './d2l-rubric-criteria-group-editor.js';
-import 'd2l-button/d2l-button.js';
+import '@brightspace-ui/core/components/button/button.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status';
@@ -71,6 +71,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				is-holistic="[[isHolistic]]"
 				percentage-format-alternate="[[percentageFormatAlternate]]"
 				rich-text-enabled="[[richTextEnabled]]"
+				rubrics-criterion-action="[[rubricsCriterionAction]]"
 				outcomes-title="[[outcomesTitle]]"
 				browse-outcomes-text="[[browseOutcomesText]]"
 				align-outcomes-text="[[alignOutcomesText]]"
@@ -130,6 +131,10 @@ Polymer({
 			observer: '_totalScoreChanged'
 		},
 
+		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
 		isHolistic: {

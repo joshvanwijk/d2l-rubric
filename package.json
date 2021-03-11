@@ -1,5 +1,8 @@
 {
+  "name": "d2l-rubric",
+  "version": "3.7.59",
   "description": "Polymer-based web components for D2L Rubrics",
+  "main": "d2l-rubric.js",
   "keywords": [
     "D2L",
     "Rubric"
@@ -9,55 +12,34 @@
     "url": "https://github.com/Brightspace/d2l-rubric.git"
   },
   "homepage": "https://github.com/Brightspace/d2l-rubric",
-  "name": "d2l-rubric",
-  "version": "3.7.35",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "lang:build": "lang-build -ec langtools/config.json",
-    "lang:copy": "lang-copy -svc langtools/config.json",
-    "lang:lint": "eslint build/lang",
     "regenerate_data": "cd test/regen_api_data && node regenerate_api_data.js",
-    "serve": "polymer analyze > analysis.json && polymer serve",
-    "test": "npm run test:lint && npm run test:wct",
-    "test:lint": "npm run test:lint:wc && npm run test:lint:js",
-    "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
-    "test:lint:wc": "polymer lint *.js editor/**/*.js test/**/*.js demo/**/*.js",
-    "test:local": "npm run test:lint && npm run test:wct:local",
-    "test:wct": "polymer test",
-    "test:wct:local": "cross-env LAUNCHPAD_BROWSERS=chrome polymer test --skip-plugin sauce",
-    "test:wct:debug": "cross-env LAUNCHPAD_BROWSERS=chrome polymer test --config-file debug.wct.conf.json -p --skip-plugin sauce"
+    "lang:build": "lang-build -es \"\t\" -c langtools/config.json",
+    "lang:copy": "lang-copy -svc langtools/config.json",
+    "license-check": "d2l-license-checker",
+    "lint": "npm run lint:eslint && npm run lint:polymer",
+    "lint:eslint": "eslint . --ext .js,.html",
+    "lint:polymer": "polymer lint",
+    "format": "npm run format:eslint",
+    "format:eslint": "npm run lint:eslint -- --fix",
+    "test": "npm run lint && npm run test:local",
+    "test:local": "polymer test --skip-plugin sauce",
+    "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --watch --open --preserve-symlinks"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
-  "devDependencies": {
-    "@polymer/iron-component-page": "^4.0.0",
-    "@polymer/iron-demo-helpers": "^3.0.0",
-    "@polymer/promise-polyfill": "^3.0.0-pre.18",
-    "@webcomponents/webcomponentsjs": "^2.2.3",
-    "babel-eslint": "^10.0.1",
-    "cross-env": "^5.2.0",
-    "d2l-polymer-langtools": "^1.4.0",
-    "eslint": "^4.19.1",
-    "eslint-config-brightspace": "^0.4.0",
-    "eslint-plugin-html": "^4.0.5",
-    "frau-ci": "^1.33.2",
-    "polymer-cli": "^1.9.11",
-    "python-shell": "^0.5.0",
-    "wct-browser-legacy": "^1.0.1",
-    "whatwg-fetch": "^2.0.0"
-  },
   "dependencies": {
     "@brightspace-ui-labs/accordion": "^2.0.2",
-    "@brightspace-ui/core": "^1.30.1",
+    "@brightspace-ui/core": "^1.113.5",
     "@polymer/iron-media-query": "^3.0.0",
     "@polymer/iron-overlay-behavior": "^3.0.2",
     "@polymer/iron-resizable-behavior": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
     "d2l-activity-alignments": "github:Brightspace/d2l-activity-alignments#semver:^2",
     "d2l-alert": "github:BrightspaceUI/alert#semver:^4",
-    "d2l-button": "github:BrightspaceUI/button#semver:^5",
     "d2l-colors": "github:BrightspaceUI/colors#semver:^4",
     "d2l-dnd-sortable": "github:Brightspace/dnd-sortable#semver:^3",
     "d2l-dropdown": "github:BrightspaceUI/dropdown#semver:^7",
@@ -83,11 +65,29 @@
     "fastdom": "^1.0.8",
     "s-html": "github:Brightspace/s-html#semver:^2"
   },
+  "devDependencies": {
+    "@polymer/iron-component-page": "^4.0.0",
+    "@polymer/iron-demo-helpers": "^3.0.0",
+    "@polymer/promise-polyfill": "^3.0.0-pre.18",
+    "@webcomponents/webcomponentsjs": "^2.2.3",
+    "babel-eslint": "^10.0.1",
+    "cross-env": "^5.2.0",
+    "d2l-license-checker": "^3.2.0",
+    "d2l-polymer-langtools": "^1.4.0",
+    "es-dev-server": "^2.1.0",
+    "eslint": "^4.19.1",
+    "eslint-config-brightspace": "^0.4.0",
+    "eslint-plugin-html": "^4.0.5",
+    "frau-ci": "^1.33.2",
+    "polymer-cli": "^1.9.11",
+    "python-shell": "^0.5.0",
+    "wct-browser-legacy": "^1.0.1",
+    "whatwg-fetch": "^2.0.0"
+  },
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
     "supports-color": "3.1.2",
     "type-detect": "1.0.0"
-  },
-  "main": "d2l-rubric.js"
+  }
 }

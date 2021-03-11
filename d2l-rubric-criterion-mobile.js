@@ -1,5 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
-import 'd2l-button/d2l-button-icon.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './localize-behavior.js';
@@ -229,7 +229,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 							assessment-href="[[assessmentCriterionHref]]"
 							token="[[token]]"
 							read-only="[[readOnly]]"
-							compact>
+						>
 						</d2l-rubric-editable-score>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">

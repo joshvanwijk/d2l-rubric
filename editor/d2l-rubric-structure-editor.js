@@ -25,6 +25,8 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import './d2l-rubric-dropdown-menu-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-editor">
@@ -135,7 +137,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
 		<div id="rubric-structure-editor-container" hidden="">
-			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{_updatingLevels}}">
+			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rubrics-criterion-action="[[rubricsCriterionAction]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{_updatingLevels}}">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
 				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="[[_updatingLevels]]"></d2l-rubric-overall-levels-editor>
@@ -151,6 +153,10 @@ Polymer({
 	is: 'd2l-rubric-structure-editor',
 
 	properties: {
+		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
 		percentageFormatAlternate: {
 			type: Boolean,
 			value: false
@@ -166,6 +172,10 @@ Polymer({
 		isSinglePageRubric: {
 			type: Boolean,
 			value: false,
+		},
+		errorLoggingEndpoint: {
+			type: String,
+			value: null
 		},
 		/**
 		* Outcomes langterm set in config variables
@@ -380,9 +390,28 @@ Polymer({
 	},
 
 	_handleError: function(e) {
+		if (e && e['target']) {
+			this.logApiError(
+				e.target.href,
+				'GET',
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				(e.detail && e.detail.error && e.detail.error.message) || null
+			);
+		}
+
+		if (this._errored) {
+			return;
+		}
+		this._errored = true;
+		this._clearAlerts();
+
 		announce(this.localize('rubricLoadingErrorAriaAlert'));
 
-		this._addAlert('error', e.message, this.localize('rubricLoadingErrorMessage'));
+		this._addAlert(
+			'error',
+			e.message || (e.detail && e.detail.error && e.detail.error.message) || null,
+			this.localize('rubricLoadingErrorMessage')
+		);
 		this._displayEditor(false);
 	},
 

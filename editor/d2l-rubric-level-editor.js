@@ -2,7 +2,7 @@ import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-button/d2l-button-icon.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '../d2l-rubric-entity-behavior.js';
 import './d2l-rubric-siren-autosave-action-behavior.js';
@@ -76,7 +76,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			value="{{_levelName}}"
 			on-save="_saveName"
 			invalid="[[_nameInvalid]]"
-			label="[[localize('_levelName')]]"
+			label="[[_editLevelNameLabel]]"
 			enabled="[[_canEditName]]"
 			pending-saves="[[_pendingNameSaves]]"
 			editing="{{_nameChanging}}"
@@ -88,7 +88,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 					value="{{_levelPoints}}"
 					on-save="_savePoints"
 					invalid="[[_pointsInvalid]]"
-					label="[[localize('_levelPoints')]]"
+					label="[[_editLevelPointsLabel]]"
 					enabled="[[_canEditPoints]]"
 					pending-saves="[[_pendingPointsSaves]]"
 					editing="{{_pointsChanging}}"
@@ -127,7 +127,8 @@ Polymer({
 			computed: '_canDeleteLevel(entity)',
 		},
 		_levelName: {
-			type: String
+			type: String,
+			observer: '_levelNameChanged'
 		},
 		_canEditName: {
 			type: Boolean,
@@ -154,7 +155,7 @@ Polymer({
 			value: 0
 		},
 		_levelPoints: {
-			type: Number
+			type: Number,
 		},
 		_unsavedLevelPoints: {
 			type: String
@@ -194,6 +195,18 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
+		},
+		positionNumber: {
+			type: String,
+			observer: '_levelPositionChanged'
+		},
+		_editLevelNameLabel: {
+			type: String,
+			value: null
+		},
+		_editLevelPointsLabel: {
+			type: String,
+			value: null
 		}
 	},
 	behaviors: [
@@ -263,6 +276,12 @@ Polymer({
 			return this.localize('pointsAbbreviation');
 		}
 		return '';
+	},
+	_levelNameChanged: function(newName) {
+		this._editLevelPointsLabel = this.localize('editLevelPointsDescription', 'levelName', newName);
+	},
+	_levelPositionChanged: function(newPosition) {
+		this._editLevelNameLabel = this.localize('editLevelNameDescription', 'positionNumber', newPosition);
 	},
 	_showAltPercentFormat: function(percentageFormatAlternate, usesPercentage) {
 		return usesPercentage && percentageFormatAlternate;

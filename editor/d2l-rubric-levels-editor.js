@@ -2,7 +2,7 @@ import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-button/d2l-button-icon.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
@@ -115,9 +115,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 			</d2l-button-icon>
 		</div>
 		<div id="levels-section" style="display: inherit; flex: 1 1 auto;">
-			<template is="dom-repeat" items="[[_levels]]" as="level">
+			<template is="dom-repeat" items="[[_levels]]" as="level" index-as="positionIndex">
 				<div class="cell" is-holistic$="[[isHolistic]]">
-					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}" on-save-points="_onSavePoints">
+					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" position-number="[[_getPositionNumber(positionIndex)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}" on-save-points="_onSavePoints">
 					</d2l-rubric-level-editor>
 				</div>
 			</template>
@@ -156,7 +156,12 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		}
+		},
+		levelCount: {
+			type: Number,
+			value: 0,
+			notify: true
+		},
 	},
 
 	behaviors: [
@@ -167,6 +172,11 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.TelemetryResultBehavior,
 		IronResizableBehavior
 	],
+
+	observers: [
+		'_countLevels(_levels)'
+	],
+
 	attached: function() {
 		// Defer the offsetWidth/scrollWidth calculations until after the page has rendered
 		afterNextRender(this, function() {
@@ -277,6 +287,10 @@ Polymer({
 		var levels = dom(this.root).querySelectorAll('d2l-rubric-level-editor');
 		return levels.length ? levels[levels.length - 1].entity.properties.name : '';
 	},
+	_getPositionNumber: function(positionIndex) {
+		//Convert 0-indexed value to a user-friendly 1-indexed position number
+		return positionIndex + 1;
+	},
 	_onPrependFocus: function() {
 		announce(this.localize('addLevelPrepend', 'name', this._getFirstLevelName()));
 	},
@@ -297,5 +311,8 @@ Polymer({
 		for (let i = saveIndex - 1; i >= 0; i--) {
 			levels[i].savePointsAfterError();
 		}
+	},
+	_countLevels: function(levelArray) {
+		this.levelCount = levelArray.length;
 	}
 });

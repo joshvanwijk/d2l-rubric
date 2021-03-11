@@ -30,7 +30,7 @@ import './d2l-rubric-autosaving-input.js';
 import 's-html/s-html.js';
 import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
 import 'd2l-resize-aware/resize-observer-polyfill.js';
-
+import '@brightspace-ui/core/components/button/button-icon.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
@@ -290,12 +290,30 @@ const $_documentContainer = html `
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isReadOnly]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" align-outcomes-text="[[alignOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
-			</d2l-rubric-structure-editor>
+			<d2l-rubric-structure-editor 
+				is-single-page-rubric="[[isSinglePageRubric]]"
+				rich-text-enabled="[[richTextEnabled]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]"
+				rubrics-criterion-action="[[rubricsCriterionAction]]"
+				href="[[href]]"
+				token="[[token]]"
+				outcomes-title="[[outcomesTitle]]"
+				browse-outcomes-text="[[browseOutcomesText]]"
+				align-outcomes-text="[[alignOutcomesText]]"
+				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+				data-telemetry-endpoint="[[_getTelemetryEndpoint]]"
+				error-logging-endpoint="[[errorLoggingEndpoint]]"
+			></d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isReadOnly]]">
-			<d2l-rubric token="[[token]]" href="[[href]]" read-only="" performance-telemetry-flag$="[[performanceTelemetryFlag]]">
-			</d2l-rubric>
+			<d2l-rubric
+				token="[[token]]"
+				href="[[href]]"
+				read-only=""
+				performance-telemetry-flag$="[[performanceTelemetryFlag]]"
+				data-telemetry-endpoint="[[_getTelemetryEndpoint]]"
+				error-logging-endpoint="[[errorLoggingEndpoint]]"
+			></d2l-rubric>
 		</template>
 
 		<div id="accordion-container">
@@ -387,6 +405,10 @@ document.head.appendChild($_documentContainer.content);
 Polymer({
 	is: 'd2l-rubric-editor',
 	properties: {
+		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
 		percentageFormatAlternate: {
 			type: Boolean,
 			value: false
@@ -612,7 +634,8 @@ Polymer({
 	listeners: {
 		'd2l-siren-entity-save-start': '_onEntitySave',
 		'd2l-siren-entity-save-error': '_onEntitySave',
-		'd2l-siren-entity-save-end': '_onEntitySave'
+		'd2l-siren-entity-save-end': '_onEntitySave',
+		'd2l-siren-entity-error': '_handleError'
 	},
 
 	ready: function() {
@@ -649,7 +672,7 @@ Polymer({
 		}
 
 		const telemetryData = {
-			endpoint: this.dataset.telemetryEndpoint,
+			endpoint: this._getTelemetryEndpoint(),
 			performanceTelemetryEnabled: this.performanceTelemetryFlag,
 			errorEndpoint: this.errorLoggingEndpoint,
 		};
@@ -1008,5 +1031,18 @@ Polymer({
 	},
 	_computeShowLockedAlert: function(isLocked, isShared) {
 		return isLocked && !isShared;
+	},
+	_handleError: function(e) {
+		if (e && e['target']) {
+			this.logApiError(
+				e.target.href,
+				'GET',
+				(e.detail && typeof e.detail['error'] === 'number') ? e.detail.error : null,
+				(e.detail && e.detail.error && e.detail.error.message) || null
+			);
+		}
+	},
+	_getTelemetryEndpoint: function() {
+		return (this.dataset && this.dataset.telemetryEndpoint) || null;
 	}
 });

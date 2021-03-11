@@ -5,16 +5,18 @@ import './editor/d2l-rubric-error-handling-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
-import 'd2l-inputs/d2l-input-textarea.js';
+import '@brightspace-ui/core/components/inputs/input-textarea.js';
 import './rubric-siren-entity.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-offscreen/d2l-offscreen.js';
-import 'd2l-button/d2l-button-subtle.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
@@ -127,7 +129,9 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				display: flex;
 				padding: 18px
 			}
-
+			d2l-input-textarea {
+				margin-bottom: 8px;
+			}
 		</style>
 		<rubric-siren-entity href="[[criterionAssessmentHref]]" token="[[token]]" entity="{{criterionAssessment}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></rubric-siren-entity>
@@ -143,18 +147,42 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 							[[_feedbackHeadingExtra]]
 						</div>
 					</div>
-					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedbackHandler" on-focusin="_handleVisibleFocusin"></d2l-icon>
+					<d2l-icon
+						aria-hidden="true"
+						id="clear-feedback"
+						class="clear-feedback-button"
+						tabindex="-1"
+						icon="d2l-tier1:close-small"
+						on-click="_clearFeedbackHandler"
+						on-focusin="_handleVisibleFocusin"
+					></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border$="[[!compact]]" no-padding$="[[!compact]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]" on-focusin="_onFocusInTextArea" aria-label="[[_ariaLabelForTextArea]]">
-				</d2l-input-textarea>
+				<d2l-input-textarea
+					no-border$="[[!compact]]"
+					no-padding$="[[!compact]]"
+					rows="1"
+					max-rows="-1"
+					id="text-area"
+					value="{{_feedback}}"
+					on-input="_handleInputChange"
+					aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]"
+					on-focusin="_onFocusInTextArea"
+					description="[[_ariaLabelForTextArea]]"
+				></d2l-input-textarea>
 				<template is="dom-if" if="[[_feedbackInvalid]]">
 					<d2l-tooltip announced id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
 						[[_feedbackInvalidError]]
 					</d2l-tooltip>
 				</template>
 				<d2l-offscreen>
-					<d2l-button-subtle aria-label$="[[localize('clearFeedback')]]" id="clear-feedback-invisible" on-focusin="_handleInvisibleFocusin" on-focusout="_handleInvisibleFocusout" on-click="_clearFeedbackHandler">
+					<d2l-button-subtle
+						description="[[_localizeClearFeedbackButtonDescription(criterionEntity)]]"
+						id="clear-feedback-invisible"
+						on-focusin="_handleInvisibleFocusin"
+						on-focusout="_handleInvisibleFocusout"
+						on-click="_clearFeedbackHandler">
+					</d2l-button-subtle>
 				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, criterionAssessment, addingFeedback)]]">
@@ -325,7 +353,7 @@ Polymer({
 
 	_saveFeedbackHandler: function(e) {
 		if (this._feedbackModified || !this._pendingFeedbackSaves && this._feedbackInvalid) {
-			var value = e.target.$.textarea.value;
+			var value = e.target.value;
 			this._saveFeedback(value);
 		}
 	},
@@ -424,5 +452,13 @@ Polymer({
 		if (!criterionEntity) return;
 		const name = criterionEntity.properties && criterionEntity.properties.name || '';
 		return this.localize('feedbackOn', 'criterionName', name);
+	},
+
+	_localizeClearFeedbackButtonDescription: function(criterionEntity) {
+		if (!criterionEntity || !criterionEntity.properties || !criterionEntity.properties.name) {
+			return null;
+		}
+
+		return this.localize('clearFeedbackFor', 'criterionName', criterionEntity.properties.name);
 	}
 });

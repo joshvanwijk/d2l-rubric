@@ -18,7 +18,10 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 	},
 
 	setTelemetryData: function(telemetryData) {
-		if (!telemetryData || !telemetryData.endpoint) return;
+		if (
+			!telemetryData
+			|| (!telemetryData.endpoint && !telemetryData.errorEndpoint)
+		) return;
 
 		Object.assign(this.telemetryData, telemetryData);
 		this._data.sessionId = this.getUUID();
@@ -72,6 +75,15 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		}, this.telemetryData);
 	},
 
+	logCriterionCopiedAction: function(startMark, endMark) {
+		return this._logAndDestroyPerformanceEvent({
+			viewName: 'RubricCriterion',
+			startMark: startMark,
+			endMark: endMark,
+			actionName: 'RubricCriterionCopied'
+		}, this.telemetryData);
+	},
+
 	// Functions to track component loading status
 	markRubricLoadedEventStart: function() {
 		this.perfMark('rubricLoadStart');
@@ -118,11 +130,12 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		});
 	},
 
-	logApiError: function(url, method, statusCode) {
+	logApiError: function(url, method, statusCode, message) {
 		const errorInfo = {
 			RequestUrl: url,
 			RequestMethod: method,
-			ResponseStatus: statusCode
+			ResponseStatus: statusCode,
+			Message: message
 		};
 
 		this._logError({
