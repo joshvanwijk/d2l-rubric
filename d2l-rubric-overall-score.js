@@ -123,20 +123,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			}
 
 			d2l-scroll-wrapper {
-
-				--d2l-scroll-wrapper-h-scroll: {
-					border-left: 1px dashed var(--d2l-color-mica);
-					border-right: 1px dashed var(--d2l-color-mica);
-				};
-
-				--d2l-scroll-wrapper-left: {
-					border-left: none;
-				};
-
-				--d2l-scroll-wrapper-right: {
-					border-right: none;
-				};
-
 				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}

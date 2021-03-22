@@ -13,32 +13,17 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 		#scroll-wrapper {
 			--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
 			--d2l-scroll-wrapper-border-color: var(--d2l-color-galena);
-
-			--d2l-scroll-wrapper-h-scroll: {
-				overflow-y: hidden;
-				border-left: 1px dashed var(--d2l-color-galena);
-				border-right: 1px dashed var(--d2l-color-galena);
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			};
-
-			--d2l-scroll-wrapper-sticky: {
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			};
-
-			--d2l-scroll-wrapper-left: {
-				overflow-y: hidden;
-				border-left: none;
-				margin-left: unset;
-			};
-
-			--d2l-scroll-wrapper-right: {
-				overflow-y: hidden;
-				border-right: none;
-				margin-right: unset;
-			};
-
+			--d2l-scroll-wrapper-overflow-border-color: var(--d2l-color-galena);
+		}
+		#scroll-wrapper[h-scrollbar] {
+			padding-left: var(--d2l-rubric-editor-start-gutter-width);
+			padding-right: var(--d2l-rubric-editor-end-gutter-width);
+		}
+		#scroll-wrapper[scrollbar-left] {
+			padding-left: unset;
+		}
+		#scroll-wrapper[scrollbar-right] {
+			padding-right: unset;
 		}
 
 		.cell {
