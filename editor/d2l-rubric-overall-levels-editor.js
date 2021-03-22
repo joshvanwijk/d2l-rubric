@@ -165,7 +165,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			<div class="sub-title">[[localize('overallScoreDescription')]]</div>
 		</div>
 
-		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
+		<d2l-scroll-wrapper id="scroll-wrapper" show-actions check-scroll-delta-value="1">
 			<div id="level-header" class="editor-section">
 				<div class="gutter-left">
 					<d2l-button-icon on-click="_handlePrependOverallLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addOverallLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">
