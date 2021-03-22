@@ -103,7 +103,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 			</div>
 		</template>
 
-		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
+		<d2l-scroll-wrapper id="scroll-wrapper" show-actions check-scroll-delta-value="1">
 			<h2 class="screen-reader">[[_getGroupHeadingText(_groupName, showGroupName)]]</h2>
 			<d2l-offscreen>[[_getRubricStructureLabel(_levelCount, _criterionCount)]]</d2l-offscreen>
 			<div class="criteria-group">
