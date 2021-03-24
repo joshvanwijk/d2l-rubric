@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.ZhTw = {
 	'criterionMoved': '{name} 已移至位置 {positionNumber}。',
 	'criterionNameAriaLabel': '位置 {positionNumber} 的標準名稱。',
 	'criterionOutOf': '標準 {name} 的總分是 {value} 分',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': '按一下以編輯標準',
 	'criterionScore': '標準分數',
 	'dashOutOf': '—/{outOf}',
 	'deleteConfirmationNo': '取消',

@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Cy = {
 	'criterionMoved': 'Symudwyd {name} i’r safle {positionNumber}.',
 	'criterionNameAriaLabel': 'Enw\'r maen prawf yn y safle {positionNumber}.',
 	'criterionOutOf': 'Mae maen prawf {name} allan o {value} o bwyntiau',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Cliciwch i olygu’r maen prawf',
 	'criterionScore': 'Sgôr Maen Prawf',
 	'dashOutOf': '—/{outOf}',
 	'deleteConfirmationNo': 'Canslo',

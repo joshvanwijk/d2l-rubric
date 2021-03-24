@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Tr = {
 	'criterionMoved': '{name}, {positionNumber} numaralı konuma taşındı.',
 	'criterionNameAriaLabel': '{positionNumber} numaralı konumdaki kriterin adı.',
 	'criterionOutOf': '{name} kriteri, {value} puan üzerindendir',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Kriteri düzenlemek için tıklayın',
 	'criterionScore': 'Kriter Puanı',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'İptal',

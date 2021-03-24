@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Pt = {
 	'criterionMoved': '{name} foi movido(a) para a posição {positionNumber}.',
 	'criterionNameAriaLabel': 'Nome do critério na posição {positionNumber}.',
 	'criterionOutOf': 'O critério {name} tem pontuação máxima de {value} pontos',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Clique para editar o critério',
 	'criterionScore': 'Pontuação do Critério',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Cancelar',

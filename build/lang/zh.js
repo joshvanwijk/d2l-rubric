@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Zh = {
 	'criterionMoved': '{name} 已移至位置 {positionNumber}。',
 	'criterionNameAriaLabel': '位置 {positionNumber} 中的标准名称。',
 	'criterionOutOf': '标准 {name} 超出 {value} 分',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': '单击编辑标准',
 	'criterionScore': '标准分数',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': '取消',

@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Sv = {
 	'criterionMoved': '{name} har flyttats till position {positionNumber}.',
 	'criterionNameAriaLabel': 'Namnet på kriteriet i position {positionNumber}.',
 	'criterionOutOf': 'Kriteriet {name} är av {value} poäng',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Klicka för att redigera kriteriet',
 	'criterionScore': 'Kriteriepoäng',
 	'dashOutOf': '– / {outOf}',
 	'deleteConfirmationNo': 'Avbryt',

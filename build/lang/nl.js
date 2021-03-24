@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Nl = {
 	'criterionMoved': '{name} verplaatst naar positie {positionNumber}.',
 	'criterionNameAriaLabel': 'Naam van het criterium in positie {positionNumber}.',
 	'criterionOutOf': 'Criterium {name} is gebaseerd op {value} punten',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Klik om het criterium te bewerken',
 	'criterionScore': 'Criteriumscore',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Annuleren',
