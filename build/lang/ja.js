@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Ja = {
 	'criterionMoved': '{name} が位置 {positionNumber} に移動しました。',
 	'criterionNameAriaLabel': '位置 {positionNumber} にある条件の名前。',
 	'criterionOutOf': '条件 {name} が {value} ポイントの範囲外です',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'クリックして条件を編集します',
 	'criterionScore': '条件スコア',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'キャンセル',

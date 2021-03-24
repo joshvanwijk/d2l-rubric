@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Fr = {
 	'criterionMoved': '{name} est passé à la position {positionNumber}.',
 	'criterionNameAriaLabel': 'Nom du critère en position {positionNumber}.',
 	'criterionOutOf': 'Le critère {name} compte pour {value} points',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Cliquez pour modifier le critère',
 	'criterionScore': 'Note du critère',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Annuler',

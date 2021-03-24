@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Ar = {
 	'criterionMoved': '{name} moved to position {positionNumber}.',
 	'criterionNameAriaLabel': 'Name of the criterion in position {positionNumber}.',
 	'criterionOutOf': 'يتيح المعيار {name} الحصول على {value} من النقاط كحدٍّ أقصى',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'انقر لتحرير المعيار',
 	'criterionScore': 'مجموع درجات المعيار',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'إلغاء',

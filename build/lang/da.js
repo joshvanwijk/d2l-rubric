@@ -55,7 +55,7 @@ window.D2L.Rubric.Language.Da = {
 	'criterionMoved': '{name} flyttede til position {positionNumber}.',
 	'criterionNameAriaLabel': 'Navn på kriteriet i position {positionNumber}.',
 	'criterionOutOf': 'Kriterium {name} er ud af {value} point',
-	'criterionPlaceholder': 'Click to edit criterion',
+	'criterionPlaceholder': 'Klik for at redigere kriterium',
 	'criterionScore': 'Kriteriescore',
 	'dashOutOf': '— / {outOf}',
 	'deleteConfirmationNo': 'Annuller',
