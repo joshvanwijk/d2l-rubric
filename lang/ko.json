@@ -48,7 +48,7 @@
    "criterionMoved" : "{name}님이 {positionNumber} 위치로 이동했습니다.",
    "criterionNameAriaLabel" : "위치 {positionNumber}에 있는 기준의 이름입니다.",
    "criterionOutOf" : "기준 {name}이(가) {value}점에서 벗어남",
-   "criterionPlaceholder" :  "클릭하여 기준 편집",
+   "criterionPlaceholder" : "클릭하여 기준 편집",
    "criterionScore" : "기준 점수",
    "dashOutOf" : "—/{outOf}",
    "deleteConfirmationNo" : "취소",
