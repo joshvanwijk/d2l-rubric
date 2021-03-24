@@ -48,7 +48,7 @@
     "criterionNameAriaLabel": "Name of the criterion in position {positionNumber}.",
     "criterionAlignmentListTitle": "{standardsName} for Criterion {criterionName}",
     "criterionOutOf": "Criterion {name} is out of {value} points",
-    "criterionPlaceholder": "Click to edit criterion",
+    "criterionPlaceholder" :  "Click to edit criterion",
     "criterionScore": "Criterion Score",
     "dashOutOf": "— / {outOf}",
     "deleteConfirmationNo": "Cancel",
