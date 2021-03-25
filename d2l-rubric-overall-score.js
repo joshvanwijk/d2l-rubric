@@ -122,11 +122,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				flex-direction: row;
 			}
 
-			d2l-scroll-wrapper {
-				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
-				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
-			}
-
 			d2l-rubric-competencies-icon {
 				margin-top: 1px;
 				margin-left: 10px;

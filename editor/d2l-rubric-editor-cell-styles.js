@@ -10,11 +10,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 			--d2l-rubric-editor-end-gutter-width: 2.5rem; /* trash can width = 50px including halo */
 		}
 
-		#scroll-wrapper {
-			--d2l-scroll-wrapper-background-color: var(--d2l-table-header-background-color);
-			--d2l-scroll-wrapper-border-color: var(--d2l-color-galena);
-			--d2l-scroll-wrapper-overflow-border-color: var(--d2l-color-galena);
-		}
 		#scroll-wrapper[h-scrollbar] {
 			padding-left: var(--d2l-rubric-editor-start-gutter-width);
 			padding-right: var(--d2l-rubric-editor-end-gutter-width);
