@@ -114,6 +114,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				flex-shrink: 1;
 			}
 
+			.print-rubric-button {
+				float: right;
+				padding-bottom: 0.5rem;
+			}
+
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
 				border-radius: 8px;
@@ -212,6 +217,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<div id="editor-save-status-container" hidden="[[readOnly]]">
 				<d2l-save-status aria-hidden="true" id="rubric-save-status"></d2l-save-status>
 			</div>
+			<d2l-button-subtle
+				class="print-rubric-button"
+				icon="d2l-tier1:print"
+				text="[[localize('printRubric')]]"
+				description="[[localize('clearOverrideTotal')]]"
+				on-click="_togglePrintPreviewVisible"
+				hidden$="[[!printable]]">
+			</d2l-button-subtle>
+			<div style="clear:both">
 			<slot hidden$="[[compact]]"></slot>
 			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
@@ -298,6 +312,15 @@ Polymer({
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
+		},
+		printable: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
+		printPreviewVisible: {
+			type: Boolean,
+			value: false
 		},
 		outcomesTitleText: {
 			type: String,
@@ -611,6 +634,10 @@ Polymer({
 			(event.detail && event.detail.error && event.detail.error.message) || null
 		);
 		event.stopPropagation();
+	},
+
+	_togglePrintPreviewVisible: function() {
+		this.printPreviewVisible = !this.printPreviewVisible;
 	}
 
 });
