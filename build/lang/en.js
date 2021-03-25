@@ -135,6 +135,8 @@ window.D2L.Rubric.Language.En = {
 	'pointsMinimum': '{number} {number, plural, =1 {point} other {points}} minimum',
 	'pointsSaveFailed': 'Saving points failed',
 	'preview': 'Preview',
+	'printRubric': 'Print Rubric',
+	'printRubricDescription': 'Print Rubric. A print preview will be opened.',
 	'rangeStartInvalid': 'Range Start value is invalid',
 	'rangeStartOrMore': 'or more',
 	'rangeStartRequired': 'Range Start value is required',
