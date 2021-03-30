@@ -1,6 +1,6 @@
 {
   "name": "d2l-rubric",
-  "version": "3.7.62",
+  "version": "3.7.63",
   "description": "Polymer-based web components for D2L Rubrics",
   "main": "d2l-rubric.js",
   "keywords": [

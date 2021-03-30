@@ -7,17 +7,18 @@
     "cy-gb cy",
     "da-dk da",
     "de-de de",
-    "es-es es-es",
     "es-mx es",
-    "fr-fr fr-fr",
+    "es-es es-es",
     "fr-ca fr",
+    "fr-on fr-on",
+    "fr-fr fr-fr",
     "ja-jp ja",
     "ko-kr ko",
     "nl-nl nl",
     "pt-br pt",
     "sv-se sv",
     "tr-tr tr",
-    "zh-tw zh-tw",
-    "zh-cn zh"
+    "zh-cn zh",
+    "zh-tw zh-tw"
   ]
 }
