@@ -199,11 +199,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			}
 
 			@media print {
+
 				.d2l-rubric-print-container {
-					visibility: visible;
 					position: absolute;
 					top: 0px;
 					left: 0px;
+				}
+
+				.d2l-rubric-print-container.print-style-active {
+					visibility: visible;
+					width: 100%;
+					display: block;
 				}
 			}
 
@@ -648,7 +654,6 @@ Polymer({
 		const originalWindowStyle = document.getElementsByTagName('style')[0].innerHTML;
 
 		//Temporarily hide all window elements that aren't part of the desired print output
-		//TODO: rework for case where multiple rubrics are present
 		document.getElementsByTagName('style')[0].innerHTML += `
 			@media print {
 				* {
@@ -662,9 +667,18 @@ Polymer({
 			}
 		`;
 
+		/*Use .print-style-active class to set the print container and its contents as visible
+		  Use temporary class to style the print container instead of general @media print CSS selector
+		  This ensures only the current rubric's print container is visible (in case there are multiple rubrics in a page)
+		*/
+		const printContainer = this.shadowRoot.querySelector('.d2l-rubric-print-container');
+		printContainer.classList.add('print-style-active');
+
 		//Perform print
 		window.print();
-		//Reset style to avoid interfering with other print operations in the page
+
+		//Reset styles to avoid interfering with other print operations in the page
 		document.getElementsByTagName('style')[0].innerHTML = originalWindowStyle;
+		printContainer.classList.remove('print-style-active');
 	}
 });
