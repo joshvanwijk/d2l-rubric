@@ -26,7 +26,6 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import './rubric-siren-entity.js';
 import './d2l-rubric-assessment-cache-primer.js';
 const $_documentContainer = document.createElement('template');
-
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 	<template strip-whitespace="">
 		<style>
@@ -199,6 +198,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				display: none !important;
 			}
 
+			@media print {
+				.d2l-rubric-print-container {
+					visibility: visible;
+					position: absolute;
+					top: 0px;
+					left: 0px;
+				}
+			}
+
 		</style>
 		<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
@@ -222,72 +230,75 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				icon="d2l-tier1:print"
 				text="[[localize('printRubric')]]"
 				description="[[localize('clearOverrideTotal')]]"
-				on-click="_togglePrintPreviewVisible"
+				on-click="_onPrintRubricButtonClicked"
 				hidden$="[[!printable]]">
 			</d2l-button-subtle>
-			<div style="clear:both">
+			<div style="clear:both" />
 			<slot hidden$="[[compact]]"></slot>
-			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
-			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
-			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-				<d2l-rubric-criteria-groups
-					href="[[_getHref(_criteriaGroups)]]"
-					assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
-					token="[[token]]"
-					rubric-type="[[rubricType]]"
-					enable-feedback-copy="[[enableFeedbackCopy]]"
-					read-only="[[readOnly]]"
-					compact="[[compact]]">
-					<div slot="total-score">
-						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
-							<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
-								<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
-								<span hidden$="[[compact]]">
-									[[localize('total')]]
-								</span>
-								<span hidden$="[[!compact]]">
-									[[localize('totalMobile')]]
-								</span>
-								<div class="out-of-score-container">
-									<d2l-button-subtle
-										class="clear-override-button"
-										icon="d2l-tier1:close-small"
-										text="[[localize('clearOverride')]]"
-										description="[[localize('clearOverrideTotal')]]"
-										on-click="_clearTotalScoreOverride"
-										hidden$="[[!_showClearTotalScoreButton(_canClearTotalScoreOverride, readOnly, compact)]]">
-									</d2l-button-subtle>
-									<d2l-rubric-editable-score
-										id="total-score-inner"
-										assessment-href="[[assessmentHref]]"
-										token="[[token]]"
-										read-only="[[readOnly]]"
-										editing-score="{{editingScore}}"
-										total-score="[[_totalScore]]"
-										entity="[[entity]]">
-									</d2l-rubric-editable-score>
+			<div class="d2l-rubric-print-container">
+				<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
+				<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
+				<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
+					<d2l-rubric-criteria-groups
+						href="[[_getHref(_criteriaGroups)]]"
+						assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
+						token="[[token]]"
+						rubric-type="[[rubricType]]"
+						enable-feedback-copy="[[enableFeedbackCopy]]"
+						read-only="[[readOnly]]"
+						compact="[[compact]]"
+					>
+						<div slot="total-score">
+							<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
+								<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
+									<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
+									<span hidden$="[[compact]]">
+										[[localize('total')]]
+									</span>
+									<span hidden$="[[!compact]]">
+										[[localize('totalMobile')]]
+									</span>
+									<div class="out-of-score-container">
+										<d2l-button-subtle
+											class="clear-override-button"
+											icon="d2l-tier1:close-small"
+											text="[[localize('clearOverride')]]"
+											description="[[localize('clearOverrideTotal')]]"
+											on-click="_clearTotalScoreOverride"
+											hidden$="[[!_showClearTotalScoreButton(_canClearTotalScoreOverride, readOnly, compact)]]">
+										</d2l-button-subtle>
+										<d2l-rubric-editable-score
+											id="total-score-inner"
+											assessment-href="[[assessmentHref]]"
+											token="[[token]]"
+											read-only="[[readOnly]]"
+											editing-score="{{editingScore}}"
+											total-score="[[_totalScore]]"
+											entity="[[entity]]">
+										</d2l-rubric-editable-score>
+									</div>
 								</div>
 							</div>
+							<hr class="compact-divider" hidden$="[[!compact]]">
 						</div>
-						<hr class="compact-divider" hidden$="[[!compact]]">
-					</div>
-				</d2l-rubric-criteria-groups>
-			</div>
-			<template is="dom-if" if="[[_hasOverallScore(entity)]]">
-				<hr class="compact-divider" hidden$="[[!compact]]">
-				<d2l-rubric-overall-score
-					read-only="[[readOnly]]"
-					href="[[_getOverallLevels(entity)]]"
-					overall-level-assessment-href="[[_getOverallLevelAssessmentHref(assessmentEntity,_cachePrimed)]]"
-					token="[[token]]"
-					has-out-of="[[_hasOutOf(entity)]]"
-					compact="[[compact]]">
-				</d2l-rubric-overall-score>
-			</template>
-			<div hidden$="[[!_hasOverallFeedback(assessmentEntity)]]">
-				<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
-				<img class="quotation-mark-icon" src="[[_quoteImage]]" height="22" width="22">
-				<s-html class="overall-feedback-text" html$="[[_getOverallFeedback(assessmentEntity)]]"></s-html>
+					</d2l-rubric-criteria-groups>
+				</div>
+				<template is="dom-if" if="[[_hasOverallScore(entity)]]">
+					<hr class="compact-divider" hidden$="[[!compact]]">
+					<d2l-rubric-overall-score
+						read-only="[[readOnly]]"
+						href="[[_getOverallLevels(entity)]]"
+						overall-level-assessment-href="[[_getOverallLevelAssessmentHref(assessmentEntity,_cachePrimed)]]"
+						token="[[token]]"
+						has-out-of="[[_hasOutOf(entity)]]"
+						compact="[[compact]]">
+					</d2l-rubric-overall-score>
+				</template>
+				<div hidden$="[[!_hasOverallFeedback(assessmentEntity)]]">
+					<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
+					<img class="quotation-mark-icon" src="[[_quoteImage]]" height="22" width="22">
+					<s-html class="overall-feedback-text" html$="[[_getOverallFeedback(assessmentEntity)]]"></s-html>
+				</div>
 			</div>
 		</d2l-rubric-adapter>
 	</template>
@@ -317,10 +328,6 @@ Polymer({
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
-		},
-		printPreviewVisible: {
-			type: Boolean,
-			value: false
 		},
 		outcomesTitleText: {
 			type: String,
@@ -636,8 +643,28 @@ Polymer({
 		event.stopPropagation();
 	},
 
-	_togglePrintPreviewVisible: function() {
-		this.printPreviewVisible = !this.printPreviewVisible;
-	}
+	_onPrintRubricButtonClicked: function() {
+		//TODO: consider case where parent window has imported style sheets instead of a <style> element
+		const originalWindowStyle = document.getElementsByTagName('style')[0].innerHTML;
 
+		//Temporarily hide all window elements that aren't part of the desired print output
+		//TODO: rework for case where multiple rubrics are present
+		document.getElementsByTagName('style')[0].innerHTML += `
+			@media print {
+				* {
+					visibility: hidden;
+					height: 0;
+					width: 0;
+					margin: 0;
+					padding: 0;
+					border: none;
+				}
+			}
+		`;
+
+		//Perform print
+		window.print();
+		//Reset style to avoid interfering with other print operations in the page
+		document.getElementsByTagName('style')[0].innerHTML = originalWindowStyle;
+	}
 });
