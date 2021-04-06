@@ -208,7 +208,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 
 				.d2l-rubric-print-container.print-style-active {
 					visibility: visible;
-					width: 100%;
 					display: block;
 				}
 			}

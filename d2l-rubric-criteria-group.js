@@ -217,6 +217,37 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			d2l-tspan {
 				position: relative;
 			}
+
+			@media print {
+
+				d2l-table { 
+					page-break-after:auto
+				}
+				.table-content-container {
+					width: 100%;
+				}
+				d2l-thead {
+					display:table-header-group;
+				}
+				d2l-tfoot {
+					display:table-footer-group;
+				}
+				d2l-tr {
+					page-break-inside:avoid;
+					page-break-after:auto;
+				}
+				d2l-td {
+					min-width: 0;
+					page-break-inside:avoid;
+					page-break-after:auto;
+				}
+				d2l-th {
+					min-width: 0;
+				}
+				d2l-rubric-editable-score {
+					min-width: 0;
+				}
+			}
 		</style>
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
@@ -224,6 +255,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 		<rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></rubric-siren-entity>
 		<d2l-table aria-colcount$="[[_getColumnCount(_levels, entity, criterionResultMap, rubricType)]]" aria-rowcount$="[[_getRowCount(_criteriaEntities)]]" hidden$="[[!_showContent]]">
+			<div class="table-content-container">
 			<d2l-offscreen>
 				[[localize('rubricSummaryA11y')]]
 			</d2l-offscreen>
@@ -269,7 +301,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			</d2l-thead>
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
-					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]">
+					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]" style="max-width: 80%;">
 						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]" on-dom-change="_rowHeaderDomChange">
 							<d2l-td class="criteria" role="rowheader">
 								<div class="criteria-row-header-container">
@@ -365,6 +397,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					</template>
 				</template>
 			</d2l-tbody>
+			</div>
 		</d2l-table>
 	</template>
 </dom-module>`;
