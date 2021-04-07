@@ -222,7 +222,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 
 				d2l-table { 
 					page-break-inside: auto;
-				}
+				}			
 				.table-content-container {
 					width: 100%;
 				}
@@ -230,20 +230,23 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					display: table-header-group;
 					page-break-inside: avoid;
 				}
-				d2l-tr {
+				d2l-tbody d2l-tr {
 					page-break-inside: avoid;
 					page-break-after: auto;
 				}
 				d2l-td {
 					min-width: 0;
-					page-break-inside: avoid;
-					page-break-after: auto;
 				}
 				d2l-th {
 					min-width: 0;
 				}
-				d2l-rubric-editable-score {
-					min-width: 0;
+				d2l-td.criterion-cell:not(.selected) {
+					border-bottom: var(--d2l-table-border);
+					margin-bottom: -1px; /* hides "double borders" on adjacent table row cells */
+				}
+				d2l-td.criteria {
+					border-bottom: var(--d2l-table-border);
+					margin-bottom: -1px;
 				}
 			}
 		</style>
