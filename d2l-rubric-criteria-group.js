@@ -221,16 +221,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			@media print {
 
 				d2l-table { 
-					page-break-after:auto
+					page-break-inside: auto;
 				}
 				.table-content-container {
 					width: 100%;
 				}
 				d2l-thead {
-					display:table-header-group;
-				}
-				d2l-tfoot {
-					display:table-footer-group;
+					display: table-header-group;
+					page-break-inside: avoid;
 				}
 				d2l-tr {
 					page-break-inside:avoid;
