@@ -57,6 +57,25 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-cell">
 			.cell-container.no-text {
 				min-width: 80px;
 			}
+
+			@media print {
+				.cell-container {
+					min-width: 0;
+				}
+				.cell-container.no-text {
+					min-width: 0;
+				}
+
+				/* Adjust checkmark to handle no minimum column width when printing */
+				.check-icon.center {
+					width: 75%
+				}
+				.check-icon.corner {
+					position: absolute;
+					right: 10%;
+				}
+	
+			}
 		</style>
 		<div class$="[[_getCellClassName(entity)]]" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden="[[!_hasCustomPoints(entity)]]">
