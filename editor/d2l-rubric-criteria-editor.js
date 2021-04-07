@@ -230,6 +230,10 @@ Polymer({
 			type: Number,
 			notify:true,
 		},
+		isReordered: {
+			type: Boolean,
+			value: false
+		},
 		rubricsCriterionAction: Boolean,
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
@@ -333,7 +337,7 @@ Polymer({
 
 	_isNewCriterion: function(criterion, newCriterionHref) {
 		const href = criterion.href || criterion.getLinkByRel('self').href;
-		return href === newCriterionHref;
+		return href === newCriterionHref && !this.isReordered;
 	},
 
 	_getRubricLevelsLink: function(entity) {

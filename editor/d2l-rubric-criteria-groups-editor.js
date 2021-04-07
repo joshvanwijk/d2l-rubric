@@ -1,6 +1,7 @@
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-icons/d2l-icon.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
@@ -55,6 +56,37 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				margin: 0 20px;
 			}
 
+			.reorder-offscreen {
+				margin-top: 30px;
+			}
+
+			.reorder-button {
+				display: block;
+				color: #565a5c;
+				background: none;
+				width: 24px;
+				height: 24px;
+				padding: 0;
+				border: 1px solid transparent;
+				border-radius: 0.3rem;
+				box-sizing: border-box;
+				outline: none;
+				margin: 0 3px 0 auto;
+				cursor: pointer;
+				user-select: none;
+			}
+
+			.reorder-button[disabled] {
+				opacity: 0.5;
+				cursor: default;
+			}
+
+			.reorder-button:focus, .reorder-button:hover {
+				background-color: #f2f3f5;
+				outline: none;
+				border: 1px solid #d3d9e3;
+			}
+
 			[hidden] {
 				display: none;
 			}
@@ -62,7 +94,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
-		<template is="dom-repeat" items="[[_groups]]" on-dom-change="_groupsDomComplete">
+		<template is="dom-repeat" items="[[_groups]]" on-dom-change="_groupsDomComplete" index-as="criteriaGroupIndex">
 			<d2l-rubric-criteria-group-editor
 				hidden$="[[!_showContent]]"
 				href="[[_getSelfLink(item)]]"
@@ -77,7 +109,30 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 				align-outcomes-text="[[alignOutcomesText]]"
 				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
 				updating-levels="{{updatingLevels}}"
+				is-reordered="[[_isReordered]]"
 			>
+				<div slot="criteria-group-reorder" class="reorder-offscreen">
+					<button 
+						id="up-toggle" 
+						class="reorder-button" 
+						hidden$="[[!_canReorder]]" 
+						disabled$="[[_isFirstCriteriaGroup(criteriaGroupIndex, _criteriaGroupCount)]]" 
+						data-index$=[[criteriaGroupIndex]] 
+						on-click="_moveUp"
+					>
+						<d2l-icon icon="d2l-tier1:arrow-toggle-up"></d2l-icon>
+					</button>
+					<button 
+						id="down-toggle" 
+						class="reorder-button" 
+						hidden$="[[!_canReorder]]" 
+						disabled$="[[_isLastCriteriaGroup(criteriaGroupIndex, _criteriaGroupCount)]]" 
+						data-index$=[[criteriaGroupIndex]] 
+						on-click="_moveDown"
+					>
+						<d2l-icon icon="d2l-tier1:arrow-toggle-down"></d2l-icon>
+					</button>
+				</div>
 			</d2l-rubric-criteria-group-editor>
 		</template>
 
@@ -106,6 +161,11 @@ Polymer({
 			value: function() { return []; }
 		},
 
+		_criteriaGroupCount: {
+			type: Number,
+			value: -1
+		},
+
 		_showContent: {
 			type: Boolean,
 			value: false
@@ -114,6 +174,16 @@ Polymer({
 		_canCreate: {
 			type: Boolean,
 			computed: '_canCreateCriteriaGroup(entity)'
+		},
+
+		_canReorder: {
+			type: Boolean,
+			computed: '_canReorderCriteriaGroup(entity, _criteriaGroupCount)'
+		},
+
+		_isReordered: {
+			type: Boolean,
+			value: false
 		},
 
 		_waitingForGroups: {
@@ -132,6 +202,10 @@ Polymer({
 		},
 
 		rubricsCriterionAction: {
+			type: Boolean,
+			value: false
+		},
+		rubricsCriterionGroupsReorder: {
 			type: Boolean,
 			value: false
 		},
@@ -159,7 +233,7 @@ Polymer({
 		updatingLevels: {
 			type: Boolean,
 			notify: true
-		},
+		}
 	},
 
 	behaviors: [
@@ -167,6 +241,10 @@ Polymer({
 		window.D2L.Hypermedia.HMConstantsBehavior,
 		D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior
+	],
+
+	observers: [
+		'_countCriteriaGroup(_groups)'
 	],
 
 	_onEntityChanged: function(entity) {
@@ -230,5 +308,104 @@ Polymer({
 	},
 	_totalScoreChanged: function(totalScore) {
 		this._hasTotalScore = typeof totalScore !== 'undefined';
+	},
+	_canReorderCriteriaGroup: function(entity, count) {
+		return entity && entity.hasActionByName('reorder') && (count > 1);
+	},
+	_countCriteriaGroup: function(criteriaGroupArray) {
+		this._criteriaGroupCount = criteriaGroupArray.length;
+	},
+	_doReorder: function(oldIndex, newIndex) {
+		// var newPosition = newIndex + 1;
+		// var criteriaGroupName = this._getCriteriaGroupName(oldIndex);
+
+		var action = this.entity.getActionByName('reorder');
+		if (action) {
+			var fields = [
+				{'name': 'oldIndex', 'value': oldIndex},
+				{'name': 'newIndex', 'value': newIndex}
+			];
+			this._isReordered = true;
+			return this.performSirenAction(action, fields).then(function() {
+				// lang terms
+				announce('LOOKS LIKE WE DID IT');
+			}.bind(this)).catch(function(err) {
+				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
+					detail: {
+						message: err.message,
+					},
+					bubbles: true,
+					composed: true
+				}));
+			}.bind(this));
+		}
+		return Promise.resolve();
+	},
+	_getCriteriaGroupName: function(index) {
+		var criteriaGroups = dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
+		return criteriaGroups && criteriaGroups[index] ? criteriaGroups[index].entity.properties.name : '';
+	},
+	_getUpButton: function(index) {
+		var upButtons = dom(this.root).querySelectorAll('#up-toggle');
+		for (var i = 0; i < upButtons.length; i++) {
+			if (parseInt(upButtons[i].attributes['data-index'].value) === index) {
+				return upButtons[i];
+			}
+		}
+	},
+	_getDownButton: function(index) {
+		var downButtons = dom(this.root).querySelectorAll('#down-toggle');
+		for (var i = 0; i < downButtons.length; i++) {
+			if (parseInt(downButtons[i].attributes['data-index'].value) === index) {
+				return downButtons[i];
+			}
+		}
+	},
+	// eslint-disable-next-line no-unused-vars
+	_isFirstCriteriaGroup: function(index, count) {
+		return index === 0;
+	},
+	_isLastCriteriaGroup: function(index, count) {
+		return index === count - 1;
+	},
+	_moveUp: function(e) {
+		var upButton = e.currentTarget;
+		var downButton = upButton.nextElementSibling;
+
+		var oldIndex = +upButton.attributes['data-index'].value;
+		var newIndex = oldIndex - 1;
+
+		var afterReorder = function() {
+			upButton = this._getUpButton(newIndex);
+			downButton = this._getDownButton(newIndex);
+			this.isReordered = true;
+			if (!upButton.disabled) {
+				upButton.focus();
+			} else {
+				downButton.focus();
+			}
+		}.bind(this);
+		this._doReorder(oldIndex, newIndex).then(afterReorder);
+	},
+	_moveDown: function(e) {
+		var downButton = e.currentTarget;
+		var upButton = downButton.previousElementSibling;
+
+		var oldIndex = +downButton.attributes['data-index'].value;
+		var newIndex = oldIndex + 1;
+
+		var afterReorder = function() {
+			upButton = this._getUpButton(newIndex);
+			downButton = this._getDownButton(newIndex);
+			this.isReordered = true;
+			if (!downButton.disabled) {
+				downButton.focus();
+				this.scrollIntoView();
+			} else {
+				upButton.focus();
+				this.scrollIntoView();
+			}
+		}.bind(this);
+		this._doReorder(oldIndex, newIndex).then(afterReorder);
 	}
 });
