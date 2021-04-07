@@ -231,13 +231,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					page-break-inside: avoid;
 				}
 				d2l-tr {
-					page-break-inside:avoid;
-					page-break-after:auto;
+					page-break-inside: avoid;
+					page-break-after: auto;
 				}
 				d2l-td {
 					min-width: 0;
-					page-break-inside:avoid;
-					page-break-after:auto;
+					page-break-inside: avoid;
+					page-break-after: auto;
 				}
 				d2l-th {
 					min-width: 0;

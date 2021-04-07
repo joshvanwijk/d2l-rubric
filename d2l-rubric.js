@@ -210,6 +210,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					visibility: visible;
 					display: block;
 				}
+
+				.out-of-container {
+					page-break-inside: avoid;
+				}
 			}
 
 		</style>

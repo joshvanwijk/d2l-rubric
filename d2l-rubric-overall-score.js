@@ -137,6 +137,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				width: 100%;
 				word-wrap: break-word;
 			}
+
+			@media print {
+
+				:host {
+					page-break-inside: avoid;
+				}
+				.overall-level {
+					min-width: 0;
+				}
+				.overall-levels {
+					max-width: 100vw;
+				}
+	
+			}
 		</style>
 
 		<rubric-siren-entity href="[[overallLevelAssessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
