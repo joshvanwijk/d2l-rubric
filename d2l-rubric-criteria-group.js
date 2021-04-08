@@ -248,6 +248,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					border-bottom: var(--d2l-table-border);
 					margin-bottom: -1px;
 				}
+				d2l-td.out-of {
+					border-bottom: var(--d2l-table-border);
+					margin-bottom: -1px;
+				}
 			}
 		</style>
 
