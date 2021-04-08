@@ -119,6 +119,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 						disabled$="[[_isFirstCriteriaGroup(criteriaGroupIndex, _criteriaGroupCount)]]" 
 						data-index$=[[criteriaGroupIndex]] 
 						on-click="_moveUp"
+						title="[[_getReorderingButtonsLocalize('moveCriteriaGroupUp', criteriaGroupIndex)]]"
 					>
 						<d2l-icon icon="d2l-tier1:arrow-toggle-up"></d2l-icon>
 					</button>
@@ -129,6 +130,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-edit
 						disabled$="[[_isLastCriteriaGroup(criteriaGroupIndex, _criteriaGroupCount)]]" 
 						data-index$=[[criteriaGroupIndex]] 
 						on-click="_moveDown"
+						title="[[_getReorderingButtonsLocalize('moveCriteriaGroupDown', criteriaGroupIndex)]]"
 					>
 						<d2l-icon icon="d2l-tier1:arrow-toggle-down"></d2l-icon>
 					</button>
@@ -316,8 +318,8 @@ Polymer({
 		this._criteriaGroupCount = criteriaGroupArray.length;
 	},
 	_doReorder: function(oldIndex, newIndex) {
-		// var newPosition = newIndex + 1;
-		// var criteriaGroupName = this._getCriteriaGroupName(oldIndex);
+		var newPosition = newIndex + 1;
+		var criteriaGroupName = this._getCriteriaGroupName(oldIndex);
 
 		var action = this.entity.getActionByName('reorder');
 		if (action) {
@@ -327,8 +329,7 @@ Polymer({
 			];
 			this._isReordered = true;
 			return this.performSirenAction(action, fields).then(function() {
-				// lang terms
-				announce('LOOKS LIKE WE DID IT');
+				announce(this.localize('criterionMoved', 'name', criteriaGroupName, 'positionNumber', newPosition));
 			}.bind(this)).catch(function(err) {
 				this.dispatchEvent(new CustomEvent('d2l-rubric-editor-save-error', {
 					detail: {
@@ -344,6 +345,9 @@ Polymer({
 	_getCriteriaGroupName: function(index) {
 		var criteriaGroups = dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
 		return criteriaGroups && criteriaGroups[index] ? criteriaGroups[index].entity.properties.name : '';
+	},
+	_getReorderingButtonsLocalize: function(localizeString, index) {
+		return this.localize(localizeString, 'positionNumber', index + 1);
 	},
 	_getUpButton: function(index) {
 		var upButtons = dom(this.root).querySelectorAll('#up-toggle');

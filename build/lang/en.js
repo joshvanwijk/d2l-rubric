@@ -105,6 +105,8 @@ window.D2L.Rubric.Language.En = {
 	'loaThresholdMovementNotif': 'Threshold moved {direction, select, left {left} right {right}}',
 	'lockedAlertText': 'This rubric cannot be edited because it has already been used to assess learner work',
 	'makeRubricAvailableHeader': 'Make rubric available to',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Move criterion {position} down',
 	'moveCriterionUp': 'Move criterion {position} up',
 	'name': 'Name',
