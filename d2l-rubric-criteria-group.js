@@ -37,6 +37,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			:host {
 				display: block;
 				position: relative;
+				--level-column-count: 0;
 			}
 			d2l-table[type="default"] d2l-td.out-of {
 				text-align: left;
@@ -235,10 +236,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					page-break-after: auto;
 				}
 				d2l-td {
-					min-width: 0;
+					word-break: break-word;
+					padding: calc(7vw / var(--level-column-count)) !important;
 				}
 				d2l-th {
-					min-width: 0;
+					word-break: break-word;
+					padding: calc(7vw / var(--level-column-count)) !important;
 				}
 				d2l-td.criterion-cell:not(.selected) {
 					border-bottom: var(--d2l-table-border);
@@ -539,6 +542,9 @@ Polymer({
 		this._levels = levelsEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 		this._sortedLevels = this._sortRubricLevels(this._levels);
 		this._loaMappingHref = this._getLoaMappingLink(levelsEntity);
+		
+		//Track the number of levels in a css variable for styling
+		this.updateStyles({'--level-column-count': this._levels.length.toString()});
 
 		// trigger a resize event so that the table resizes with the new levels
 		if (PolymerElement) {

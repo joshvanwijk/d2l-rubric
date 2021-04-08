@@ -57,11 +57,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-cell">
 			.cell-container.no-text {
 				min-width: 80px;
 			}
-
+				
 			@media print {
+
 				.cell-container {
 					min-width: 0;
 				}
+
 				.cell-container.no-text {
 					min-width: 0;
 				}
@@ -74,8 +76,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-cell">
 					position: absolute;
 					right: 10%;
 				}
-	
-			}
+				.criterion-description-richtext {
+					overflow-x: wrap;
+					word-break: break-word;
+					min-width: 0;
+				}
+			}	
 		</style>
 		<div class$="[[_getCellClassName(entity)]]" aria-label$="[[_getEmptyLabel(entity)]]">
 			<div class="points custom-points" hidden="[[!_hasCustomPoints(entity)]]">
