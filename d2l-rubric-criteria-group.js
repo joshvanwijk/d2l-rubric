@@ -37,7 +37,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			:host {
 				display: block;
 				position: relative;
-				--level-column-count: 0;
+				--column-count: 0;
 			}
 			d2l-table[type="default"] d2l-td.out-of {
 				text-align: left;
@@ -235,11 +235,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				}
 				d2l-td {
 					word-break: break-word;
-					padding: calc(5vw / var(--level-column-count)) !important;
+					padding: calc(5vw / var(--column-count)) !important;
 				}
 				d2l-th {
 					word-break: break-word;
-					padding: calc(5vw / var(--level-column-count)) !important;
+					width: calc(100% / var(--column-count));
+					padding: calc(5vw / var(--column-count)) !important;
 				}
 				d2l-td.criterion-cell:not(.selected) {
 					border-bottom: var(--d2l-table-border);
@@ -540,7 +541,8 @@ Polymer({
 		this._loaMappingHref = this._getLoaMappingLink(levelsEntity);
 		
 		//Track the number of levels in a css variable for styling
-		this.updateStyles({'--level-column-count': this._levels.length.toString()});
+		const colCount = this._getColumnCount(this._levels, this.entity, this.criterionResultMap, this.rubricType);
+		this.updateStyles({'--column-count': colCount.toString()});
 
 		// trigger a resize event so that the table resizes with the new levels
 		if (PolymerElement) {
