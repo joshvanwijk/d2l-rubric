@@ -318,12 +318,12 @@ Polymer({
 		this._criteriaGroupCount = criteriaGroupArray.length;
 	},
 	_doReorder: function(oldIndex, newIndex) {
-		var newPosition = newIndex + 1;
-		var criteriaGroupName = this._getCriteriaGroupName(oldIndex);
+		const newPosition = newIndex + 1;
+		const criteriaGroupName = this._getCriteriaGroupName(oldIndex);
 
-		var action = this.entity.getActionByName('reorder');
+		const action = this.entity.getActionByName('reorder');
 		if (action) {
-			var fields = [
+			const fields = [
 				{'name': 'oldIndex', 'value': oldIndex},
 				{'name': 'newIndex', 'value': newIndex}
 			];
@@ -343,23 +343,23 @@ Polymer({
 		return Promise.resolve();
 	},
 	_getCriteriaGroupName: function(index) {
-		var criteriaGroups = dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
+		const criteriaGroups = dom(this.root).querySelectorAll('d2l-rubric-criteria-group-editor');
 		return criteriaGroups && criteriaGroups[index] ? criteriaGroups[index].entity.properties.name : '';
 	},
 	_getReorderingButtonsLocalize: function(localizeString, index) {
 		return this.localize(localizeString, 'positionNumber', index + 1);
 	},
 	_getUpButton: function(index) {
-		var upButtons = dom(this.root).querySelectorAll('#up-toggle');
-		for (var i = 0; i < upButtons.length; i++) {
+		const upButtons = dom(this.root).querySelectorAll('#up-toggle');
+		for (let i = 0; i < upButtons.length; i++) {
 			if (parseInt(upButtons[i].attributes['data-index'].value) === index) {
 				return upButtons[i];
 			}
 		}
 	},
 	_getDownButton: function(index) {
-		var downButtons = dom(this.root).querySelectorAll('#down-toggle');
-		for (var i = 0; i < downButtons.length; i++) {
+		const downButtons = dom(this.root).querySelectorAll('#down-toggle');
+		for (let i = 0; i < downButtons.length; i++) {
 			if (parseInt(downButtons[i].attributes['data-index'].value) === index) {
 				return downButtons[i];
 			}
@@ -373,13 +373,16 @@ Polymer({
 		return index === count - 1;
 	},
 	_moveUp: function(e) {
-		var upButton = e.currentTarget;
-		var downButton = upButton.nextElementSibling;
+		if (!e) {
+			return;
+		}
+		let upButton = e.currentTarget;
+		let downButton = upButton.nextElementSibling;
 
-		var oldIndex = +upButton.attributes['data-index'].value;
-		var newIndex = oldIndex - 1;
+		const oldIndex = +upButton.attributes['data-index'].value;
+		const newIndex = oldIndex - 1;
 
-		var afterReorder = function() {
+		const afterReorder = function() {
 			upButton = this._getUpButton(newIndex);
 			downButton = this._getDownButton(newIndex);
 			this.isReordered = true;
@@ -392,22 +395,23 @@ Polymer({
 		this._doReorder(oldIndex, newIndex).then(afterReorder);
 	},
 	_moveDown: function(e) {
-		var downButton = e.currentTarget;
-		var upButton = downButton.previousElementSibling;
+		if (!e) {
+			return;
+		}
+		let downButton = e.currentTarget;
+		let upButton = downButton.previousElementSibling;
 
-		var oldIndex = +downButton.attributes['data-index'].value;
-		var newIndex = oldIndex + 1;
+		const oldIndex = +downButton.attributes['data-index'].value;
+		const newIndex = oldIndex + 1;
 
-		var afterReorder = function() {
+		const afterReorder = function() {
 			upButton = this._getUpButton(newIndex);
 			downButton = this._getDownButton(newIndex);
 			this.isReordered = true;
 			if (!downButton.disabled) {
 				downButton.focus();
-				this.scrollIntoView();
 			} else {
 				upButton.focus();
-				this.scrollIntoView();
 			}
 		}.bind(this);
 		this._doReorder(oldIndex, newIndex).then(afterReorder);
