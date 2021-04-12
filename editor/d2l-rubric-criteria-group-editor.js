@@ -132,7 +132,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						prevent-submit
 						novalidate
 					></d2l-input-text>
-						
+					<slot name="criteria-group-reorder" slot="criteria-group-reorder"></slot>	
 				</d2l-rubric-levels-editor>
 				<d2l-rubric-loa-overlay
 					href="[[_levelsHref]]"
@@ -168,6 +168,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
 						updating-levels="[[updatingLevels]]"
 						criterion-count="{{_criterionCount}}"
+						is-reordered="[[isReordered]]"
 					>
 					</d2l-rubric-criteria-editor>
 				</div>
@@ -269,6 +270,10 @@ Polymer({
 			type: Object,
 			value: {}
 		},
+		isReordered: {
+			type: Boolean,
+			value: false
+		}
 	},
 
 	behaviors: [
