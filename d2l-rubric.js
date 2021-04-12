@@ -213,7 +213,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 
 				.out-of-container {
 					page-break-inside: avoid;
+					width: 100vw;
 				}
+
 			}
 
 		</style>

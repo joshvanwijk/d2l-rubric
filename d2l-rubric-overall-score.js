@@ -150,7 +150,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 					padding: calc(5vw / var(--level-count)) !important;
 				}
 				.overall-levels {
-					max-width: 100vw;
+					max-width: calc(100vw - 2px);
 				}
 
 				.info-container {

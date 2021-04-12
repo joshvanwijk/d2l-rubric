@@ -221,12 +221,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 
 			@media print {
 
+				:host {
+					page-break-before: auto;
+					page-break-inside: avoid;
+					page-break-after: auto;
+				}
 				d2l-table { 
-					width: 97vw;
-					page-break-inside: auto;
+					width: 100vw;
 				}
 				d2l-thead {
 					display: table-header-group;
+					page-break-before: auto;
 					page-break-inside: avoid;
 				}
 				d2l-tbody d2l-tr {
@@ -239,7 +244,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				}
 				d2l-th {
 					word-break: break-word;
-					width: calc(87vw / var(--column-count));
+					width: calc(90vw / var(--column-count));
 					padding: calc(5vw / var(--column-count)) !important;
 				}
 
