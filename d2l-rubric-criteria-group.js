@@ -222,7 +222,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			@media print {
 
 				d2l-table { 
-					width: 100%;
+					width: 97vw;
 					page-break-inside: auto;
 				}
 				d2l-thead {
@@ -239,9 +239,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				}
 				d2l-th {
 					word-break: break-word;
-					width: calc(100% / var(--column-count));
+					width: calc(87vw / var(--column-count));
 					padding: calc(5vw / var(--column-count)) !important;
 				}
+
 				d2l-td.criterion-cell:not(.selected) {
 					border-bottom: var(--d2l-table-border);
 					margin-bottom: -1px; /* hides "double borders" on adjacent table row cells */
