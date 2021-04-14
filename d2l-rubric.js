@@ -244,6 +244,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 		</style>
 		<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+		<rubric-siren-entity href="[[assessedUserHref]]" token="[[token]]" entity="{{assessedUserEntity}}"></rubric-siren-entity>
 		<d2l-rubric-assessment-cache-primer href="[[assessmentHref]]" token="[[token]]" primed="{{_cachePrimed}}"></d2l-rubric-assessment-cache-primer>
 		<d2l-rubric-adapter
 			rubric-name="[[_getRubricName(entity)]]"
@@ -274,9 +275,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 				<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
 					<h1 class="rubric-name-label print-only">[[_getRubricName(entity)]]</h1>
-					<div class="activity-name-label print-only">[[localize('activityNameLabel, 'name', _activityName)]]</div>
-					<div class="course-name-label print-only">[[localize('courseNameLabel, 'name', _activityName)]]</div>
-					<div class="student-name-label print-only">[[localize('studentNameLabel, 'name', _activityName)]]</div>
+					<div class="activity-name-label print-only">[[localize('activityNameLabel', 'name', _activityName)]]</div>
+					<div class="course-name-label print-only">[[localize('courseNameLabel', 'name', _courseName)]]</div>
+					<div class="student-name-label print-only">[[localize('studentNameLabel', 'name', _assessedUserDisplayName)]]</div>
 					<d2l-rubric-criteria-groups
 						href="[[_getHref(_criteriaGroups)]]"
 						assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
@@ -398,6 +399,10 @@ Polymer({
 			type: String,
 			reflectToAttribute: true
 		},
+		assessedUserHref: {
+			type: String,
+			computed: '_getAssessedUserHref(assessmentEntity)'
+		},
 		rubricType: {
 			type: String,
 			value: null
@@ -409,6 +414,10 @@ Polymer({
 		_errored: {
 			type: Boolean,
 			value: false
+		},
+		_assessedUserDisplayName: {
+			type: String,
+			computed: '_getAssessedUserDisplayName(assessedUserEntity)'
 		},
 		_canOverrideTotalScore: {
 			type: Boolean,
@@ -486,6 +495,7 @@ Polymer({
 
 			this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 			this._showContent = true;
+			this._courseName = entity.properties.courseName;
 		}
 	},
 
@@ -651,6 +661,22 @@ Polymer({
 
 	_computeCompact: function(forceCompact, _isMobile) {
 		return forceCompact || _isMobile;
+	},
+
+	_getAssessedUserHref: function(entity) {
+		return entity && entity.getLinkByRel('https://api.brightspace.com/rels/user');
+	},
+
+	_getAssessedUserDisplayName: function(entity) {
+		if(!entity) {
+			return null;
+		}
+		const nameEntities = entity.getSubEntitiesByClasses(['display', 'name']);
+		if(!nameEntities || nameEntities.length === 0) {
+			return null;
+		}
+		const nameEntity = nameEntities[0];
+		return nameEntity.properties && nameEntity.properties.name;
 	},
 
 	_getCanOverrideTotalScore: function(entity) {
