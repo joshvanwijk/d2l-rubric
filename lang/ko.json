@@ -1,6 +1,7 @@
 {
     "actionsforCriterion": "{criterionName} 기준에 대한 작업",
     "actionsforEditRubric": "루브릭 편집에 대한 작업",
+    "activityNameLabel": "Activity: {name}",
     "addCriteriaGroup": "기준 그룹 추가",
     "addCriterion": "기준 추가",
     "addedOverallLevelAppend": "{name} 뒤에 새 전체 점수 수준이 추가되었음",
@@ -33,6 +34,7 @@
     "copiedCriterionLoading": "{name}의 사본이 로드 중입니다.",
     "copyCriterion": "{criterionName} 복사",
     "copyRow": "행 복사",
+    "courseNameLabel": "Course: {name}",
     "criteriaGroup": "기준 그룹",
     "criteriaHeading": "기준",
     "criterion": "기준",
@@ -172,6 +174,7 @@
     "shareRubricSaveFailed": "구성 단위 가용성을 변경하지 못했습니다.",
     "standardsAligned": "{standardsName}이(가) {name}에 정렬되었습니다.",
     "statistics": "통계",
+    "studentNameLabel": "Name: {name}",
     "total": "총",
     "totalMobile": "총 점수",
     "totalScoreAriaLabel": "루브릭이 총 {value}점의 점수에서 벗어났습니다.",

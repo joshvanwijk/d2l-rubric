@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.FrFr = {
 	'actionsforCriterion': 'Actions pour le critère {criterionName}',
 	'actionsforEditRubric': 'Actions pour modifier la grille d’évaluation',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Ajouter un groupe de critères',
 	'addCriterion': 'Ajouter un critère',
 	'addedOverallLevelAppend': 'Un niveau de score global a été ajouté après {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.FrFr = {
 	'copiedCriterionLoading': 'La copie de {name} est en cours de chargement',
 	'copyCriterion': 'Copier {criterionName}',
 	'copyRow': 'Copier la ligne',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Groupe de critères',
 	'criteriaHeading': 'Critère',
 	'criterion': 'Critère',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.FrFr = {
 	'shareRubricSaveFailed': 'Le changement d’unité organisationnelle a échoué',
 	'standardsAligned': '{standardsName} aligné sur {name}',
 	'statistics': 'Statistiques',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Total',
 	'totalMobile': 'Score total',
 	'totalScoreAriaLabel': 'La grille d’évaluation affiche une note sur un total de {value} points.',

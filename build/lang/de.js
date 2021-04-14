@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.De = {
 	'actionsforCriterion': 'Aktionen für Kriterium {criterionName}',
 	'actionsforEditRubric': 'Aktionen für die Bearbeitung des Bewertungsschemas',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Kriteriengruppe hinzufügen',
 	'addCriterion': 'Kriterium hinzufügen',
 	'addedOverallLevelAppend': 'Ein neues Gesamtpunktzahl-Niveau wurde nach {name} hinzugefügt',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.De = {
 	'copiedCriterionLoading': 'Kopie von {name} wird geladen',
 	'copyCriterion': '{criterionName} kopieren',
 	'copyRow': 'Zeile kopieren',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Kriteriengruppe',
 	'criteriaHeading': 'Kriterien',
 	'criterion': 'Kriterium',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.De = {
 	'shareRubricSaveFailed': 'Ändern der Verfügbarkeit der Organisationseinheit fehlgeschlagen',
 	'standardsAligned': '{standardsName} auf {name} ausgerichtet',
 	'statistics': 'Statistik',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Gesamt',
 	'totalMobile': 'Gesamtpunktzahl',
 	'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',

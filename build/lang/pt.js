@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Pt = {
 	'actionsforCriterion': 'Ações para o critério {criterionName}',
 	'actionsforEditRubric': 'Ações para Editar Rubrica',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Adicionar Grupo de critérios',
 	'addCriterion': 'Adicionar Critério',
 	'addedOverallLevelAppend': 'Um novo nível de pontuação geral foi adicionado depois de {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Pt = {
 	'copiedCriterionLoading': 'A cópia de {name} está sendo carregada',
 	'copyCriterion': 'Copiar {criterionName}',
 	'copyRow': 'Copiar linha',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Grupo de critérios',
 	'criteriaHeading': 'Critérios',
 	'criterion': 'Critério',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Pt = {
 	'shareRubricSaveFailed': 'Falha ao alterar a disponibilidade da unidade organizacional',
 	'standardsAligned': '{standardsName} alinhado ao {name}',
 	'statistics': 'Estatísticas',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Total',
 	'totalMobile': 'Pontuação Total',
 	'totalScoreAriaLabel': 'A rubrica refere-se à pontuação total máxima de {value} pontos.',

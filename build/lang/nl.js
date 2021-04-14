@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Nl = {
 	'actionsforCriterion': 'Acties voor criterium {criterionName}',
 	'actionsforEditRubric': 'Acties voor rubric bewerken',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Criteriagroep toevoegen',
 	'addCriterion': 'Criterium toevoegen',
 	'addedOverallLevelAppend': 'Een nieuw niveau voor de algehele score is toegevoegd na {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Nl = {
 	'copiedCriterionLoading': 'Kopie van {name} wordt geladen',
 	'copyCriterion': '{criterionName} kopiëren',
 	'copyRow': 'Rij kopiëren',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Criteriagroep',
 	'criteriaHeading': 'Criteria',
 	'criterion': 'Criterium',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Nl = {
 	'shareRubricSaveFailed': 'Het wijzigen van de beschikbaarheid van de organisatie-eenheid is mislukt',
 	'standardsAligned': '{standardsName} afgestemd op {name}',
 	'statistics': 'Statistieken',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Totaal',
 	'totalMobile': 'Totale score',
 	'totalScoreAriaLabel': 'De rubric is gebaseerd op een totale score van {value} punten.',

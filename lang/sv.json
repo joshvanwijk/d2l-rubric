@@ -1,6 +1,7 @@
 {
     "actionsforCriterion": "Åtgärder för kriteriet {criterionName}",
     "actionsforEditRubric": "Åtgärder för Redigera rubricering",
+    "activityNameLabel": "Activity: {name}",
     "addCriteriaGroup": "Lägg till kriteriegrupp",
     "addCriterion": "Lägg till kriterium",
     "addedOverallLevelAppend": "En ny allmän poängnivå har lagts till efter {name}",
@@ -33,6 +34,7 @@
     "copiedCriterionLoading": "En kopia av {name} läses in",
     "copyCriterion": "Kopiera {criterionName}",
     "copyRow": "Kopiera rad",
+    "courseNameLabel": "Course: {name}",
     "criteriaGroup": "Kriteriegrupp",
     "criteriaHeading": "Kriterier",
     "criterion": "Kriterium",
@@ -172,6 +174,7 @@
     "shareRubricSaveFailed": "Det gick inte att ändra tillgängligheten för organisationsenheten",
     "standardsAligned": "{standardsName} justerad efter {name}",
     "statistics": "Statistik",
+    "studentNameLabel": "Name: {name}",
     "total": "Totalt antal",
     "totalMobile": "Totala poäng",
     "totalScoreAriaLabel": "Rubriceringen är av totalt {value} poäng.",

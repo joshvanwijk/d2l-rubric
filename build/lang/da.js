@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Da = {
 	'actionsforCriterion': 'Handlinger for kriterium {criterionName}',
 	'actionsforEditRubric': 'Handlinger for Rediger rubrik',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Tilføj kriteriegruppe',
 	'addCriterion': 'Tilføj kriterium',
 	'addedOverallLevelAppend': 'Et nyt overordnet scoreniveau blev tilføjet efter {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Da = {
 	'copiedCriterionLoading': 'Kopi af {name} indlæses',
 	'copyCriterion': 'Kopier {criterionName}',
 	'copyRow': 'Kopiér række',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Kriteriegruppe',
 	'criteriaHeading': 'Kriterier',
 	'criterion': 'Kriterium',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Da = {
 	'shareRubricSaveFailed': 'Ændring af tilgængelighed for organisationsenhed mislykkedes',
 	'standardsAligned': '{standardsName} justeret til {name}',
 	'statistics': 'Statistik',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Samlet',
 	'totalMobile': 'Samlet score',
 	'totalScoreAriaLabel': 'Rubrikken er ud fra en samlet score på {value} point.',

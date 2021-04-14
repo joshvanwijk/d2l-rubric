@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Tr = {
 	'actionsforCriterion': '{criterionName} kriteri için işlemler',
 	'actionsforEditRubric': 'Rubriği Düzenleme Eylemleri',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Kriter Grubu Ekle',
 	'addCriterion': 'Kriter Ekle',
 	'addedOverallLevelAppend': '{name} sonrasına yeni bir genel puan eklendi',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Tr = {
 	'copiedCriterionLoading': '{name} kopyası yükleniyor',
 	'copyCriterion': '{criterionName} kriterini kopyala',
 	'copyRow': 'Satırı Kopyala',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Ölçüt Grubu',
 	'criteriaHeading': 'Kriterler',
 	'criterion': 'Ölçüt',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Tr = {
 	'shareRubricSaveFailed': 'Organizasyon birimi kullanılabilirliği değiştirilemedi',
 	'standardsAligned': '{name} ile hizalanmış {standardsName}',
 	'statistics': 'İstatistikler',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Toplam',
 	'totalMobile': 'Toplam Puan',
 	'totalScoreAriaLabel': 'Rubrik, toplam {value} puandan oluşur.',

@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Zh = {
 	'actionsforCriterion': '标准 {criterionName} 的操作',
 	'actionsforEditRubric': '编辑量规的操作',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': '添加标准组',
 	'addCriterion': '添加标准',
 	'addedOverallLevelAppend': '新的总分数级别已添加到 {name} 之后',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Zh = {
 	'copiedCriterionLoading': '正在加载 {name} 的副本',
 	'copyCriterion': '复制 {criterionName}',
 	'copyRow': '复制行',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': '标准组',
 	'criteriaHeading': '标准',
 	'criterion': '标准',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Zh = {
 	'shareRubricSaveFailed': '更改组织单位可用性失败',
 	'standardsAligned': '{standardsName} 与 {name} 相符',
 	'statistics': '统计',
+	'studentNameLabel': 'Name: {name}',
 	'total': '总计',
 	'totalMobile': '总分数',
 	'totalScoreAriaLabel': '量规超出了总分数值 {value}。',

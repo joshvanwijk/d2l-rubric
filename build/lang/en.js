@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.En = {
 	'actionsforCriterion': 'Actions for criterion {criterionName}',
 	'actionsforEditRubric': 'Actions for Edit Rubric',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Add Criteria Group',
 	'addCriterion': 'Add Criterion',
 	'addedOverallLevelAppend': 'A new overall score level has been added after {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.En = {
 	'copiedCriterionLoading': 'Copy of {name} is loading',
 	'copyCriterion': 'Copy {criterionName}',
 	'copyRow': 'Copy Row',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Criteria Group',
 	'criteriaHeading': 'Criteria',
 	'criterion': 'Criterion',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.En = {
 	'shareRubricSaveFailed': 'Changing org unit availability failed',
 	'standardsAligned': '{standardsName} aligned to {name}',
 	'statistics': 'Statistics',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Total',
 	'totalMobile': 'Total Score',
 	'totalScoreAriaLabel': 'The rubric is out of a total score of {value} points.',

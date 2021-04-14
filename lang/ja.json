@@ -1,6 +1,7 @@
 {
     "actionsforCriterion": "条件 {criterionName} のアクション",
     "actionsforEditRubric": "注釈の編集のアクション",
+    "activityNameLabel": "Activity: {name}",
     "addCriteriaGroup": "条件グループの追加",
     "addCriterion": "条件の追加",
     "addedOverallLevelAppend": "新規の全体スコアレベルが {name} の後ろに追加されました",
@@ -33,6 +34,7 @@
     "copiedCriterionLoading": "{name} のコピーをロード中",
     "copyCriterion": "{criterionName} のコピー",
     "copyRow": "行のコピー",
+    "courseNameLabel": "Course: {name}",
     "criteriaGroup": "条件グループ",
     "criteriaHeading": "条件",
     "criterion": "条件",
@@ -172,6 +174,7 @@
     "shareRubricSaveFailed": "組織単位の使用可能期間の変更に失敗しました",
     "standardsAligned": "{standardsName} が {name} と整合されました",
     "statistics": "統計",
+    "studentNameLabel": "Name: {name}",
     "total": "合計",
     "totalMobile": "合計スコア",
     "totalScoreAriaLabel": "注釈は最大スコア合計 {value} ポイントです。",

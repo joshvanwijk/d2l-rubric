@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Cy = {
 	'actionsforCriterion': 'Camau gweithredu ar gyfer y maen prawf {criterionName}',
 	'actionsforEditRubric': 'Camau Gweithredu ar gyfer Golygu Cyfeireb',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Ychwanegu Grŵp Meini Prawf',
 	'addCriterion': 'Ychwanegu Maen Prawf',
 	'addedOverallLevelAppend': 'Mae lefel sgôr cyffredinol newydd wedi cael ei hychwanegu ar ôl {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Cy = {
 	'copiedCriterionLoading': 'Mae copi o {name} wrthi’n llwytho',
 	'copyCriterion': 'Copïo {criterionName}',
 	'copyRow': 'Copïo Rhes',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Grŵp Meini Prawf',
 	'criteriaHeading': 'Meini Prawf',
 	'criterion': 'Maen prawf',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Cy = {
 	'shareRubricSaveFailed': 'Methwyd â newid argaeledd uned sefydliad',
 	'standardsAligned': '{standardsName} wedi’i alinio i {name}',
 	'statistics': 'Ystadegau',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Cyfanswm',
 	'totalMobile': 'Cyfanswm Sgôr',
 	'totalScoreAriaLabel': 'Mae’r gyfeireb allan o gyfanswm o {value} o bwyntiau.',

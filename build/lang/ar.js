@@ -8,6 +8,7 @@ window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
 window.D2L.Rubric.Language.Ar = {
 	'actionsforCriterion': 'إجراءات للمعيار {criterionName}',
 	'actionsforEditRubric': 'إجراءات لتحرير آلية التقييم',
+	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'إضافة مجموعة معايير',
 	'addCriterion': 'إضافة معيار',
 	'addedOverallLevelAppend': 'تمت إضافة مستوى جديد من مجموع الدرجات الإجمالية بعد {name}',
@@ -40,6 +41,7 @@ window.D2L.Rubric.Language.Ar = {
 	'copiedCriterionLoading': 'يتم الآن تحميل نسخة من {name}',
 	'copyCriterion': 'نسخ {criterionName}',
 	'copyRow': 'نسخ الصف',
+	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'مجموعة المعايير',
 	'criteriaHeading': 'المعايير',
 	'criterion': 'المعيار',
@@ -179,6 +181,7 @@ window.D2L.Rubric.Language.Ar = {
 	'shareRubricSaveFailed': 'فشل تغيير توفر الوحدة التنظيمية',
 	'standardsAligned': 'تمت محاذاة {standardsName} مع {name}',
 	'statistics': 'الإحصاءات',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'المجموع',
 	'totalMobile': 'مجموع الدرجات',
 	'totalScoreAriaLabel': 'تشمل آلية التقييم مجموع درجات يساوي {value} من النقاط.',
