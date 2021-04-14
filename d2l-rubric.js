@@ -197,6 +197,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			[hidden] {
 				display: none !important;
 			}
+			
+			.print-only {
+				display: none;
+			}
 
 			@media print {
 
@@ -214,6 +218,25 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				.out-of-container {
 					page-break-inside: avoid;
 					width: 100vw;
+				}
+
+				.print-only {
+					display: block;
+				}
+
+				h1.print-only {
+					@apply --d2l-heading-1;
+					font-size: 1.6rem;
+					margin-bottom: 0px;
+				}
+
+				div.print-only {
+					@apply --d2l-body-standard-text;
+					font-size: 0.8rem;
+				}
+
+				.student-name-label {
+					margin-bottom: 0.8rem;
 				}
 
 			}
@@ -250,6 +273,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 				<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 				<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
+					<h1 class="rubric-name-label print-only">[[_getRubricName(entity)]]</h1>
+					<div class="activity-name-label print-only">[[localize('activityNameLabel, 'name', _activityName)]]</div>
+					<div class="course-name-label print-only">[[localize('courseNameLabel, 'name', _activityName)]]</div>
+					<div class="student-name-label print-only">[[localize('studentNameLabel, 'name', _activityName)]]</div>
 					<d2l-rubric-criteria-groups
 						href="[[_getHref(_criteriaGroups)]]"
 						assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
@@ -354,6 +381,18 @@ Polymer({
 		editingScore: {
 			type: Number,
 			value: -1
+		},
+		_assessmentName: {
+			type: String,
+			value: null
+		},
+		_studentName: {
+			type: String,
+			value: null
+		},
+		_courseName: {
+			type: String,
+			value: null
 		},
 		assessmentHref: {
 			type: String,
