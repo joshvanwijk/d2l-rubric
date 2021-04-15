@@ -217,7 +217,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 
 				.out-of-container {
 					page-break-inside: avoid;
-					width: 100vw;
+					width: 99vw;
 				}
 
 				.print-only {
@@ -235,8 +235,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					font-size: 0.8rem;
 				}
 
-				.student-name-label {
-					margin-bottom: 0.8rem;
+				d2l-rubric-criteria-groups {
+					margin-top: 0.8rem;
 				}
 
 			}
@@ -275,9 +275,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 				<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
 					<h1 class="rubric-name-label print-only">[[_getRubricName(entity)]]</h1>
-					<div class="activity-name-label print-only">[[localize('activityNameLabel', 'name', _activityName)]]</div>
+					<template is="dom-if" if="[[_hasAssessment(assessmentHref)]]">
+						<div class="activity-name-label print-only">[[localize('activityNameLabel', 'name', _assessedActivityName)]]</div>
+					</template>
 					<div class="course-name-label print-only">[[localize('courseNameLabel', 'name', _courseName)]]</div>
-					<div class="student-name-label print-only">[[localize('studentNameLabel', 'name', _assessedUserDisplayName)]]</div>
+					<template is="dom-if" if="[[_hasAssessment(assessmentHref)]]">
+						<div class="student-name-label print-only">[[localize('studentNameLabel', 'name', _assessedUserDisplayName)]]</div>
+					</template>
 					<d2l-rubric-criteria-groups
 						href="[[_getHref(_criteriaGroups)]]"
 						assessment-href="[[_waitForCachePrimer(assessmentHref,_cachePrimed)]]"
@@ -383,9 +387,9 @@ Polymer({
 			type: Number,
 			value: -1
 		},
-		_assessmentName: {
+		_assessedActivityName: {
 			type: String,
-			value: null
+			computed: '_getAssessedActivityName(assessmentEntity)'
 		},
 		_studentName: {
 			type: String,
@@ -555,6 +559,10 @@ Polymer({
 		return field && field.value && field.value.selected;
 	},
 
+	_hasAssessment: function(href) {
+		return href && href !== '';
+	},
+
 	_hasOutOf: function(entity) {
 		var outOf = entity && entity.properties && entity.properties.outOf;
 		return !!outOf || outOf === 0;
@@ -661,6 +669,10 @@ Polymer({
 
 	_computeCompact: function(forceCompact, _isMobile) {
 		return forceCompact || _isMobile;
+	},
+
+	_getAssessedActivityName: function(entity) {
+		return entity && entity.properties && entity.properties.activityName;
 	},
 
 	_getAssessedUserHref: function(entity) {
