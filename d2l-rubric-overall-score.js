@@ -24,6 +24,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			:host {
 				display: block;
 				width: 100%;
+				--level-count: 0;
+
 			}
 
 			h4 {
@@ -136,6 +138,25 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				overflow: hidden;
 				width: 100%;
 				word-wrap: break-word;
+			}
+
+			@media print {
+
+				:host {
+					page-break-inside: avoid;
+				}
+				.overall-level {
+					min-width: 0;
+					padding: calc(5vw / var(--level-count)) !important;
+				}
+				.overall-levels {
+					max-width: calc(100vw - 2px);
+				}
+
+				.info-container {
+					word-break: break-word;
+				}
+	
 			}
 		</style>
 
@@ -252,6 +273,8 @@ Polymer({
 		}
 		this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
 		this._version = (this._version || 0) + 1;
+		const levelCount = this._levels.length;
+		this.updateStyles({'--level-count': levelCount.toString()});
 		afterNextRender(this, () => {
 			const scrollWrapper = this.shadowRoot.querySelector('d2l-scroll-wrapper');
 			if (scrollWrapper) {

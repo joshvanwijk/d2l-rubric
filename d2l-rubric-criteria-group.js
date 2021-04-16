@@ -37,6 +37,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			:host {
 				display: block;
 				position: relative;
+				--column-count: 0;
 			}
 			d2l-table[type="default"] d2l-td.out-of {
 				text-align: left;
@@ -216,6 +217,49 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 
 			d2l-tspan {
 				position: relative;
+			}
+
+			@media print {
+
+				:host {
+					page-break-before: auto;
+					page-break-inside: avoid;
+					page-break-after: auto;
+				}
+				d2l-table { 
+					width: 100vw;
+				}
+				d2l-thead {
+					display: table-header-group;
+					page-break-before: auto;
+					page-break-inside: avoid;
+				}
+				d2l-tbody d2l-tr {
+					page-break-inside: avoid;
+					page-break-after: auto;
+				}
+				d2l-td {
+					word-break: break-word;
+					padding: calc(5vw / var(--column-count)) !important;
+				}
+				d2l-th {
+					word-break: break-word;
+					width: calc(90vw / var(--column-count));
+					padding: calc(5vw / var(--column-count)) !important;
+				}
+
+				d2l-td.criterion-cell:not(.selected) {
+					border-bottom: var(--d2l-table-border);
+					margin-bottom: -1px; /* hides "double borders" on adjacent table row cells */
+				}
+				d2l-td.criteria {
+					border-bottom: var(--d2l-table-border);
+					margin-bottom: -1px;
+				}
+				d2l-td.out-of {
+					border-bottom: var(--d2l-table-border);
+					margin-bottom: -1px;
+				}
 			}
 		</style>
 
@@ -501,6 +545,10 @@ Polymer({
 		this._levels = levelsEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 		this._sortedLevels = this._sortRubricLevels(this._levels);
 		this._loaMappingHref = this._getLoaMappingLink(levelsEntity);
+
+		//Track the number of levels in a css variable for styling
+		const colCount = this._getColumnCount(this._levels, this.entity, this.criterionResultMap, this.rubricType);
+		this.updateStyles({'--column-count': colCount.toString()});
 
 		// trigger a resize event so that the table resizes with the new levels
 		if (PolymerElement) {
