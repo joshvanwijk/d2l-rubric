@@ -680,11 +680,11 @@ Polymer({
 	},
 
 	_getAssessedUserDisplayName: function(entity) {
-		if(!entity) {
+		if (!entity) {
 			return null;
 		}
 		const nameEntities = entity.getSubEntitiesByClasses(['display', 'name']);
-		if(!nameEntities || nameEntities.length === 0) {
+		if (!nameEntities || nameEntities.length === 0) {
 			return null;
 		}
 		const nameEntity = nameEntities[0];

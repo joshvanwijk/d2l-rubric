@@ -545,7 +545,7 @@ Polymer({
 		this._levels = levelsEntity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 		this._sortedLevels = this._sortRubricLevels(this._levels);
 		this._loaMappingHref = this._getLoaMappingLink(levelsEntity);
-		
+
 		//Track the number of levels in a css variable for styling
 		const colCount = this._getColumnCount(this._levels, this.entity, this.criterionResultMap, this.rubricType);
 		this.updateStyles({'--column-count': colCount.toString()});
