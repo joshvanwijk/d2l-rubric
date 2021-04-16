@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Pt = {
 	'loaThresholdMovementNotif': 'Limite movido {direction, select, left {esquerda} right {direita}}',
 	'lockedAlertText': 'A rubrica não pode ser editada porque já foi usada para avaliar o trabalho do aluno',
 	'makeRubricAvailableHeader': 'Disponibilizar rubrica para',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Mover critério {position} para baixo',
 	'moveCriterionUp': 'Mover critério {position} para cima',
 	'name': 'Nome',

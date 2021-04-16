@@ -5,10 +5,9 @@ window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
 window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior || {};
 window.D2L.Rubric = window.D2L.Rubric || {};
 window.D2L.Rubric.Language = window.D2L.Rubric.Language || {};
-window.D2L.Rubric.Language.Fr = {
+window.D2L.Rubric.Language.FrOn = {
 	'actionsforCriterion': 'Actions pour le critère {criterionName}',
 	'actionsforEditRubric': 'Actions pour modifier la grille d’évaluation',
-	'activityNameLabel': 'Activity: {name}',
 	'addCriteriaGroup': 'Ajouter un groupe de critères',
 	'addCriterion': 'Ajouter un critère',
 	'addedOverallLevelAppend': 'Un nouveau niveau de note globale a été ajouté après {name}',
@@ -41,7 +40,6 @@ window.D2L.Rubric.Language.Fr = {
 	'copiedCriterionLoading': 'Une copie de {name} est en cours de chargement',
 	'copyCriterion': 'Copier {criterionName}',
 	'copyRow': 'Copier la rangée',
-	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Groupe de critères',
 	'criteriaHeading': 'Critère',
 	'criterion': 'Critère',
@@ -107,8 +105,8 @@ window.D2L.Rubric.Language.Fr = {
 	'loaThresholdMovementNotif': 'Seuil déplacé {direction, select, left {à gauche} right {à droite}}',
 	'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée parce qu’elle a déjà été utilisée pour évaluer le travail d’un élève',
 	'makeRubricAvailableHeader': 'Rendre la rubrique disponible à :',
-	'moveCriteriaGroupDown': 'Déplacer le groupe de critères en position {positionNumber} vers le bas',
-	'moveCriteriaGroupUp': 'Déplacer le groupe de critères en position {positionNumber} vers le haut',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Déplacer le critère {position} vers le bas',
 	'moveCriterionUp': 'Déplacer le critère {position} vers le haut',
 	'name': 'Nom',
@@ -139,8 +137,6 @@ window.D2L.Rubric.Language.Fr = {
 	'pointsMinimum': '{number} {number, plural, =1 {point} other {points}} minimum',
 	'pointsSaveFailed': 'Échec de l’enregistrement des points',
 	'preview': 'Prévisualiser',
-	'printRubric': 'Print Rubric',
-	'printRubricDescription': 'Print Rubric. A print preview will be opened.',
 	'rangeStartInvalid': 'La valeur de départ de la plage n’est pas valide',
 	'rangeStartOrMore': 'ou plus',
 	'rangeStartRequired': 'Une valeur de départ de plage est requise',
@@ -183,7 +179,6 @@ window.D2L.Rubric.Language.Fr = {
 	'shareRubricSaveFailed': 'Échec de la modification de la disponibilité de l’unité organisationnelle',
 	'standardsAligned': '{standardsName} aligné avec {name}',
 	'statistics': 'Statistiques',
-	'studentNameLabel': 'Name: {name}',
 	'total': 'Total',
 	'totalMobile': 'Résultat total',
 	'totalScoreAriaLabel': 'La grille d’évaluation compte pour la note totale de {value} points.',
@@ -191,9 +186,9 @@ window.D2L.Rubric.Language.Fr = {
 };
 
 /*
- * Fr lang terms
- * @polymerBehavior D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior
+ * FrOn lang terms
+ * @polymerBehavior D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrOnBehavior
  */
-D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrBehavior = {
-	fr: window.D2L.Rubric.Language.Fr
+D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrOnBehavior = {
+	frOn: window.D2L.Rubric.Language.FrOn
 };

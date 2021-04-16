@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.ZhTw = {
 	'loaThresholdMovementNotif': '門檻已向{direction, select, left {左} right {右}}移動',
 	'lockedAlertText': '此量規已用於評量學習者作業，因此無法編輯',
 	'makeRubricAvailableHeader': '使量規可用於',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': '下移標準 {position}',
 	'moveCriterionUp': '上移標準 {position}',
 	'name': '名稱',

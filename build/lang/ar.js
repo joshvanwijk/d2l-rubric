@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Ar = {
 	'loaThresholdMovementNotif': 'تم نقل الحد الأدنى للتحصيل {direction, select, left {left} right {right}}',
 	'lockedAlertText': 'لا يمكن تحرير آلية التقييم هذه بسبب استخدامها مسبقًا لتقييم عمل المتعلّم',
 	'makeRubricAvailableHeader': 'توفير آلية التقييم لـ',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'نقل المعيار {position} إلى الأسفل',
 	'moveCriterionUp': 'نقل المعيار {position} إلى الأعلى',
 	'name': 'الاسم',

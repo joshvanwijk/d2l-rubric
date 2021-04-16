@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Es = {
 	'loaThresholdMovementNotif': 'El umbral se movió a la {direction, select, left {izquierda} right {derecha}}',
 	'lockedAlertText': 'Esta rúbrica no se puede editar porque ya se utilizó para evaluar el trabajo del estudiante',
 	'makeRubricAvailableHeader': 'Rúbrica disponible para',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Baje el criterio {position}',
 	'moveCriterionUp': 'Suba el criterio {position}',
 	'name': 'Nombre',

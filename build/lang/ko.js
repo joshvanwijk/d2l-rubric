@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Ko = {
 	'loaThresholdMovementNotif': '임계값이 {direction, select, left {left} right {right}} 방향으로 이동했습니다.',
 	'lockedAlertText': '이 루브릭은 이미 학습자 수행 평가에 사용되었으므로 편집할 수 없음',
 	'makeRubricAvailableHeader': '루브릭 제공 대상',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': '{position} 아래로 기준 이동',
 	'moveCriterionUp': '{position} 위로 기준 이동',
 	'name': '이름',

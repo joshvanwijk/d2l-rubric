@@ -108,7 +108,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 			}
 		</style>
 
-		<div class="gutter-left"></div>
+		<div class="gutter-left">
+			<slot name="criteria-group-reorder"></slot>
+		</div>
 		<div class="cell col-first" is-holistic$="[[isHolistic]]">
 			<slot name="group-name-slot"></slot>
 			<d2l-button-icon on-click="_handlePrependLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">

@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Ja = {
 	'loaThresholdMovementNotif': 'しきい値は {direction, select, left {左} right {右}} に移動されました',
 	'lockedAlertText': 'この注釈はすでに受講者の作業を評価するために使用されているため、編集できません',
 	'makeRubricAvailableHeader': '次に対して注釈を使用可能にする',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': '条件 {position} を下に移動',
 	'moveCriterionUp': '条件 {position} を上に移動',
 	'name': '名前',

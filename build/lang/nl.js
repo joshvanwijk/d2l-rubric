@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Nl = {
 	'loaThresholdMovementNotif': 'Drempel verplaatst {direction, select, left {links} right {rechts}}',
 	'lockedAlertText': 'Deze rubric kan niet worden bewerkt omdat deze al is gebruikt om het werk van de cursist te beoordelen',
 	'makeRubricAvailableHeader': 'Rubric beschikbaar maken voor',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Criterium {position} omlaag verplaatsen',
 	'moveCriterionUp': 'Criterium {position} omhoog verplaatsen',
 	'name': 'Naam',

@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.De = {
 	'loaThresholdMovementNotif': 'Mindestergebnis nach {direction, select, left {links} right {rechts}} verschoben',
 	'lockedAlertText': 'Dieses Bewertungsschema kann nicht bearbeitet werden, da damit bereits auf Arbeit von Lernern bewertet wurde.',
 	'makeRubricAvailableHeader': 'Bewertungsschema verfügbar machen für',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Kriterium {position} nach unten verschieben',
 	'moveCriterionUp': 'Kriterium {position} nach oben verschieben',
 	'name': 'Name',

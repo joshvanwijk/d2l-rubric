@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Tr = {
 	'loaThresholdMovementNotif': 'Eşik taşındı: {direction, select, left {sol} right {sağ}}',
 	'lockedAlertText': 'Öğrenci çalışmalarını değerlendirmek için zaten kullanıldığından bu rubrik düzenlenemiyor',
 	'makeRubricAvailableHeader': 'Şunların rubriği kullanmasına izin ver:',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Kriteri {position} aşağı taşı',
 	'moveCriterionUp': 'Kriteri {position} yukarı taşı',
 	'name': 'Ad',

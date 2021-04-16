@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.FrFr = {
 	'loaThresholdMovementNotif': 'Seuil de réussite déplacé {direction, select, left {gauche} right {droite}}',
 	'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée, car elle a déjà été utilisée pour évaluer le travail de l’apprenant.',
 	'makeRubricAvailableHeader': 'Rendre la rubrique disponible à',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Déplacer le critère {position} vers le bas',
 	'moveCriterionUp': 'Déplacer le critère {position} vers le haut',
 	'name': 'Nom',

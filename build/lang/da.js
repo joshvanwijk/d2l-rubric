@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Da = {
 	'loaThresholdMovementNotif': 'Grænse flyttet til {direction, select, left {venstre} right {højre}}',
 	'lockedAlertText': 'Denne rubrik kan ikke redigeres, da den allerede er blevet brugt til at vurdere elevens arbejde',
 	'makeRubricAvailableHeader': 'Gør rubrik tilgængelig for',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Flyt kriterium {position} ned',
 	'moveCriterionUp': 'Flyt kriterium {position} op',
 	'name': 'Navn',

@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Cy = {
 	'loaThresholdMovementNotif': 'Trothwy wedi’i symud {direction, select, left {i’r chwith} right {i\'r dde}}',
 	'lockedAlertText': 'Does dim modd golygu’r gyfeireb hon gan ei bod eisoes wedi cael ei defnyddio i asesu gwaith dysgwyr',
 	'makeRubricAvailableHeader': 'Gwneud y gyfeireb ar gael i',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Symud y maen prawf i lawr {position}',
 	'moveCriterionUp': 'Symud y maen prawf i fyny {position}',
 	'name': 'Enw',

@@ -107,6 +107,8 @@ window.D2L.Rubric.Language.Sv = {
 	'loaThresholdMovementNotif': 'Tröskeln har flyttats {direction, select, left {left} right {right}}',
 	'lockedAlertText': 'Denna rubricering kan inte redigeras eftersom den redan har använts för utvärdering av elevarbete',
 	'makeRubricAvailableHeader': 'Gör rubricering tillgänglig för',
+	'moveCriteriaGroupDown': 'Move criteria group in position {positionNumber} down',
+	'moveCriteriaGroupUp': 'Move criteria group in position {positionNumber} up',
 	'moveCriterionDown': 'Flytta ned kriterium {position}',
 	'moveCriterionUp': 'Flytta upp kriterium {position}',
 	'name': 'Namn',
