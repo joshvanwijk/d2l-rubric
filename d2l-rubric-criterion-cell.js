@@ -70,7 +70,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-cell">
 
 				/* Adjust checkmark to handle no minimum column width when printing */
 				.check-icon.center {
-					width: 75%
+					width: 90%; /* Table cells have ~5% padding */
 				}
 				.check-icon.corner {
 					position: absolute;
