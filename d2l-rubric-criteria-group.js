@@ -222,8 +222,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			@media print {
 
 				:host {
-					page-break-before: auto;
-					page-break-inside: avoid;
+					page-break-before: avoid;
 					page-break-after: auto;
 				}
 				d2l-table { 
