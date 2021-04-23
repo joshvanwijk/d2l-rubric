@@ -745,6 +745,7 @@ Polymer({
 					margin: 0;
 					padding: 0;
 					border: none;
+					overflow: visible !important;
 				}
 			}
 		`;
