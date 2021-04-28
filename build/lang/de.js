@@ -183,7 +183,7 @@ window.D2L.Rubric.Language.De = {
 	'shareRubricSaveFailed': 'Ändern der Verfügbarkeit der Organisationseinheit fehlgeschlagen',
 	'standardsAligned': '{standardsName} auf {name} ausgerichtet',
 	'statistics': 'Statistik',
-	'studentNameLabel': 'Name: {Name}',
+	'studentNameLabel': 'Name: {name}',
 	'total': 'Gesamt',
 	'totalMobile': 'Gesamtpunktzahl',
 	'totalScoreAriaLabel': 'Das Bewertungsschema hat eine maximale Punktzahl von {value}.',
