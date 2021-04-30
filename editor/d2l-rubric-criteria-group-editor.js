@@ -81,9 +81,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				padding: 0.45rem;
 				flex: 1 1 auto;
 				border: 1px solid var(--d2l-color-galena);
-				border-bottom-left-radius: var(--d2l-table-border-radius);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
-				background-color: var(--d2l-table-header-background-color);
+				border-bottom-left-radius: 0.3rem;
+				border-bottom-right-radius: 0.3rem;
+				background-color: var(--d2l-color-regolith);
 			}
 
 			.screen-reader {

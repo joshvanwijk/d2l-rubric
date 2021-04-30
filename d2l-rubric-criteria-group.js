@@ -69,7 +69,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				@apply --d2l-body-compact-text;
 				font-weight: bold;
 				text-align: left;
-				background-color: var(--d2l-table-header-background-color);
+				background-color: var(--d2l-color-regolith);
 			}
 			d2l-table[type="default"] d2l-tbody d2l-tr {
 				height: 100%;
@@ -87,7 +87,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			#loa-labels > div {
 				align-items: center;
 				background-color: #F1F5FB;
-				border: 1px solid var(--d2l-table-border-color);
+				border: 1px solid var(--d2l-color-mica);
 				border-width: 0px 1px 0px 0px;
 				box-sizing: border-box;
 				display: flex;
@@ -115,7 +115,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			d2l-table[type="default"] d2l-td.criteria {
 				@apply --d2l-body-compact-text;
 				text-align: left;
-				background-color: var(--d2l-table-header-background-color);
+				background-color: var(--d2l-color-regolith);
 				vertical-align: top;
 			}
 			.criteria-row-header-container {
@@ -177,7 +177,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.criterion-cell.first.holistic {
-				border-left: var(--d2l-table-border);
+				border-left: 1px solid var(--d2l-color-mica);
 			}
 			.criterion-cell.first.holistic:focus {
 				border-left-color: var(--d2l-color-celestine);
@@ -248,15 +248,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				}
 
 				d2l-td.criterion-cell:not(.selected) {
-					border-bottom: var(--d2l-table-border);
+					border-bottom: 1px solid var(--d2l-color-mica);
 					margin-bottom: -1px; /* hides "double borders" on adjacent table row cells */
 				}
 				d2l-td.criteria {
-					border-bottom: var(--d2l-table-border);
+					border-bottom: 1px solid var(--d2l-color-mica);
 					margin-bottom: -1px;
 				}
 				d2l-td.out-of {
-					border-bottom: var(--d2l-table-border);
+					border-bottom: 1px solid var(--d2l-color-mica);
 					margin-bottom: -1px;
 				}
 			}
@@ -863,7 +863,7 @@ Polymer({
 				const side = reversed ? 'left' : 'right';
 				const hiddenSide = reversed ? 'right' : 'left';
 
-				styles.push(`border-${side}: 1px solid var(--d2l-table-border-color)`);
+				styles.push(`border-${side}: 1px solid var(--d2l-color-mica)`);
 				if (!reversed || cellIndex < this._getCriterionCells(this._criteriaEntities[rowIndex]).length - 1) {
 					styles.push(`border-${hiddenSide}-style: hidden`);
 				}

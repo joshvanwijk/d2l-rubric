@@ -30,11 +30,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 			min-width: 8rem;
 		}
 
-		:dir(rtl) .cell {
-			/* border-right: none;
-			border-left: var(--d2l-table-border); */
-		}
-
 		.gutter-left, .gutter-right {
 			flex: 0 0 auto;
 			width: var(--d2l-rubric-editor-start-gutter-width);
