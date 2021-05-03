@@ -1,5 +1,6 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
-import 'd2l-table/d2l-table-shared-styles.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-styles">
@@ -28,11 +29,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-
 			/* Min width chosen so that 4 levels are visible in standard LMS tab layout.
 			After 4 levels scrolling will kick in */
 			min-width: 8rem;
-		}
-
-		:dir(rtl) .cell {
-			/* border-right: none;
-			border-left: var(--d2l-table-border); */
 		}
 
 		.gutter-left, .gutter-right {

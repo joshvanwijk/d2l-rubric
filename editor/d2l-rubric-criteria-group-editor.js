@@ -1,6 +1,6 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-alert/d2l-alert.js';
@@ -81,9 +81,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 				padding: 0.45rem;
 				flex: 1 1 auto;
 				border: 1px solid var(--d2l-color-galena);
-				border-bottom-left-radius: var(--d2l-table-border-radius);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
-				background-color: var(--d2l-table-header-background-color);
+				border-bottom-left-radius: 0.3rem;
+				border-bottom-right-radius: 0.3rem;
+				background-color: var(--d2l-color-regolith);
 			}
 
 			.screen-reader {

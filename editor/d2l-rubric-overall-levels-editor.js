@@ -1,8 +1,8 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import '../d2l-rubric-entity-behavior.js';
 import '../localize-behavior.js';
@@ -120,43 +120,43 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 
 			#level-header .col-center {
-				background-color: var(--d2l-table-header-background-color);
+				background-color: var(--d2l-color-regolith);
 			}
 
 			#level-header .col-center div:first-of-type {
-				border-top-left-radius: var(--d2l-table-border-radius);
+				border-top-left-radius: 0.3rem;
 			}
 
 			#level-header .col-center div:last-of-type {
-				border-top-right-radius: var(--d2l-table-border-radius);
+				border-top-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) #level-header .col-center div:first-of-type {
 				border-top-left-radius: 0;
-				border-top-right-radius: var(--d2l-table-border-radius);
+				border-top-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) #level-header div.col-center div:last-of-type {
 				border-top-right-radius: 0;
-				border-top-left-radius: var(--d2l-table-border-radius);
+				border-top-left-radius: 0.3rem;
 			}
 
 			#description .col-center div:first-of-type {
-				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-left-radius: 0.3rem;
 			}
 
 			#description .col-center div:last-of-type {
-				border-bottom-right-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) #description .col-center div:first-of-type {
 				border-bottom-left-radius: 0;
-				border-bottom-right-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) #description div.col-center div:last-of-type {
 				border-bottom-right-radius: 0;
-				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-left-radius: 0.3rem;
 			}
 		</style>
 

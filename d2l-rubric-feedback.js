@@ -43,7 +43,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				transition-property: border-color;
 				transition-timing-function: ease;
 				transition: border-color 0.5s;
-				border-bottom-color: var(--d2l-table-border-color);
+				border-bottom-color: var(--d2l-color-mica);
 			}
 			.feedback-arrow[data-mobile] {
 				display: none;

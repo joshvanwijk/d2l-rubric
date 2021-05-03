@@ -1,6 +1,6 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
@@ -29,26 +29,26 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 			}
 			.cell {
 				padding: 0.5rem;
-				background-color: var(--d2l-table-header-background-color);
+				background-color: var(--d2l-color-regolith);
 			}
 
 			:dir(ltr) #levels-section > div:first-of-type[is-holistic] { /* first col-inner */
-				border-top-left-radius: var(--d2l-table-border-radius);
+				border-top-left-radius: 0.3rem;
 				border-left: 1px solid var(--d2l-color-galena);
 			}
 
 			:dir(ltr) #levels-section > div:last-of-type[is-holistic] { /* last col-inner */
 				border-right: 1px solid var(--d2l-color-galena);
-				border-top-right-radius: var(--d2l-table-border-radius);
+				border-top-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) #levels-section > div:first-of-type[is-holistic] {
 				border-right: 1px solid var(--d2l-color-galena);
-				border-top-right-radius: var(--d2l-table-border-radius);
+				border-top-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) #levels-section > div:last-of-type[is-holistic] {
-				border-top-left-radius: var(--d2l-table-border-radius);
+				border-top-left-radius: 0.3rem;
 				border-left: 1px solid var(--d2l-color-galena);
 			}
 
@@ -68,14 +68,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 				flex-direction: row;
 				align-items: center;
 				justify-content: flex-end;
-				border-top-left-radius: var(--d2l-table-border-radius);
+				border-top-left-radius: 0.3rem;
 			}
 			.col-first[is-holistic], .col-last[is-holistic] {
 				padding-top: 3px;
 				padding-bottom: 3px;
 				width: 2.6rem;
 				border: none;
-				background-color: var(--d2l-table-body-background-color);
+				background-color: #ffffff;
 			}
 			.col-first[is-holistic] {
 				padding-left: 0;
@@ -93,18 +93,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 			}
 			:dir(rtl) .col-first {
 				border-top-left-radius: 0;
-				border-top-right-radius: var(--d2l-table-border-radius);
+				border-top-right-radius: 0.3rem;
 			}
 			.col-last {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
 				justify-content: flex-start;
-				border-top-right-radius: var(--d2l-table-border-radius);
+				border-top-right-radius: 0.3rem;
 			}
 			 :dir(rtl) .col-last {
 				border-top-right-radius: 0;
-				border-top-left-radius: var(--d2l-table-border-radius);
+				border-top-left-radius: 0.3rem;
 			}
 		</style>
 

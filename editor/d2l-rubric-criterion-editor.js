@@ -1,10 +1,10 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
 import 'd2l-activity-alignments/d2l-select-outcomes-hierarchical.js';
 import 'd2l-activity-alignments/d2l-activity-alignment-tags.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import '@brightspace-ui/core/components/inputs/input-textarea.js';
@@ -14,7 +14,6 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import '@brightspace-ui/core/components/dropdown/dropdown-more.js';
 import '@brightspace-ui/core/components/dropdown/dropdown-menu.js';
 import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-table/d2l-tspan.js';
 import '../d2l-rubric-entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../localize-behavior.js';
@@ -85,7 +84,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 			}
 
 			.criterion-feedback-header {
-				background-color: var(--d2l-table-header-background-color);
+				background-color: var(--d2l-color-regolith);
 			}
 
 			.criterion-name {
@@ -184,28 +183,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-editor">
 
 			.criterion-detail[is-holistic] {
 				border-bottom: 1px solid var(--d2l-color-galena);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
-				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: 0.3rem;
+				border-bottom-left-radius: 0.3rem;
 			}
 
 			:dir(ltr) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
 				border-left: 1px solid var(--d2l-color-galena);
-				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-left-radius: 0.3rem;
 			}
 
 			:dir(ltr) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
 				border-right: 1px solid var(--d2l-color-galena);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:first-of-type {
 				border-right: 1px solid var(--d2l-color-galena);
-				border-bottom-right-radius: var(--d2l-table-border-radius);
+				border-bottom-right-radius: 0.3rem;
 			}
 
 			:dir(rtl) .criterion-detail[is-holistic] .criterion-text div:last-of-type {
 				border-left: 1px solid var(--d2l-color-galena);
-				border-bottom-left-radius: var(--d2l-table-border-radius);
+				border-bottom-left-radius: 0.3rem;
 			}
 
 			.gutter-left, .gutter-right {

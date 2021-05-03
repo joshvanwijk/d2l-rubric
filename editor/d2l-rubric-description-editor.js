@@ -66,15 +66,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			}
 
 			:host([first-and-corner]) {
-				--input-border-bottom-left-radius: var(--d2l-table-border-radius);
+				--input-border-bottom-left-radius: 0.3rem;
 			}
 
 			:host([last-and-corner]){
-				--input-border-bottom-right-radius: var(--d2l-table-border-radius);
+				--input-border-bottom-right-radius: 0.3rem;
 			}
 
 			:host([first-and-corner]) :dir(rtl) {
-				--input-border-bottom-right-radius: var(--d2l-table-border-radius);
+				--input-border-bottom-right-radius: 0.3rem;
 			}
 
 			:host([first-and-corner]:not([last-and-corner])) :dir(rtl) {
@@ -82,7 +82,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 			}
 
 			:host([last-and-corner]) :dir(rtl) {
-				--input-border-bottom-left-radius: var(--d2l-table-border-radius);
+				--input-border-bottom-left-radius: 0.3rem;
 			}
 
 			:host([last-and-corner]:not([first-and-corner])) :dir(rtl) {

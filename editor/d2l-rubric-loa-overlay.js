@@ -5,7 +5,6 @@ import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
 import '../localize-behavior.js';
 import '../rubric-siren-entity.js';
@@ -98,7 +97,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
-                    padding: var(--d2l-table-cell_-_padding);
+                    padding: 0.5rem 1rem;
                     padding-bottom: 0px;
 					padding-top: 0px;
 					font-size: small;
@@ -108,7 +107,7 @@ class RubricLoaOverlay extends mixinBehaviors([
                     padding-bottom: 3px;
                     width: 2.6rem;
                     border: none;
-                    background-color: var(--d2l-table-body-background-color);
+                    background-color: #ffffff;
                 }
                 .col-first[is-holistic] {
                     padding-left: 0;
