@@ -5,7 +5,6 @@ import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
 import '../localize-behavior.js';
 import '../rubric-siren-entity.js';

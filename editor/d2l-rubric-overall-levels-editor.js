@@ -1,8 +1,8 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-table/d2l-table-shared-styles.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import '../d2l-rubric-entity-behavior.js';
 import '../localize-behavior.js';

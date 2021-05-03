@@ -1,5 +1,6 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
-import 'd2l-table/d2l-table-shared-styles.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-editor-cell-styles">
