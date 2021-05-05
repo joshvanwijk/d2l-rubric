@@ -16,7 +16,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 	static get properties() {
 		return {
 			compact: Boolean,
-			detached: Boolean,
+			detachedView: Boolean,
 			hasAlerts: Boolean,
 			rubricName: String,
 			scoreText: String,
@@ -84,7 +84,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 					<template
 						is="dom-if"
 						id="attached-view-template"
-						if="[[!detached]]"
+						if="[[!detachedView]]"
 						restamp
 					>
 						<d2l-labs-accordion flex>
@@ -92,7 +92,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 								<div slot="header">
 								<d2l-icon
 										class="rubric-header-icon"
-										icon="[[_getRubricIcon(assessmentEntity, detached)]]">
+										icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
 									</d2l-icon>
 									<span class="rubric-header-title-container">
 										<div class="rubric-header-title">[[rubricName]]</div>
@@ -110,12 +110,12 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 					<template
 						is="dom-if"
 						id="detached-view-template"
-						if="[[detached]]"
+						if="[[detachedView]]"
 					>
 						<div slot="header">
 							<d2l-icon
 								class="rubric-header-icon-detached"
-								icon="[[_getRubricIcon(assessmentEntity, detached)]]">
+								icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
 							</d2l-icon>
 							<span class="rubric-header-title-container">
 								<div class="rubric-header-title-detached">[[rubricName]]</div>
@@ -143,8 +143,8 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 		return !!hasAlerts;
 	}
 
-	_getRubricIcon(assessmentEntity, detached) {
-		const tierName = detached
+	_getRubricIcon(assessmentEntity, detachedView) {
+		const tierName = detachedView
 			? 'd2l-tier1'
 			: 'd2l-tier3';
 		const iconName = assessmentEntity && assessmentEntity.hasClass('completed')

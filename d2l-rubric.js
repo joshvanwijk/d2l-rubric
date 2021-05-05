@@ -251,7 +251,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			assessment-entity="[[assessmentEntity]]"
 			has-alerts="[[_hasAlerts]]"
 			compact="[[compact]]"
-			detached="[[detached]]"
+			detached-view="[[detachedView]]"
 			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]">
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
@@ -359,10 +359,9 @@ Polymer({
 			readOnly: true,
 			reflectToAttribute: true
 		},
-		detached: {
+		detachedView: {
 			type: Boolean,
-			value: false,
-			reflectToAttribute: true
+			value: false
 		},
 		forceCompact: {
 			type: Boolean,
