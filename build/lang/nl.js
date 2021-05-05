@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Nl = {
 	'descriptionReadOnlyMode': 'Beschrijving (niet zichtbaar voor cursisten)',
 	'descriptionReadOnlyPlaceholder': 'Geen beschrijving',
 	'descriptionSaveFailed': 'Opslaan van beschrijving mislukt',
+	'detached': 'Detached',
 	'editFeedback': 'Feedback bewerken',
 	'editLevelNameDescription': 'Naam van het niveau op positie {positionNumber}.',
 	'editLevelPointsDescription': 'Punten verdiend voor het behalen van {levelName}.',

@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Da = {
 	'descriptionReadOnlyMode': 'Beskrivelse (ikke synlig for elever)',
 	'descriptionReadOnlyPlaceholder': 'Ingen beskrivelse',
 	'descriptionSaveFailed': 'Det lykkedes ikke at gemme beskrivelsen',
+	'detached': 'Detached',
 	'editFeedback': 'Rediger feedback',
 	'editLevelNameDescription': 'Navn på niveau i position {positionNumber}.',
 	'editLevelPointsDescription': 'Optjente point for at opnå {levelName}.',
