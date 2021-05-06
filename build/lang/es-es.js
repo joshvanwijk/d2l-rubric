@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.EsEs = {
 	'descriptionReadOnlyMode': 'Descripción (no es visible para los estudiantes)',
 	'descriptionReadOnlyPlaceholder': 'No hay descripción',
 	'descriptionSaveFailed': 'No se ha podido guardar la descripción',
+	'detached': 'Detached',
 	'editFeedback': 'Editar comentarios',
 	'editLevelNameDescription': 'Nombre del nivel en la posición {positionNumber}.',
 	'editLevelPointsDescription': 'Puntos obtenidos por lograr el nivel {levelName}.',

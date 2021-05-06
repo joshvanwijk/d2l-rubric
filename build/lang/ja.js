@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Ja = {
 	'descriptionReadOnlyMode': '説明（受講者には表示されません）',
 	'descriptionReadOnlyPlaceholder': '説明なし',
 	'descriptionSaveFailed': '説明を保存できませんでした',
+	'detached': 'Detached',
 	'editFeedback': 'フィードバックの編集',
 	'editLevelNameDescription': '位置 {positionNumber} にあるレベルの名前。',
 	'editLevelPointsDescription': '{levelName} を達成するために獲得したポイント。',

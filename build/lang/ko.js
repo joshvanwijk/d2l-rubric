@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Ko = {
 	'descriptionReadOnlyMode': '설명(학생에게 표시되지 않음)',
 	'descriptionReadOnlyPlaceholder': '설명 없음',
 	'descriptionSaveFailed': '설명 저장 실패',
+	'detached': 'Detached',
 	'editFeedback': '피드백 편집',
 	'editLevelNameDescription': '{positionNumber} 위치에 있는 레벨의 이름입니다.',
 	'editLevelPointsDescription': '{levelName}을(를) 달성하기 위해 획득한 점수.',

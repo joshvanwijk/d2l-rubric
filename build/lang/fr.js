@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Fr = {
 	'descriptionReadOnlyMode': 'Description (non visible pour les élèves)',
 	'descriptionReadOnlyPlaceholder': 'Aucune description',
 	'descriptionSaveFailed': 'Échec de l’enregistrement de la description',
+	'detached': 'Detached',
 	'editFeedback': 'Modifier la rétroaction',
 	'editLevelNameDescription': 'Nom du niveau en position {positionNumber}.',
 	'editLevelPointsDescription': 'Points obtenus pour avoir atteint {levelName}.',

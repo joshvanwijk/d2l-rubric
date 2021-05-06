@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Pt = {
 	'descriptionReadOnlyMode': 'Descrição (não está visível para os alunos)',
 	'descriptionReadOnlyPlaceholder': 'Sem descrição',
 	'descriptionSaveFailed': 'Falha ao salvar descrição',
+	'detached': 'Detached',
 	'editFeedback': 'Editar Comentários',
 	'editLevelNameDescription': 'Nome do nível na posição {positionNumber}.',
 	'editLevelPointsDescription': 'Pontos obtidos por alcançar {levelName}.',

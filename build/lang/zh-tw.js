@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.ZhTw = {
 	'descriptionReadOnlyMode': '說明 (學生不會看到)',
 	'descriptionReadOnlyPlaceholder': '沒有說明',
 	'descriptionSaveFailed': '說明儲存失敗',
+	'detached': 'Detached',
 	'editFeedback': '編輯意見反應',
 	'editLevelNameDescription': '位置 {positionNumber} 的層級名稱。',
 	'editLevelPointsDescription': '達成 {levelName} 所獲得的分數。',

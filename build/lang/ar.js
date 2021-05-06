@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Ar = {
 	'descriptionReadOnlyMode': 'الوصف (غير مرئي للطلاب)',
 	'descriptionReadOnlyPlaceholder': 'ما من وصف',
 	'descriptionSaveFailed': 'فشل حفظ الوصف',
+	'detached': 'Detached',
 	'editFeedback': 'تحرير الملاحظات',
 	'editLevelNameDescription': 'اسم المستوى في الموضع {positionNumber}.',
 	'editLevelPointsDescription': 'النقاط المكتسبة مقابل إكمال المستوى {levelName}.',

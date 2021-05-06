@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Zh = {
 	'descriptionReadOnlyMode': '描述（对学生不可见）',
 	'descriptionReadOnlyPlaceholder': '无描述',
 	'descriptionSaveFailed': '保存描述失败',
+	'detached': 'Detached',
 	'editFeedback': '编辑反馈',
 	'editLevelNameDescription': '位置 {positionNumber} 中的级别名称。',
 	'editLevelPointsDescription': '完成 {levelName} 所获得的分数。',

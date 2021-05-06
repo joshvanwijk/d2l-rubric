@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Cy = {
 	'descriptionReadOnlyMode': 'Disgrifiad (ni all myfyrwyr ei weld)',
 	'descriptionReadOnlyPlaceholder': 'Dim disgrifiad',
 	'descriptionSaveFailed': 'Methwyd â chadw’r disgrifiad',
+	'detached': 'Detached',
 	'editFeedback': 'Golygu’r Adborth',
 	'editLevelNameDescription': 'Enw\'r lefel yn y safle {positionNumber}.',
 	'editLevelPointsDescription': 'Pwyntiau a enillwyd am gyflawni {levelName}.',

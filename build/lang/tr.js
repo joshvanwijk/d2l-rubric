@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Tr = {
 	'descriptionReadOnlyMode': 'Açıklama (Öğrencilere görünmez)',
 	'descriptionReadOnlyPlaceholder': 'Açıklama yok',
 	'descriptionSaveFailed': 'Açıklama kaydedilemedi',
+	'detached': 'Detached',
 	'editFeedback': 'Geri Bildirimi Düzenle',
 	'editLevelNameDescription': '{positionNumber} numaralı konumdaki seviyenin adı.',
 	'editLevelPointsDescription': '{levelName} seviyesine ulaşmak için kazanılan puanlar.',

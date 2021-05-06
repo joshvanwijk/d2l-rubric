@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.De = {
 	'descriptionReadOnlyMode': 'Beschreibung (nicht für Kursteilnehmer sichtbar)',
 	'descriptionReadOnlyPlaceholder': 'Keine Beschreibung',
 	'descriptionSaveFailed': 'Speichern der Beschreibung fehlgeschlagen',
+	'detached': 'Detached',
 	'editFeedback': 'Feedback bearbeiten',
 	'editLevelNameDescription': 'Name der Ebene in der Position {positionNumber}.',
 	'editLevelPointsDescription': 'Gesammelte Punkte für das Erreichen von {levelName}.',

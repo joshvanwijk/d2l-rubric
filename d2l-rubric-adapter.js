@@ -1,18 +1,22 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import '@brightspace-ui-labs/accordion/accordion.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
-
+import './localize-behavior.js';
 /**
  * An adapter for the Rubrics component to get platform-specific ordering of components without
  * owning the specific rendering logic.
  */
-window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends PolymerElement {
+window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends mixinBehaviors([
+	D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+], PolymerElement) {
 	static get properties() {
 		return {
 			compact: Boolean,
+			detachedView: Boolean,
 			hasAlerts: Boolean,
 			rubricName: String,
 			scoreText: String,
@@ -31,7 +35,20 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 					color: var(--d2l-color-celestine);
 				}
 
-				.rubric-header-title {
+				.rubric-header-icon-detached,
+				.rubric-header-title-detached {
+					color: var(--d2l-color-ferrite);
+				}
+
+				.rubric-label-detached {
+					color: var(--d2l-color-ferrite);
+					font-style: italic;
+					font-size: 0.6rem;
+					text-align: right;
+				}
+
+				.rubric-header-title,
+				.rubric-header-title-detached {
 					font-size: 0.8rem;
 					text-align: bottom;
 				}
@@ -40,6 +57,10 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 					display: inline-flex;
 					flex-direction: column;
 					vertical-align: middle;
+				}
+
+				.rubric-label-detached-container {
+					float: right;
 				}
 
 				.rubric-header-out-of-container {
@@ -58,26 +79,53 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 					is="dom-if"
 					id="compact-view-template"
 					if="[[compact]]"
-					restamp>
-					<d2l-labs-accordion flex>
-						<d2l-labs-accordion-collapse flex>
-							<div slot="header">
+					restamp
+				>
+					<template
+						is="dom-if"
+						id="attached-view-template"
+						if="[[!detachedView]]"
+						restamp
+					>
+						<d2l-labs-accordion flex>
+							<d2l-labs-accordion-collapse flex>
+								<div slot="header">
 								<d2l-icon
-									class="rubric-header-icon"
-									icon="[[_getRubricIcon(assessmentEntity)]]">
-								</d2l-icon>
-								<span class="rubric-header-title-container">
-									<div class="rubric-header-title">[[rubricName]]</div>
-									<div class="rubric-header-out-of-container">
-										<span class="rubric-header-out-of-text">
-											[[scoreText]]
-										</span>
-									</div>
-								</span>
-							</div>
-							<slot></slot>
-						</d2l-labs-accordion-collapse>
-					</d2l-labs-accordion>
+										class="rubric-header-icon"
+										icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
+									</d2l-icon>
+									<span class="rubric-header-title-container">
+										<div class="rubric-header-title">[[rubricName]]</div>
+										<div class="rubric-header-out-of-container">
+											<span class="rubric-header-out-of-text">
+												[[scoreText]]
+											</span>
+										</div>
+									</span>
+								</div>
+								<slot></slot>
+							</d2l-labs-accordion-collapse>
+						</d2l-labs-accordion>
+					</template>
+					<template
+						is="dom-if"
+						id="detached-view-template"
+						if="[[detachedView]]"
+					>
+						<div slot="header">
+							<d2l-icon
+								class="rubric-header-icon-detached"
+								icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
+							</d2l-icon>
+							<span class="rubric-header-title-container">
+								<div class="rubric-header-title-detached">[[rubricName]]</div>
+							</span>
+							<span class="rubric-label-detached-container">
+								<div class="rubric-label-detached">[[localize('detached')]]</div>
+								<div style="clear: both;" />
+							</span>
+						</div>
+					</template>
 				</template>
 				<template is="dom-if" if="[[!compact]]" restamp>
 					<slot></slot>
@@ -88,7 +136,6 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 
 	connectedCallback() {
 		super.connectedCallback();
-
 		this._onConnected();
 	}
 
@@ -96,12 +143,15 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 		return !!hasAlerts;
 	}
 
-	_getRubricIcon(assessmentEntity) {
-		const icon = assessmentEntity && assessmentEntity.hasClass('completed')
-			? 'd2l-tier3:rubric-graded'
-			: 'd2l-tier3:rubric';
+	_getRubricIcon(assessmentEntity, detachedView) {
+		const tierName = detachedView
+			? 'd2l-tier1'
+			: 'd2l-tier3';
+		const iconName = assessmentEntity && assessmentEntity.hasClass('completed')
+			? 'rubric-graded'
+			: 'rubric';
 
-		return icon;
+		return tierName + ':' + iconName;
 	}
 
 	_onConnected() {

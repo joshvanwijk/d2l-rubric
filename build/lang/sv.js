@@ -73,6 +73,7 @@ window.D2L.Rubric.Language.Sv = {
 	'descriptionReadOnlyMode': 'Beskrivning (inte synlig för elever)',
 	'descriptionReadOnlyPlaceholder': 'Ingen beskrivning',
 	'descriptionSaveFailed': 'Beskrivningen kunde inte sparas',
+	'detached': 'Detached',
 	'editFeedback': 'Redigera feedback',
 	'editLevelNameDescription': 'Namn på nivån i position {positionNumber}.',
 	'editLevelPointsDescription': 'Intjänade poäng för att uppnå {levelName}.',
