@@ -78,54 +78,48 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				<template
 					is="dom-if"
 					id="compact-view-template"
-					if="[[compact]]"
+					if="[[_showAttachedCompactView(compact, detachedView)]]"
 					restamp
 				>
-					<template
-						is="dom-if"
-						id="attached-view-template"
-						if="[[!detachedView]]"
-						restamp
-					>
-						<d2l-labs-accordion flex>
-							<d2l-labs-accordion-collapse flex>
-								<div slot="header">
+					<d2l-labs-accordion flex>
+						<d2l-labs-accordion-collapse flex>
+							<div slot="header">
 								<d2l-icon
-										class="rubric-header-icon"
-										icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
-									</d2l-icon>
-									<span class="rubric-header-title-container">
-										<div class="rubric-header-title">[[rubricName]]</div>
-										<div class="rubric-header-out-of-container">
-											<span class="rubric-header-out-of-text">
-												[[scoreText]]
-											</span>
-										</div>
-									</span>
-								</div>
-								<slot></slot>
-							</d2l-labs-accordion-collapse>
-						</d2l-labs-accordion>
-					</template>
-					<template
-						is="dom-if"
-						id="detached-view-template"
-						if="[[detachedView]]"
-					>
-						<div slot="header">
-							<d2l-icon
-								class="rubric-header-icon-detached"
-								icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
-							</d2l-icon>
-							<span class="rubric-header-title-container">
-								<div class="rubric-header-title-detached">[[rubricName]]</div>
-							</span>
-							<span class="rubric-label-detached-container">
-								<div class="rubric-label-detached">[[localize('detached')]]</div>
-								<div style="clear: both;" />
-							</span>
-						</div>
-					</template>
+									class="rubric-header-icon"
+									icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
+								</d2l-icon>
+								<span class="rubric-header-title-container">
+									<div class="rubric-header-title">[[rubricName]]</div>
+									<div class="rubric-header-out-of-container">
+										<span class="rubric-header-out-of-text">
+											[[scoreText]]
+										</span>
+									</div>
+								</span>
+							</div>
+							<slot></slot>
+						</d2l-labs-accordion-collapse>
+					</d2l-labs-accordion>
+				</template>
+				<template
+					is="dom-if"
+					id="detached-compact-view-template"
+					if="[[_showDetachedCompactView(compact, detachedView)]]"
+					restamp
+				>
+					<div slot="header">
+						<d2l-icon
+							class="rubric-header-icon-detached"
+							icon="[[_getRubricIcon(assessmentEntity, detachedView)]]">
+						</d2l-icon>
+						<span class="rubric-header-title-container">
+							<div class="rubric-header-title-detached">[[rubricName]]</div>
+						</span>
+						<span class="rubric-label-detached-container">
+							<div class="rubric-label-detached">[[localize('detached')]]</div>
+							<div style="clear: both;" />
+						</span>
+					</div>
 				</template>
 				<template is="dom-if" if="[[!compact]]" restamp>
 					<slot></slot>
@@ -152,6 +146,14 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 			: 'rubric';
 
 		return tierName + ':' + iconName;
+	}
+
+	_showAttachedCompactView(compact, detachedView) {
+		return compact && !detachedView;
+	}
+
+	_showDetachedCompactView(compact, detachedView) {
+		return compact && detachedView;
 	}
 
 	_onConnected() {
