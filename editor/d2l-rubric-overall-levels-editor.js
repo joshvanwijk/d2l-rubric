@@ -331,6 +331,7 @@ Polymer({
 	_notifyResize: function() {
 		afterNextRender(this, function() {
 			this.$$('d2l-scroll-wrapper').notifyResize();
+			this.syncMiddleSectionSize();
 		}.bind(this));
 	},
 	// eslint-disable-next-line no-unused-vars
