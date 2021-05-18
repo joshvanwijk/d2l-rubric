@@ -168,12 +168,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 						id="level-tab[[index]]"
-						class$="[[_getLevelClassName(index, selected, criterionCells, cellAssessmentMap)]]"
+						class$="[[_getLevelClassName(index, selected, hovered, criterionCells, cellAssessmentMap)]]"
 						role="tab"
 						tabindex="0"
 						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]"
 						data-index="[[index]]"
 						on-click="_handleClick"
+						on-mouseover="_handleMouseOver"
+						on-mouseout="_handleMouseOut"
 						on-keydown="_onKeyDown"
 						on-track="_handleTrack"
 						aria-selected$="[[_isSelected(index, selected)]]"
@@ -204,6 +206,14 @@ Polymer({
 		 * The selected level
 		 */
 		selected: {
+			type: Number,
+			notify: true
+		},
+
+		/**
+		 * The hovered level
+		 */
+		hovered: {
 			type: Number,
 			notify: true
 		},
@@ -324,6 +334,12 @@ Polymer({
 			: index === 0;
 	},
 
+	_isHovered: function(index, hovered) {
+		return hovered >= 0
+			? index === hovered
+			: index === 0;
+	},
+
 	_onEntityChanged: function(entity) {
 		if (!entity) {
 			return;
@@ -331,10 +347,13 @@ Polymer({
 		this.levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 	},
 
-	_getLevelClassName: function(index, selected, criterionCells, cellAssessmentMap) {
+	_getLevelClassName: function(index, selected, hovered, criterionCells, cellAssessmentMap) {
 		var className = 'level';
 		if (this._isSelected(index, selected)) {
 			className += ' selected';
+		}
+		if (this._isHovered(index, hovered)) {
+			className += ' hovered';
 		}
 		if (criterionCells && this._isAssessedLevel(index, criterionCells[index], cellAssessmentMap)) {
 			className += ' assessed';
@@ -352,6 +371,14 @@ Polymer({
 
 	_selectLevel: function(event) {
 		this.selected = event.currentTarget.dataIndex;
+	},
+
+	_hoverLevel: function(event) {
+		this.hovered = event.currentTarget.dataIndex;
+	},
+
+	_unhoverLevel: function() {
+		this.hovered = -1;
 	},
 
 	_hasScore: function(score) {
@@ -400,6 +427,14 @@ Polymer({
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this.cellAssessmentMap[evt.currentTarget.dataset.cellHref]
 		);
+	},
+
+	_handleMouseOver: function(evt) {
+		this._hoverLevel(evt);
+	},
+
+	_handleMouseOut: function(evt) {
+		this._unhoverLevel(evt);
 	},
 
 	_canEditScore: function(assessmentCriterionEntity) {

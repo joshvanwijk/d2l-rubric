@@ -194,6 +194,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				cell-assessment-map="[[cellAssessmentMap]]"
 				token="[[token]]"
 				selected="{{_selected}}"
+				hovered="{{_hovered}}"
 				level-entities="{{_levelEntities}}"
 				out-of="[[_outOf]]"
 				score="[[_score]]"
@@ -216,21 +217,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 
 		<div id="description" class="criterion-description-container">
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
-				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
+				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelVisible(index, _selected, _hovered)]]">
 					<div class$="[[_getLevelNameClass(criterionCell, cellAssessmentMap)]]">
-						<div class="level-text">[[_getSelectedLevelText(_selected, _levelEntities)]]</div>
+						<div class="level-text">[[_getVisibleLevelTitle(_selected, _hovered, _levelEntities)]]</div>
 						<d2l-icon
 							hidden="[[!_showLevelBullet()]]"
 							class$="[[_getLevelBulletClass(criterionCell, cellAssessmentMap)]]"
 							icon="d2l-tier1:bullet">
 						</d2l-icon>
-						<d2l-rubric-editable-score
-							criterion-href="[[href]]"
-							assessment-href="[[assessmentCriterionHref]]"
-							token="[[token]]"
-							read-only="[[readOnly]]"
-						>
-						</d2l-rubric-editable-score>
+						<div class="level-number">[[_getVisibleLevelScore(_selected, _hovered, _levelEntities)]]</div>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
 						<s-html class="criterion-description-html" html="[[_getCriterionCellText(criterionCell)]]"></s-html>
@@ -272,6 +267,11 @@ Polymer({
 		},
 
 		_selected: {
+			type: Number,
+			value: -1
+		},
+
+		_hovered: {
 			type: Number,
 			value: -1
 		},
@@ -375,30 +375,30 @@ Polymer({
 		return selected === this._total - 1 || selected === -1;
 	},
 
-	_getPoints: function(selected, levels, criterionCell) {
+	_getVisibleLevel: function(selected, hovered, levels) {
+		return levels && (levels[hovered] || levels[selected]);
+	},
+
+	_getVisibleLevelTitle: function(selected, hovered, levels) {
+		var level = this._getVisibleLevel(selected, hovered, levels);
+		return level ? level.properties.name : null;
+	},
+
+	_getVisibleLevelPoints: function(selected, hovered, levels, criterionCell) {
+		var level = this._getVisibleLevel(selected, hovered, levels);
+		if (!level) {
+			return null;
+		}
 		// check for overrides
-		var points = levels[selected].properties.points;
+		var points = level.properties.points;
 		if (criterionCell && criterionCell.hasClass(this.HypermediaClasses.rubrics.overridden)) {
 			points = criterionCell.properties.points;
 		}
 		return points;
 	},
 
-	_getSelectedLevelText: function(selected, levels) {
-		if (!levels || !levels[selected]) {
-			return null;
-		}
-
-		var levelTitle = levels[selected].properties.name;
-		return levelTitle;
-	},
-
-	_getSelectedNumberText: function(selected, levels, criterionCell) {
-		if (!levels || !levels[selected]) {
-			return null;
-		}
-
-		var points = this._getPoints(selected, levels, criterionCell);
+	_getVisibleLevelScore: function(selected, hovered, levels, criterionCell) {
+		var points = this._getVisibleLevelPoints(selected, hovered, levels, criterionCell);
 		if (points === null || points === undefined) {
 			return null;
 		}
@@ -423,6 +423,15 @@ Polymer({
 
 	_isLevelSelected: function(levelIndex, selected) {
 		return levelIndex === selected || ((typeof selected !== 'number' || selected < 0) && levelIndex === 0);
+	},
+
+	_isLevelHovered: function(levelIndex, hovered) {
+		return levelIndex === hovered;
+	},
+
+	_isLevelVisible: function(levelIndex, selected, hovered) {
+		return this._isLevelHovered(levelIndex, hovered)
+			|| this._isLevelSelected(levelIndex, selected) && (typeof hovered !== 'number' || hovered < 0);
 	},
 
 	_getLevelNameClass: function(criterionCell, cellAssessmentMap) {
