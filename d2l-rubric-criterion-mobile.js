@@ -86,6 +86,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			}
 			:host([compact]) .level-name {
 				justify-content: space-between;
+				align-items: center;
 			}
 
 			.level-text {
@@ -216,6 +217,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 		</div>
 
 		<div id="description" class="criterion-description-container">
+			<template is="dom-if" if="[[!_getVisibleLevel(_selected, _hovered, _levelEntities)]]" restamp>
+				<div id="level-description-panel" class="criterion-middle" aria-labelledby$="level-tab" role="tabpanel">
+					<div class="level-name">
+						<div class="level-text">Not scored</div>
+						<d2l-rubric-editable-score
+							criterion-href="[[href]]"
+							assessment-href="[[assessmentCriterionHref]]"
+							token="[[token]]"
+							read-only="[[readOnly]]"
+						>
+						</d2l-rubric-editable-score>
+					</div>
+				</div>
+			</template>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
 				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelVisible(index, _selected, _hovered)]]">
 					<div class$="[[_getLevelNameClass(criterionCell, cellAssessmentMap)]]">
@@ -381,7 +396,7 @@ Polymer({
 
 	_getVisibleLevelTitle: function(selected, hovered, levels) {
 		var level = this._getVisibleLevel(selected, hovered, levels);
-		return level ? level.properties.name : null;
+		return level ? level.properties.name : 'Not scored';
 	},
 
 	_getVisibleLevelPoints: function(selected, hovered, levels, criterionCell) {
@@ -402,7 +417,6 @@ Polymer({
 		if (points === null || points === undefined) {
 			return null;
 		}
-
 		if (this.isHolistic) {
 			return this.localize('numberAndPercentage', 'number', points.toString());
 		}
@@ -422,7 +436,7 @@ Polymer({
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
-		return levelIndex === selected || ((typeof selected !== 'number' || selected < 0) && levelIndex === 0);
+		return levelIndex === selected; //  || ((typeof selected !== 'number' || selected < 0) && levelIndex === 0);
 	},
 
 	_isLevelHovered: function(levelIndex, hovered) {
