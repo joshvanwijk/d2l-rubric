@@ -116,6 +116,7 @@ window.D2L.Rubric.Language.En = {
 	'nameIsRequired': 'Name is required',
 	'nameSaveFailed': 'Saving name failed',
 	'newAssociationLabel': 'Allow new associations in',
+	'notScored': 'Not scored',
 	'numberAndPercentage': '{number} %',
 	'numberAndPoints': '{number} {number, plural, =1 {point} other {points}}',
 	'options': 'Options',

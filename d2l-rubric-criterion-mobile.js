@@ -220,7 +220,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<template is="dom-if" if="[[!_getVisibleLevel(_selected, _hovered, _levelEntities)]]" restamp>
 				<div id="level-description-panel" class="criterion-middle" aria-labelledby$="level-tab" role="tabpanel">
 					<div class="level-name">
-						<div class="level-text">Not scored</div>
+						<div class="level-text">[[localize('notScored')]]</div>
 						<d2l-rubric-editable-score
 							criterion-href="[[href]]"
 							assessment-href="[[assessmentCriterionHref]]"
@@ -402,7 +402,7 @@ Polymer({
 
 	_getVisibleLevelTitle: function(selected, hovered, levels) {
 		var level = this._getVisibleLevel(selected, hovered, levels);
-		return level ? level.properties.name : 'Not scored';
+		return level ? level.properties.name : null;
 	},
 
 	_getVisibleLevelPoints: function(selected, hovered, levels, criterionCell) {
