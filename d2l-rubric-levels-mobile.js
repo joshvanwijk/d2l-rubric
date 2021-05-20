@@ -335,9 +335,7 @@ Polymer({
 	},
 
 	_isHovered: function(index, hovered) {
-		return hovered >= 0
-			? index === hovered
-			: index === 0;
+		return index === hovered;
 	},
 
 	_onEntityChanged: function(entity) {
@@ -373,8 +371,8 @@ Polymer({
 		this.selected = event.currentTarget.dataIndex;
 	},
 
-	_hoverLevel: function(event) {
-		this.hovered = event.currentTarget.dataIndex;
+	_hoverLevel: function(index) {
+		this.hovered = index;
 	},
 
 	_unhoverLevel: function() {
@@ -430,11 +428,11 @@ Polymer({
 	},
 
 	_handleMouseOver: function(evt) {
-		this._hoverLevel(evt);
+		this._hoverLevel(evt.currentTarget.dataIndex);
 	},
 
-	_handleMouseOut: function(evt) {
-		this._unhoverLevel(evt);
+	_handleMouseOut: function() {
+		this._unhoverLevel();
 	},
 
 	_canEditScore: function(assessmentCriterionEntity) {
