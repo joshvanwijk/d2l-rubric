@@ -240,7 +240,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 							class$="[[_getLevelBulletClass(criterionCell, cellAssessmentMap)]]"
 							icon="d2l-tier1:bullet">
 						</d2l-icon>
+						<div
+							hidden="[[!_isLevelHovered(index, _hovered)]]"
+							class="level-number"
+						>
+							[[_getVisibleLevelScore(_selected, _hovered, _levelEntities)]]
+						</div>
 						<d2l-rubric-editable-score
+							hidden="[[_isLevelHovered(index, _hovered)]]"
 							criterion-href="[[href]]"
 							assessment-href="[[assessmentCriterionHref]]"
 							token="[[token]]"
@@ -396,8 +403,16 @@ Polymer({
 		return selected === this._total - 1 || selected === -1;
 	},
 
+	_getSelectedLevel: function(selected, levels) {
+		return levels && levels[selected];
+	},
+
+	_getHoveredLevel: function(hovered, levels) {
+		return levels && levels[hovered];
+	},
+
 	_getVisibleLevel: function(selected, hovered, levels) {
-		return levels && (levels[hovered] || levels[selected]);
+		return this._getHoveredLevel(hovered, levels) || this._getSelectedLevel(selected, levels);
 	},
 
 	_getVisibleLevelTitle: function(selected, hovered, levels) {
