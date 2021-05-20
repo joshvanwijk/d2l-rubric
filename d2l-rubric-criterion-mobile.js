@@ -240,7 +240,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 							class$="[[_getLevelBulletClass(criterionCell, cellAssessmentMap)]]"
 							icon="d2l-tier1:bullet">
 						</d2l-icon>
-						<div class="level-number">[[_getVisibleLevelScore(_selected, _hovered, _levelEntities)]]</div>
+						<d2l-rubric-editable-score
+							criterion-href="[[href]]"
+							assessment-href="[[assessmentCriterionHref]]"
+							token="[[token]]"
+							read-only="[[readOnly]]"
+						>
+						</d2l-rubric-editable-score>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
 						<s-html class="criterion-description-html" html="[[_getCriterionCellText(criterionCell)]]"></s-html>
