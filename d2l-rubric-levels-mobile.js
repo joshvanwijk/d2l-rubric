@@ -179,10 +179,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				type="range"
 				class="level-slider"
 				min="0"
-				max$="[[_getLevelCount(levelEntities)]]"
+				max$="[[_getLevelMax(levelEntities)]]"
 				value$="[[selected]]"
 				aria-valuemin="0"
-				aria-valuemax$="[[_getLevelCount(levelEntities)]]"
+				aria-valuemax$="[[_getLevelMax(levelEntities)]]"
 				aria-valuenow$="[[selected]]"
 				aria-valuetext$="[[_getLevelText(selected)]]"
 				on-change="_handleChange"
@@ -394,8 +394,8 @@ Polymer({
 		this.levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 	},
 
-	_getLevelCount: function(levelEntities) {
-		return levelEntities.length - 1;
+	_getLevelMax: function(levelEntities) {
+		return levelEntities.length - 1; // Offset by -1 for zero-indexing
 	},
 
 	_getLevelClassName: function(index, selected, hovered, focused, criterionCells, cellAssessmentMap) {
@@ -451,10 +451,11 @@ Polymer({
 	_getLevelText: function(index) {
 		const item = this.criterionCells[index];
 		const levelName = item && item.properties && item.properties.levelName;
-		const levelDescription = item && item.getSubEntityByClass(this.HypermediaClasses.text.description).properties.text;
+		const levelEntity = item && item.getSubEntityByClass(this.HypermediaClasses.text.description);
+		const levelDesc = levelEntity && levelEntity.properties && levelEntity.properties.text || '';
 		const criterionName = this._getCriterionName();
 		return levelName
-			? `${levelName}: ${levelDescription}`
+			? `${levelName}: ${levelDesc}`
 			: criterionName
 				? `${this._getCriterionName()}: ${this.localize('notScored')}`
 				: this.localize('notScored');
