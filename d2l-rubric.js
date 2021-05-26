@@ -484,7 +484,6 @@ Polymer({
 
 	ready: function() {
 		this._updateOutcomesTitleText();
-
 		const telemetryData = {
 			rubricMode: this.dataset.rubricMode,
 			originTool: this.dataset.originTool,
