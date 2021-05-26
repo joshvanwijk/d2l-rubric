@@ -457,7 +457,7 @@ Polymer({
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
-		return levelIndex === selected; //  || ((typeof selected !== 'number' || selected < 0) && levelIndex === 0);
+		return levelIndex === selected;
 	},
 
 	_isLevelHovered: function(levelIndex, hovered) {
