@@ -197,11 +197,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 						id="level-tab[[index]]"
-						class$="[[_getLevelClassName(index, selected, focused, criterionCells, cellAssessmentMap)]]"
+						class$="[[_getLevelClassName(index, selected, hovered, focused, criterionCells, cellAssessmentMap)]]"
 						role="tab"
 						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]"
 						data-index="[[index]]"
 						on-mousedown="_handleMouseDown"
+						on-mouseover="_handleMouseOver"
+						on-mouseout="_handleMouseOut"
 						on-click="_handleClick"
 						on-track="_handleTrack"
 						<div class="level-tab-focus">
@@ -229,6 +231,14 @@ Polymer({
 		 * The selected level
 		 */
 		selected: {
+			type: Number,
+			notify: true
+		},
+
+		/**
+		 * The hovered level
+		 */
+		hovered: {
 			type: Number,
 			notify: true
 		},
@@ -369,6 +379,10 @@ Polymer({
 		return selected >= 0 && index === selected;
 	},
 
+	_isHovered: function(index, hovered) {
+		return hovered >= 0 && index === hovered;
+	},
+
 	_isFocused: function(index, focused) {
 		return focused >= 0 && index === focused;
 	},
@@ -384,10 +398,13 @@ Polymer({
 		return levelEntities.length - 1;
 	},
 
-	_getLevelClassName: function(index, selected, focused, criterionCells, cellAssessmentMap) {
+	_getLevelClassName: function(index, selected, hovered, focused, criterionCells, cellAssessmentMap) {
 		var className = 'level';
 		if (this._isSelected(index, selected)) {
 			className += ' selected';
+		}
+		if (this._isHovered(index, hovered)) {
+			className += ' hovered';
 		}
 		if (this._isFocused(index, focused)) {
 			className += ' focused';
@@ -458,6 +475,14 @@ Polymer({
 		const index = parseInt(evt.target.value);
 		const level = this.shadowRoot.querySelector(`#level-tab${index}`);
 		this._selectLevel(level);
+	},
+
+	_handleMouseOver: function(evt) {
+		this.hovered = evt.currentTarget.dataIndex;
+	},
+
+	_handleMouseOut: function() {
+		this.hovered = -1;
 	},
 
 	_handleFocus: function() {
