@@ -118,6 +118,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 100%;
 				justify-content: space-around;
 				align-items: center;
+				position: relative;
+				z-index: 2;
 			}
 
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
