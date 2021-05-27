@@ -443,12 +443,14 @@ Polymer({
 
 	_handleTapLeft: function(e) {
 		e.stopPropagation();
+		e.preventDefault();
 		this._moveIteratorLeft();
 		e.currentTarget.nextSibling.focusSlider();
 	},
 
 	_handleTapRight: function(e) {
 		e.stopPropagation();
+		e.preventDefault();
 		this._moveIteratorRight();
 		e.currentTarget.previousSibling.focusSlider();
 	},
