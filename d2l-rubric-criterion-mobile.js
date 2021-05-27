@@ -407,51 +407,46 @@ Polymer({
 		}, 1000);
 	},
 
-	_moveIteratorLeft: function() {
-		if (this._focused === 0) {
-			return this.say(this.localize('noMoreLevels'));
-		}
-		if (this.readOnly) {
-			this._focus(Math.max(0, this._focused - 1));
-		} else {
-			this._select(Math.max(0, this._selected - 1));
-		}
-	},
-
-	_moveIteratorRight: function() {
+	_moveIterator: function(delta) {
 		if (!this._criterionCells) {
 			return;
 		}
+		const min = 0;
 		const max = this._criterionCells.length - 1;
-		if (this._focused === max) {
-			return this.say(this.localize('noMoreLevels'));
-		}
-		let index;
-		if (this._selected === -1) {
-			index = max;
+		let level;
+		if (this._selected === -1 && delta === -1) {
+			level = min;
+		} else if (this._selected === -1 && delta === 1) {
+			level = max;
 		} else if (this.readOnly) {
-			index = Math.min(max, this._focused + 1);
+			level = this._focused + delta;
 		} else {
-			index = Math.min(max, this._selected + 1);
+			level = this._selected + delta;
 		}
-		if (this.readOnly) {
-			this._focus(index);
-		} else {
-			this._select(index);
+		if (level < min) {
+			level = min;
+			this.say(this.localize('noMoreLevels'));
+		} else if (level > max) {
+			level = max;
+			this.say(this.localize('noMoreLevels'));
+		}
+		this._focus(level);
+		if (!this.readOnly) {
+			this._select(level);
 		}
 	},
 
 	_handleTapLeft: function(e) {
 		e.stopPropagation();
 		e.preventDefault();
-		this._moveIteratorLeft();
+		this._moveIterator(-1);
 		e.currentTarget.nextSibling.focusSlider();
 	},
 
 	_handleTapRight: function(e) {
 		e.stopPropagation();
 		e.preventDefault();
-		this._moveIteratorRight();
+		this._moveIterator(1);
 		e.currentTarget.previousSibling.focusSlider();
 	},
 
