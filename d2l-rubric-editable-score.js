@@ -26,30 +26,22 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			#editable-container {
 				display: block;
 				outline: none;
+				border: thin solid transparent;
+				padding: 0.5rem;
+				padding-left: 0.6rem;
 			}
 			:host([overridden-styling]) #editable-container {
 				border-radius: 0.3rem;
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
-			:host([compact]:not([editor-styling])) #editable-container {
-				padding: 0.25rem;
-				margin: -0.25rem;
-			}
-			:host(:not([compact]):not([editor-styling])) #editable-container {
-				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
-			}
-			:host(:not([compact]):not([editor-styling])) #editable-container:focus,
-			:host(:not([compact]):not([editor-styling])) #editable-container:hover {
-				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
-			}
-			:host(.assessable[compact]:not([editor-styling])) #editable-container:focus,
-			:host(.assessable[compact]:not([editor-styling])) #editable-container:hover {
-				padding: calc(0.25rem - 1px);
-			}
 			:host(.assessable:not([editor-styling])) #editable-container:focus,
 			:host(.assessable:not([editor-styling])) #editable-container:hover {
 				border-radius: 0.3rem;
-				border: 1px solid var(--d2l-color-celestine);
+				border-color: var(--d2l-color-celestine);
+			}
+			:host([editor-styling]) #editable-container {
+				padding-top: 0;
+				padding-bottom: 0;
 			}
 			.total-score-container {
 				display: flex;
@@ -77,7 +69,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			}
 
 			#out-of {
-				@apply --d2l-body-compact-text;
 				margin-left: 3px;
 				display: inline;
 				line-height: 2.2rem;
@@ -89,9 +80,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 
 			.editing-component {
 				margin-right: 0;
-				display: inline-flex;
-				padding: 6px 12px 6px 0;
-				align-items : center;
 			}
 
 			#clear-button {
@@ -141,7 +129,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
-				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" aria-labelledby="score-label">
+				<div
+					aria-labelledby="score-label"
+					class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]"
+					tabindex$="[[_getOutOfTabIndex(readOnly)]]"
+				>
 					<d2l-offscreen id="score-label">[[_getCriterionContext(criterionName)]]</d2l-offscreen>
 					[[_localizeOutOf(entity, _score)]]
 					<div class="star" id="score-overridden-star" aria-hidden="true">*</div>
@@ -267,7 +259,7 @@ Polymer({
 		'_updateAssessable(readOnly, assessmentHref)'
 	],
 	ready: function() {
-		['click', 'keydown'].forEach((eventType) => {
+		['click', 'keydown', 'focus'].forEach((eventType) => {
 			this.addEventListener(eventType, (e) => {
 				if (eventType === 'keydown' && e.keyCode !== 13) {
 					return;
@@ -464,6 +456,10 @@ Polymer({
 			className += ' overridden';
 		}
 		return className;
+	},
+
+	_getOutOfTabIndex: function(readOnly) {
+		return readOnly ? undefined : 0;
 	},
 
 	_getContainerClassName: function(criterionHref) {

@@ -34,11 +34,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				border: solid 1px var(--d2l-color-celestine);
 				display: flex;
 				overflow: hidden;
+				justify-content: center;
+				align-items: center;
 				text-align: center;
 				color: var(--d2l-color-galena);
 				outline: none;
 				flex: 1;
-				height: 18px;
+				height: 24px;
 				align-self: center;
 			}
 			.level:not(.selected):not(:last-of-type),
@@ -73,19 +75,36 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 
 			.level.selected {
-				background-color: var(--d2l-color-gypsum);
-				border: 1px solid var(--d2l-color-galena);
-				border-radius: 6px !important;
-				height: 30px;
+				border-radius: 6px;
+				height: 36px;
 			}
-			.level:hover {
-				cursor: pointer;
-				background-color: var(--d2l-color-gypsum);
-			}
+
 			.level.selected.assessed:focus {
 				background-color: var(--d2l-color-celestine-plus-2);
 				border: solid 1px var(--d2l-color-celestine);
 			}
+			
+			.level:hover {
+				cursor: pointer;
+				background-color: var(--d2l-color-gypsum);
+			}
+
+			.level.focused {
+				box-shadow: inset 0 0 0 2px white,
+							inset 0 0 0 3px var(--d2l-color-celestine-minus-1);
+			}
+
+			.level.focused:hover {
+				box-shadow: inset 0 0 0 2px var(--d2l-color-gypsum),
+							inset 0 0 0 3px var(--d2l-color-celestine-minus-1);
+			}
+
+			.level-slider {
+				pointer-events: none;
+				width: 0;
+				opacity: 0;
+			}
+
 			.level-name {
 				@apply --d2l-body-small-text;
 				margin: 5px auto 5px auto;
@@ -106,15 +125,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				justify-content: space-around;
 				align-items: center;
 			}
-			.level:focus .level-tab-focus {
-				border: 1px solid var(--d2l-color-celestine-minus-1);
-				margin: 2px;
-				height: 12px;
-			}
-			.level.selected:focus .level-tab-focus {
-				border-radius: 6px;
-				height: 24px;
-			}
+
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
 				border-radius: 0px 4px 4px 0px;
@@ -164,21 +175,37 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 		</style>
 		<rubric-siren-entity href="[[assessmentCriterionHref]]" token="[[token]]" entity="{{assessmentCriterionEntity}}"></rubric-siren-entity>
 		<div class="levels-container">
-			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]">
+			<input
+				type="range"
+				class="level-slider"
+				min="0"
+				max$="[[_getLevelMax(levelEntities)]]"
+				value$="[[selected]]"
+				aria-valuemin="0"
+				aria-valuemax$="[[_getLevelMax(levelEntities)]]"
+				aria-valuenow$="[[selected]]"
+				aria-valuetext$="[[_getLevelText(selected)]]"
+				on-change="_handleChange"
+				on-focus="_handleFocus"
+				on-blur="_handleBlur"
+			/>
+			<div
+				class="levels"
+				role="tablist"
+				hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]"
+			>
 				<template is="dom-repeat" items="[[levelEntities]]">
 					<div
 						id="level-tab[[index]]"
-						class$="[[_getLevelClassName(index, selected, criterionCells, cellAssessmentMap)]]"
+						class$="[[_getLevelClassName(index, selected, hovered, focused, criterionCells, cellAssessmentMap)]]"
 						role="tab"
-						tabindex="0"
 						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]"
 						data-index="[[index]]"
+						on-mousedown="_handleMouseDown"
+						on-mouseover="_handleMouseOver"
+						on-mouseout="_handleMouseOut"
 						on-click="_handleClick"
-						on-keydown="_onKeyDown"
 						on-track="_handleTrack"
-						aria-selected$="[[_isSelected(index, selected)]]"
-						aria-controls$="level-description-panel[[index]]"
-						aria-label$="[[_getLevelLabelName(item, criterionCells, cellAssessmentMap)]]">
 						<div class="level-tab-focus">
 							<d2l-icon
 								hidden$="[[!_isAssessedLevel(index, criterionCells, cellAssessmentMap)]]"
@@ -206,6 +233,21 @@ Polymer({
 		selected: {
 			type: Number,
 			notify: true
+		},
+
+		/**
+		 * The hovered level
+		 */
+		hovered: {
+			type: Number,
+			notify: true
+		},
+
+		/**
+		 * The focused level
+		 */
+		focused: {
+			type: Number
 		},
 
 		/**
@@ -305,23 +347,44 @@ Polymer({
 	},
 
 	_focusPrevLevel: function(e) {
-		if (e.currentTarget.dataIndex !== 0) {
-			e.currentTarget.previousSibling.focus();
-			e.preventDefault();
-		}
+		this._selectLevel(e.currentTarget.previousSibling);
+		e.preventDefault();
 	},
 
 	_focusNextLevel: function(e) {
-		if (this.levelEntities && event.currentTarget.dataIndex !== this.levelEntities.length - 1) {
-			e.currentTarget.nextSibling.focus();
-			e.preventDefault();
+		this._selectLevel(e.currentTarget.nextSibling);
+		e.preventDefault();
+	},
+
+	_focusLevel: function(index) {
+		this.focused = index;
+		this.selected = index;
+	},
+
+	_selectLevel: function(level) {
+		this._focusLevel(level.dataIndex);
+		if (!this.readOnly) {
+			this.CriterionCellAssessmentHelper.selectAsync(
+				() => this.cellAssessmentMap[level.dataset.cellHref]
+			);
 		}
 	},
 
+	focusSlider: function() {
+		const slider = this.shadowRoot.querySelector('input.level-slider');
+		slider.focus();
+	},
+
 	_isSelected: function(index, selected) {
-		return selected >= 0
-			? index === selected
-			: index === 0;
+		return selected >= 0 && index === selected;
+	},
+
+	_isHovered: function(index, hovered) {
+		return hovered >= 0 && index === hovered;
+	},
+
+	_isFocused: function(index, focused) {
+		return focused >= 0 && index === focused;
 	},
 
 	_onEntityChanged: function(entity) {
@@ -331,15 +394,24 @@ Polymer({
 		this.levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 	},
 
-	_getLevelClassName: function(index, selected, criterionCells, cellAssessmentMap) {
+	_getLevelMax: function(levelEntities) {
+		return levelEntities.length - 1; // Offset by -1 for zero-indexing
+	},
+
+	_getLevelClassName: function(index, selected, hovered, focused, criterionCells, cellAssessmentMap) {
 		var className = 'level';
 		if (this._isSelected(index, selected)) {
 			className += ' selected';
 		}
+		if (this._isHovered(index, hovered)) {
+			className += ' hovered';
+		}
+		if (this._isFocused(index, focused)) {
+			className += ' focused';
+		}
 		if (criterionCells && this._isAssessedLevel(index, criterionCells[index], cellAssessmentMap)) {
 			className += ' assessed';
 		}
-
 		return className;
 	},
 
@@ -348,10 +420,6 @@ Polymer({
 			return 'level-name selected';
 		}
 		return 'level-name';
-	},
-
-	_selectLevel: function(event) {
-		this.selected = event.currentTarget.dataIndex;
 	},
 
 	_hasScore: function(score) {
@@ -380,6 +448,23 @@ Polymer({
 		}
 	},
 
+	_getLevelText: function(index) {
+		const item = this.criterionCells[index];
+		const levelName = item && item.properties && item.properties.levelName;
+		const levelEntity = item && item.getSubEntityByClass(this.HypermediaClasses.text.description);
+		const levelDesc = levelEntity && levelEntity.properties && levelEntity.properties.text || '';
+		const criterionName = this._getCriterionName();
+		return levelName
+			? `${levelName}: ${levelDesc}`
+			: criterionName
+				? `${this._getCriterionName()}: ${this.localize('notScored')}`
+				: this.localize('notScored');
+	},
+
+	_getCriterionName: function() {
+		return this.getRootNode().host._name;
+	},
+
 	_getCriterionCellHref: function(criterionCells, index) {
 		if (!criterionCells[index]) {
 			return null;
@@ -387,19 +472,38 @@ Polymer({
 		return this._getSelfLink(criterionCells[index]);
 	},
 
+	_handleChange: function(evt) {
+		const index = parseInt(evt.target.value);
+		const level = this.shadowRoot.querySelector(`#level-tab${index}`);
+		this._selectLevel(level);
+	},
+
+	_handleMouseOver: function(evt) {
+		this.hovered = evt.currentTarget.dataIndex;
+	},
+
+	_handleMouseOut: function() {
+		this.hovered = -1;
+	},
+
+	_handleFocus: function() {
+		this.focused = Math.max(0, this.selected);
+	},
+
+	_handleBlur: function() {
+		this.focused = -1;
+	},
+
+	_handleMouseDown: function(evt) {
+		this.focused = evt.currentTarget.dataIndex;
+	},
+
 	_handleClick: function(evt) {
 		if (this._preventClick) {
 			return;
 		}
-
-		this._selectLevel(evt);
-		if (this.readOnly) {
-			return;
-		}
-
-		this.CriterionCellAssessmentHelper.selectAsync(
-			() => this.cellAssessmentMap[evt.currentTarget.dataset.cellHref]
-		);
+		this.focusSlider(evt);
+		this._selectLevel(evt.currentTarget);
 	},
 
 	_canEditScore: function(assessmentCriterionEntity) {
@@ -473,7 +577,7 @@ Polymer({
 			maxLevelIndex: levelElements.length - 1,
 		};
 
-		this._selectLevel(e);
+		this._focusLevel(e.currentTarget.dataIndex);
 	},
 
 	_handleTrackMove: function(e) {
@@ -504,6 +608,7 @@ Polymer({
 
 		setTimeout(() => {
 			this._preventClick = false;
+			this._selectLevel(e.currentTarget);
 		});
 	}
 });
