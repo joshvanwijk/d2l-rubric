@@ -125,7 +125,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				justify-content: space-around;
 				align-items: center;
 			}
-
+			.level:focus .level-tab-focus {
+				border: 1px solid var(--d2l-color-celestine-minus-1);
+				margin: 2px;
+				height: 18px;
+			}
+			.level.selected:focus .level-tab-focus {
+				border-radius: 4px;
+				height: 30px;
+			}
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
 				border-radius: 0px 4px 4px 0px;
