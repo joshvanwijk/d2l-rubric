@@ -86,6 +86,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			}
 			:host([compact]) .level-name {
 				justify-content: space-between;
+				align-items: center;
 			}
 
 			.level-text {
@@ -194,6 +195,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				cell-assessment-map="[[cellAssessmentMap]]"
 				token="[[token]]"
 				selected="{{_selected}}"
+				hovered="{{_hovered}}"
 				level-entities="{{_levelEntities}}"
 				out-of="[[_outOf]]"
 				score="[[_score]]"
@@ -215,16 +217,37 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 		</div>
 
 		<div id="description" class="criterion-description-container">
+			<template is="dom-if" if="[[!_getVisibleLevel(_selected, _hovered, _levelEntities)]]" restamp>
+				<div id="level-description-panel" class="criterion-middle" aria-labelledby$="level-tab" role="tabpanel">
+					<div class="level-name">
+						<div class="level-text">[[localize('notScored')]]</div>
+						<d2l-rubric-editable-score
+							criterion-href="[[href]]"
+							assessment-href="[[assessmentCriterionHref]]"
+							token="[[token]]"
+							read-only="[[readOnly]]"
+						>
+						</d2l-rubric-editable-score>
+					</div>
+				</div>
+			</template>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
-				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
+				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelVisible(index, _selected, _hovered)]]">
 					<div class$="[[_getLevelNameClass(criterionCell, cellAssessmentMap)]]">
-						<div class="level-text">[[_getSelectedLevelText(_selected, _levelEntities)]]</div>
+						<div class="level-text">[[_getVisibleLevelTitle(_selected, _hovered, _levelEntities)]]</div>
 						<d2l-icon
 							hidden="[[!_showLevelBullet()]]"
 							class$="[[_getLevelBulletClass(criterionCell, cellAssessmentMap)]]"
 							icon="d2l-tier1:bullet">
 						</d2l-icon>
+						<div
+							hidden="[[!_isLevelHovered(index, _hovered)]]"
+							class="level-number"
+						>
+							[[_getVisibleLevelScore(_selected, _hovered, _levelEntities)]]
+						</div>
 						<d2l-rubric-editable-score
+							hidden="[[_isLevelHovered(index, _hovered)]]"
 							criterion-href="[[href]]"
 							assessment-href="[[assessmentCriterionHref]]"
 							token="[[token]]"
@@ -272,6 +295,11 @@ Polymer({
 		},
 
 		_selected: {
+			type: Number,
+			value: -1
+		},
+
+		_hovered: {
 			type: Number,
 			value: -1
 		},
@@ -375,34 +403,41 @@ Polymer({
 		return selected === this._total - 1 || selected === -1;
 	},
 
-	_getPoints: function(selected, levels, criterionCell) {
+	_getSelectedLevel: function(selected, levels) {
+		return levels && levels[selected];
+	},
+
+	_getHoveredLevel: function(hovered, levels) {
+		return levels && levels[hovered];
+	},
+
+	_getVisibleLevel: function(selected, hovered, levels) {
+		return this._getHoveredLevel(hovered, levels) || this._getSelectedLevel(selected, levels);
+	},
+
+	_getVisibleLevelTitle: function(selected, hovered, levels) {
+		var level = this._getVisibleLevel(selected, hovered, levels);
+		return level ? level.properties.name : null;
+	},
+
+	_getVisibleLevelPoints: function(selected, hovered, levels, criterionCell) {
+		var level = this._getVisibleLevel(selected, hovered, levels);
+		if (!level) {
+			return null;
+		}
 		// check for overrides
-		var points = levels[selected].properties.points;
+		var points = level.properties.points;
 		if (criterionCell && criterionCell.hasClass(this.HypermediaClasses.rubrics.overridden)) {
 			points = criterionCell.properties.points;
 		}
 		return points;
 	},
 
-	_getSelectedLevelText: function(selected, levels) {
-		if (!levels || !levels[selected]) {
-			return null;
-		}
-
-		var levelTitle = levels[selected].properties.name;
-		return levelTitle;
-	},
-
-	_getSelectedNumberText: function(selected, levels, criterionCell) {
-		if (!levels || !levels[selected]) {
-			return null;
-		}
-
-		var points = this._getPoints(selected, levels, criterionCell);
+	_getVisibleLevelScore: function(selected, hovered, levels, criterionCell) {
+		var points = this._getVisibleLevelPoints(selected, hovered, levels, criterionCell);
 		if (points === null || points === undefined) {
 			return null;
 		}
-
 		if (this.isHolistic) {
 			return this.localize('numberAndPercentage', 'number', points.toString());
 		}
@@ -422,7 +457,16 @@ Polymer({
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
-		return levelIndex === selected || ((typeof selected !== 'number' || selected < 0) && levelIndex === 0);
+		return levelIndex === selected;
+	},
+
+	_isLevelHovered: function(levelIndex, hovered) {
+		return levelIndex === hovered;
+	},
+
+	_isLevelVisible: function(levelIndex, selected, hovered) {
+		return this._isLevelHovered(levelIndex, hovered)
+			|| this._isLevelSelected(levelIndex, selected) && (typeof hovered !== 'number' || hovered < 0);
 	},
 
 	_getLevelNameClass: function(criterionCell, cellAssessmentMap) {

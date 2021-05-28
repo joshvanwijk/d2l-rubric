@@ -30,7 +30,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 			cell-assessment-map="[[cellAssessmentMap]]"
 			criterion-result-map="[[criterionResultMap]]"
 			token="[[token]]"
-			is-holistic="[[_isHolistic]]"
+			is-holistic="[[isHolistic]]"
 			is-numeric="[[_isNumeric]]"
 			read-only="[[readOnly]]"
 			enable-feedback-copy="[[enableFeedbackCopy]]"
@@ -56,7 +56,7 @@ Polymer({
 		assessmentEntity: Object,
 		criterionResultMap: Object,
 		cellAssessmentMap: Object,
-		_isHolistic: Boolean,
+		isHolistic: Boolean,
 		_isNumeric: Boolean,
 		_loaded: Boolean,
 		readOnly: Boolean,
