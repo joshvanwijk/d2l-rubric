@@ -210,6 +210,7 @@ Polymer({
 			return;
 		}
 		this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
+		this.checkSize();
 	},
 	_canPrependLevel: function(entity) {
 		return entity && entity.hasActionByName('prepend');
