@@ -28,9 +28,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			.criterion-description-container {
 				@apply --d2l-body-small-text;
 				display: inline-flex;
-				width:100%;
-				margin-top: 24px;
-				margin-bottom: 0.33rem;
+				width: 100%;
+				margin-top: 4px;
+				margin-bottom: 0.5rem;
 			}
 			.criterion-description {
 				padding-top: 6px;
@@ -83,14 +83,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 
 			.level-name {
 				display: flex;
-			}
-			:host([compact]) .level-name {
-				justify-content: space-between;
-				align-items: center;
+				color: var(--d2l-color-celestine);
 			}
 
 			.level-text {
-				font-weight: bold;
+				padding: calc(0.5rem + 3px) 0;
+			}
+
+			:host([compact]) .level-name {
+				justify-content: space-between;
+				align-items: center;
 			}
 
 			.level-bullet.assessed,

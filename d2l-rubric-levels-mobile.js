@@ -38,7 +38,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				color: var(--d2l-color-galena);
 				outline: none;
 				flex: 1;
-				height: 18px;
+				height: 24px;
 				align-self: center;
 			}
 			.level:not(.selected):not(:last-of-type),
@@ -73,10 +73,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 
 			.level.selected {
-				background-color: var(--d2l-color-gypsum);
-				border: 1px solid var(--d2l-color-galena);
-				border-radius: 6px !important;
-				height: 30px;
+				border-radius: 6px;
+				height: 36px;
 			}
 			.level:hover {
 				cursor: pointer;
@@ -109,11 +107,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level:focus .level-tab-focus {
 				border: 1px solid var(--d2l-color-celestine-minus-1);
 				margin: 2px;
-				height: 12px;
+				height: 18px;
 			}
 			.level.selected:focus .level-tab-focus {
-				border-radius: 6px;
-				height: 24px;
+				border-radius: 4px;
+				height: 30px;
 			}
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
@@ -329,9 +327,7 @@ Polymer({
 	},
 
 	_isSelected: function(index, selected) {
-		return selected >= 0
-			? index === selected
-			: index === 0;
+		return selected >= 0 && index === selected;
 	},
 
 	_isHovered: function(index, hovered) {
@@ -356,7 +352,6 @@ Polymer({
 		if (criterionCells && this._isAssessedLevel(index, criterionCells[index], cellAssessmentMap)) {
 			className += ' assessed';
 		}
-
 		return className;
 	},
 
