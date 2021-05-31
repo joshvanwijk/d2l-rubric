@@ -251,8 +251,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				</div>
 			</div>
 		</div>
-
-		<p class="criterion-status sr-only" role="status" aria-live="polite"></p>
+		<d2l-offscreen class="criterion-status">
+			<p role="status" aria-live="assertive"></p>
+		</d2l-offscreen>
 	</template>
 
 </dom-module>`;
@@ -364,7 +365,10 @@ Polymer({
 	},
 
 	say: function(text) {
-		const status = this.shadowRoot.querySelector('.criterion-status');
+		const statusWrap = this.shadowRoot.querySelector('.criterion-status');
+		const status = statusWrap && statusWrap.querySelector('p');
+		if (!status) return;
+		// TODO: cache timeouts (robust interrupt handling)
 		status.textContent = text;
 		setTimeout(() => {
 			status.textContent = '';
