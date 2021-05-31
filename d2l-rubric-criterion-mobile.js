@@ -159,6 +159,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			d2l-rubric-levels-mobile {
 				flex-grow: 1;
 			}
+
+			.sr-only {
+				position: absolute;
+				width: 1px;
+				height: 1px;
+				padding: 0;
+				margin: -1px;
+				border: 0;
+				overflow: hidden;
+				clip: rect(0, 0, 0, 0);
+				white-space: nowrap;
+			}
 		</style>
 		<rubric-siren-entity href="[[assessmentCriterionHref]]" token="[[token]]" entity="{{assessmentCriterionEntity}}"></rubric-siren-entity>
 		<div class="criterion-name">
@@ -183,8 +195,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<div
 				class="level-iterator-container"
 				role="button"
-				aria-label$="[[localize('selectNextLevel')]]"
-				on-click="_handleTapLeft"
+				aria-label$="[[_getLeftIteratorText()]]"
+				on-mousedown="_handleTapLeft"
 				on-keydown="_handleLeftIteratorKeyDown"
 			>
 				<div class="level-iterator">
@@ -198,6 +210,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				token="[[token]]"
 				selected="{{_selected}}"
 				hovered="{{_hovered}}"
+				focused="{{_focused}}"
 				level-entities="{{_levelEntities}}"
 				out-of="[[_outOf]]"
 				score="[[_score]]"
@@ -208,8 +221,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<div
 				class="level-iterator-container"
 				role="button"
-				aria-label$="[[localize('selectPreviousLevel')]]"
-				on-click="_handleTapRight"
+				aria-label$="[[_getRightIteratorText()]]"
+				on-mousedown="_handleTapRight"
 				on-keydown="_handleRightIteratorKeyDown"
 			>
 				<div class="level-iterator">
@@ -219,7 +232,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 		</div>
 
 		<div id="description" class="criterion-description-container">
-			<template is="dom-if" if="[[!_getVisibleLevel(_selected, _hovered, _levelEntities)]]" restamp>
+			<template is="dom-if" if="[[!_getVisibleLevel(_selected, _hovered, _focused, _levelEntities)]]" restamp>
 				<div id="level-description-panel" class="criterion-middle" aria-labelledby$="level-tab" role="tabpanel">
 					<div class="level-name">
 						<div class="level-text">[[localize('notScored')]]</div>
@@ -234,22 +247,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				</div>
 			</template>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
-				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelVisible(index, _selected, _hovered)]]">
+				<div
+					id="level-description-panel[[index]]"
+					class="criterion-middle"
+					aria-labelledby$="level-tab[[index]]"
+					role="tabpanel"
+					hidden="[[!_isLevelVisible(index, _selected, _hovered, _focused)]]"
+				>
 					<div class$="[[_getLevelNameClass(criterionCell, cellAssessmentMap)]]">
-						<div class="level-text">[[_getVisibleLevelTitle(_selected, _hovered, _levelEntities)]]</div>
+						<div class="level-text">[[_getVisibleLevelTitle(_selected, _hovered, _focused, _levelEntities)]]</div>
 						<d2l-icon
 							hidden="[[!_showLevelBullet()]]"
 							class$="[[_getLevelBulletClass(criterionCell, cellAssessmentMap)]]"
 							icon="d2l-tier1:bullet">
 						</d2l-icon>
 						<div
-							hidden="[[!_isLevelHovered(index, _hovered)]]"
+							hidden="[[!_isLevelHovered(index, _hovered, _focused)]]"
 							class="level-number"
 						>
-							[[_getVisibleLevelScore(_selected, _hovered, _levelEntities)]]
+							[[_getVisibleLevelScore(_selected, _hovered, _focused, _levelEntities)]]
 						</div>
 						<d2l-rubric-editable-score
-							hidden="[[_isLevelHovered(index, _hovered)]]"
+							hidden="[[_isLevelHovered(index, _hovered, _focused)]]"
 							criterion-href="[[href]]"
 							assessment-href="[[assessmentCriterionHref]]"
 							token="[[token]]"
@@ -263,6 +282,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				</div>
 			</template>
 		</div>
+
+		<p class="criterion-status sr-only" role="status" aria-live="polite"></p>
 	</template>
 
 </dom-module>`;
@@ -302,6 +323,11 @@ Polymer({
 		},
 
 		_hovered: {
+			type: Number,
+			value: -1
+		},
+
+		_focused: {
 			type: Number,
 			value: -1
 		},
@@ -373,27 +399,54 @@ Polymer({
 		return this.CriterionAssessmentHelper.getCompetencyNames(assessmentCriterionEntity);
 	},
 
-	_moveIteratorLeft: function() {
-		if (this._selected > 0) {
-			this._select(this._selected - 1, this._criterionCells, this.cellAssessmentMap);
-		}
+	say: function(text) {
+		const status = this.shadowRoot.querySelector('.criterion-status');
+		status.textContent = text;
+		setTimeout(() => {
+			status.textContent = '';
+		}, 1000);
 	},
 
-	_moveIteratorRight: function() {
-		if (this._criterionCells && this._selected < this._criterionCells.length - 1) {
-			this._select(this._selected + 1, this._criterionCells, this.cellAssessmentMap);
+	_moveIterator: function(delta) {
+		if (!this._criterionCells) {
+			return;
+		}
+		const min = 0;
+		const max = this._criterionCells.length - 1;
+		let level;
+		if (this._selected === -1 && delta === -1) {
+			level = min;
+		} else if (this._selected === -1 && delta === 1) {
+			level = max;
+		} else if (this.readOnly) {
+			level = this._focused + delta;
+		} else {
+			level = this._selected + delta;
+		}
+		if (level < min) {
+			level = min;
+			this.say(this.localize('noMoreLevels'));
+		} else if (level > max) {
+			level = max;
+			this.say(this.localize('noMoreLevels'));
+		}
+		this._focus(level);
+		if (!this.readOnly) {
+			this._select(level);
 		}
 	},
 
 	_handleTapLeft: function(e) {
 		e.stopPropagation();
-		this._moveIteratorLeft();
+		e.preventDefault();
+		this._moveIterator(-1);
 		e.currentTarget.nextSibling.focusSlider();
 	},
 
 	_handleTapRight: function(e) {
 		e.stopPropagation();
-		this._moveIteratorRight();
+		e.preventDefault();
+		this._moveIterator(1);
 		e.currentTarget.previousSibling.focusSlider();
 	},
 
@@ -413,17 +466,23 @@ Polymer({
 		return levels && levels[hovered];
 	},
 
-	_getVisibleLevel: function(selected, hovered, levels) {
-		return this._getHoveredLevel(hovered, levels) || this._getSelectedLevel(selected, levels);
+	_getFocusedLevel: function(focused, levels) {
+		return levels && levels[focused];
 	},
 
-	_getVisibleLevelTitle: function(selected, hovered, levels) {
-		var level = this._getVisibleLevel(selected, hovered, levels);
-		return level ? level.properties.name : null;
+	_getVisibleLevel: function(selected, hovered, focused, levels) {
+		return this._getHoveredLevel(hovered, levels)
+			|| this._getFocusedLevel(focused, levels)
+			|| this._getSelectedLevel(selected, levels);
 	},
 
-	_getVisibleLevelPoints: function(selected, hovered, levels, criterionCell) {
-		var level = this._getVisibleLevel(selected, hovered, levels);
+	_getVisibleLevelTitle: function(selected, hovered, focused, levels) {
+		var level = this._getVisibleLevel(selected, hovered, focused, levels);
+		return level && level.properties && level.properties.name || null;
+	},
+
+	_getVisibleLevelPoints: function(selected, hovered, focused, levels, criterionCell) {
+		var level = this._getVisibleLevel(selected, hovered, focused, levels);
 		if (!level) {
 			return null;
 		}
@@ -435,8 +494,8 @@ Polymer({
 		return points;
 	},
 
-	_getVisibleLevelScore: function(selected, hovered, levels, criterionCell) {
-		var points = this._getVisibleLevelPoints(selected, hovered, levels, criterionCell);
+	_getVisibleLevelScore: function(selected, hovered, focused, levels, criterionCell) {
+		var points = this._getVisibleLevelPoints(selected, hovered, focused, levels, criterionCell);
 		if (points === null || points === undefined) {
 			return null;
 		}
@@ -459,16 +518,19 @@ Polymer({
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
-		return levelIndex === selected; //  || ((typeof selected !== 'number' || selected < 0) && levelIndex === 0);
+		return levelIndex === selected;
 	},
 
-	_isLevelHovered: function(levelIndex, hovered) {
-		return levelIndex === hovered;
+	_isLevelHovered: function(levelIndex, hovered, focused) {
+		return levelIndex === hovered
+			|| levelIndex === focused && hovered === -1;
 	},
 
-	_isLevelVisible: function(levelIndex, selected, hovered) {
-		return this._isLevelHovered(levelIndex, hovered)
-			|| this._isLevelSelected(levelIndex, selected) && (typeof hovered !== 'number' || hovered < 0);
+	_isLevelVisible: function(levelIndex, selected, hovered, focused) {
+		return this._isLevelHovered(levelIndex, hovered, focused)
+			|| this._isLevelSelected(levelIndex, selected)
+				&& (typeof hovered !== 'number' || hovered < 0)
+				&& (typeof focused !== 'number' || focused < 0);
 	},
 
 	_getLevelNameClass: function(criterionCell, cellAssessmentMap) {
@@ -527,6 +589,16 @@ Polymer({
 			this._moveIteratorRight();
 		}
 	},
+	_getLeftIteratorText: function() {
+		return getComputedStyle(this).direction === 'rtl'
+			? this.localize('selectNextLevel')
+			: this.localize('selectPreviousLevel');
+	},
+	_getRightIteratorText: function() {
+		return getComputedStyle(this).direction === 'rtl'
+			? this.localize('selectPreviousLevel')
+			: this.localize('selectNextLevel');
+	},
 	_getScore: function(assessmentCriterionEntity) {
 		const score = this.CriterionAssessmentHelper.getScore(assessmentCriterionEntity);
 		if (score !== undefined && score !== null) {
@@ -549,6 +621,11 @@ Polymer({
 			if (prevIndex >= 0 && index >= 0) {
 				element.classList.add(index > prevIndex ? 'slide-from-right' : 'slide-from-left');
 			}
+		}
+	},
+	_focus: function(index) {
+		if (index !== this._focused) {
+			this._focused = index;
 		}
 	}
 });
