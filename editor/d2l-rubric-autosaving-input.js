@@ -1,7 +1,7 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import '@brightspace-ui/core/components/inputs/input-text.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
-import 'd2l-inputs/d2l-input-text.js';
 
 class AutosavingInput extends PolymerElement {
 
