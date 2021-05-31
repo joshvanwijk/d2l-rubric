@@ -183,9 +183,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<div
 				class="level-iterator-container"
 				role="button"
-				aria-label$="[[localize('selectNextLevel')]]"
-				on-click="_handleTapLeft"
-				on-keydown="_handleLeftIteratorKeyDown"
+				aria-label$="[[_getLeftIteratorText()]]"
+				on-mousedown="_handleTapLeft"
 			>
 				<div class="level-iterator">
 					<d2l-icon icon="d2l-tier1:chevron-left"></d2l-icon>
@@ -198,6 +197,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				token="[[token]]"
 				selected="{{_selected}}"
 				hovered="{{_hovered}}"
+				focused="{{_focused}}"
 				level-entities="{{_levelEntities}}"
 				out-of="[[_outOf]]"
 				score="[[_score]]"
@@ -208,9 +208,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<div
 				class="level-iterator-container"
 				role="button"
-				aria-label$="[[localize('selectPreviousLevel')]]"
-				on-click="_handleTapRight"
-				on-keydown="_handleRightIteratorKeyDown"
+				aria-label$="[[_getRightIteratorText()]]"
+				on-mousedown="_handleTapRight"
 			>
 				<div class="level-iterator">
 					<d2l-icon icon="d2l-tier1:chevron-right"></d2l-icon>
@@ -280,6 +279,11 @@ Polymer({
 		},
 
 		_hovered: {
+			type: Number,
+			value: -1
+		},
+
+		_focused: {
 			type: Number,
 			value: -1
 		},
@@ -355,29 +359,48 @@ Polymer({
 		setTimeout(() => {
 			status.textContent = '';
 		}, 1000);
-  },
-  
-	_moveIteratorLeft: function() {
-		if (this._selected > 0) {
-			this._select(this._selected - 1, this._criterionCells, this.cellAssessmentMap);
-		}
 	},
 
-	_moveIteratorRight: function() {
-		if (this._criterionCells && this._selected < this._criterionCells.length - 1) {
-			this._select(this._selected + 1, this._criterionCells, this.cellAssessmentMap);
+	_moveIterator: function(delta) {
+		if (!this._criterionCells) {
+			return;
+		}
+		const min = 0;
+		const max = this._criterionCells.length - 1;
+		let level;
+		if (this._selected === -1 && delta === -1) {
+			level = min;
+		} else if (this._selected === -1 && delta === 1) {
+			level = max;
+		} else if (this.readOnly) {
+			level = this._focused + delta;
+		} else {
+			level = this._selected + delta;
+		}
+		if (level < min) {
+			level = min;
+			this.say(this.localize('noMoreLevels'));
+		} else if (level > max) {
+			level = max;
+			this.say(this.localize('noMoreLevels'));
+		}
+		this._focus(level);
+		if (!this.readOnly) {
+			this._select(level);
 		}
 	},
 
 	_handleTapLeft: function(e) {
 		e.stopPropagation();
-		this._moveIteratorLeft();
+		e.preventDefault();
+		this._moveIterator(-1);
 		e.currentTarget.nextSibling.focusSlider();
 	},
 
 	_handleTapRight: function(e) {
 		e.stopPropagation();
-		this._moveIteratorRight();
+		e.preventDefault();
+		this._moveIterator(1);
 		e.currentTarget.previousSibling.focusSlider();
 	},
 
@@ -417,13 +440,16 @@ Polymer({
 		return levelIndex === selected;
 	},
 
-	_isLevelHovered: function(levelIndex, hovered) {
-		return levelIndex === hovered;
+	_isLevelHovered: function(levelIndex, hovered, focused) {
+		return levelIndex === hovered
+			|| levelIndex === focused && hovered === -1;
 	},
 
-	_isLevelVisible: function(levelIndex, selected, hovered) {
-		return this._isLevelHovered(levelIndex, hovered)
-			|| this._isLevelSelected(levelIndex, selected) && (typeof hovered !== 'number' || hovered < 0);
+	_isLevelVisible: function(levelIndex, selected, hovered, focused) {
+		return this._isLevelHovered(levelIndex, hovered, focused)
+			|| this._isLevelSelected(levelIndex, selected)
+				&& (typeof hovered !== 'number' || hovered < 0)
+				&& (typeof focused !== 'number' || focused < 0);
 	},
 
 	_getLevelNameClass: function(criterionCell, cellAssessmentMap) {
@@ -472,15 +498,15 @@ Polymer({
 
 		return shouldHide;
 	},
-	_handleLeftIteratorKeyDown: function(e) {
-		if (e.keyCode === 13) {
-			this._moveIteratorLeft();
-		}
+	_getLeftIteratorText: function() {
+		return getComputedStyle(this).direction === 'rtl'
+			? this.localize('selectNextLevel')
+			: this.localize('selectPreviousLevel');
 	},
-	_handleRightIteratorKeyDown: function(e) {
-		if (e.keyCode === 13) {
-			this._moveIteratorRight();
-		}
+	_getRightIteratorText: function() {
+		return getComputedStyle(this).direction === 'rtl'
+			? this.localize('selectPreviousLevel')
+			: this.localize('selectNextLevel');
 	},
 	_getScore: function(assessmentCriterionEntity) {
 		const score = this.CriterionAssessmentHelper.getScore(assessmentCriterionEntity);
@@ -504,6 +530,11 @@ Polymer({
 			if (prevIndex >= 0 && index >= 0) {
 				element.classList.add(index > prevIndex ? 'slide-from-right' : 'slide-from-left');
 			}
+		}
+	},
+	_focus: function(index) {
+		if (index !== this._focused) {
+			this._focused = index;
 		}
 	}
 });
