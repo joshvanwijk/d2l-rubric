@@ -186,8 +186,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				aria-label$="[[localize('selectNextLevel')]]"
 				on-click="_handleTapLeft"
 				on-keydown="_handleLeftIteratorKeyDown"
-				tabindex$="[[_getIteratorTabIndex('left', _selected, _criterionCells)]]">
-				<div class="level-iterator" hidden$="[[_hideIterator('left', _selected, _criterionCells)]]">
+			>
+				<div class="level-iterator">
 					<d2l-icon icon="d2l-tier1:chevron-left"></d2l-icon>
 				</div>
 			</div>
@@ -211,8 +211,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				aria-label$="[[localize('selectPreviousLevel')]]"
 				on-click="_handleTapRight"
 				on-keydown="_handleRightIteratorKeyDown"
-				tabindex$="[[_getIteratorTabIndex('right', _selected, _criterionCells)]]">
-				<div class="level-iterator" hidden$="[[_hideIterator('right', _selected, _criterionCells)]]">
+			>
+				<div class="level-iterator">
 					<d2l-icon icon="d2l-tier1:chevron-right"></d2l-icon>
 				</div>
 			</div>
@@ -387,14 +387,14 @@ Polymer({
 
 	_handleTapLeft: function(e) {
 		e.stopPropagation();
-
 		this._moveIteratorLeft();
+		e.currentTarget.nextSibling.focusSlider();
 	},
 
 	_handleTapRight: function(e) {
 		e.stopPropagation();
-
 		this._moveIteratorRight();
+		e.currentTarget.previousSibling.focusSlider();
 	},
 
 	_hideLeftChevron: function(selected) {
@@ -516,11 +516,6 @@ Polymer({
 			: selected === (criterionCells.length - 1);
 
 		return shouldHide;
-	},
-	_getIteratorTabIndex: function(which, selected, criterionCells) {
-		const isHidden = this._hideIterator(which, selected, criterionCells);
-
-		return isHidden ?  undefined : '0';
 	},
 	_handleLeftIteratorKeyDown: function(e) {
 		if (e.keyCode === 13) {

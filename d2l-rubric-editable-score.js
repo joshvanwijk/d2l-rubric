@@ -129,7 +129,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
-				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" aria-labelledby="score-label">
+				<div
+					aria-labelledby="score-label"
+					class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]"
+					tabindex$="[[_getOutOfTabIndex(readOnly)]]"
+				>
 					<d2l-offscreen id="score-label">[[_getCriterionContext(criterionName)]]</d2l-offscreen>
 					[[_localizeOutOf(entity, _score)]]
 					<div class="star" id="score-overridden-star" aria-hidden="true">*</div>
@@ -255,7 +259,7 @@ Polymer({
 		'_updateAssessable(readOnly, assessmentHref)'
 	],
 	ready: function() {
-		['click', 'keydown'].forEach((eventType) => {
+		['click', 'keydown', 'focus'].forEach((eventType) => {
 			this.addEventListener(eventType, (e) => {
 				if (eventType === 'keydown' && e.keyCode !== 13) {
 					return;
@@ -452,6 +456,10 @@ Polymer({
 			className += ' overridden';
 		}
 		return className;
+	},
+
+	_getOutOfTabIndex: function(readOnly) {
+		return readOnly ? undefined : 0;
 	},
 
 	_getContainerClassName: function(criterionHref) {
