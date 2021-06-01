@@ -214,7 +214,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 						on-mousedown="_handleMouseDown"
 						on-mouseover="_handleMouseOver"
 						on-mouseout="_handleMouseOut"
-						on-click="_handleClick"
 						on-track="_handleTrack"
 					>
 						<template is="dom-if" if="[[_isThumbVisible(index, selected)]]">
@@ -386,11 +385,13 @@ Polymer({
 	},
 
 	_selectLevel: function(level) {
+		if (this.focused === level.dataIndex
+		&& this.selected === level.dataIndex) {
+			return;
+		}
 		this._focusLevel(level.dataIndex);
 		if (!this.readOnly) {
-			this.CriterionCellAssessmentHelper.selectAsync(
-				() => this.cellAssessmentMap[level.dataset.cellHref]
-			);
+			this._getCriterion().selectCell(() => this.cellAssessmentMap[level.dataset.cellHref]);
 		}
 	},
 
@@ -510,8 +511,12 @@ Polymer({
 		return this.shadowRoot.querySelector(`#level-tab${index}`);
 	},
 
+	_getCriterion: function() {
+		return this.getRootNode().host;
+	},
+
 	_getCriterionName: function() {
-		return this.getRootNode().host._name;
+		return this._getCriterion()._name;
 	},
 
 	_getCriterionCellHref: function(criterionCells, index) {
@@ -546,14 +551,9 @@ Polymer({
 	},
 
 	_handleMouseDown: function(evt) {
-		this._focusLevel(evt.currentTarget.dataIndex);
-	},
-
-	_handleClick: function(evt) {
 		if (this._preventClick) {
 			return;
 		}
-		this.shadowRoot.querySelector('input.level-slider').value = evt.currentTarget.dataIndex;
 		this.focusSlider(evt);
 		this._selectLevel(evt.currentTarget);
 		evt.preventDefault();

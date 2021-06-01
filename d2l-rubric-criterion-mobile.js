@@ -273,6 +273,8 @@ Polymer({
 			value: null
 		},
 
+		_save: Object,
+
 		_selected: {
 			type: Number,
 			value: -1
@@ -328,9 +330,50 @@ Polymer({
 		this._criterionCells = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 	},
 
-	_selectAssessedLevel: function(cells, cellAssessmentMap) {
-		if (!cells || !cellAssessmentMap) {
+	selectCell: function(entityGetter) {
+		const criterion = this;
+		const helper = this.CriterionCellAssessmentHelper;
+		const entityWrapper = () => {
+			const entity = entityGetter();
+			criterion._save.entity = entity;
+			return entity;
+		};
+
+		const DEBOUNCE_DURATION = 1000;
+		const timeout = setTimeout(() => {
+			helper.selectAsync(entityWrapper);
+			criterion._save.ops += 1;
+		}, DEBOUNCE_DURATION);
+
+		if (this._save) {
+			clearTimeout(this._save.timeout);
+			this._save.timeout = timeout;
+			this._save.entity = null;
+		} else {
+			this._save = {
+				timeout: timeout,
+				entity: null,
+				ops: 0
+			};
+		}
+	},
+
+	_selectAssessedLevel: function(cells, cellAssessmentMap, assessmentCriterionEntity) {
+		if (!cells
+		|| !cellAssessmentMap
+		|| !Object.keys(cellAssessmentMap).length
+		|| !assessmentCriterionEntity
+		|| this._levelEntities && (
+			assessmentCriterionEntity.rel
+			|| !this._save
+			|| !this._save.entity
+			|| this._save.entity.getLink().href !== assessmentCriterionEntity.getAction().href
+			|| --this._save.ops
+		)) {
 			return;
+		}
+		if (this._save && !this._save.ops) {
+			this._save = null;
 		}
 		for (let i = 0; i < cells.length; i++) {
 			const assessmentCriterion = cellAssessmentMap[this._getSelfLink(cells[i])];
