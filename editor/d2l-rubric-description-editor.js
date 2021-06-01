@@ -1,16 +1,16 @@
+import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-inputs/d2l-input-text.js';
-import '../d2l-rubric-entity-behavior.js';
-import '../localize-behavior.js';
+import './d2l-rubric-autosaving-input.js';
+import './d2l-rubric-error-handling-behavior.js';
 import './d2l-rubric-siren-autosave-action-behavior.js';
 import './d2l-rubric-text-editor.js';
-import './d2l-rubric-error-handling-behavior.js';
-import './d2l-rubric-autosaving-input.js';
+import '../d2l-rubric-entity-behavior.js';
+import '../localize-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-description-editor">
 	<template strip-whitespace="">
 		<style>

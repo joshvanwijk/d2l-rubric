@@ -1,14 +1,12 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
-
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-colors/d2l-colors.js';
-import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-icons/tier1-icons.js';
-import 'd2l-icons/d2l-icon.js';
+import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import './d2l-siren-entity-resolver.js';
 import './localize-behavior.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
 const _trim = str => str ? str.trim() : str;
 

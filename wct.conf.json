@@ -1,5 +1,5 @@
 {
-  "testTimeout": 180000,
+  "testTimeout": 600000,
   "plugins": {
     "local": {
       "browsers": [

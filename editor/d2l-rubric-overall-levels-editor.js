@@ -1,21 +1,20 @@
+import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/scroll-wrapper/scroll-wrapper.js';
 import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-table/d2l-scroll-wrapper.js';
-import '../d2l-rubric-entity-behavior.js';
-import '../localize-behavior.js';
 import './d2l-rubric-description-editor.js';
 import './d2l-rubric-overall-level-editor.js';
+import '../d2l-rubric-entity-behavior.js';
+import '../localize-behavior.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import '@brightspace-ui/core/components/button/button-icon.js';
 
 const $_documentContainer = document.createElement('template');
-
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-levels-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
@@ -165,7 +164,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			<div class="sub-title">[[localize('overallScoreDescription')]]</div>
 		</div>
 
-		<d2l-scroll-wrapper id="scroll-wrapper" show-actions check-scroll-delta-value="1">
+		<d2l-scroll-wrapper id="scroll-wrapper">
 			<div id="level-header" class="editor-section">
 				<div class="gutter-left">
 					<d2l-button-icon on-click="_handlePrependOverallLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addOverallLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">

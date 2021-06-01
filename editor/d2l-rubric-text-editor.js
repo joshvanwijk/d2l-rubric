@@ -1,8 +1,9 @@
 import '@polymer/polymer/polymer-legacy.js';
 import '@brightspace-ui/core/components/inputs/input-textarea.js';
 import './d2l-rubric-html-editor.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+
 Polymer({
 	_template: html`
 		<style>

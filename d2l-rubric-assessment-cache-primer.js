@@ -1,7 +1,7 @@
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import './rubric-siren-entity.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
 const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-assessment-cache-primer">

@@ -1,21 +1,21 @@
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import './d2l-rubric-criterion-mobile.js';
 import './d2l-rubric-levels-mobile.js';
 import './d2l-rubric-feedback.js';
-import 'd2l-colors/d2l-colors.js';
 import './d2l-rubric-entity-behavior.js';
 import './assessment-behavior.js';
 import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
 import 'fastdom/fastdom.js';
-import '@brightspace-ui/core/components/button/button-subtle.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-const $_documentContainer = document.createElement('template');
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 	<template strip-whitespace="">
 		<style>
