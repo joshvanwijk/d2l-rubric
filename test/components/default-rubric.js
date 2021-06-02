@@ -10,6 +10,7 @@ suite('Preview Mode', function() {
 		element.href = '/rubrics/default-rubric';
 		/* global waitForLastSirenChangeEvent */
 		return waitForLastSirenChangeEvent(element, 'd2l-siren-entity-changed', 'Criterion 3').then(function() {
+			// TODO: needs fixing
 			table = element.$$('d2l-rubric-criteria-groups').$$('d2l-rubric-criteria-group').$$('d2l-table');
 			firstRow = table.querySelector('d2l-tbody').querySelector('d2l-tr');
 		});

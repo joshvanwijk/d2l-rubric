@@ -3,13 +3,7 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/offscreen/offscreen.js';
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-table/d2l-table.js';
-import 'd2l-table/d2l-td.js';
-import 'd2l-table/d2l-tr.js';
-import 'd2l-table/d2l-thead.js';
-import 'd2l-table/d2l-tbody.js';
-import 'd2l-table/d2l-th.js';
-import 'd2l-table/d2l-tspan.js';
+import 'd2l-table/d2l-table-wrapper.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'fastdom/fastdom.js';
 import 's-html/s-html.js';
@@ -39,22 +33,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				position: relative;
 				--column-count: 0;
 			}
-			d2l-table[type="default"] d2l-td.out-of {
+			d2l-table-wrapper[type="default"] td.out-of {
 				text-align: left;
 				vertical-align: top;
 				min-width: 0;
 				pointer-events: none;
 			}
-			d2l-table[type="default"] d2l-td.out-of.assessable {
+			d2l-table-wrapper[type="default"] td.out-of.assessable {
 				pointer-events: auto;
 				max-width: 75px;
 			}
-			d2l-td.out-of.assessable:hover {
+			td.out-of.assessable:hover {
 				color: var(--d2l-color-celestine);
 				cursor: pointer;
-			}
-			d2l-th  {
-				text-align: center;
 			}
 			d2l-rubric-editable-score {
 				min-width: 70px;
@@ -70,9 +61,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				font-weight: bold;
 				text-align: left;
 				background-color: var(--d2l-color-regolith);
-			}
-			d2l-table[type="default"] d2l-tbody d2l-tr {
-				height: 100%;
 			}
 			#loa-container #float {
 				padding: 0px;
@@ -112,7 +100,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			#loa-labels .loa-end {
 				border-width: 0px;
 			}
-			d2l-table[type="default"] d2l-td.criteria {
+			d2l-table-wrapper[type="default"] td.criteria {
 				@apply --d2l-body-compact-text;
 				text-align: left;
 				background-color: var(--d2l-color-regolith);
@@ -125,7 +113,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				height: calc(100% - 0.5rem);
 				padding-top: 0.5rem;
 			}
-			d2l-table[type="default"] d2l-td.criterion-cell {
+			d2l-table-wrapper[type="default"] td.criterion-cell {
 				@apply --d2l-body-compact-text;
 				vertical-align: top;
 				position: relative;
@@ -266,149 +254,150 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 		<rubric-siren-entity href="[[_levelsHref]]" token="[[token]]" entity="{{_levelsEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_loaMappingHref]]" token="[[token]]" entity="{{_loaLevelEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[_criteriaCollectionHref]]" token="[[token]]" entity="{{_criteriaCollectionEntity}}"></rubric-siren-entity>
-		<d2l-table aria-colcount$="[[_getColumnCount(_levels, entity, criterionResultMap, rubricType)]]" aria-rowcount$="[[_getRowCount(_criteriaEntities)]]" hidden$="[[!_showContent]]">
-			<d2l-offscreen>
-				[[localize('rubricSummaryA11y')]]
-			</d2l-offscreen>
-			<d2l-thead>
-				<d2l-tr aria-rowindex="1">
-					<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
-						<d2l-td role="columnheader" class="group-name">
-							[[entity.properties.name]]
-						</d2l-td>
-					</template>
-					<template is="dom-repeat" items="[[_levels]]" as="level">
-						<d2l-th>
-							<div>
-								<div class="level-name">[[level.properties.name]]</div>
-								<div hidden="[[!_isNumeric(entity, level)]]">[[_localizeLevelOutOf('points', level.properties.points)]]</div>
-								<div hidden="[[!_isHolistic(entity, level)]]">[[_localizeLevelOutOf('percentage', level.properties.points)]]</div>
-							</div>
-						</d2l-th>
-					</template>
-					<template is="dom-if" if="[[_hasOutOf(entity)]]">
-						<d2l-th class="out-of">
-							<div class="level-name">[[localize('criterionScore')]]</div>
-						</d2l-th>
-					</template>
-				</d2l-tr>
-				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
-					<d2l-tspan id="loa-container">
-						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_setLoaCellsWidth">
-							<div class="loa-label">
-								<div class="loa-label-text">[[_getLoaHeadingLangTerm()]]</div>
-							</div>
-							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" on-dom-change="_setLoaCellsWidth">
-								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]">
-									<div class="loa-label-text">[[loaLevel.properties.name]]</div>
-								</div>
-							</template>
-							<template is="dom-if" if="[[_hasOutOf(entity)]]">
-								<div class="loa-end"></div>
-							</template>
-						</d2l-resize-aware>
-					</d2l-tspan>
-				</template>
-			</d2l-thead>
-			<d2l-tbody>
-				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
-					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]">
-						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]" on-dom-change="_rowHeaderDomChange">
-							<d2l-td class="criteria" role="rowheader">
-								<div class="criteria-row-header-container">
-									<div>
-										<d2l-rubric-alignments-indicator
-											href="[[_getActivityLink(criterion)]]"
-											token="[[token]]"
-											outcomes-title-text="[[_getOutcomesTitleText()]]"
-											criterion-name="[[criterion.properties.name]]"
-										></d2l-rubric-alignments-indicator>
-										<template is="dom-if" if="[[_showCompetencies(criterionResultMap, criterion, readOnly)]]">
-											<d2l-rubric-competencies-icon
-												competency-names="[[_getCriterionCompetencies(criterionResultMap, criterion)]]"
-											></d2l-rubric-competencies-icon>
-										</template>
-										<div class="criterion-name">
-											<span>
-												[[criterion.properties.name]]
-											</span>
-										</div>
-									</div>
-									<d2l-button-subtle
-										aria-hidden="true"
-										tabindex="-1"
-										id="addFeedback[[_getRowIndex(criterionNum)]]"
-										on-click="_handleAddFeedback"
-										on-focusin="_handleVisibleFeedbackFocusin"
-										on-focusout="_handleVisibleFeedbackFocusout"
-										hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
-										text="[[localize('addFeedback')]]"
-										data-criterion$="[[criterionNum]]"
-									></d2l-button-subtle>
-								</div>
-							</d2l-td>
+		<d2l-table-wrapper hidden$="[[!_showContent]]">
+			<table class="d2l-table" aria-label="[[localize('rubricSummaryA11y')]]">
+				<thead>
+					<tr>
+						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]">
+							<td class="group-name">[[entity.properties.name]]</d2l-td>
 						</template>
-						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum" on-dom-change="_onCriterionCellDomChanged">
-							<d2l-td
-								class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
-								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
-								on-click="_handleTap"
-								data-href$="[[_getSelfLink(criterionCell)]]"
-							>
-								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" cell-assessment="[[_lookupMap(criterionCell,cellAssessmentMap)]]">
-								</d2l-rubric-criterion-cell>
-								<d2l-offscreen>
-									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, cellAssessmentMap)]]" id="criterion-cell-input[[criterionNum]]_[[cellNum]]">
-								</d2l-offscreen>
-							</d2l-td>
+						<template is="dom-repeat" items="[[_levels]]" as="level">
+							<th>
+								<div>
+									<div class="level-name">[[level.properties.name]]</div>
+									<div hidden="[[!_isNumeric(entity, level)]]">[[_localizeLevelOutOf('points', level.properties.points)]]</div>
+									<div hidden="[[!_isHolistic(entity, level)]]">[[_localizeLevelOutOf('percentage', level.properties.points)]]</div>
+								</div>
+							</th>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion, criterionResultMap, readOnly)]]">
-								<d2l-rubric-editable-score
-									id="score-inner[[criterionNum]]"
-									criterion-href="[[_getSelfLink(criterion)]]"
-									assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
-									token="[[token]]"
-									read-only="[[readOnly]]"
-									editing-score="{{editingScore}}"
-									criterion-num="[[criterionNum]]"
-									criterion-name="[[criterion.properties.name]]">
-								</d2l-rubric-editable-score>
-							</d2l-td>
+							<th class="out-of">
+								<div class="level-name">[[localize('criterionScore')]]</div>
+							</th>
 						</template>
-					</d2l-tr>
-					<d2l-offscreen>
-						<d2l-button-subtle
-							id="invisible-addFeedback[[_getRowIndex(criterionNum)]]"
-							on-click="_handleAddFeedback"
-							on-focusin="_handleInvisibleFeedbackFocusin"
-							on-focusout="_handleInvisibleFeedbackFocusout"
-							description="[[_localizeAddFeedbackButtonDescription(criterion)]]"
-							hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
-							data-criterion$="[[criterionNum]]"
-						></d2l-button-subtle>
-					</d2l-offscreen>
-					<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
-						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
-							<d2l-rubric-feedback
-								id="feedback-inner[[criterionNum]]"
-								class="feedback-wrapper"
-								criterion-href="[[_getSelfLink(criterion)]]"
-								criterion-assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
-								token="[[token]]"
-								read-only="[[readOnly]]"
-								enable-feedback-copy="[[enableFeedbackCopy]]"
-								data-criterion$="[[criterionNum]]"
-								on-save-feedback-start="_handleSaveStart"
-								on-save-feedback-finished="_handleSaveFinished"
-								on-close-feedback="_closeFeedback"
-								on-focus="_handleFeedbackTextFocus">
-							</d2l-rubric-feedback>
+					</tr>
+					<!--
+					<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
+						<d2l-tspan id="loa-container">
+							<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_setLoaCellsWidth">
+								<div class="loa-label">
+									<div class="loa-label-text">[[_getLoaHeadingLangTerm()]]</div>
+								</div>
+								<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel" on-dom-change="_setLoaCellsWidth">
+									<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]">
+										<div class="loa-label-text">[[loaLevel.properties.name]]</div>
+									</div>
+								</template>
+								<template is="dom-if" if="[[_hasOutOf(entity)]]">
+									<div class="loa-end"></div>
+								</template>
+							</d2l-resize-aware>
 						</d2l-tspan>
 					</template>
-				</template>
-			</d2l-tbody>
-		</d2l-table>
+					-->
+				</thead>
+				<tbody>
+					<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
+						<tr aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]">
+							<template is="dom-if" if="[[_showRowHeaders(rubricType)]]" on-dom-change="_rowHeaderDomChange">
+								<td class="criteria">
+									<div class="criteria-row-header-container">
+										<div>
+											<d2l-rubric-alignments-indicator
+												href="[[_getActivityLink(criterion)]]"
+												token="[[token]]"
+												outcomes-title-text="[[_getOutcomesTitleText()]]"
+												criterion-name="[[criterion.properties.name]]"
+											></d2l-rubric-alignments-indicator>
+											<template is="dom-if" if="[[_showCompetencies(criterionResultMap, criterion, readOnly)]]">
+												<d2l-rubric-competencies-icon
+													competency-names="[[_getCriterionCompetencies(criterionResultMap, criterion)]]"
+												></d2l-rubric-competencies-icon>
+											</template>
+											<div class="criterion-name">
+												<span>
+													[[criterion.properties.name]]
+												</span>
+											</div>
+										</div>
+										<d2l-button-subtle
+											aria-hidden="true"
+											tabindex="-1"
+											id="addFeedback[[_getRowIndex(criterionNum)]]"
+											on-click="_handleAddFeedback"
+											on-focusin="_handleVisibleFeedbackFocusin"
+											on-focusout="_handleVisibleFeedbackFocusout"
+											hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+											text="[[localize('addFeedback')]]"
+											data-criterion$="[[criterionNum]]"
+										></d2l-button-subtle>
+									</div>
+								</td>
+							</template>
+							<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum" on-dom-change="_onCriterionCellDomChanged">
+								<td
+									class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
+									style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
+									on-click="_handleTap"
+									data-href$="[[_getSelfLink(criterionCell)]]"
+								>
+									<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" cell-assessment="[[_lookupMap(criterionCell,cellAssessmentMap)]]">
+									</d2l-rubric-criterion-cell>
+									<d2l-offscreen>
+										<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, cellAssessmentMap)]]" id="criterion-cell-input[[criterionNum]]_[[cellNum]]">
+									</d2l-offscreen>
+								</td>
+							</template>
+							<template is="dom-if" if="[[_hasOutOf(entity)]]">
+								<td class$="[[_getOutOfClassName(criterion, criterionResultMap, readOnly)]]">
+									<d2l-rubric-editable-score
+										id="score-inner[[criterionNum]]"
+										criterion-href="[[_getSelfLink(criterion)]]"
+										assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
+										token="[[token]]"
+										read-only="[[readOnly]]"
+										editing-score="{{editingScore}}"
+										criterion-num="[[criterionNum]]"
+										criterion-name="[[criterion.properties.name]]">
+									</d2l-rubric-editable-score>
+								</td>
+							</template>
+						</tr>
+						<!--
+						<d2l-offscreen>
+							<d2l-button-subtle
+								id="invisible-addFeedback[[_getRowIndex(criterionNum)]]"
+								on-click="_handleAddFeedback"
+								on-focusin="_handleInvisibleFeedbackFocusin"
+								on-focusout="_handleInvisibleFeedbackFocusout"
+								description="[[_localizeAddFeedbackButtonDescription(criterion)]]"
+								hidden="[[!_showAddFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+								data-criterion$="[[criterionNum]]"
+							></d2l-button-subtle>
+						</d2l-offscreen>
+						<template is="dom-if" if="[[_displayFeedback(criterion, criterionResultMap, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
+							<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
+								<d2l-rubric-feedback
+									id="feedback-inner[[criterionNum]]"
+									class="feedback-wrapper"
+									criterion-href="[[_getSelfLink(criterion)]]"
+									criterion-assessment-href="[[_getCriterionResultHref(criterion,criterionResultMap)]]"
+									token="[[token]]"
+									read-only="[[readOnly]]"
+									enable-feedback-copy="[[enableFeedbackCopy]]"
+									data-criterion$="[[criterionNum]]"
+									on-save-feedback-start="_handleSaveStart"
+									on-save-feedback-finished="_handleSaveFinished"
+									on-close-feedback="_closeFeedback"
+									on-focus="_handleFeedbackTextFocus">
+								</d2l-rubric-feedback>
+							</d2l-tspan>
+						</template>
+						-->
+					</template>
+				</tbody>
+			</table>
+		</d2l-table-wrapper>
 	</template>
 </dom-module>`;
 
