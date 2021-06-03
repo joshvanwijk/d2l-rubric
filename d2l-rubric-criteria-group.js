@@ -312,7 +312,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			</d2l-thead>
 			<d2l-tbody>
 				<template is="dom-repeat" items="[[_criteriaEntities]]" as="criterion" index-as="criterionNum">
-					<d2l-tr aria-rowindex$="[[_getRowIndex(criterionNum)]]" aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]">
+					<d2l-tr
+						role="radiogroup"
+						aria-labelledby$="criterion-name[[criterionNum]]"
+						aria-rowindex$="[[_getRowIndex(criterionNum)]]"
+						aria-owns$="[[_getFeedbackID(criterion, criterionResultMap, criterionNum)]]"
+					>
 						<template is="dom-if" if="[[_showRowHeaders(rubricType)]]" on-dom-change="_rowHeaderDomChange">
 							<d2l-td class="criteria" role="rowheader">
 								<div class="criteria-row-header-container">
@@ -329,7 +334,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 											></d2l-rubric-competencies-icon>
 										</template>
 										<div class="criterion-name">
-											<span>
+											<span id="criterion-name[[criterionNum]]">
 												[[criterion.properties.name]]
 											</span>
 										</div>
@@ -350,16 +355,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum" on-dom-change="_onCriterionCellDomChanged">
 							<d2l-td
+								role="radio"
+								aria-checked$="[[_isSelected(criterionCell, cellAssessmentMap)]]"
+								tabindex$="[[_getCriteriaTabIndex(criterionCell, cellAssessmentMap)]]"
 								class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
 								on-click="_handleTap"
+								on-keydown="_handleKey"
 								data-href$="[[_getSelfLink(criterionCell)]]"
 							>
 								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" cell-assessment="[[_lookupMap(criterionCell,cellAssessmentMap)]]">
 								</d2l-rubric-criterion-cell>
-								<d2l-offscreen>
-									<input hidden="[[_isStaticView()]]" on-keypress="_handleKey" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, cellAssessmentMap)]]" id="criterion-cell-input[[criterionNum]]_[[cellNum]]">
-								</d2l-offscreen>
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
@@ -826,6 +832,10 @@ Polymer({
 		return className;
 	},
 
+	_getCriteriaTabIndex: function(criterionCell, cellAssessmentMap) {
+		return this._isSelected(criterionCell, cellAssessmentMap) ? 0 : -1;
+	},
+
 	_getHeaderStyle: function(loaLevel, sortedRubricLevels, loaLevels, levelsReversed) {
 		const colSpan = this._getLoaLevelSpan(loaLevel, sortedRubricLevels, loaLevels, levelsReversed);
 		const side = levelsReversed ? 'left' : 'right';
@@ -904,22 +914,53 @@ Polymer({
 		this.CriterionCellAssessmentHelper.selectAsync(
 			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
 		).then(() => {
-			if (this._addingFeedback === -1) {
-				this._focusCriterionCell(event);
-			}
-
 			this.perfMark(`criterionCellTappedEnd-${uuid}`);
 			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`);
 		});
 
+		this._focusCriterionCell(event);
 		this._addingFeedback = -1;
 		this.editingScore = -1;
 	},
 
+	_getRadioSibling: function(radio, delta) {
+		const radios = radio.parentNode.querySelectorAll('[role=radio]');
+		const index = Array.prototype.indexOf.call(radios, radio);
+		return radios[index + delta];
+	},
+
+	_selectRadio: function(radio) {
+		if (this._isStaticView()) {
+			return;
+		}
+		const href = radio.getAttribute('data-href');
+		this.CriterionCellAssessmentHelper.selectAsync(() => this.cellAssessmentMap[href]);
+		radio.focus();
+	},
+
+	_handlePrev: function(event) {
+		const prevRadio = this._getRadioSibling(event.target, -1);
+		if (prevRadio) {
+			this._selectRadio(prevRadio);
+		}
+	},
+
+	_handleNext: function(event) {
+		const nextRadio = this._getRadioSibling(event.target, 1);
+		if (nextRadio) {
+			this._selectRadio(nextRadio);
+		}
+	},
+
 	_handleKey: function(event) {
-		var criterionCell = event.model.get('criterionCell');
-		if (event.keyCode === 13 || (this._isSelected(criterionCell, this.cellAssessmentMap) === true && event.keyCode === 32)) { // enter or space key
-			this._handleTap(event);
+		switch (event.code) {
+			case 'Enter':
+			case 'Space':
+				return this._handleTap(event);
+			case 'ArrowLeft':
+				return this._handlePrev(event);
+			case 'ArrowRight':
+				return this._handleNext(event);
 		}
 	},
 
@@ -984,10 +1025,9 @@ Polymer({
 
 	_focusCriterionCell: function(event) {
 		var elem = dom(this.root).querySelector('#criterion-cell-input' + event.model.get('criterionNum') + '_' + event.model.get('cellNum'));
-		fastdom.mutate(function() {
-			// Refocus criterion cell input
+		if (elem) {
 			elem.focus();
-		}.bind(this));
+		}
 	},
 
 	_handleSaveStart: function(event) {
