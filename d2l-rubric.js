@@ -253,7 +253,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			has-alerts="[[_hasAlerts]]"
 			compact="[[compact]]"
 			detached-view="[[detachedView]]"
-			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]">
+			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]"
+			include-statistics="[[_shouldShowStatsButton(includeStatistics, _statisticsHref)]]"
+			statistics-href="[[_statisticsHref]]"
+		>
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 					[[item.alertMessage]]
@@ -441,6 +444,14 @@ Polymer({
 			type: Number,
 			computed: '_getTotalScore(assessmentEntity)'
 		},
+		includeStatistics: {
+			type: Boolean,
+			value: false
+		},
+		_statisticsHref: {
+			type: String,
+			value: null
+		},
 		_cachePrimed: {
 			type: Boolean,
 			value: false
@@ -506,6 +517,13 @@ Polymer({
 			this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 			this._showContent = true;
 			this._courseName = entity.properties.courseName;
+			if(this.includeStatistics) {
+				const statisticsLink = this.assessmentEntity.getLinkByRel('activity-competency-stats');
+				this._statisticsHref = statisticsLink && statisticsLink.href;
+				console.log(this._statisticsHref);
+				console.log(this.assessmentEntity);
+				console.log(statisticsLink);
+			}
 		}
 	},
 

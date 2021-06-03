@@ -24,6 +24,14 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				type: Boolean,
 				value: false,
 			},
+			statisticsHref: {
+				type: String,
+				value: ''
+			},
+			_statisticsDialogOpened: {
+				type: Boolean,
+				value: false
+			}
 		};
 	}
 
@@ -95,6 +103,24 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 											[[scoreText]]
 										</span>
 									</div>
+								</span>
+								<span hidden="[[!_shouldShowStatisticsLink(includeStatistics, _statisticsHref)]]">
+									<d2l-button-subtle
+										class="stats-button"
+										icon="tier1:reports"
+										on-click="_openStatsDialog"
+									>
+									</d2l-button-subtle>
+									<d2l-dialog
+										class="statistics-dialog"
+										title-text="[[localize('statsDialogTitle')]]"
+										opened="[[_statisticsDialogOpened]]"
+									>
+										<iframe src="[[statisticsHref]]"></iframe>
+										<div slot="footer">
+											<d2l-button primary on-click="_closeStatsDialog">[[localize('closeDialog')]]</d2l-button>
+										</div>
+									</d2l-dialog>
 								</span>
 							</div>
 							<slot></slot>
@@ -203,5 +229,17 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				this.___accordionMutationObserver = null;
 			}
 		});
+	}
+
+	_openStatsDialog() {
+		this._statisticsDialogOpened = true;
+	}
+
+	_closeStatsDialog() {
+		this._statisticsDialogOpened = false;
+	}
+
+	_shouldShowStatisticsLink(includeStatistics, statisticsHref) {
+		return includeStatistics && statisticsHref && statisticsHref.length > 0;
 	}
 });
