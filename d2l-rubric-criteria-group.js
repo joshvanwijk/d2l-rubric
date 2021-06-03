@@ -144,7 +144,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			.criterion-cell:focus-within {
 				box-shadow: 0 0 0 4px inset rgba(0, 111, 191, 0.4); /* celestine with 0.4 opacity */
 			}
-			.criterion-cell.selected {
+			.criterion-cell[aria-checked=true] {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
 				background-color: var(--d2l-color-celestine-plus-2);
@@ -153,17 +153,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
 				border-width: 2px;
 			}
-			.criterion-cell.selected:focus-within {
+			.criterion-cell[aria-checked=true]:focus-within {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
-			.criterion-cell.selected.has-bottom {
+			.criterion-cell[aria-checked=true].has-bottom {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), -2px 2px 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
 			}
-			.criterion-cell.selected.has-bottom:focus-within {
+			.criterion-cell[aria-checked=true].has-bottom:focus-within {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
-			.criterion-cell.selected.is-last {
+			.criterion-cell[aria-checked=true].is-last {
 				border-bottom-color: var(--d2l-color-celestine);
 				border-bottom-width: 2px;
 			}
@@ -173,7 +173,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			.criterion-cell.assessable:hover {
 				background-color: var(--d2l-color-sylvite);
 			}
-			.criterion-cell.assessable.selected {
+			.criterion-cell.assessable[aria-checked=true] {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.criterion-cell.first.holistic {
@@ -183,9 +183,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
 			}
-			.criterion-cell.first.holistic.selected {
+			.criterion-cell.first.holistic[aria-checked=true] {
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
+			}
+			d2l-rubric-criterion-cell {
+				pointer-events: none;
 			}
 
 			d2l-button-subtle {
@@ -356,7 +359,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum" on-dom-change="_onCriterionCellDomChanged">
 							<d2l-td
 								role="radio"
-								aria-checked$="[[_isSelected(criterionCell, cellAssessmentMap)]]"
+								aria-checked$="[[_getCriteriaAriaChecked(criterionCell, cellAssessmentMap)]]"
 								tabindex$="[[_getCriteriaTabIndex(criterionCell, cellAssessmentMap)]]"
 								class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
@@ -484,7 +487,16 @@ Polymer({
 			type: Boolean,
 		},
 		criterionResultMap: Object,
-		cellAssessmentMap: Object
+		cellAssessmentMap: Object,
+		_changeTimeout: Number,
+		_changesQueued: {
+			type: Object,
+			value: () => ({})
+		},
+		_changesRequested: {
+			type: Object,
+			value: () => ({})
+		}
 	},
 
 	behaviors: [
@@ -774,6 +786,21 @@ Polymer({
 		return cellResult && this.CriterionCellAssessmentHelper.isSelected(cellResult);
 	},
 
+	_willSelect: function(criterionCell, cellAssessmentMap) {
+		const criterionHref = criterionCell.getLinkByRel('up')?.href;
+		const requestedCell = criterionHref && this._changesRequested[criterionHref]?.();
+		const assessmentCell = this._lookupMap(criterionCell, cellAssessmentMap);
+		if (requestedCell) {
+			return requestedCell.properties.score === assessmentCell?.properties.score;
+		} else {
+			return this._isSelected(criterionCell, cellAssessmentMap);
+		}
+	},
+
+	_getCriteriaAriaChecked: function(criterionCell, cellAssessmentMap) {
+		return (!!this._willSelect(criterionCell, cellAssessmentMap)).toString();
+	},
+
 	_hasBottom: function(criterionCell, criterionResultMap, criterionNum, criteria, addingFeedback) {
 		if (criterionNum === addingFeedback || criterionNum >= criteria.length - 1) {
 			return true;
@@ -815,7 +842,7 @@ Polymer({
 		if (cellNum === 0 && this.rubricType === 'holistic') {
 			className += ' first holistic';
 		}
-		if (this._isSelected(criterionCell, cellAssessmentMap)) {
+		if (this._willSelect(criterionCell, cellAssessmentMap)) {
 			className += ' selected';
 		}
 		const cellAssessment = this._lookupMap(criterionCell, cellAssessmentMap);
@@ -833,7 +860,7 @@ Polymer({
 	},
 
 	_getCriteriaTabIndex: function(criterionCell, cellAssessmentMap) {
-		return this._isSelected(criterionCell, cellAssessmentMap) ? 0 : -1;
+		return this._willSelect(criterionCell, cellAssessmentMap) ? 0 : -1;
 	},
 
 	_getHeaderStyle: function(loaLevel, sortedRubricLevels, loaLevels, levelsReversed) {
@@ -908,17 +935,12 @@ Polymer({
 		if (this._isStaticView()) {
 			return;
 		}
-
-		const uuid = this.getUUID();
-		this.perfMark(`criterionCellTappedStart-${uuid}`);
-		this.CriterionCellAssessmentHelper.selectAsync(
-			() => this._lookupMap(event.model.get('criterionCell'), this.cellAssessmentMap)
-		).then(() => {
-			this.perfMark(`criterionCellTappedEnd-${uuid}`);
-			this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`);
-		});
-
-		this._focusCriterionCell(event);
+		const radio = event.target;
+		const prevRadio = radio.parentNode.querySelector('[aria-checked=true]');
+		if (prevRadio) {
+			this._deselectRadio(prevRadio);
+		}
+		this._selectRadio(radio);
 		this._addingFeedback = -1;
 		this.editingScore = -1;
 	},
@@ -929,25 +951,47 @@ Polymer({
 		return radios[index + delta];
 	},
 
+	_deselectRadio: function(radio) {
+		if (this._isStaticView()) {
+			return;
+		}
+		fastdom.mutate(() => {
+			radio.setAttribute('aria-checked', false);
+			radio.setAttribute('tabindex', -1);
+		});
+	},
+
 	_selectRadio: function(radio) {
 		if (this._isStaticView()) {
 			return;
 		}
+		fastdom.mutate(() => {
+			radio.setAttribute('aria-checked', true);
+			radio.setAttribute('tabindex', 0);
+			radio.focus();
+		});
 		const href = radio.getAttribute('data-href');
-		this.CriterionCellAssessmentHelper.selectAsync(() => this.cellAssessmentMap[href]);
-		radio.focus();
+		const entity = this.cellAssessmentMap[href];
+		const criterionHref = entity?.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion')?.href;
+		if (criterionHref) {
+			this._queueChange(criterionHref, (() => this.cellAssessmentMap[href]).bind(this));
+		}
 	},
 
 	_handlePrev: function(event) {
-		const prevRadio = this._getRadioSibling(event.target, -1);
+		const radio = event.target;
+		const prevRadio = this._getRadioSibling(radio, -1);
 		if (prevRadio) {
+			this._deselectRadio(radio);
 			this._selectRadio(prevRadio);
 		}
 	},
 
 	_handleNext: function(event) {
-		const nextRadio = this._getRadioSibling(event.target, 1);
+		const radio = event.target;
+		const nextRadio = this._getRadioSibling(radio, 1);
 		if (nextRadio) {
+			this._deselectRadio(radio);
 			this._selectRadio(nextRadio);
 		}
 	},
@@ -961,6 +1005,34 @@ Polymer({
 				return this._handlePrev(event);
 			case 'ArrowRight':
 				return this._handleNext(event);
+		}
+	},
+
+	_queueChange: function(criterionId, entityGetter) {
+		const DEBOUNCE_DELAY = 1000;
+		if (this._changeTimeout) {
+			clearTimeout(this._changeTimeout);
+		}
+		const entity = entityGetter();
+		if (this._changesRequested[criterionId] === entity
+		|| !this._changesRequested[criterionId] && this.CriterionCellAssessmentHelper.isSelected(entity)) {
+			delete this._changesQueued[criterionId];
+		} else {
+			this._changesQueued[criterionId] = entityGetter;
+			this._changeTimeout = setTimeout((() => {
+				for (const criterionId in this._changesQueued) {
+					const entityGetter = this._changesQueued[criterionId];
+					this._changesRequested[criterionId] = entityGetter;
+					const uuid = this.getUUID();
+					this.perfMark(`criterionCellTappedStart-${uuid}`);
+					this.CriterionCellAssessmentHelper.selectAsync(entityGetter).then(() => {
+						this.perfMark(`criterionCellTappedEnd-${uuid}`);
+						this.logCriterionCellTappedAction(`criterionCellTappedStart-${uuid}`, `criterionCellTappedEnd-${uuid}`);
+						delete this._changesRequested[criterionId];
+					});
+				}
+				this._changesQueued = {};
+			}).bind(this), DEBOUNCE_DELAY);
 		}
 	},
 
@@ -1021,13 +1093,6 @@ Polymer({
 	_handleFeedbackTextFocus: function(event) {
 		var criterionNum = event.model.get('criterionNum');
 		this._addingFeedback = criterionNum;
-	},
-
-	_focusCriterionCell: function(event) {
-		var elem = dom(this.root).querySelector('#criterion-cell-input' + event.model.get('criterionNum') + '_' + event.model.get('cellNum'));
-		if (elem) {
-			elem.focus();
-		}
 	},
 
 	_handleSaveStart: function(event) {
