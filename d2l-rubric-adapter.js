@@ -6,12 +6,14 @@ import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import './localize-behavior.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 /**
  * An adapter for the Rubrics component to get platform-specific ordering of components without
  * owning the specific rendering logic.
  */
 window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends mixinBehaviors([
-	D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+	D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+	window.D2L.Hypermedia.HMConstantsBehavior
 ], PolymerElement) {
 	static get properties() {
 		return {
@@ -24,6 +26,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				type: Boolean,
 				value: false,
 			},
+			criterionAssessmentMap: Object
 		};
 	}
 
@@ -92,7 +95,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 									<div class="rubric-header-title">[[rubricName]]</div>
 									<div class="rubric-header-out-of-container">
 										<span class="rubric-header-out-of-text">
-											[[_getRubricText(assessmentEntity)]]
+											[[_getRubricText(assessmentEntity, criterionAssessmentMap)]]
 										</span>
 									</div>
 								</span>
@@ -148,10 +151,24 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 		return tierName + ':' + iconName;
 	}
 
-	_getRubricText(assessmentEntity) {
-		return !assessmentEntity || assessmentEntity.properties.score === 0
-			? this.localize('notScored')
-			: this.scoreText;
+	_getRubricText(assessmentEntity, criterionAssessmentMap) {
+		const criterionAssessmentLinks = assessmentEntity?.getSubEntitiesByClass('criterion-assessment-links');
+		const criterionLinks = criterionAssessmentLinks?.map(link => link.getLinkByRel(this.HypermediaRels.Rubrics.criterion));
+		const criterionCellSelectors = criterionLinks?.map(link => criterionAssessmentMap[link.href]);
+		const assessmentCriterionCells = criterionCellSelectors?.map(selector => (
+			selector?.getSubEntitiesByClass(this.HypermediaClasses.rubrics.assessmentCriterionCell)
+		));
+		const assessedCriteriaCount = assessmentCriterionCells?.reduce((count, cells) => (
+			count + !!cells?.find(cell => cell.hasClass('selected'))
+		), 0);
+
+		if (!assessedCriteriaCount) {
+			return this.localize('notScored');
+		} else if (this.scoreText && assessedCriteriaCount === assessmentCriterionCells?.length) {
+			return this.scoreText;
+		} else {
+			return `${assessedCriteriaCount}/${assessmentCriterionCells.length} criteria scored`;
+		}
 	}
 
 	_showAttachedCompactView(compact, detachedView) {

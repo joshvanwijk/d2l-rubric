@@ -29,8 +29,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 			<d2l-rubric-assessment-criterion-entity-loader
 				href="[[criterionAssessmentHref]]"
 				token="[[token]]"
-				criterion-assessment-map="{{_criterionResultMap}}"
-				cell-assessment-map="{{_cellAssessmentMap}}"
+				criterion-assessment-map="{{criterionAssessmentMap}}"
+				cell-assessment-map="{{cellAssessmentMap}}"
 			></d2l-rubric-assessment-criterion-entity-loader>
 		</template>
 
@@ -44,8 +44,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					enable-feedback-copy="[[enableFeedbackCopy]]"
 					read-only="[[readOnly]]"
 					hidden$="[[!_showContent]]"
-					criterion-result-map="[[_criterionResultMap]]"
-					cell-assessment-map="[[_cellAssessmentMap]]"
+					criterion-result-map="[[criterionAssessmentMap]]"
+					cell-assessment-map="[[cellAssessmentMap]]"
 				></d2l-rubric-criteria-group>
 			</template>
 			<slot name="total-score"></slot>
@@ -61,8 +61,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					read-only="[[readOnly]]"
 					compact="[[compact]]"
 					hidden$="[[!_showContent]]"
-					criterion-result-map="[[_criterionResultMap]]"
-					cell-assessment-map="[[_cellAssessmentMap]]"
+					criterion-result-map="[[criterionAssessmentMap]]"
+					cell-assessment-map="[[cellAssessmentMap]]"
 					enable-feedback-copy="[[enableFeedbackCopy]]"
 					is-holistic="[[_isHolistic(rubricType)]]"
 				></d2l-rubric-criteria-group-mobile>
@@ -103,8 +103,14 @@ Polymer({
 		enableFeedbackCopy: {
 			type: Boolean,
 		},
-		_criterionResultMap: Object,
-		_cellAssessmentMap: Object
+		criterionAssessmentMap: {
+			type: Object,
+			notify: true
+		},
+		cellAssessmentMap: {
+			type: Object,
+			notify: true
+		}
 	},
 
 	behaviors: [
@@ -118,8 +124,8 @@ Polymer({
 	],
 
 	created: function() {
-		this._criterionResultMap = {};
-		this._cellAssessmentMap = {};
+		this.criterionAssessmentMap = {};
+		this.cellAssessmentMap = {};
 	},
 
 	_onAssessmentDomChanged: function() {
