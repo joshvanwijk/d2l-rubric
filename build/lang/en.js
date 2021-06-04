@@ -185,6 +185,7 @@ window.D2L.Rubric.Language.En = {
 	'shareRubricSaveFailed': 'Changing org unit availability failed',
 	'standardsAligned': '{standardsName} aligned to {name}',
 	'statistics': 'Statistics',
+	'statsDialogTitle': 'Rubric Statistics',
 	'studentNameLabel': 'Name: {name}',
 	'total': 'Total',
 	'totalMobile': 'Total Score',
