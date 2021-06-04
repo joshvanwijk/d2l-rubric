@@ -517,12 +517,9 @@ Polymer({
 			this._criteriaGroups = entity.getLinkByRel(this.HypermediaRels.Rubrics.criteriaGroups);
 			this._showContent = true;
 			this._courseName = entity.properties.courseName;
-			if(this.includeStatistics) {
+			if (this.includeStatistics) {
 				const statisticsLink = this.assessmentEntity.getLinkByRel('rubric-assessment-stats');
 				this._statisticsHref = statisticsLink && statisticsLink.href;
-				console.log(this._statisticsHref);
-				console.log(this.assessmentEntity);
-				console.log(statisticsLink);
 			}
 		}
 	},

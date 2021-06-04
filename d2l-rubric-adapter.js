@@ -253,9 +253,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 
 	_openStatsDialog() {
 		this._statisticsDialogOpened = true;
-		console.log(this.shadowRoot);
-		console.log(this.shadowRoot.querySelector('d2l-dialog'));
-		this.shadowRoot.querySelector('d2l-dialog').addEventListener('d2l-dialog-close', (e) => {
+		this.shadowRoot.querySelector('d2l-dialog').addEventListener('d2l-dialog-close', () => {
 			this._statisticsDialogOpened = false;
 		});
 	}
