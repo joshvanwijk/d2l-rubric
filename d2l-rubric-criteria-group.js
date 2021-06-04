@@ -144,7 +144,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			.criterion-cell:focus-within {
 				box-shadow: 0 0 0 4px inset rgba(0, 111, 191, 0.4); /* celestine with 0.4 opacity */
 			}
-			.criterion-cell[aria-checked=true] {
+			.criterion-cell[aria-checked] {
 				position: relative;
 				border-color: var(--d2l-color-celestine);
 				background-color: var(--d2l-color-celestine-plus-2);
@@ -153,17 +153,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				box-shadow: -2px 0 0 var(--d2l-color-celestine); /* left border */
 				border-width: 2px;
 			}
-			.criterion-cell[aria-checked=true]:focus-within {
+			.criterion-cell[aria-checked]:focus-within {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
-			.criterion-cell[aria-checked=true].has-bottom {
+			.criterion-cell[aria-checked].has-bottom {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), -2px 2px 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine);
 				z-index: 1; /* Need bottom border to render over feedback cell border */
 			}
-			.criterion-cell[aria-checked=true].has-bottom:focus-within {
+			.criterion-cell[aria-checked].has-bottom:focus-within {
 				box-shadow: -2px 0 0 var(--d2l-color-celestine), 0 2px 0 var(--d2l-color-celestine), 0 0 0 4px inset rgba(0, 111, 191, 0.4);
 			}
-			.criterion-cell[aria-checked=true].is-last {
+			.criterion-cell[aria-checked].is-last {
 				border-bottom-color: var(--d2l-color-celestine);
 				border-bottom-width: 2px;
 			}
@@ -173,7 +173,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 			.criterion-cell.assessable:hover {
 				background-color: var(--d2l-color-sylvite);
 			}
-			.criterion-cell.assessable[aria-checked=true] {
+			.criterion-cell.assessable[aria-checked] {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.criterion-cell.first.holistic {
@@ -183,7 +183,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
 			}
-			.criterion-cell.first.holistic[aria-checked=true] {
+			.criterion-cell.first.holistic[aria-checked] {
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
 			}
@@ -359,7 +359,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum" on-dom-change="_onCriterionCellDomChanged">
 							<d2l-td
 								role="radio"
-								aria-checked$="[[_getCriteriaAriaChecked(criterionCell, cellAssessmentMap)]]"
+								aria-checked$="[[_willSelect(criterionCell, cellAssessmentMap)]]"
 								tabindex$="[[_getCriteriaTabIndex(criterionCell, cellAssessmentMap)]]"
 								class$="[[_getCriteriaClassName(criterionCell, criterionResultMap, cellAssessmentMap, criterionNum, _criteriaEntities, cellNum, readOnly, _addingFeedback)]]"
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
@@ -797,10 +797,6 @@ Polymer({
 		}
 	},
 
-	_getCriteriaAriaChecked: function(criterionCell, cellAssessmentMap) {
-		return (!!this._willSelect(criterionCell, cellAssessmentMap)).toString();
-	},
-
 	_hasBottom: function(criterionCell, criterionResultMap, criterionNum, criteria, addingFeedback) {
 		if (criterionNum === addingFeedback || criterionNum >= criteria.length - 1) {
 			return true;
@@ -936,7 +932,7 @@ Polymer({
 			return;
 		}
 		const radio = event.target;
-		const prevRadio = radio.parentNode.querySelector('[aria-checked=true]');
+		const prevRadio = radio.parentNode.querySelector('[aria-checked]');
 		if (prevRadio) {
 			this._deselectRadio(prevRadio);
 		}
@@ -956,7 +952,7 @@ Polymer({
 			return;
 		}
 		fastdom.mutate(() => {
-			radio.setAttribute('aria-checked', false);
+			radio.removeAttribute('aria-checked');
 			radio.setAttribute('tabindex', -1);
 		});
 	},
@@ -966,7 +962,7 @@ Polymer({
 			return;
 		}
 		fastdom.mutate(() => {
-			radio.setAttribute('aria-checked', true);
+			radio.setAttribute('aria-checked', '');
 			radio.setAttribute('tabindex', 0);
 			radio.focus();
 		});
