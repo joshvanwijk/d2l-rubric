@@ -92,7 +92,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 									<div class="rubric-header-title">[[rubricName]]</div>
 									<div class="rubric-header-out-of-container">
 										<span class="rubric-header-out-of-text">
-											[[scoreText]]
+											[[_getRubricText(assessmentEntity)]]
 										</span>
 									</div>
 								</span>
@@ -146,6 +146,12 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 			: 'rubric';
 
 		return tierName + ':' + iconName;
+	}
+
+	_getRubricText(assessmentEntity) {
+		return !assessmentEntity || assessmentEntity.properties.score === 0
+			? this.localize('notScored')
+			: this.scoreText;
 	}
 
 	_showAttachedCompactView(compact, detachedView) {
