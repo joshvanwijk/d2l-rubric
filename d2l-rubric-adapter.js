@@ -79,6 +79,15 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				d2l-labs-accordion-collapse[opened] .rubric-header-out-of-text {
 					display: none;
 				}
+
+				.statistics-dialog {
+				}
+
+				.stats-page-frame {
+					width: 100%;
+					height: 500px;
+				}
+
 			</style>
 
 			<slot name="alerts"></slot>
@@ -115,8 +124,14 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 										class="statistics-dialog"
 										title-text="[[localize('statsDialogTitle')]]"
 										opened="[[_statisticsDialogOpened]]"
+										width="800"
 									>
-										<iframe src="[[statisticsHref]]"></iframe>
+										<iframe
+											class="stats-page-frame"
+											src="[[statisticsHref]]"
+											frameborder="0"
+										>
+										</iframe>
 										<div slot="footer">
 											<d2l-button primary on-click="_closeStatsDialog">[[localize('closeDialog')]]</d2l-button>
 										</div>
