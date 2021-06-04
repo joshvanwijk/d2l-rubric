@@ -81,7 +81,10 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 					display: none;
 				}
 
-				.statistics-dialog {
+				.stats-button {
+					float: right;
+					margin-right: 0.5rem;
+					margin-top: 0.4rem;
 				}
 
 				.stats-page-frame {
