@@ -24,6 +24,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				type: Boolean,
 				value: false,
 			},
+			includeStatistics: Boolean,
 			statisticsHref: {
 				type: String,
 				value: ''
@@ -113,7 +114,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 										</span>
 									</div>
 								</span>
-								<span hidden="[[!_shouldShowStatisticsLink(includeStatistics, _statisticsHref)]]">
+								<span hidden$="[[!_shouldShowStatisticsLink(includeStatistics, statisticsHref)]]" >
 									<d2l-button-subtle
 										class="stats-button"
 										icon="tier1:reports"

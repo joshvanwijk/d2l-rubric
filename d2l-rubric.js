@@ -254,7 +254,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			compact="[[compact]]"
 			detached-view="[[detachedView]]"
 			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]"
-			include-statistics="[[_shouldShowStatsButton(includeStatistics, _statisticsHref)]]"
+			include-statistics$="[[includeStatistics]]"
 			statistics-href="[[_statisticsHref]]"
 		>
 			<template is="dom-repeat" items="[[_alerts]]">
@@ -518,7 +518,7 @@ Polymer({
 			this._showContent = true;
 			this._courseName = entity.properties.courseName;
 			if(this.includeStatistics) {
-				const statisticsLink = this.assessmentEntity.getLinkByRel('activity-competency-stats');
+				const statisticsLink = this.assessmentEntity.getLinkByRel('rubric-assessment-stats');
 				this._statisticsHref = statisticsLink && statisticsLink.href;
 				console.log(this._statisticsHref);
 				console.log(this.assessmentEntity);
@@ -787,5 +787,6 @@ Polymer({
 		//Reset styles to avoid interfering with other print operations in the page
 		document.getElementsByTagName('style')[0].innerHTML = originalWindowStyle;
 		printContainer.classList.remove('print-style-active');
-	}
+	},
+
 });
