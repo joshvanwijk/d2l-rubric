@@ -44,6 +44,7 @@ window.D2L.Rubric.Language.En = {
 	'courseNameLabel': 'Course: {name}',
 	'criteriaGroup': 'Criteria Group',
 	'criteriaHeading': 'Criteria',
+	'criteriaScored': '{scored} / {outOf} criteria scored',
 	'criterion': 'Criterion',
 	'criterionAdded': 'A new criterion has been added',
 	'criterionAlignmentListTitle': '{standardsName} for Criterion {criterionName}',

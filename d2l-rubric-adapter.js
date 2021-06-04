@@ -167,7 +167,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 		} else if (this.scoreText && assessedCriteriaCount === assessmentCriterionCells?.length) {
 			return this.scoreText;
 		} else {
-			return `${assessedCriteriaCount}/${assessmentCriterionCells.length} criteria scored`;
+			return this.localize('criteriaScored', 'scored', assessedCriteriaCount, 'outOf', assessmentCriterionCells.length);
 		}
 	}
 
