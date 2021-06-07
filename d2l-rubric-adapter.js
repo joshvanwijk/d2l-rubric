@@ -152,19 +152,19 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 	}
 
 	_getRubricText(assessmentEntity, criterionAssessmentMap) {
-		const criterionAssessmentLinks = assessmentEntity?.getSubEntitiesByClass('criterion-assessment-links');
-		const criterionLinks = criterionAssessmentLinks?.map(link => link.getLinkByRel(this.HypermediaRels.Rubrics.criterion));
-		const criterionCellSelectors = criterionLinks?.map(link => criterionAssessmentMap[link.href]);
-		const assessmentCriterionCells = criterionCellSelectors?.map(selector => (
-			selector?.getSubEntitiesByClass(this.HypermediaClasses.rubrics.assessmentCriterionCell)
+		const criterionAssessmentLinks = assessmentEntity && assessmentEntity.getSubEntitiesByClass('criterion-assessment-links');
+		const criterionLinks = criterionAssessmentLinks && criterionAssessmentLinks.map(link => link.getLinkByRel(this.HypermediaRels.Rubrics.criterion));
+		const criterionCellSelectors = criterionLinks && criterionLinks.map(link => criterionAssessmentMap[link.href]);
+		const assessmentCriterionCells = criterionCellSelectors && criterionCellSelectors.map(selector => (
+			selector && selector.getSubEntitiesByClass(this.HypermediaClasses.rubrics.assessmentCriterionCell)
 		));
-		const assessedCriteriaCount = assessmentCriterionCells?.reduce((count, cells) => (
-			count + !!cells?.find(cell => cell.hasClass('selected'))
+		const assessedCriteriaCount = assessmentCriterionCells && assessmentCriterionCells.reduce((count, cells) => (
+			count + !!(cells && cells.find(cell => cell.hasClass('selected')))
 		), 0);
 
 		if (!assessedCriteriaCount) {
 			return this.localize('notScored');
-		} else if (this.scoreText && assessedCriteriaCount === assessmentCriterionCells?.length) {
+		} else if (this.scoreText && assessmentCriterionCells && assessmentCriterionCells.length === assessedCriteriaCount) {
 			return this.scoreText;
 		} else {
 			return this.localize('criteriaScored', 'scored', assessedCriteriaCount, 'outOf', assessmentCriterionCells.length);
