@@ -1,10 +1,10 @@
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-html-editor/d2l-html-editor-client.js';
 import 'd2l-html-editor/d2l-html-editor.js';
-import 'd2l-inputs/d2l-input-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import 'd2l-inputs/d2l-input-shared-styles.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
 let htmlEditorId = 0;
 function getNextEditorId() {

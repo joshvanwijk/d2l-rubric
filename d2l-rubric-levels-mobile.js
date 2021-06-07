@@ -1,16 +1,16 @@
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-fetch/d2l-fetch.js';
-import 'd2l-colors/d2l-colors.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
 import './assessment-behavior.js';
-import './localize-behavior.js';
 import './d2l-rubric-entity-behavior.js';
-import 'd2l-icons/d2l-icon.js';
+import './localize-behavior.js';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 	<template strip-whitespace="">
 		<style>
@@ -120,8 +120,22 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				align-items: center;
 				position: relative;
 				z-index: 2;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
 			}
-
+			.level:focus .level-tab-focus {
+				border: 1px solid var(--d2l-color-celestine-minus-1);
+				margin: 2px;
+				height: 18px;
+			}
+			.level.selected:focus .level-tab-focus {
+				border-radius: 4px;
+				height: 30px;
+>>>>>>> semibran/dev
+>>>>>>> translation-updates
+			}
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
 				border-radius: 0px 4px 4px 0px;
@@ -187,10 +201,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				type="range"
 				class="level-slider"
 				min="0"
-				max$="[[_getLevelCount(levelEntities)]]"
+				max$="[[_getLevelMax(levelEntities)]]"
 				value$="[[selected]]"
 				aria-valuemin="0"
-				aria-valuemax$="[[_getLevelCount(levelEntities)]]"
+				aria-valuemax$="[[_getLevelMax(levelEntities)]]"
 				aria-valuenow$="[[selected]]"
 				aria-valuetext$="[[_getLevelText(selected)]]"
 				on-change="_handleChange"
@@ -431,8 +445,8 @@ Polymer({
 		this.levelEntities = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
 	},
 
-	_getLevelCount: function(levelEntities) {
-		return levelEntities.length - 1;
+	_getLevelMax: function(levelEntities) {
+		return levelEntities.length - 1; // Offset by -1 for zero-indexing
 	},
 
 	_getLevelClassName: function(index, selected, hovered, focused, criterionCells, cellAssessmentMap) {

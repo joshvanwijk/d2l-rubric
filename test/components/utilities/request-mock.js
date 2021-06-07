@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
-import SirenParse from 'siren-parser';
 import * as default_data from './default-rubric-data.js';
 import * as text_only_data from './text-only-rubric-data.js';
+import SirenParse from 'siren-parser';
 
 window.d2lfetch.fetch = function(href) {
 	return D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest({ url: href, formData: function() { return Promise.resolve(); } })

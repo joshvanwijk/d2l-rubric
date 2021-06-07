@@ -1,12 +1,12 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import '@polymer/iron-media-query/iron-media-query.js';
+import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui-labs/accordion/accordion.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
-import 'd2l-icons/d2l-icon.js';
-import 'd2l-icons/tier3-icons.js';
+import '@polymer/iron-media-query/iron-media-query.js';
 import './localize-behavior.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+
 /**
  * An adapter for the Rubrics component to get platform-specific ordering of components without
  * owning the specific rendering logic.
