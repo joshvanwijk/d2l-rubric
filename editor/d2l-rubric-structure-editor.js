@@ -5,27 +5,27 @@ Creates and edits a rubric structue
 @demo demo/d2l-rubric-structure-editor.html
 
 */
+import '@brightspace-ui/core/components/alert/alert.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/dropdown/dropdown-button-subtle.js';
+import '@brightspace-ui/core/components/dropdown/dropdown-menu.js';
+import '@brightspace-ui/core/components/menu/menu.js';
 import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-alert/d2l-alert.js';
+import './d2l-rubric-criteria-groups-editor.js';
+import './d2l-rubric-dialog-behavior.js';
+import './d2l-rubric-dropdown-menu-behavior.js';
+import './d2l-rubric-editor-header.js';
+import './d2l-rubric-overall-levels-editor.js';
+import '../d2l-rubric-entity-behavior.js';
 import '../d2l-rubric-loading.js';
 import '../localize-behavior.js';
-import '../d2l-rubric-entity-behavior.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import './d2l-rubric-editor-header.js';
-import './d2l-rubric-criteria-groups-editor.js';
-import './d2l-rubric-overall-levels-editor.js';
-import 'd2l-menu/d2l-menu-item-radio.js';
-import './d2l-rubric-dialog-behavior.js';
-import 'd2l-dropdown/d2l-dropdown-button-subtle.js';
-import 'd2l-dropdown/d2l-dropdown-menu.js';
-import './d2l-rubric-dropdown-menu-behavior.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import '@brightspace-ui/core/components/button/button-subtle.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
 const $_documentContainer = document.createElement('template');
 

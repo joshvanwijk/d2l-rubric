@@ -1,17 +1,17 @@
-import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
-import './d2l-rubric-siren-autosave-action-behavior.js';
-import '../localize-behavior.js';
-import 'd2l-inputs/d2l-input-text.js';
-import 'd2l-tooltip/d2l-tooltip.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
-import '../d2l-rubric-entity-behavior.js';
+import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
+import '@polymer/polymer/polymer-legacy.js';
+import './d2l-rubric-autosaving-input.js';
 import './d2l-rubric-dialog-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
-import './d2l-rubric-autosaving-input.js';
+import './d2l-rubric-siren-autosave-action-behavior.js';
+import '../localize-behavior.js';
+import '../d2l-rubric-entity-behavior.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-level-editor">
 	<template strip-whitespace="">
 		<style>

@@ -1,6 +1,5 @@
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-
 import '../localize-behavior.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};

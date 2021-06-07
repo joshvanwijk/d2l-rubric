@@ -3,13 +3,12 @@
 Polymer Web-Component to display a loading rubric
 
 */
+import '@brightspace-ui/core/components/loading-spinner/loading-spinner.js';
 import '@polymer/polymer/polymer-legacy.js';
-
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-loading">
 	<template strip-whitespace="">
 		<style>

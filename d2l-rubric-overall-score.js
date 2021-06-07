@@ -1,20 +1,20 @@
-import '@polymer/polymer/polymer-legacy.js';
-import './d2l-rubric-entity-behavior.js';
-import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-colors/d2l-colors.js';
-import './localize-behavior.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
-import './rubric-siren-entity.js';
-import 's-html/s-html.js';
-import 'd2l-table/d2l-scroll-wrapper.js';
-import 'd2l-icons/tier1-icons.js';
-import 'd2l-offscreen/d2l-offscreen.js';
-import './d2l-rubric-action-behavior.js';
-import './assessment-behavior.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-import './d2l-rubric-competencies-icon.js';
 import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/offscreen/offscreen.js';
+import '@brightspace-ui/core/components/scroll-wrapper/scroll-wrapper.js';
+import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
+import 's-html/s-html.js';
+import './assessment-behavior.js';
+import './d2l-rubric-action-behavior.js';
+import './d2l-rubric-competencies-icon.js';
+import './d2l-rubric-entity-behavior.js';
+import './localize-behavior.js';
+import './rubric-siren-entity.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
 const $_documentContainer = document.createElement('template');
 
@@ -172,7 +172,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 					></d2l-rubric-competencies-icon>
 				</template>
 			</h3>
-			<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
+			<d2l-scroll-wrapper role="group" aria-labelledby="overall-grouping-label">
 				<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
 				<div class="overall-levels" data-mobile$="[[compact]]" role$="[[_ifAssessible(readOnly, 'radiogroup')]]">
 					<template is="dom-repeat" items="[[_levels]]" as="level" index-as="i">

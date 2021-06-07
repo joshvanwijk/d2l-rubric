@@ -1,23 +1,24 @@
-import '@brightspace-ui/core/components/colors/colors.js';
-import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
-import 'd2l-table/d2l-scroll-wrapper.js';
-import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-alert/d2l-alert.js';
-import 'd2l-offscreen/d2l-offscreen.js';
+import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/button/button-subtle.js';
-import 'd2l-tooltip/d2l-tooltip.js';
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/offscreen/offscreen.js';
+import '@brightspace-ui/core/components/scroll-wrapper/scroll-wrapper.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
+import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import './d2l-rubric-criteria-editor.js';
+import './d2l-rubric-levels-editor.js';
+import './d2l-rubric-loa-overlay.js';
+import './d2l-rubric-error-handling-behavior.js';
 import '../d2l-rubric-entity-behavior.js';
 import '../d2l-rubric-loading.js';
 import '../localize-behavior.js';
 import '../rubric-siren-entity.js';
 import '../telemetry-behavior.js';
-import './d2l-rubric-levels-editor.js';
-import './d2l-rubric-loa-overlay.js';
-import './d2l-rubric-criteria-editor.js';
-import './d2l-rubric-error-handling-behavior.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-editor">
@@ -103,7 +104,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-edito
 			</div>
 		</template>
 
-		<d2l-scroll-wrapper id="scroll-wrapper" show-actions check-scroll-delta-value="1">
+		<d2l-scroll-wrapper id="scroll-wrapper">
 			<h2 class="screen-reader">[[_getGroupHeadingText(_groupName, showGroupName)]]</h2>
 			<d2l-offscreen>[[_getRubricStructureLabel(_levelCount, _criterionCount)]]</d2l-offscreen>
 			<div class="criteria-group">
