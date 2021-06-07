@@ -331,19 +331,18 @@ Polymer({
 	},
 
 	selectCell: function(entityGetter) {
-		const criterion = this;
 		const helper = this.CriterionCellAssessmentHelper;
-		const entityWrapper = () => {
+		const entityWrapper = (() => {
 			const entity = entityGetter();
-			criterion._save.entity = entity;
+			this._save.entity = entity;
 			return entity;
-		};
+		}).bind(this);
 
 		const DEBOUNCE_DURATION = 1000;
-		const timeout = setTimeout(() => {
+		const timeout = setTimeout((() => {
 			helper.selectAsync(entityWrapper);
-			criterion._save.ops += 1;
-		}, DEBOUNCE_DURATION);
+			this._save.ops += 1;
+		}).bind(this), DEBOUNCE_DURATION);
 
 		if (this._save) {
 			clearTimeout(this._save.timeout);
