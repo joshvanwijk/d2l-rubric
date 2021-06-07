@@ -4,36 +4,39 @@ Creates and edits a rubric
 
 @demo demo/d2l-rubric-editor.html
 */
-import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
-
-import './d2l-rubric-structure-editor.js';
-import './d2l-rubric-editor-cell-styles.js';
-import './d2l-rubric-error-handling-behavior.js';
-import './d2l-rubric-editor-header.js';
-import '../localize-behavior.js';
-import '../telemetry-behavior.js';
-import './d2l-rubric-dropdown-menu-behavior.js';
+import '@brightspace-ui/core/components/alert/alert.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/dropdown/dropdown.js';
+import '@brightspace-ui/core/components/dropdown/dropdown-button-subtle.js';
+import '@brightspace-ui/core/components/dropdown/dropdown-menu.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/inputs/input-checkbox.js';
+import '@brightspace-ui/core/components/link/link.js';
+import '@brightspace-ui/core/components/menu/menu.js';
+import '@brightspace-ui/core/components/menu/menu-item.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
-import 'd2l-colors/d2l-colors.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-tooltip/d2l-tooltip.js';
+import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-inputs/d2l-input-checkbox.js';
-import 'd2l-dropdown/d2l-dropdown-button-subtle.js';
-import 'd2l-dropdown/d2l-dropdown-menu.js';
-import 'd2l-alert/d2l-alert.js';
-import 'd2l-link/d2l-link.js';
-import './d2l-rubric-visibility-editor.js';
-import './d2l-rubric-alignment-editor.js';
-import './d2l-rubric-autosaving-input.js';
-import 's-html/s-html.js';
 import 'd2l-organizations/components/d2l-organization-availability-set/d2l-organization-availability-set.js';
 import 'd2l-resize-aware/resize-observer-polyfill.js';
-import '@brightspace-ui/core/components/button/button-icon.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
+import 's-html/s-html.js';
+import './d2l-rubric-alignment-editor.js';
+import './d2l-rubric-autosaving-input.js';
+import './d2l-rubric-dropdown-menu-behavior.js';
+import './d2l-rubric-editor-cell-styles.js';
+import './d2l-rubric-editor-header.js';
+import './d2l-rubric-error-handling-behavior.js';
+import './d2l-rubric-structure-editor.js';
+import './d2l-rubric-visibility-editor.js';
+import '../localize-behavior.js';
+import '../telemetry-behavior.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
 const $_documentContainer = html `
 <dom-module id="d2l-rubric-editor">

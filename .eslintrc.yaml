@@ -4,6 +4,7 @@ rules:
   eqeqeq: [2, "always", {"null": "ignore"}]
   no-useless-escape: 0
   object-shorthand: [2, "never"]
+  sort-imports: [2, {"ignoreCase": true}]
 globals:
   fastdom: false
 env:
