@@ -33,7 +33,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				position: relative;
 				border: solid 1px var(--d2l-color-celestine);
 				display: flex;
-				overflow: hidden;
 				justify-content: center;
 				align-items: center;
 				text-align: center;
@@ -74,11 +73,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				border-right: 1px solid var(--d2l-color-celestine);
 			}
 
-			.level.selected {
-				border-radius: 6px;
-				height: 36px;
-			}
-
 			.level.selected.assessed:focus {
 				background-color: var(--d2l-color-celestine-plus-2);
 				border: solid 1px var(--d2l-color-celestine);
@@ -89,7 +83,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				background-color: var(--d2l-color-gypsum);
 			}
 
-			.level.focused {
+			.level.focused, .level-thumb.focused {
 				box-shadow: inset 0 0 0 2px white,
 							inset 0 0 0 3px var(--d2l-color-celestine-minus-1);
 			}
@@ -124,6 +118,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 100%;
 				justify-content: space-around;
 				align-items: center;
+				position: relative;
+				z-index: 2;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
 			}
 			.level:focus .level-tab-focus {
 				border: 1px solid var(--d2l-color-celestine-minus-1);
@@ -133,6 +133,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level.selected:focus .level-tab-focus {
 				border-radius: 4px;
 				height: 30px;
+>>>>>>> semibran/dev
+>>>>>>> translation-updates
 			}
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
@@ -141,6 +143,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level:not(.selected):focus:first-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:last-of-type .level-tab-focus {
 				border-radius: 4px 0px 0px 4px;
+			}
+
+			.level-thumb {
+				pointer-events: none;
+				background: white;
+				border: thin solid var(--d2l-color-celestine);
+				border-radius: 6px;
+				width: calc(100% + 1px);
+				height: 36px;
+				position: absolute;
+				z-index: 1;
+				transition: 250ms transform;
 			}
 
 			.out-of {
@@ -196,6 +210,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				on-change="_handleChange"
 				on-focus="_handleFocus"
 				on-blur="_handleBlur"
+				on-keydown="_handleKeyDown"
+				on-keyup="_handleKeyUp"
 			/>
 			<div
 				class="levels"
@@ -214,6 +230,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 						on-mouseout="_handleMouseOut"
 						on-click="_handleClick"
 						on-track="_handleTrack"
+					>
+						<template is="dom-if" if="[[_isThumbVisible(index, selected)]]">
+							<div
+								class$="[[_getThumbClassName(selected, focused)]]"
+								style$="[[_getThumbStyles(selected)]]"
+							></div>
+						</template>
 						<div class="level-tab-focus">
 							<d2l-icon
 								hidden$="[[!_isAssessedLevel(index, criterionCells, cellAssessmentMap)]]"
@@ -255,7 +278,8 @@ Polymer({
 		 * The focused level
 		 */
 		focused: {
-			type: Number
+			type: Number,
+			notify: true
 		},
 
 		/**
@@ -322,51 +346,57 @@ Polymer({
 	],
 
 	_keyCodes: {
-		ENTER: 13,
 		LEFT: 37,
-		RIGHT: 39
+		UP: 38,
+		RIGHT: 39,
+		DOWN: 40
 	},
 
-	_onKeyDown: function(e) {
+	_handleKeyDown: function(e) {
+		const slider = e.target;
+		const criterion = this.getRootNode().host;
+		const [lowerBound, upperBound] = getComputedStyle(this).direction === 'rtl'
+			? [slider.max, slider.min]
+			: [slider.min, slider.max];
 		switch (e.keyCode) {
-			case this._keyCodes.ENTER:
-				this.selected = e.currentTarget.dataIndex;
-				if (!this.readOnly) {
-					this.CriterionCellAssessmentHelper.selectAsync(
-						() => this.cellAssessmentMap[e.currentTarget.dataset.cellHref]
-					);
-				}
-				break;
 			case this._keyCodes.LEFT:
-				if (getComputedStyle(this).direction === 'rtl') {
-					this._focusNextLevel(e);
-				} else {
-					this._focusPrevLevel(e);
+			case this._keyCodes.DOWN:
+				if (slider.value === lowerBound) {
+					criterion.say(this.localize('noMoreLevels'));
 				}
 				break;
 			case this._keyCodes.RIGHT:
-				if (getComputedStyle(this).direction === 'rtl') {
-					this._focusPrevLevel(e);
-				} else {
-					this._focusNextLevel(e);
+			case this._keyCodes.UP:
+				if (slider.value === upperBound) {
+					criterion.say(this.localize('noMoreLevels'));
 				}
 				break;
 		}
 	},
 
-	_focusPrevLevel: function(e) {
-		this._selectLevel(e.currentTarget.previousSibling);
-		e.preventDefault();
-	},
-
-	_focusNextLevel: function(e) {
-		this._selectLevel(e.currentTarget.nextSibling);
-		e.preventDefault();
+	_handleKeyUp: function(e) {
+		const criterion = this.getRootNode().host;
+		switch (e.keyCode) {
+			case this._keyCodes.LEFT:
+			case this._keyCodes.DOWN:
+				if (this.readOnly) {
+					criterion.say(this._getLevelText(this.focused));
+				}
+				break;
+			case this._keyCodes.RIGHT:
+			case this._keyCodes.UP:
+				if (this.readOnly) {
+					criterion.say(this._getLevelText(this.focused));
+				}
+				break;
+		}
 	},
 
 	_focusLevel: function(index) {
 		this.focused = index;
-		this.selected = index;
+		if (!this.readOnly) {
+			this.selected = index;
+		}
 	},
 
 	_selectLevel: function(level) {
@@ -393,6 +423,19 @@ Polymer({
 
 	_isFocused: function(index, focused) {
 		return focused >= 0 && index === focused;
+	},
+
+	_isThumbVisible: function(index, selected) {
+		return index === 0 && selected >= 0;
+	},
+
+	_getThumbClassName: function(selected, focused) {
+		return 'level-thumb'
+			+ (focused >= 0 && focused === selected ? ' focused' : '');
+	},
+
+	_getThumbStyles: function(selected) {
+		return `transform: translateX(calc(${selected * 100}% - ${selected * 2}px))`;
 	},
 
 	_onEntityChanged: function(entity) {
@@ -460,13 +503,25 @@ Polymer({
 		const item = this.criterionCells[index];
 		const levelName = item && item.properties && item.properties.levelName;
 		const levelEntity = item && item.getSubEntityByClass(this.HypermediaClasses.text.description);
-		const levelDesc = levelEntity && levelEntity.properties && levelEntity.properties.text || '';
+		const levelDesc = levelEntity && levelEntity.properties.text || this.localize('noDescription');
 		const criterionName = this._getCriterionName();
-		return levelName
-			? `${levelName}: ${levelDesc}`
-			: criterionName
-				? `${this._getCriterionName()}: ${this.localize('notScored')}`
-				: this.localize('notScored');
+		const criterionOutOf = this.criterionCells.length;
+		const criterionScore = getComputedStyle(this).direction === 'rtl'
+			? this.criterionCells.length - index
+			: index + 1;
+		let levelText = this.localize('levelSelected', 'score', criterionScore, 'outOf', criterionOutOf);
+		if (levelName) {
+			levelText += `, ${levelName}: ${levelDesc}`;
+		} else if (criterionName) {
+			levelText = `${criterionName}: ${this.localize('notScored')}`;
+		} else {
+			levelText = this.localize('notScored');
+		}
+		return levelText;
+	},
+
+	_getLevelAt: function(index) {
+		return this.shadowRoot.querySelector(`#level-tab${index}`);
 	},
 
 	_getCriterionName: function() {
@@ -482,8 +537,10 @@ Polymer({
 
 	_handleChange: function(evt) {
 		const index = parseInt(evt.target.value);
-		const level = this.shadowRoot.querySelector(`#level-tab${index}`);
-		this._selectLevel(level);
+		const level = this._getLevelAt(index);
+		if (index !== this.focused) {
+			this._selectLevel(level);
+		}
 	},
 
 	_handleMouseOver: function(evt) {
@@ -503,15 +560,17 @@ Polymer({
 	},
 
 	_handleMouseDown: function(evt) {
-		this.focused = evt.currentTarget.dataIndex;
+		this._focusLevel(evt.currentTarget.dataIndex);
 	},
 
 	_handleClick: function(evt) {
 		if (this._preventClick) {
 			return;
 		}
+		this.shadowRoot.querySelector('input.level-slider').value = evt.currentTarget.dataIndex;
 		this.focusSlider(evt);
 		this._selectLevel(evt.currentTarget);
+		evt.preventDefault();
 	},
 
 	_canEditScore: function(assessmentCriterionEntity) {
@@ -596,15 +655,18 @@ Polymer({
 			: clampedLevel;
 		const nextSelected = Math.max(0, Math.min(normalizedClampedLevel, this._currentDragContext.maxLevelIndex));
 
-		if (nextSelected !== this.selected) {
-			this.selected = nextSelected;
-			this.shadowRoot.querySelector('.selected').focus();
+		if (nextSelected !== this.focused) {
+			this._focusLevel(nextSelected);
 		}
 	},
 
 	// eslint-disable-next-line no-unused-vars
 	_handleTrackEnd: function(e) {
 		this._currentDragContext = null;
+		this._selectLevel(this._getLevelAt(this.focused));
+		if (!this.readOnly) {
+			this.focusSlider();
+		}
 
 		/**
 		 * A `click` event will be fired on the level even after track events start
@@ -616,7 +678,6 @@ Polymer({
 
 		setTimeout(() => {
 			this._preventClick = false;
-			this._selectLevel(e.currentTarget);
 		});
 	}
 });
