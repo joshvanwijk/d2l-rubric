@@ -119,7 +119,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					</d2l-button-icon>
 				</template>
 				<div class="editing-component">
-					<d2l-input-text id="text-area" value="[[_score]]" type="number" step="any" min="0" max="100000" novalidate on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
+					<d2l-input-text id="text-area" value="[[score]]" type="number" step="any" min="0" max="100000" novalidate on-change="_changeHandler" on-input="_inputHandler" on-blur="_blurHandler" on-keypress="_handleKey" aria-invalid="[[isAriaInvalid(scoreInvalid)]]" prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of">
 						[[_localizeOutOf(entity)]]
@@ -136,7 +136,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					tabindex$="[[_getOutOfTabIndex(readOnly)]]"
 				>
 					<d2l-offscreen id="score-label">[[_getCriterionContext(criterionName)]]</d2l-offscreen>
-					[[_localizeOutOf(entity, _score)]]
+					[[_localizeOutOf(entity, score)]]
 					<div class="star" id="score-overridden-star" aria-hidden="true">*</div>
 					<template is="dom-if" if="[[scoreOverridden]]">
 						<d2l-offscreen>[[_localizeStarLabel(totalScore)]]</d2l-offscreen>
@@ -192,7 +192,7 @@ Polymer({
 			value: false,
 			computed: '_computeIsEditingScore(criterionNum, editingScore, scoreInvalid)'
 		},
-		_score: {
+		score: {
 			type: Number
 		},
 		_scoreModified: {
@@ -279,12 +279,6 @@ Polymer({
 
 		this.classList.toggle('assessable', isAssessable);
 		this.classList.toggle('editing', isEditing);
-
-		const editableContainer = this.shadowRoot.querySelector('#editable-container');
-
-		isAssessable
-			? editableContainer.setAttribute('tabindex', '0')
-			: editableContainer.removeAttribute('tabindex');
 	},
 
 	_onAssessmentResultChanged: function(entity, assessmentEntity, criterionHref) {
@@ -348,9 +342,6 @@ Polymer({
 	},
 
 	_blurHandler: function(event) {
-		if (event.relatedTarget && event.relatedTarget.id === 'clear-button') {
-			return;
-		}
 		var innerInput = event.target.shadowRoot && event.target.shadowRoot.querySelector('input');
 		if (!innerInput || !innerInput.checkValidity()) {
 			return;
@@ -373,7 +364,7 @@ Polymer({
 				action = this._saveScore(newScore);
 			}
 			this._pendingScoreSaves++;
-			this._score = newScore;
+			this.score = newScore;
 			action.catch(function(err) {
 				this.handleValidationError('score-bubble', 'scoreInvalid', 'pointsSaveFailed', err);
 			}.bind(this)).finally(function() {
@@ -386,7 +377,7 @@ Polymer({
 	_updateScore: function(entity, assessmentEntity, totalScore, isCriterion) {
 		if (!this._scoreModified && !this._pendingScoreSaves) {
 			this.toggleBubble('scoreInvalid', false);
-			this._score = this.getScore(entity, assessmentEntity, totalScore, isCriterion);
+			this.score = this.getScore(entity, assessmentEntity, totalScore, isCriterion);
 		}
 	},
 

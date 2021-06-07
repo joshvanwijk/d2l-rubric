@@ -184,9 +184,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<div
 				class="level-iterator-container"
 				role="button"
-				aria-label$="[[localize('selectNextLevel')]]"
-				on-click="_handleTapLeft"
-				on-keydown="_handleLeftIteratorKeyDown"
+				aria-label$="[[_getLeftIteratorText()]]"
+				on-mousedown="_handleTapLeft"
 			>
 				<div class="level-iterator">
 					<d2l-icon icon="d2l-tier1:chevron-left"></d2l-icon>
@@ -199,6 +198,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				token="[[token]]"
 				selected="{{_selected}}"
 				hovered="{{_hovered}}"
+				focused="{{_focused}}"
 				level-entities="{{_levelEntities}}"
 				out-of="[[_outOf]]"
 				score="[[_score]]"
@@ -209,9 +209,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<div
 				class="level-iterator-container"
 				role="button"
-				aria-label$="[[localize('selectPreviousLevel')]]"
-				on-click="_handleTapRight"
-				on-keydown="_handleRightIteratorKeyDown"
+				aria-label$="[[_getRightIteratorText()]]"
+				on-mousedown="_handleTapRight"
 			>
 				<div class="level-iterator">
 					<d2l-icon icon="d2l-tier1:chevron-right"></d2l-icon>
@@ -220,50 +219,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 		</div>
 
 		<div id="description" class="criterion-description-container">
-			<template is="dom-if" if="[[!_getVisibleLevel(_selected, _hovered, _levelEntities)]]" restamp>
-				<div id="level-description-panel" class="criterion-middle" aria-labelledby$="level-tab" role="tabpanel">
-					<div class="level-name">
-						<div class="level-text">[[localize('notScored')]]</div>
-						<d2l-rubric-editable-score
-							criterion-href="[[href]]"
-							assessment-href="[[assessmentCriterionHref]]"
-							token="[[token]]"
-							read-only="[[readOnly]]"
-						>
-						</d2l-rubric-editable-score>
-					</div>
+			<div id="level-description-panel" class="criterion-middle" aria-labelledby$="level-tab" role="tabpanel">
+				<div class$="[[_getLevelNameClass(criterionCell, cellAssessmentMap)]]">
+					<div class="level-text">[[_getVisibleLevelTitle(_selected, _hovered, _focused, _levelEntities)]]</div>
+					<d2l-rubric-editable-score
+						criterion-href="[[href]]"
+						assessment-href="[[assessmentCriterionHref]]"
+						token="[[token]]"
+						read-only="[[readOnly]]"
+						score="[[_getVisibleLevelPoints(_selected, _hovered, _focused, _levelEntities, _criterionCells)]]"
+					>
+					</d2l-rubric-editable-score>
 				</div>
-			</template>
-			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
-				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelVisible(index, _selected, _hovered)]]">
-					<div class$="[[_getLevelNameClass(criterionCell, cellAssessmentMap)]]">
-						<div class="level-text">[[_getVisibleLevelTitle(_selected, _hovered, _levelEntities)]]</div>
-						<d2l-icon
-							hidden="[[!_showLevelBullet()]]"
-							class$="[[_getLevelBulletClass(criterionCell, cellAssessmentMap)]]"
-							icon="d2l-tier1:bullet">
-						</d2l-icon>
-						<div
-							hidden="[[!_isLevelHovered(index, _hovered)]]"
-							class="level-number"
-						>
-							[[_getVisibleLevelScore(_selected, _hovered, _levelEntities)]]
-						</div>
-						<d2l-rubric-editable-score
-							hidden="[[_isLevelHovered(index, _hovered)]]"
-							criterion-href="[[href]]"
-							assessment-href="[[assessmentCriterionHref]]"
-							token="[[token]]"
-							read-only="[[readOnly]]"
-						>
-						</d2l-rubric-editable-score>
-					</div>
-					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
-						<s-html class="criterion-description-html" html="[[_getCriterionCellText(criterionCell)]]"></s-html>
-					</div>
+				<div hidden="[[!_getVisibleLevelDescription(_selected, _hovered, _focused, _criterionCells)]]" class="criterion-description">
+					<p class="criterion-description-html">
+						[[_getVisibleLevelDescription(_selected, _hovered, _focused, _criterionCells)]]
+					</p>
 				</div>
-			</template>
+			</div>
 		</div>
+		<d2l-offscreen class="criterion-status">
+			<p role="status" aria-live="assertive"></p>
+		</d2l-offscreen>
 	</template>
 
 </dom-module>`;
@@ -303,6 +280,11 @@ Polymer({
 		},
 
 		_hovered: {
+			type: Number,
+			value: -1
+		},
+
+		_focused: {
 			type: Number,
 			value: -1
 		},
@@ -361,11 +343,6 @@ Polymer({
 		this._selected = -1;
 	},
 
-	_hasDescription: function(criterionCell) {
-		var description = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description);
-		return !!(description && description.properties && description.properties.html);
-	},
-
 	_showCompetencies: function(assessmentCriterionEntity, readOnly) {
 		return readOnly && this._getCompetencies(assessmentCriterionEntity).length > 0;
 	},
@@ -374,102 +351,106 @@ Polymer({
 		return this.CriterionAssessmentHelper.getCompetencyNames(assessmentCriterionEntity);
 	},
 
-	_moveIteratorLeft: function() {
-		if (this._selected > 0) {
-			this._select(this._selected - 1, this._criterionCells, this.cellAssessmentMap);
-		}
+	say: function(text) {
+		const statusWrap = this.shadowRoot.querySelector('.criterion-status');
+		const status = statusWrap && statusWrap.querySelector('p');
+		if (!status) return;
+		// TODO: cache timeouts (robust interrupt handling)
+		status.textContent = text;
+		setTimeout(() => {
+			status.textContent = '';
+		}, 1000);
 	},
 
-	_moveIteratorRight: function() {
-		if (this._criterionCells && this._selected < this._criterionCells.length - 1) {
-			this._select(this._selected + 1, this._criterionCells, this.cellAssessmentMap);
+	_moveIterator: function(delta) {
+		if (!this._criterionCells) {
+			return;
+		}
+		const min = 0;
+		const max = this._criterionCells.length - 1;
+		let level;
+		if (this._selected === -1 && delta === -1) {
+			level = min;
+		} else if (this._selected === -1 && delta === 1) {
+			level = max;
+		} else if (this.readOnly) {
+			level = this._focused + delta;
+		} else {
+			level = this._selected + delta;
+		}
+		if (level < min) {
+			level = min;
+			this.say(this.localize('noMoreLevels'));
+		} else if (level > max) {
+			level = max;
+			this.say(this.localize('noMoreLevels'));
+		}
+		this._focus(level);
+		if (!this.readOnly) {
+			this._select(level);
 		}
 	},
 
 	_handleTapLeft: function(e) {
 		e.stopPropagation();
-		this._moveIteratorLeft();
+		e.preventDefault();
+		this._moveIterator(-1);
 		e.currentTarget.nextSibling.focusSlider();
 	},
 
 	_handleTapRight: function(e) {
 		e.stopPropagation();
-		this._moveIteratorRight();
+		e.preventDefault();
+		this._moveIterator(1);
 		e.currentTarget.previousSibling.focusSlider();
 	},
 
-	_hideLeftChevron: function(selected) {
-		return selected <= 0;
+	_resolveSelection: function(selected, hovered, focused, items) {
+		return items
+			&& (items[hovered]
+			|| items[focused]
+			|| items[selected]);
 	},
 
-	_hideRightChevron: function(selected) {
-		return selected === this._total - 1 || selected === -1;
+	_getVisibleLevelTitle: function(selected, hovered, focused, levels) {
+		const level = this._resolveSelection(selected, hovered, focused, levels);
+		return level && level.properties.name || this.localize('notScored');
 	},
 
-	_getSelectedLevel: function(selected, levels) {
-		return levels && levels[selected];
-	},
-
-	_getHoveredLevel: function(hovered, levels) {
-		return levels && levels[hovered];
-	},
-
-	_getVisibleLevel: function(selected, hovered, levels) {
-		return this._getHoveredLevel(hovered, levels) || this._getSelectedLevel(selected, levels);
-	},
-
-	_getVisibleLevelTitle: function(selected, hovered, levels) {
-		var level = this._getVisibleLevel(selected, hovered, levels);
-		return level ? level.properties.name : null;
-	},
-
-	_getVisibleLevelPoints: function(selected, hovered, levels, criterionCell) {
-		var level = this._getVisibleLevel(selected, hovered, levels);
+	_getVisibleLevelPoints: function(selected, hovered, focused, levels, cells) {
+		const level = this._resolveSelection(selected, hovered, focused, levels);
 		if (!level) {
 			return null;
 		}
 		// check for overrides
-		var points = level.properties.points;
-		if (criterionCell && criterionCell.hasClass(this.HypermediaClasses.rubrics.overridden)) {
-			points = criterionCell.properties.points;
+		let points = level.properties.points;
+		const cell = this._resolveSelection(selected, hovered, focused, cells);
+		if (cell && cell.hasClass(this.HypermediaClasses.rubrics.overridden)) {
+			points = cell.properties.points;
 		}
 		return points;
 	},
 
-	_getVisibleLevelScore: function(selected, hovered, levels, criterionCell) {
-		var points = this._getVisibleLevelPoints(selected, hovered, levels, criterionCell);
-		if (points === null || points === undefined) {
-			return null;
-		}
-		if (this.isHolistic) {
-			return this.localize('numberAndPercentage', 'number', points.toString());
-		}
-		if (this.isNumeric) {
-			return this.localize('scoreOutOf', 'score', points.toString(), 'outOf', this._outOf.toString());
-		}
-	},
-
-	_getCriterionCellText: function(criterionCell) {
-		var descHtml = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description).properties.html;
-		if (descHtml) {
-			// Remove the margin of any paragraph elements in the description
-			var paragraphStyle = '<style> p { margin: 0; } </style>';
-			return paragraphStyle + descHtml;
-		}
-		return descHtml;
+	_getVisibleLevelDescription: function(selected, hovered, focused, cells) {
+		const cell = this._resolveSelection(selected, hovered, focused, cells);
+		const desc = cell && cell.getSubEntityByClass(this.HypermediaClasses.text.description);
+		return desc && desc.properties.text;
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
 		return levelIndex === selected;
 	},
 
-	_isLevelHovered: function(levelIndex, hovered) {
-		return levelIndex === hovered;
+	_isLevelHovered: function(levelIndex, hovered, focused) {
+		return levelIndex === hovered
+			|| levelIndex === focused && hovered === -1;
 	},
 
-	_isLevelVisible: function(levelIndex, selected, hovered) {
-		return this._isLevelHovered(levelIndex, hovered)
-			|| this._isLevelSelected(levelIndex, selected) && (typeof hovered !== 'number' || hovered < 0);
+	_isLevelVisible: function(levelIndex, selected, hovered, focused) {
+		return this._isLevelHovered(levelIndex, hovered, focused)
+			|| this._isLevelSelected(levelIndex, selected)
+				&& (typeof hovered !== 'number' || hovered < 0)
+				&& (typeof focused !== 'number' || focused < 0);
 	},
 
 	_getLevelNameClass: function(criterionCell, cellAssessmentMap) {
@@ -518,15 +499,15 @@ Polymer({
 
 		return shouldHide;
 	},
-	_handleLeftIteratorKeyDown: function(e) {
-		if (e.keyCode === 13) {
-			this._moveIteratorLeft();
-		}
+	_getLeftIteratorText: function() {
+		return getComputedStyle(this).direction === 'rtl'
+			? this.localize('selectNextLevel')
+			: this.localize('selectPreviousLevel');
 	},
-	_handleRightIteratorKeyDown: function(e) {
-		if (e.keyCode === 13) {
-			this._moveIteratorRight();
-		}
+	_getRightIteratorText: function() {
+		return getComputedStyle(this).direction === 'rtl'
+			? this.localize('selectPreviousLevel')
+			: this.localize('selectNextLevel');
 	},
 	_getScore: function(assessmentCriterionEntity) {
 		const score = this.CriterionAssessmentHelper.getScore(assessmentCriterionEntity);
@@ -550,6 +531,11 @@ Polymer({
 			if (prevIndex >= 0 && index >= 0) {
 				element.classList.add(index > prevIndex ? 'slide-from-right' : 'slide-from-left');
 			}
+		}
+	},
+	_focus: function(index) {
+		if (index !== this._focused) {
+			this._focused = index;
 		}
 	}
 });

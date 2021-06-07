@@ -195,6 +195,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				on-change="_handleChange"
 				on-focus="_handleFocus"
 				on-blur="_handleBlur"
+				on-keydown="_handleKeyDown"
+				on-keyup="_handleKeyUp"
 			/>
 			<div
 				class="levels"
@@ -261,7 +263,8 @@ Polymer({
 		 * The focused level
 		 */
 		focused: {
-			type: Number
+			type: Number,
+			notify: true
 		},
 
 		/**
@@ -328,17 +331,47 @@ Polymer({
 	],
 
 	_keyCodes: {
-		ENTER: 13
+		LEFT: 37,
+		UP: 38,
+		RIGHT: 39,
+		DOWN: 40
 	},
 
-	_onKeyDown: function(e) {
+	_handleKeyDown: function(e) {
+		const slider = e.target;
+		const criterion = this.getRootNode().host;
+		const [lowerBound, upperBound] = getComputedStyle(this).direction === 'rtl'
+			? [slider.max, slider.min]
+			: [slider.min, slider.max];
 		switch (e.keyCode) {
-			case this._keyCodes.ENTER:
-				this.selected = e.currentTarget.dataIndex;
-				if (!this.readOnly) {
-					this.CriterionCellAssessmentHelper.selectAsync(
-						() => this.cellAssessmentMap[e.currentTarget.dataset.cellHref]
-					);
+			case this._keyCodes.LEFT:
+			case this._keyCodes.DOWN:
+				if (slider.value === lowerBound) {
+					criterion.say(this.localize('noMoreLevels'));
+				}
+				break;
+			case this._keyCodes.RIGHT:
+			case this._keyCodes.UP:
+				if (slider.value === upperBound) {
+					criterion.say(this.localize('noMoreLevels'));
+				}
+				break;
+		}
+	},
+
+	_handleKeyUp: function(e) {
+		const criterion = this.getRootNode().host;
+		switch (e.keyCode) {
+			case this._keyCodes.LEFT:
+			case this._keyCodes.DOWN:
+				if (this.readOnly) {
+					criterion.say(this._getLevelText(this.focused));
+				}
+				break;
+			case this._keyCodes.RIGHT:
+			case this._keyCodes.UP:
+				if (this.readOnly) {
+					criterion.say(this._getLevelText(this.focused));
 				}
 				break;
 		}
@@ -346,7 +379,9 @@ Polymer({
 
 	_focusLevel: function(index) {
 		this.focused = index;
-		this.selected = index;
+		if (!this.readOnly) {
+			this.selected = index;
+		}
 	},
 
 	_selectLevel: function(level) {
@@ -453,13 +488,21 @@ Polymer({
 		const item = this.criterionCells[index];
 		const levelName = item && item.properties && item.properties.levelName;
 		const levelEntity = item && item.getSubEntityByClass(this.HypermediaClasses.text.description);
-		const levelDesc = levelEntity && levelEntity.properties && levelEntity.properties.text || '';
+		const levelDesc = levelEntity && levelEntity.properties.text || this.localize('noDescription');
 		const criterionName = this._getCriterionName();
-		return levelName
-			? `${levelName}: ${levelDesc}`
-			: criterionName
-				? `${this._getCriterionName()}: ${this.localize('notScored')}`
-				: this.localize('notScored');
+		const criterionOutOf = this.criterionCells.length;
+		const criterionScore = getComputedStyle(this).direction === 'rtl'
+			? this.criterionCells.length - index
+			: index + 1;
+		let levelText = this.localize('levelSelected', 'score', criterionScore, 'outOf', criterionOutOf);
+		if (levelName) {
+			levelText += `, ${levelName}: ${levelDesc}`;
+		} else if (criterionName) {
+			levelText = `${criterionName}: ${this.localize('notScored')}`;
+		} else {
+			levelText = this.localize('notScored');
+		}
+		return levelText;
 	},
 
 	_getLevelAt: function(index) {
@@ -480,7 +523,7 @@ Polymer({
 	_handleChange: function(evt) {
 		const index = parseInt(evt.target.value);
 		const level = this._getLevelAt(index);
-		if (index !== this.selected || index !== this.focused) {
+		if (index !== this.focused) {
 			this._selectLevel(level);
 		}
 	},
@@ -606,7 +649,9 @@ Polymer({
 	_handleTrackEnd: function(e) {
 		this._currentDragContext = null;
 		this._selectLevel(this._getLevelAt(this.focused));
-		this.focusSlider();
+		if (!this.readOnly) {
+			this.focusSlider();
+		}
 
 		/**
 		 * A `click` event will be fired on the level even after track events start
