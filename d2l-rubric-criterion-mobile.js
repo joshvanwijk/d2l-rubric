@@ -274,6 +274,8 @@ Polymer({
 			value: null
 		},
 
+		_save: Object,
+
 		_selected: {
 			type: Number,
 			value: -1
@@ -329,9 +331,63 @@ Polymer({
 		this._criterionCells = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.criterionCell);
 	},
 
-	_selectAssessedLevel: function(cells, cellAssessmentMap) {
-		if (!cells || !cellAssessmentMap) {
+	selectCell: function(entityGetter) {
+		const helper = this.CriterionCellAssessmentHelper;
+		const entityWrapper = (() => {
+			const entity = entityGetter();
+			this._save.entity = entity;
+			return entity;
+		}).bind(this);
+
+		const DEBOUNCE_DURATION = 1000;
+		const timeout = setTimeout((() => {
+			helper.selectAsync(entityWrapper);
+			this._save.ops += 1;
+		}).bind(this), DEBOUNCE_DURATION);
+
+		if (this._save) {
+			clearTimeout(this._save.timeout);
+			this._save.timeout = timeout;
+			this._save.entity = null;
+		} else {
+			this._save = {
+				timeout: timeout,
+				entity: null,
+				ops: 0
+			};
+		}
+	},
+
+	_isCachePrimed: function() {
+		return !!this._levelEntities;
+	},
+
+	_isCachePriming: function(assessmentCriterionEntity) {
+		return !!assessmentCriterionEntity.rel;
+	},
+
+	_isCriterionSaving: function(assessmentCriterionEntity) {
+		return this._save
+			&& this._save.entity
+			&& this._save.entity.getLink().href !== assessmentCriterionEntity.getAction().href;
+	},
+
+	_canUpdateAssessment: function(assessmentCriterionEntity) {
+		return !this._isCachePrimed() ||
+			!this._isCachePriming(assessmentCriterionEntity)
+			&& this._isCriterionSaving(assessmentCriterionEntity)
+			&& !--this._save.ops;
+	},
+
+	_selectAssessedLevel: function(cells, cellAssessmentMap, assessmentCriterionEntity) {
+		if (!cells
+		|| !cellAssessmentMap || !Object.keys(cellAssessmentMap).length
+		|| !assessmentCriterionEntity
+		|| !this._canUpdateAssessment(assessmentCriterionEntity)) {
 			return;
+		}
+		if (this._save && !this._save.ops) {
+			this._save = null;
 		}
 		for (let i = 0; i < cells.length; i++) {
 			const assessmentCriterion = cellAssessmentMap[this._getSelfLink(cells[i])];
