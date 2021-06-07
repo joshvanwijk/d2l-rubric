@@ -358,18 +358,32 @@ Polymer({
 		}
 	},
 
+	_isCachePrimed: function() {
+		return !!this._levelEntities;
+	},
+
+	_isCachePriming: function(assessmentCriterionEntity) {
+		return !!assessmentCriterionEntity.rel;
+	},
+
+	_isCriterionSaving: function(assessmentCriterionEntity) {
+		return this._save
+			&& this._save.entity
+			&& this._save.entity.getLink().href !== assessmentCriterionEntity.getAction().href;
+	},
+
+	_canUpdateAssessment: function(assessmentCriterionEntity) {
+		return !this._isCachePrimed() ||
+			!this._isCachePriming(assessmentCriterionEntity)
+			&& this._isCriterionSaving(assessmentCriterionEntity)
+			&& !--this._save.ops;
+	},
+
 	_selectAssessedLevel: function(cells, cellAssessmentMap, assessmentCriterionEntity) {
 		if (!cells
-		|| !cellAssessmentMap
-		|| !Object.keys(cellAssessmentMap).length
+		|| !cellAssessmentMap || !Object.keys(cellAssessmentMap).length
 		|| !assessmentCriterionEntity
-		|| this._levelEntities && (
-			assessmentCriterionEntity.rel
-			|| !this._save
-			|| !this._save.entity
-			|| this._save.entity.getLink().href !== assessmentCriterionEntity.getAction().href
-			|| --this._save.ops
-		)) {
+		|| !this._canUpdateAssessment(assessmentCriterionEntity)) {
 			return;
 		}
 		if (this._save && !this._save.ops) {
