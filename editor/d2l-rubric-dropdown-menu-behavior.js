@@ -1,4 +1,6 @@
+import '@brightspace-ui/core/components/menu/menu-item-radio.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};

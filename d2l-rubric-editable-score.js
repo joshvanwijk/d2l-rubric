@@ -1,18 +1,19 @@
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-ui/core/components/offscreen/offscreen.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
 import '@polymer/polymer/polymer-legacy.js';
 import './localize-behavior.js';
 import './assessment-behavior.js';
 import './editor/d2l-rubric-error-handling-behavior.js';
-import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
-import 'd2l-inputs/d2l-input-text.js';
 import './rubric-siren-entity.js';
-import 'd2l-tooltip/d2l-tooltip.js';
 import '@polymer/iron-media-query/iron-media-query.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-import '@brightspace-ui/core/components/button/button-subtle.js';
-import '@brightspace-ui/core/components/button/button-icon.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
 const $_documentContainer = document.createElement('template');
 

@@ -1,6 +1,6 @@
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-tooltip/d2l-tooltip.js';
 import '../d2l-rubric-entity-behavior.js';
 import './d2l-rubric-siren-autosave-action-behavior.js';
 import '../localize-behavior.js';

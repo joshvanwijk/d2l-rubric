@@ -1,19 +1,20 @@
-import '@polymer/polymer/polymer-legacy.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-fetch/d2l-fetch.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
-import './localize-behavior.js';
-import './d2l-rubric-levels-mobile.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import './d2l-rubric-entity-behavior.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
 import './assessment-behavior.js';
-import './d2l-rubric-alignments-indicator';
+import './d2l-rubric-alignments-indicator.js';
+import './d2l-rubric-competencies-icon.js';
+import './d2l-rubric-entity-behavior.js';
+import './d2l-rubric-levels-mobile.js';
+import './localize-behavior.js';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import './d2l-rubric-competencies-icon.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 	<template strip-whitespace="">
 		<style>
