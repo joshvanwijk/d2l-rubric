@@ -1,13 +1,13 @@
-import { PolymerElement, html } from '@polymer/polymer';
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import './d2l-rubric-editor-cell-styles.js';
 import '../localize-behavior.js';
 import '../rubric-siren-entity.js';
+import { html, PolymerElement } from '@polymer/polymer';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
 const MIN_HEADER_WIDTH = 8;
 const MIN_HEADER_WIDTH_UNIT = 'rem';

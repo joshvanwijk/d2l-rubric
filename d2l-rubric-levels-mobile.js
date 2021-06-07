@@ -1,16 +1,16 @@
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
 import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-fetch/d2l-fetch.js';
-import 'd2l-colors/d2l-colors.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
 import './assessment-behavior.js';
-import './localize-behavior.js';
 import './d2l-rubric-entity-behavior.js';
-import 'd2l-icons/d2l-icon.js';
+import './localize-behavior.js';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 	<template strip-whitespace="">
 		<style>
@@ -125,7 +125,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				justify-content: space-around;
 				align-items: center;
 			}
-
+			.level:focus .level-tab-focus {
+				border: 1px solid var(--d2l-color-celestine-minus-1);
+				margin: 2px;
+				height: 18px;
+			}
+			.level.selected:focus .level-tab-focus {
+				border-radius: 4px;
+				height: 30px;
+			}
 			.level:not(.selected):focus:last-of-type .level-tab-focus,
 			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
 				border-radius: 0px 4px 4px 0px;

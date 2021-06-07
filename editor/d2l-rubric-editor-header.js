@@ -1,12 +1,12 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@polymer/polymer/polymer-legacy.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import '../localize-behavior.js';
-import 'd2l-colors/d2l-colors.js';
+import 'd2l-save-status/d2l-save-status.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
-import 'd2l-save-status/d2l-save-status.js';
-const $_documentContainer = document.createElement('template');
+import '../localize-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor-header">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
@@ -72,16 +72,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editor-header">
 
 			#editor-save-status {
 				display: inline-block;
-			}
-
-			d2l-alert {
-				margin: 0;
-				margin-left: var(--d2l-rubric-editor-start-gutter-width);
-				margin-right: var(--d2l-rubric-editor-end-gutter-width);
-			}
-			:dir(rtl) d2l-alert {
-				margin-right: var(--d2l-rubric-editor-start-gutter-width);
-				margin-left: var(--d2l-rubric-editor-end-gutter-width);
 			}
 		</style>
 		<div id="rubric-editor-header">

@@ -4,27 +4,28 @@ Polymer Web-Component to display rubrics
 
 @demo demo/index.html
 */
-import { Polymer } from '@polymer/polymer/polymer-legacy.js';
+import '@brightspace-ui/core/components/alert/alert.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/offscreen/offscreen.js';
 import '@polymer/iron-media-query/iron-media-query.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
-
 import 'd2l-fetch/d2l-fetch.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-save-status/d2l-save-status.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
+import 's-html/s-html.js';
+import './assessment-behavior.js';
 import './d2l-rubric-adapter.js';
 import './d2l-rubric-criteria-groups.js';
+import './d2l-rubric-entity-behavior.js';
 import './d2l-rubric-loading.js';
 import './d2l-rubric-overall-score.js';
-import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
 import './localize-behavior.js';
 import './telemetry-behavior.js';
-import './assessment-behavior.js';
-import './d2l-rubric-entity-behavior.js';
-import 'd2l-alert/d2l-alert.js';
-import 's-html/s-html.js';
-import 'd2l-save-status/d2l-save-status.js';
-import '@brightspace-ui/core/components/button/button-subtle.js';
 import './rubric-siren-entity.js';
 import './d2l-rubric-assessment-cache-primer.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
+import { Polymer } from '@polymer/polymer/polymer-legacy.js';
+
 const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 	<template strip-whitespace="">

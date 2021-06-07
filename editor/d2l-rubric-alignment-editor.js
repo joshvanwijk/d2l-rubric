@@ -1,7 +1,7 @@
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
 import '@polymer/polymer/polymer-legacy.js';
-import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-tooltip/d2l-tooltip.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-inputs/d2l-input-shared-styles.js';
 import 'd2l-inputs/d2l-input-radio-styles.js';
@@ -9,8 +9,8 @@ import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import '../d2l-rubric-entity-behavior.js';
 import '../localize-behavior.js';
 import './d2l-rubric-error-handling-behavior.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { useShadow } from '@polymer/polymer/lib/utils/settings.js';
 const $_documentContainer = document.createElement('template');
 
