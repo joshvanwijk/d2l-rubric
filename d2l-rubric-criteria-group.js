@@ -787,11 +787,13 @@ Polymer({
 	},
 
 	_willSelect: function(criterionCell, cellAssessmentMap) {
-		const criterionHref = criterionCell.getLinkByRel('up')?.href;
-		const requestedCell = criterionHref && this._changesRequested[criterionHref]?.();
+		const criterionLink = criterionCell.getLinkByRel('up');
+		const criterionHref = criterionLink && criterionLink.href;
+		const requestedGetter = criterionHref && this._changesRequested[criterionHref];
+		const requestedCell = requestedGetter && requestedGetter();
 		const assessmentCell = this._lookupMap(criterionCell, cellAssessmentMap);
 		if (requestedCell) {
-			return requestedCell.properties.score === assessmentCell?.properties.score;
+			return assessmentCell && assessmentCell.properties.score === requestedCell.properties.score;
 		} else {
 			return this._isSelected(criterionCell, cellAssessmentMap);
 		}
@@ -968,7 +970,8 @@ Polymer({
 		});
 		const href = radio.getAttribute('data-href');
 		const entity = this.cellAssessmentMap[href];
-		const criterionHref = entity?.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion')?.href;
+		const criterionEntity = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion');
+		const criterionHref = criterionEntity && criterionEntity.href;
 		if (criterionHref) {
 			this._queueChange(criterionHref, (() => this.cellAssessmentMap[href]).bind(this));
 		}
