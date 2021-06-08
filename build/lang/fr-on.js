@@ -106,7 +106,7 @@ window.D2L.Rubric.Language.FrOn = {
 	'loaOverlayHeading': 'Niveaux d’accomplissement',
 	'loaSliderLabel': 'Seuil de réussite entre "{loaLevel1}" et "{loaLevel2}" Utilisez les touches à flèche de gauche et de droite pour déplacer le seuil.',
 	'loaThresholdMovementNotif': 'Seuil déplacé {direction, select, left {à gauche} right {à droite}}',
-	'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée parce qu’elle a déjà été utilisée pour évaluer le travail d’un élève',
+	'lockedAlertText': 'Cette grille d’évaluation ne peut pas être modifiée parce qu’elle a déjà été utilisée pour évaluer le tâche d’un élève',
 	'makeRubricAvailableHeader': 'Rendre la grille d\'évaluation disponible à :',
 	'moveCriteriaGroupDown': 'Déplacer le groupe de critères en position {positionNumber} vers le bas',
 	'moveCriteriaGroupUp': 'Déplacer le groupe de critères en position {positionNumber} vers le haut',
