@@ -253,7 +253,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			has-alerts="[[_hasAlerts]]"
 			compact="[[compact]]"
 			detached-view="[[detachedView]]"
-			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]">
+			score-text="[[_localizeCompactScoreText(entity, _totalScore)]]"
+			criterion-assessment-map="[[_criterionAssessmentMap]]"
+		>
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 					[[item.alertMessage]]
@@ -292,6 +294,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 						enable-feedback-copy="[[enableFeedbackCopy]]"
 						read-only="[[readOnly]]"
 						compact="[[compact]]"
+						criterion-assessment-map="{{_criterionAssessmentMap}}"
 					>
 						<div slot="total-score">
 							<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
@@ -458,7 +461,8 @@ Polymer({
 		errorLoggingEndpoint: {
 			type: String,
 			value: null
-		}
+		},
+		_criterionAssessmentMap: Object
 	},
 
 	behaviors: [
