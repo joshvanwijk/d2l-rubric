@@ -231,7 +231,7 @@ const $_documentContainer = html `
 			}
 		</style>
 		<d2l-rubric-editor-header id="rubric-header">
-			<template is="dom-if" if="{{!titleHidden}}">
+			<template is="dom-if" if="[[!titleHidden]]">
 				<div slot="title">[[localize('editRubric')]]</div>
 			</template>
 			<template is="dom-if" if="{{!titleDropdownHidden}}">
