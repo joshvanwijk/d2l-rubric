@@ -24,11 +24,11 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import 'fastdom/fastdom.js';
 import './d2l-rubric-editable-score.js';
 import './d2l-rubric-alignments-indicator';
+import './d2l-rubric-competencies-icon.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import './d2l-rubric-competencies-icon.js';
 
 const DEBOUNCE_DELAY = 1000;
 const $_documentContainer = document.createElement('template');
