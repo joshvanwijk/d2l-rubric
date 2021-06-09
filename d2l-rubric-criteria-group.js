@@ -26,7 +26,6 @@ import './rubric-siren-entity.js';
 import './telemetry-behavior.js';
 import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import './d2l-rubric-competencies-icon.js';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
