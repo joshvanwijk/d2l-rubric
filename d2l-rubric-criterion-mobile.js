@@ -1,19 +1,20 @@
-import '@polymer/polymer/polymer-legacy.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@polymer/polymer/polymer-legacy.js';
 import 'd2l-fetch/d2l-fetch.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
-import './localize-behavior.js';
-import './d2l-rubric-levels-mobile.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import './d2l-rubric-entity-behavior.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
 import './assessment-behavior.js';
-import './d2l-rubric-alignments-indicator';
+import './d2l-rubric-alignments-indicator.js';
+import './d2l-rubric-competencies-icon.js';
+import './d2l-rubric-entity-behavior.js';
+import './d2l-rubric-levels-mobile.js';
+import './localize-behavior.js';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import './d2l-rubric-competencies-icon.js';
-const $_documentContainer = document.createElement('template');
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 	<template strip-whitespace="">
 		<style>
@@ -331,19 +332,18 @@ Polymer({
 	},
 
 	selectCell: function(entityGetter) {
-		const criterion = this;
 		const helper = this.CriterionCellAssessmentHelper;
-		const entityWrapper = () => {
+		const entityWrapper = (() => {
 			const entity = entityGetter();
-			criterion._save.entity = entity;
+			this._save.entity = entity;
 			return entity;
-		};
+		}).bind(this);
 
 		const DEBOUNCE_DURATION = 1000;
-		const timeout = setTimeout(() => {
+		const timeout = setTimeout((() => {
 			helper.selectAsync(entityWrapper);
-			criterion._save.ops += 1;
-		}, DEBOUNCE_DURATION);
+			this._save.ops += 1;
+		}).bind(this), DEBOUNCE_DURATION);
 
 		if (this._save) {
 			clearTimeout(this._save.timeout);
@@ -358,18 +358,32 @@ Polymer({
 		}
 	},
 
+	_isCachePrimed: function() {
+		return !!this._levelEntities;
+	},
+
+	_isCachePriming: function(assessmentCriterionEntity) {
+		return !!assessmentCriterionEntity.rel;
+	},
+
+	_isCriterionSaving: function(assessmentCriterionEntity) {
+		return this._save
+			&& this._save.entity
+			&& this._save.entity.getLink().href !== assessmentCriterionEntity.getAction().href;
+	},
+
+	_canUpdateAssessment: function(assessmentCriterionEntity) {
+		return !this._isCachePrimed() ||
+			!this._isCachePriming(assessmentCriterionEntity)
+			&& this._isCriterionSaving(assessmentCriterionEntity)
+			&& !--this._save.ops;
+	},
+
 	_selectAssessedLevel: function(cells, cellAssessmentMap, assessmentCriterionEntity) {
 		if (!cells
-		|| !cellAssessmentMap
-		|| !Object.keys(cellAssessmentMap).length
+		|| !cellAssessmentMap || !Object.keys(cellAssessmentMap).length
 		|| !assessmentCriterionEntity
-		|| this._levelEntities && (
-			assessmentCriterionEntity.rel
-			|| !this._save
-			|| !this._save.entity
-			|| this._save.entity.getLink().href !== assessmentCriterionEntity.getAction().href
-			|| --this._save.ops
-		)) {
+		|| !this._canUpdateAssessment(assessmentCriterionEntity)) {
 			return;
 		}
 		if (this._save && !this._save.ops) {
