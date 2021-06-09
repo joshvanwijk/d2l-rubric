@@ -3,6 +3,7 @@ import '@brightspace-ui-labs/accordion/accordion.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import './localize-behavior.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
@@ -11,7 +12,8 @@ import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
  * owning the specific rendering logic.
  */
 window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends mixinBehaviors([
-	D2L.PolymerBehaviors.Rubric.LocalizeBehavior
+	D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
+	D2L.Hypermedia.HMConstantsBehavior
 ], PolymerElement) {
 	static get properties() {
 		return {
@@ -24,6 +26,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 				type: Boolean,
 				value: false,
 			},
+			criterionAssessmentMap: Object
 		};
 	}
 
@@ -92,7 +95,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 									<div class="rubric-header-title">[[rubricName]]</div>
 									<div class="rubric-header-out-of-container">
 										<span class="rubric-header-out-of-text">
-											[[scoreText]]
+											[[_getRubricText(assessmentEntity, criterionAssessmentMap)]]
 										</span>
 									</div>
 								</span>
@@ -146,6 +149,26 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends m
 			: 'rubric';
 
 		return tierName + ':' + iconName;
+	}
+
+	_getRubricText(assessmentEntity, criterionAssessmentMap) {
+		const criterionAssessmentLinks = assessmentEntity && assessmentEntity.getSubEntitiesByClass('criterion-assessment-links');
+		const criterionLinks = criterionAssessmentLinks && criterionAssessmentLinks.map(link => link.getLinkByRel(this.HypermediaRels.Rubrics.criterion));
+		const criterionCellSelectors = criterionLinks && criterionLinks.map(link => criterionAssessmentMap[link.href]);
+		const assessmentCriterionCells = criterionCellSelectors && criterionCellSelectors.map(selector => (
+			selector && selector.getSubEntitiesByClass(this.HypermediaClasses.rubrics.assessmentCriterionCell)
+		));
+		const assessedCriteriaCount = assessmentCriterionCells && assessmentCriterionCells.reduce((count, cells) => (
+			count + !!(cells && cells.find(cell => cell.hasClass('selected')))
+		), 0);
+
+		if (!assessedCriteriaCount) {
+			return this.localize('notScored');
+		} else if (this.scoreText && assessmentCriterionCells && assessmentCriterionCells.length === assessedCriteriaCount) {
+			return this.scoreText;
+		} else {
+			return this.localize('criteriaScored', 'scored', assessedCriteriaCount, 'outOf', assessmentCriterionCells.length);
+		}
 	}
 
 	_showAttachedCompactView(compact, detachedView) {
