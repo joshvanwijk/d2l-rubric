@@ -154,7 +154,7 @@ window.D2L.Rubric.Language.FrOn = {
 	'removeCriterion': 'Retirer le critère {name}',
 	'removeLevel': 'Retirer le niveau {name}',
 	'removeOverallLevel': 'Supprimer le niveau global {name}',
-	'reverseLevelOrder': 'Inverser l’ordre du niveau',
+	'reverseLevelOrder': 'Inverser l’ordre des niveaux',
 	'reverseLevelsSuccessful': 'L’ordre du niveau a été inversé',
 	'rubricAlignmentSaveFailed': 'La modification de l’alignement de la grille d\'évaluation a échoué.',
 	'rubricFeedbackCopyOption': 'Inclure une rétroaction de grille d\'évaluation dans la rétroaction globale',
