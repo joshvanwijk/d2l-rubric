@@ -29,6 +29,8 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import './d2l-rubric-competencies-icon.js';
+
+const DEBOUNCE_DELAY = 1000;
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
@@ -1008,7 +1010,6 @@ Polymer({
 	},
 
 	_queueChange: function(criterionId, entityGetter) {
-		const DEBOUNCE_DELAY = 1000;
 		if (this._changeTimeout) {
 			clearTimeout(this._changeTimeout);
 		}
