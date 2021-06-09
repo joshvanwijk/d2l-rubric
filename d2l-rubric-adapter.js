@@ -13,7 +13,7 @@ import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
  */
 window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends mixinBehaviors([
 	D2L.PolymerBehaviors.Rubric.LocalizeBehavior,
-	window.D2L.Hypermedia.HMConstantsBehavior
+	D2L.Hypermedia.HMConstantsBehavior
 ], PolymerElement) {
 	static get properties() {
 		return {
