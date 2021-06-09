@@ -1,21 +1,21 @@
 import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/offscreen/offscreen.js';
 import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
-import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-offscreen/d2l-offscreen.js';
-import 'd2l-icons/d2l-icon.js';
 import 'd2l-dnd-sortable/d2l-dnd-sortable.js';
-import '../d2l-rubric-entity-behavior.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import '../localize-behavior.js';
-import '../telemetry-behavior.js';
 import './d2l-rubric-criterion-editor.js';
 import './d2l-rubric-editor-cell-styles.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import '../d2l-rubric-entity-behavior.js';
+import '../localize-behavior.js';
+import '../telemetry-behavior.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-const $_documentContainer = document.createElement('template');
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">

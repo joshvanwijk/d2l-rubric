@@ -1,18 +1,18 @@
-import '@polymer/polymer/polymer-legacy.js';
-import { announce } from '@brightspace-ui/core/helpers/announce.js';
-import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
-import 'd2l-icons/d2l-icon.js';
-import '../d2l-rubric-entity-behavior.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import '../localize-behavior.js';
-import '../d2l-rubric-loading.js';
-import './d2l-rubric-criteria-group-editor.js';
 import '@brightspace-ui/core/components/button/button.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
+import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
+import '../d2l-rubric-entity-behavior.js';
+import '../d2l-rubric-loading.js';
+import '../localize-behavior.js';
+import './d2l-rubric-criteria-group-editor.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status';
-const $_documentContainer = document.createElement('template');
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 
+const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">

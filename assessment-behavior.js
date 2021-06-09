@@ -1,8 +1,8 @@
+import './d2l-rubric-action-behavior.js';
 import AssessmentHelper from './assessment-helpers/assessment.js';
 import CriterionAssessmentHelper from './assessment-helpers/criterion-assessment.js';
 import CriterionCellAssessmentHelper from './assessment-helpers/criterion-cell-assessment.js';
 import OverallLevelAssessmentHelper from './assessment-helpers/overall-level-assessment.js';
-import './d2l-rubric-action-behavior.js';
 
 window.D2L = window.D2L || {};
 
