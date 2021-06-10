@@ -231,7 +231,9 @@ const $_documentContainer = html `
 			}
 		</style>
 		<d2l-rubric-editor-header id="rubric-header">
-			<div slot="title">[[localize('editRubric')]]</div>
+			<template is="dom-if" if="[[!titleHidden]]">
+				<div slot="title">[[localize('editRubric')]]</div>
+			</template>
 			<template is="dom-if" if="{{!titleDropdownHidden}}">
 				<d2l-dropdown id="title-dropdown" slot="title-dropdown-menu">
 					<d2l-button-icon class="d2l-dropdown-opener" icon="d2l-tier1:chevron-down" text="[[localize('actionsforEditRubric')]]"></d2l-button-icon>
@@ -452,6 +454,10 @@ Polymer({
 			type: String
 		},
 		titleDropdownHidden: {
+			type: Boolean,
+			value: false
+		},
+		titleHidden: {
 			type: Boolean,
 			value: false
 		},
